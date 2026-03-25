@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f5f5f0; color:#1a1a1a; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+  .header { padding:20px 0; border-bottom:2px solid #1a1a1a; margin-bottom:24px; }
+  .header h1 { font-size:22px; font-weight:700; margin:0 0 4px; }
+  .header p { font-size:13px; color:#666; margin:0; }
+  .item { background:#fff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e5e5e0; }
+  .item-source { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+  .item-title { font-size:17px; font-weight:600; margin:0 0 8px; }
+  .item-title a { color:#1a1a1a; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+  .item-summary { font-size:14px; color:#444; margin-bottom:12px; line-height:1.5; }
+  .badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 8px; border-radius:6px; margin-right:4px; }
+  .badge-score { background:#e8f5e9; color:#2e7d32; }
+  .badge-yt { background:#fee; color:#c62828; }
+  .badge-rss { background:#e3f2fd; color:#1565c0; }
+  .section-label { font-size:12px; font-weight:600; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin:12px 0 6px; }
+  .key-point { font-size:13px; color:#333; padding:4px 0 4px 12px; border-left:2px solid #ddd; margin-bottom:4px; line-height:1.4; }
+  .key-point .ts { font-size:11px; color:#888; font-family:monospace; }
+  .idea { font-size:13px; color:#1565c0; padding:6px 10px; background:#f0f7ff; border-radius:6px; margin-bottom:4px; line-height:1.4; }
+  .quiz-box { background:#fafaf5; border-radius:8px; padding:12px; margin-top:12px; }
+  .quiz-q { font-size:13px; font-weight:600; margin-bottom:6px; }
+  .quiz-opt { font-size:12px; color:#555; padding:2px 0; }
+  .quiz-answer { font-size:12px; color:#2e7d32; margin-top:6px; display:none; }
+  .feedback { display:flex; gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid #f0f0eb; }
+  .fb-btn { display:inline-block; padding:6px 14px; font-size:12px; border-radius:20px; text-decoration:none; border:1px solid #ddd; color:#666; }
+  .fb-btn:hover { background:#f5f5f0; }
+  .footer { text-align:center; padding:20px 0; font-size:12px; color:#999; }
+  .footer a { color:#666; }
+  .keyword-form { text-align:center; padding:16px; background:#fff; border-radius:12px; border:1px solid #e5e5e0; margin-bottom:16px; }
+  .keyword-form p { font-size:14px; margin:0 0 8px; }
+  .keyword-form a { display:inline-block; padding:8px 20px; background:#1a1a1a; color:#fff; border-radius:8px; text-decoration:none; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 3월 24일 화요일 — 오늘의 큐레이션 3건</p>
+  </div>
+
+  
+  <div class="item">
+    <div>
+      <span class="badge badge-yt">
+        YOUTUBE
+      </span>
+      <span class="badge badge-score">관련도 9/10</span>
+      <span class="item-source">토스 테크</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/abc123" target="_blank">토스의 Feature Store 구축기 — 실시간 ML 서빙의 핵심</a>
+    </h2>
+
+    <p class="item-summary">실시간 피처 서빙을 위한 아키텍처와 운영 노하우</p>
+
+    
+    <div class="section-label">핵심 포인트</div>
+    
+    <div class="key-point">
+      <span class="ts">05:23</span> 
+      Redis 기반 실시간 피처 서빙으로 지연시간 10ms 이하 달성
+    </div>
+    
+    <div class="key-point">
+      <span class="ts">12:45</span> 
+      피처 드리프트 모니터링 파이프라인 구축
+    </div>
+    
+    <div class="key-point">
+      <span class="ts">22:10</span> 
+      오프라인/온라인 피처 일관성 보장 전략
+    </div>
+    
+    
+
+    
+    <div class="section-label">현업 적용 아이디어</div>
+    
+    <div class="idea">💡 추천 모델의 실시간 피처를 Redis로 전환하는 PoC</div>
+    
+    <div class="idea">💡 피처 드리프트 알림을 Slack 연동</div>
+    
+    
+
+    
+    <div class="quiz-box">
+      <div class="section-label" style="margin-top:0">내용 확인 퀴즈</div>
+      
+      <div class="quiz-q">Q1. Feature Store의 핵심 역할은?</div>
+      
+      <div class="quiz-opt">A. 모델 학습</div>
+      
+      <div class="quiz-opt">B. 피처 서빙</div>
+      
+      <div class="quiz-opt">C. 데이터 수집</div>
+      
+      <div class="quiz-opt">D. 모델 배포</div>
+      
+      <div class="quiz-answer">정답: B — 학습과 서빙에 일관된 피처를 제공하는 것이 핵심</div>
+      
+      <div class="quiz-q">Q2. 실시간 피처 서빙의 지연시간 목표는?</div>
+      
+      <div class="quiz-opt">A. 1초</div>
+      
+      <div class="quiz-opt">B. 100ms</div>
+      
+      <div class="quiz-opt">C. 10ms</div>
+      
+      <div class="quiz-opt">D. 1ms</div>
+      
+      <div class="quiz-answer">정답: C — 토스에서는 Redis 기반으로 10ms 이하를 달성</div>
+      
+    </div>
+    
+
+    <div class="feedback">
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=like&item_url=https%3A//youtu.be/abc123">👍 도움됐어</a>
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=dislike&item_url=https%3A//youtu.be/abc123">👎 별로야</a>
+    </div>
+  </div>
+  
+  <div class="item">
+    <div>
+      <span class="badge badge-rss">
+        RSS
+      </span>
+      <span class="badge badge-score">관련도 8/10</span>
+      <span class="item-source">당근 테크 블로그</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/causal-ads" target="_blank">당근에서 인과추론으로 광고 효과를 측정하는 방법</a>
+    </h2>
+
+    <p class="item-summary">DID + 성향점수 매칭을 결합한 광고 캠페인 효과 분석</p>
+
+    
+    <div class="section-label">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+      이중차분법(DID)과 성향점수 매칭을 결합한 하이브리드 접근
+    </div>
+    
+    <div class="key-point">
+      
+      A/B 테스트가 불가능한 상황에서의 대안적 인과추론 전략
+    </div>
+    
+    
+
+    
+    <div class="section-label">현업 적용 아이디어</div>
+    
+    <div class="idea">💡 프로모션 캠페인에 DID 적용하여 순수 효과 측정</div>
+    
+    
+
+    
+    <div class="quiz-box">
+      <div class="section-label" style="margin-top:0">내용 확인 퀴즈</div>
+      
+      <div class="quiz-q">Q1. Feature Store의 핵심 역할은?</div>
+      
+      <div class="quiz-opt">A. 모델 학습</div>
+      
+      <div class="quiz-opt">B. 피처 서빙</div>
+      
+      <div class="quiz-opt">C. 데이터 수집</div>
+      
+      <div class="quiz-opt">D. 모델 배포</div>
+      
+      <div class="quiz-answer">정답: B — 학습과 서빙에 일관된 피처를 제공하는 것이 핵심</div>
+      
+      <div class="quiz-q">Q2. 실시간 피처 서빙의 지연시간 목표는?</div>
+      
+      <div class="quiz-opt">A. 1초</div>
+      
+      <div class="quiz-opt">B. 100ms</div>
+      
+      <div class="quiz-opt">C. 10ms</div>
+      
+      <div class="quiz-opt">D. 1ms</div>
+      
+      <div class="quiz-answer">정답: C — 토스에서는 Redis 기반으로 10ms 이하를 달성</div>
+      
+    </div>
+    
+
+    <div class="feedback">
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=like&item_url=https%3A//medium.com/daangn/causal-ads">👍 도움됐어</a>
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=dislike&item_url=https%3A//medium.com/daangn/causal-ads">👎 별로야</a>
+    </div>
+  </div>
+  
+  <div class="item">
+    <div>
+      <span class="badge badge-rss">
+        NEWSLETTER
+      </span>
+      <span class="badge badge-score">관련도 7/10</span>
+      <span class="item-source">The Batch</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deeplearning.ai/the-batch/rag-vs-ft" target="_blank">RAG vs Fine-tuning: When to Use What</a>
+    </h2>
+
+    <p class="item-summary">RAG와 파인튜닝의 실전 선택 기준 가이드</p>
+
+    
+    <div class="section-label">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+      도메인 지식 깊이에 따른 RAG/FT 선택 의사결정 트리
+    </div>
+    
+    <div class="key-point">
+      
+      비용 대비 성능 벤치마크 결과
+    </div>
+    
+    
+
+    
+    <div class="section-label">현업 적용 아이디어</div>
+    
+    <div class="idea">💡 사내 문서 QA 봇을 RAG 기반으로 먼저 구축</div>
+    
+    
+
+    
+    <div class="quiz-box">
+      <div class="section-label" style="margin-top:0">내용 확인 퀴즈</div>
+      
+      <div class="quiz-q">Q1. Feature Store의 핵심 역할은?</div>
+      
+      <div class="quiz-opt">A. 모델 학습</div>
+      
+      <div class="quiz-opt">B. 피처 서빙</div>
+      
+      <div class="quiz-opt">C. 데이터 수집</div>
+      
+      <div class="quiz-opt">D. 모델 배포</div>
+      
+      <div class="quiz-answer">정답: B — 학습과 서빙에 일관된 피처를 제공하는 것이 핵심</div>
+      
+      <div class="quiz-q">Q2. 실시간 피처 서빙의 지연시간 목표는?</div>
+      
+      <div class="quiz-opt">A. 1초</div>
+      
+      <div class="quiz-opt">B. 100ms</div>
+      
+      <div class="quiz-opt">C. 10ms</div>
+      
+      <div class="quiz-opt">D. 1ms</div>
+      
+      <div class="quiz-answer">정답: C — 토스에서는 Redis 기반으로 10ms 이하를 달성</div>
+      
+    </div>
+    
+
+    <div class="feedback">
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=like&item_url=https%3A//deeplearning.ai/the-batch/rag-vs-ft">👍 도움됐어</a>
+      <a class="fb-btn" href="http://localhost:8000/api/feedback?action=dislike&item_url=https%3A//deeplearning.ai/the-batch/rag-vs-ft">👎 별로야</a>
+    </div>
+  </div>
+  
+
+  <div class="keyword-form">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    <p>DS Digest — 매일 아침 당신의 DS 성장을 위한 큐레이션</p>
+    <p><a href="http://localhost:8000/api/feedback?action=unsubscribe">수신 거부</a></p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+name: Daily DS Digest
+
+on:
+  schedule:
+    # UTC 22:25 = KST 07:25 → 파이프라인 2~5분 소요 → 07:27~30 수신
+    - cron: '25 22 * * *'
+  workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'   # 3.14 금지: protobuf C ext, supabase pyiceberg 빌드 실패
+          cache: 'pip'
+
+      - name: Install dependencies
+        # 실패 케이스 A: supabase>=2.19.0 → pyiceberg 포함 → MSVC 없어 빌드 실패
+        #   대응: requirements.txt에 supabase>=2.9.0,<2.19.0 고정
+        # 실패 케이스 B: google-generativeai SDK → protobuf C ext 충돌
+        #   대응: SDK 미사용, httpx로 REST API 직접 호출
+        run: pip install -r requirements.txt
+
+      - name: Run daily digest
+        # 실패 케이스 C: YouTube transcript API가 GitHub Actions IP 차단
+        #   대응: transcript 없어도 분석 계속 진행 (body/transcript 중 있는 것 사용)
+        #          필요 시 YT_FETCH_PER_CHANNEL=0 으로 YouTube 수집 비활성화
+        # 실패 케이스 D: 환경변수 누락 → pydantic ValidationError
+        #   대응: 아래 env 목록과 GitHub Secrets 등록 목록을 일치시킬 것
+        env:
+          # AI
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          # Database
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          # Email
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # Telegram
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # App
+          BASE_URL: ${{ secrets.BASE_URL }}
+          DELIVERY_CHANNELS: ${{ secrets.DELIVERY_CHANNELS }}
+          # Content Sources
+          YOUTUBE_CHANNELS: ${{ secrets.YOUTUBE_CHANNELS }}
+          RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
+          # Settings
+          MAX_ITEMS_PER_DIGEST: ${{ secrets.MAX_ITEMS_PER_DIGEST }}
+          RELEVANCE_THRESHOLD: ${{ secrets.RELEVANCE_THRESHOLD }}
+          YT_FETCH_PER_CHANNEL: ${{ secrets.YT_FETCH_PER_CHANNEL }}
+          YT_NEW_PER_CHANNEL: ${{ secrets.YT_NEW_PER_CHANNEL }}
+          DRY_RUN: "false"
+        run: python -m app.jobs.daily_digest
