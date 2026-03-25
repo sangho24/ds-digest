@@ -38,15 +38,17 @@ ANALYSIS_PROMPT = """\
 ## 분석 기준
 1. relevance_score (1-10): DS 현업자에게 얼마나 유용한지. 사용자 관심 토픽과의 관련도도 반영.
 2. one_line_summary: 한 줄 요약 (한국어, 30자 이내)
-3. key_points: 핵심 포인트 최대 3개. 영상이면 timestamp 포함 (MM:SS).
-4. production_ideas: 이 내용을 실제 현업 프로덕션에 적용할 수 있는 구체적 아이디어 1-2개
-5. quiz: 내용 확인용 객관식 퀴즈 2문항 (4지선다, 정답 인덱스, 해설 포함)
-6. skip_reason: relevance_score가 6 이하면, 왜 스킵 추천하는지 간단히
+3. tags: 이 콘텐츠가 맞닿아 있는 기술/분야 태그 최대 5개 (예: MLOps, A/B testing, Kubernetes, 추천시스템). 영어 또는 한국어 혼용 가능.
+4. key_points: 핵심 포인트 최대 3개. 영상이면 timestamp 포함 (MM:SS).
+5. production_ideas: 이 내용을 실제 현업 프로덕션에 적용할 수 있는 구체적 아이디어 1-2개
+6. quiz: 내용 확인용 객관식 퀴즈 2문항 (4지선다, 정답 인덱스, 해설 포함)
+7. skip_reason: relevance_score가 6 이하면, 왜 스킵 추천하는지 간단히
 
 반드시 아래 JSON 구조로만 응답하세요:
 {{
   "relevance_score": 8,
   "one_line_summary": "...",
+  "tags": ["MLOps", "Kubernetes", "모델 서빙"],
   "key_points": [{{"point": "...", "timestamp": "12:34"}}],
   "production_ideas": ["..."],
   "quiz": [{{"question": "...", "options": ["A", "B", "C", "D"], "answer_index": 0, "explanation": "..."}}],
@@ -86,6 +88,7 @@ def _mock_analysis(item: RawContent) -> ContentAnalysis:
     return ContentAnalysis(
         relevance_score=8,
         one_line_summary=f"[DRY RUN] {item.title[:40]}",
+        tags=["DRY RUN", "테스트"],
         key_points=[
             KeyPoint(point="[DRY RUN] 핵심 포인트 1", timestamp="01:00" if item.source_type.value == "youtube" else None),
             KeyPoint(point="[DRY RUN] 핵심 포인트 2", timestamp="02:00" if item.source_type.value == "youtube" else None),
@@ -129,6 +132,7 @@ async def analyze_content(
         return ContentAnalysis(
             relevance_score=data["relevance_score"],
             one_line_summary=data["one_line_summary"],
+            tags=data.get("tags", []),
             key_points=[KeyPoint(**kp) for kp in data["key_points"]],
             production_ideas=data["production_ideas"],
             quiz=[QuizItem(**q) for q in data["quiz"]],

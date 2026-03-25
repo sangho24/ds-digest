@@ -39,6 +39,7 @@ class ContentAnalysis(BaseModel):
     """Claude가 분석한 결과"""
     relevance_score: int = Field(ge=0, le=10, description="DS 현업 관련도 1-10")
     one_line_summary: str
+    tags: list[str] = Field(default_factory=list, max_length=5, description="관련 기술/분야 태그 (예: MLOps, A/B testing, Kubernetes)")
     key_points: list[KeyPoint] = Field(default_factory=list, max_length=5)
     production_ideas: list[str] = Field(default_factory=list, max_length=3)
     quiz: list[QuizItem] = Field(default_factory=list, max_length=3)

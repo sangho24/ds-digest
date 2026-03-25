@@ -1,84 +1,133 @@
-# DS Digest — 오늘 완료할 작업
+# DS Digest — 이메일 템플릿 리디자인
 
-## 목표
-내일 아침 7시 30분(KST)에 Telegram + 이메일로 다이제스트가 자동 발송되어야 함.
+app/templates/digest.html을 아래 기준으로 전면 수정해줘.
+이메일 클라이언트 호환 필수 (인라인 CSS, JS 없음, table 레이아웃 OK).
 
 ---
 
-## 작업 1: GitHub Actions cron 시간 수정
+## 디자인 방향: Notion 스타일 미니멀 카드
 
-현재 daily_digest.yml의 cron이 `'0 23 * * *'` (= KST 08:00)로 되어 있을 텐데,
-KST 07:30에 도착하게 하려면 파이프라인 실행 시간(2~5분)을 감안해서:
+### 색감 변경 — "AI가 만든 것 같은" 톤 제거
+- 현재의 초록(badge-score), 빨강(badge-yt), 파랑(badge-rss) 뱃지 → 전부 제거
+- 기본 색상: 배경 #FFFFFF, 텍스트 #37352F (Notion 기본 텍스트색), 보조 텍스트 #787774
+- 강조색: #2EAADC (Notion 블루) 하나만 사용 — 링크, 점수 표시에만
+- 카드 배경: #FFFFFF, 보더 #E3E2DE (Notion의 연한 보더)
+- 전체 페이지 배경: #F7F6F3 (Notion 배경 톤)
+- 현업 적용 아이디어 박스: 현재 초록/파랑 배경 → #F1F1EF (Notion의 gray 배경)에 왼쪽 보더 2px #2EAADC
+- 퀴즈 영역: 현재 연노랑 배경 → #F1F1EF 통일
 
-```yaml
-on:
-  schedule:
-    - cron: '25 22 * * *'   # UTC 22:25 = KST 07:25 → 발송 07:27~30 도착
-  workflow_dispatch:
+### 레이아웃 구조
+
+```
+┌─────────────────────────────────────┐
+│ DS Digest                           │
+│ 3월 25일 화요일 · 3건               │  ← 날짜 포맷 간결하게
+├─────────────────────────────────────┤
+│                                     │
+│ ┌─────────────────────────────────┐ │
+│ │ NAVER D2 · 관련도 8             │ │  ← 소스명 + 점수 한 줄, /10 빼기
+│ │                                 │ │
+│ │ 디자인시스템이 AI를 만났을 때    │ │  ← 제목 (클릭 가능 링크)
+│ │                                 │ │
+│ │ 디자인 시스템에 AI를 접목한...   │ │  ← 한 줄 요약
+│ │                                 │ │
+│ │ ─── 핵심 포인트 ──────────────  │ │
+│ │ 05:23  피처 서빙 지연시간 10ms  │ │  ← 타임스탬프 있으면 표시, 없으면 bullet만
+│ │ 12:45  드리프트 모니터링 구축   │ │
+│ │                                 │ │
+│ │ ─── 적용 아이디어 ────────────  │ │
+│ │ │ 사내 개발자 도구에 AI 코파일  │ │  ← 왼쪽 파란 보더
+│ │ │ 럿 기능을 구축...             │ │
+│ │                                 │ │
+│ │ ─── 퀴즈 ─────────────────────  │ │
+│ │ Q1. 주로 다루는 주제는?        │ │
+│ │ A) 백엔드 아키텍처              │ │  ← A. A) 중복 제거 → A) 만
+│ │ B) AI와 프론트엔드 개발 ✓      │ │  ← 정답에 ✓ 마크 + 볼드
+│ │ C) DB 최적화                    │ │
+│ │ D) 클라우드 비용                │ │
+│ │ → 정답 해설 (접힌 상태 아님)   │ │  ← 정답 아래에 작은 글씨로 해설
+│ │                                 │ │
+│ │        👍 도움됐어   👎 별로야   │ │  ← 하단 중앙 정렬
+│ └─────────────────────────────────┘ │
+│                                     │
+│ ┌─────────────────────────────────┐ │
+│ │ (다음 카드...)                   │ │
+│ └─────────────────────────────────┘ │
+│                                     │
+│ ┌─────────────────────────────────┐ │
+│ │ 다음에 받고 싶은 주제가 있나요? │ │  ← 하단 CTA
+│ │      [키워드 요청하기 →]        │ │
+│ └─────────────────────────────────┘ │
+│                                     │
+│ DS Digest · 피드백은 Telegram에서   │  ← 푸터 한 줄로 정리
+└─────────────────────────────────────┘
 ```
 
-## 작업 2: GitHub Actions에 필요한 Secrets 목록 확인
+### 구체적 수정 사항
 
-현재 .env에서 사용 중인 환경변수를 전부 확인하고,
-GitHub repo → Settings → Secrets and variables → Actions에 등록해야 할 목록을 출력해줘.
+1. **색감 교체**
+   - 뱃지 전부 제거 (YOUTUBE 빨간 뱃지, 관련도 초록 뱃지, RSS 파란 뱃지)
+   - 소스명은 일반 텍스트로 `NAVER D2 · 관련도 8` 한 줄
+   - 관련도 숫자만 #2EAADC 색상, 나머지는 #787774
 
-최소한 다음이 필요:
-- GEMINI_API_KEY
-- TELEGRAM_BOT_TOKEN
-- TELEGRAM_CHAT_ID
-- RESEND_API_KEY
-- EMAIL_FROM
-- EMAIL_TO
-- SUPABASE_URL
-- SUPABASE_KEY
-- 기타 사용 중인 설정 (YOUTUBE_CHANNELS, RSS_FEEDS, RELEVANCE_THRESHOLD 등)
+2. **핵심 포인트 타임스탬프**
+   - 현재 "N/A" 표시 → 타임스탬프 없으면 N/A 대신 그냥 bullet(·) 으로 표시
+   - 타임스탬프 있으면 모노스페이스 `05:23` 표시
 
-daily_digest.yml의 env 섹션에 이 시크릿들이 전부 매핑되어 있는지 확인하고, 빠진 게 있으면 추가해줘.
+3. **퀴즈 선지 포맷**
+   - 현재: `A. A) 선지` → 수정: `A) 선지`
+   - A. 과 A)가 중복되고 있음. 하나만 남기기
+   - 정답 선지는 볼드 + ✓ 마크
+   - 정답 해설은 정답 선지 바로 아래에 작은 글씨(12px, #787774)로 표시
+   - display:none이나 토글 쓰지 않기 — 이메일에서 JS 안 됨
 
-## 작업 3: workflow dispatch로 수동 테스트
+4. **현업 적용 아이디어**
+   - 현재 초록/노란 배경 → #F1F1EF 배경 + 왼쪽 2px #2EAADC 보더
+   - 💡 이모지는 유지
 
-GitHub에 push 한 뒤 Actions 탭에서 "Run workflow" 버튼으로 수동 실행해서 성공하는지 확인할 거야.
-실패할 수 있는 포인트:
-- requirements.txt 설치 실패 (supabase 버전 이슈 등)
-- 환경변수 누락
-- YouTube transcript API가 GitHub Actions IP에서 차단
+5. **피드백 버튼**
+   - 👍 도움됐어 / 👎 별로야 → 카드 하단 중앙 정렬
+   - "텔레그램에서 피드백 가능" 텍스트 → 카드 안이 아니라 이메일 맨 하단 푸터로 이동
+   - 푸터: `DS Digest · 피드백은 Telegram에서도 가능합니다` 한 줄
 
-각 실패 케이스에 대한 에러 메시지와 대응을 daily_digest.yml에 주석으로 넣어줘.
+6. **원본 보기 링크 수정**
+   - 현재 원본 보기 링크가 안 들어가지는 버그 있음
+   - item.raw.url이 제대로 href에 들어가는지 확인
+   - Jinja2 템플릿에서 `{{ item.raw.url }}` 이 올바른 필드명인지 확인
+   - 링크 텍스트: "원본 보기 →" 유지, 색상 #2EAADC
 
-## 작업 4: Telegram 피드백 E2E 확인
+7. **폰트**
+   - font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif (현재 유지)
+   - 제목: 17px → 16px, font-weight: 600
+   - 본문: 14px, line-height: 1.6
+   - 보조 텍스트: 13px, color: #787774
+   - 퀴즈/타임스탬프: 13px
 
-현재 Telegram 인라인 버튼(👍/👎/📝)을 눌렀을 때:
-1. callback_data가 어디로 가는지 확인
-2. Supabase feedback 테이블에 실제로 row가 생기는지 확인
-3. 다음 파이프라인 실행 시 해당 피드백이 필터링 프롬프트에 반영되는지 확인
+8. **카드 스타일**
+   - background: #FFFFFF
+   - border: 1px solid #E3E2DE
+   - border-radius: 8px
+   - padding: 20px
+   - margin-bottom: 12px
+   - box-shadow 없음
 
-만약 Telegram callback 처리가 polling 방식이라면, GitHub Actions에서는 파이프라인 실행 시점에만 돌아가니까 피드백은 별도 서버가 필요해.
+---
 
-현실적 해결책:
-- 방법 A: FastAPI 서버를 Railway/Render에 배포하고, Telegram webhook을 설정
-- 방법 B (MVP): 피드백 polling을 daily_digest 실행 시작 시 한 번 돌리기 — 파이프라인 시작 전에 "어제 들어온 callback을 처리하고 프로필에 반영" → 그 다음 수집/분석/발송
+## 원본 보기 링크 버그 수정
 
-방법 B로 구현해줘. daily_digest.py 시작부에:
-```
-1. getUpdates로 미처리 callback 수집
-2. 각 callback을 feedback 테이블에 저장
-3. 프로필 업데이트
-4. 이후 일반 파이프라인 실행
-```
+렌더러(app/renderers/html.py 또는 newsletter.py)에서 URL이 템플릿에 전달되는 경로를 확인해줘:
+- item.raw.url이 맞는지, 아니면 다른 필드명인지
+- URL이 비어있는 경우가 있는지
+- href에 URL이 들어갈 때 urlencode가 필요한지
 
-이러면 별도 서버 없이도 하루 1회 피드백이 반영됨.
+---
 
-## 작업 5: 현재 코드 전체 점검
+## 수정 후 테스트
 
-push 전에 확인:
-- .gitignore에 .env, data/, __pycache__/ 포함되어 있는지
-- requirements.txt에 모든 의존성이 있는지
-- .env.example이 최신 상태인지 (GEMINI_API_KEY 등 반영)
-
-## 완료 기준
-
-1. GitHub repo에 push 완료
-2. Actions 탭에서 수동 workflow_dispatch 실행 → 성공 (녹색 체크)
-3. Telegram + 이메일 수신 확인
-4. Telegram에서 👍 버튼 클릭 → 다음 실행 시 피드백 반영되는 구조 확인
-5. cron이 UTC 22:25로 설정되어 내일 KST 07:25에 자동 실행 예약
+변경 후 `python -m app.jobs.daily_digest`로 실행하고 data/archive/에 생성된 HTML을 브라우저로 열어서 확인.
+체크할 것:
+- 색감이 Notion 톤인지
+- N/A 타임스탬프가 사라졌는지
+- 퀴즈 A. A) 중복이 없는지
+- 원본 보기 링크가 작동하는지
+- "텔레그램에서 피드백 가능" 이 푸터에 있는지

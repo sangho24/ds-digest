@@ -61,6 +61,9 @@ def _format_item(item: DigestItem) -> str:
         for idea in a.production_ideas:
             lines.append(f"  • {html.escape(idea)}")
 
+    if a.tags:
+        lines += ["", "  ".join(f"#{html.escape(t.replace(' ', '_'))}" for t in a.tags)]
+
     lines += ["", f'🔗 <a href="{raw.url}">원본 보기</a>']
     return "\n".join(lines)
 
