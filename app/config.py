@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     # AI (Groq — OpenAI-compatible, 무료 30 RPM / 14,400 RPD)
     # GROQ_API_KEY 설정 시 Gemini 대신 Groq 사용
     groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "qwen/qwen3-32b"
 
     # Database
     supabase_url: str = ""
