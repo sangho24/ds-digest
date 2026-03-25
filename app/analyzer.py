@@ -57,8 +57,10 @@ ANALYSIS_PROMPT = """\
 """
 
 
-async def _call_gemini(prompt: str) -> dict:
-    """Gemini REST API 호출 → 파싱된 JSON dict 반환."""
+async def _call_gemini(prompt: str, _retry: int = 3) -> dict:
+    """Gemini REST API 호출 → 파싱된 JSON dict 반환.
+    429 응답 시 retryDelay만큼 대기 후 최대 _retry회 재시도.
+    """
     settings = get_settings()
     url = _GEMINI_API_URL.format(model=settings.gemini_model)
 
@@ -67,10 +69,33 @@ async def _call_gemini(prompt: str) -> dict:
         "generationConfig": {"response_mime_type": "application/json"},
     }
 
-    async with httpx.AsyncClient(timeout=30) as client:
-        resp = await client.post(url, params={"key": settings.gemini_api_key}, json=payload)
+    for attempt in range(_retry + 1):
+        async with httpx.AsyncClient(timeout=60) as client:
+            resp = await client.post(url, params={"key": settings.gemini_api_key}, json=payload)
+
+        if resp.status_code == 429:
+            # retryDelay는 에러 응답 body에 포함 (없으면 기본 30초)
+            retry_after = 30
+            try:
+                details = resp.json().get("error", {}).get("details", [])
+                for d in details:
+                    if d.get("@type", "").endswith("RetryInfo"):
+                        delay_str = d.get("retryDelay", "30s")
+                        retry_after = int(delay_str.rstrip("s")) + 2
+                        break
+            except Exception:
+                pass
+
+            if attempt < _retry:
+                logger.warning("gemini_rate_limited", attempt=attempt + 1, wait_seconds=retry_after)
+                await asyncio.sleep(retry_after)
+                continue
+            else:
+                resp.raise_for_status()
+
         resp.raise_for_status()
         result = resp.json()
+        break
 
     # 응답 구조: result["candidates"][0]["content"]["parts"][0]["text"]
     text = result["candidates"][0]["content"]["parts"][0]["text"]
