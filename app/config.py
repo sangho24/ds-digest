@@ -5,7 +5,12 @@ from functools import lru_cache
 class Settings(BaseSettings):
     # AI (Gemini)
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-1.5-flash"
+    gemini_model: str = "gemini-2.5-flash"
+
+    # AI (Groq — OpenAI-compatible, 무료 30 RPM / 14,400 RPD)
+    # GROQ_API_KEY 설정 시 Gemini 대신 Groq 사용
+    groq_api_key: str = ""
+    groq_model: str = "llama-3.3-70b-versatile"
 
     # Database
     supabase_url: str = ""

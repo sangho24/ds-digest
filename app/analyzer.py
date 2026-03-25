@@ -18,8 +18,11 @@ from app.models import (
 logger = structlog.get_logger()
 
 # Gemini free tier: gemini-2.5-flash 약 10 RPM → 호출 간 최소 8초
+# Groq free tier: 30 RPM → 호출 간 최소 3초
 _RATE_LIMIT_DELAY = 8.0
+_GROQ_RATE_LIMIT_DELAY = 3.0
 _GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+_GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 ANALYSIS_PROMPT = """\
 당신은 Data Science 현업 팀의 시니어 DS입니다.
@@ -108,6 +111,43 @@ async def _call_gemini(prompt: str, _retry: int = 3) -> dict:
     return json.loads(text)
 
 
+async def _call_groq(prompt: str, _retry: int = 3) -> dict:
+    """Groq OpenAI-compatible API 호출 → 파싱된 JSON dict 반환.
+    429 응답 시 Retry-After 헤더 기준 대기 후 최대 _retry회 재시도.
+    """
+    settings = get_settings()
+
+    payload = {
+        "model": settings.groq_model,
+        "messages": [{"role": "user", "content": prompt}],
+        "response_format": {"type": "json_object"},
+        "temperature": 0.3,
+    }
+    headers = {"Authorization": f"Bearer {settings.groq_api_key}"}
+
+    for attempt in range(_retry + 1):
+        async with httpx.AsyncClient(timeout=60, verify=False) as client:
+            resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
+
+        if resp.status_code == 429:
+            retry_after = int(resp.headers.get("Retry-After", "30")) + 2
+            if attempt < _retry:
+                logger.warning("groq_rate_limited", attempt=attempt + 1, wait_seconds=retry_after)
+                await asyncio.sleep(retry_after)
+                continue
+            else:
+                resp.raise_for_status()
+
+        resp.raise_for_status()
+        result = resp.json()
+        break
+
+    text = result["choices"][0]["message"]["content"]
+    text = re.sub(r"^```(?:json)?\s*", "", text.strip())
+    text = re.sub(r"\s*```$", "", text)
+    return json.loads(text)
+
+
 def _mock_analysis(item: RawContent) -> ContentAnalysis:
     """DRY_RUN=true 시 Gemini 호출 없이 반환하는 더미 분석 결과."""
     return ContentAnalysis(
@@ -153,7 +193,11 @@ async def analyze_content(
     )
 
     try:
-        data = await _call_gemini(prompt)
+        if settings.groq_api_key:
+            logger.info("using_groq", model=settings.groq_model, title=item.title[:50])
+            data = await _call_groq(prompt)
+        else:
+            data = await _call_gemini(prompt)
         return ContentAnalysis(
             relevance_score=data["relevance_score"],
             one_line_summary=data["one_line_summary"],
@@ -185,9 +229,10 @@ async def filter_and_analyze(
     digest_items: list[DigestItem] = []
 
     for i, item in enumerate(items):
-        # Gemini free tier 15 RPM 준수 (dry run은 스킵)
+        # API rate limit 준수 (dry run은 스킵)
         if i > 0 and not settings.dry_run:
-            await asyncio.sleep(_RATE_LIMIT_DELAY)
+            delay = _GROQ_RATE_LIMIT_DELAY if settings.groq_api_key else _RATE_LIMIT_DELAY
+            await asyncio.sleep(delay)
 
         analysis = await analyze_content(item, profile)
 
