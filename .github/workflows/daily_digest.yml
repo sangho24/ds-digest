@@ -60,6 +60,9 @@ jobs:
           # Content Sources
           YOUTUBE_CHANNELS: ${{ secrets.YOUTUBE_CHANNELS }}
           RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
+          ARXIV_CATEGORIES: ${{ secrets.ARXIV_CATEGORIES || 'cs.LG,stat.ML' }}
+          HACKERNEWS_KEYWORDS: ${{ secrets.HACKERNEWS_KEYWORDS || 'machine learning,MLOps,data science,LLM' }}
+          HACKERNEWS_MIN_SCORE: ${{ secrets.HACKERNEWS_MIN_SCORE || '50' }}
           # Settings
           MAX_ITEMS_PER_DIGEST: ${{ secrets.MAX_ITEMS_PER_DIGEST }}
           RELEVANCE_THRESHOLD: ${{ secrets.RELEVANCE_THRESHOLD }}

@@ -83,15 +83,19 @@ async def run_daily_digest() -> dict:
         hours=48,
         fetch_per_channel=settings.yt_fetch_per_channel,
     )
+    from app.collectors import fetch_arxiv_recent, fetch_hackernews_recent
+    arxiv_items = await fetch_arxiv_recent(settings.arxiv_category_list)
+    hn_items = await fetch_hackernews_recent(settings.hackernews_keyword_list, min_score=settings.hackernews_min_score)
+    logger.info("collection_complete", youtube=len(yt_items), rss=len(rss_items), arxiv=len(arxiv_items), hn=len(hn_items))
 
-    if not yt_items and not rss_items:
+    if not yt_items and not rss_items and not arxiv_items and not hn_items:
         logger.warning("no_items_collected")
         await _send_error_alert("수집된 콘텐츠가 없습니다. YouTube / RSS 소스를 확인하세요.")
         return {"status": "no_items", "collected": 0}
 
     # 3. 중복 발송 방지
     # RSS: 시간 필터로 이미 걸러졌지만 dedup도 적용
-    rss_items = _deduplicate(rss_items)
+    rss_items = _deduplicate(rss_items + arxiv_items + hn_items)
     # YouTube: dedup 후 채널당 new_per_channel개로 제한
     yt_items = _deduplicate(yt_items)
     yt_items = _cap_per_channel(yt_items, settings.yt_new_per_channel)

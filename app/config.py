@@ -28,6 +28,13 @@ class Settings(BaseSettings):
     youtube_channels: str = ""
     rss_feeds: str = ""
 
+    # ArXiv
+    arxiv_categories: str = "cs.LG,stat.ML"
+
+    # HackerNews
+    hackernews_keywords: str = "machine learning,MLOps,data science,LLM"
+    hackernews_min_score: int = 50
+
     # Settings
     max_items_per_digest: int = 5
     relevance_threshold: int = 7
@@ -56,6 +63,14 @@ class Settings(BaseSettings):
     @property
     def rss_feed_list(self) -> list[str]:
         return [f.strip() for f in self.rss_feeds.split(",") if f.strip()]
+
+    @property
+    def arxiv_category_list(self) -> list[str]:
+        return [c.strip() for c in self.arxiv_categories.split(",") if c.strip()]
+
+    @property
+    def hackernews_keyword_list(self) -> list[str]:
+        return [k.strip() for k in self.hackernews_keywords.split(",") if k.strip()]
 
 
 @lru_cache

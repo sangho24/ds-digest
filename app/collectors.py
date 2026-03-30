@@ -4,6 +4,7 @@ YouTube 채널 최신 영상 + RSS 피드에서 새 아티클을 가져온다.
 """
 import base64
 import os
+import re
 import tempfile
 import httpx
 import feedparser
@@ -38,6 +39,7 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                     published = datetime(*entry.published_parsed[:6]) if entry.get("published_parsed") else None
                     video_id = entry.yt_videoid
                     transcript = _get_transcript(video_id)
+                    body = _extract_yt_description(entry)
 
                     items.append(RawContent(
                         source_type=SourceType.YOUTUBE,
@@ -46,13 +48,44 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                         url=f"https://youtu.be/{video_id}",
                         published_at=published,
                         transcript=transcript,
+                        body=body,
                     ))
-                    logger.info("youtube_collected", title=entry.title, has_transcript=bool(transcript))
+                    logger.info("youtube_collected", title=entry.title, has_transcript=bool(transcript), has_body=bool(body))
 
             except Exception as e:
                 logger.error("youtube_fetch_failed", channel_id=channel_id, error=str(e))
 
     return items
+
+
+def _extract_yt_description(entry) -> str | None:
+    """feedparser YouTube entry에서 description 텍스트 추출.
+    HTML 태그 제거 후 최대 3000자로 truncate. 비어 있으면 None 반환.
+    """
+    text = ""
+
+    # 1순위: entry.summary
+    if hasattr(entry, "summary") and entry.summary:
+        text = entry.summary
+    else:
+        # 2순위: media_group > media:description
+        media_group = entry.get("media_group", {})
+        if media_group:
+            text = media_group.get("media_description", "") or ""
+
+    if not text:
+        return None
+
+    # HTML 태그 제거
+    text = re.sub(r'<[^>]+>', '', text)
+    # 앞뒤 공백 제거
+    text = text.strip()
+
+    if not text:
+        return None
+
+    # 3000자 truncate
+    return text[:3000]
 
 
 def _build_transcript_api() -> YouTubeTranscriptApi:
@@ -184,6 +217,100 @@ async def fetch_rss_recent(feed_urls: list[str], hours: int = 48) -> list[RawCon
 
 
 # ──────────────────────────────────────────────
+# ArXiv
+# ──────────────────────────────────────────────
+
+async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[RawContent]:
+    """ArXiv Atom API에서 카테고리별 최신 논문 수집"""
+    items: list[RawContent] = []
+
+    async with httpx.AsyncClient(timeout=15) as client:
+        for category in categories:
+            try:
+                url = (
+                    f"http://export.arxiv.org/api/query"
+                    f"?search_query=cat:{category}"
+                    f"&sortBy=submittedDate&sortOrder=descending&max_results=10"
+                )
+                resp = await client.get(url)
+                feed = feedparser.parse(resp.content)
+
+                for entry in feed.entries:
+                    published = None
+                    if hasattr(entry, "published_parsed") and entry.published_parsed:
+                        published = datetime(*entry.published_parsed[:6])
+                        if datetime.now() - published > timedelta(hours=hours):
+                            continue
+
+                    link = getattr(entry, "link", None) or getattr(entry, "id", None)
+                    if not link:
+                        continue
+
+                    items.append(RawContent(
+                        source_type=SourceType.RSS,
+                        source_name=f"arXiv:{category}",
+                        title=entry.title,
+                        url=link,
+                        published_at=published,
+                        body=entry.summary[:3000] if hasattr(entry, "summary") else "",
+                    ))
+                    logger.info("arxiv_collected", category=category, title=entry.title)
+
+            except Exception as e:
+                logger.error("arxiv_fetch_failed", category=category, error=str(e))
+
+    return items
+
+
+# ──────────────────────────────────────────────
+# HackerNews
+# ──────────────────────────────────────────────
+
+async def fetch_hackernews_recent(
+    keywords: list[str], hours: int = 24, min_score: int = 50
+) -> list[RawContent]:
+    """Algolia HN API에서 키워드별 최신 스토리 수집"""
+    import time as _time
+
+    items: list[RawContent] = []
+    seen_urls: set[str] = set()
+    timestamp = int(_time.time()) - hours * 3600
+
+    async with httpx.AsyncClient(timeout=15) as client:
+        for keyword in keywords:
+            try:
+                url = (
+                    f"https://hn.algolia.com/api/v1/search"
+                    f"?query={keyword}&tags=story"
+                    f"&numericFilters=created_at_i>{timestamp},points>{min_score}"
+                )
+                resp = await client.get(url)
+                data = resp.json()
+
+                for hit in data.get("hits", []):
+                    item_url = hit.get("url") or f"https://news.ycombinator.com/item?id={hit['objectID']}"
+
+                    if item_url in seen_urls:
+                        continue
+                    seen_urls.add(item_url)
+
+                    items.append(RawContent(
+                        source_type=SourceType.RSS,
+                        source_name="HackerNews",
+                        title=hit["title"],
+                        url=item_url,
+                        published_at=None,
+                        body=hit.get("story_text", "")[:3000],
+                    ))
+                    logger.info("hn_collected", keyword=keyword, title=hit["title"])
+
+            except Exception as e:
+                logger.error("hn_fetch_failed", keyword=keyword, error=str(e))
+
+    return items
+
+
+# ──────────────────────────────────────────────
 # Unified collector
 # ──────────────────────────────────────────────
 
@@ -199,5 +326,5 @@ async def collect_all(
     yt_items = await fetch_youtube_recent(youtube_channels, fetch_per_channel)
     rss_items = await fetch_rss_recent(rss_feeds, hours)
 
-    logger.info("collection_complete", youtube=len(yt_items), rss=len(rss_items), total=len(yt_items) + len(rss_items))
+    logger.info("youtube_rss_complete", youtube=len(yt_items), rss=len(rss_items), total=len(yt_items) + len(rss_items))
     return yt_items, rss_items
