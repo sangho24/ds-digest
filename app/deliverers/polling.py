@@ -1,10 +1,12 @@
 """
-Telegram 인라인 버튼 콜백 폴링 모듈 (Method A: getUpdates)
+Telegram 인라인 버튼 콜백 폴링 모듈 (getUpdates)
 
-FastAPI 앱 시작 시 백그라운드 태스크로 실행.
-- 2초 간격으로 getUpdates 호출
-- like / dislike / keyword 콜백 처리 → feedback 저장
-- 키워드 입력 대기 상태: in-memory dict {chat_id: item_url}
+FastAPI 앱 시작 시 백그라운드 태스크로 실행 (실시간 모드).
+GitHub Actions 파이프라인 시작 시 poll_once() 1회 호출 (배치 모드).
+
+처리 항목:
+- like / dislike 콜백 → feedback 저장
+- /keyword <텍스트> 명령어 → keyword_request 저장
 """
 import asyncio
 import httpx
@@ -15,8 +17,6 @@ from app.feedback import process_feedback
 
 logger = structlog.get_logger()
 
-# 키워드 입력 대기 중인 사용자 {chat_id: item_url}
-_awaiting_keyword: dict[int, str] = {}
 _last_update_id: int = 0
 
 
@@ -27,6 +27,7 @@ def _api_url(token: str, method: str) -> str:
 async def _answer_callback(
     client: httpx.AsyncClient, token: str, cq_id: str, text: str
 ) -> None:
+    """인라인 버튼 클릭에 토스트 응답 (실시간 서버 모드에서만 유효)."""
     try:
         await client.post(_api_url(token, "answerCallbackQuery"), json={
             "callback_query_id": cq_id,
@@ -37,28 +38,15 @@ async def _answer_callback(
         logger.warning("answer_callback_failed", error=str(e))
 
 
-async def _send_text(
-    client: httpx.AsyncClient, token: str, chat_id: int, text: str
-) -> None:
-    try:
-        await client.post(_api_url(token, "sendMessage"), json={
-            "chat_id": chat_id,
-            "text": text,
-        })
-    except Exception as e:
-        logger.warning("send_text_failed", error=str(e))
-
-
 async def _handle_update(
-    client: httpx.AsyncClient, token: str, update: dict
+    client: httpx.AsyncClient, token: str, update: dict, summary: dict
 ) -> None:
     global _last_update_id
     _last_update_id = max(_last_update_id, update.get("update_id", 0))
 
-    # ── 인라인 버튼 콜백 ────────────────────────────────────────────────────
+    # ── 인라인 버튼 콜백 (like / dislike) ──────────────────────────────────
     if cq := update.get("callback_query"):
         cq_id = cq["id"]
-        chat_id: int = cq["message"]["chat"]["id"]
         data: str = cq.get("data", "")
 
         try:
@@ -68,36 +56,42 @@ async def _handle_update(
 
         if action in ("like", "dislike"):
             process_feedback(FeedbackPayload(item_url=item_url, action=action))
-            reply = "👍 반영했어요!" if action == "like" else "👎 다음엔 더 좋은 걸 찾아볼게요"
+            if action == "like":
+                summary["likes"] += 1
+            else:
+                summary["dislikes"] += 1
+            # 실시간 서버 모드에서만 토스트가 즉각 전달됨
+            reply = "👍 반영됐어요!" if action == "like" else "👎 알겠어요!"
             await _answer_callback(client, token, cq_id, reply)
             logger.info("telegram_feedback", action=action, url=item_url[:60])
 
-        elif action == "keyword":
-            _awaiting_keyword[chat_id] = item_url
-            await _answer_callback(client, token, cq_id, "키워드를 채팅으로 입력해주세요 📝")
-
-    # ── 일반 텍스트 메시지 — 키워드 대기 상태 확인 ──────────────────────────
+    # ── 일반 텍스트 메시지 — /keyword 명령어 ───────────────────────────────
     elif msg := update.get("message"):
-        chat_id = msg["chat"]["id"]
         text: str = msg.get("text", "").strip()
 
-        if not text or text.startswith("/"):
+        if not text:
             return
 
-        if chat_id in _awaiting_keyword:
-            item_url = _awaiting_keyword.pop(chat_id)
-            process_feedback(FeedbackPayload(
-                item_url=item_url,
-                action="keyword_request",
-                keyword=text,
-            ))
-            await _send_text(client, token, chat_id, f"✅ '{text}' 키워드가 등록됐어요!")
-            logger.info("telegram_keyword_saved", keyword=text)
+        if text.lower().startswith("/keyword"):
+            keyword = text[len("/keyword"):].strip()
+            if keyword:
+                process_feedback(FeedbackPayload(
+                    action="keyword_request",
+                    keyword=keyword,
+                ))
+                summary["keywords"].append(keyword)
+                logger.info("telegram_keyword_saved", keyword=keyword)
 
 
-async def poll_once(client: httpx.AsyncClient, token: str) -> None:
-    """getUpdates 1회 호출 후 업데이트 처리."""
+async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
+    """
+    getUpdates 1회 호출 후 업데이트 처리.
+    처리 결과 summary 반환: {"likes": N, "dislikes": N, "keywords": [...]}
+
+    처리 후 acknowledge 호출로 동일 업데이트 재처리 방지.
+    """
     global _last_update_id
+    summary: dict = {"likes": 0, "dislikes": 0, "keywords": []}
     try:
         resp = await client.get(
             _api_url(token, "getUpdates"),
@@ -111,9 +105,18 @@ async def poll_once(client: httpx.AsyncClient, token: str) -> None:
         data = resp.json()
         if data.get("ok"):
             for update in data.get("result", []):
-                await _handle_update(client, token, update)
+                await _handle_update(client, token, update, summary)
+
+            # 처리된 업데이트 acknowledge — 다음 실행 시 재처리 방지
+            if _last_update_id > 0:
+                await client.get(
+                    _api_url(token, "getUpdates"),
+                    params={"offset": _last_update_id + 1, "timeout": 0},
+                    timeout=10,
+                )
     except Exception as e:
         logger.warning("telegram_poll_error", error=str(e))
+    return summary
 
 
 async def start_polling() -> None:

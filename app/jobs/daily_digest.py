@@ -41,21 +41,54 @@ async def _send_error_alert(message: str) -> None:
         logger.error("error_alert_failed", error=str(e))
 
 
-async def _process_pending_feedback() -> None:
+async def _process_pending_feedback() -> dict:
     """
-    파이프라인 시작 전 Telegram 미처리 콜백을 일괄 처리 (Method B).
+    파이프라인 시작 전 Telegram 미처리 콜백을 일괄 처리 (배치 모드).
     별도 서버 없이 하루 1회 피드백을 수집해 프로필에 반영.
+    처리 결과 summary 반환: {"likes": N, "dislikes": N, "keywords": [...]}
     """
     settings = get_settings()
     if not settings.telegram_bot_token:
-        return
+        return {}
     try:
         from app.deliverers.polling import poll_once
         async with httpx.AsyncClient() as client:
-            await poll_once(client, settings.telegram_bot_token)
-        logger.info("pending_feedback_processed")
+            summary = await poll_once(client, settings.telegram_bot_token)
+        logger.info("pending_feedback_processed", **summary)
+        return summary
     except Exception as e:
         logger.warning("pending_feedback_error", error=str(e))
+        return {}
+
+
+async def _send_feedback_summary(summary: dict) -> None:
+    """전날 피드백 처리 결과를 Telegram으로 알림."""
+    settings = get_settings()
+    if not settings.telegram_bot_token or not settings.telegram_chat_id:
+        return
+    if settings.dry_run:
+        return
+
+    parts = []
+    if summary.get("likes"):
+        parts.append(f"👍 {summary['likes']}건")
+    if summary.get("dislikes"):
+        parts.append(f"👎 {summary['dislikes']}건")
+    if summary.get("keywords"):
+        parts.append(f"📝 키워드 등록: {', '.join(summary['keywords'])}")
+
+    if not parts:
+        return
+
+    text = "📊 <b>어제 피드백 처리 완료</b>\n" + " · ".join(parts)
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                json={"chat_id": settings.telegram_chat_id, "text": text, "parse_mode": "HTML"},
+            )
+    except Exception as e:
+        logger.warning("feedback_summary_failed", error=str(e))
 
 
 async def run_daily_digest() -> dict:
@@ -69,8 +102,9 @@ async def run_daily_digest() -> dict:
         from app.db import cleanup_seen_urls
         cleanup_seen_urls(days=30)
 
-    # 0-b. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영
-    await _process_pending_feedback()
+    # 0-b. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영 → 요약 알림
+    feedback_summary = await _process_pending_feedback()
+    await _send_feedback_summary(feedback_summary)
 
     # 1. 사용자 프로필 로드
     profile = load_profile()

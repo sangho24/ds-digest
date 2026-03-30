@@ -33,7 +33,8 @@ def _format_header(items: list[DigestItem]) -> str:
     breakdown_str = "  " + " · ".join(breakdown) if breakdown else ""
     return (
         f"📬 <b>DS Digest  {today.month}월 {today.day}일</b>\n"
-        f"오늘의 큐레이션 {len(items)}건{breakdown_str}"
+        f"오늘의 큐레이션 {len(items)}건{breakdown_str}\n"
+        f"<i>💡 특정 주제를 원하면 /keyword 주제명 으로 알려주세요</i>"
     )
 
 
@@ -98,7 +99,6 @@ def _item_keyboard(item_url: str) -> dict:
         "inline_keyboard": [[
             {"text": "👍", "callback_data": f"like|{item_url}"},
             {"text": "👎", "callback_data": f"dislike|{item_url}"},
-            {"text": "📝 키워드", "callback_data": f"keyword|{item_url}"},
         ]]
     }
 
