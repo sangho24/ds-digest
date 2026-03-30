@@ -69,8 +69,11 @@ def _format_item(item: DigestItem) -> str:
 
 
 def _format_quiz(items: list[DigestItem]) -> str | None:
-    """퀴즈를 하나의 메시지로 묶기. 4096자 초과 시 None 반환(스킵)."""
-    lines = ["🧠 <b>오늘의 퀴즈</b>", ""]
+    """퀴즈를 하나의 메시지로 묶기.
+    정답은 <tg-spoiler>로 감싸서 탭하면 보이는 스포일러 형태로 표시.
+    4096자 초과 시 None 반환(스킵).
+    """
+    lines = ["🧠 <b>오늘의 퀴즈</b>  <i>(정답 탭해서 확인)</i>", ""]
     alpha = ["A", "B", "C", "D"]
 
     has_quiz = False
@@ -80,7 +83,8 @@ def _format_quiz(items: list[DigestItem]) -> str | None:
             lines.append(f"<b>Q. {html.escape(q.question)}</b>")
             for i, opt in enumerate(q.options):
                 lines.append(f"  {alpha[i]}. {html.escape(opt)}")
-            lines.append(f"  ✅ 정답: {alpha[q.answer_index]} — {html.escape(q.explanation)}")
+            answer_text = f"✅ {alpha[q.answer_index]}) {html.escape(q.options[q.answer_index])} — {html.escape(q.explanation)}"
+            lines.append(f"  <tg-spoiler>{answer_text}</tg-spoiler>")
             lines.append("")
 
     if not has_quiz:

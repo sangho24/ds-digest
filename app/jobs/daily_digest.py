@@ -7,6 +7,7 @@ import httpx
 import structlog
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from app.config import get_settings
 from app.collectors import collect_all
@@ -16,6 +17,28 @@ from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
 
 logger = structlog.get_logger()
+
+
+async def _send_error_alert(message: str) -> None:
+    """파이프라인 오류를 Telegram으로 알림. 실패해도 파이프라인에 영향 없음."""
+    settings = get_settings()
+    if not settings.telegram_bot_token or not settings.telegram_chat_id:
+        return
+    if settings.dry_run:
+        return
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                json={
+                    "chat_id": settings.telegram_chat_id,
+                    "text": f"⚠️ <b>DS Digest 오류</b>\n{message}",
+                    "parse_mode": "HTML",
+                },
+            )
+        logger.info("error_alert_sent", message=message[:80])
+    except Exception as e:
+        logger.error("error_alert_failed", error=str(e))
 
 
 async def _process_pending_feedback() -> None:
@@ -41,7 +64,12 @@ async def run_daily_digest() -> dict:
     start = datetime.now()
     logger.info("digest_started", time=start.isoformat())
 
-    # 0. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영
+    # 0-a. 만료된 seen_urls 정리 (30일 초과)
+    if settings.supabase_url and settings.supabase_key:
+        from app.db import cleanup_seen_urls
+        cleanup_seen_urls(days=30)
+
+    # 0-b. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영
     await _process_pending_feedback()
 
     # 1. 사용자 프로필 로드
@@ -58,6 +86,7 @@ async def run_daily_digest() -> dict:
 
     if not yt_items and not rss_items:
         logger.warning("no_items_collected")
+        await _send_error_alert("수집된 콘텐츠가 없습니다. YouTube / RSS 소스를 확인하세요.")
         return {"status": "no_items", "collected": 0}
 
     # 3. 중복 발송 방지
@@ -79,6 +108,10 @@ async def run_daily_digest() -> dict:
 
     if not digest_items:
         logger.warning("no_items_passed_filter")
+        await _send_error_alert(
+            f"관련도 {settings.relevance_threshold}점 이상 아이템이 없습니다. "
+            f"(수집 {len(raw_items)}건 전부 필터링됨)"
+        )
         return {"status": "all_filtered", "collected": len(raw_items), "passed": 0}
 
     # 5. 발송 — 설정된 채널 모두 시도 (하나 실패해도 다른 쪽 계속)
@@ -92,6 +125,17 @@ async def run_daily_digest() -> dict:
         sent_results["email"] = await send_digest(digest_items)
 
     any_sent = any(sent_results.values())
+
+    # 발송 실패 채널 알림
+    failed_channels = [ch for ch, ok in sent_results.items() if not ok]
+    if failed_channels and any_sent:
+        # 일부 실패 (다른 채널은 성공)
+        await _send_error_alert(f"발송 실패 채널: {', '.join(failed_channels)}")
+    elif not any_sent:
+        # 전체 실패
+        await _send_error_alert(
+            f"모든 발송 채널 실패: {', '.join(sent_results.keys()) or '채널 미설정'}"
+        )
 
     # 6. 발송 완료 URL 기록 (적어도 1개 채널 성공 시)
     if any_sent:
@@ -119,25 +163,37 @@ async def run_daily_digest() -> dict:
 def _deduplicate(raw_items):
     """
     Supabase seen_urls를 이용해 이미 발송된 URL을 제거.
-    Supabase 미설정 시 이번 실행 내 중복만 제거.
+    - 한 번의 bulk 쿼리로 조회하여 N+1 문제 및 부분 실패 최소화.
+    - Supabase 미설정 또는 조회 실패 시 이번 실행 내 중복만 제거.
     """
     from app.config import get_settings
     settings = get_settings()
 
     use_db = bool(settings.supabase_url and settings.supabase_key)
-    seen_in_run: set[str] = set()
-    fresh = []
 
+    # 이번 실행 내 URL 중복 먼저 제거
+    seen_in_run: set[str] = set()
+    candidates = []
     for item in raw_items:
-        if item.url in seen_in_run:
-            continue
-        if use_db:
-            from app.db import is_seen
-            if is_seen(item.url):
-                logger.debug("skipping_seen_url", url=item.url[:80])
-                continue
-        seen_in_run.add(item.url)
-        fresh.append(item)
+        if item.url not in seen_in_run:
+            seen_in_run.add(item.url)
+            candidates.append(item)
+
+    if not use_db:
+        return candidates
+
+    # 한 번의 bulk 쿼리로 이미 발송된 URL 조회
+    from app.db import fetch_seen_urls
+    already_seen = fetch_seen_urls([item.url for item in candidates])
+    logger.info("dedup_bulk_check", total=len(candidates), already_seen=len(already_seen))
+
+    fresh = []
+    for item in candidates:
+        from app.db import _normalize_url
+        if _normalize_url(item.url) in already_seen:
+            logger.debug("skipping_seen_url", url=item.url[:80])
+        else:
+            fresh.append(item)
 
     return fresh
 

@@ -31,6 +31,7 @@ create table if not exists user_profile (
 insert into user_profile (user_id) values ('default')
 on conflict (user_id) do nothing;
 
--- 오래된 seen_urls 자동 정리 (90일 이상)
--- Supabase pg_cron 또는 외부 cron으로 주기적으로 실행:
--- delete from seen_urls where seen_at < now() - interval '90 days';
+-- 오래된 seen_urls 자동 정리 (30일 초과)
+-- 파이프라인 시작 시 cleanup_seen_urls(days=30) 으로 자동 실행됨.
+-- 수동 실행이 필요한 경우:
+-- delete from seen_urls where seen_at < now() - interval '30 days';

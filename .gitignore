@@ -5,3 +5,9 @@ data/
 .venv/
 *.egg-info/
 dist/
+
+# 쿠키 / 인증 파일 — 절대 커밋 금지
+cookies*.txt
+encoded*.txt
+filter_cookies.py
+*.cookie

@@ -2,6 +2,9 @@
 콘텐츠 수집 모듈
 YouTube 채널 최신 영상 + RSS 피드에서 새 아티클을 가져온다.
 """
+import base64
+import os
+import tempfile
 import httpx
 import feedparser
 import structlog
@@ -52,10 +55,49 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
     return items
 
 
+def _build_transcript_api() -> YouTubeTranscriptApi:
+    """
+    YouTubeTranscriptApi 인스턴스 생성.
+    YOUTUBE_COOKIES 환경변수가 있으면 쿠키를 주입한 requests.Session을 http_client로 전달.
+    - GitHub Actions IP 차단 우회용: YouTube 계정 쿠키를 Netscape 형식으로
+      base64 인코딩하여 YOUTUBE_COOKIES secret에 저장하면 됨.
+    - 쿠키 없으면 익명 요청 (로컬 개발 환경에서는 보통 통과).
+
+    쿠키 준비 방법:
+      1. youtube.com 로그인된 Chrome에서 "Get cookies.txt LOCALLY" 확장 설치
+      2. youtube.com 접속 후 쿠키 파일 내보내기 (Netscape 형식)
+      3. base64 인코딩: python -c "import base64; print(base64.b64encode(open('cookies.txt','rb').read()).decode())"
+      4. 출력값을 GitHub Secrets > YOUTUBE_COOKIES 에 저장
+    """
+    import requests
+    from http.cookiejar import MozillaCookieJar
+
+    cookies_b64 = os.environ.get("YOUTUBE_COOKIES", "").strip()
+    if cookies_b64:
+        try:
+            cookies_bytes = base64.b64decode(cookies_b64)
+            with tempfile.NamedTemporaryFile(
+                mode="wb", suffix=".txt", delete=False
+            ) as f:
+                f.write(cookies_bytes)
+                cookie_path = f.name
+
+            jar = MozillaCookieJar(cookie_path)
+            jar.load(ignore_discard=True, ignore_expires=True)
+
+            session = requests.Session()
+            session.cookies = jar
+            logger.info("transcript_api_with_cookies", cookie_count=len(list(jar)))
+            return YouTubeTranscriptApi(http_client=session)
+        except Exception as e:
+            logger.warning("transcript_cookie_load_failed", error=str(e))
+    return YouTubeTranscriptApi()
+
+
 def _get_transcript(video_id: str) -> str | None:
     """YouTube 자막 추출 (한국어 우선, 없으면 영어) — youtube-transcript-api v1.x"""
     try:
-        api = YouTubeTranscriptApi()
+        api = _build_transcript_api()
         transcript_list = api.list(video_id)
 
         # 한국어 우선, 영어 fallback

@@ -7,7 +7,7 @@ Supabase DB 연동 모듈
 MVP(로컬 JSON)에서 Supabase로 전환된 구현입니다.
 """
 import structlog
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 
 from supabase import create_client, Client
@@ -28,32 +28,84 @@ def get_supabase() -> Client:
 # seen_urls (중복 발송 방지)
 # ──────────────────────────────────────────────
 
-def is_seen(url: str) -> bool:
+def _normalize_url(url: str) -> str:
+    """URL 정규화: 트레일링 슬래시 제거, 소문자 스킴+호스트."""
+    url = url.strip()
+    # 스킴 + 호스트 소문자화 (path는 대소문자 유지)
+    if "://" in url:
+        scheme, rest = url.split("://", 1)
+        if "/" in rest:
+            host, path = rest.split("/", 1)
+            url = f"{scheme.lower()}://{host.lower()}/{path}"
+        else:
+            url = f"{scheme.lower()}://{rest.lower()}"
+    # 트레일링 슬래시 제거 (path가 있을 때만)
+    if url.count("/") > 2:
+        url = url.rstrip("/")
+    return url
+
+
+def fetch_seen_urls(urls: list[str]) -> set[str]:
     """
-    해당 URL이 이미 발송된 적 있는지 확인.
-    Supabase 연결 실패 시 False 반환(fail-open) — 가끔 중복 허용이 미발송보다 낫다.
-    DRY_RUN=true 시 항상 False 반환 (모든 아이템 통과).
+    주어진 URL 목록 중 이미 발송된 것을 한 번의 쿼리로 조회.
+    Supabase 연결 실패 시 빈 set 반환(fail-open) — 중복보다 미발송이 더 나쁘다.
+    DRY_RUN=true 시 항상 빈 set 반환.
     """
     from app.config import get_settings
     if get_settings().dry_run:
-        return False
+        return set()
+    if not urls:
+        return set()
+    normalized = [_normalize_url(u) for u in urls]
     try:
         result = (
             get_supabase()
             .table("seen_urls")
             .select("url")
-            .eq("url", url)
-            .limit(1)
+            .in_("url", normalized)
             .execute()
         )
-        return len(result.data) > 0
+        return {row["url"] for row in result.data}
     except Exception as e:
-        logger.warning("seen_urls_check_failed", url=url[:80], error=str(e))
-        return False
+        logger.warning("seen_urls_bulk_fetch_failed", count=len(urls), error=str(e))
+        return set()
+
+
+def cleanup_seen_urls(days: int = 30) -> int:
+    """
+    days일보다 오래된 seen_urls 레코드 삭제.
+    매일 파이프라인 시작 시 호출하여 DB 비대화 방지.
+    반환: 삭제된 행 수 (실패 시 0)
+    """
+    from app.config import get_settings
+    if get_settings().dry_run:
+        return 0
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+    try:
+        result = (
+            get_supabase()
+            .table("seen_urls")
+            .delete()
+            .lt("seen_at", cutoff)
+            .execute()
+        )
+        count = len(result.data) if result.data else 0
+        if count:
+            logger.info("seen_urls_cleanup", deleted=count, cutoff_days=days)
+        return count
+    except Exception as e:
+        logger.warning("seen_urls_cleanup_failed", error=str(e))
+        return 0
+
+
+def is_seen(url: str) -> bool:
+    """단일 URL 조회 — fetch_seen_urls 래퍼 (하위 호환)."""
+    return _normalize_url(url) in fetch_seen_urls([url])
 
 
 def mark_seen(url: str) -> None:
-    """발송 완료된 URL을 seen_urls에 기록."""
+    """발송 완료된 URL을 seen_urls에 기록 (정규화 후 저장)."""
+    url = _normalize_url(url)
     try:
         get_supabase().table("seen_urls").upsert(
             {"url": url, "seen_at": datetime.now(timezone.utc).isoformat()}

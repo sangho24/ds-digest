@@ -39,12 +39,36 @@ ANALYSIS_PROMPT = """\
 {content}
 
 ## 분석 기준
-1. relevance_score (1-10): DS 현업자에게 얼마나 유용한지. 사용자 관심 토픽과의 관련도도 반영.
+
+1. relevance_score (1-10): DS 현업자에게 얼마나 즉각적으로 유용한지 엄격하게 평가.
+   점수 기준 (아래 기준을 반드시 지키세요 — 7~8점이 과반수를 차지하면 안 됩니다):
+   - 10: 당장 팀 전체에 공유하거나 적용해야 할 핵심 인사이트. 읽지 않으면 손해인 수준.
+   - 9: 실무에서 즉시 써먹을 수 있는 기법/도구가 구체적으로 제시됨.
+   - 8: 관련 있고 실용적이지만 적용에는 약간의 맥락 파악이 필요함.
+   - 7: 흥미롭지만 당장 행동으로 이어지기 어려운 일반적인 내용.
+   - 5-6: DS와 느슨하게 관련 있거나 너무 입문/기초 수준.
+   - 1-4: DS 현업과 무관하거나 광고성/비기술적 내용.
+   채점 후 자기 점수를 다시 검토하세요: "이 콘텐츠가 실제로 9점 이상인가? 아니면 그냥 7점이 더 정직한가?"
+
 2. one_line_summary: 한 줄 요약 (한국어, 30자 이내)
+   - 제목을 그대로 옮기거나 paraphrase하지 마세요.
+   - "이 콘텐츠가 DS 현업자에게 왜 중요한가"를 핵심 이유 한 문장으로 담으세요.
+   - 나쁜 예: "LightGBM으로 모델 성능 높이기" (제목 반복)
+   - 좋은 예: "범주형 변수 전처리 없이 OHE 대비 15% 빠른 학습 가능"
+
 3. tags: 이 콘텐츠가 맞닿아 있는 기술/분야 태그 최대 5개 (예: MLOps, A/B testing, Kubernetes, 추천시스템). 영어 또는 한국어 혼용 가능.
-4. key_points: 핵심 포인트 최대 3개. 영상이면 timestamp 포함 (MM:SS).
-5. production_ideas: 이 내용을 실제 현업 프로덕션에 적용할 수 있는 구체적 아이디어 1-2개
+
+4. key_points: 핵심 포인트 최대 3개.
+{timestamp_instruction}
+
+5. production_ideas: 이 콘텐츠에서 언급된 구체적인 기법/도구/알고리즘을 활용해 현업 DS 팀이 실제로 적용해볼 수 있는 아이디어 1-2개.
+   반드시 지켜야 할 조건:
+   - 이 콘텐츠의 핵심 내용을 직접 인용하거나 근거로 삼아야 합니다.
+   - "데이터 파이프라인 개선", "모델 모니터링 도입" 같은 일반적인 문장은 안 됩니다.
+   - 구체적인 기술명(예: LightGBM, Ray, Kafka, dbt), 지표(예: AUC 0.02 개선), 또는 구체적인 시나리오(예: "신규 유저 cold-start 문제에 content-based fallback 추가")를 포함해야 합니다.
+
 6. quiz: 내용 확인용 객관식 퀴즈 2문항 (4지선다, 정답 인덱스, 해설 포함)
+
 7. skip_reason: relevance_score가 6 이하면, 왜 스킵 추천하는지 간단히
 
 반드시 아래 JSON 구조로만 응답하세요:
@@ -183,6 +207,22 @@ async def analyze_content(
         return _mock_analysis(item)
 
     content_text = (item.transcript or item.body or "")[:4000]
+
+    is_youtube = item.source_type.value == "youtube"
+    has_transcript = bool(item.transcript)
+    if is_youtube and has_transcript:
+        timestamp_instruction = (
+            "   - 반드시 위 자막 텍스트에 실제로 등장한 [MM:SS] 형식의 시간만 timestamp로 사용하세요.\n"
+            "     자막에 없는 시간을 추측하거나 임의로 생성하지 마세요. 확실하지 않으면 timestamp를 null로 두세요."
+        )
+    elif is_youtube and not has_transcript:
+        timestamp_instruction = (
+            "   - 이 영상은 자막을 가져올 수 없어 실제 타임라인 정보가 없습니다.\n"
+            "     timestamp를 임의로 만들지 말고 모든 key_point의 timestamp는 반드시 null로 설정하세요."
+        )
+    else:
+        timestamp_instruction = "   - timestamp는 null."
+
     prompt = ANALYSIS_PROMPT.format(
         topics=", ".join(profile.preferred_topics),
         keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
@@ -190,6 +230,7 @@ async def analyze_content(
         source_name=item.source_name,
         source_type=item.source_type.value,
         content=content_text,
+        timestamp_instruction=timestamp_instruction,
     )
 
     try:

@@ -28,8 +28,12 @@ jobs:
 
       - name: Run daily digest
         # 실패 케이스 C: YouTube transcript API가 GitHub Actions IP 차단
-        #   대응: transcript 없어도 분석 계속 진행 (body/transcript 중 있는 것 사용)
-        #          필요 시 YT_FETCH_PER_CHANNEL=0 으로 YouTube 수집 비활성화
+        #   대응: YOUTUBE_COOKIES secret에 쿠키 파일(Netscape 형식)을 base64 인코딩해서 저장
+        #   쿠키 추출 방법: 브라우저에서 youtube.com 로그인 후
+        #     "Get cookies.txt LOCALLY" 확장 프로그램으로 내보내기 →
+        #     base64 인코딩: python -c "import base64,sys; print(base64.b64encode(open('cookies.txt','rb').read()).decode())"
+        #     → 출력값을 GitHub Secrets > YOUTUBE_COOKIES 에 저장
+        #   쿠키 미설정 시: 익명 요청으로 fallback (로컬은 보통 통과, Actions는 차단될 수 있음)
         # 실패 케이스 D: 환경변수 누락 → pydantic ValidationError
         #   대응: 아래 env 목록과 GitHub Secrets 등록 목록을 일치시킬 것
         env:
@@ -51,6 +55,8 @@ jobs:
           # App
           BASE_URL: ${{ secrets.BASE_URL }}
           DELIVERY_CHANNELS: ${{ secrets.DELIVERY_CHANNELS }}
+          # YouTube 쿠키 (GitHub Actions IP 차단 우회 — 선택사항)
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
           # Content Sources
           YOUTUBE_CHANNELS: ${{ secrets.YOUTUBE_CHANNELS }}
           RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
