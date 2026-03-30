@@ -70,3 +70,11 @@ jobs:
           YT_NEW_PER_CHANNEL: ${{ secrets.YT_NEW_PER_CHANNEL }}
           DRY_RUN: "false"
         run: python -m app.jobs.daily_digest
+
+      - name: Publish docs to GitHub Pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "docs: digest $(date +%Y-%m-%d)"
+          git push

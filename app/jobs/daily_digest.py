@@ -145,12 +145,19 @@ async def run_daily_digest() -> dict:
     if any_sent:
         _mark_sent(digest_items)
 
-    # 7. HTML 로컬 저장 (디버깅 + 아카이브)
-    output_dir = Path(__file__).parent.parent.parent / "data" / "archive"
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # 7. HTML 저장 — data/archive (로컬 디버깅) + docs/ (GitHub Pages 공개)
+    root = Path(__file__).parent.parent.parent
     html = render_digest_email(digest_items)
     today_str = datetime.now().strftime("%Y-%m-%d")
-    (output_dir / f"digest_{today_str}.html").write_text(html, encoding="utf-8")
+
+    archive_dir = root / "data" / "archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    (archive_dir / f"digest_{today_str}.html").write_text(html, encoding="utf-8")
+
+    docs_dir = root / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    (docs_dir / f"{today_str}.html").write_text(html, encoding="utf-8")
+    _update_docs_index(docs_dir)
 
     elapsed = (datetime.now() - start).total_seconds()
     result = {
@@ -226,6 +233,51 @@ def _mark_sent(digest_items) -> None:
     from app.db import mark_seen
     for item in digest_items:
         mark_seen(item.raw.url)
+
+
+def _update_docs_index(docs_dir: Path) -> None:
+    """docs/index.html — 날짜 목록 페이지 생성 (GitHub Pages 진입점)"""
+    files = sorted(docs_dir.glob("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].html"), reverse=True)
+    dates = [f.stem for f in files]
+
+    if not dates:
+        return
+
+    items_html = "\n".join(
+        f'<li><a href="{d}.html">📄 {d}</a></li>'
+        for d in dates
+    )
+
+    html = f"""<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DS Digest — 아카이브</title>
+<style>
+  body{{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;}}
+  .wrap{{max-width:640px;margin:48px auto;padding:0 20px;}}
+  h1{{font-size:22px;font-weight:700;margin-bottom:6px;}}
+  .sub{{color:#888;font-size:13px;margin-bottom:28px;}}
+  ul{{list-style:none;padding:0;margin:0;}}
+  li{{margin-bottom:8px;}}
+  a{{display:block;padding:14px 20px;background:#fff;border-radius:10px;
+     text-decoration:none;color:#1a1a1a;font-size:15px;
+     border:1px solid #e8e8e0;}}
+  a:hover{{box-shadow:0 2px 8px rgba(0,0,0,.1);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📚 DS Digest 아카이브</h1>
+  <p class="sub">총 {len(dates)}개 다이제스트</p>
+  <ul>{items_html}</ul>
+</div>
+</body>
+</html>"""
+
+    (docs_dir / "index.html").write_text(html, encoding="utf-8")
+    logger.info("docs_index_updated", count=len(dates))
 
 
 # CLI로 직접 실행 가능

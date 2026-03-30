@@ -3,13 +3,16 @@ FastAPI 메인 앱
 - GET /api/feedback : 이메일 링크 클릭 시 피드백 수신
 - POST /api/feedback : 프로그래밍 방식 피드백
 - POST /api/trigger : 수동으로 다이제스트 트리거 (백그라운드 실행)
+- GET /archive : 저장된 다이제스트 목록
+- GET /archive/{date} : 특정 날짜 다이제스트 조회
 - 앱 시작 시 Telegram 콜백 폴링 루프 백그라운드 실행
 """
 import asyncio
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Query, BackgroundTasks
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 
 from app.models import FeedbackPayload
 from app.feedback import process_feedback
@@ -65,6 +68,90 @@ async def feedback_via_api(payload: FeedbackPayload):
     """프로그래밍 방식 피드백"""
     profile = process_feedback(payload)
     return {"status": "ok", "profile_topics": profile.preferred_topics}
+
+
+_ARCHIVE_DIR = Path(__file__).parent.parent / "data" / "archive"
+
+
+@app.get("/archive", response_class=HTMLResponse)
+async def archive_index():
+    """저장된 다이제스트 목록 페이지"""
+    files = sorted(_ARCHIVE_DIR.glob("digest_*.html"), reverse=True) if _ARCHIVE_DIR.exists() else []
+    dates = [f.stem.replace("digest_", "") for f in files]
+
+    if not dates:
+        items_html = "<p style='color:#999;text-align:center;padding:40px 0;'>아직 저장된 다이제스트가 없습니다.</p>"
+    else:
+        items_html = "\n".join(
+            f'<a href="/archive/{d}" style="display:block;padding:14px 20px;margin-bottom:8px;'
+            f'background:#fff;border-radius:10px;text-decoration:none;color:#1a1a1a;'
+            f'font-size:15px;border:1px solid #e8e8e0;transition:box-shadow .15s;"'
+            f'onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.1)\'"'
+            f'onmouseout="this.style.boxShadow=\'none\'">'
+            f'📄 {d}'
+            f'</a>'
+            for d in dates
+        )
+
+    return f"""<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DS Digest — 아카이브</title>
+<style>
+  body{{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;}}
+  .wrap{{max-width:640px;margin:0 auto;padding:40px 20px;}}
+  h1{{font-size:22px;font-weight:700;margin-bottom:6px;}}
+  .sub{{color:#888;font-size:13px;margin-bottom:28px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📚 DS Digest 아카이브</h1>
+  <p class="sub">총 {len(dates)}개 다이제스트</p>
+  {items_html}
+</div>
+</body>
+</html>"""
+
+
+@app.get("/archive/{date}", response_class=HTMLResponse)
+async def archive_view(date: str):
+    """특정 날짜 다이제스트 조회"""
+    # 날짜 형식 검증 (YYYY-MM-DD)
+    import re
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        return HTMLResponse("<p>잘못된 날짜 형식입니다.</p>", status_code=400)
+
+    path = _ARCHIVE_DIR / f"digest_{date}.html"
+    if not path.exists():
+        return HTMLResponse(
+            f"<p style='font-family:sans-serif;padding:40px;'>📭 {date} 다이제스트가 없습니다. "
+            f"<a href='/archive'>목록으로 돌아가기</a></p>",
+            status_code=404,
+        )
+
+    html = path.read_text(encoding="utf-8")
+
+    # 목록으로 돌아가는 네비게이션 바 주입
+    nav = (
+        "<div style='position:sticky;top:0;z-index:999;background:#1a1a1a;color:#fff;"
+        "padding:10px 20px;font-family:sans-serif;font-size:13px;display:flex;"
+        "align-items:center;gap:16px;'>"
+        f"<a href='/archive' style='color:#aaa;text-decoration:none;'>← 목록</a>"
+        f"<span style='color:#666;'>|</span>"
+        f"<span>{date}</span>"
+        "</div>"
+    )
+    body_match = re.search(r"<body[^>]*>", html, re.IGNORECASE)
+    if body_match:
+        insert_pos = body_match.end()
+        html = html[:insert_pos] + nav + html[insert_pos:]
+    else:
+        html = nav + html
+
+    return HTMLResponse(html)
 
 
 @app.post("/api/trigger")
