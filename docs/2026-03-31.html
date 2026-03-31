@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 03월 31일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/myH9d_g9OuE" target="_blank">Iceberg Low-Latency Queries with Materialized Views  (feat. 실시간 거래 리포트)</a>
+    </h2>
+
+    <p class="item-summary">Iceberg+StarRocks 조합으로 실시간 리포트 성능 10배 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">Iceberg</span><span class="tag">MLOps</span><span class="tag">Real-time Data Processing</span><span class="tag">StarRocks</span><span class="tag">Materialized Views</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/myH9d_g9OuE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 거래 리포트의 최신성과 저지연 확보를 위한 Iceberg materialized views 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Spark와 StarRocks의 분산 처리 최적화 사례 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다차원 필터링 성능 100ms 이하로 개선한 아키텍처 구현</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Iceberg incremental materialized views를 활용해 실시간 BI 대시보드의 쿼리 지연 시간을 50% 감소</div>
+    
+    <div class="idea">💡 StarRocks의 복합 필터링 성능을 활용해 유저 행동 데이터의 실시간 세그먼테이션 파이프라인 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 언급된 실시간 리포트 최적화의 주요 도전 과제는?</div>
+      
+      <div class="quiz-opt">A) 데이터 볼륨 증가</div>
+      
+      <div class="quiz-opt">B) 쿼리 지연 시간 최소화</div>
+      
+      <div class="quiz-opt">C) 모델 재학습 주기 단축</div>
+      
+      <div class="quiz-opt">D) GPU 리소스 확장</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 쿼리 지연 시간 최소화</div>
+          <div class="quiz-explanation">본문에서 '최신성과 응답 속도, 그리고 확장성'을 핵심 과제로 명시하며, 쿼리 지연 시간 최소화가 핵심 목표임을 강조</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Iceberg materialized views의 주요 기술적 이점은?</div>
+      
+      <div class="quiz-opt">A) 오프라인 배치 처리 최적화</div>
+      
+      <div class="quiz-opt">B) 트랜잭션 로깅 기반의 실시간 업데이트</div>
+      
+      <div class="quiz-opt">C) GPU 가속 인퍼런스</div>
+      
+      <div class="quiz-opt">D) 모델 버전 관리</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 트랜잭션 로깅 기반의 실시간 업데이트</div>
+          <div class="quiz-explanation">발표 내용에서 Iceberg의 트랜잭션 로깅 기능을 활용해 실시간 데이터 업데이트와 쿼리 최신성을 동시에 달성한 사례가 소개됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/timescale/pg_textsearch" target="_blank">Show HN: Postgres extension for BM25 relevance-ranked full-text search</a>
+    </h2>
+
+    <p class="item-summary">Postgres 확장으로 BM25 검색 성능 4.7배 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">PostgreSQL</span><span class="tag">BM25</span><span class="tag">Hybrid Search</span><span class="tag">MLOps</span><span class="tag">Open Source</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/timescale/pg_textsearch" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>PostgreSQL에 BM25 기반 풀 텍스트 검색 확장 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 ParadeDB 대비 4.7배 높은 쿼리 처리 성능 달성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AGPL 제약 없는 오픈소스 라이선스로 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 PostgreSQL 기반 데이터 저장소에 pg_textsearch를 도입해 키워드+벡터 기반 하이브리드 검색 시스템 구축</div>
+    
+    <div class="idea">💡 AGPL 라이선스로 인한 법적 리스크 회피를 위해 Postgres 라이선스 기반 확장을 기존 검색 파이프라인에 통합</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. pg_textsearch는 기존 Parade/Tantivy 대비 쿼리 처리 성능을 몇 배 향상시켰나요?</div>
+      
+      <div class="quiz-opt">A) 2.3x</div>
+      
+      <div class="quiz-opt">B) 3.5x</div>
+      
+      <div class="quiz-opt">C) 4.7x</div>
+      
+      <div class="quiz-opt">D) 5.2x</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 4.7x</div>
+          <div class="quiz-explanation">MS-MARCO 벤치마크 결과에 따르면 4.7배의 성능 향상이 확인되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 확장은 어떤 라이선스로 오픈소스화 되었나요?</div>
+      
+      <div class="quiz-opt">A) AGPL</div>
+      
+      <div class="quiz-opt">B) MIT</div>
+      
+      <div class="quiz-opt">C) PostgreSQL</div>
+      
+      <div class="quiz-opt">D) Apache 2.0</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) PostgreSQL</div>
+          <div class="quiz-explanation">PostgreSQL 라이선스로 공개되어 상업적 사용이 용이합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/3WXk2yngbok" target="_blank">AI Safety & Quality 성과리더 이상호 : 안전한 AI를 위한 카카오의 노력 | if(kakao)25 Day2</a>
+    </h2>
+
+    <p class="item-summary">AI 안전성 확보를 위한 카카오의 정책·기술·협력 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI Safety</span><span class="tag">Quality Assurance</span><span class="tag">Collaboration</span><span class="tag">Policy</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/3WXk2yngbok" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 시스템의 위험성 특징 분석</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>정책 수립을 통한 안전성 관리 프레임워크</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>외부 협력으로 AI 표준화 기여</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 출시 전 '안전성 정책 체크리스트' 도입 (예: 편향성 검증, 설명 가능성 평가)</div>
+    
+    <div class="idea">💡 실시간 모델 감시 시스템에 이상 탐지 알고리즘 추가 (카카오 기술 개발 사례 기반)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 카카오의 안전한 AI 구현 전략 중 '정책 수립'의 주요 목적은?</div>
+      
+      <div class="quiz-opt">A) A. 모델 성능 최적화</div>
+      
+      <div class="quiz-opt">B) B. 법적 리스크 방지</div>
+      
+      <div class="quiz-opt">C) C. 사용자 경험 개선</div>
+      
+      <div class="quiz-opt">D) D. 클라우드 비용 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 법적 리스크 방지</div>
+          <div class="quiz-explanation">정책 수립은 AI 시스템의 법적·윤리적 기준을 정의하여 리스크를 사전에 관리하는 핵심 전략입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 카카오가 외부 협력으로 수행하는 활동은?</div>
+      
+      <div class="quiz-opt">A) A. 경쟁사 모델 도입</div>
+      
+      <div class="quiz-opt">B) B. AI 표준화 기여</div>
+      
+      <div class="quiz-opt">C) C. 사용자 데이터 수집</div>
+      
+      <div class="quiz-opt">D) D. 클라우드 인프라 공유</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. AI 표준화 기여</div>
+          <div class="quiz-explanation">외부 협력은 산업 전반의 AI 안전성 향상을 위한 표준화 및 벤치마킹 활동을 포함합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
