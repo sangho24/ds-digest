@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 01일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/0i4NRU-GIvo" target="_blank">사용자의 목소리를 AI로 재현하다: LLM기반 Multi Agent UX플랫폼 개발기</a>
+    </h2>
+
+    <p class="item-summary">AI 협업 모델로 사용자 페르소나봇 개발 및 평가 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Multi-Agent Systems</span><span class="tag">UX Research</span><span class="tag">Model Evaluation</span><span class="tag">Collaboration Frameworks</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/0i4NRU-GIvo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디자이너, 리서처, 개발자의 역할 재정의를 통한 AI 협업 모델 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Agent 중심 서비스 구조 설계와 UX 기반 모델 평가 프로세스 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사용자 리서치 데이터를 실시간 협업 자원으로 전환하는 Multi-Party 대화 시스템 실험</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 서비스별 UX 중심 모델 평가 프로세스 도입: NSona의 'Service-specific 평가' 방식을 기반으로 DS 팀이 사용자 행동 패턴을 반영한 모델 품질 지표를 설계</div>
+    
+    <div class="idea">💡 Agent 기반 협업 플랫폼 개발: 디자이너-리서처-개발자 협업 구조를 모방해 MLOps 팀 내 실시간 피드백 루프 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. NSona 프로젝트에서 디자이너의 주요 역할은 무엇이었나요?</div>
+      
+      <div class="quiz-opt">A) 프롬프트 설계</div>
+      
+      <div class="quiz-opt">B) 로직을 에이전트 구조로 변환</div>
+      
+      <div class="quiz-opt">C) AI 비평</div>
+      
+      <div class="quiz-opt">D) 데이터 수집</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 프롬프트 설계</div>
+          <div class="quiz-explanation">발표 내용에 따르면 디자이너는 프롬프트 설계를 담당했으며, 리서처는 로직을 에이전트 구조로 변환하고 개발자는 AI를 비평하는 역할을 맡았습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. NSona 평가 과정에서 가장 강조된 평가 방식은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) A/B 테스트</div>
+      
+      <div class="quiz-opt">B) UX 중심 평가</div>
+      
+      <div class="quiz-opt">C) 정량적 지표만 사용</div>
+      
+      <div class="quiz-opt">D) 사용자 설문</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) UX 중심 평가</div>
+          <div class="quiz-explanation">발표에서는 'UX관점에서 새롭게 구축한 모델 평가 과정'을 통해 사용자 몰입도를 중심으로 평가했음을 강조했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/et3rwORREVI" target="_blank">경험이 쌓일수록 똑똑해지는 네이버 통합검색 LLM Devops Agent</a>
+    </h2>
+
+    <p class="item-summary">LLM Agent로 장애 대응 자동화, MLOps 시스템 설계 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">DevOps</span><span class="tag">Anomaly Detection</span><span class="tag">System Reliability</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/et3rwORREVI" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 장애 대응 프로세스의 문제점과 LLM Agent 도입 동기 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Devops Agent v1→v2로의 진화 과정과 컨텍스트 확대 방안</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Trigger Queue 기반 이상 탐지 시스템과 지속 가능성 설계</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 현재 시스템의 Trigger Queue 구조를 참고해, Ray 기반의 실시간 이상 탐지 파이프라인 구축</div>
+    
+    <div class="idea">💡 Agent v2의 컨텍스트 확대 방식을 적용해, Prometheus 알람 시스템에 LLM 기반 원인 추론 기능 추가</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Devops Agent v2에서 주로 개선된 핵심 기능은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. LLM 모델 크기 확장</div>
+      
+      <div class="quiz-opt">B) B. 컨텍스트 기반 액션 추천</div>
+      
+      <div class="quiz-opt">C) C. Kubernetes 클러스터 확장</div>
+      
+      <div class="quiz-opt">D) D. SQL 기반 데이터 파이프라인</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 컨텍스트 기반 액션 추천</div>
+          <div class="quiz-explanation">발표에서 v2는 v1의 한계를 극복하기 위해 컨텍스트 확대와 액션 추천 기능을 핵심적으로 강화했다고 설명</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 시스템의 이상 탐지 방법은 어떤 특징을 가진가?</div>
+      
+      <div class="quiz-opt">A) A. 사전 정의된 규칙 기반</div>
+      
+      <div class="quiz-opt">B) B. LLM의 실시간 추론 기반</div>
+      
+      <div class="quiz-opt">C) C. 오픈소스 모델 재사용</div>
+      
+      <div class="quiz-opt">D) D. 유저 행동 패턴 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. LLM의 실시간 추론 기반</div>
+          <div class="quiz-explanation">발표에서 Trigger Queue와 LLM 기반의 실시간 추론을 결합한 이상 탐지 방법이 강조됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/LiStWdgb984" target="_blank">다양한 기술을 공유하는 자리 💡if(kakao)25 Krew Day Demo Station @카카오 AI캠퍼스</a>
+    </h2>
+
+    <p class="item-summary">카카오 그룹사의 MLOps 및 AI 기술 적용 사례 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI 데모</span><span class="tag">모델 서빙</span><span class="tag">모델 설명성</span><span class="tag">분산 시스템</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/LiStWdgb984" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오뱅크 '금융맛' 프로젝트: 금융 데이터 기반 모델 개발 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오 '에이전트 빌더' 도구: 자동화된 시스템 통합 프레임워크</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오페이손해보험 'AI 블랙박스' 시스템: 모델 설명성 강화 기술</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 에이전트 빌더 프레임워크를 활용해 데이터 파이프라인 자동화 시스템 구축</div>
+    
+    <div class="idea">💡 AI 블랙박스 기술을 기반으로 모델 설명성 모니터링 대시보드 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 영상에 참여한 카카오 그룹사는 총 몇 개입니까?</div>
+      
+      <div class="quiz-opt">A) 10개</div>
+      
+      <div class="quiz-opt">B) 12개</div>
+      
+      <div class="quiz-opt">C) 15개</div>
+      
+      <div class="quiz-opt">D) 8개</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 12개</div>
+          <div class="quiz-explanation">영상 타임라인에 명시된 '12개 그룹사' 정보를 기준으로 합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 카카오뱅크가 발표한 '몰빵' 프로젝트는 어떤 분야에 해당합니까?</div>
+      
+      <div class="quiz-opt">A) 금융 데이터 분석</div>
+      
+      <div class="quiz-opt">B) 모델 서빙</div>
+      
+      <div class="quiz-opt">C) A/B 테스팅</div>
+      
+      <div class="quiz-opt">D) 모델 설명성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 금융 데이터 분석</div>
+          <div class="quiz-explanation">카카오뱅크 발표 내용에서 '금융맛' 프로젝트가 금융 데이터 기반 모델 개발 사례로 언급됨.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
