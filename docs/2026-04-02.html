@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 02일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/8NMfqYqe6fs" target="_blank">AI와 함께하는 프로젝트 자동화 : 더 빠르고, 더 스마트하게</a>
+    </h2>
+
+    <p class="item-summary">LLM 기반 자동화로 빌드 실패 분석과 크래시 모니터링 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">자동화</span><span class="tag">크래시 모니터링</span><span class="tag">Slack 통합</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/8NMfqYqe6fs" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>로컬 LLM(Ollama)과 mcp-agent로 빌드 실패 분석 자동화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 기반 크래시 로그 요약 및 실시간 Slack 리포트 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM과 오픈소스 도구 조합으로 프로젝트 자동화 동료 구축 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 CI/CD 파이프라인에 Ollama + mcp-agent 기반 빌드 실패 분석 시스템 도입 (예: Jenkins 워크플로우에 로그 요약 기능 추가)</div>
+    
+    <div class="idea">💡 Kubernetes 클러스터의 크래시 로그를 LLM으로 요약 후 Slack 워크스페이스에 실시간 알림 전송 시스템 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 언급된 로컬 LLM 도구는?</div>
+      
+      <div class="quiz-opt">A) Ollama</div>
+      
+      <div class="quiz-opt">B) HuggingFace</div>
+      
+      <div class="quiz-opt">C) GPT-4</div>
+      
+      <div class="quiz-opt">D) Claude</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Ollama</div>
+          <div class="quiz-explanation">발표 내용에서 로컬 환경에서 사용된 LLM은 Ollama로 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 자동화 시스템의 주요 기능은?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 최적화</div>
+      
+      <div class="quiz-opt">B) 빌드 실패 분석</div>
+      
+      <div class="quiz-opt">C) 데이터 수집 자동화</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 빌드 실패 분석</div>
+          <div class="quiz-explanation">발표 대상에 명시된 주요 기능은 빌드 실패 분석, 크래시 로그 요약, Slack 리포트입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/4ta__3CQvm0" target="_blank">이건 첫 번째 클릭 👆 히트맵 🔥 같이 보기</a>
+    </h2>
+
+    <p class="item-summary">실시간 사용자 행동 분석을 위한 히트맵/히스토그램 시각화 기법 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">데이터 시각화</span><span class="tag">MLOps</span><span class="tag">사용자 행동 분석</span><span class="tag">실시간 데이터 처리</span><span class="tag">서비스 개선</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/4ta__3CQvm0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>네이버 통합검색 클릭 로그를 히트맵과 히스토그램으로 시각화한 사례 공개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 서비스 진화에 대응한 시행착오와 노하우 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>정량적 데이터를 직관적 시각 요소로 변환하는 방법론 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 웹 애플리케이션의 사용자 클릭 패턴을 실시간 히트맵으로 모니터링하여 UX 개선 근거 도출</div>
+    
+    <div class="idea">💡 A/B 테스트 결과를 히스토그램으로 시각화해 변동성을 시간별로 비교 분석</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 제시된 주요 시각화 기법은?</div>
+      
+      <div class="quiz-opt">A) 트리맵</div>
+      
+      <div class="quiz-opt">B) 히트맵</div>
+      
+      <div class="quiz-opt">C) 산점도</div>
+      
+      <div class="quiz-opt">D) 파이차트</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 히트맵</div>
+          <div class="quiz-explanation">본문에서 네이버 통합검색 클릭 로그를 히트맵과 히스토그램으로 시각화한 사례를 소개했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠의 주요 대상은?</div>
+      
+      <div class="quiz-opt">A) 모델 개발자</div>
+      
+      <div class="quiz-opt">B) 프론트엔드 개발자</div>
+      
+      <div class="quiz-opt">C) 정량적 데이터 이해에 어려움이 있는 분</div>
+      
+      <div class="quiz-opt">D) 데이터 인프라 담당자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 정량적 데이터 이해에 어려움이 있는 분</div>
+          <div class="quiz-explanation">발표 대상에 명시된 바와 같이 정량적 데이터를 이해하는 데 어려움을 겪는 분을 포함합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/kntRTYCTgBE" target="_blank">우아한 디버깅 툴: QA 이슈 해결에 필요한 데이터를 쉽게 주고, 받자 #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">자동화된 QA 데이터 수집 툴로 컨텍스트 스위칭 감소</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Pipeline</span><span class="tag">QA Automation</span><span class="tag">Debugging Tools</span><span class="tag">DevOps</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/kntRTYCTgBE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 누락 시 개발자와 QA 간 컨텍스트 스위칭 문제 식별</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이슈 상황 자동 기록 및 원격 공유 기능 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>QA 프로세스 효율성 개선 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에 데이터 품질 이슈 자동 캡처 기능 통합 (예: 모델 입력 데이터 이상 시 실시간 로깅 및 팀 공유)</div>
+    
+    <div class="idea">💡 A/B 테스트 환경에서 실험 데이터 누락 시 자동 재요청 프로세스 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 세션이 해결하려는 핵심 문제는?</div>
+      
+      <div class="quiz-opt">A) 데이터 과잉으로 인한 저장소 비용 증가</div>
+      
+      <div class="quiz-opt">B) 데이터 누락 시 컨텍스트 스위칭 비효율</div>
+      
+      <div class="quiz-opt">C) 모델 성능 저하</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 실험 설계 오류</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 데이터 누락 시 컨텍스트 스위칭 비효율</div>
+          <div class="quiz-explanation">본문에서 '데이터 누락 시 개발자와 QA 간 컨텍스트 스위칭'이 주요 문제로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 제시된 해결책의 핵심 기능은?</div>
+      
+      <div class="quiz-opt">A) 데이터 샘플링 최적화</div>
+      
+      <div class="quiz-opt">B) 이슈 상황 자동 기록 및 원격 공유</div>
+      
+      <div class="quiz-opt">C) 모델 재학습 자동화</div>
+      
+      <div class="quiz-opt">D) 데이터 라벨링 툴 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 이슈 상황 자동 기록 및 원격 공유</div>
+          <div class="quiz-explanation">발표 내용에서 '이슈 상황 자동 기록 및 원격 공유'가 핵심 해결책으로 제시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
