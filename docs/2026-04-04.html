@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 04일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://sllm.cloud" target="_blank">Show HN: sllm – Split a GPU node with other developers, unlimited tokens</a>
+    </h2>
+
+    <p class="item-summary">GPU 노드 공유로 대형 모델 사용 비용 절감 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Cost Optimization</span><span class="tag">Model Serving</span><span class="tag">Cloud Computing</span><span class="tag">Distributed Computing</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://sllm.cloud" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DeepSeek V3 실행 시 14,000달러/월 비용 절감 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OpenAI 호환 API로 즉시 교체 가능한 모델 인프라 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>개인/팀별 GPU 리소스 할당 없이 코호트 방식 공유 모델</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 vLLM 기반 OpenAI 호환 API를 활용해 기존 모델 서빙 파이프라인을 sllm 인프라로 마이그레이션하여 GPU 비용 70% 이상 절감</div>
+    
+    <div class="idea">💡 신규 실험 모델 테스트 시 코호트 방식 GPU 공유를 통해 8xH100 노드 접근 비용을 5달러/월로 확보</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. DeepSeek V3 모델을 실행하기 위한 월간 GPU 비용은?</div>
+      
+      <div class="quiz-opt">A) $5,000</div>
+      
+      <div class="quiz-opt">B) $14,000</div>
+      
+      <div class="quiz-opt">C) $25,000</div>
+      
+      <div class="quiz-opt">D) $50,000</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) $14,000</div>
+          <div class="quiz-explanation">콘텐츠에 명시된 8×H100 GPU 비용은 $14k/월 수준입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. sllm의 API 호환성은 어떤 인터페이스를 기반으로 하는가?</div>
+      
+      <div class="quiz-opt">A) TensorFlow Serving</div>
+      
+      <div class="quiz-opt">B) PyTorch Serve</div>
+      
+      <div class="quiz-opt">C) OpenAI API</div>
+      
+      <div class="quiz-opt">D) ONNX Runtime</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) OpenAI API</div>
+          <div class="quiz-explanation">문서에 명시된 대로 OpenAI 호환 API를 통해 기존 시스템과 호환됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/YcA31dmSNMk" target="_blank">"어제 쓴 프롬프트, 오늘도 그대로 쓰시나요?" #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">AI 대화 설계 원리와 체크리스트로 업무 효율성 극대화</p>
+
+    
+    <div class="tags">
+      <span class="tag">AI 프롬프트 엔지니어링</span><span class="tag">MLOps</span><span class="tag">Anthropic</span><span class="tag">교육</span><span class="tag">AI 활용 전략</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/YcA31dmSNMk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>운에 의존하는 AI 대화에서 의도적 설계로 전환하는 전략 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Anthropic 공식 가이드 기반 실제 교육/개발 사례 분석</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>감각 대신 근거 기반 AI 적용을 위한 체크리스트 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 트레이닝 문서에 프롬프트 최적화 체크리스트 추가 (예: '의도적 키워드 포함 여부' 항목 삽입)</div>
+    
+    <div class="idea">💡 A/B 테스트 시나리오에 의도적 대화 설계 전략 적용 (예: 사용자 인터랙션 시나리오별 프롬프트 템플릿 표준화)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 대화 설계의 핵심 전환점은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 파라미터 최적화</div>
+      
+      <div class="quiz-opt">B) 운에 의존한 대화에서 의도적 설계로 전환</div>
+      
+      <div class="quiz-opt">C) GPU 성능 향상</div>
+      
+      <div class="quiz-opt">D) 데이터 증식 기법 적용</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 운에 의존한 대화에서 의도적 설계로 전환</div>
+          <div class="quiz-explanation">세션 핵심은 '운에 맡기는 대화'에서 '의도적으로 설계된 대화'로 전환하는 전략을 강조합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 체크리스트의 주요 목적은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 측정</div>
+      
+      <div class="quiz-opt">B) AI 대화 품질 평가</div>
+      
+      <div class="quiz-opt">C) 감각 대신 근거 기반 적용</div>
+      
+      <div class="quiz-opt">D) GPU 리소스 절약</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 감각 대신 근거 기반 적용</div>
+          <div class="quiz-explanation">체크리스트는 '감각이 아닌 근거 기반으로 AI를 업무에 적용'할 수 있도록 돕는 것이 목적입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/PzdxsnNq7Ks" target="_blank">AI에이전트플랫폼 성과리더 유용하 : PlayMCP - AI 서비스 생태계의 출발점 | if(kakao)25 Day2</a>
+    </h2>
+
+    <p class="item-summary">MLOps 기반 AI 서비스 생태계 구축 전략 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI 서비스 생태계</span><span class="tag">모델 플랫폼</span><span class="tag">인증/품질 관리</span><span class="tag">AI 툴 연결</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/PzdxsnNq7Ks" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MCP 개발의 핵심 허들로 '발견, 연결, 인증, 품질' 4가지 도전 과제 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오의 MCP Tool로 AI 서비스 생태계 구축 방향 공개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 서비스 생태계의 새로운 Frontend 개념 도입</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 팀 내에서 '발견-연결-인증-품질' 허들을 해결하기 위한 표준화된 플랫폼 설계 시도 (예: 내부 모델 레지스트리 구축)</div>
+    
+    <div class="idea">💡 AI 서비스 연결 시 인증 프로세스 자동화 도구 개발 (예: API 키 관리 + 품질 기준 자동 검증 시스템)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. MCP 개발의 핵심 허들로 제시된 4가지 도전 과제는?</div>
+      
+      <div class="quiz-opt">A) 발견, 연결, 인증, 품질</div>
+      
+      <div class="quiz-opt">B) 데이터, 모델, 인프라, 보안</div>
+      
+      <div class="quiz-opt">C) 학습, 추론, 모니터링, 배포</div>
+      
+      <div class="quiz-opt">D) 설계, 개발, 테스트, 운영</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 발견, 연결, 인증, 품질</div>
+          <div class="quiz-explanation">영상에서 명시된 MCP 개발의 핵심 허들은 '발견, 연결, 인증, 품질' 4가지 도전 과제입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 카카오가 제시한 AI 서비스 생태계의 새로운 Frontend는 어떤 특징을 가졌나요?</div>
+      
+      <div class="quiz-opt">A) 모델 학습 자동화</div>
+      
+      <div class="quiz-opt">B) 사용자 맞춤형 추천</div>
+      
+      <div class="quiz-opt">C) AI 에이전트 기반 인터페이스</div>
+      
+      <div class="quiz-opt">D) 클라우드 기반 모델 호스팅</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) AI 에이전트 기반 인터페이스</div>
+          <div class="quiz-explanation">영상 11:22에서 AI 서비스 생태계의 새로운 Frontend로 AI 에이전트 기반 인터페이스를 도입하는 방향성을 제시했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
