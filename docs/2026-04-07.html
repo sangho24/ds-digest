@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 07일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank">Show HN: Gemma 4 Multimodal Fine-Tuner for Apple Silicon</a>
+    </h2>
+
+    <p class="item-summary">Gemma 4 로컬 파인튜닝 툴, GCS 데이터 스트리밍 지원</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Model Optimization</span><span class="tag">Apple Silicon</span><span class="tag">Data Pipeline</span><span class="tag">Memory Management</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>15,000시간의 GCS 데이터를 로컬 학습에 스트리밍 처리하는 파이프라인 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Gemma 4와 Whisper 모델의 파인튜닝을 분리한 모듈화 아키텍처</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>64GB RAM 환경에서 발생하는 OOM 문제와 그 대응 방안 공개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 GCS 데이터 스트리밍 방식을 기존 MLOps 파이프라인에 통합하여 대규모 데이터셋 처리 효율성 개선</div>
+    
+    <div class="idea">💡 Gemma 4 파인튜닝 시 발생하는 OOM 문제를 해결하기 위해 gradient checkpointing 기법 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 프로젝트에서 주요한 기술적 도전 과제는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. GPU 클러스터 구매</div>
+      
+      <div class="quiz-opt">B) B. 15,000시간의 GCS 데이터 처리</div>
+      
+      <div class="quiz-opt">C) C. 모델 추론 속도 최적화</div>
+      
+      <div class="quiz-opt">D) D. 데이터 라벨링 자동화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 15,000시간의 GCS 데이터 처리</div>
+          <div class="quiz-explanation">콘텐츠 본문에서 15,000시간의 GCS 데이터를 로컬 환경에 적재할 수 없어 스트리밍 처리 방식을 개발했다는 내용이 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Gemma 4 파인튜닝 시 발생한 주요 문제는?</div>
+      
+      <div class="quiz-opt">A) A. 과적합</div>
+      
+      <div class="quiz-opt">B) B. OOM(Out of Memory)</div>
+      
+      <div class="quiz-opt">C) C. 데이터 누수</div>
+      
+      <div class="quiz-opt">D) D. 하드웨어 호환성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. OOM(Out of Memory)</div>
+          <div class="quiz-explanation">64GB RAM 환경에서도 자주 발생하는 메모리 부족 문제는 콘텐츠에서 명확히 언급된 핵심 이슈입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/hB_UaNcYaAc" target="_blank">커뮤니티로 진화한 오픈채팅, AI로 슬기롭게 연결하다</a>
+    </h2>
+
+    <p class="item-summary">커뮤니티 추천 AI로 사용자 참여도 극대화 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">추천시스템</span><span class="tag">AI</span><span class="tag">Community</span><span class="tag">MLOps</span><span class="tag">Product Evolution</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/hB_UaNcYaAc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오픈채팅에서 커뮤니티로의 전략적 진화 방향 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 부족 환경에서의 커뮤니티 콘텐츠 추천 AI 기술 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>제품 기획자-AI 연구자 협업 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 스파ース 데이터 환경에서 사용자-커뮤니티 매칭을 위한 hybrid recommendation model 설계 (content-based + collaborative filtering fallback)</div>
+    
+    <div class="idea">💡 커뮤니티 활성도 지표(AUC 대신 dwell time, 참여율)를 반영한 reinforcement learning 기반 추천 시스템 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 커뮤니티 콘텐츠 추천 AI 발표자 이름은?</div>
+      
+      <div class="quiz-opt">A) 김초은</div>
+      
+      <div class="quiz-opt">B) 김선범</div>
+      
+      <div class="quiz-opt">C) 이지은</div>
+      
+      <div class="quiz-opt">D) 박지성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 김선범</div>
+          <div class="quiz-explanation">자막에 '김선범(jeffrey.1002)'로 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 세션의 주요 기술적 도전 과제는?</div>
+      
+      <div class="quiz-opt">A) 실시간 번역</div>
+      
+      <div class="quiz-opt">B) 스파ース 데이터 추천</div>
+      
+      <div class="quiz-opt">C) 영상 인식</div>
+      
+      <div class="quiz-opt">D) 음성 합성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 스파ース 데이터 추천</div>
+          <div class="quiz-explanation">발표 내용에서 '아무것도 없는 곳에서 길 찾기'라는 표현으로 데이터 부족 문제 강조</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/1155434" target="_blank">C++ std::bit_cast와 reinterpret_cast — 언제 어떤 것을 써야 하는가</a>
+    </h2>
+
+    <p class="item-summary">C++ 타입 퍼닝에서 안전한 std::bit_cast 사용법</p>
+
+    
+    <div class="tags">
+      <span class="tag">C++</span><span class="tag">MLOps</span><span class="tag">Type Punning</span><span class="tag">C++20</span><span class="tag">Memory Safety</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/1155434" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>std::bit_cast는 엄격한 앨리어싱 규칙을 준수하며 타입 퍼닝을 안전하게 수행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>reinterpret_cast는 객체 수명(object lifetime) 규칙 위반 시 미정의 동작 발생</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>const 제거는 std::bit_cast로 불가능하며, memcpy가 표준 준수 방식</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 고성능 데이터 파이프라인에서 std::bit_cast를 사용해 직렬화/역직렬화 로직 개선 (예: 바이트 배열을 구조체로 안전하게 변환)</div>
+    
+    <div class="idea">💡 MLOps 시스템의 메모리 최적화 시, reinterpret_cast 대신 std::bit_cast로 타입 변환 코드 리팩터링 (UB 방지)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. C++에서 타입 퍼닝 시 표준 준수 방식은?</div>
+      
+      <div class="quiz-opt">A) reinterpret_cast</div>
+      
+      <div class="quiz-opt">B) union</div>
+      
+      <div class="quiz-opt">C) memcpy</div>
+      
+      <div class="quiz-opt">D) std::bit_cast</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) memcpy</div>
+          <div class="quiz-explanation">memcpy는 바이트 단위 복사로 엄격한 앨리어싱 규칙을 준수합니다. reinterpret_cast는 UB 위험, std::bit_cast는 const 제거 불가</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. std::bit_cast<float*>(src)가 허용되지 않는 이유는?</div>
+      
+      <div class="quiz-opt">A) 타입 크기 불일치</div>
+      
+      <div class="quiz-opt">B) const 제거 불가</div>
+      
+      <div class="quiz-opt">C) 정수-포인터 변환 불가</div>
+      
+      <div class="quiz-opt">D) C++20 미지원</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) const 제거 불가</div>
+          <div class="quiz-explanation">std::bit_cast는 const 제거를 허용하지 않으며, 포인터 타입 변환 시 소스/대상 타입이 동일한 const/volatile 속성을 가져야 합니다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
