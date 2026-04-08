@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 08일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2604.05091" target="_blank">MegaTrain: Full Precision Training of 100B+ Parameter LLMs on a Single GPU</a>
+    </h2>
+
+    <p class="item-summary">100B+ 파라미터 모델을 단일 GPU로 훈련하는 혁신적 기법</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Large Language Models</span><span class="tag">GPU Optimization</span><span class="tag">Model Training</span><span class="tag">Distributed Computing</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2604.05091" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Full precision training 기법으로 GPU 메모리 효율성 극대화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>100B+ 파라미터 모델을 단일 GPU에서 실행 가능한 최적화 알고리즘 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 분산 학습 대비 30% 이상 비용 절감 가능</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MegaTrain의 메모리 최적화 기법을 현업의 대규모 모델 훈련 파이프라인에 통합하여 GPU 클러스터 확장 필요성을 완화</div>
+    
+    <div class="idea">💡 100B+ 파라미터 모델 훈련 시 단일 GPU 기반 실험 환경 구축으로 A/B 테스트 주기를 40% 단축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. MegaTrain의 주요 혁신 포인트는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. 분산 학습 대신 단일 GPU 사용</div>
+      
+      <div class="quiz-opt">B) B. 저정밀도 연산 최적화</div>
+      
+      <div class="quiz-opt">C) C. 100B+ 파라미터 모델의 메모리 최적화</div>
+      
+      <div class="quiz-opt">D) D. GPU 대신 CPU 기반 훈련</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 100B+ 파라미터 모델의 메모리 최적화</div>
+          <div class="quiz-explanation">C가 정답입니다. MegaTrain은 100B+ 파라미터 모델을 단일 GPU에서 훈련할 수 있도록 메모리 최적화 기법을 적용한 것이 핵심입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. MegaTrain을 현업에 적용하면 어떤 이점이 있는가?</div>
+      
+      <div class="quiz-opt">A) A. 모델 추론 속도 2배 향상</div>
+      
+      <div class="quiz-opt">B) B. 훈련 비용 30% 절감</div>
+      
+      <div class="quiz-opt">C) C. 파라미터 수 50% 증가</div>
+      
+      <div class="quiz-opt">D) D. GPU 클러스터 확장 필요성 해소</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 훈련 비용 30% 절감</div>
+          <div class="quiz-explanation">B가 정답입니다. 단일 GPU 기반 훈련으로 기존 분산 학습 대비 30% 이상의 비용 절감이 가능합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/k-8CFgBhhu4" target="_blank">화면을 이해하고 행동하는 AI - GUI Agent 개발기</a>
+    </h2>
+
+    <p class="item-summary">브라우저 자동화를 위한 VLM 기반 GUI 에이전트 개발 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">Multimodal AI</span><span class="tag">MLOps</span><span class="tag">GUI Automation</span><span class="tag">AI Research</span><span class="tag">VLM</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/k-8CFgBhhu4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>멀티모달 언어모델을 활용한 브라우저 화면 이해 및 자동 조작 기술 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>VLM 기반 모델을 활용한 GUI 에이전트 개발 프로세스 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 사용 사례와 기술적 제약 조건 분석</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델을 활용해 웹 UI 테스트 자동화 파이프라인에 통합하여 테스트 커버리지 30% 이상 확대</div>
+    
+    <div class="idea">💡 멀티모달 모델을 기반으로 사용자 인터페이스 분석 시스템 개발하여 UX 팀과 협업한 디자인 개선 제안</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 소개된 핵심 기술은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) GNN</div>
+      
+      <div class="quiz-opt">B) VLM</div>
+      
+      <div class="quiz-opt">C) Transformer</div>
+      
+      <div class="quiz-opt">D) GAN</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) VLM</div>
+          <div class="quiz-explanation">VLM(Vision-Language Model)이 브라우저 화면 이해와 조작에 핵심적으로 사용되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. GUI 에이전트의 주요 적용 분야는?</div>
+      
+      <div class="quiz-opt">A) 음성 인식</div>
+      
+      <div class="quiz-opt">B) 브라우저 자동화</div>
+      
+      <div class="quiz-opt">C) 영상 분석</div>
+      
+      <div class="quiz-opt">D) 추천 시스템</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 브라우저 자동화</div>
+          <div class="quiz-explanation">콘텐츠는 브라우저 화면을 이해하고 조작하는 GUI 에이전트 개발 과정을 중심으로 설명합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/0407747" target="_blank">FE News 26년 3월 소식을 전해드립니다!</a>
+    </h2>
+
+    <p class="item-summary">Vite 기반 Next.js 재구현으로 빌드 속도 4.4배 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">CI/CD</span><span class="tag">AI 도구</span><span class="tag">프론트엔드 최적화</span><span class="tag">코드 생성</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/0407747" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Cloudflare 엔지니어가 AI 도움으로 Next.js를 Vite 기반으로 1주일 내 재구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>33라우트 앱 기준 빌드 속도 4.4배 향상(7.38초 → 1.67초), 번들 크기 57% 감소</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Next.js 16 API의 94% 지원하며 서버 액션/캐싱/미들웨어 기능 포함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 파이프라인 빌드 프로세스에 Vite 기반 아키텍처 도입하여 CI/CD 속도 개선</div>
+    
+    <div class="idea">💡 코드 생성 AI(예: Claude Code) 도입해 반복적 데이터 전처리 스크립트 자동화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Vinext 프로젝트에서 Next.js 빌드 속도 향상율은?</div>
+      
+      <div class="quiz-opt">A) 2.4배</div>
+      
+      <div class="quiz-opt">B) 4.4배</div>
+      
+      <div class="quiz-opt">C) 6.4배</div>
+      
+      <div class="quiz-opt">D) 8.4배</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 4.4배</div>
+          <div class="quiz-explanation">33라우트 앱 기준 7.38초에서 1.67초로 4.4배 향상됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Claude Code가 공개 GitHub 커밋 중 차지하는 비율은?</div>
+      
+      <div class="quiz-opt">A) 1%</div>
+      
+      <div class="quiz-opt">B) 2%</div>
+      
+      <div class="quiz-opt">C) 3%</div>
+      
+      <div class="quiz-opt">D) 4%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) 4%</div>
+          <div class="quiz-explanation">1년 전 터미널 프로토타입에서 시작해 현재 4%를 차지함</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
