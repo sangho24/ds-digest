@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 09일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/7997284" target="_blank">C++ 객체 수명과 암묵적 객체 생성</a>
+    </h2>
+
+    <p class="item-summary">C++ 객체 수명 규칙이 메모리 안정성에 미치는 영향 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">C++</span><span class="tag">MLOps</span><span class="tag">시스템 프로그래밍</span><span class="tag">메모리 관리</span><span class="tag">객체 수명</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/7997284" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>C++ 객체 수명 규칙은 포인터가 가리키는 주소에 살아 있는 객체가 존재해야 접근 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>C++20 암묵적 객체 생성이 기존 미정의 동작을 합법화한 실무적 배경 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>malloc() 메모리에 직접 접근하는 패턴이 C++17까지는 UB였지만 C++20에서 수정됨</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 C++20 암묵적 객체 생성 기능을 사용해 네트워크/디스크 I/O 파이프라인에서 메모리 해석 안정성 개선</div>
+    
+    <div class="idea">💡 MLOps 인프라에서 C++ 기반 모델 서빙 시스템 구축 시 객체 수명 규칙을 준수한 메모리 풀 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. malloc()로 할당된 메모리를 구조체 포인터로 캐스팅한 경우 C++17에서의 상태는?</div>
+      
+      <div class="quiz-opt">A) 정상 동작</div>
+      
+      <div class="quiz-opt">B) 컴파일 오류</div>
+      
+      <div class="quiz-opt">C) 미정의 동작</div>
+      
+      <div class="quiz-opt">D) 런타임 예외</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 미정의 동작</div>
+          <div class="quiz-explanation">C++17까지는 malloc() 메모리에 살아 있는 객체가 없으므로 미정의 동작(UB)으로 간주됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. C++20 암묵적 객체 생성의 주요 목적은?</div>
+      
+      <div class="quiz-opt">A) 성능 최적화</div>
+      
+      <div class="quiz-opt">B) 기존 코드 호환성 확보</div>
+      
+      <div class="quiz-opt">C) 메모리 사용량 감소</div>
+      
+      <div class="quiz-opt">D) 코드 길이 단축</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 기존 코드 호환성 확보</div>
+          <div class="quiz-explanation">C++20은 기존 실무 관행(예: malloc() 메모리 직접 접근)을 표준화하여 호환성을 보장하는 동시에 안전성을 개선했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/W06sESnB9rg" target="_blank">디자인시스템이 AI를 만났을 때: FE 개발 패러다임의 변화</a>
+    </h2>
+
+    <p class="item-summary">AI 자동화로 FE 개발 효율성 30% 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">AI Automation</span><span class="tag">Design System</span><span class="tag">MLOps</span><span class="tag">Front-End Development</span><span class="tag">Tooling</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/W06sESnB9rg" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디자인 토큰 기반 컴포넌트 시스템으로 표준화된 UI 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI가 마크업 작업을 50% 자동화하는 프로세스 도입</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 개발 환경에서 디자인 시스템과 AI의 통합 방식 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 파이프라인 문서 생성을 위한 AI 자동화 도구 도입 (예: dbt + LLM 기반 스키마 문서 생성)</div>
+    
+    <div class="idea">💡 MLOps에서 모델 배포 스펙을 디자인 토큰 방식으로 표준화하여 CI/CD 자동화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 마크업 자동화의 주요 도전 과제는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 디자인 토큰 생성</div>
+      
+      <div class="quiz-opt">B) 인스트럭션 정의</div>
+      
+      <div class="quiz-opt">C) 컴포넌트 라이브러리 확장</div>
+      
+      <div class="quiz-opt">D) 브라우저 호환성 테스트</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 인스트럭션 정의</div>
+          <div class="quiz-explanation">자막에서 '디자인시스템 instruction 정의'가 핵심 어려움으로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 디자인 시스템의 핵심 구성 요소는?</div>
+      
+      <div class="quiz-opt">A) API 엔드포인트</div>
+      
+      <div class="quiz-opt">B) 디자인 토큰</div>
+      
+      <div class="quiz-opt">C) 버전 관리 시스템</div>
+      
+      <div class="quiz-opt">D) 테스트 자동화 프레임워크</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 디자인 토큰</div>
+          <div class="quiz-explanation">자막에서 '디자인 토큰'이 반복적으로 강조됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/sXt2ZcyOvhI" target="_blank">함께해서 더 즐거운 하루 ☀️ if(kakao)25 Krew Day @카카오 AI캠퍼스</a>
+    </h2>
+
+    <p class="item-summary">AI 기술 트렌드와 팀 협업 사례 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI</span><span class="tag">Collaboration</span><span class="tag">Industry Trends</span><span class="tag">Event</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/sXt2ZcyOvhI" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>12개 그룹사 크루의 AI 기술 협업 사례 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>CTO 및 FE 팀의 기술 트렌드 논의</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>1000명 참여 AI 기반 실시간 협업 이벤트 운영</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 AI Talk Lounge에서 언급된 모델 설명성 향상 기법을 현업 모델에 적용하여 stakeholder 커뮤니케이션 개선</div>
+    
+    <div class="idea">💡 Demo Station 형식을 벤치마킹하여 팀 내 주간 기술 데모 세션 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. if(kakao)25 Krew Day에 참여한 그룹사는 몇 개입니까?</div>
+      
+      <div class="quiz-opt">A) 8</div>
+      
+      <div class="quiz-opt">B) 10</div>
+      
+      <div class="quiz-opt">C) 12</div>
+      
+      <div class="quiz-opt">D) 15</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 12</div>
+          <div class="quiz-explanation">본문에 명시된 대로 12개 그룹사가 참여했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Krew Day에서 가장 많은 참여자 수는 약 몇 명입니까?</div>
+      
+      <div class="quiz-opt">A) 500</div>
+      
+      <div class="quiz-opt">B) 800</div>
+      
+      <div class="quiz-opt">C) 1000</div>
+      
+      <div class="quiz-opt">D) 1500</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 1000</div>
+          <div class="quiz-explanation">자막에 명시된 대로 약 1000명의 크루가 참여했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
