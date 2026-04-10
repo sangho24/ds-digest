@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 10일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Aj2a5Ru2vMA" target="_blank">프로덕트의 본질에 집중하는 빼기의 미학: 주문까지 3초면 됩니다 #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">단순화 전략으로 서비스 확장성 향상 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">Product Design</span><span class="tag">MLOps</span><span class="tag">System Scalability</span><span class="tag">User Experience</span><span class="tag">Platform Engineering</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Aj2a5Ru2vMA" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기능 추가 대신 단순화로 새로운 주문 경험 창출</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>하나의 기능을 전사 플랫폼으로 확장한 성장 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사용자 경험 최적화를 위한 빼기의 디자인 철학 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 추론 속도 향상을 위해 불필요한 피처 제거 및 파이프라인 최적화</div>
+    
+    <div class="idea">💡 A/B 테스트를 통해 사용자 행동 패턴 분석 후 비필수 기능 제거 전략 수립</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 퀵결제 개발의 핵심 접근 방식은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) A) 기능 추가</div>
+      
+      <div class="quiz-opt">B) B) 프로세스 단순화</div>
+      
+      <div class="quiz-opt">C) C) 사용자 데이터 확대</div>
+      
+      <div class="quiz-opt">D) D) 시장 확장</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B) 프로세스 단순화</div>
+          <div class="quiz-explanation">발표 내용에서 '빼기의 과정'을 통해 단순화를 강조했으며, 이는 기능 추가 대신 단순화를 핵심 전략으로 삼았음을 나타냅니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 빠기의 디자인 철학이 가져온 주요 결과는?</div>
+      
+      <div class="quiz-opt">A) A) 사용자 참여 증가</div>
+      
+      <div class="quiz-opt">B) B) 주문 시간 단축</div>
+      
+      <div class="quiz-opt">C) C) 서버 비용 증가</div>
+      
+      <div class="quiz-opt">D) D) 시스템 복잡도 증가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B) 주문 시간 단축</div>
+          <div class="quiz-explanation">자막에서 '주문까지 3초면 됩니다'라는 핵심 메시지로, 사용자 경험 최적화를 통한 시간 단축이 주요 성과로 언급되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/" target="_blank">OpenAI backs Illinois bill that would limit when AI labs can be held liable</a>
+    </h2>
+
+    <p class="item-summary">AI 법적 책임 제한이 MLOps 모델 배포 전략에 영향</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI Governance</span><span class="tag">Legal Compliance</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>일리노이 주 법안은 AI 실험실의 법적 책임을 특정 상황으로 제한</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OpenAI가 법안 지원으로 AI 개발자 보호 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 모델 배포 시 법적 리스크 관리가 MLOps 핵심 과제로 부상</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에 법적 컴플라이언스 체크포인트 추가 (예: 모델 설명 가능성 로깅)</div>
+    
+    <div class="idea">💡 AI 모델 배포 시 책임 범위를 명시하는 문서화 프레임워크 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 법안의 주요 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) AI 연구 비용 절감</div>
+      
+      <div class="quiz-opt">B) AI 실험실의 법적 책임 제한</div>
+      
+      <div class="quiz-opt">C) 모델 성능 향상</div>
+      
+      <div class="quiz-opt">D) 데이터 수집 규제 완화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) AI 실험실의 법적 책임 제한</div>
+          <div class="quiz-explanation">법안은 AI 실험실이 특정 상황에서 법적 책임을 지지 않도록 보호하는 것을 목표로 합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 법안을 지원한 주요 기업은?</div>
+      
+      <div class="quiz-opt">A) Google</div>
+      
+      <div class="quiz-opt">B) Meta</div>
+      
+      <div class="quiz-opt">C) OpenAI</div>
+      
+      <div class="quiz-opt">D) Microsoft</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) OpenAI</div>
+          <div class="quiz-explanation">OpenAI는 이 법안이 AI 개발자 보호에 필요하다고 판단하여 공식적으로 지지했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/eRAj4sKSVd4" target="_blank">복잡한 흐름 앞에서, 우리가 선택한 건 Funnel / 이었다</a>
+    </h2>
+
+    <p class="item-summary">복잡한 웹뷰 흐름을 퍼널 구조로 정리해 팀 협업 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Workflow Design</span><span class="tag">Product-Engineering Collaboration</span><span class="tag">Data Pipeline Structuring</span><span class="tag">Frontend Engineering</span><span class="tag">Developer Experience</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/eRAj4sKSVd4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>복잡한 웹뷰 서비스의 동선을 퍼널 중심 구조로 시각화해 기획/개발 팀 간 흐름 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>useFlow라는 도구로 퍼널 구조를 코드로 구현해 반복 작업 최소화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>개발자 경험(DX) 개선을 목표로 팀의 몰입도 높이는 환경 설계</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 A/B 테스트 실험 대상자 흐름을 퍼널 중심으로 정의해 데이터 수집 일관성 확보</div>
+    
+    <div class="idea">💡 useFlow 방식의 퍼널 모니터링 시스템을 도입해 사용자 이탈 포인트 실시간 추적</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 강조하는 퍼널 설계의 주요 목적은?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 개선</div>
+      
+      <div class="quiz-opt">B) 기획/개발 팀 간 흐름 공유</div>
+      
+      <div class="quiz-opt">C) 서버 리소스 절약</div>
+      
+      <div class="quiz-opt">D) UI/UX 디자인 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 기획/개발 팀 간 흐름 공유</div>
+          <div class="quiz-explanation">퍼널 중심 구조화는 복잡한 웹뷰 동선을 기획자와 개발자가 동일하게 이해할 수 있도록 설계된 핵심 목적입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 발표자료에서 사용된 구현 도구는?</div>
+      
+      <div class="quiz-opt">A) Kafka</div>
+      
+      <div class="quiz-opt">B) useFlow</div>
+      
+      <div class="quiz-opt">C) dbt</div>
+      
+      <div class="quiz-opt">D) Ray</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) useFlow</div>
+          <div class="quiz-explanation">useFlow는 퍼널 구조를 코드로 구현한 도구로, 반복 작업 최소화에 활용되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
