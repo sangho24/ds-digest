@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 11일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/t-2A9lLEbl0" target="_blank">이래라저래라 하지 마라: 주니어를 성장시키는 '파트너십 대화법' #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">데이터 기반 대화법으로 팀원 성장 촉진</p>
+
+    
+    <div class="tags">
+      <span class="tag">소프트스킬</span><span class="tag">팀 코칭</span><span class="tag">데이터 기반 피드백</span><span class="tag">파트너십 대화법</span><span class="tag">동기면담</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/t-2A9lLEbl0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>고쳐주려는 마음에서 진심의 중요성을 배움</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI/데이터를 활용해 대화 훈련 프레임워크 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>주니어 멘토링 시 '맞는 말' 대신 파트너십 접근 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 기반 피드백 시스템 도입으로 팀원 성장 촉진</div>
+    
+    <div class="idea">💡 파트너십 대화법을 활용한 정기 1:1 면담 프로세스 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 발표자의 핵심 경험은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 개선</div>
+      
+      <div class="quiz-opt">B) 피드백 방식 전환</div>
+      
+      <div class="quiz-opt">C) A/B 테스트 최적화</div>
+      
+      <div class="quiz-opt">D) 모델 서빙 자동화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 피드백 방식 전환</div>
+          <div class="quiz-explanation">발표자는 '고쳐주려는 마음'에서 '진심'으로 접근 방식을 전환한 경험이 핵심입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠에서 강조된 가장 중요한 요소는?</div>
+      
+      <div class="quiz-opt">A) 기술적 전문성</div>
+      
+      <div class="quiz-opt">B) 데이터 정제</div>
+      
+      <div class="quiz-opt">C) 진심</div>
+      
+      <div class="quiz-opt">D) 모델 해석도구</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 진심</div>
+          <div class="quiz-explanation">발표 끝에서 가장 중요한 것은 '진심'임을 깨달았다고 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://khronokernel.com/macos/2023/08/08/AS-VM.html" target="_blank">Apple Silicon and Virtual Machines: Beating the 2 VM Limit (2023)</a>
+    </h2>
+
+    <p class="item-summary">Apple Silicon에서 VM 제한 극복해 MLOps 환경 최적화 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Virtual Machines</span><span class="tag">Apple Silicon</span><span class="tag">DevOps</span><span class="tag">Cloud Computing</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://khronokernel.com/macos/2023/08/08/AS-VM.html" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Apple Silicon 기반 Mac에서 2개 이상 VM 실행 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>UTM(Universal VM Manager) 활용한 x86_64 VM 호환성 확보</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Rosetta 2 기반 ARM/Intel 혼용 환경 구축 방법</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 팀이 Apple Silicon Mac에서 UTM을 사용해 별도 VM에 ML 테스트/배포 환경 분리</div>
+    
+    <div class="idea">💡 x86 기반 컨테이너와 ARM 네이티브 모델 훈련을 병행하는 하이브리드 클라우드 인프라 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Apple Silicon Mac에서 기본적으로 지원하는 VM 최대 개수는?</div>
+      
+      <div class="quiz-opt">A) 1</div>
+      
+      <div class="quiz-opt">B) 2</div>
+      
+      <div class="quiz-opt">C) 3</div>
+      
+      <div class="quiz-opt">D) 4</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 2</div>
+          <div class="quiz-explanation">Apple Silicon 아키텍처의 하드웨어 제한으로 기본 2개 VM만 실행 가능</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Apple Silicon에서 x86_64 VM을 실행하기 위한 주요 도구는?</div>
+      
+      <div class="quiz-opt">A) Docker Desktop</div>
+      
+      <div class="quiz-opt">B) UTM</div>
+      
+      <div class="quiz-opt">C) Parallels Desktop</div>
+      
+      <div class="quiz-opt">D) VirtualBox</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) UTM</div>
+          <div class="quiz-explanation">UTM은 Apple Silicon에서 x86_64 VM 호환성을 제공하는 오픈소스 솔루션</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/JHrWLJ-XAGQ" target="_blank">WOOWACON 2025 현장 스케치 #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">2025년 우아한형제들 기술 컨퍼런스 현장 리뷰 제공</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">A/B testing</span><span class="tag">Industry Trends</span><span class="tag">Data Engineering</span><span class="tag">Conference</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/JHrWLJ-XAGQ" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>2025년 10월 28일 서울에서 열린 WOOWACON 현장 분위기 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>우아한형제들 기술 팀의 최신 개발 동향 소개 예상</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 기반 의사결정 사례 공유 가능성 언급</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 컨퍼런스 자료 분석을 통해 MLOps 도입 사례를 추출해 팀 내 적용 방안 검토</div>
+    
+    <div class="idea">💡 A/B testing 관련 발표 자료를 활용해 실험 프레임워크 개선 아이디어 도출</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. WOOWACON 2025는 언제 개최되었나요?</div>
+      
+      <div class="quiz-opt">A) 2025년 10월 27일</div>
+      
+      <div class="quiz-opt">B) 2025년 10월 28일</div>
+      
+      <div class="quiz-opt">C) 2025년 10월 29일</div>
+      
+      <div class="quiz-opt">D) 2025년 11월 1일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 2025년 10월 28일</div>
+          <div class="quiz-explanation">콘텐츠에 명시된 행사 일정은 2025년 10월 28일(화)입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. WOOWACON 2025가 열린 장소는 어디입니까?</div>
+      
+      <div class="quiz-opt">A) 서울 워커힐 호텔</div>
+      
+      <div class="quiz-opt">B) 그랜드 인터컨티넨탈 파르나스 서울</div>
+      
+      <div class="quiz-opt">C) 코엑스</div>
+      
+      <div class="quiz-opt">D) 서울 삼성동 코스트코</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 그랜드 인터컨티넨탈 파르나스 서울</div>
+          <div class="quiz-explanation">콘텐츠에 명시된 행사 장소는 그랜드 인터컨티넨탈 파르나스 서울 5F입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
