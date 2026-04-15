@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 15일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/saffron-health/libretto" target="_blank">Show HN: Libretto – Making AI browser automations deterministic</a>
+    </h2>
+
+    <p class="item-summary">런타임 AI 대신 개발 시점 AI로 브라우저 자동화 신뢰성 극대화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Browser Automation</span><span class="tag">Deterministic Workflows</span><span class="tag">A/B Testing</span><span class="tag">CI/CD</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/saffron-health/libretto" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>런타임 AI 대신 개발 시점에 실제 코드 생성해 검증 가능하게 함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>플레이라이트 UI 자동화와 네트워크/API 요청을 결합해 복잡한 웹 환경 대응</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>수동 액션 기록과 스텝 디버깅 기능으로 실패 원인 분석 효율화</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 의료 EHR 시스템과 연동된 데이터 수집 파이프라인에서 Libretto의 네트워크 요청 기반 자동화로 병원 정보 시스템과의 인터페이스 신뢰도를 30% 향상</div>
+    
+    <div class="idea">💡 A/B 테스트 실험 그룹의 웹 인터페이스 자동화 시나리오를 Libretto의 개발 시점 코드 생성 기능으로 작성해 실험 재현성 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Libretto가 기존 런타임 AI 기반 브라우저 자동화와 다른 핵심 접근 방식은?</div>
+      
+      <div class="quiz-opt">A) DOM 파서 대신 컴퓨터 비전 기반 인식 사용</div>
+      
+      <div class="quiz-opt">B) 개발 시점에 실행 가능한 코드를 생성</div>
+      
+      <div class="quiz-opt">C) 모든 액션을 브라우저 확장 프로그램으로 처리</div>
+      
+      <div class="quiz-opt">D) 사용자 행동을 마이크로 서비스로 분산</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 개발 시점에 실행 가능한 코드를 생성</div>
+          <div class="quiz-explanation">Libretto는 런타임 AI 대신 개발 시점에 실제 코드를 생성해 검증 가능하도록 설계된 점이 핵심 차별점입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Libretto가 복잡한 웹 환경에서 신뢰성 향상을 위해 채택한 하이브리드 접근 방식은?</div>
+      
+      <div class="quiz-opt">A) Selenium + 머신러닝 기반 예측</div>
+      
+      <div class="quiz-opt">B) Playwright UI 자동화 + 네트워크/API 요청</div>
+      
+      <div class="quiz-opt">C) Headless Chrome + Docker 컨테이너</div>
+      
+      <div class="quiz-opt">D) JavaScript 실행 + 웹소켓 모니터링</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Playwright UI 자동화 + 네트워크/API 요청</div>
+          <div class="quiz-explanation">Playwright UI 자동화와 내부 네트워크/API 요청을 결합한 하이브리드 방식이 의료 등 복잡한 웹 환경 대응의 핵심 전략입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/6236639" target="_blank">NAVER SECURITY SEMINAR 참가 신청을 시작합니다!</a>
+    </h2>
+
+    <p class="item-summary">AI 보안 및 위협 모델링 실무 인사이트 제공</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI Security</span><span class="tag">Threat Modeling</span><span class="tag">Cryptography</span><span class="tag">Attack Surface Management</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/6236639" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 시대의 AI 레드팀 파이프라인 구축 사례 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>피싱 공격 체인 탐지 회피 기법 분석</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Cryptographic Agility 전략과 양자내성 기술 적용</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 AI 레드팀 파이프라인 구축 사례를 참고해 모델 보안 검증 프로세스에 Threat Modeling 기법 통합</div>
+    
+    <div class="idea">💡 TLS 인증서 관리 전략을 기반으로 모델 서빙 시스템의 암호화 전략 검토 및 강화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. NAVER SECURITY SEMINAR의 참가 신청 기간은 언제인가요?</div>
+      
+      <div class="quiz-opt">A) 4월 10일 - 15일</div>
+      
+      <div class="quiz-opt">B) 4월 15일 - 19일</div>
+      
+      <div class="quiz-opt">C) 4월 20일 - 25일</div>
+      
+      <div class="quiz-opt">D) 4월 25일 - 30일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 4월 15일 - 19일</div>
+          <div class="quiz-explanation">본문 참가 신청 안내 표에 따르면 신청 일자는 4월 15일(수) 오후 3시 - 19일(일) 오후 11시 30분입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 발표영상과 자료는 향후 제공될까요?</div>
+      
+      <div class="quiz-opt">A) 네, 모든 발표영상 제공</div>
+      
+      <div class="quiz-opt">B) 네, 발표자료만 제공</div>
+      
+      <div class="quiz-opt">C) 아니요, 제공되지 않음</div>
+      
+      <div class="quiz-opt">D) 네, 선택적 제공</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 아니요, 제공되지 않음</div>
+          <div class="quiz-explanation">FAQ 섹션의 [발표관련] 항목에 따르면 발표영상과 자료는 별도로 제공되지 않습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/gastownhall/gastown/issues/3649" target="_blank">Does Gas Town 'steal' usage from users' LLM credits to improve itself?</a>
+    </h2>
+
+    <p class="item-summary">LLM 사용 데이터 윤리적 활용 논쟁</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">데이터 윤리</span><span class="tag">모델 훈련</span><span class="tag">사용자 신뢰</span><span class="tag">데이터 거버넌스</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/gastownhall/gastown/issues/3649" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사용자 허가 없이 LLM 훈련 데이터 확보의 윤리적 논쟁</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사용자 신뢰 저해와 규제 준수 리스크 고조</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 사용자 데이터 소스 투명성 보장을 위한 데이터 거버넌스 정책 강화</div>
+    
+    <div class="idea">💡 모델 훈련 시 사용자 데이터 추적 및 동의 관리 시스템 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Gas Town 논란의 핵심 쟁점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. 모델 성능 향상 방식</div>
+      
+      <div class="quiz-opt">B) B. 사용자 데이터 윤리적 활용</div>
+      
+      <div class="quiz-opt">C) C. 클라우드 인프라 최적화</div>
+      
+      <div class="quiz-opt">D) D. A/B 테스트 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 사용자 데이터 윤리적 활용</div>
+          <div class="quiz-explanation">사용자 허가 없이 LLM 훈련에 데이터를 활용하는 윤리적 문제를 다루고 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠가 속한 주요 기술 분야는?</div>
+      
+      <div class="quiz-opt">A) A. 추천 시스템</div>
+      
+      <div class="quiz-opt">B) B. 데이터 윤리</div>
+      
+      <div class="quiz-opt">C) C. 분산 컴퓨팅</div>
+      
+      <div class="quiz-opt">D) D. 시계열 예측</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 데이터 윤리</div>
+          <div class="quiz-explanation">사용자 데이터 활용의 윤리적 경계를 논의하며 데이터 거버넌스와 모델 훈련의 관계를 다룹니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
