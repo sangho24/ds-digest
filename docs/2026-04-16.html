@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 16일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/flink-realtime-frequency-capping" target="_blank">Apache Flink + RocksDB 튜닝으로 광고 Frequency Capping 실시간 집계를 일주일까지 확장하기</a>
+    </h2>
+
+    <p class="item-summary">Flink+RocksDB로 광고 실시간 집계 7일까지 확장한 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Apache Flink</span><span class="tag">RocksDB</span><span class="tag">Real-time Processing</span><span class="tag">Frequency Capping</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/flink-realtime-frequency-capping" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>광고 노출 제한(Frequency Capping)을 1분~7일 구간으로 실시간 집계하는 Flink 아키텍처 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>RocksDB 상태 관리 최적화로 Flink 앱 성능 한계 돌파</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>배치 처리에서 실시간으로 마이그레이션 시킨 운영 지표 기반 병목 분석 방법론</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 광고 이외의 실시간 집계 시스템(예: 유저 행동 분석)에 Flink+RocksDB 상태 저장 방식 도입하여 7일 이상 슬라이딩 윈도우 구현</div>
+    
+    <div class="idea">💡 Flink Changelog 기반 상태 백업/복원 기능을 활용해 장애 시 7일 집계 데이터 손실 방지 시스템 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 광고 Frequency Capping 시스템에서 Flink 대신 Airflow 배치를 사용하지 않은 주된 이유는?</div>
+      
+      <div class="quiz-opt">A) A. 배치 처리가 실시간 요구사항에 부적합</div>
+      
+      <div class="quiz-opt">B) B. Airflow가 광고 도메인에 최적화되지 않음</div>
+      
+      <div class="quiz-opt">C) C. Flink가 RocksDB와 호환성이 더 좋음</div>
+      
+      <div class="quiz-opt">D) D. Airflow가 클러스터 확장성이 낮음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) A. 배치 처리가 실시간 요구사항에 부적합</div>
+          <div class="quiz-explanation">본문에서 1분~7일 구간을 실시간으로 처리해야 하는 요구사항이 명시되어 있으며, Flink의 실시간 처리 특성이 핵심 동기입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. RocksDB가 Flink에서 주로 어떤 역할을 했나요?</div>
+      
+      <div class="quiz-opt">A) A. Kafka 메시지 캐싱</div>
+      
+      <div class="quiz-opt">B) B. 상태(state) 저장소</div>
+      
+      <div class="quiz-opt">C) C. A/B 테스트 결과 저장</div>
+      
+      <div class="quiz-opt">D) D. 모델 추론 결과 캐시</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 상태(state) 저장소</div>
+          <div class="quiz-explanation">콘텐츠에서 RocksDB는 Flink의 상태 저장소로 사용되어 장기간 슬라이딩 윈도우 집계를 가능하게 했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      당근 테크 블로그 - Medium · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/our-journey-to-autoscaling-eks-node-groups-for-job-workloads-e8a6a7ed845e?source=rss----4505f82a2dbd---4" target="_blank">Our Journey to Autoscaling EKS Node Groups for Job Workloads</a>
+    </h2>
+
+    <p class="item-summary">배치 작업 인터럽션 방지한 EKS 자동확장 전략 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">Kubernetes</span><span class="tag">MLOps</span><span class="tag">autoscaling</span><span class="tag">batch processing</span><span class="tag">EKS</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/daangn/our-journey-to-autoscaling-eks-node-groups-for-job-workloads-e8a6a7ed845e?source=rss----4505f82a2dbd---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>작업 인터럽션 방지를 위한 노드 그룹 분리 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Bin-packing 기반 스케줄링으로 Scale-in 최적화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>비용-안정성 균형 맞춘 동적 리소스 관리 구현</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 학습 배치 작업에 Bin-packing 스케줄러 적용하여 GPU 클러스터 자동확장 최적화</div>
+    
+    <div class="idea">💡 훈련/추론 작업 분리된 Dedicated Node Group 구축으로 인프라 비용 30% 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Job workload 자동확장의 주요 도전 과제는?</div>
+      
+      <div class="quiz-opt">A) Pod 재시작 시간 최소화</div>
+      
+      <div class="quiz-opt">B) 노드 간 작업 균형 분배</div>
+      
+      <div class="quiz-opt">C) 작업 인터럽션 방지</div>
+      
+      <div class="quiz-opt">D) GPU 메모리 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 작업 인터럽션 방지</div>
+          <div class="quiz-explanation">Job workload는 중단 시 작업 재시작이 불가능해 인터럽션 방지가 핵심</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Scale-in을 위한 효과적인 스케줄링 전략은?</div>
+      
+      <div class="quiz-opt">A) Round-robin</div>
+      
+      <div class="quiz-opt">B) Bin-packing</div>
+      
+      <div class="quiz-opt">C) Random</div>
+      
+      <div class="quiz-opt">D) Spread</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Bin-packing</div>
+          <div class="quiz-explanation">Bin-packing은 작업을 특정 노드에 집중시켜 Scale-in 시 중단 리스크를 줄임</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      당근 테크 블로그 - Medium · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/job-%EC%9B%8C%ED%81%AC%EB%A1%9C%EB%93%9C%EB%A5%BC-%EC%9C%84%ED%95%9C-eks-node-group-%EC%98%A4%ED%86%A0%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81-%EB%8F%84%EC%9E%85%EA%B8%B0-a6a28376d153?source=rss----4505f82a2dbd---4" target="_blank">Job 워크로드를 위한 EKS Node Group 오토스케일링 도입기</a>
+    </h2>
+
+    <p class="item-summary">Job 워크로드 자동 확장으로 MLOps 비용 최적화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Kubernetes</span><span class="tag">Auto-scaling</span><span class="tag">Cloud Infrastructure</span><span class="tag">PodAffinity</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/daangn/job-%EC%9B%8C%ED%81%AC%EB%A1%9C%EB%93%9C%EB%A5%BC-%EC%9C%84%ED%95%9C-eks-node-group-%EC%98%A4%ED%86%A0%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81-%EB%8F%84%EC%9E%85%EA%B8%B0-a6a28376d153?source=rss----4505f82a2dbd---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Job 워크로드는 중단 불가능성으로 인해 기존 자동 확장에 어려움</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>PodAffinity를 활용한 Bin-packing으로 Node 집중 배치 최적화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>전용 Node Group 유지 비용 대신 동적 자동 확장 정책 도입</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 배치 처리 파이프라인의 EKS Node Group에 PodAffinity 기반 Bin-packing 정책 적용</div>
+    
+    <div class="idea">💡 ML 모델 학습용 Job 워크로드에 Min/Max Node 수를 조정한 Cost-aware Auto-scaling 정책 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Job 워크로드 자동 확장의 주요 도전 과제는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 고정된 CPU 사용률</div>
+      
+      <div class="quiz-opt">B) 중단 불가능한 작업 특성</div>
+      
+      <div class="quiz-opt">C) 네트워크 지연</div>
+      
+      <div class="quiz-opt">D) GPU 리소스 부족</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 중단 불가능한 작업 특성</div>
+          <div class="quiz-explanation">Job 워크로드는 중단 시 재시작해야 하므로 Scale-in 과정에서 Node 제거가 어려움</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. PodAffinity가 Bin-packing에 기여하는 방식은?</div>
+      
+      <div class="quiz-opt">A) Pod를 여러 Node에 고르게 분산</div>
+      
+      <div class="quiz-opt">B) Pod를 특정 Node에 집중 배치</div>
+      
+      <div class="quiz-opt">C) CPU 사용량에 따라 Node 수 조정</div>
+      
+      <div class="quiz-opt">D) 네트워크 대역폭 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Pod를 특정 Node에 집중 배치</div>
+          <div class="quiz-explanation">PodAffinity는 Job 워크로드를 소수 Node에 집중 배치해 빈 Node 생성을 유도해 Scale-in 가능</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
