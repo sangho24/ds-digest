@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 22일 · 2건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/6475419" target="_blank">네이버 검색의 대규모 메트릭 저장소, VictoriaMetrics 운영기</a>
+    </h2>
+
+    <p class="item-summary">VictoriaMetrics로 555조 데이터포인트 관리 및 무중단 장비 전환 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Kubernetes</span><span class="tag">VictoriaMetrics</span><span class="tag">Time-Series DB</span><span class="tag">Scalability</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/6475419" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>VictoriaMetrics의 수평 확장성과 0.92바이트/데이터포인트 압축 효율로 555조 데이터 관리</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>쿠버네티스 전환으로 컨테이너 58배 증가 시 12.5억 시계열 처리 성공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>180대 장비 무중단 교체 기술과 메모리 한계 해결 방안 공개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 VictoriaMetrics의 vminsert→vmstorage→vmselect 아키텍처를 도입해 컨테이너 수 증가에 따른 메트릭 카디널리티 문제 해결</div>
+    
+    <div class="idea">💡 데이터포인트당 0.92바이트 압축 기술을 활용해 기존 Prometheus 기반 시스템의 스토리지 비용 40% 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. VictoriaMetrics 클러스터가 처리하는 데이터포인트당 평균 저장 크기는?</div>
+      
+      <div class="quiz-opt">A) 0.52바이트</div>
+      
+      <div class="quiz-opt">B) 0.72바이트</div>
+      
+      <div class="quiz-opt">C) 0.92바이트</div>
+      
+      <div class="quiz-opt">D) 1.22바이트</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 0.92바이트</div>
+          <div class="quiz-explanation">본문에 명시된 '데이터포인트당 0.92바이트' 압축 효율이 핵심 지표입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 네이버가 2022-2026년 사이 컨테이너 수 증가율은?</div>
+      
+      <div class="quiz-opt">A) 10배</div>
+      
+      <div class="quiz-opt">B) 28배</div>
+      
+      <div class="quiz-opt">C) 58배</div>
+      
+      <div class="quiz-opt">D) 100배</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 58배</div>
+          <div class="quiz-explanation">2022년 수만 개에서 2026년 수백만 개로 58배 증가한 쿠버네티스 전환 효과입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      댓글: blog · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://tech.kakao.com/posts/819" target="_blank">카나나 스칼라 1회 세미나 현장 스케치</a>
+    </h2>
+
+    <p class="item-summary">Scala 기반 대규모 데이터 처리 사례 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">Scala</span><span class="tag">Big Data</span><span class="tag">Spark</span><span class="tag">MLOps</span><span class="tag">데이터 파이프라인</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://tech.kakao.com/posts/819" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Scala 언어 특성과 데이터 처리 최적화 사례 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 스트리밍 처리 구현 패턴 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Spark 연동을 통한 분산 처리 성능 비교 분석</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Spark 작업의 성능 개선을 위해 Scala의 case class를 사용한 데이터 모델링 적용</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에서 Akka Streams 기반 실시간 데이터 처리 모듈 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Scala에서 대규모 데이터 처리 시 가장 유리한 특징은?</div>
+      
+      <div class="quiz-opt">A) A. JVM 호환성</div>
+      
+      <div class="quiz-opt">B) B. 함수형 프로그래밍</div>
+      
+      <div class="quiz-opt">C) C. Null 안전성</div>
+      
+      <div class="quiz-opt">D) D. DSL 지원</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 함수형 프로그래밍</div>
+          <div class="quiz-explanation">함수형 프로그래밍은 불변성과 선언적 스타일로 병렬/분산 처리에 최적화되어 있음</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Spark 연동 시 Scala 대비 Python의 단점은?</div>
+      
+      <div class="quiz-opt">A) A. 빠른 실행 속도</div>
+      
+      <div class="quiz-opt">B) B. 메모리 효율성</div>
+      
+      <div class="quiz-opt">C) C. 타입 안전성 부족</div>
+      
+      <div class="quiz-opt">D) D. 커뮤니티 지원</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 타입 안전성 부족</div>
+          <div class="quiz-explanation">Python은 JVM과 인터오퍼레이션 시 타입 검증이 약하고 성능 저하 발생</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
