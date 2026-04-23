@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 23일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/da-assistant-panda" target="_blank">토스플레이스 데이터봇 ‘판다(PANDA)’를 소개합니다 : 모든 팀원이 데이터 전문가처럼 일하는 방법</a>
+    </h2>
+
+    <p class="item-summary">데이터 민주화를 위한 AI 기반 데이터봇 구현 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Democratization</span><span class="tag">AI 데이터봇</span><span class="tag">데이터 분석 자동화</span><span class="tag">보안 데이터 접근</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/da-assistant-panda" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>70%의 데이터 요청이 단순 추출 작업임을 발견해 데이터봇을 기획</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 기반 데이터봇(PANDA)을 통해 팀원이 보안 등급에 맞는 데이터를 실시간 조회 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>토큰 낭비와 일관성 없는 결과 등 실제 AI 도입 시 발생한 기술적 한계</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 분석가의 70% 단순 작업 감소를 위해 내부 데이터봇 도입 시, SQL 쿼리 생성 API와 결합해 자동화 파이프라인 구축</div>
+    
+    <div class="idea">💡 보안 등급 기반 데이터 접근 제어 시스템을 구현해 민감 데이터 유출 리스크를 줄이는 MLOps 프레임워크 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. PANDA 데이터봇이 해결하려는 핵심 문제는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 학습 속도 개선</div>
+      
+      <div class="quiz-opt">B) 데이터 요청 처리 지연</div>
+      
+      <div class="quiz-opt">C) SQL 쿼리 복잡도 감소</div>
+      
+      <div class="quiz-opt">D) 모델 추론 정확도 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 데이터 요청 처리 지연</div>
+          <div class="quiz-explanation">본문에서 '데이터 분석가가 수십 개 대시보드 확인 또는 복잡한 SQL 작성'이 필요했던 문제를 PANDA가 해결했다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. PANDA 개발 시 발견된 주요 기술적 한계는?</div>
+      
+      <div class="quiz-opt">A) 데이터 시각화 제한</div>
+      
+      <div class="quiz-opt">B) 토큰 낭비와 일관성 없는 결과</div>
+      
+      <div class="quiz-opt">C) GPU 자원 부족</div>
+      
+      <div class="quiz-opt">D) 데이터 샘플링 오류</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 토큰 낭비와 일관성 없는 결과</div>
+          <div class="quiz-explanation">문서에서 'AI가 수천 개 테이블을 참고하며 토큰 낭비 발생' 및 '일관성 없는 결과' 문제가 구체적으로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      당근 테크 블로그 - Medium · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/%EB%AA%A8%EB%91%90%EA%B0%80-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EB%8B%A4%EB%A3%A8%EB%8A%94-ai-%EC%8B%9C%EB%8C%80-%EC%A7%80%EB%82%9C-1%EB%85%84%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%8C%80%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A1%8C%EC%9D%84%EA%B9%8C-67bdb8fd91d4?source=rss----4505f82a2dbd---4" target="_blank">모두가 데이터를 다루는 AI 시대, 지난 1년간 데이터 팀은 어떻게 달라졌을까?</a>
+    </h2>
+
+    <p class="item-summary">AI 도입으로 데이터 업무의 핵심 역량이 구현에서 검증으로 이동</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Governance</span><span class="tag">Data Platforms</span><span class="tag">A/B testing</span><span class="tag">Experimentation</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/daangn/%EB%AA%A8%EB%91%90%EA%B0%80-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EB%8B%A4%EB%A3%A8%EB%8A%94-ai-%EC%8B%9C%EB%8C%80-%EC%A7%80%EB%82%9C-1%EB%85%84%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%8C%80%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A1%8C%EC%9D%84%EA%B9%8C-67bdb8fd91d4?source=rss----4505f82a2dbd---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI는 반복 작업 자동화로 데이터 업무의 진입 장벽을 낮추지만, 책임 공백 위험 증가</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MCP 서버를 통해 LLM이 데이터 플랫폼에 직접 접근하는 자연어 인터페이스 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 조직의 역할이 셀프 서비스 플랫폼 기반으로 전환되면서 데이터 품질 검증 체계 강화 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 BigQuery MCP 서버를 도입하여 자연어 질의 기반 데이터 탐색 기능 구현 (예: '최근 1개월 유저 활성화율 추이 알려줘')</div>
+    
+    <div class="idea">💡 Lineage MCP를 활용한 테이블 수정 시 자동 영향도 분석 시스템 개발 (예: 스키마 변경 시 영향 받는 파이프라인 30개 자동 식별)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 도입으로 데이터 엔지니어의 주요 역량이 어떻게 변화하고 있나요?</div>
+      
+      <div class="quiz-opt">A) SQL 작성 속도 향상</div>
+      
+      <div class="quiz-opt">B) 문제 정의 및 검증 능력 강화</div>
+      
+      <div class="quiz-opt">C) 데이터 시각화 기술</div>
+      
+      <div class="quiz-opt">D) 클라우드 인프라 운영 능력</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 문제 정의 및 검증 능력 강화</div>
+          <div class="quiz-explanation">본문에서 AI가 구현을 대신하면서 업무의 본질이 '문제 정의, 검증, 설계' 쪽으로 이동하고 있다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. MCP 서버의 주요 목적은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 데이터 암호화 강화</div>
+      
+      <div class="quiz-opt">B) LLM이 데이터 플랫폼에 직접 접근하도록 연결</div>
+      
+      <div class="quiz-opt">C) 데이터 파이프라인 자동 배포</div>
+      
+      <div class="quiz-opt">D) 모델 추론 속도 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) LLM이 데이터 플랫폼에 직접 접근하도록 연결</div>
+          <div class="quiz-explanation">MCP 서버는 LLM이 BigQuery, Lineage, KarrotMetrics 등 데이터 시스템과 직접 연결해 자연어 인터페이스를 구현하는 핵심 기술</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/operating-starrocks-1" target="_blank">StarRocks 운영기: Resource Group으로 멀티테넌트 워크로드 격리하기</a>
+    </h2>
+
+    <p class="item-summary">StarRocks 리소스 그룹으로 워크로드 우선순위 설정 방법</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Resource Management</span><span class="tag">StarRocks</span><span class="tag">Multi-tenancy</span><span class="tag">OLAP</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/operating-starrocks-1" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>서비스/모니터링/배치 워크로드를 CPU 우선순위로 분리한 운영 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Resource Group 설정 시 의존 관계를 무시하면 예상치 못한 동작 발생</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>StarRocks 3.4 기준 통합 클러스터 내 워크로드 격리 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 파이프라인에서 Resource Group을 사용해 실시간 조회와 배치 작업을 CPU 우선순위로 분리하여 성능 경쟁 최소화</div>
+    
+    <div class="idea">💡 StarRocks 클러스터 내 A/B 테스트 쿼리와 모니터링 쿼리를 별도 리소스 그룹으로 격리해 QPS 변동에 따른 성능 영향 분석</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. StarRocks를 도입한 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) MySQL 대체</div>
+      
+      <div class="quiz-opt">B) 이중 경로 제거</div>
+      
+      <div class="quiz-opt">C) GPU 가속</div>
+      
+      <div class="quiz-opt">D) 데이터 압축</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 이중 경로 제거</div>
+          <div class="quiz-explanation">MySQL과 Hadoop 간 이중 경로 문제를 해결하기 위해 StarRocks를 도입했으며, 이는 SQL 인터페이스 통합과 대용량 처리를 가능하게 했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 워크로드 격리의 핵심 고려사항은?</div>
+      
+      <div class="quiz-opt">A) 메모리 최적화</div>
+      
+      <div class="quiz-opt">B) CPU 우선순위</div>
+      
+      <div class="quiz-opt">C) 데이터 암호화</div>
+      
+      <div class="quiz-opt">D) 네트워크 대역폭</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) CPU 우선순위</div>
+          <div class="quiz-explanation">동시 실행 워크로드가 겹칠 때 CPU 우선순위 설정이 성능 보호의 핵심이며, Resource Group을 통해 이를 관리했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
