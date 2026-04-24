@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 24일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/browser-use/browser-harness" target="_blank">Show HN: Browser Harness – Gives LLM freedom to complete any browser task</a>
+    </h2>
+
+    <p class="item-summary">LLM이 브라우저 작업을 자유롭게 처리하는 신규 패러다임 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">Browser Automation</span><span class="tag">CDP</span><span class="tag">A/B Testing</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/browser-use/browser-harness" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 브라우저 프레임워크 제거 후 LLM이 CDP 웹소켓을 직접 제어하는 방식 도입</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM이 자체적으로 툴 생성(예: upload_file 함수 자동 작성)으로 에지 케이스 해결</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Playwright 등 기존 솔루션 대비 실시간 컨텍스트 제공으로 '실제 클릭 여부' 같은 오류 방지</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 A/B 테스트 자동화 시나리오에 CDP 기반 브라우저 허네스 도입: LLM이 테스트 환경에서 동적 UI 변경을 실시간 감지하고 대응</div>
+    
+    <div class="idea">💡 모델 서빙 파이프라인에 브라우저 허네스 통합: 웹 인터페이스 기반 모델 테스트 시 LLM이 크로스-Origin iframe 처리 등 복잡한 UI 상호작용 자동화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Browser Harness가 기존 브라우저 자동화 도구와 다른 핵심 개념은?</div>
+      
+      <div class="quiz-opt">A) 사전 정의된 함수 집합 사용</div>
+      
+      <div class="quiz-opt">B) LLM이 CDP 웹소켓을 직접 제어</div>
+      
+      <div class="quiz-opt">C) Python 스크립트 기반 UI 테스트</div>
+      
+      <div class="quiz-opt">D) Headless Chrome만 지원</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) LLM이 CDP 웹소켓을 직접 제어</div>
+          <div class="quiz-explanation">기존 도구는 LLM에 사전 정의된 함수를 제공했지만, Browser Harness는 LLM이 CDP 웹소켓을 직접 제어하여 최대한 유연하게 작업을 수행합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. LLM이 upload_file 함수를 자동 생성한 사례에서 사용된 핵심 기술은?</div>
+      
+      <div class="quiz-opt">A) DOM.setFileInputFiles</div>
+      
+      <div class="quiz-opt">B) Playwright MCP</div>
+      
+      <div class="quiz-opt">C) Selenium WebDriver</div>
+      
+      <div class="quiz-opt">D) Chrome DevTools Protocol</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) DOM.setFileInputFiles</div>
+          <div class="quiz-explanation">LLM은 DOM.setFileInputFiles라는 CDP 명령어를 직접 사용하여 파일 업로드 기능을 동적으로 생성했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/post-quantum-cryptography" target="_blank">양자컴퓨터 시대에 대비한 양자내성암호 적용, 왜 10년 먼저 서비스에 적용했을까?</a>
+    </h2>
+
+    <p class="item-summary">양자내성암호 도입 시 수만 개 가맹점과의 협업 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">Security</span><span class="tag">MLOps</span><span class="tag">Legacy System</span><span class="tag">Post-Quantum Cryptography</span><span class="tag">System Integration</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/post-quantum-cryptography" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Mission-critical 시스템에서 '돌아가면 건들지 마라'는 보수적 원칙이 변화 도입에 미치는 영향</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오래된 가맹점 서버의 기술 스택 낙후화로 인한 보안 프로토콜 업그레이드 난이도</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>양자내성암호 도입을 위한 단계적 테스트 및 가맹점별 맞춤형 지원 전략</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 팀이 모델 배포 시 '영향 범위 최소화 원칙'을 적용해, 단계적 롤아웃과 롤백 전략을 설계</div>
+    
+    <div class="idea">💡 보안 프로토콜 업그레이드 방식을 참고해, 모델 서빙 환경의 백워드 호환성 유지 전략 수립</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 토스페이먼츠가 보안 프로토콜 변경 시 가장 큰 도전 과제로 삼은 것은?</div>
+      
+      <div class="quiz-opt">A) A. 알고리즘 성능 최적화</div>
+      
+      <div class="quiz-opt">B) B. 수만 개 가맹점과의 호환성 보장</div>
+      
+      <div class="quiz-opt">C) C. 클라우드 비용 절감</div>
+      
+      <div class="quiz-opt">D) D. 개발자 교육 프로그램 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 수만 개 가맹점과의 호환성 보장</div>
+          <div class="quiz-explanation">본문에서 '수만 개 가맹점과 보조를 맞추면서 보안 수준을 올리는 일'이 진짜 어려운 점으로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Mission-critical 시스템에서 '돌아가면 건들지 마라'는 원칙이 적용되는 주된 이유는?</div>
+      
+      <div class="quiz-opt">A) A. 개발자 편의성</div>
+      
+      <div class="quiz-opt">B) B. 시스템 안정성 유지</div>
+      
+      <div class="quiz-opt">C) C. 법적 규제 준수</div>
+      
+      <div class="quiz-opt">D) D. 사용자 경험 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 시스템 안정성 유지</div>
+          <div class="quiz-explanation">본문에서 '안정성을 지키기 위한 보수적 원칙'으로 설명되며, 장애 방지를 위한 핵심 원칙임</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://ynarwal.github.io/how-llms-work/" target="_blank">Show HN: How LLMs Work – Interactive visual guide based on Karpathy's lecture</a>
+    </h2>
+
+    <p class="item-summary">LLM 작동 원리 시각화로 팀 교육 자료로 활용 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLMs</span><span class="tag">Data Science Education</span><span class="tag">Interactive Learning</span><span class="tag">Model Interpretability</span><span class="tag">Andrej Karpathy</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://ynarwal.github.io/how-llms-work/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Andrej Karpathy의 강의를 기반으로 LLM 작동 원리 시각화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Claude Code로 자동 생성된 단일 HTML 파일 기반 인터랙티브 사이트</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>정기적으로 복습 가능한 LLM 핵심 개념 정리</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 팀 내 LLM 교육 자료 제작 시 Claude Code로 자동 생성 프로세스 도입</div>
+    
+    <div class="idea">💡 모델 설명을 위한 인터랙티브 시각화 개발로 이해도 향상</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠가 기반된 강의를 진행한 인물은?</div>
+      
+      <div class="quiz-opt">A) A. Yann LeCun</div>
+      
+      <div class="quiz-opt">B) B. Andrej Karpathy</div>
+      
+      <div class="quiz-opt">C) C. Fei-Fei Li</div>
+      
+      <div class="quiz-opt">D) D. Geoffrey Hinton</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. Andrej Karpathy</div>
+          <div class="quiz-explanation">콘텐츠 본문에서 명시된 대로 Andrej Karpathy의 강의를 기반으로 제작됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 인트로 스타일의 인터랙티브 사이트를 생성한 AI 도구는?</div>
+      
+      <div class="quiz-opt">A) A. GPT-4</div>
+      
+      <div class="quiz-opt">B) B. Claude Code</div>
+      
+      <div class="quiz-opt">C) C. Gemini</div>
+      
+      <div class="quiz-opt">D) D. Llama 3</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. Claude Code</div>
+          <div class="quiz-explanation">본문에 명시된 대로 Claude Code가 자동 생성 도구로 사용됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
