@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 04월 27일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.systalyze.com/utilyze" target="_blank">Show HN: Utilyze – an open source GPU monitoring tool more accurate than nvtop</a>
+    </h2>
+
+    <p class="item-summary">GPU 실제 계산 성능 측정으로 과도한 클러스터 확장 방지</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">GPU Monitoring</span><span class="tag">Performance Optimization</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.systalyze.com/utilyze" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 GPU utilization 지표는 커널 실행 시간만 반영해 실제 성능과 차이 큼</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Utilyze는 하드웨어 성능 카운터를 샘플링해 이론적 한계 대비 실제 성능 측정</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오픈소스 도구로 GPU 클러스터 최적화 및 자원 할당 정확도 개선 가능</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Utilyze를 기반으로 GPU 클러스터 자동 스케일링 정책에 실제 성능 지표 반영</div>
+    
+    <div class="idea">💡 모델 학습 파이프라인에 통합해 과도한 GPU 할당으로 인한 학습 비용 증가 방지</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Utilyze가 기존 GPU monitoring 도구와 다른 점은?</div>
+      
+      <div class="quiz-opt">A) GPU 메모리 사용량을 실시간으로 시각화</div>
+      
+      <div class="quiz-opt">B) 하드웨어 성능 카운터를 샘플링해 이론적 한계 대비 실제 성능 측정</div>
+      
+      <div class="quiz-opt">C) GPU 온도와 전력 소모를 연동해 에너지 효율 계산</div>
+      
+      <div class="quiz-opt">D) 다중 GPU 환경에서 부하 분산 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 하드웨어 성능 카운터를 샘플링해 이론적 한계 대비 실제 성능 측정</div>
+          <div class="quiz-explanation">Utilyze는 기존 도구가 커널 실행 시간만 반영하는 반면, 하드웨어 성능 카운터를 기반으로 실제 계산 성능을 측정합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 기존 GPU utilization 지표의 문제점은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) GPU 메모리 누수를 감지하지 못함</div>
+      
+      <div class="quiz-opt">B) GPU가 100%로 표시되더라도 실제 계산 성능이 낮을 수 있음</div>
+      
+      <div class="quiz-opt">C) 멀티 GPU 환경에서 정확도 저하</div>
+      
+      <div class="quiz-opt">D) GPU 드라이버 버전별 호환성 문제</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) GPU가 100%로 표시되더라도 실제 계산 성능이 낮을 수 있음</div>
+          <div class="quiz-explanation">기존 지표는 GPU가 100%로 표시되더라도 실제 계산 성능이 1-10%에 불과한 경우가 있어 자원 할당 오류를 유발합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/post-quantum-cryptography-eng" target="_blank">Why We Adopted Post-Quantum Cryptography a Decade Before Quantum Computers Arrive</a>
+    </h2>
+
+    <p class="item-summary">퀀텀 컴퓨팅 도래 전 포스트-퀀텀 암호학 도입 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">Security</span><span class="tag">Post-Quantum Cryptography</span><span class="tag">MLOps</span><span class="tag">Infrastructure</span><span class="tag">Cryptography</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/post-quantum-cryptography-eng" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>20년된 시스템 리프레시 중 보안 강화와 서비스 연속성 유지의 균형 도모</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>퀀텀 컴퓨팅 도래 10년 전부터 포스트-퀀텀 암호학을 프로토콜에 통합한 전략적 결정</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>미니멀리즘 원칙을 무너뜨리고 장기적 보안 리스크 대비한 기술적 리스크 수용</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 ML 모델 배포 파이프라인에 포스트-퀀텀 암호화 알고리즘(Hybrid Encryption) 도입하여 데이터 전송 보안 강화</div>
+    
+    <div class="idea">💡 현재 사용 중인 암호화 프로토콜의 퀀텀 취약성 평가를 위한 Quantum Security Assessment Framework 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Toss가 포스트-퀀텀 암호학을 도입한 주요 동기는?</div>
+      
+      <div class="quiz-opt">A) 기존 시스템 성능 향상</div>
+      
+      <div class="quiz-opt">B) 퀀텀 컴퓨팅 도래에 대한 선제적 대응</div>
+      
+      <div class="quiz-opt">C) 규제 준수 강화</div>
+      
+      <div class="quiz-opt">D) 클라우드 비용 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 퀀텀 컴퓨팅 도래에 대한 선제적 대응</div>
+          <div class="quiz-explanation">본문에서 'a decade before quantum computers arrive'라는 명확한 선제적 전략적 결정을 언급하고 있음</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 리프레시 프로젝트의 가장 큰 도전은 무엇이었는가?</div>
+      
+      <div class="quiz-opt">A) 기술적 복잡성</div>
+      
+      <div class="quiz-opt">B) 보안 표준 강화</div>
+      
+      <div class="quiz-opt">C) 개발자 숙련도 부족</div>
+      
+      <div class="quiz-opt">D) 클라우드 마이그레이션</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 보안 표준 강화</div>
+          <div class="quiz-explanation">본문에서 'raising our security standards while keeping tens of thousands of merchants on board'라는 핵심 도전 과제를 명시</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deploy.live/blog/running-local-llms-offline-on-a-ten-hour-flight/" target="_blank">Running local LLMs offline on a ten-hour flight</a>
+    </h2>
+
+    <p class="item-summary">오프라인 환경에서 LLM 실행으로 모델 서빙 비용 절감 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 서빙</span><span class="tag">Edge Computing</span><span class="tag">LLM</span><span class="tag">Quantization</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deploy.live/blog/running-local-llms-offline-on-a-ten-hour-flight/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GGUF 포맷을 활용한 LLM 양자화 기술로 10GB 모델을 3GB로 축소</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OLLAMA 프레임워크로 CPU 기반 로컬 추론이 10시간 비행 중 지속 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오프라인 모델 실행 시 데이터 프라이버시 보장 및 클라우드 의존도 감소</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 GGUF 양자화 모델을 기존 MLOps 파이프라인에 통합하여 추론 비용 70% 절감</div>
+    
+    <div class="idea">💡 AWS SageMaker Edge 기반 GGUF 모델 배포로 사내 테스트 환경 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM 오프라인 실행 시 가장 중요한 장점은?</div>
+      
+      <div class="quiz-opt">A) A. 모델 정확도 향상</div>
+      
+      <div class="quiz-opt">B) B. 데이터 프라이버시 보장</div>
+      
+      <div class="quiz-opt">C) C. GPU 사용량 감소</div>
+      
+      <div class="quiz-opt">D) D. A/B 테스트 속도 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 데이터 프라이버시 보장</div>
+          <div class="quiz-explanation">오프라인 실행은 데이터가 클라우드로 전송되지 않아 프라이버시 보호가 핵심</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. GGUF 포맷의 주요 특징은?</div>
+      
+      <div class="quiz-opt">A) A. 모델 가중치 압축</div>
+      
+      <div class="quiz-opt">B) B. 파이썬 기반 추론 엔진</div>
+      
+      <div class="quiz-opt">C) C. GPU 전용 최적화</div>
+      
+      <div class="quiz-opt">D) D. 대화형 인터페이스 제공</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) A. 모델 가중치 압축</div>
+          <div class="quiz-explanation">GGUF는 모델 양자화와 가중치 압축 기술로 파일 크기를 최소화</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
