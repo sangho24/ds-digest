@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 01일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/3WXk2yngbok" target="_blank">AI Safety & Quality 성과리더 이상호 : 안전한 AI를 위한 카카오의 노력 | if(kakao)25 Day2</a>
+    </h2>
+
+    <p class="item-summary">AI 시스템 위험성 대응 전략 및 카카오 안전성 확보 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">AI Safety</span><span class="tag">MLOps</span><span class="tag">Policy</span><span class="tag">Collaboration</span><span class="tag">Risk Management</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/3WXk2yngbok" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 시스템의 주요 위험성과 그 특징 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>정책 수립, 기술 개발, 외부 협력 3가지 접근 방식 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>외부 전문가와의 협력을 통한 안전성 검증 프레임워크 소개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 배포 전 정책 기반 위험 평가 체크리스트 도입 (예: 카카오의 정책 수립 프레임워크 참고)</div>
+    
+    <div class="idea">💡 AI 모델 설명성 향상을 위한 외부 전문가 참여 심사 프로세스 설계 (예: 카카오의 외부 협력 사례 적용)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 카카오가 안전한 AI를 위해 채택한 세 가지 주요 접근 방식은?</div>
+      
+      <div class="quiz-opt">A) 정책 수립, 기술 개발, 외부 협력</div>
+      
+      <div class="quiz-opt">B) 데이터 증강, 모델 앙상블, 클러스터링</div>
+      
+      <div class="quiz-opt">C) A/B 테스트, 로깅, 모니터링</div>
+      
+      <div class="quiz-opt">D) 인프라 최적화, 자동화, 배포 파이프라인</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 정책 수립, 기술 개발, 외부 협력</div>
+          <div class="quiz-explanation">영상에서 정책 수립(06:36), 기술 개발(09:24), 외부 협력(13:50)을 명확히 제시한 세 가지 핵심 전략입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 시스템의 위험성 특징으로 가장 적절한 설명은?</div>
+      
+      <div class="quiz-opt">A) 모든 사용 환경에서 일관된 성능 보장</div>
+      
+      <div class="quiz-opt">B) 사전 예측 불가능한 부작용 발생 가능성</div>
+      
+      <div class="quiz-opt">C) 데이터 수집 비용의 지속적 증가</div>
+      
+      <div class="quiz-opt">D) 모델 해석성과 성능의 반비례 관계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 사전 예측 불가능한 부작용 발생 가능성</div>
+          <div class="quiz-explanation">영상 02:11에서 AI 시스템의 주요 위험성으로 예측 불가능한 부작용 발생 가능성을 강조하고 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      당근 테크 블로그 - Medium · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8-%ED%95%9C-%EC%A4%84%EB%A1%9C-%ED%99%94%EB%A9%B4%EC%9D%B4-%EB%82%98%EC%98%A4%EB%8A%94-%EC%8B%9C%EB%8C%80-%EB%8B%B9%EA%B7%BC%EC%8A%A4%EB%9F%AC%EC%9A%B4-%ED%99%94%EB%A9%B4%EC%9D%84-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95-0bc268f819c7?source=rss----4505f82a2dbd---4" target="_blank">프롬프트 한 줄로 화면이 나오는 시대, ‘당근스러운 화면’을 만드는 법</a>
+    </h2>
+
+    <p class="item-summary">디자인 시스템 기반 AI 도구로 의사결정 자동화 구현</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">A/B testing</span><span class="tag">Design Systems</span><span class="tag">AI Automation</span><span class="tag">CLI Tools</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/daangn/%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8-%ED%95%9C-%EC%A4%84%EB%A1%9C-%ED%99%94%EB%A9%B4%EC%9D%B4-%EB%82%98%EC%98%A4%EB%8A%94-%EC%8B%9C%EB%8C%80-%EB%8B%B9%EA%B7%BC%EC%8A%A4%EB%9F%AC%EC%9A%B4-%ED%99%94%EB%A9%B4%EC%9D%84-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95-0bc268f819c7?source=rss----4505f82a2dbd---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 AI 도구는 디자인 시스템 컴포넌트/토큰 적용이 불가능해 실제 제품에 통합 불가</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kraft는 SEED 디자인 시스템 규칙을 AI에 내재화해 코드 레벨 자동화를 달성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>어드민 → CLI → 에이전트 형태로 확장된 도구 체계를 통해 의사결정 자동화 구현</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 파이프라인에서 CLI 기반 자동화 도구를 도입해 규칙 기반 데이터 전처리 스크립트 생성</div>
+    
+    <div class="idea">💡 A/B 테스트 시나리오 자동화 시, 디자인 시스템 규칙을 기반으로 테스트 화면 생성 프로세스 통합</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 기존 바이브 코딩 도구의 주요 한계는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 디자인 시스템 컴포넌트를 지원하지 않음</div>
+      
+      <div class="quiz-opt">B) AI 모델 학습 속도가 느림</div>
+      
+      <div class="quiz-opt">C) 사용자 인터페이스가 복잡함</div>
+      
+      <div class="quiz-opt">D) 클라우드 호스팅 지원 불가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 디자인 시스템 컴포넌트를 지원하지 않음</div>
+          <div class="quiz-explanation">본문에서 Lovable, v0 등은 SEED 디자인 시스템의 ActionButton, AppBar 등 특정 컴포넌트를 지원하지 않아 실제 제품에 통합이 어려웠다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Kraft 도구의 핵심 기능은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 디자인 시스템 규칙 기반 의사결정 자동화</div>
+      
+      <div class="quiz-opt">B) AI 모델 학습 속도 최적화</div>
+      
+      <div class="quiz-opt">C) 사용자 행동 분석 대시보드 제공</div>
+      
+      <div class="quiz-opt">D) 모바일 앱 성능 모니터링</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 디자인 시스템 규칙 기반 의사결정 자동화</div>
+          <div class="quiz-explanation">콘텐츠에서 Kraft는 '의사결정 자동화 도구'로, SEED 디자인 시스템의 수십 가지 규칙을 AI에 내재화해 자동화한다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/intel/auto-round" target="_blank">Advanced Quantization Algorithm for LLMs</a>
+    </h2>
+
+    <p class="item-summary">LLM 모델의 추론 속도 향상과 메모리 절약을 위한 최신 양자화 알고리즘</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Quantization</span><span class="tag">Model Optimization</span><span class="tag">LLMs</span><span class="tag">Inference Optimization</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/intel/auto-round" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>고정밀도를 유지하면서 모델 크기를 40% 이상 줄이는 양자화 기법 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>8-bit 정밀도에서 95% 이상의 FP32 성능을 달성하는 실험 결과 포함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Transformer 기반 모델의 어텐션 메커니즘에 특화된 양자화 전략 제안</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 환경에서 8-bit 양자화된 LLM을 배포하여 GPU 메모리 사용량을 30% 절감</div>
+    
+    <div class="idea">💡 Ray 클러스터에 양자화된 모델을 배치해 실시간 추론 latency를 200ms 이하로 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 양자화 알고리즘의 주요 장점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 모델 학습 시간 단축</div>
+      
+      <div class="quiz-opt">B) 추론 속도 향상 및 메모리 절약</div>
+      
+      <div class="quiz-opt">C) 데이터 수집 비용 감소</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 실험 횟수 증가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 추론 속도 향상 및 메모리 절약</div>
+          <div class="quiz-explanation">양자화는 모델의 정밀도를 낮추어 추론 속도를 높이고 메모리 사용량을 줄이는 기법입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 기술이 적용될 수 있는 주요 분야는?</div>
+      
+      <div class="quiz-opt">A) 데이터베이스 최적화</div>
+      
+      <div class="quiz-opt">B) MLOps</div>
+      
+      <div class="quiz-opt">C) 데이터 시각화</div>
+      
+      <div class="quiz-opt">D) 모델 해석성 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) MLOps</div>
+          <div class="quiz-explanation">양자화는 모델 배포 및 서빙 과정에서 성능 향상을 위한 MLOps 핵심 기술입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
