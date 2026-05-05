@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 05일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://news.ycombinator.com/item?id=48023496" target="_blank">Show HN: Airbyte Agents – context for agents across multiple data sources</a>
+    </h2>
+
+    <p class="item-summary">AI 에이전트의 다중 데이터 소스 통합 문제 해결</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Integration</span><span class="tag">API Management</span><span class="tag">AI Agents</span><span class="tag">Context Store</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://news.ycombinator.com/item?id=48023496" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현재 MCP(Multi-Cloud Platform)가 API 래퍼로만 구성되어 있어 에이전트가 실시간 컨텍스트 생성에 실패</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Context Store를 통해 데이터 인덱싱과 엔티티 매핑을 사전 처리하여 47단계 API 호출을 단순화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Slack, Salesforce 등 운영 시스템 간 인증/스키마 처리를 자동화하는 통합 레이어 구축</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 에이전트 기반 고객 이탈 예측 시스템에 Airbyte Agents 적용하여 API 호출 수 47→3단계로 줄이기</div>
+    
+    <div class="idea">💡 Context Store를 활용해 Salesforce와 Jira 간 티켓-고객 매핑 자동화 (기존 수작업 대비 80% 시간 절약)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 현재 MCP의 주요 문제점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) API 인증 과정이 복잡함</div>
+      
+      <div class="quiz-opt">B) API를 단순 래퍼로만 제공하여 컨텍스트 생성 실패</div>
+      
+      <div class="quiz-opt">C) 데이터 복제 속도가 느림</div>
+      
+      <div class="quiz-opt">D) 다중 클라우드 지원이 불가능함</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) API를 단순 래퍼로만 제공하여 컨텍스트 생성 실패</div>
+          <div class="quiz-explanation">기사에서 'Most MCPs don’t fix this. They’re thin wrappers over APIs'로 명시된 핵심 문제</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Airbyte Agents의 핵심 구성 요소는?</div>
+      
+      <div class="quiz-opt">A) Data Pipeline Orchestration Engine</div>
+      
+      <div class="quiz-opt">B) Context Store</div>
+      
+      <div class="quiz-opt">C) AutoML Tuner</div>
+      
+      <div class="quiz-opt">D) Real-time Feature Store</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Context Store</div>
+          <div class="quiz-explanation">Context Store는 에이전트가 데이터를 검색할 수 있는 인덱스로, 기사에서 2번 강조된 핵심 개념</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Y-FLsYE9yDI" target="_blank">배달 로봇을 위한 맵 서비스: 강남 한복판에서 달리는 법 #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">실외 로봇 배달 서비스의 맵 서비스 개발 과제와 MLOps 적용 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">로봇 맵 서비스</span><span class="tag">데이터 인프라</span><span class="tag">실시간 데이터 처리</span><span class="tag">스케일링 전략</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Y-FLsYE9yDI" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>배달 로봇의 정확한 맵 데이터 생성을 위한 센서 퓨전 기술 적용</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>강남 도심 환경에서의 맵 데이터 실시간 업데이트 시스템 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>로봇 운행 안정성을 위한 다중 경로 최적화 알고리즘 개발</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 지도 데이터 수집 시 LiDAR + 카메라 센서 퓨전 파이프라인을 MLOps 파이프라인에 통합하여 자동 학습 주기를 24시간 단위로 단축</div>
+    
+    <div class="idea">💡 도심 맵 데이터의 실시간 변경 사항을 Kafka 기반 스트리밍 파이프라인으로 처리하여 로봇 경로 재계산 지연 시간을 500ms 이하로 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 세션에서 언급된 맵 서비스의 핵심 기능은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. 사용자 위치 추적</div>
+      
+      <div class="quiz-opt">B) B. 실시간 경로 최적화</div>
+      
+      <div class="quiz-opt">C) C. 로봇 운행 시 센서 데이터 퓨전</div>
+      
+      <div class="quiz-opt">D) D. 주문 데이터 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 로봇 운행 시 센서 데이터 퓨전</div>
+          <div class="quiz-explanation">발표 내용에서 센서 퓨전 기술을 통해 정확한 맵 데이터를 생성하고 이를 기반으로 로봇이 운행한다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 황순영 엔지니어의 발표 주제는 다음 중 무엇과 가장 관련이 있는가?</div>
+      
+      <div class="quiz-opt">A) A. 머신러닝 모델 추론 최적화</div>
+      
+      <div class="quiz-opt">B) B. 로봇 맵 서비스 인프라 개발</div>
+      
+      <div class="quiz-opt">C) C. A/B 테스트 설계</div>
+      
+      <div class="quiz-opt">D) D. 사용자 행동 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 로봇 맵 서비스 인프라 개발</div>
+          <div class="quiz-explanation">발표자 소개와 세션 설명에서 로봇 맵 서비스 개발 과정을 공유한다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/YcA31dmSNMk" target="_blank">"어제 쓴 프롬프트, 오늘도 그대로 쓰시나요?" #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">AI 대화 설계 원리로 업무 재현성 확보</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI 프롬프트 설계</span><span class="tag">교육</span><span class="tag">재현 가능성</span><span class="tag">업무 자동화</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/YcA31dmSNMk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>운에 의존하지 않는 AI 대화 설계 원리 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Anthropic 공식 가이드 기반 실제 적용 사례 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>근거 기반 AI 활용 체크리스트 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 설명 생성 시 프롬프트 설계 체크리스트 도입 (예: '의도-입력-기대값' 3단계 검증)</div>
+    
+    <div class="idea">💡 재현 가능한 AI 작업 템플릿 개발 (교육/개발 프로세스 표준화)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 활용의 핵심 원칙은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 최신 모델 사용</div>
+      
+      <div class="quiz-opt">B) 운에 맡기는 대화</div>
+      
+      <div class="quiz-opt">C) 의도적 설계</div>
+      
+      <div class="quiz-opt">D) 복잡도 최소화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 의도적 설계</div>
+          <div class="quiz-explanation">세션 핵심은 '의도적으로 설계된 대화'가 AI 활용의 핵심이라는 점입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 제시된 체크리스트의 주요 목적은?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 향상</div>
+      
+      <div class="quiz-opt">B) 감각에 의존한 업무</div>
+      
+      <div class="quiz-opt">C) 재현 가능한 전략 도출</div>
+      
+      <div class="quiz-opt">D) 비용 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 재현 가능한 전략 도출</div>
+          <div class="quiz-explanation">체크리스트는 '감각이 아닌 근거 기반' AI 적용을 위한 도구로 설명되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
