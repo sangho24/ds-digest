@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 09일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2604.15597" target="_blank">LLMs corrupt your documents when you delegate</a>
+    </h2>
+
+    <p class="item-summary">LLM 위임 시 문서 손상 문제로 데이터 신뢰성 관리 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">Data Quality</span><span class="tag">Document Processing</span><span class="tag">Data Integrity</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2604.15597" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 위임 과정에서 문서의 구조/내용이 의도치 않게 변형될 수 있음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>문서 변형은 데이터 파이프라인의 신뢰성과 모델 훈련 결과에 직접적 영향</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 활용 시 문서 변경 내역 추적 및 검증 프로세스 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 LLM 처리 문서에 SHA-256 해시 검증 단계 추가하여 변경 감지</div>
+    
+    <div class="idea">💡 Git-based 문서 버전 관리 시스템에 LLM 처리 전/후 문서 자동 비교 기능 구현</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM 위임 시 발생할 수 있는 주요 문제는?</div>
+      
+      <div class="quiz-opt">A) A) 모델 훈련 속도 저하</div>
+      
+      <div class="quiz-opt">B) B) 문서 구조/내용 변형</div>
+      
+      <div class="quiz-opt">C) C) GPU 메모리 과소비</div>
+      
+      <div class="quiz-opt">D) D) 사용자 인터페이스 복잡화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B) 문서 구조/내용 변형</div>
+          <div class="quiz-explanation">LLM은 문서의 구조적/내용적 변형을 유발할 수 있어 데이터 파이프라인 신뢰성에 직접적인 영향을 미칩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. LLM 문서 처리 시 변형 감지를 위한 최적 전략은?</div>
+      
+      <div class="quiz-opt">A) A) 모델 파라미터 증가</div>
+      
+      <div class="quiz-opt">B) B) 문서 해시 비교</div>
+      
+      <div class="quiz-opt">C) C) 사용자 피드백 수집</div>
+      
+      <div class="quiz-opt">D) D) 훈련 데이터 확장</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B) 문서 해시 비교</div>
+          <div class="quiz-explanation">문서의 해시 비교는 변형 감지에 가장 직접적이고 효율적인 방법입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/TZfL1VHt--0" target="_blank">오픈형 멘토링: 정신차려보니 시니어, 좋은 중니어+a 되기 #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">시니어 데이터 사이언티스트로 성장하는 실무 멘토링 팁</p>
+
+    
+    <div class="tags">
+      <span class="tag">Career Development</span><span class="tag">Mentorship</span><span class="tag">Data Science</span><span class="tag">Leadership</span><span class="tag">Professional Growth</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/TZfL1VHt--0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>경력 개발을 위한 구체적인 멘토링 전략 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현업 PM의 관점에서 요구되는 핵심 역량 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>중니어 단계에서 주의해야 할 성장 트러블 스폿</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 팀 내 정기 멘토링 프로그램 도입 시, 김현정 PM이 언급한 '역량별 성장 체크리스트'를 기준으로 멘토-멘티 매칭 시스템 구축</div>
+    
+    <div class="idea">💡 신입/중니어 교육 과정에 '현업 시니어의 성장 스토리'를 사례 기반 학습 자료로 활용하여 경력 로드맵 시각화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 세션의 주요 목적은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) A. 머신러닝 모델 최적화 기법</div>
+      
+      <div class="quiz-opt">B) B. 데이터 파이프라인 설계</div>
+      
+      <div class="quiz-opt">C) C. 경력 개발 멘토링</div>
+      
+      <div class="quiz-opt">D) D. A/B 테스트 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 경력 개발 멘토링</div>
+          <div class="quiz-explanation">세션 설명에서 '시니어, 좋은 중니어+a 되기'라는 제목과 멘토링이라는 컨셉이 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 김현정(PM)의 역할은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) A. 데이터 엔지니어</div>
+      
+      <div class="quiz-opt">B) B. 머신러닝 엔지니어</div>
+      
+      <div class="quiz-opt">C) C. 프로덕트 매니저</div>
+      
+      <div class="quiz-opt">D) D. 데이터 사이언티스트</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 프로덕트 매니저</div>
+          <div class="quiz-explanation">멘토 소개에서 '김현정(PM)'으로 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/4911787" target="_blank">FE News 26년 5월 소식을 전해드립니다.</a>
+    </h2>
+
+    <p class="item-summary">Cursor SDK로 코드 에이전트를 CI/CD 파이프라인에 통합 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Automation</span><span class="tag">CI/CD</span><span class="tag">Code Generation</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/4911787" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Cursor TypeScript SDK는 클라우드 기반 코딩 에이전트를 프로그래밍 방식으로 호출 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>React Server Components를 활용한 부분 페이지 캐싱 전략이 성능 최적화에 기여</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>접근성 문제 해결을 위한 React 개발 체크리스트 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Cursor SDK를 사용해 데이터 파이프라인 자동화 스크립트 생성</div>
+    
+    <div class="idea">💡 React Server Components 기반의 MLOps 대시보드에서 동적/정적 콘텐츠 분리 구현</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. MDN이 새 프론트엔드 아키텍처로 전환한 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) React 대신 Vue.js로 전환</div>
+      
+      <div class="quiz-opt">B) Web Components 기반으로 빌드 속도 개선</div>
+      
+      <div class="quiz-opt">C) CSS-in-JS 방식 폐지</div>
+      
+      <div class="quiz-opt">D) SPA 대신 SSR 전환</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Web Components 기반으로 빌드 속도 개선</div>
+          <div class="quiz-explanation">Rspack 도입으로 빌드 시간이 2초로 단축되었으며 Web Components 기반의 lazy-loading 구조를 채택</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Cursor SDK의 핵심 기능은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 모델 추론 결과 시각화</div>
+      
+      <div class="quiz-opt">B) 코드 생성 에이전트 프로그래밍 통합</div>
+      
+      <div class="quiz-opt">C) 데이터베이스 쿼리 최적화</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 결과 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 코드 생성 에이전트 프로그래밍 통합</div>
+          <div class="quiz-explanation">CI/CD 파이프라인 또는 백엔드 서비스에 코딩 에이전트를 임베드하여 자동화 작업 수행 가능</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
