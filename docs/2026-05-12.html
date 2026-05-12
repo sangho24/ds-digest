@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 12일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/cactus-compute/needle" target="_blank">Show HN: Needle: We Distilled Gemini Tool Calling into a 26M Model</a>
+    </h2>
+
+    <p class="item-summary">소형 기기에서 툴 호출 성능 최적화한 26M 모델로 MLOps 효율성 극대화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Edge Computing</span><span class="tag">Model Distillation</span><span class="tag">Function Calling</span><span class="tag">Attention Networks</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/cactus-compute/needle" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>26M 파라미터 모델로 소비자 기기(스마트워치, 폰)에서 6000 tok/s 처리 속도 달성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>FFN(Feed-Forward Network) 제거한 순수 Attention 기반 아키텍처로 툴 호출 성능 개선</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Gemini로 생성한 2B 토큰 합성 데이터로 45분만에 툴 호출 특화 트레이닝 완료</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모바일 앱 내 툴 호출 시스템에 Needle 모델 도입하여 FunctionGemma-270M 대비 10배 가볍게 서비스 배포</div>
+    
+    <div class="idea">💡 RAG 기반 챗봇에서 FFN 제거한 Simple Attention Network 적용해 GPU 메모리 소비 40% 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Needle 모델의 파라미터 수는?</div>
+      
+      <div class="quiz-opt">A) 26M</div>
+      
+      <div class="quiz-opt">B) 270M</div>
+      
+      <div class="quiz-opt">C) 350M</div>
+      
+      <div class="quiz-opt">D) 1.5B</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 26M</div>
+          <div class="quiz-explanation">Needle은 26M 파라미터로 소형 기기 최적화된 툴 호출 모델입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. FFN(Feed-Forward Network)를 제거한 이유는?</div>
+      
+      <div class="quiz-opt">A) 추론 속도 향상</div>
+      
+      <div class="quiz-opt">B) 정확도 개선</div>
+      
+      <div class="quiz-opt">C) 툴 호출은 retrieval-and-assembly 특성</div>
+      
+      <div class="quiz-opt">D) 모델 양자화 용이성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 툴 호출은 retrieval-and-assembly 특성</div>
+          <div class="quiz-explanation">툴 호출은 쿼리-툴 매칭과 JSON 생성이라는 retrieval-and-assembly 과정이므로 FFN이 불필요합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/statewright/statewright" target="_blank">Show HN: Statewright – Visual state machines that make AI agents reliable</a>
+    </h2>
+
+    <p class="item-summary">상태머신으로 LLM 에이전트 신뢰성 극대화하는 구조적 접근법 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">State Machines</span><span class="tag">Workflow Automation</span><span class="tag">Model Reliability</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/statewright/statewright" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>13-20B 파라미터 모델에 상태머신 제약 적용 시 SWE-bench 성능 개선</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>각 상태별 툴 접근 제한으로 LLM의 비이드포테нт성 문제 해결</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Rust 엔진 기반 상태머신 실행 + Claude Code 플러그인 통합 아키텍처</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에 상태머신 기반 워크플로우 도입: 예) 코드 리뷰 → 테스트 → 배포 단계별 툴 접근 제어</div>
+    
+    <div class="idea">💡 13B 이상 모델에 상태머신 제약 적용해 파라미터 비용 절감: 기존 70B 모델 작업을 13B로 리팩터링</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Statewright가 13B 파라미터 모델에서 효과적인 주된 이유는?</div>
+      
+      <div class="quiz-opt">A) 더 큰 컨텍스트 윈도우 제공</div>
+      
+      <div class="quiz-opt">B) 상태머신으로 컨텍스트 범위 좁히기</div>
+      
+      <div class="quiz-opt">C) 모델 파인튜닝 강화</div>
+      
+      <div class="quiz-opt">D) 하드웨어 가속 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 상태머신으로 컨텍스트 범위 좁히기</div>
+          <div class="quiz-explanation">본문에서 'context window utilization matters more than raw context size'로 상태머신이 컨텍스트 범위를 좁히는 전략이 핵심이라고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Statewright가 LLM의 비이드포텐트 문제를 해결하는 방법은?</div>
+      
+      <div class="quiz-opt">A) 더 긴 프롬프트 사용</div>
+      
+      <div class="quiz-opt">B) 결정론적 코드로 상태 전이 강제</div>
+      
+      <div class="quiz-opt">C) 모델 파라미터 확장</div>
+      
+      <div class="quiz-opt">D) 사전 학습 데이터 증강</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 결정론적 코드로 상태 전이 강제</div>
+          <div class="quiz-explanation">상태머신 프로토콜로 툴 접근과 상태 전이를 결정론적으로 제어하여 비이드포텐트성을 방지</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/t-2A9lLEbl0" target="_blank">이래라저래라 하지 마라: 주니어를 성장시키는 '파트너십 대화법' #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">데이터 기반 대화 훈련으로 팀원 성장 촉진</p>
+
+    
+    <div class="tags">
+      <span class="tag">Data Science</span><span class="tag">Soft Skills</span><span class="tag">Mentorship</span><span class="tag">Communication</span><span class="tag">Team Collaboration</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/t-2A9lLEbl0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>맞는 말 대신 진심이 핵심임을 깨닫는 경험담 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>동기면담 정신과 데이터/AI를 결합한 대화 훈련 방법 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>주니어 멘토링 시 '파트너십 대화법' 구체적 사례 설명</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 주니어 멘토링 시스템에 파트너십 대화법 도입하여 피드백의 질 향상</div>
+    
+    <div class="idea">💡 데이터 기반 대화 분석 도구로 팀 커뮤니케이션 패턴 개선 (예: 대화 빈도/감정 분석 모델 개발)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 발표자가 강조한 대화의 핵심은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 정답률 최적화</div>
+      
+      <div class="quiz-opt">B) 데이터 정확도</div>
+      
+      <div class="quiz-opt">C) 진심</div>
+      
+      <div class="quiz-opt">D) 시간 단축</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 진심</div>
+          <div class="quiz-explanation">발표자 경험을 통해 '맞는 말'보다 '진심'이 대화의 핵심임을 강조했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠에서 제시된 팀원 성장 전략은?</div>
+      
+      <div class="quiz-opt">A) 강압적 피드백</div>
+      
+      <div class="quiz-opt">B) 자동화 도구</div>
+      
+      <div class="quiz-opt">C) 파트너십 대화법</div>
+      
+      <div class="quiz-opt">D) 경쟁 시스템</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 파트너십 대화법</div>
+          <div class="quiz-explanation">동기면담 정신과 데이터/AI를 결합한 '파트너십 대화법'이 주요 전략으로 제시되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
