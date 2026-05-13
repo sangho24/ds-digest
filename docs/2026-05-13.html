@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 13일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.tryardent.com/" target="_blank">Launch HN: Ardent (YC P26) – Postgres sandboxes in seconds with zero migration</a>
+    </h2>
+
+    <p class="item-summary">데이터 인프라 테스트용 DB 샌드박스 자동화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">A/B testing</span><span class="tag">Postgres</span><span class="tag">Database Sandboxing</span><span class="tag">Causal Inference</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.tryardent.com/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>로직 복제 + DDL 트리거로 호스팅된 Postgres DB에 샌드박스 생성 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TB 규모에서도 6초 미만으로 클론 생성 (Copy-on-Write 기반)</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>PII 익명화 SQL 지원 및 클라우드 데이터 거주성 보장</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 A/B 테스트 시각화 파이프라인에서 Ardent 샌드박스를 사용해 실제 데이터 기반 가설 검증</div>
+    
+    <div class="idea">💡 인과추론 실험 시 DB 클론을 기반으로 치환변수 조작 테스트 (Counterfactual Testing)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Ardent가 물리적 복제 대신 논리적 복제를 사용하는 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) 호스팅 DB 플랫폼 제약 준수</div>
+      
+      <div class="quiz-opt">B) Kafka 스트리밍 최적화</div>
+      
+      <div class="quiz-opt">C) BYOC(Cloud) 지원</div>
+      
+      <div class="quiz-opt">D) DDL 트리거 성능 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 호스팅 DB 플랫폼 제약 준수</div>
+          <div class="quiz-explanation">대부분의 호스팅 DB 플랫폼이 물리적 복제를 허용하지 않기 때문입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Ardent 샌드박스의 핵심 성능 지표는?</div>
+      
+      <div class="quiz-opt">A) 10초 미만 클론 생성</div>
+      
+      <div class="quiz-opt">B) 6초 미만 클론 생성</div>
+      
+      <div class="quiz-opt">C) 3초 미만 클론 생성</div>
+      
+      <div class="quiz-opt">D) 1초 미만 클론 생성</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 6초 미만 클론 생성</div>
+          <div class="quiz-explanation">TB 규모에서도 Copy-on-Write 기반으로 6초 미만 클론 생성이 가능합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/2009415" target="_blank">[사전 안내] 첫 번째 'NAVER SECURITY SEMINAR'가 열립니다.</a>
+    </h2>
+
+    <p class="item-summary">NAVER 보안 세미나에서 AI 레드티밍 전략과 피싱 트렌드 분석 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AI Security</span><span class="tag">LLM Security</span><span class="tag">Cybersecurity</span><span class="tag">Bug Bounty</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/2009415" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 레드티밍 전략을 통한 안전한 LLM 모델 개발 사례 발표</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>네이버 서비스에서 발견된 최신 피싱 트렌드 분석 공개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오프라인 결제 환경 보안 강화를 위한 실무 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 배포 시 AI 레드티밍 프로세스를 MLOps 파이프라인에 통합하여 보안 취약점 사전 점검</div>
+    
+    <div class="idea">💡 피싱 트렌드 데이터를 기반으로 데이터 전처리 단계에 이상 탐지 알고리즘 추가</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 세미나에서 발표되는 주요 주제 중 하나는?</div>
+      
+      <div class="quiz-opt">A) A. 클라우드 인프라 최적화</div>
+      
+      <div class="quiz-opt">B) B. AI 레드티밍 전략</div>
+      
+      <div class="quiz-opt">C) C. 빅데이터 저장소 설계</div>
+      
+      <div class="quiz-opt">D) D. 머신러닝 모델 해석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. AI 레드티밍 전략</div>
+          <div class="quiz-explanation">본문에서 '안전한 LLM 모델을 만들기 위한 AI 레드티밍 전략'이 명시적으로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 세미나 참가 신청 결과는 언제 이메일로 안내받을 수 있나요?</div>
+      
+      <div class="quiz-opt">A) A. 4월 19일</div>
+      
+      <div class="quiz-opt">B) B. 4월 23일</div>
+      
+      <div class="quiz-opt">C) C. 4월 30일</div>
+      
+      <div class="quiz-opt">D) D. 5월 5일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 4월 23일</div>
+          <div class="quiz-explanation">신청 결과 안내 일정이 4월 23일(목) 오후로 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://kerkour.com/the-limits-of-rust" target="_blank">The limits of Rust, or why you should probably not follow Amazon and Cloudflare</a>
+    </h2>
+
+    <p class="item-summary">Rust의 성능 한계와 MLOps 인프라 선택 시 고려사항</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Rust</span><span class="tag">Systems Programming</span><span class="tag">Cloud Infrastructure</span><span class="tag">Performance Optimization</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://kerkour.com/the-limits-of-rust" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Rust의 메모리 관리 복잡성이 클라우드 인프라 개발에서 생산성 저하 요인</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Amazon/Cloudflare의 Rust 도입 사례가 모든 시나리오에 적합하지 않음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>고성능이 필수인 시스템과 일반 웹 서비스에서의 Rust 활용도 차이</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 인프라에서 Rust 대신 Go 또는 Python 기반 마이크로서비스 도입 검토</div>
+    
+    <div class="idea">💡 Rust로 구현된 배치 처리 파이프라인을 WASM 기반 하이브리드 아키텍처로 리팩터링</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Rust가 클라우드 인프라에서 주요한 단점으로 지적된 것은?</div>
+      
+      <div class="quiz-opt">A) GPU 호환성 부족</div>
+      
+      <div class="quiz-opt">B) 메모리 관리 복잡성</div>
+      
+      <div class="quiz-opt">C) 병렬 처리 지원 미비</div>
+      
+      <div class="quiz-opt">D) 모델 추론 속도 저하</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 메모리 관리 복잡성</div>
+          <div class="quiz-explanation">Rust의 소유권 시스템은 성능 최적화를 가능하게 하지만, 복잡한 메모리 관리가 개발 생산성을 저하시키는 주요 지적사항임</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Amazon과 Cloudflare의 Rust 도입 사례가 일반화되지 않는 이유는?</div>
+      
+      <div class="quiz-opt">A) 특수한 하드웨어 요구사항</div>
+      
+      <div class="quiz-opt">B) 고유한 트래픽 패턴</div>
+      
+      <div class="quiz-opt">C) 기존 시스템과의 호환성</div>
+      
+      <div class="quiz-opt">D) 모든 시나리오에서 최적화 효과 미비</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) 모든 시나리오에서 최적화 효과 미비</div>
+          <div class="quiz-explanation">Rust의 성능 이점은 특정 고성능 요구 시나리오에만 해당하며, 일반 웹 서비스에서는 복잡도 대비 수익성이 낮음</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
