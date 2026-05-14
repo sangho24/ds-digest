@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 14일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Yklrs_WA-ts" target="_blank">AI 시대, 서비스 보안 담당자는 어떤 고민들을 할까? #우아콘2025 #우아한형제들</a>
+    </h2>
+
+    <p class="item-summary">AI 모델 보안 및 보안 강화 전략 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Application Security</span><span class="tag">AI Security</span><span class="tag">Model Protection</span><span class="tag">Data Privacy</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Yklrs_WA-ts" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 사용 자체에 대한 보안 고민 (예: 모델 유출 방지, 데이터 암호화)</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI를 활용한 보안 전략 (예: 이상행동 탐지, 자동화된 취약점 분석)</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>보안 담당자의 AI 도입 시 핵심 고려사항 정리</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 시 TensorFlow Privacy 적용해 데이터 유출 방지</div>
+    
+    <div class="idea">💡 Kubernetes 기반 MLOps 파이프라인에 Prometheus 모니터링 도입해 이상 트래픽 탐지</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 권현철의 발표 주제는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) AI 모델 성능 최적화</div>
+      
+      <div class="quiz-opt">B) AI 시대의 서비스 보안 전략</div>
+      
+      <div class="quiz-opt">C) 데이터 파이프라인 자동화</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 설계 방법</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) AI 시대의 서비스 보안 전략</div>
+          <div class="quiz-explanation">발표 설명에서 AI 시대의 보안 고민과 해결책을 공유한다고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI를 활용한 보안의 예시로 해당하는 것은?</div>
+      
+      <div class="quiz-opt">A) 모델 인퍼런스 속도 개선</div>
+      
+      <div class="quiz-opt">B) 자동화된 취약점 분석</div>
+      
+      <div class="quiz-opt">C) 데이터 라벨링 자동화</div>
+      
+      <div class="quiz-opt">D) 추천 시스템 성능 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 자동화된 취약점 분석</div>
+          <div class="quiz-explanation">발표 내용에서 AI를 활용한 보안 전략으로 자동화된 분석이 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/toss-tpm" target="_blank">AI 시대, 성과 내는 조직일수록 토스식 TPM이 필요한 이유</a>
+    </h2>
+
+    <p class="item-summary">AI 확산에 따른 TPM 역할 재정의 필요성 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Technical Program Management</span><span class="tag">Cross-functional Collaboration</span><span class="tag">AI Governance</span><span class="tag">Organizational Design</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/toss-tpm" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 도입 시 팀 간 의존성 복잡화로 기존 TPM 역할 부족</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>전략과 실행 간 괴리 해결을 위한 TPM의 문제 정의 역할 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>상태 공유와 실제 변화 간 괴리 문제를 해결하기 위한 구조적 개선 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에서 모델 배포 시 팀 간 의존성 매핑을 위한 Dependency Graph 도입</div>
+    
+    <div class="idea">💡 AI 프로젝트의 전략-실행 간 괴리 해소를 위한 OKR(목표와 주요 결과)과 TPM 역할 통합 프레임워크 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 조직에서 TPM 역할 재정의가 필요한 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) A. 코드 리뷰 효율화</div>
+      
+      <div class="quiz-opt">B) B. 팀 간 의존성 복잡성 증가</div>
+      
+      <div class="quiz-opt">C) C. 개발자 생산성 측정</div>
+      
+      <div class="quiz-opt">D) D. 클라우드 비용 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 팀 간 의존성 복잡성 증가</div>
+          <div class="quiz-explanation">본문에서 AI 도입으로 팀 간 의존성이 복잡해지고 회색지대가 증가해 기존 역할 정의로는 부족하다고 설명했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. TPM이 단순 조율자 역할을 넘어선 핵심 문제는?</div>
+      
+      <div class="quiz-opt">A) A. 일정표 최적화</div>
+      
+      <div class="quiz-opt">B) B. 정의되지 않은 문제의 소유권 설정</div>
+      
+      <div class="quiz-opt">C) C. 문서 자동화</div>
+      
+      <div class="quiz-opt">D) D. 코드 리팩토링</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 정의되지 않은 문제의 소유권 설정</div>
+          <div class="quiz-explanation">문서에 명시된 문제 외에도 소유권이 명확하지 않은 문제들이 조직에서 발생하며 이는 TPM이 해결해야 할 핵심 과제입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      당근 테크 블로그 - Medium · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/daangn/%EB%88%84%EA%B5%AC%EB%82%98-%EC%B0%BE%EC%95%84%EB%B3%BC-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98-%EC%84%9C%EB%B2%84-llm-%EB%A6%B4%EB%A6%AC%EC%A6%88-%EB%85%B8%ED%8A%B8-%EB%8F%84%EC%9E%85%EA%B8%B0-93afe203d766?source=rss----4505f82a2dbd---4" target="_blank">누구나 찾아볼 수 있는 중고거래 서버 LLM 릴리즈 노트 도입기</a>
+    </h2>
+
+    <p class="item-summary">LLM으로 기술 용어 없는 릴리즈 노트 자동화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">DevOps</span><span class="tag">Documentation</span><span class="tag">Automation</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/daangn/%EB%88%84%EA%B5%AC%EB%82%98-%EC%B0%BE%EC%95%84%EB%B3%BC-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98-%EC%84%9C%EB%B2%84-llm-%EB%A6%B4%EB%A6%AC%EC%A6%88-%EB%85%B8%ED%8A%B8-%EB%8F%84%EC%9E%85%EA%B8%B0-93afe203d766?source=rss----4505f82a2dbd---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>PR description을 LLM 입력으로 활용해 토큰 비용 절감</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Notion DB를 통해 배포 데이터 자산화 및 다각적 분석 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GitHub Actions + Prompt Studio로 코드 없이 파이프라인 구축</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 배포 시점의 변경 내역을 LLM으로 요약해 비개발자 팀에 공유 (예: '회귀 모델 AUC 0.02 개선' 대신 '신규 유저 추천 정확도 5% 상승' 형태)</div>
+    
+    <div class="idea">💡 CodeRabbit 대신 DS 팀의 모델 변경 요약을 자동화해 PR description에 삽입 (예: 'LightGBM → CatBoost 교체로 추론 속도 30% 향상')</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Stage 1의 핵심 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) LLM 모델 훈련</div>
+      
+      <div class="quiz-opt">B) PR 데이터 자산화</div>
+      
+      <div class="quiz-opt">C) A/B 테스트 결과 요약</div>
+      
+      <div class="quiz-opt">D) 사용자 피드백 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) PR 데이터 자산화</div>
+          <div class="quiz-explanation">Stage 1은 Notion DB에 PR/배포 내역을 자산화해 LLM 입력으로 활용하는 기반을 만드는 단계입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 왜 변경 코드(diff) 대신 PR description을 사용했나?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 향상</div>
+      
+      <div class="quiz-opt">B) 토큰 비용 절감</div>
+      
+      <div class="quiz-opt">C) 코드 보안 강화</div>
+      
+      <div class="quiz-opt">D) 배포 속도 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 토큰 비용 절감</div>
+          <div class="quiz-explanation">diff를 사용하면 토큰 비용이 증가하고, 이미 PR description에 요약된 의미를 무시하게 되기 때문입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
