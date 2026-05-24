@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 24일 · 2건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2605.06445" target="_blank">Constraint Decay: The Fragility of LLM Agents in Back End Code Generation</a>
+    </h2>
+
+    <p class="item-summary">LLM 에이전트의 백엔드 코드 생성 시 제약 약화 문제로 모델 신뢰도 저하</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">코드 생성</span><span class="tag">제약 처리</span><span class="tag">모델 신뢰성</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2605.06445" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 에이전트가 백엔드 코드 생성 시 입력 제약이 시간 경과에 따라 약화되는 현상 발견</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>제약 약화는 코드 품질 저하 및 예측 불가능한 오류 발생 원인</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현행 LLM 기반 코드 생성 시스템의 신뢰도 한계를 실증</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 코드 생성 시스템에 실시간 제약 검증 모듈 추가 (예: Pylint + LLM output 결합 검증)</div>
+    
+    <div class="idea">💡 LLM 생성 코드에 대한 후처리 단계 도입 (예: 형식 검증 + 유닛 테스트 자동화)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Constraint Decay 현상이 발생하는 주요 원인은?</div>
+      
+      <div class="quiz-opt">A) LLM의 사전 학습 데이터 부족</div>
+      
+      <div class="quiz-opt">B) 코드 생성 시 입력 제약의 시간 경과에 따른 약화</div>
+      
+      <div class="quiz-opt">C) 백엔드 시스템의 하드웨어 한계</div>
+      
+      <div class="quiz-opt">D) 모델 파라미터 최적화 실패</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 코드 생성 시 입력 제약의 시간 경과에 따른 약화</div>
+          <div class="quiz-explanation">Constraint Decay는 입력 제약이 코드 생성 과정에서 점차 약화되어 발생하는 현상으로, 이는 LLM의 내재적 제한으로 인해 시간 경과에 따라 악화됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. LLM 기반 코드 생성 시스템의 신뢰도를 높이기 위한 방안은?</div>
+      
+      <div class="quiz-opt">A) 모델 크기 확장</div>
+      
+      <div class="quiz-opt">B) 제약 조건을 명시적으로 인코딩한 프롬프트 설계</div>
+      
+      <div class="quiz-opt">C) 코드 생성 후 수작업 검수 의존</div>
+      
+      <div class="quiz-opt">D) 추가 데이터 수집 없이 더 많은 학습</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 제약 조건을 명시적으로 인코딩한 프롬프트 설계</div>
+          <div class="quiz-explanation">제약 조건을 명시적으로 인코딩한 프롬프트 설계는 LLM이 생성 과정에서 제약을 유지하도록 유도하여 Constraint Decay를 완화할 수 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://scienceaim.com/australia-just-proved-the-four-day-work-week-works-here-is-what-the-data-actually-says/" target="_blank">Australia Four-Day Work Week Study Data Shows Boosted Productivity</a>
+    </h2>
+
+    <p class="item-summary">4일 근무제 실험 데이터로 인과추론 사례 분석 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">A/B testing</span><span class="tag">causal inference</span><span class="tag">productivity analysis</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://scienceaim.com/australia-just-proved-the-four-day-work-week-works-here-is-what-the-data-actually-says/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>호주 4일 근무제 실험에서 생산성 35% 상승 기록</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 현업 팀 내 A/B 테스트 설계 시 근무제 실험 대상군/통제군 설정 방법 적용</div>
+    
+    <div class="idea">💡 인과추론 모델(Causal Impact)로 정책 변경 효과 분석 프레임워크 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 호주 4일 근무제 실험의 주요 결과는?</div>
+      
+      <div class="quiz-opt">A) 생산성 35% 하락</div>
+      
+      <div class="quiz-opt">B) 근무시간 20% 증가</div>
+      
+      <div class="quiz-opt">C) 생산성 35% 상승</div>
+      
+      <div class="quiz-opt">D) 휴가일 50% 감소</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 생산성 35% 상승</div>
+          <div class="quiz-explanation">실험 대상 기업에서 4일 근무제 도입 후 평균 생산성이 35% 상승한 것으로 나타났습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 실험에서 사용된 주요 분석 방법은?</div>
+      
+      <div class="quiz-opt">A) 시간시리즈 분석</div>
+      
+      <div class="quiz-opt">B) A/B 테스트</div>
+      
+      <div class="quiz-opt">C) 인과추론</div>
+      
+      <div class="quiz-opt">D) 딥러닝 모델</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) A/B 테스트</div>
+          <div class="quiz-explanation">실험군(4일 근무)과 통제군(5일 근무)을 대상으로 A/B 테스트 방식으로 데이터를 비교 분석했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
