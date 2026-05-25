@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 25일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.tinyvolt.com/geomatic" target="_blank">Show HN: Geomatic – A command-driven geometry studio enabled with autodiff</a>
+    </h2>
+
+    <p class="item-summary">기하학적 자동미분 도구로 ML 시각화/디버깅 효율성 극대화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Data Science</span><span class="tag">Autodiff</span><span class="tag">Visualization</span><span class="tag">MLOps</span><span class="tag">Geometric Modeling</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.tinyvolt.com/geomatic" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>명령어 기반 작업 흐름으로 즉각적 기하 생성 및 수정 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>NumPy/PyTorch 방식의 브로드캐스팅과 자동미분 통합</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>변수 변경 시 실시간 반응형 기하 업데이트 기능 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 ML 모델의 파라미터 공간을 시각화하여 경사하강법 동작 확인 (예: loss surface 시각화)</div>
+    
+    <div class="idea">💡 브로드캐스팅 기능 활용해 하이퍼파라미터 스윕 시각화 (예: 학습률/정규화 계수 조합 시각화)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Geomatic에서 `line a b` 명령어는 어떤 작업을 수행하는가?</div>
+      
+      <div class="quiz-opt">A) a, b 좌표 간 선분 생성</div>
+      
+      <div class="quiz-opt">B) a, b 파라미터로 회전 행렬 계산</div>
+      
+      <div class="quiz-opt">C) a, b 확률 분포 시각화</div>
+      
+      <div class="quiz-opt">D) a, b 노드 간 그래프 연결</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) a, b 좌표 간 선분 생성</div>
+          <div class="quiz-explanation">기하 도구 특성상 명령어는 기본적으로 좌표 기반 기하 생성을 수행하며, 빈 캔버스에 점 a와 b를 생성한 후 연결합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Geomatic의 브로드캐스팅 기능은 어떤 기술과 유사한가?</div>
+      
+      <div class="quiz-opt">A) Kubernetes 스케줄링</div>
+      
+      <div class="quiz-opt">B) PyTorch 텐서 연산</div>
+      
+      <div class="quiz-opt">C) SQL 조인</div>
+      
+      <div class="quiz-opt">D) Git 분기 병합</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) PyTorch 텐서 연산</div>
+          <div class="quiz-explanation">NumPy/PyTorch의 텐서 연산 방식과 유사한 다차원 데이터 처리 기능을 시각적 환경에서 구현했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.blocksandfiles.com/flash/2026/05/22/norways-2-petabytes-of-huawei-flash-storage-and-llm-training/5244910" target="_blank">Norway's 2 petabytes of Huawei flash storage and LLM training</a>
+    </h2>
+
+    <p class="item-summary">대규모 언어 모델 학습을 위한 고속 스토리지 솔루션 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">Storage</span><span class="tag">Data Infrastructure</span><span class="tag">High-Performance Computing</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.blocksandfiles.com/flash/2026/05/22/norways-2-petabytes-of-huawei-flash-storage-and-llm-training/5244910" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>노르웨이가 2PB 규모의 핀란드 Huawei 플래시 스토리지를 LLM 학습에 적용한 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대규모 데이터셋 처리를 위한 스토리지 속도와 확장성의 중요성 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 학습 시 데이터 파이프라인 최적화를 위한 하드웨어-소프트웨어 통합 설계 필요성</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 현업 팀의 LLM 학습 인프라에 플래시 스토리지 도입 시 데이터 로딩 속도 개선 효과 검증</div>
+    
+    <div class="idea">💡 2PB 규모 데이터셋을 처리하는 배치 학습 파이프라인의 스토리지 병목 분석 및 리팩토링</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 노르웨이가 LLM 학습에 적용한 스토리지 용량은?</div>
+      
+      <div class="quiz-opt">A) 1PB</div>
+      
+      <div class="quiz-opt">B) 2PB</div>
+      
+      <div class="quiz-opt">C) 5PB</div>
+      
+      <div class="quiz-opt">D) 10PB</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 2PB</div>
+          <div class="quiz-explanation">기사 제목에 명시된 2PB 규모의 Huawei 플래시 스토리지가 핵심 내용입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠에서 강조된 MLOps 핵심 요소는?</div>
+      
+      <div class="quiz-opt">A) 모델 배포</div>
+      
+      <div class="quiz-opt">B) 데이터 저장소</div>
+      
+      <div class="quiz-opt">C) A/B 테스트</div>
+      
+      <div class="quiz-opt">D) 인과 추론</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 데이터 저장소</div>
+          <div class="quiz-explanation">대규모 데이터셋 처리를 위한 스토리지 솔루션은 MLOps에서 핵심적인 데이터 인프라 설계와 관련됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://lemon.rip/w/6-c-extensions-compilers/" target="_blank">C extensions, portability, and alternative compilers</a>
+    </h2>
+
+    <p class="item-summary">C 확장 활용해 파이썬 코드 성능 최적화 기법 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Performance Optimization</span><span class="tag">Cython</span><span class="tag">Compiler</span><span class="tag">Model Serving</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://lemon.rip/w/6-c-extensions-compilers/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>C 확장 모듈로 CPU 집약적 작업 처리 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다양한 컴파일러 선택이 포터빌리티에 미치는 영향 분석</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Numba 등 대안 컴파일러의 실제 성능 비교 사례 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 데이터 전처리 파이프라인의 핵심 함수를 Cython으로 리팩터링하여 30% 이상 처리 시간 단축</div>
+    
+    <div class="idea">💡 Ray 클러스터에서 Numba 기반의 GPU 가속 모델 추론 엔진 구현</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. C 확장 모듈의 주요 활용 목적은?</div>
+      
+      <div class="quiz-opt">A) 모델 해석성 향상</div>
+      
+      <div class="quiz-opt">B) 메모리 사용량 최적화</div>
+      
+      <div class="quiz-opt">C) CPU 집약적 작업 처리</div>
+      
+      <div class="quiz-opt">D) 데이터 시각화 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) CPU 집약적 작업 처리</div>
+          <div class="quiz-explanation">C 확장은 파이썬의 느린 반복 작업을 대체해 CPU 집약적 처리를 가속화하는 데 사용됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 다음 중 포터빌리티 향상을 위한 주요 요소는?</div>
+      
+      <div class="quiz-opt">A) GPU 호환성</div>
+      
+      <div class="quiz-opt">B) 컴파일러 선택</div>
+      
+      <div class="quiz-opt">C) 데이터 정규화</div>
+      
+      <div class="quiz-opt">D) 모델 크기 최소화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 컴파일러 선택</div>
+          <div class="quiz-explanation">다양한 컴파일러 선택은 코드의 포터빌리티(다양한 환경에서 실행 가능성)에 직접적인 영향을 미칩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
