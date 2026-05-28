@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 28일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://shvbsle.in/various-llm-smells/" target="_blank">Various LLM Smells</a>
+    </h2>
+
+    <p class="item-summary">LLM 개발 시 자주 발생하는 문제 패턴을 식별해 모델 품질 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">Model Monitoring</span><span class="tag">Data Quality</span><span class="tag">Prompt Engineering</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://shvbsle.in/various-llm-smells/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 훈련 데이터에 포함된 바이어스로 인한 예측 불일치 문제 식별 방법</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>프롬프트 공학에서의 overfitting 방지를 위한 벤치마킹 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대규모 모델 배포 시 발생하는 latency-accuracy tradeoff 최적화 패턴</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 LLM 모델 서빙 시 input validation pipeline에 'prompt injection' 탐지 규칙 추가</div>
+    
+    <div class="idea">💡 모델 모니터링 시스템에 'data drift' 지표와 'token distribution shift' 지표를 병행 측정</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM에서 발생하는 'data leakage' 문제를 가장 효과적으로 방지하는 방법은?</div>
+      
+      <div class="quiz-opt">A) 훈련 데이터 샘플링 시 시간 기반 스플릿</div>
+      
+      <div class="quiz-opt">B) 모델 가중치 정규화 적용</div>
+      
+      <div class="quiz-opt">C) 프롬프트 템플릿 복잡도 제한</div>
+      
+      <div class="quiz-opt">D) 배치 사이즈 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 훈련 데이터 샘플링 시 시간 기반 스플릿</div>
+          <div class="quiz-explanation">시간 기반 스플릿은 훈련/테스트 데이터의 시간적 순서를 보장해 미래 데이터 유출을 방지합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. LLM 모델의 'hallucination' 문제를 감지하기 위한 모니터링 지표는?</div>
+      
+      <div class="quiz-opt">A) BLEU 점수</div>
+      
+      <div class="quiz-opt">B) Perplexity</div>
+      
+      <div class="quiz-opt">C) Answer Relevance Score</div>
+      
+      <div class="quiz-opt">D) Training Loss</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Answer Relevance Score</div>
+          <div class="quiz-explanation">Answer Relevance Score는 모델 응답과 입력 질문 간의 관련성을 측정해 hallucination을 객관화할 수 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://lenz.io/research/llm-disagreement" target="_blank">Disagreement among frontier LLMs on real-world fact-checks</a>
+    </h2>
+
+    <p class="item-summary">LLM 신뢰도 문제로 모델 평가 방식 재고해야</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">Model Evaluation</span><span class="tag">Causal Inference</span><span class="tag">Data Quality</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://lenz.io/research/llm-disagreement" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>최첨단 LLM들이 실제 사실 검증에서 일관성 없이 반응</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이 현상은 모델 신뢰도 평가 시 기존 지표의 한계를 드러냄</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>인과적 추론 프레임워크 필요해짐 (왜 그런 결과가 나오는지 분석)</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 시점에 다중 LLM 앙상블 + 외부 사실 검증 API를 통합 파이프라인으로 구축</div>
+    
+    <div class="idea">💡 Causal Impact 분석 도구를 사용해 LLM 응답 불일치 원인 파악 프로세스 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM들이 동일 사실에 대해 다른 응답을 할 때 주요 문제는?</div>
+      
+      <div class="quiz-opt">A) A. 추론 속도 저하</div>
+      
+      <div class="quiz-opt">B) B. 사실 신뢰도 저하</div>
+      
+      <div class="quiz-opt">C) C. GPU 사용 증가</div>
+      
+      <div class="quiz-opt">D) D. 사용자 인터페이스 복잡도 증가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 사실 신뢰도 저하</div>
+          <div class="quiz-explanation">LLM의 일관성 없는 사실 인식은 모델 신뢰도와 사용 결정에 직접적인 영향을 미칩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 현상 해결을 위해 가장 효과적인 접근 방식은?</div>
+      
+      <div class="quiz-opt">A) A. 더 큰 모델 훈련</div>
+      
+      <div class="quiz-opt">B) B. 앙상블 + 외부 검증</div>
+      
+      <div class="quiz-opt">C) C. 사용자 피드백 수집</div>
+      
+      <div class="quiz-opt">D) D. 텍스트 길이 제한</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 앙상블 + 외부 검증</div>
+          <div class="quiz-explanation">다중 모델의 결과 비교와 외부 사실 검증을 결합하는 것이 가장 직접적인 해결책입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/XoCy36rrJ7s" target="_blank">[10분 테코톡] 이산의 DTO는 왜 써야할까?</a>
+    </h2>
+
+    <p class="item-summary">DTO 패턴으로 데이터 전달 구조 최적화 방법 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">소프트웨어 설계</span><span class="tag">데이터 엔지니어링</span><span class="tag">API 개발</span><span class="tag">클린 아키텍처</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/XoCy36rrJ7s" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DTO는 도메인 로직과 데이터 전달 계층 분리의 핵심 패턴</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>복잡한 시스템에서 데이터 일관성과 유지보수성 향상</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>API 응답/요청 데이터 구조 명확화를 통한 협업 효율성 증대</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 파이프라인에서 raw data와 feature data를 분리하는 DTO 구조 설계</div>
+    
+    <div class="idea">💡 모델 서빙 시 API Gateway와 ML 서버 간 데이터 전달을 위한 타입 안전한 DTO 스펙 정의</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. DTO의 주요 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 최적화</div>
+      
+      <div class="quiz-opt">B) 데이터 전달 계층과 도메인 로직 분리</div>
+      
+      <div class="quiz-opt">C) GPU 리소스 절약</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 실험 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 데이터 전달 계층과 도메인 로직 분리</div>
+          <div class="quiz-explanation">DTO는 데이터 전달 계층과 비즈니스 로직을 분리하여 시스템의 유지보수성과 확장성을 높이는 설계 패턴입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. DTO를 사용하지 않으면 발생할 수 있는 문제는?</div>
+      
+      <div class="quiz-opt">A) 모델 학습 시간 증가</div>
+      
+      <div class="quiz-opt">B) 데이터 일관성 저하</div>
+      
+      <div class="quiz-opt">C) GPU 메모리 누수</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 통계 유의성 감소</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 데이터 일관성 저하</div>
+          <div class="quiz-explanation">DTO 미사용 시 데이터 전달 과정에서의 일관성 문제로 인해 시스템 전체의 예측 가능성이 떨어집니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
