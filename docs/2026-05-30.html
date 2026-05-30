@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 05월 30일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/myH9d_g9OuE" target="_blank">Iceberg Low-Latency Queries with Materialized Views  (feat. 실시간 거래 리포트)</a>
+    </h2>
+
+    <p class="item-summary">Iceberg+Materialized View로 실시간 거래 리포트 성능 극대화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Iceberg</span><span class="tag">MLOps</span><span class="tag">Real-time data</span><span class="tag">Data engineering</span><span class="tag">Materialized view</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/myH9d_g9OuE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Iceberg의 Materialized View를 활용한 실시간 데이터 캐싱 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Spark+Iceberg+StarRocks 조합으로 100ms 이하 지연 보장</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>동적 필터링 성능 10배 향상 사례 공개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 거래 데이터 파이프라인에 Iceberg Materialized View 도입해 A/B 테스트 결과 조회 속도 개선</div>
+    
+    <div class="idea">💡 StarRocks와 Iceberg 연동으로 인과 추론(Causal Inference) 모델의 학습 데이터 Freshness 보장</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 제시된 실시간 리포트 최적화의 핵심 기술은?</div>
+      
+      <div class="quiz-opt">A) Kafka Stream</div>
+      
+      <div class="quiz-opt">B) Iceberg Materialized View</div>
+      
+      <div class="quiz-opt">C) Flink CEP</div>
+      
+      <div class="quiz-opt">D) Redis Cache</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Iceberg Materialized View</div>
+          <div class="quiz-explanation">Iceberg의 Materialized View는 사전 집계 데이터를 캐시해 쿼리 속도를 극대화하는 핵심 기술로 소개됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 제시된 아키텍처에서 데이터 쓰기 지연을 100ms 이하로 유지하기 위한 조합은?</div>
+      
+      <div class="quiz-opt">A) Spark+Hive</div>
+      
+      <div class="quiz-opt">B) Flink+BigQuery</div>
+      
+      <div class="quiz-opt">C) Spark+Iceberg+StarRocks</div>
+      
+      <div class="quiz-opt">D) Airflow+Snowflake</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Spark+Iceberg+StarRocks</div>
+          <div class="quiz-explanation">Spark(ETL) → Iceberg(저장소) → StarRocks(쿼리)의 조합이 실시간 성능 요구사항을 충족</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/2017402" target="_blank">비개발자의 AI 협업 도전기 — 생산성 측정하려다 서버까지 띄운 9일</a>
+    </h2>
+
+    <p class="item-summary">AI로 비개발자가 Jira-GitHub 데이터 통합 대시보드 구축 과정 공개</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Pipeline</span><span class="tag">DORA Metrics</span><span class="tag">AI Collaboration</span><span class="tag">DevOps</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/2017402" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI를 활용해 Jira CSV 데이터를 시각화하는 HTML 대시보드 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DORA 지표 기반 변경 리드타임 측정 및 GitHub API 연동 확장</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사내 컨테이너 플랫폼 가이드와 AI 협업을 통한 서버 배포 성공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Jira-GitHub 데이터 파이프라인 자동화: AI 프롬프트로 Dockerfile 생성 및 CI/CD 통합</div>
+    
+    <div class="idea">💡 DORA 지표 대시보드 확장: Pull Request 데이터를 활용한 변경 실패율 실시간 모니터링 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 저자가 AI에 요청한 첫 번째 프롬프트의 핵심 요구사항은?</div>
+      
+      <div class="quiz-opt">A) Jira 이슈 수를 시각화하는 대시보드 개발</div>
+      
+      <div class="quiz-opt">B) In Progress → Done 상태 전환 시간 계산</div>
+      
+      <div class="quiz-opt">C) GitHub 커밋 빈도 분석</div>
+      
+      <div class="quiz-opt">D) 팀별 스프린트 완료율 비교</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) In Progress → Done 상태 전환 시간 계산</div>
+          <div class="quiz-explanation">본문에서 'In Progress로 처음 전환된 시각과 Done으로 전환된 시각의 차이를 일 단위로 계산'하는 것이 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. DORA 지표 중 Jira 데이터로 직접 측정 가능한 항목은?</div>
+      
+      <div class="quiz-opt">A) 변경 실패율</div>
+      
+      <div class="quiz-opt">B) 서비스 복구 시간</div>
+      
+      <div class="quiz-opt">C) 변경 리드타임</div>
+      
+      <div class="quiz-opt">D) 배포 빈도</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 변경 리드타임</div>
+          <div class="quiz-explanation">Jira 이슈의 상태 전환 기록을 통해 '변경 리드타임'을 측정할 수 있습니다. 나머지 지표는 GitHub 등 다른 데이터 소스 필요.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/VEWrIXM6tq4" target="_blank">kakao AI Native, 그 전환의 여정과 엔지니어들의 미래</a>
+    </h2>
+
+    <p class="item-summary">AI-native 전환 과정의 엔지니어링 전략과 MLOps 적용 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 서빙</span><span class="tag">AI 인프라</span><span class="tag">엔지니어링 전략</span><span class="tag">스케일링</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/VEWrIXM6tq4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI-native 전환 과정에서 발생한 인프라 재구성 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대규모 모델 서빙 시 확장성 문제와 해결 방안</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 추론을 위한 엔지니어링 최적화 전략</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Kakao의 AI-native 아키텍처 설계 원칙을 기반으로 현업 모델 서빙 파이프라인 재설계</div>
+    
+    <div class="idea">💡 모델 추론 지연 최적화를 위해 Ray 클러스터 대신 GPU 가속 서빙 엔진 도입 평가</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI-native 전환 과정에서 가장 큰 도전 과제로 언급된 것은?</div>
+      
+      <div class="quiz-opt">A) 데이터 품질 개선</div>
+      
+      <div class="quiz-opt">B) 모델 해석성 확보</div>
+      
+      <div class="quiz-opt">C) 스케일링 한계 극복</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 자동화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 스케일링 한계 극복</div>
+          <div class="quiz-explanation">영상에서 대규모 모델 서빙 시 인프라 확장성 문제를 해결하기 위한 엔지니어링 전략이 핵심 내용으로 다뤄짐</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Kakao가 강조한 AI-native 아키텍처의 핵심 특징은?</div>
+      
+      <div class="quiz-opt">A) 모델 중심 설계</div>
+      
+      <div class="quiz-opt">B) 데이터 파이프라인 자동화</div>
+      
+      <div class="quiz-opt">C) 실시간 추론 최적화</div>
+      
+      <div class="quiz-opt">D) 모델 버전 관리 강화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 실시간 추론 최적화</div>
+          <div class="quiz-explanation">실시간 추론 성능을 위한 엔지니어링 최적화가 주요 전환 포인트로 강조됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
