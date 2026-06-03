@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 03일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/YTcoTr8KJGc" target="_blank">AI 에이전트가 코드를 실험하고 개선하는 법</a>
+    </h2>
+
+    <p class="item-summary">AI 에이전트로 코드 최적화 루프 구축해 QoE 17% 개선</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">AutoML</span><span class="tag">A/B testing</span><span class="tag">QoE</span><span class="tag">AI Agent</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/YTcoTr8KJGc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Karpathy Agent Loop의 7가지 비타협 원칙 적용</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>계층적 검증과 Regression Guard로 Context Rot 방지</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>5시간 인간 작업 대비 60시간 AI 실험의 12배 레버리지 확보</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 하이퍼파라미터 튜닝에 Karpathy Agent Loop 적용하여 A/B 테스트 반복 횟수 30% 감소</div>
+    
+    <div class="idea">💡 Regression Guard를 MLOps 파이프라인에 통합해 배포 후 성능 저하 사례 40% 감소</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 에이전트가 코드를 자율적으로 개선하는 핵심 루프는?</div>
+      
+      <div class="quiz-opt">A) Karpathy Loop</div>
+      
+      <div class="quiz-opt">B) CRISP-DM</div>
+      
+      <div class="quiz-opt">C) DevOps Cycle</div>
+      
+      <div class="quiz-opt">D) Waterfall Model</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Karpathy Loop</div>
+          <div class="quiz-explanation">발표에서 강조된 Karpathy Agent Loop는 코드 수정-빌드-실험-판정의 자율적 반복 구조입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. QoE 개선 실험에서 AI 에이전트가 달성한 성과는?</div>
+      
+      <div class="quiz-opt">A) 17% 개선</div>
+      
+      <div class="quiz-opt">B) 5% 개선</div>
+      
+      <div class="quiz-opt">C) 30% 개선</div>
+      
+      <div class="quiz-opt">D) 10% 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 17% 개선</div>
+          <div class="quiz-explanation">발표에서 명시된 스트리밍 품질(QoE) 17% 개선은 주요 성과 지표입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/YbaUqZXqcR8" target="_blank">Inside VictoriaMetrics</a>
+    </h2>
+
+    <p class="item-summary">VictoriaMetrics 아키텍처 이해로 대규모 메트릭 관리 효율성 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Time Series DB</span><span class="tag">Monitoring</span><span class="tag">Distributed Systems</span><span class="tag">VictoriaMetrics</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/YbaUqZXqcR8" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>VictoriaMetrics의 수집-저장-쿼리 흐름 구조 분석</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>vmagent의 스크래핑 및 리모트라이트 기능 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>vmstorage의 데이터 저장 최적화 전략 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 ML 모델 서빙 시 VictoriaMetrics를 사용한 실시간 성능 메트릭 수집 파이프라인 구축</div>
+    
+    <div class="idea">💡 기존 Prometheus 기반 시스템에서 VictoriaMetrics로 마이그레이션해 30% 이상 쿼리 응답 속도 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. VictoriaMetrics 아키텍처에서 데이터 수집을 담당하는 컴포넌트는?</div>
+      
+      <div class="quiz-opt">A) vmstorage</div>
+      
+      <div class="quiz-opt">B) vmselect</div>
+      
+      <div class="quiz-opt">C) vmagent</div>
+      
+      <div class="quiz-opt">D) vminsert</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) vmagent</div>
+          <div class="quiz-explanation">vmagent는 메트릭 수집 및 리모트라이트를 담당하는 핵심 컴포넌트입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 쿼리 실행을 담당하는 VictoriaMetrics 컴포넌트는?</div>
+      
+      <div class="quiz-opt">A) vmstorage</div>
+      
+      <div class="quiz-opt">B) vmselect</div>
+      
+      <div class="quiz-opt">C) vmagent</div>
+      
+      <div class="quiz-opt">D) vminsert</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) vmselect</div>
+          <div class="quiz-explanation">vmselect은 사용자 쿼리 처리 및 결과 반환을 담당하는 컴포넌트입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/0i4NRU-GIvo" target="_blank">사용자의 목소리를 AI로 재현하다: LLM기반 Multi Agent UX플랫폼 개발기</a>
+    </h2>
+
+    <p class="item-summary">AI 협업 모델과 페르소나봇 구현 사례로 MLOps 적용 영감 제공</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Multi-Agent Systems</span><span class="tag">Causal Inference</span><span class="tag">Model Evaluation</span><span class="tag">UX Research</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/0i4NRU-GIvo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디자이너-리서처-개발자 협업 구조로 AI 페르소나봇 NSona 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Agent 중심 서비스 설계와 UX 기반 모델 평가 프로세스 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Multi-Party 대화 시스템에서 사용자 리서치 데이터 실시간 활용</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 서비스별 특화된 모델 평가 프로세스 도입: NSona의 UX 중심 평가 방식을 추천 시스템 모델 평가에 적용하여 사용자 몰입도 지표(AUC 대비 10% 이상 개선) 도입</div>
+    
+    <div class="idea">💡 Agent 기반 협업 프레임워크 설계: Ray를 활용한 디자이너-데이터 엔지니어 협업 파이프라인 구축 (예: 프롬프트 엔지니어링 → 로직 에이전트화 → 서비스 통합)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. NSona 프로젝트에서 디자이너의 주요 역할은 무엇이었나요?</div>
+      
+      <div class="quiz-opt">A) AI 모델 학습 데이터 전처리</div>
+      
+      <div class="quiz-opt">B) 프롬프트 설계 및 에이전트 로직 구조화</div>
+      
+      <div class="quiz-opt">C) 모델 성능 평가 지표 정의</div>
+      
+      <div class="quiz-opt">D) 사용자 리서치 데이터 수집</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 프롬프트 설계 및 에이전트 로직 구조화</div>
+          <div class="quiz-explanation">본문에 따르면 디자이너는 프롬프트를 설계하고 리서처는 로직을 에이전트 구조로 바꾸는 역할을 맡았습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. NSona 평가 과정에서 도입된 혁신적인 평가 방식은?</div>
+      
+      <div class="quiz-opt">A) A/B 테스트 기반 사용자 행동 분석</div>
+      
+      <div class="quiz-opt">B) 사용자 페르소나 기반 몰입도 측정</div>
+      
+      <div class="quiz-opt">C) ROC 커브 기반 모델 성능 평가</div>
+      
+      <div class="quiz-opt">D) 서비스 로그 기반 클릭률 분석</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 사용자 페르소나 기반 몰입도 측정</div>
+          <div class="quiz-explanation">발표 내용에서 UX 관점에서 새롭게 구축한 모델 평가 과정은 사용자 페르소나를 생생히 재현하여 몰입도를 측정하는 방식입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
