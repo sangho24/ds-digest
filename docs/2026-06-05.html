@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 05일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/7161766" target="_blank">FE News 26년 6월 소식을 전해드립니다.</a>
+    </h2>
+
+    <p class="item-summary">AI 코드 생성 비중 54% 증가 및 npm 공급망 보안 사고 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Security</span><span class="tag">AI Code Generation</span><span class="tag">Supply Chain</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/7161766" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 생성 코드 비중 54%로 급증, Claude Code 유료 전환율 1위 기록</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TanStack npm 공급망 공격 사후 분석: 6분 내 악성 버전 배포, 1시간 43분 폐기</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GitHub Actions 캐시 취약점과 OIDC 토큰 노출이 공격 근본 원인</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 CI/CD 파이프라인에 npm 패키지 공급망 보안 검증 단계 추가 (OIDC 토큰 보호, Actions 캐시 제한)</div>
+    
+    <div class="idea">💡 AI 코드 생성 툴 사용률(AI Code Agent)을 모니터링하는 MLOps 대시보드 개발 (Copilot/ Claude Code 사용 비중 추적)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 2026 State of AI 설문에서 개발자들이 생성한 코드 중 AI 생성 비중은 평균 몇%인가?</div>
+      
+      <div class="quiz-opt">A) 42%</div>
+      
+      <div class="quiz-opt">B) 54%</div>
+      
+      <div class="quiz-opt">C) 67%</div>
+      
+      <div class="quiz-opt">D) 78%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 54%</div>
+          <div class="quiz-explanation">설문 결과에 따르면 개발자들이 작성하는 코드 중 AI 생성 비중이 평균 54%로 급증한 것으로 나타났습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. TanStack npm 공급망 공격의 근본 원인 중 하나로 드러난 GitHub Actions 취약점은?</div>
+      
+      <div class="quiz-opt">A) pull_request_target 권한 오남용</div>
+      
+      <div class="quiz-opt">B) CI/CD 파이프라인 누수</div>
+      
+      <div class="quiz-opt">C) Docker 이미지 취약점</div>
+      
+      <div class="quiz-opt">D) API 키 노출</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) pull_request_target 권한 오남용</div>
+          <div class="quiz-explanation">공격 근본 원인으로 pull_request_target 권한 오남용, GitHub Actions 캐시 취약점, OIDC 토큰 노출이 확인되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/zdk/lowfat" target="_blank">Show HN: Lowfat – pluggable CLI filter that saved 91.8% of my LLM tokens</a>
+    </h2>
+
+    <p class="item-summary">CLI 출력 필터링으로 LLM 토큰 91.8% 절약하는 Lowfat 도구 소개</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">CLI</span><span class="tag">LLM</span><span class="tag">Token Optimization</span><span class="tag">Kubernetes</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/zdk/lowfat" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 토큰 사용량 91.8% 절감하는 CLI 필터링 도구 Lowfat 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>kubectl, git, docker 등 주요 명령어별 플러그인 시스템으로 커스터마이징 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>93.9% 절감률을 보이는 kubectl get 명령어가 가장 효과적인 사례</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 CI/CD 파이프라인에 Lowfat 통합하여 kubectl logs, terraform 등 대용량 CLI 출력 자동 필터링으로 AWS Bedrock 토큰 비용 30% 이상 절감</div>
+    
+    <div class="idea">💡 Jupyter Notebook 연동형 Lowfat 플러그인 개발: 데이터 전처리 시 git diff, docker ps 등 명령어 출력을 실시간으로 요약해 노트북 메모리 사용량 40% 감소</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Lowfat 도구의 주요 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) CLI 명령어 실행 속도 향상</div>
+      
+      <div class="quiz-opt">B) LLM 토큰 사용량 절감</div>
+      
+      <div class="quiz-opt">C) Kubernetes 클러스터 관리</div>
+      
+      <div class="quiz-opt">D) Git 커밋 히스토리 시각화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) LLM 토큰 사용량 절감</div>
+          <div class="quiz-explanation">본문에서 'LLM 토큰 사용량 91.8% 절약'이라는 핵심 수치와 'Bedrock 토큰 제한 회피'라는 목적을 명시적으로 언급하고 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Lowfat의 플러그인 시스템에서 가장 높은 절감률을 보인 명령어는?</div>
+      
+      <div class="quiz-opt">A) kubectl describe</div>
+      
+      <div class="quiz-opt">B) kubectl get</div>
+      
+      <div class="quiz-opt">C) docker images</div>
+      
+      <div class="quiz-opt">D) git commit</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) kubectl get</div>
+          <div class="quiz-explanation">표에서 kubectl get 명령어가 93.9%의 절감률을 기록하며 가장 높은 효율을 보였습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/LiStWdgb984" target="_blank">다양한 기술을 공유하는 자리 💡if(kakao)25 Krew Day Demo Station @카카오 AI캠퍼스</a>
+    </h2>
+
+    <p class="item-summary">카카오 그룹사 데이터 기술 협업 사례 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">A/B testing</span><span class="tag">모델 협업</span><span class="tag">데이터 제품화</span><span class="tag">AI 데모</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/LiStWdgb984" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>12개 그룹사가 참여한 대규모 AI 기술 공유 행사</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>금융, 모빌리티, 엔터프라이즈 등 다양한 분야의 데이터 기술 데모</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 데모 스테이션을 통한 실무 적용 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 카카오뱅크 '금융맛' 프로젝트의 A/B 테스트 설계 방식을 참고해 신규 금융 서비스 출시 시 다중 변수 실험 설계 적용</div>
+    
+    <div class="idea">💡 카카오 '에이전트 빌더' 시스템의 MLOps 파이프라인 구조를 현업 모델 배포 시스템에 통합하여 재사용</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 행사를 개최한 장소는 어디입니까?</div>
+      
+      <div class="quiz-opt">A) 카카오 본사</div>
+      
+      <div class="quiz-opt">B) 카카오 AI 캠퍼스</div>
+      
+      <div class="quiz-opt">C) 서울 디지털 뉴딜 센터</div>
+      
+      <div class="quiz-opt">D) 한국과학기념관</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 카카오 AI 캠퍼스</div>
+          <div class="quiz-explanation">콘텐츠 본문에 명시된 '카카오 AI 캠퍼스'가 행사 장소입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 데모 스테이션에 참여한 그룹사 수는?</div>
+      
+      <div class="quiz-opt">A) 8개사</div>
+      
+      <div class="quiz-opt">B) 10개사</div>
+      
+      <div class="quiz-opt">C) 12개사</div>
+      
+      <div class="quiz-opt">D) 15개사</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 12개사</div>
+          <div class="quiz-explanation">콘텐츠 본문에 명시된 '12개 그룹사'가 참여했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
