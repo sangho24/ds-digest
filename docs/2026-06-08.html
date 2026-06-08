@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 08일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/cPpUrH2Y3aw" target="_blank">AI국민비서: 공공 특화 에이전트 구축하기</a>
+    </h2>
+
+    <p class="item-summary">공공서비스 AI 에이전트 개발의 모델 선택과 안전성 대응 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Model Optimization</span><span class="tag">Safety</span><span class="tag">Public AI</span><span class="tag">Agent Development</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/cPpUrH2Y3aw" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>HyperClovaX 모델 선택 시 공공 특화 데이터 적합성 평가 방법론 공개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>속도 최적화를 위한 문제 난이도 조절 전략 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 안전성 대응을 위한 QA 체계 설계 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 공공 데이터셋 기반 모델 선택 시 HyperClovaX 대신 경량화된 모델을 우선 검증하는 프로세스 도입</div>
+    
+    <div class="idea">💡 사전 QA 체계에 '공공 서비스 접근성' 지표를 추가하여 모델 안전성 검증 프레임워크 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI국민비서 프로젝트에서 모델 선택 시 가장 중점을 둔 요소는?</div>
+      
+      <div class="quiz-opt">A) A. 컴퓨팅 비용</div>
+      
+      <div class="quiz-opt">B) B. 공공 데이터 적합성</div>
+      
+      <div class="quiz-opt">C) C. 모델 크기</div>
+      
+      <div class="quiz-opt">D) D. 학습 속도</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 공공 데이터 적합성</div>
+          <div class="quiz-explanation">발표자료 2:34에서 공공 특화 데이터셋과의 호환성 평가가 핵심 선택 기준으로 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 속도 최적화를 위해 채택한 전략은?</div>
+      
+      <div class="quiz-opt">A) A. GPU 클러스터 확장</div>
+      
+      <div class="quiz-opt">B) B. 문제 난이도 조절</div>
+      
+      <div class="quiz-opt">C) C. 모델 양자화</div>
+      
+      <div class="quiz-opt">D) D. 배치 처리 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 문제 난이도 조절</div>
+          <div class="quiz-explanation">발표자료 5:12에서 문제 복잡도를 단계별로 낮추는 접근이 핵심 최적화 전략으로 제시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/enGvyrLjT9s" target="_blank">[ifkakao2018] 딥러닝을 활용한 뉴스 메타 태깅</a>
+    </h2>
+
+    <p class="item-summary">딥러닝 기반 뉴스 메타태깅 시스템으로 컨텐츠-사용자 연결 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">딥러닝</span><span class="tag">MLOps</span><span class="tag">자연어 처리</span><span class="tag">추천시스템</span><span class="tag">메타태깅</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/enGvyrLjT9s" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기본 정보 외 컨텐츠 특성 파악을 위한 딥러닝 기반 메타태깅 시스템 개발 필요성 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>NLP 기반 기사 유형/핵심 주제 추출 과정의 기술적 도전점 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 학습부터 운영 시스템 개발까지의 전단계 Lessons Learned 공개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 BERT 기반 컨텐츠 분류 모델을 도입해 기사 태깅 자동화 파이프라인 구축</div>
+    
+    <div class="idea">💡 Transformer 모델을 활용한 실시간 메타데이터 생성 시스템 설계 시 인프라 확장성 검증</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 시스템이 주로 해결하려는 문제는?</div>
+      
+      <div class="quiz-opt">A) 광고 타겟 최적화</div>
+      
+      <div class="quiz-opt">B) 기사 유형/핵심 주제 자동 추출</div>
+      
+      <div class="quiz-opt">C) 사용자 행동 예측</div>
+      
+      <div class="quiz-opt">D) 언론사 데이터 통합</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 기사 유형/핵심 주제 자동 추출</div>
+          <div class="quiz-explanation">본문에서 '기사의 유형이나 핵심 주제 같은 것들을 컨텐츠 본문을 자연어 처리해서 얻는 것이 까다롭다'고 명시하며, 이를 해결하기 위한 딥러닝 기반 시스템을 소개합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 메타태깅 시스템 개발의 핵심 기술은?</div>
+      
+      <div class="quiz-opt">A) Rule-based NLP</div>
+      
+      <div class="quiz-opt">B) 딥러닝</div>
+      
+      <div class="quiz-opt">C) A/B 테스팅</div>
+      
+      <div class="quiz-opt">D) 그래프 알고리즘</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 딥러닝</div>
+          <div class="quiz-explanation">발표 제목과 내용에서 'Deep Learning 기술을 사용한 뉴스 메타 태깅 시스템'이라고 명확히 언급되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Pizy0mD_s8o" target="_blank">[ifkakao2018] 무엇이든 물어보세요, 지식그래프 : 카카오미니와 검색 적용 소개</a>
+    </h2>
+
+    <p class="item-summary">지식그래프로 관계 추론 기반 검색 시스템 구축 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">Knowledge Graph</span><span class="tag">Semantic Web</span><span class="tag">Information Retrieval</span><span class="tag">Ontology</span><span class="tag">NLP</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Pizy0mD_s8o" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>지식그래프는 정보 간 관계를 기반으로 유추 가능한 구조화된 데이터 시스템</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오미니에 적용된 지식그래프 기반 KBQA(지식베이스 질문응답) 구현 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>시맨틱웹 기술을 활용한 엔티티 관계 맵핑과 검색 최적화 전략</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 도메인별 지식그래프를 구축해 고객 지원 시스템의 KBQA 정확도를 20% 향상시키기</div>
+    
+    <div class="idea">💡 관계 추론 기반 추천 엔진에 시맨틱웹 데이터를 연동해 유사도 계산 알고리즘 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 지식그래프와 기존 검색 시스템의 핵심 차이점은?</div>
+      
+      <div class="quiz-opt">A) A. 키워드 기반 검색</div>
+      
+      <div class="quiz-opt">B) B. 정보 간 관계 유추</div>
+      
+      <div class="quiz-opt">C) C. 클라우드 스토리지 활용</div>
+      
+      <div class="quiz-opt">D) D. 실시간 데이터 처리</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 정보 간 관계 유추</div>
+          <div class="quiz-explanation">지식그래프는 엔티티 간 관계를 맵핑해 논리적 유추가 가능하지만, 기존 검색은 키워드 일치도에 의존합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 카카오미니에서 지식그래프를 적용한 주요 목적은?</div>
+      
+      <div class="quiz-opt">A) A. 광고 수익 증대</div>
+      
+      <div class="quiz-opt">B) B. 사용자 질문의 관계 추론 처리</div>
+      
+      <div class="quiz-opt">C) C. 서버 비용 절감</div>
+      
+      <div class="quiz-opt">D) D. UI/UX 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 사용자 질문의 관계 추론 처리</div>
+          <div class="quiz-explanation">영상에서 언급된 대로, '이효리 남편의 그룹 멤버 나이'처럼 복잡한 관계 질의를 처리하기 위해 지식그래프가 도입되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
