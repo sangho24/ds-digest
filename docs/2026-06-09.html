@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 09일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/vErMinkPCLk" target="_blank">[ifkakao2020] 알아서 저금해주는 똑똑한 저금통 자동 모으기 개발</a>
+    </h2>
+
+    <p class="item-summary">은행 저축 서비스에 ML 파이프라인과 시계열 예측 기법 적용 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Time Series</span><span class="tag">Data Pipeline</span><span class="tag">Banking</span><span class="tag">Finance</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/vErMinkPCLk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Airflow 기반 ML 파이프라인 설계 과정 공유</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>고객 잔고 데이터 특성 분석 및 시계열 예측 알고리즘 성능 비교</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>자동 저축 금액 산출을 위한 잔고 예측 모델 개발 프로세스</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Airflow DAG 구조를 활용한 주간 예측 모델 배치 작업 자동화</div>
+    
+    <div class="idea">💡 Prophet과 LSTM 기반 시계열 모델 성능 비교 실험 설계 (MAE 기준)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 자동 모으기 서비스에서 주간 예측을 위해 사용된 핵심 도구는?</div>
+      
+      <div class="quiz-opt">A) Kafka</div>
+      
+      <div class="quiz-opt">B) Airflow</div>
+      
+      <div class="quiz-opt">C) TensorFlow</div>
+      
+      <div class="quiz-opt">D) PyTorch</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Airflow</div>
+          <div class="quiz-explanation">발표자료에 따르면 Airflow를 활용한 ML 파이프라인 개발 과정이 소개됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 두 번째 발표 파트의 주요 주제는?</div>
+      
+      <div class="quiz-opt">A) 데이터 수집 방식</div>
+      
+      <div class="quiz-opt">B) 모델 서빙 전략</div>
+      
+      <div class="quiz-opt">C) 잔고 예측 알고리즘</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 결과</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 잔고 예측 알고리즘</div>
+          <div class="quiz-explanation">발표 구조에 따르면 두 번째 파트는 시계열 예측 알고리즘 성능 비교가 주요 내용임</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Aq4Ga7pfDJo" target="_blank">[10분 테코톡] 하로의 단위 테스트로 나누는 것이 반드시 좋은 것일까?</a>
+    </h2>
+
+    <p class="item-summary">단위 테스트 과다 분할은 유지보수성 저하로 이어질 수 있어 MLOps에서 균형 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Software Engineering</span><span class="tag">Testing</span><span class="tag">Code Quality</span><span class="tag">CI/CD</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Aq4Ga7pfDJo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>단위 테스트의 과도한 세분화는 테스트 유지보수 비용 증가</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>테스트 범위와 책임 영역의 명확성 확보가 핵심</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MLOps 파이프라인에서 테스트 전략의 균형 필요성 강조</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 PyTest의 fixture 재사용 전략으로 테스트 코드 중복 최소화</div>
+    
+    <div class="idea">💡 ML 모델 테스트 시 유닛/통합 테스트 비율을 7:3으로 설정한 테스트 전략 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 단위 테스트 분할의 주요 단점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 테스트 실행 속도 저하</div>
+      
+      <div class="quiz-opt">B) 코드 유지보수 비용 증가</div>
+      
+      <div class="quiz-opt">C) 버그 탐지율 감소</div>
+      
+      <div class="quiz-opt">D) 모델 성능 저하</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 코드 유지보수 비용 증가</div>
+          <div class="quiz-explanation">과도한 테스트 분할은 테스트 코드 자체의 복잡도를 높여 유지보수 비용이 증가합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. MLOps에서 테스트 전략의 핵심은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 100% 테스트 커버리지 달성</div>
+      
+      <div class="quiz-opt">B) 테스트 범위와 책임 영역의 명확성</div>
+      
+      <div class="quiz-opt">C) 테스트 자동화 최소화</div>
+      
+      <div class="quiz-opt">D) 테스트 코드 길이 최대화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 테스트 범위와 책임 영역의 명확성</div>
+          <div class="quiz-explanation">테스트 범위와 책임 영역의 명확성은 테스트의 효과성과 유지보수성을 동시에 보장합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/YDPUXNap3Ss" target="_blank">안드로이드 빌드 대기 시간 없애기</a>
+    </h2>
+
+    <p class="item-summary">MLOps 환경에서 동적 리소스 할당으로 CI/CD 병목 해결 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Kubernetes</span><span class="tag">CI/CD</span><span class="tag">캐시 최적화</span><span class="tag">Pod 오케스트레이션</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/YDPUXNap3Ss" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>고정 Runner Pool 한계와 빌드 무게 문제 식별</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>N3R + GitHub ARC를 통한 동적 리소스 할당 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>3-Layer Cache와 Diff-aware 테스트로 빌드 시간 30% 단축</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 훈련 파이프라인에 3-Layer Cache 전략 적용하여 GPU 리소스 재사용률 20% 증가</div>
+    
+    <div class="idea">💡 N3R 기반 AutoScaler를 사용해 MLOps 워크로드에 맞는 Pod 자동 확장 시스템 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 발표에서 CI/CD 병목 해결을 위해 핵심적으로 사용된 기술은?</div>
+      
+      <div class="quiz-opt">A) Kubernetes</div>
+      
+      <div class="quiz-opt">B) N3R + GitHub ARC</div>
+      
+      <div class="quiz-opt">C) Jenkins</div>
+      
+      <div class="quiz-opt">D) Docker Swarm</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) N3R + GitHub ARC</div>
+          <div class="quiz-explanation">발표 내용에서 N3R(사내 Pod 오케스트레이션 툴)과 GitHub ARC를 결합하여 리소스 동적 할당을 구현한 점이 핵심 전략입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 3-Layer Cache 전략의 주요 목적은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 빌드 시간 단축</div>
+      
+      <div class="quiz-opt">B) 테스트 코드 증가</div>
+      
+      <div class="quiz-opt">C) 메모리 최적화</div>
+      
+      <div class="quiz-opt">D) GPU 리소스 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 빌드 시간 단축</div>
+          <div class="quiz-explanation">자막에서 3-Layer Cache는 빌드 캐시 재사용을 통해 반복적인 Gradle 빌드 시간을 30% 감소시킨 전략으로 설명됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
