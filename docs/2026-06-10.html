@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 10일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/HelixDB/helix-db/tree/main" target="_blank">Show HN: HelixDB – A graph database built on object storage</a>
+    </h2>
+
+    <p class="item-summary">객체 저장소 기반 그래프 DB로 AI 데이터 관리 확장성 해결</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Graph Database</span><span class="tag">Vector Search</span><span class="tag">Scalability</span><span class="tag">S3</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/HelixDB/helix-db/tree/main" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>그래프, 벡터, 풀텍스트 검색 기능 통합한 하이브리드 DB 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>S3 기반 객체 저장소 활용으로 무제한 그래프 확장 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>수평 확장 노드 캐싱으로 핫데이터 저지연 읽기 구현</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 AI 에이전트의 컨텍스트 확장을 위해 HelixDB의 S3 기반 그래프 저장소를 도입하여 대규모 관계 데이터를 저비용으로 관리</div>
+    
+    <div class="idea">💡 고통복잡도 그래프 쿼리 처리를 위해 수평 확장 노드 캐싱 기법을 기존 MLOps 파이프라인에 통합</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 그래프 DB 확장성 문제를 해결하기 위해 HelixDB가 채택한 주요 전략은?</div>
+      
+      <div class="quiz-opt">A) 데이터 중복 복제</div>
+      
+      <div class="quiz-opt">B) S3 객체 저장소 활용</div>
+      
+      <div class="quiz-opt">C) 관계형 DB 셰딩</div>
+      
+      <div class="quiz-opt">D) 인메모리 캐싱</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) S3 객체 저장소 활용</div>
+          <div class="quiz-explanation">HelixDB는 S3 객체 저장소를 기반으로 데이터를 저장하고 필요 시만 로드하는 방식으로 확장성을 해결했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. HelixDB가 일반적인 그래프 DB 확장 방식과 다른 점은?</div>
+      
+      <div class="quiz-opt">A) 분산 노드 간 데이터 복제</div>
+      
+      <div class="quiz-opt">B) 관계형 DB 셰딩 방식 적용</div>
+      
+      <div class="quiz-opt">C) 엣지 기반 분할 대신 객체 저장소 활용</div>
+      
+      <div class="quiz-opt">D) GPU 기반 인메모리 처리</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 엣지 기반 분할 대신 객체 저장소 활용</div>
+          <div class="quiz-explanation">기존 그래프 DB는 셰딩이나 복제로 확장하지만, HelixDB는 객체 저장소(S3)를 활용해 그래프의 물리적 분할 없이 확장합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/tam-connect-2025" target="_blank">빠르게 움직이는 조직에서, TAM은 어떻게 문제를 해결할까?</a>
+    </h2>
+
+    <p class="item-summary">TAM이 기술/비즈니스 경계에서 문제 해결하는 방식 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Incident Management</span><span class="tag">API Integration</span><span class="tag">Cross-Team Collaboration</span><span class="tag">Fintech</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/tam-connect-2025" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TAM은 파트너사 연동 문제 해결과 API 도입 컨설팅을 수행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>장애 상황에서 여러 조직을 연결하는 역할 수행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TAM CONNECT 2025 통해 시스템/프로세스 개선 사례 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 배포 시 API 연동 문제를 사전에 예방하기 위해 TAM 역할을 DS 팀에 통합</div>
+    
+    <div class="idea">💡 장애 대응 시 TAM의 교차조직 협업 프로세스를 MLOps 파이프라인에 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. TAM의 주요 역할 중 하나는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 성능 최적화</div>
+      
+      <div class="quiz-opt">B) 파트너사 연동 문제 해결</div>
+      
+      <div class="quiz-opt">C) 데이터 수집 설계</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 파트너사 연동 문제 해결</div>
+          <div class="quiz-explanation">본문에서 TAM이 '파트너사 연동 문제 해결'과 'API 도입 컨설팅'을 주요 역할로 언급했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. TAM CONNECT 2025의 주요 목적은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 신규 모델 개발</div>
+      
+      <div class="quiz-opt">B) 기존 고객 확보</div>
+      
+      <div class="quiz-opt">C) 기술/비즈니스 문제 해결 방식 공유</div>
+      
+      <div class="quiz-opt">D) 마케팅 전략 수립</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 기술/비즈니스 문제 해결 방식 공유</div>
+          <div class="quiz-explanation">콘텐츠에서 TAM CONNECT 2025는 '다른 회사 TAM의 문제 해결 방식 공유'를 목적으로 개최된 행사입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/6647064" target="_blank">AI국민비서: 공공 특화 에이전트 구축하기</a>
+    </h2>
+
+    <p class="item-summary">공공 서비스 AI 에이전트 개발의 핵심 과정과 최적화 전략 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 최적화</span><span class="tag">안전 대응</span><span class="tag">모델 평가</span><span class="tag">에이전트 개발</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/6647064" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>HyperClovaX 모델 선택과 문제 난이도 조절 전략</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>속도 최적화와 Safety 대응 구현 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>공공 서비스 특화된 QA 평가 체계 설계</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 HyperClovaX 기반 에이전트 개발 시 속도 최적화 기법(예: 인퍼런스 파이프라인 병렬화)을 추천 시스템에 적용하여 실시간 응답 지연 30% 감소</div>
+    
+    <div class="idea">💡 Safety 대응 전략(예: 톡스피치 필터링 + 컨텍스트 기반 감시)을 금융 서비스 모델에 통합하여 부정적 출력 발생률 40% 하락</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI국민비서 프로젝트에서 핵심적으로 적용한 모델은?</div>
+      
+      <div class="quiz-opt">A) HyperClovaX</div>
+      
+      <div class="quiz-opt">B) BERT</div>
+      
+      <div class="quiz-opt">C) GPT-4</div>
+      
+      <div class="quiz-opt">D) T5</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) HyperClovaX</div>
+          <div class="quiz-explanation">본문에서 '네이버 HyperClovaX 모델'을 명시적으로 언급하며 모델 선택 과정을 설명합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 문제 난이도를 낮추기 위한 전략은?</div>
+      
+      <div class="quiz-opt">A) 모델 파라미터 축소</div>
+      
+      <div class="quiz-opt">B) 입력 데이터 복잡도 조절</div>
+      
+      <div class="quiz-opt">C) 하드웨어 업그레이드</div>
+      
+      <div class="quiz-opt">D) 사용자 피드백 반영</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 입력 데이터 복잡도 조절</div>
+          <div class="quiz-explanation">발표 내용 3번 항목에서 '문제의 난이도를 낮추기'라는 구체적 전략이 언급됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
