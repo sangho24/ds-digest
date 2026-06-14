@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 14일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/W06sESnB9rg" target="_blank">디자인시스템이 AI를 만났을 때: FE 개발 패러다임의 변화</a>
+    </h2>
+
+    <p class="item-summary">AI 자동 마크업이 FE 개발 효율성에 미치는 영향</p>
+
+    
+    <div class="tags">
+      <span class="tag">Design Systems</span><span class="tag">AI Automation</span><span class="tag">FE Development</span><span class="tag">MLOps</span><span class="tag">Code Connect</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/W06sESnB9rg" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디자인 토큰 기반 AI 마크업 자동화 구현 사례</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디자인 시스템과 FE 개발 툴의 통합 방식</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 개발 환경에서의 AI 도입 한계 분석</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 디자인 토큰 기반 AI 마크업 도구를 MLOps 파이프라인에 통합해 UI/UX 테스트 자동화</div>
+    
+    <div class="idea">💡 Code Connect 프레임워크를 활용해 FE 컴포넌트와 ML 모델의 데이터 흐름 최적화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 마크업 자동화의 핵심 기반 요소는?</div>
+      
+      <div class="quiz-opt">A) 디자인 토큰</div>
+      
+      <div class="quiz-opt">B) CSS 프레임워크</div>
+      
+      <div class="quiz-opt">C) JavaScript 엔진</div>
+      
+      <div class="quiz-opt">D) 버전 관리 시스템</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 디자인 토큰</div>
+          <div class="quiz-explanation">디자인 토큰은 색상, 폰트, 스페이싱 등 시각 요소를 표준화해 AI가 마크업을 자동 생성할 수 있도록 기반을 제공합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 도입 후 개발팀이 가장 큰 어려움을 겪은 점은?</div>
+      
+      <div class="quiz-opt">A) 디자인 시스템 호환성</div>
+      
+      <div class="quiz-opt">B) AI 학습 데이터 부족</div>
+      
+      <div class="quiz-opt">C) 실시간 협업 도구 부재</div>
+      
+      <div class="quiz-opt">D) 성능 최적화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 디자인 시스템 호환성</div>
+          <div class="quiz-explanation">디자인 시스템과 AI 도구 간의 호환성 문제는 실제 개발 환경에서 가장 큰 도전 과제로 나타났습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/nex-agi/Nex-N2/issues/4" target="_blank">Rio de Janeiro's "homegrown" LLM appears to be a merge of an existing model</a>
+    </h2>
+
+    <p class="item-summary">로컬 LLM 모델 병합이 MLOps 효율성에 미치는 영향 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">LLM</span><span class="tag">모델 병합</span><span class="tag">모델 최적화</span><span class="tag">효율성</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/nex-agi/Nex-N2/issues/4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>리오데자네이루의 로컬 LLM이 기존 모델 병합으로 개발된 것으로 나타남</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 병합은 훈련 비용 절감 및 추론 성능 향상에 기여할 수 있음</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 기존 LLM 모델 병합을 통해 훈련 비용을 30% 이상 절감하는 실험 설계</div>
+    
+    <div class="idea">💡 병합된 모델의 추론 속도를 측정하여 현업 서빙 환경에 적용 가능성 검토</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 콘텐츠에서 언급된 로컬 LLM 개발 방식은?</div>
+      
+      <div class="quiz-opt">A) A. 신규 훈련</div>
+      
+      <div class="quiz-opt">B) B. 모델 병합</div>
+      
+      <div class="quiz-opt">C) C. 데이터 증강</div>
+      
+      <div class="quiz-opt">D) D. 하이퍼파라미터 튜닝</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 모델 병합</div>
+          <div class="quiz-explanation">콘텐츠는 리오데자네이루의 LLM이 기존 모델 병합으로 개발되었다고 분석하고 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 모델 병합이 MLOps 팀에게 주는 주요 이점은?</div>
+      
+      <div class="quiz-opt">A) A. 모델 해석성 향상</div>
+      
+      <div class="quiz-opt">B) B. 훈련 비용 절감</div>
+      
+      <div class="quiz-opt">C) C. 데이터 수집 자동화</div>
+      
+      <div class="quiz-opt">D) D. A/B 테스트 간소화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 훈련 비용 절감</div>
+          <div class="quiz-explanation">모델 병합은 기존 훈련된 모델을 활용해 추가 훈련 비용을 줄이는 핵심 이점이 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://tumbleweed.nu/r/lm-3/uv/amber.html" target="_blank">Chaosnet (1981)</a>
+    </h2>
+
+    <p class="item-summary">1981년 네트워크 프로토콜 설계 원칙의 역사적 참고 자료</p>
+
+    
+    <div class="tags">
+      <span class="tag">Distributed Systems</span><span class="tag">Networking</span><span class="tag">Historical Tech</span><span class="tag">MIT AI Lab</span><span class="tag">Chaosnet</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://tumbleweed.nu/r/lm-3/uv/amber.html" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Chaosnet은 1980년대 초반 MIT에서 개발된 분산 네트워크 프로토콜</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>패킷 기반 통신과 라우팅 알고리즘의 초기 실험적 구현</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Chaosnet의 분산 라우팅 원칙을 현대 MLOps 인프라 설계에 적용하여 네트워크 탄력성 개선</div>
+    
+    <div class="idea">💡 고대 프로토콜 설계 사례를 분석해 현대 분산 시스템의 보안 취약점 예측 모델 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Chaosnet의 주요 설계 목표는 무엇이었는가?</div>
+      
+      <div class="quiz-opt">A) 고속 데이터 압축</div>
+      
+      <div class="quiz-opt">B) 분산 네트워크 통신</div>
+      
+      <div class="quiz-opt">C) 실시간 영상 스트리밍</div>
+      
+      <div class="quiz-opt">D) 대규모 데이터베이스 관리</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 분산 네트워크 통신</div>
+          <div class="quiz-explanation">Chaosnet은 MIT에서 분산 네트워크 환경에서의 효율적인 데이터 전송을 목표로 설계된 초기 프로토콜입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Chaosnet이 현대 MLOps에 주는 가장 직접적인 교훈은?</div>
+      
+      <div class="quiz-opt">A) GPU 클러스터 최적화</div>
+      
+      <div class="quiz-opt">B) 네트워크 탄력성 설계</div>
+      
+      <div class="quiz-opt">C) 모델 버전 관리</div>
+      
+      <div class="quiz-opt">D) A/B 테스트 실험 설계</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 네트워크 탄력성 설계</div>
+          <div class="quiz-explanation">Chaosnet의 분산 라우팅 원칙은 현대 MLOps에서 네트워크 장애 대응 시스템 설계에 역사적 참고 자료로 활용될 수 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
