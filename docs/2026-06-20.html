@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 20일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/vC-fyIaw4EM" target="_blank">[ifkakao2021] if(kakao)2021 Overview</a>
+    </h2>
+
+    <p class="item-summary">Kakao의 MLOps 및 데이터 과학 실무 사례 공유</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">A/B testing</span><span class="tag">모델 서빙</span><span class="tag">Kubernetes</span><span class="tag">데이터 파이프라인</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/vC-fyIaw4EM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kakao의 MLOps 구축 전략 및 운영 사례 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대규모 데이터 파이프라인 최적화 기법 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 추천 시스템의 모델 서빙 아키텍처 공개</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Kakao의 A/B testing 프레임워크를 참고해 실험 설계 시 실험 그룹 분할 정확도를 5% 개선</div>
+    
+    <div class="idea">💡 Kubernetes 기반 모델 서빙 파이프라인을 도입해 추론 latency를 30% 감소</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. if(kakao)2021 콘텐츠에서 강조된 핵심 기술 분야는?</div>
+      
+      <div class="quiz-opt">A) MLOps</div>
+      
+      <div class="quiz-opt">B) Computer Vision</div>
+      
+      <div class="quiz-opt">C) NLP</div>
+      
+      <div class="quiz-opt">D) Data Visualization</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) MLOps</div>
+          <div class="quiz-explanation">Kakao Tech 콘텐츠는 MLOps 구축 및 운영 전략을 중심으로 제시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Kakao의 모델 서빙 아키텍처에서 핵심적으로 사용된 기술은?</div>
+      
+      <div class="quiz-opt">A) Kafka</div>
+      
+      <div class="quiz-opt">B) Kubernetes</div>
+      
+      <div class="quiz-opt">C) TensorFlow</div>
+      
+      <div class="quiz-opt">D) PyTorch</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Kubernetes</div>
+          <div class="quiz-explanation">대규모 모델 서빙을 위한 컨테이너 오케스트레이션 도구로 Kubernetes가 강조됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/technical-writing-2" target="_blank">2. 전문성 밖으로 나아가기</a>
+    </h2>
+
+    <p class="item-summary">AI 기반 문서 플랫폼 '토독'으로 지식 관리 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Documentation</span><span class="tag">Product Development</span><span class="tag">AI Tools</span><span class="tag">Knowledge Management</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/technical-writing-2" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Technical Writer(TW)가 제품 팀 리더로 참여해 AI 기반 문서 플랫폼 '토독'을 개발</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 정적 사이트 생성기(SSG)의 비개발자 접근성 문제를 해결한 문서 플랫폼</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>토독 도입 6개월 만에 500개 문서, 4만 페이지, 1000명 이상 사용자 성장</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MLOps 팀 문서화 프로세스에 토독 플랫폼 통합하여 모델/파이프라인 문서 자동화</div>
+    
+    <div class="idea">💡 AI 기반 문서 생성 기능을 DS 팀의 코드 리뷰 프로세스에 연동해 실시간 지식 저장</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 기존 문서 툴의 주요 문제점은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 비개발자 접근성 문제</div>
+      
+      <div class="quiz-opt">B) AI 연동 기능 부족</div>
+      
+      <div class="quiz-opt">C) 보안 문제</div>
+      
+      <div class="quiz-opt">D) 멀티플랫폼 호환성 문제</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 비개발자 접근성 문제</div>
+          <div class="quiz-explanation">문서 수정 시 저장소 클론, 마크다운 작성, PR 리뷰 등의 과정이 필요해 비개발자 접근성이 낮았습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 토독 도입 6개월 후 사용자 수는 몇 명 이상인가요?</div>
+      
+      <div class="quiz-opt">A) 500명</div>
+      
+      <div class="quiz-opt">B) 1000명</div>
+      
+      <div class="quiz-opt">C) 5000명</div>
+      
+      <div class="quiz-opt">D) 10000명</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 1000명</div>
+          <div class="quiz-explanation">토독은 도입 6개월 만에 1000명 이상의 사용자를 확보했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/technical-writing-1" target="_blank">1. 세상에 없던 직무를 만들어가기</a>
+    </h2>
+
+    <p class="item-summary">문서와 맥락을 결합한 SSoT 구축이 MLOps 시스템 안정성에 핵심</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Technical Writing</span><span class="tag">Knowledge Management</span><span class="tag">AI Integration</span><span class="tag">Documentation</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/technical-writing-1" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>코드만으로는 불완전한 SSoT이며, 조직 맥락을 문서화해야 완성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 도구(예: 챗봇)를 활용해 지식 자동화 시스템 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Technical Writing Chapter의 궁극적 목표는 지식 시스템 자동화</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 변경 이력과 결정 맥락을 자동으로 문서화하는 MLOps 파이프라인 구축</div>
+    
+    <div class="idea">💡 AI 기반 문서 추천 시스템 도입 (예: 특정 코드 변경 시 관련 문서 자동 생성)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. SSoT(Single Source of Truth)를 완성하기 위해 반드시 필요한 요소는?</div>
+      
+      <div class="quiz-opt">A) 코드만</div>
+      
+      <div class="quiz-opt">B) 문서만</div>
+      
+      <div class="quiz-opt">C) 코드와 조직 맥락</div>
+      
+      <div class="quiz-opt">D) AI 추천 시스템</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 코드와 조직 맥락</div>
+          <div class="quiz-explanation">코드는 결과만 담고, 조직의 결정 맥락은 문서화되어야 SSoT가 완성됩니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Technical Writing Chapter의 궁극적 목표는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 더 많은 문서 작성</div>
+      
+      <div class="quiz-opt">B) AI 대체</div>
+      
+      <div class="quiz-opt">C) 지식 시스템 자동화</div>
+      
+      <div class="quiz-opt">D) 온보딩 프로그램 확장</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 지식 시스템 자동화</div>
+          <div class="quiz-explanation">사람이 직접 문서를 쓰지 않아도 지식이 쌓이는 시스템을 구축하고, 궁극적으로는 TW 챕터가 사라지는 것이 목표입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
