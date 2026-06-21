@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 21일 · 2건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/2852215" target="_blank">스펙만 바꾸면 프롬프트가 따라옵니다 - 답변 생성 모델 자동화 파이프라인</a>
+    </h2>
+
+    <p class="item-summary">스펙 변경 시 자동 프롬프트 최적화 파이프라인 구축 방법</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Prompt Engineering</span><span class="tag">Automated ML</span><span class="tag">SFT</span><span class="tag">Defect Detection</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/2852215" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>스펙 변경 시 결함 탐지, 프롬프트 최적화, SFT 데이터 생성을 자동화한 폐쇄 루프 파이프라인 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>쇼핑 에이전트 모델 개발에서 반복되는 스펙 변경 문제를 해결하기 위한 Agent Spec 구조 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실무 적용 사례를 통해 프롬프트 최적화의 구체적 적용 방식 공유</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 신규 프로젝트에서 스펙 변경 시 자동으로 결함 탐지 및 프롬프트 재생성하는 워크플로우 도입</div>
+    
+    <div class="idea">💡 SFT 데이터 생성 과정에 Agent Spec 기반 템플릿을 적용해 라벨링 효율성 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 발표에서 제시된 자동화 파이프라인의 핵심 구성 요소는 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 모델 추론, 데이터 수집, A/B 테스트</div>
+      
+      <div class="quiz-opt">B) Agent Spec, 결함 탐지, 프롬프트 최적화</div>
+      
+      <div class="quiz-opt">C) 모델 배포, 모니터링, 재학습</div>
+      
+      <div class="quiz-opt">D) 데이터 전처리, 피처 엔지니어링, 모델 평가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Agent Spec, 결함 탐지, 프롬프트 최적화</div>
+          <div class="quiz-explanation">발표 목차에 명시된 Agent Spec, 결함 탐지, 프롬프트 최적화가 핵심 구성 요소입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 콘텐츠의 주요 적용 대상은 누구인가요?</div>
+      
+      <div class="quiz-opt">A) 데이터 수집 담당자</div>
+      
+      <div class="quiz-opt">B) AI 기획/엔지니어</div>
+      
+      <div class="quiz-opt">C) 프론트엔드 개발자</div>
+      
+      <div class="quiz-opt">D) 인프라 엔지니어</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) AI 기획/엔지니어</div>
+          <div class="quiz-explanation">발표 대상 섹션에서 AI 서비스 스펙 기반 프롬프트 최적화를 적용하고자 하는 기획/AI 엔지니어를 대상으로 합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      kakao tech · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/XHVFS4mYKyg" target="_blank">[ifkakao2021] 카카오지갑  지갑서비스의 현황과 미래</a>
+    </h2>
+
+    <p class="item-summary">디지털 지갑 인증 및 보안 트렌드 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">Digital Authentication</span><span class="tag">Data Security</span><span class="tag">E-Document</span><span class="tag">Privacy Compliance</span><span class="tag">User Verification</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/XHVFS4mYKyg" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카카오지갑의 온라인 인증 기술과 디지털 문서 활용 현황 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>개인정보 보안 강화를 위한 서비스 발전 방향 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>전자출입증 및 디지털 카드 등 미래 서비스 확장 전략 논의</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 사용자 인증 흐름에 생체 인식 기반 A/B 테스트 도입 (예: 지문 vs 얼굴 인식 인증률 비교)</div>
+    
+    <div class="idea">💡 전자문서 저장 시 암호화 알고리즘 성능 분석을 위한 캐우зал 인퍼런스 모델 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 카카오지갑의 핵심 기능 중 미래 전략으로 강조된 것은?</div>
+      
+      <div class="quiz-opt">A) 소셜 결제</div>
+      
+      <div class="quiz-opt">B) 전자출입증</div>
+      
+      <div class="quiz-opt">C) 광고 플랫폼</div>
+      
+      <div class="quiz-opt">D) 음성 인식</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 전자출입증</div>
+          <div class="quiz-explanation">영상에서 전자출입증과 디지털 카드를 통한 서비스 확장 계획을 명시적으로 언급했습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본 콘텐츠에서 강조된 보안 기술은?</div>
+      
+      <div class="quiz-opt">A) 블록체인</div>
+      
+      <div class="quiz-opt">B) 동적 암호</div>
+      
+      <div class="quiz-opt">C) 멀티팩터 인증</div>
+      
+      <div class="quiz-opt">D) 서버리스 아키텍처</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 멀티팩터 인증</div>
+          <div class="quiz-explanation">온라인 인증 서비스의 핵심으로 멀티팩터 인증 기반의 사용자 인증 방식이 다뤄졌습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
