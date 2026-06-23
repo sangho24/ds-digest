@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 06월 23일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/739upsjlaKM" target="_blank">How SNOW Adopted Automatic Sharding</a>
+    </h2>
+
+    <p class="item-summary">GPU 리소스 제한 속 AI 콘텐츠 수천개 자동 분산 운영 전략</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Auto Sharding</span><span class="tag">GPU Optimization</span><span class="tag">Model Serving</span><span class="tag">Infrastructure Automation</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/739upsjlaKM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>수동 셰이딩의 확장성 문제와 자동화 필요성 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GPU 리소스 최적화를 위한 자동 셰이딩 알고리즘 설계 과정</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>생산 환경에 자동 셰이딩 결과 적용하는 CI/CD 통합 전략</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 환경에서 GPU 메모리 사용량 기반 동적 셰이딩 알고리즘 구현</div>
+    
+    <div class="idea">💡 모델 배포 파이프라인에 자동 셰이딩 결과 자동 적용 스크립트 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 수동 셰이딩의 주요 한계는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. 모델 정확도 저하</div>
+      
+      <div class="quiz-opt">B) B. GPU 메모리 과다 소비</div>
+      
+      <div class="quiz-opt">C) C. 확장성 문제와 운영 복잡도 증가</div>
+      
+      <div class="quiz-opt">D) D. CPU-GPU 호환성 문제</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) C. 확장성 문제와 운영 복잡도 증가</div>
+          <div class="quiz-explanation">수동 셰이딩은 GPU 리소스 분배 최적화가 어렵고 운영 복잡도가 높아 확장성이 제한된다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 자동 셰이딩 도입으로 얻은 주요 이점은?</div>
+      
+      <div class="quiz-opt">A) A. 모델 학습 시간 30% 단축</div>
+      
+      <div class="quiz-opt">B) B. GPU 리소스 사용률 40% 개선</div>
+      
+      <div class="quiz-opt">C) C. 모델 배포 실패율 50% 감소</div>
+      
+      <div class="quiz-opt">D) D. 인프라 비용 20% 절감</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. GPU 리소스 사용률 40% 개선</div>
+          <div class="quiz-explanation">자동 셰이딩은 GPU 리소스를 효율적으로 할당하여 사용률을 최적화할 수 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Ab2GMyqwXxo" target="_blank">SNOW의 Automatic Sharding 도입기</a>
+    </h2>
+
+    <p class="item-summary">GPU 자원 효율화를 위한 자동 셰이딩 기술로 모델 서빙 성능 개선</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 서빙</span><span class="tag">GPU 자원 관리</span><span class="tag">자동화</span><span class="tag">인프라 최적화</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Ab2GMyqwXxo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Manual Sharding의 자원 낭비와 운영 오버헤드 문제 정의</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Dynamic Sharding 알고리즘으로 GPU 할당 최적화 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 모니터링 기반 자동 배포 전략 도입</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 다중 모델 서빙 환경에서 Dynamic Sharding 알고리즘을 적용해 GPU 메모리 사용률을 30% 이상 개선</div>
+    
+    <div class="idea">💡 모델 로딩 오버헤드 제거를 위해 Pre-warmed Container Pool 구축 (예: 500ms 이하로 대기 시간 감소)</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Automatic Sharding의 주된 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) GPU 메모리 용량 확장</div>
+      
+      <div class="quiz-opt">B) 모델 로딩 시간 단축</div>
+      
+      <div class="quiz-opt">C) GPU 자원의 효율적 공유</div>
+      
+      <div class="quiz-opt">D) 모델 정확도 향상</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) GPU 자원의 효율적 공유</div>
+          <div class="quiz-explanation">발표 내용에서 수천 개 서비스가 한정된 GPU 자원을 효율적으로 공유하는 것이 핵심 목표로 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 기술이 적용된 주 대상은?</div>
+      
+      <div class="quiz-opt">A) 데이터 전처리 엔지니어</div>
+      
+      <div class="quiz-opt">B) GPU 환경에서 다수 AI 모델 운영자</div>
+      
+      <div class="quiz-opt">C) 머신러닝 모델 개발자</div>
+      
+      <div class="quiz-opt">D) 클라우드 인프라 관리자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) GPU 환경에서 다수 AI 모델 운영자</div>
+          <div class="quiz-explanation">발표 대상에 명시된 대로 GPU 환경에서 운영 자동화를 고민하는 AI 모델 운영자가 주 대상임</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/4394359" target="_blank">SNOW의 Automatic Sharding 도입기</a>
+    </h2>
+
+    <p class="item-summary">GPU 자원 효율화 및 모델 서빙 안정성 향상 기술 소개</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 서빙</span><span class="tag">GPU 자원 관리</span><span class="tag">자동화</span><span class="tag">인프라 자동화</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/4394359" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Manual Sharding의 운영 복잡성과 오버헤드 문제를 해결하는 알고리즘 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실시간 GPU 사용량을 기반으로 Sharding 배치를 자동 조정하는 인프라 구축</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 로딩 오버헤드 제거를 통한 서빙 지연 최소화 전략</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 기존 모델 서빙 인프라에 Automatic Sharding을 도입하여 GPU 사용률을 30% 이상 향상시키고, 서빙 대기 시간을 20% 감소시키는 시범 프로젝트 추진</div>
+    
+    <div class="idea">💡 모델별 GPU 자원 할당 정책을 동적 Sharding 알고리즘으로 전환하여, 신규 서비스 도입 시 자동 스케일링을 지원하는 운영 프로세스 개발</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Automatic Sharding의 주요 목적은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) A. GPU 메모리 사용량 최소화</div>
+      
+      <div class="quiz-opt">B) B. 수천 개 서비스의 GPU 자원 공유 최적화</div>
+      
+      <div class="quiz-opt">C) C. 모델 학습 속도 향상</div>
+      
+      <div class="quiz-opt">D) D. 데이터 전처리 자동화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 수천 개 서비스의 GPU 자원 공유 최적화</div>
+          <div class="quiz-explanation">본문에서 '수천 개의 서비스가 한정된 GPU 자원을 효율적으로 공유할 수 있도록 돕는' Automatic Sharding 기술이 소개되었다는 점에서 B가 정답입니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이 기술의 주요 대상은 누구인가?</div>
+      
+      <div class="quiz-opt">A) A. 데이터 수집 엔지니어</div>
+      
+      <div class="quiz-opt">B) B. 다수의 AI 모델을 GPU 환경에서 운영하는 팀</div>
+      
+      <div class="quiz-opt">C) C. 머신러닝 모델 개발자</div>
+      
+      <div class="quiz-opt">D) D. 클라우드 인프라 관리자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 다수의 AI 모델을 GPU 환경에서 운영하는 팀</div>
+          <div class="quiz-explanation">발표 대상에 명시된 '다수의 AI 모델을 GPU 환경에서 운영하면서 운영 자동화를 고민하시는 분들'이 B에 해당합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
