@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 09일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">9</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/JustVugg/colibri" target="_blank">Show HN: Getting GLM 5.2 running on my slow computer</a>
+    </h2>
+
+    <p class="item-summary">저사양 PC에서 GLM 5.2 실행하는 MLOps 최적화 기법 공개</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">모델 최적화</span><span class="tag">Quantization</span><span class="tag">MoE</span><span class="tag">저자원 추론</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/JustVugg/colibri" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>int4 양자화와 Mixture-of-Experts(MoE) 구조로 744B 모델을 11GB RAM에서 실행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디스크 기반 LRU 캐시와 OS 페이지 캐시를 활용한 메모리 효율화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GPU 없이도 0.1 tok/s 속도로 실행 가능한 저사양 서빙 솔루션 개발</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 모델 서빙 서버의 RAM 제약 환경에서 int4 양자화 + MoE 구조를 도입해 30% 이상 메모리 절감</div>
+    
+    <div class="idea">💡 Colibrì의 디스크 스트리밍 방식을 기반으로 100B 이상 모델을 64GB RAM 서버에 배포</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. GLM 5.2 모델의 실행 환경에서 'routed experts'는 어떤 방식으로 관리되는가?</div>
+      
+      <div class="quiz-opt">A) GPU VRAM에 전체 로딩</div>
+      
+      <div class="quiz-opt">B) 디스크에 저장하고 필요 시 로드</div>
+      
+      <div class="quiz-opt">C) RAM에 압축 저장</div>
+      
+      <div class="quiz-opt">D) 네트워크 스토리지에서 실시간 다운로드</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 디스크에 저장하고 필요 시 로드</div>
+          <div class="quiz-explanation">콘텐츠에 따르면 21,504개의 routed experts는 디스크에 저장되어 필요 시 스트리밍되고, LRU 캐시와 OS 페이지 캐시를 활용합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Colibrì 엔진의 int4 양자화 적용으로 주로 어떤 성능 향상이 기대되는가?</div>
+      
+      <div class="quiz-opt">A) 추론 속도 2배 향상</div>
+      
+      <div class="quiz-opt">B) 메모리 사용 50% 절감</div>
+      
+      <div class="quiz-opt">C) 정확도 10% 개선</div>
+      
+      <div class="quiz-opt">D) GPU 사용률 30% 감소</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 메모리 사용 50% 절감</div>
+          <div class="quiz-explanation">int4 양자화로 17B 파라미터의 밀집층이 9.9GB로 유지되며, 전체 메모리 절감 효과가 강조되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.context.dev" target="_blank">Launch HN: Context.dev (YC S26) – API to get structured data from any website</a>
+    </h2>
+
+    <p class="item-summary">웹사이트에서 구조화된 데이터를 API로 자동 추출해 데이터 파이프라인 효율성 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">MLOps</span><span class="tag">Data Engineering</span><span class="tag">Web Scraping</span><span class="tag">API</span><span class="tag">Structured Data</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.context.dev" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>JSON Schema 기반의 커스텀 데이터 추출 기능 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>브랜드/회사 정보 자동 수집으로 온보딩 컨버전 향상 사례 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM에 최적화된 마크다운/HTML 포맷의 정제 데이터 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 경쟁사 가격 정보를 JSON Schema로 자동 추출해 가격 예측 모델 학습 데이터로 활용</div>
+    
+    <div class="idea">💡 고객 도메인 기반 브랜드 정보(로고/색상/폰트)를 자동 수집해 UI/UX 팀에 제공해 브랜딩 일관성 강화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Context.dev API가 제공하는 주요 데이터 포맷은?</div>
+      
+      <div class="quiz-opt">A) A. Raw HTML</div>
+      
+      <div class="quiz-opt">B) B. Markdown</div>
+      
+      <div class="quiz-opt">C) C. JSON</div>
+      
+      <div class="quiz-opt">D) D. 위 모두</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) D. 위 모두</div>
+          <div class="quiz-explanation">문서에 명시된 바에 따르면 마크다운, 렌더링된 HTML, JSON 등 다양한 포맷을 지원합니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Brand.dev를 통해 온보딩 컨버전이 향상된 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) A. 개인정보 수집 강화</div>
+      
+      <div class="quiz-opt">B) B. 정보 입력 단계 자동화</div>
+      
+      <div class="quiz-opt">C) C. A/B 테스트 도입</div>
+      
+      <div class="quiz-opt">D) D. 모델 인퍼런스 속도 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) B. 정보 입력 단계 자동화</div>
+          <div class="quiz-explanation">공개된 정보를 자동 수집하여 '입력' 대신 '확인' 단계로 전환함으로써 사용자 부담을 줄였습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://tomesphere.com/atlas" target="_blank">Show HN: I mapped 8.5M research papers into an interactive atlas</a>
+    </h2>
+
+    <p class="item-summary">850만 논문 시각화 도구로 연구 자료 통합 검색 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Data Science</span><span class="tag">MLOps</span><span class="tag">NLP</span><span class="tag">Dimensionality Reduction</span><span class="tag">Embedding</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://tomesphere.com/atlas" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>SPECTER2 임베딩 + UMAP으로 850만 논문 2D 맵 생성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>논문별 GitHub/데이터셋/임상시험 정보 통합 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM용 API(MCP)로 데이터 직접 활용 가능</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MCP API를 활용해 모델 개발 시 관련 논문/데이터셋 자동 추천 시스템 구축</div>
+    
+    <div class="idea">💡 arXiv 확장 프로그램을 팀 내 지식 공유 플랫폼에 통합하여 연구 효율성 개선</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 프로젝트에서 사용된 차원 축소 알고리즘은?</div>
+      
+      <div class="quiz-opt">A) PCA</div>
+      
+      <div class="quiz-opt">B) t-SNE</div>
+      
+      <div class="quiz-opt">C) UMAP</div>
+      
+      <div class="quiz-opt">D) LDA</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) UMAP</div>
+          <div class="quiz-explanation">본문에서 'UMAP for 2D representation'이라고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 해당 시스템에 포함된 논문 수는 약?</div>
+      
+      <div class="quiz-opt">A) 100만</div>
+      
+      <div class="quiz-opt">B) 500만</div>
+      
+      <div class="quiz-opt">C) 850만</div>
+      
+      <div class="quiz-opt">D) 1000만</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 850만</div>
+          <div class="quiz-explanation">제목과 본문에서 '8.5M papers'라고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
