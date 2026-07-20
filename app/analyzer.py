@@ -145,6 +145,43 @@ def determine_evidence_level(item: RawContent) -> EvidenceLevel:
     return EvidenceLevel.TITLE_ONLY
 
 
+async def _call_llm_with_fallback(prompt: str, title: str) -> dict:
+    """
+    Groq를 우선 시도하고 실패하면 Gemini로 넘어간다.
+
+    이전 구현은 `if groq_api_key: Groq else: Gemini` 라서 폴백이
+    "키가 없을 때"만 동작하고 "호출이 실패했을 때"는 동작하지 않았다.
+    2026-07-17경 Groq 모델이 404(폐기 추정)를 내기 시작하자 6건 전부
+    analysis_failed -> relevance 0 -> 전량 탈락했고, 다이제스트가
+    3일간 발행되지 않았다. 제공자 하나가 죽어도 파이프라인은 살아야 한다.
+
+    두 제공자가 모두 실패하면 마지막 예외를 올려 보내 기존 처리(스킵)를 따른다.
+    """
+    settings = get_settings()
+    last_error: Exception | None = None
+
+    if settings.groq_api_key:
+        try:
+            logger.info("using_groq", model=settings.groq_model, title=title[:50])
+            return await _call_groq(prompt)
+        except Exception as e:
+            last_error = e
+            logger.warning(
+                "groq_failed_falling_back",
+                model=settings.groq_model,
+                error=str(e)[:200],
+                title=title[:50],
+            )
+
+    if settings.gemini_api_key:
+        logger.info("using_gemini", model=settings.gemini_model, title=title[:50])
+        return await _call_gemini(prompt)
+
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("사용 가능한 LLM 제공자가 없습니다 (GROQ_API_KEY / GEMINI_API_KEY 미설정)")
+
+
 def _coerce_score(data: dict, key: str, title: str) -> int:
     """
     LLM 응답에서 0~10 점수를 안전하게 읽는다.
@@ -358,11 +395,7 @@ async def analyze_content(
     )
 
     try:
-        if settings.groq_api_key:
-            logger.info("using_groq", model=settings.groq_model, title=item.title[:50])
-            data = await _call_groq(prompt)
-        else:
-            data = await _call_gemini(prompt)
+        data = await _call_llm_with_fallback(prompt, item.title)
 
         # 점수 키를 대괄호로 직접 접근하면, 모델이 키 하나를 빠뜨렸을 때
         # KeyError -> except -> relevance_score=0 이 되어 그날 아이템이 전량 탈락한다.

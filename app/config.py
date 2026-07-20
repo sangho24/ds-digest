@@ -10,7 +10,12 @@ class Settings(BaseSettings):
     # AI (Groq — OpenAI-compatible, 무료 30 RPM / 14,400 RPD)
     # GROQ_API_KEY 설정 시 Gemini 대신 Groq 사용
     groq_api_key: str = ""
-    groq_model: str = "qwen/qwen3-32b"
+    # qwen/qwen3-32b는 2026-07-17 셧다운되어 404를 반환한다(2026-06-17 폐기 공지).
+    # 그 여파로 다이제스트가 3일간 발행되지 못했다.
+    # Groq가 공식 지정한 마이그레이션 대상이 gpt-oss-120b이며, Production 등급이라
+    # Preview 등급(예: qwen3.6-27b)보다 폐기 위험이 낮다.
+    # Qwen 계열은 qwen-2.5-32b -> qwen-qwq-32b -> qwen3-32b 로 세 번 연속 폐기됐다.
+    groq_model: str = "openai/gpt-oss-120b"
 
     # Database
     supabase_url: str = ""
@@ -47,6 +52,13 @@ class Settings(BaseSettings):
     # YouTube 수집 설정
     yt_fetch_per_channel: int = 10   # 채널당 최근 N개 가져오기
     yt_new_per_channel: int = 3      # dedup 후 채널당 최대 분석 대상
+
+    # YouTube 자막 Gemini 폴백
+    # datacenter IP 차단으로 youtube-transcript-api 성공률이 0.9%(116건 중 1건)라
+    # 기본 활성화한다. GEMINI_API_KEY가 없거나 DRY_RUN이면 자동으로 건너뛴다.
+    yt_gemini_transcript: bool = True
+    # 2시간 이상 영상은 1M 토큰을 초과해 400으로 실패하므로 그 앞에서 사전 차단한다.
+    yt_gemini_max_duration_seconds: int = 6000  # 100분
 
     # Telegram
     telegram_bot_token: str = ""
