@@ -1,8 +1,35 @@
 import re
 
-from pydantic import BaseModel, Field, field_validator
+import structlog
+from pydantic import BaseModel, Field, field_validator, model_validator
 from datetime import datetime
 from enum import Enum
+
+logger = structlog.get_logger()
+
+# LLM이 새 분류값을 자유 생성하지 못하도록 코드에서 검증하는 닫힌 어휘다.
+DOMAINS = [
+    "ai-ml",
+    "data-eng",
+    "software-eng",
+    "systems",
+    "product",
+    "business",
+    "research-method",
+    "career",
+    "tools",
+]
+CONTENT_TYPES = [
+    "paper",
+    "case-study",
+    "tutorial",
+    "talk",
+    "news",
+    "interview",
+    "opinion",
+    "release",
+]
+HALF_LIVES = ["ephemeral", "seasonal", "durable", "foundational"]
 
 # 선지 앞에 붙는 라벨: "A. " "A) " "(A) " "1. " "1) " "가. " 등
 # 한글은 열거 기호로 실제 쓰이는 글자만 포함한다. [가-힣] 전체를 넣으면
@@ -14,6 +41,21 @@ class SourceType(str, Enum):
     YOUTUBE = "youtube"
     RSS = "rss"
     NEWSLETTER = "newsletter"
+
+
+class EvidenceLevel(str, Enum):
+    FULL = "full"
+    PARTIAL = "partial"
+    DESCRIPTION = "description"
+    TITLE_ONLY = "title_only"
+
+
+EVIDENCE_DEPTH_CAPS = {
+    EvidenceLevel.FULL: 10,
+    EvidenceLevel.PARTIAL: 6,
+    EvidenceLevel.DESCRIPTION: 3,
+    EvidenceLevel.TITLE_ONLY: 1,
+}
 
 
 class RawContent(BaseModel):
@@ -63,6 +105,76 @@ class ContentAnalysis(BaseModel):
     production_ideas: list[str] = Field(default_factory=list, max_length=3)
     quiz: list[QuizItem] = Field(default_factory=list, max_length=3)
     skip_reason: str | None = None
+    evidence_level: EvidenceLevel = EvidenceLevel.TITLE_ONLY
+    domain: list[str] = Field(default_factory=list, max_length=2)
+    content_type: str = "news"
+    half_life: str = "seasonal"
+    actionability: int = Field(default=0, ge=0, le=10)
+    # 상한은 아래 model_validator가 근거 수준별로 clamp한다.
+    depth: int = Field(default=0, ge=0)
+
+    @field_validator("domain", mode="before")
+    @classmethod
+    def validate_domain(cls, value: object) -> list[str]:
+        """닫힌 어휘만 남기고, 유효한 도메인은 최대 두 개만 보존한다."""
+        if value is None:
+            candidates: list[object] = []
+        elif isinstance(value, (list, tuple, set)):
+            candidates = list(value)
+        else:
+            candidates = [value]
+
+        valid = [item for item in candidates if isinstance(item, str) and item in DOMAINS]
+        invalid = [item for item in candidates if item not in DOMAINS]
+        if invalid:
+            logger.warning("invalid_domain_removed", values=invalid)
+        if len(valid) > 2:
+            logger.warning("domain_truncated", values=valid[2:])
+        return valid[:2]
+
+    @field_validator("content_type", mode="before")
+    @classmethod
+    def validate_content_type(cls, value: object) -> str:
+        """잘못된 콘텐츠 유형은 하위 호환 기본값인 news로 복구한다."""
+        if value not in CONTENT_TYPES:
+            logger.warning("invalid_content_type_replaced", value=value, fallback="news")
+            return "news"
+        return value
+
+    @field_validator("half_life", mode="before")
+    @classmethod
+    def validate_half_life(cls, value: object) -> str:
+        """잘못된 반감기 분류는 하위 호환 기본값인 seasonal로 복구한다."""
+        if value not in HALF_LIVES:
+            logger.warning("invalid_half_life_replaced", value=value, fallback="seasonal")
+            return "seasonal"
+        return value
+
+    @model_validator(mode="after")
+    def enforce_evidence_gate(self) -> "ContentAnalysis":
+        """근거 수준에 따라 깊이와 근거 의존 산출물을 코드에서 강제한다."""
+        depth_cap = EVIDENCE_DEPTH_CAPS[self.evidence_level]
+        if self.depth > depth_cap:
+            logger.warning(
+                "depth_clamped_by_evidence",
+                evidence_level=self.evidence_level.value,
+                original_depth=self.depth,
+                clamped_depth=depth_cap,
+            )
+            self.depth = depth_cap
+
+        if self.evidence_level in {EvidenceLevel.DESCRIPTION, EvidenceLevel.TITLE_ONLY}:
+            if self.quiz or self.production_ideas:
+                logger.warning(
+                    "unsupported_outputs_removed",
+                    evidence_level=self.evidence_level.value,
+                    quiz_count=len(self.quiz),
+                    production_idea_count=len(self.production_ideas),
+                )
+            self.quiz = []
+            self.production_ideas = []
+
+        return self
 
 
 class DigestItem(BaseModel):
