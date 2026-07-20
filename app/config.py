@@ -40,6 +40,10 @@ class Settings(BaseSettings):
     relevance_threshold: int = 7
     log_level: str = "INFO"
 
+    # seen_urls 보존 기간. 이 값이 짧으면 만료된 URL이 재수집되어 중복 발송된다.
+    # 30일이었을 때 전체 아이템의 19.8%가 30~37일 주기로 재유입되었다.
+    seen_url_ttl_days: int = 365
+
     # YouTube 수집 설정
     yt_fetch_per_channel: int = 10   # 채널당 최근 N개 가져오기
     yt_new_per_channel: int = 3      # dedup 후 채널당 최대 분석 대상

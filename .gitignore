@@ -11,3 +11,8 @@ cookies*.txt
 encoded*.txt
 filter_cookies.py
 *.cookie
+
+# 디버깅 부산물
+.pytest_cache/
+.playwright-mcp/
+resp.json

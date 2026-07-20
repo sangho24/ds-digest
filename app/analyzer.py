@@ -150,7 +150,7 @@ async def _call_groq(prompt: str, _retry: int = 3) -> dict:
     headers = {"Authorization": f"Bearer {settings.groq_api_key}"}
 
     for attempt in range(_retry + 1):
-        async with httpx.AsyncClient(timeout=60, verify=False) as client:
+        async with httpx.AsyncClient(timeout=60) as client:
             resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
 
         if resp.status_code == 429:

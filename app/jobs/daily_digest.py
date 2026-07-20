@@ -97,10 +97,13 @@ async def run_daily_digest() -> dict:
     start = datetime.now()
     logger.info("digest_started", time=start.isoformat())
 
-    # 0-a. 만료된 seen_urls 정리 (30일 초과)
+    # 0-a. 만료된 seen_urls 정리
+    # 주의: 30일로 두면 31일째 되는 날 같은 콘텐츠가 재유입된다.
+    # 실측(98일/247아이템) 결과 전체의 19.8%가 이 경로로 재발송되었고,
+    # 재등장 간격 49건이 전부 30~37일이었다. 소스 풀이 작을수록 심해진다.
     if settings.supabase_url and settings.supabase_key:
         from app.db import cleanup_seen_urls
-        cleanup_seen_urls(days=30)
+        cleanup_seen_urls(days=settings.seen_url_ttl_days)
 
     # 0-b. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영 → 요약 알림
     feedback_summary = await _process_pending_feedback()
