@@ -221,6 +221,15 @@ async def run_daily_digest() -> dict:
     (docs_dir / f"{today_str}.html").write_text(html, encoding="utf-8")
     _update_docs_index(docs_dir)
 
+    # 7.5. 구조화 정본 저장 — 로컬 JSON(정본) + Supabase 미러(best-effort)
+    # 발송 성공 여부와 무관하게 분석 결과가 남도록 HTML 저장과 같은 지점에 둔다.
+    # (기존엔 HTML만 저장되고 구조화 분석 결과는 발송 후 폐기됐다.)
+    from app.records import save_digest_records
+    from app.db import save_digest_records_to_db
+    record_path = save_digest_records(digest_items, today_str)
+    logger.info("records_saved", path=str(record_path), count=len(digest_items))
+    await save_digest_records_to_db(digest_items, today_str)  # best-effort 미러
+
     elapsed = (datetime.now() - start).total_seconds()
     result = {
         "status": "ok",
