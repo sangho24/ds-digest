@@ -17,6 +17,12 @@ class Settings(BaseSettings):
     # Qwen 계열은 qwen-2.5-32b -> qwen-qwq-32b -> qwen3-32b 로 세 번 연속 폐기됐다.
     groq_model: str = "openai/gpt-oss-120b"
 
+    # 메타데이터 랭킹 전용 모델. gpt-oss 계열은 정수 인덱스 배열 출력을 뭉개므로
+    # (실측: 범위 밖 인덱스·숫자 이어붙임) 구조화 출력이 안정적인 llama를 쓴다.
+    # 분석은 groq_model(gpt-oss-120b) 그대로. 더 가볍게 가려면
+    # llama-3.1-8b-instant도 동일하게 유효.
+    groq_ranking_model: str = "llama-3.3-70b-versatile"
+
     # Database
     supabase_url: str = ""
     supabase_key: str = ""
@@ -64,6 +70,11 @@ class Settings(BaseSettings):
     #   장편 필터가 꼭 필요해지면 YouTube Data API videos.list(contentDetails.duration,
     #   datacenter IP 면역)로 duration을 채우는 것이 정공법이다.
     yt_gemini_max_duration_seconds: int = 14400  # 4시간
+
+    # 런당 Gemini 전사 최대 건수. Groq가 랭킹·분석을 담당하므로 Gemini는 전사에만
+    # 쓰이고, 이 캡이 곧 Gemini 무료 토큰 사용량 상한이다. 상위 N건만 전사하고
+    # 나머지는 설명글(description)로 남긴다.
+    yt_transcript_budget: int = 5
 
     # Telegram
     telegram_bot_token: str = ""

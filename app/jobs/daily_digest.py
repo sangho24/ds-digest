@@ -11,7 +11,7 @@ from typing import Any
 
 from app.config import get_settings
 from app.collectors import collect_all
-from app.analyzer import filter_and_analyze
+from app.analyzer import filter_and_analyze, resolve_youtube_transcripts
 from app.newsletter import send_digest, render_digest_email
 from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
@@ -136,6 +136,9 @@ async def run_daily_digest() -> dict:
     # YouTube: dedup 후 채널당 new_per_channel개로 제한
     yt_items = _deduplicate(yt_items)
     yt_items = _cap_per_channel(yt_items, settings.yt_new_per_channel)
+
+    # 3.5. Stage 1 메타 랭킹 → Stage 2 상위 N건만 Gemini 전사 (rate-limit 보호)
+    yt_items = await resolve_youtube_transcripts(yt_items, profile, settings.yt_transcript_budget)
 
     raw_items = yt_items + rss_items
     logger.info("after_dedup", yt=len(yt_items), rss=len(rss_items), remaining=len(raw_items))

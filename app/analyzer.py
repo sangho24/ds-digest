@@ -8,12 +8,14 @@ import json
 import re
 import structlog
 import httpx
+from urllib.parse import urlparse, parse_qs
 
 from app.config import get_settings
 from app.models import (
     RawContent, ContentAnalysis, KeyPoint, QuizItem, SourceType,
     DigestItem, UserProfile, EvidenceLevel, EVIDENCE_DEPTH_CAPS,
 )
+from app.transcript_gemini import fetch_transcript_via_gemini
 
 logger = structlog.get_logger()
 
@@ -21,6 +23,8 @@ logger = structlog.get_logger()
 # Groq free tier: 30 RPM → 호출 간 최소 3초
 _RATE_LIMIT_DELAY = 8.0
 _GROQ_RATE_LIMIT_DELAY = 3.0
+# Stage 2 전사 호출 사이 대기(초). 무료 티어 TPM 보호용 — 첫 호출 앞에는 두지 않는다.
+_TRANSCRIPT_PACING_DELAY = 5.0
 _GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 _GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -145,9 +149,13 @@ def determine_evidence_level(item: RawContent) -> EvidenceLevel:
     return EvidenceLevel.TITLE_ONLY
 
 
-async def _call_llm_with_fallback(prompt: str, title: str) -> dict:
+async def _call_llm_with_fallback(prompt: str, title: str, groq_model: str | None = None) -> dict:
     """
     Groq를 우선 시도하고 실패하면 Gemini로 넘어간다.
+
+    groq_model=None이면 분석용 기본 모델(settings.groq_model)을 쓴다. 메타데이터
+    랭킹은 정수 인덱스 배열 출력이 안정적인 모델(settings.groq_ranking_model)을
+    넘겨 오버라이드한다. Gemini 폴백 경로는 groq_model의 영향을 받지 않는다.
 
     이전 구현은 `if groq_api_key: Groq else: Gemini` 라서 폴백이
     "키가 없을 때"만 동작하고 "호출이 실패했을 때"는 동작하지 않았다.
@@ -159,16 +167,21 @@ async def _call_llm_with_fallback(prompt: str, title: str) -> dict:
     """
     settings = get_settings()
     last_error: Exception | None = None
+    request_model = groq_model or settings.groq_model
 
     if settings.groq_api_key:
         try:
-            logger.info("using_groq", model=settings.groq_model, title=title[:50])
+            logger.info("using_groq", model=request_model, title=title[:50])
+            # 기본(분석) 경로는 기존 호출 형태를 그대로 유지한다. 랭킹처럼 모델을
+            # 오버라이드해야 할 때만 model을 넘긴다(_call_groq가 model or groq_model 처리).
+            if groq_model is not None:
+                return await _call_groq(prompt, model=groq_model)
             return await _call_groq(prompt)
         except Exception as e:
             last_error = e
             logger.warning(
                 "groq_failed_falling_back",
-                model=settings.groq_model,
+                model=request_model,
                 error=str(e)[:200],
                 title=title[:50],
             )
@@ -180,6 +193,198 @@ async def _call_llm_with_fallback(prompt: str, title: str) -> dict:
     if last_error is not None:
         raise last_error
     raise RuntimeError("사용 가능한 LLM 제공자가 없습니다 (GROQ_API_KEY / GEMINI_API_KEY 미설정)")
+
+
+# ──────────────────────────────────────────────
+# Stage 1 메타 랭킹 → Stage 2 Gemini 전사 (v2 §5)
+# ──────────────────────────────────────────────
+
+_METADATA_RANKING_PROMPT = """\
+당신은 Data Science 현업자를 위한 콘텐츠 큐레이터입니다.
+아래 YouTube 영상 목록에서 DS 현업자에게 가장 가치 있는 {budget}개를 고르세요.
+아직 전사(자막)는 없고 제목·출처·설명글만 주어집니다. 이 메타데이터만으로
+"전사를 확보해 깊게 분석할 가치가 큰" 영상을 상대 비교로 골라내는 것이 목표입니다.
+
+## 사용자가 최근 요청한 키워드
+{keywords}
+
+## 영상 목록
+{listing}
+
+반드시 아래 JSON 구조로만 응답하세요.
+- index는 반드시 0 이상 (목록 개수-1) 이하의 정수이며 목록에 없는 숫자는 쓰지 마세요.
+- 위 목록의 각 항목 앞에 붙은 [n]의 n이 그 항목의 index입니다.
+- 가장 가치 있는 순서로 최대 {budget}개까지 넣으세요.
+{{"top_indices": [가치 큰 순서의 index 최대 {budget}개]}}
+"""
+
+
+def _recover_youtube_video_id(url: str) -> str | None:
+    """RawContent.url에서 YouTube video_id를 복원한다.
+
+    수집기(collectors.fetch_youtube_recent)는 항상 https://youtu.be/{video_id}
+    형식으로 저장하므로 경로 세그먼트가 곧 video_id다. watch?v=·embed·shorts
+    형식도 방어적으로 처리한다. 복원 실패 시 None.
+    """
+    try:
+        parsed = urlparse(url)
+        host = (parsed.hostname or "").lower()
+        if host.endswith("youtu.be"):
+            segment = parsed.path.lstrip("/").split("/", 1)[0]
+            return segment or None
+        query_v = parse_qs(parsed.query).get("v")
+        if query_v and query_v[0]:
+            return query_v[0]
+        # /embed/{id}, /shorts/{id}, /v/{id} 등은 마지막 경로 세그먼트로 폴백한다.
+        segments = [seg for seg in parsed.path.split("/") if seg]
+        if segments:
+            return segments[-1]
+    except Exception as e:
+        logger.warning("yt_video_id_recover_failed", url=url, error=str(e))
+    return None
+
+
+def _parse_top_indices(data: dict, item_count: int, budget: int) -> list[int]:
+    """랭킹 응답의 top_indices를 방어적으로 파싱한다.
+
+    정수로 변환 가능한 값만, 범위 내(0 <= i < item_count)만, 중복 제거,
+    등장 순서를 보존하며 budget개로 절삭한다. 유효한 인덱스가 없으면 빈 리스트.
+    """
+    raw = (data or {}).get("top_indices")
+    if not isinstance(raw, list):
+        return []
+
+    result: list[int] = []
+    seen: set[int] = set()
+    for value in raw:
+        # bool은 int의 하위 타입이라 True/False가 0/1로 새는 것을 막는다.
+        if isinstance(value, bool):
+            continue
+        try:
+            idx = int(value)
+        except (TypeError, ValueError):
+            continue
+        if 0 <= idx < item_count and idx not in seen:
+            seen.add(idx)
+            result.append(idx)
+        if len(result) >= budget:
+            break
+    return result
+
+
+async def _select_top_youtube_items(
+    items: list[RawContent],
+    profile: UserProfile,
+    budget: int,
+) -> list[RawContent]:
+    """Stage 1: 값싼 메타데이터(제목·출처·설명글)만으로 상위 budget건을 고른다.
+
+    랭킹 LLM 호출·파싱이 어떤 이유로든 실패하면 앞 budget건으로 폴백해
+    파이프라인이 절대 멈추지 않게 한다.
+    """
+    listing_lines: list[str] = []
+    for idx, item in enumerate(items):
+        description = (item.body or "").strip()[:200] or "(설명 없음)"
+        listing_lines.append(
+            f"[{idx}] 제목: {item.title}\n"
+            f"     출처: {item.source_name}\n"
+            f"     설명: {description}"
+        )
+
+    prompt = _METADATA_RANKING_PROMPT.format(
+        budget=budget,
+        keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
+        listing="\n".join(listing_lines),
+    )
+
+    # 랭킹은 정수 인덱스 배열 출력이 안정적인 llama 계열을 쓴다. gpt-oss 계열
+    # (분석용 groq_model)은 이 스키마에서 범위 밖 인덱스·숫자 이어붙임을 낸다.
+    settings = get_settings()
+    try:
+        data = await _call_llm_with_fallback(
+            prompt, "youtube-metadata-ranking", groq_model=settings.groq_ranking_model
+        )
+        indices = _parse_top_indices(data, len(items), budget)
+        if not indices:
+            raise ValueError("top_indices가 비어 있거나 유효하지 않음")
+        logger.info("yt_metadata_ranking_selected", indices=indices, total=len(items))
+        return [items[i] for i in indices]
+    except Exception as e:
+        logger.warning(
+            "yt_metadata_ranking_failed",
+            error=str(e)[:200],
+            fallback="first_n",
+        )
+        return items[:budget]
+
+
+async def resolve_youtube_transcripts(
+    items: list[RawContent],
+    profile: UserProfile,
+    budget: int,
+) -> list[RawContent]:
+    """dedup·채널 캡 이후 상위 N건만 Gemini로 전사한다(v2 §5 Stage 1→2).
+
+    구버전은 수집 시점에 모든 YouTube 아이템을 전사해서, dedup·채널 캡 이전에
+    런당 20여 건의 무거운 Gemini 호출이 터졌고 무료 티어 429 폭풍으로
+    파이프라인이 50분간 멈춘 채 다이제스트를 못 냈다. 그래서 전사를 이 단계로
+    미루고, 값싼 메타데이터 랭킹(Stage 1)으로 고른 상위 budget건에만 Gemini
+    전사(Stage 2)를 쓴다. Groq가 랭킹·분석을 담당하므로 Gemini는 전사에만
+    쓰이고 budget이 곧 Gemini 무료 토큰 사용량 상한이 된다.
+
+    반환: items 전체(선택된 아이템만 .transcript가 채워지고 나머지는 None 유지).
+    """
+    settings = get_settings()
+
+    if not items:
+        return items
+
+    # 게이트: 아래 중 하나라도 걸리면 전사를 건너뛰고 items를 그대로 돌려준다
+    # (모든 transcript=None 유지). 이유를 로그로 남겨 계측 가능하게 한다.
+    skip_reason: str | None = None
+    if budget <= 0:
+        skip_reason = "budget_non_positive"
+    elif settings.dry_run:
+        skip_reason = "dry_run"
+    elif not settings.yt_gemini_transcript:
+        skip_reason = "yt_gemini_transcript_disabled"
+    elif not settings.gemini_api_key:
+        skip_reason = "no_gemini_api_key"
+
+    if skip_reason:
+        logger.warning("yt_transcript_skipped", reason=skip_reason, item_count=len(items))
+        return items
+
+    # 선택: budget 이하면 랭킹 LLM 호출이 불필요하므로 전체를 전사한다.
+    if len(items) <= budget:
+        selected = items
+    else:
+        selected = await _select_top_youtube_items(items, profile, budget)
+
+    # Stage 2: 선택된 아이템만 Gemini 전사. 무료 티어 TPM 보호를 위해 호출 사이에만
+    # 대기하고(첫 호출 앞에는 두지 않음), transcript_source를 로그로 남겨 평가
+    # 하니스가 근거 경로를 계측할 수 있게 한다.
+    for position, item in enumerate(selected):
+        if position > 0:
+            await asyncio.sleep(_TRANSCRIPT_PACING_DELAY)
+
+        video_id = _recover_youtube_video_id(item.url)
+        if not video_id:
+            logger.warning("yt_transcript_video_id_unresolved", url=item.url, title=item.title[:60])
+            logger.info("yt_transcript_resolved", title=item.title[:60], transcript_source="none")
+            continue
+
+        watch_url = f"https://www.youtube.com/watch?v={video_id}"
+        transcript = await fetch_transcript_via_gemini(watch_url, None)
+        if transcript:
+            item.transcript = transcript
+            logger.info("yt_transcript_resolved", title=item.title[:60], transcript_source="gemini")
+        else:
+            # 전사 실패 시 body(설명글)가 있으면 DESCRIPTION 근거로, 없으면 none.
+            source = "description" if item.body else "none"
+            logger.info("yt_transcript_resolved", title=item.title[:60], transcript_source=source)
+
+    return items
 
 
 def _coerce_score(data: dict, key: str, title: str) -> int:
@@ -289,14 +494,18 @@ async def _call_gemini(prompt: str, _retry: int = 3) -> dict:
     return json.loads(text)
 
 
-async def _call_groq(prompt: str, _retry: int = 3) -> dict:
+async def _call_groq(prompt: str, _retry: int = 3, model: str | None = None) -> dict:
     """Groq OpenAI-compatible API 호출 → 파싱된 JSON dict 반환.
     429 응답 시 Retry-After 헤더 기준 대기 후 최대 _retry회 재시도.
+
+    model=None이면 settings.groq_model(분석용 gpt-oss-120b)을 쓴다. 메타데이터
+    랭킹처럼 다른 모델이 필요한 호출은 model을 명시해 오버라이드한다.
     """
     settings = get_settings()
+    request_model = model or settings.groq_model
 
     payload = {
-        "model": settings.groq_model,
+        "model": request_model,
         "messages": [{"role": "user", "content": prompt}],
         "response_format": {"type": "json_object"},
         "temperature": 0.3,

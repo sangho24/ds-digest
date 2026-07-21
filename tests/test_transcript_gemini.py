@@ -14,8 +14,9 @@ import asyncio
 import httpx
 import pytest
 
-from app import collectors, transcript_gemini
+from app import analyzer, transcript_gemini
 from app.config import Settings
+from app.models import RawContent, SourceType, UserProfile
 from app.transcript_gemini import (
     MAX_VIDEO_DURATION_SECONDS,
     TRANSCRIPT_FPS,
@@ -335,126 +336,217 @@ def test_api_key_passed_as_query_param(patch_gemini):
 
 
 # ──────────────────────────────────────────────
-# 5. collectors 폴백 체인 통합
-#    transcript_source는 평가 하니스의 계측 축이므로 라벨이 흔들리면 안 된다.
+# 5. Stage 1 메타 랭킹 → Stage 2 전사 (analyzer.resolve_youtube_transcripts)
+#    구버전 collectors._resolve_transcript 체인을 대체한다. 전사는 이제 수집이
+#    아니라 dedup·캡 이후 상위 N건에만 붙으므로, 여기서는 게이트·선택·폴백을 검증한다.
+#    transcript_source는 평가 하니스의 계측 축이므로 선택 규칙이 흔들리면 안 된다.
 # ──────────────────────────────────────────────
 
-class _FakeEntry(dict):
-    """feedparser entry 대역 — .get()만 쓰이므로 dict로 충분하다."""
+def _yt_item(idx: int, *, body: str | None = "설명글") -> RawContent:
+    """수집기가 만드는 형식(url=https://youtu.be/{video_id})의 YouTube 아이템."""
+    return RawContent(
+        source_type=SourceType.YOUTUBE,
+        source_name=f"채널{idx}",
+        title=f"영상 {idx}",
+        url=f"https://youtu.be/VID{idx}",
+        body=body,
+    )
 
 
 @pytest.fixture
-def patch_chain(monkeypatch):
-    """_resolve_transcript가 쓰는 외부 의존 3개(api·gemini·settings)를 갈아끼운다."""
+def patch_resolve(monkeypatch):
+    """resolve_youtube_transcripts의 외부 의존을 갈아끼운다.
 
-    def _apply(*, api_transcript, gemini_transcript, api_key="k", dry_run=False, enabled=True):
-        calls = {"gemini_called": False, "url": None, "duration": "UNSET"}
+    - get_settings: 게이트(dry_run / gemini_api_key / yt_gemini_transcript) 제어
+    - fetch_transcript_via_gemini: 전사 대역(호출된 watch_url을 순서대로 기록)
+    - _call_llm_with_fallback: 메타 랭킹 대역(호출 여부·반환값·예외 제어)
+    - asyncio.sleep: 페이싱 대기 제거(테스트가 실제로 멈추지 않도록)
+    """
 
-        async def _fake_gemini(url, duration_seconds):
-            calls["gemini_called"] = True
-            calls["url"] = url
-            calls["duration"] = duration_seconds
-            return gemini_transcript
+    def _apply(*, api_key="k", dry_run=False, enabled=True, ranking_result=None, ranking_error=None):
+        state = {"gemini_urls": [], "ranking_called": False, "ranking_groq_model": None}
 
-        monkeypatch.setattr(collectors, "_get_transcript", lambda vid: api_transcript)
-        monkeypatch.setattr(collectors, "fetch_transcript_via_gemini", _fake_gemini)
-        monkeypatch.setattr(
-            collectors,
-            "get_settings",
-            lambda: Settings(
-                gemini_api_key=api_key,
-                yt_gemini_transcript=enabled,
-                dry_run=dry_run,
-                _env_file=None,
-            ),
+        settings = Settings(
+            gemini_api_key=api_key,
+            yt_gemini_transcript=enabled,
+            dry_run=dry_run,
+            _env_file=None,
         )
-        return calls
+        monkeypatch.setattr(analyzer, "get_settings", lambda: settings)
+
+        async def _fake_transcript(url, duration_seconds):
+            state["gemini_urls"].append(url)
+            return f"전사::{url}"
+
+        monkeypatch.setattr(analyzer, "fetch_transcript_via_gemini", _fake_transcript)
+
+        async def _fake_ranking(prompt, title, groq_model=None):
+            state["ranking_called"] = True
+            state["ranking_groq_model"] = groq_model
+            if ranking_error is not None:
+                raise ranking_error
+            return ranking_result
+
+        monkeypatch.setattr(analyzer, "_call_llm_with_fallback", _fake_ranking)
+        monkeypatch.setattr(analyzer.asyncio, "sleep", _noop_sleep)
+        return state
 
     return _apply
 
 
-def _resolve(entry=None, body="설명글"):
-    return asyncio.run(
-        collectors._resolve_transcript("VID123", entry or _FakeEntry(), body)
-    )
-
-
-def test_chain_prefers_transcript_api(patch_chain):
-    """1단계가 성공하면 Gemini를 호출하지 않는다 — 타임스탬프가 있는 쪽이 우선."""
-    calls = patch_chain(api_transcript="[00:01] API 자막", gemini_transcript="G")
-
-    assert _resolve() == ("[00:01] API 자막", "api")
-    assert calls["gemini_called"] is False
-
-
-def test_chain_falls_back_to_gemini(patch_chain):
-    """1단계 실패 시 Gemini로 넘어가고 source가 gemini로 기록된다."""
-    calls = patch_chain(api_transcript=None, gemini_transcript="Gemini 전사")
-
-    assert _resolve() == ("Gemini 전사", "gemini")
-    # Gemini에는 공식 문서 예제 형식(watch?v=)을 넘긴다.
-    assert calls["url"] == "https://www.youtube.com/watch?v=VID123"
-
-
-def test_chain_falls_back_to_description(patch_chain):
-    """둘 다 실패하고 설명글이 있으면 transcript=None + source=description."""
-    patch_chain(api_transcript=None, gemini_transcript=None)
-
-    assert _resolve(body="설명글") == (None, "description")
-
-
-def test_chain_reports_none_when_nothing_available(patch_chain):
-    """근거가 전혀 없으면 source=none — 계측에서 구분되어야 한다."""
-    patch_chain(api_transcript=None, gemini_transcript=None)
-
-    assert _resolve(body=None) == (None, "none")
+def _resolve_yt(items, budget):
+    """코루틴을 동기 컨텍스트에서 실행하는 헬퍼."""
+    return asyncio.run(analyzer.resolve_youtube_transcripts(items, UserProfile(), budget))
 
 
 @pytest.mark.parametrize(
-    "kwargs",
+    "kwargs, budget",
     [
-        {"api_key": ""},        # GEMINI_API_KEY 없음
-        {"dry_run": True},      # DRY_RUN
-        {"enabled": False},     # 토글 off
+        ({"dry_run": True}, 5),   # DRY_RUN
+        ({"api_key": ""}, 5),     # GEMINI_API_KEY 없음
+        ({"enabled": False}, 5),  # 토글 off
+        ({}, 0),                  # budget <= 0
     ],
 )
-def test_chain_skips_gemini_when_gated(patch_chain, kwargs):
-    """API 키 없음 / DRY_RUN / 토글 off 셋 중 하나라도 걸리면 Gemini를 호출하지 않는다."""
-    calls = patch_chain(api_transcript=None, gemini_transcript="G", **kwargs)
+def test_resolve_gate_skips_transcription(patch_resolve, kwargs, budget):
+    """게이트 조건 중 하나라도 걸리면 전사·랭킹 호출 없이 items를 그대로 돌려준다."""
+    state = patch_resolve(**kwargs)
+    items = [_yt_item(i) for i in range(3)]
 
-    assert _resolve(body="설명글") == (None, "description")
-    assert calls["gemini_called"] is False
+    result = _resolve_yt(items, budget)
 
-
-def test_duration_extracted_when_present(patch_chain):
-    """피드가 duration을 주면 그대로 Gemini에 전달한다(사전 차단이 동작하도록)."""
-    calls = patch_chain(api_transcript=None, gemini_transcript="G")
-    entry = _FakeEntry(media_content=[{"duration": "300"}])
-
-    _resolve(entry=entry)
-
-    assert calls["duration"] == 300
+    assert result is items
+    assert state["gemini_urls"] == []
+    assert state["ranking_called"] is False
+    assert all(item.transcript is None for item in result)
 
 
-def test_duration_is_none_for_real_youtube_feed(patch_chain):
+def test_resolve_empty_items_returns_empty(patch_resolve):
+    """아이템이 없으면 아무 것도 하지 않는다."""
+    state = patch_resolve()
+
+    result = _resolve_yt([], 5)
+
+    assert result == []
+    assert state["gemini_urls"] == []
+    assert state["ranking_called"] is False
+
+
+def test_resolve_within_budget_skips_ranking_transcribes_all(patch_resolve):
+    """items 수 <= budget이면 랭킹 LLM을 호출하지 않고 전부 전사한다."""
+    state = patch_resolve()
+    items = [_yt_item(i) for i in range(3)]
+
+    result = _resolve_yt(items, budget=5)
+
+    assert state["ranking_called"] is False
+    assert all(item.transcript is not None for item in result)
+    # 수집기가 저장한 youtu.be URL에서 video_id를 복원해 watch?v= 형식으로 넘긴다.
+    assert state["gemini_urls"] == [
+        "https://www.youtube.com/watch?v=VID0",
+        "https://www.youtube.com/watch?v=VID1",
+        "https://www.youtube.com/watch?v=VID2",
+    ]
+
+
+def test_resolve_over_budget_ranks_and_transcribes_selected(patch_resolve):
+    """items 수 > budget이면 랭킹 LLM이 고른 정확히 budget개만 전사한다."""
+    state = patch_resolve(ranking_result={"top_indices": [1, 3]})
+    items = [_yt_item(i) for i in range(5)]
+
+    result = _resolve_yt(items, budget=2)
+
+    assert state["ranking_called"] is True
+    assert result is items  # 순서 보존, 전체 리스트 반환
+    # 선택된 1, 3만 전사되고 나머지는 None 유지
+    assert result[1].transcript is not None
+    assert result[3].transcript is not None
+    assert result[0].transcript is None
+    assert result[2].transcript is None
+    assert result[4].transcript is None
+    assert state["gemini_urls"] == [
+        "https://www.youtube.com/watch?v=VID1",
+        "https://www.youtube.com/watch?v=VID3",
+    ]
+
+
+def test_resolve_ranking_uses_llama_model(patch_resolve):
+    """랭킹 호출은 gpt-oss가 아니라 groq_ranking_model(llama)로 나가야 한다.
+
+    gpt-oss 계열은 정수 인덱스 배열 스키마에서 범위 밖 인덱스·숫자 이어붙임을
+    내므로(실측), 랭킹만 llama로 오버라이드한다. 분석은 groq_model 그대로다.
     """
-    YouTube videos.xml에는 duration이 없다 — 이때 None이 넘어가야 한다.
+    state = patch_resolve(ranking_result={"top_indices": [1, 3]})
+    items = [_yt_item(i) for i in range(5)]
 
-    None이면 사전 차단이 동작하지 않으며, 2시간+ 영상은 Gemini 쪽 400 후
-    None으로 처리된다(모듈 docstring에 명시된 알려진 한계).
-    """
-    calls = patch_chain(api_transcript=None, gemini_transcript="G")
+    _resolve_yt(items, budget=2)
 
-    _resolve(entry=_FakeEntry())
-
-    assert calls["duration"] is None
-    assert collectors._extract_yt_duration_seconds(_FakeEntry()) is None
+    assert state["ranking_called"] is True
+    assert state["ranking_groq_model"] == "llama-3.3-70b-versatile"
 
 
-def test_malformed_duration_does_not_raise(patch_chain):
-    """duration이 파싱 불가한 값이어도 수집이 중단되면 안 된다."""
-    patch_chain(api_transcript=None, gemini_transcript="G")
-    entry = _FakeEntry(media_content=[{"duration": "not-a-number"}])
+def test_resolve_ranking_indices_sanitized(patch_resolve):
+    """범위 밖·중복 인덱스는 제거하고 유효한 것만 등장 순서대로 최대 budget개 쓴다."""
+    state = patch_resolve(ranking_result={"top_indices": [99, 1, 1, 0]})
+    items = [_yt_item(i) for i in range(5)]
 
-    assert collectors._extract_yt_duration_seconds(entry) is None
-    assert _resolve(entry=entry) == ("G", "gemini")
+    result = _resolve_yt(items, budget=2)
+
+    # 99(범위밖)·중복 1 제거 → [1, 0] 순서로 선택
+    assert result[1].transcript is not None
+    assert result[0].transcript is not None
+    assert result[2].transcript is None
+    assert state["gemini_urls"] == [
+        "https://www.youtube.com/watch?v=VID1",
+        "https://www.youtube.com/watch?v=VID0",
+    ]
+
+
+def test_resolve_ranking_exception_falls_back_to_first_n(patch_resolve):
+    """랭킹 LLM이 예외를 던지면 앞 budget건으로 폴백하고 예외를 전파하지 않는다."""
+    state = patch_resolve(ranking_error=RuntimeError("LLM down"))
+    items = [_yt_item(i) for i in range(5)]
+
+    result = _resolve_yt(items, budget=2)
+
+    assert state["ranking_called"] is True
+    assert result[0].transcript is not None
+    assert result[1].transcript is not None
+    assert all(item.transcript is None for item in result[2:])
+    assert state["gemini_urls"] == [
+        "https://www.youtube.com/watch?v=VID0",
+        "https://www.youtube.com/watch?v=VID1",
+    ]
+
+
+def test_resolve_ranking_bad_json_falls_back_to_first_n(patch_resolve):
+    """랭킹 LLM이 엉뚱한 JSON을 주면(top_indices 없음) 앞 budget건으로 폴백한다."""
+    state = patch_resolve(ranking_result={"unexpected": "shape"})
+    items = [_yt_item(i) for i in range(5)]
+
+    result = _resolve_yt(items, budget=2)
+
+    assert state["ranking_called"] is True
+    assert result[0].transcript is not None
+    assert result[1].transcript is not None
+    assert all(item.transcript is None for item in result[2:])
+
+
+def test_resolve_transcript_failure_keeps_none(patch_resolve, monkeypatch):
+    """전사가 None을 반환하면(확보 실패) 해당 아이템은 transcript=None을 유지한다."""
+    state = patch_resolve()
+
+    async def _fail_transcript(url, duration_seconds):
+        state["gemini_urls"].append(url)
+        return None
+
+    monkeypatch.setattr(analyzer, "fetch_transcript_via_gemini", _fail_transcript)
+    items = [_yt_item(i) for i in range(2)]
+
+    result = _resolve_yt(items, budget=5)
+
+    assert all(item.transcript is None for item in result)
+    assert state["gemini_urls"] == [
+        "https://www.youtube.com/watch?v=VID0",
+        "https://www.youtube.com/watch?v=VID1",
+    ]

@@ -12,9 +12,7 @@ import structlog
 from datetime import datetime, timedelta
 from youtube_transcript_api import YouTubeTranscriptApi
 
-from app.config import get_settings
 from app.models import RawContent, SourceType
-from app.transcript_gemini import fetch_transcript_via_gemini
 
 logger = structlog.get_logger()
 
@@ -42,87 +40,30 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                     video_id = entry.yt_videoid
                     body = _extract_yt_description(entry)
 
-                    transcript, transcript_source = await _resolve_transcript(video_id, entry, body)
-
+                    # 전사는 수집 시점이 아니라 dedup·채널 캡 이후 상위 N건만 Gemini로
+                    # 확보한다(analyzer.resolve_youtube_transcripts). 수집 단계에서 전량
+                    # 전사하면 dedup 이전에 20여 건의 Gemini 호출이 터져 무료 티어 429
+                    # 폭풍을 일으킨다. 여기서는 설명글(body)만 담고 transcript=None으로 둔다.
                     items.append(RawContent(
                         source_type=SourceType.YOUTUBE,
                         source_name=channel_name,
                         title=entry.title,
                         url=f"https://youtu.be/{video_id}",
                         published_at=published,
-                        transcript=transcript,
+                        transcript=None,
                         body=body,
                     ))
                     logger.info(
                         "youtube_collected",
                         title=entry.title,
-                        has_transcript=bool(transcript),
+                        has_transcript=False,  # 전사는 이후 Stage 2에서 확보
                         has_body=bool(body),
-                        transcript_source=transcript_source,
                     )
 
             except Exception as e:
                 logger.error("youtube_fetch_failed", channel_id=channel_id, error=str(e))
 
     return items
-
-
-async def _resolve_transcript(video_id: str, entry, body: str | None) -> tuple[str | None, str]:
-    """YouTube 자막 확보 폴백 체인.
-
-    1) youtube-transcript-api — 주거 IP에서는 최선. 유일하게 [MM:SS] 타임스탬프가 나온다.
-    2) Gemini에 영상 URL 직접 전달 — datacenter IP 차단을 우회하지만 타임스탬프가 없다.
-    3) 영상 설명글(body) — 자막이 아니므로 transcript로 승격하지 않고 출처만 기록한다.
-
-    반환: (transcript, transcript_source)
-      transcript_source ∈ {"api", "gemini", "description", "none"}
-      — 어느 경로로 근거를 확보했는지 평가 하니스가 계측할 수 있도록 구분한다.
-    """
-    transcript = _get_transcript(video_id)
-    if transcript:
-        return transcript, "api"
-
-    settings = get_settings()
-
-    # DRY_RUN이면 외부 API를 호출하지 않는다(파이프라인 흐름 검증 전용).
-    # GEMINI_API_KEY가 없으면 2단계를 건너뛴다.
-    if settings.yt_gemini_transcript and settings.gemini_api_key and not settings.dry_run:
-        # YouTube RSS 피드(videos.xml)에는 duration이 포함되지 않는 것이 일반적이라
-        # 대부분 None이 넘어간다. 그 경우 사전 차단이 동작하지 않으며, 2시간 이상
-        # 영상은 Gemini 쪽에서 400(토큰 초과)으로 실패한 뒤 None이 반환된다.
-        duration_seconds = _extract_yt_duration_seconds(entry)
-        # Gemini에는 youtu.be 단축 URL 대신 공식 문서 예제와 같은 watch?v= 형식을 넘긴다.
-        # (RawContent.url은 기존 dedup·seen_urls 호환을 위해 youtu.be를 그대로 유지한다.)
-        watch_url = f"https://www.youtube.com/watch?v={video_id}"
-        transcript = await fetch_transcript_via_gemini(watch_url, duration_seconds)
-        if transcript:
-            return transcript, "gemini"
-
-    # 3단계: 기존 description fallback. body는 호출부에서 이미 추출해 RawContent.body로
-    # 들어가므로 여기서는 출처 라벨만 정한다(analyzer가 DESCRIPTION 근거 수준으로 처리).
-    if body:
-        return None, "description"
-    return None, "none"
-
-
-def _extract_yt_duration_seconds(entry) -> int | None:
-    """feedparser YouTube entry에서 영상 길이(초)를 추출한다.
-
-    YouTube의 videos.xml 피드는 보통 duration을 제공하지 않는다. 다른 피드나
-    feedparser 버전에서 media:content@duration이 실릴 수 있어 방어적으로 시도하고,
-    없으면 None을 반환한다(= duration 사전 차단 비활성).
-    """
-    try:
-        media_contents = entry.get("media_content") or []
-        for media in media_contents:
-            raw = media.get("duration")
-            if raw:
-                seconds = int(float(raw))
-                if seconds > 0:
-                    return seconds
-    except Exception as e:
-        logger.warning("yt_duration_parse_failed", error=str(e))
-    return None
 
 
 def _extract_yt_description(entry) -> str | None:
