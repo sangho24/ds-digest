@@ -48,7 +48,14 @@ class Settings(BaseSettings):
 
     # Settings
     max_items_per_digest: int = 5
+    # 필터링용으로는 폐기됨(상대 랭킹으로 대체됨). RELEVANCE_THRESHOLD GitHub
+    # secret이 이 값을 설정하므로 필드는 표시/호환용으로만 유지한다.
     relevance_threshold: int = 7
+    # 상대 랭킹의 최소 바닥값. 절대 문턱(relevance_threshold) 대신, 후보를
+    # 점수순으로 정렬해 상위 max_items_per_digest건을 뽑되 이 값 미만(명백한
+    # 저품질: 제목만 2점 등)만 제외한다. 약한 날에도 가용 후보 중 최선을 발송해
+    # 빈 다이제스트를 구조적으로 없앤다.
+    relevance_floor: int = 4
     log_level: str = "INFO"
 
     # seen_urls 보존 기간. 이 값이 짧으면 만료된 URL이 재수집되어 중복 발송된다.

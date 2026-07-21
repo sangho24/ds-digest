@@ -151,10 +151,11 @@ async def run_daily_digest() -> dict:
     digest_items = await filter_and_analyze(raw_items, profile)
 
     if not digest_items:
-        logger.warning("no_items_passed_filter")
+        # 상대 랭킹 전환 후 이 분기는 "모든 아이템이 바닥값 미만"인 드문 경우에만 걸린다.
+        logger.warning("no_items_above_floor")
         await _send_error_alert(
-            f"관련도 {settings.relevance_threshold}점 이상 아이템이 없습니다. "
-            f"(수집 {len(raw_items)}건 전부 필터링됨)"
+            f"발송할 만한 아이템이 없습니다. "
+            f"(수집 {len(raw_items)}건 전부 관련도 {settings.relevance_floor}점 미만)"
         )
         return {"status": "all_filtered", "collected": len(raw_items), "passed": 0}
 

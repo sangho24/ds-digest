@@ -645,10 +645,20 @@ async def filter_and_analyze(
     items: list[RawContent],
     profile: UserProfile,
 ) -> list[DigestItem]:
-    """수집된 콘텐츠를 필터링 + 분석하여 다이제스트 아이템 생성"""
-    settings = get_settings()
-    digest_items: list[DigestItem] = []
+    """수집된 콘텐츠를 분석 후 상대 랭킹으로 다이제스트 아이템을 선정한다.
 
+    절대 문턱(relevance_threshold=7)으로 거르던 방식은 약한 날 빈 다이제스트를
+    낳았다. 근거 게이트가 얇은 근거(제목만 depth≤1, 설명글 depth≤3)를 정직하게
+    캡하므로 대부분의 피드 아이템이 7점 미만이 되고, 6/2/5점만 나온 날에는 전부
+    탈락해 발송이 통째로 비었다(실측). 그래서 v2 §3.4/§11대로 절대 문턱을 버리고
+    상대 랭킹으로 전환한다: 후보를 점수순 정렬해 상위 max_items_per_digest건을
+    뽑되, 명백한 저품질(relevance_floor 미만)만 제외한다. 약한 날에도 가용 후보
+    중 최선을 발송해 빈 다이제스트를 구조적으로 없앤다.
+    """
+    settings = get_settings()
+
+    # 1) 모든 아이템을 먼저 분석한다(선정은 전체 점수를 본 뒤 상대적으로 결정).
+    analyzed: list[DigestItem] = []
     for i, item in enumerate(items):
         # API rate limit 준수 (dry run은 스킵)
         if i > 0 and not settings.dry_run:
@@ -656,12 +666,36 @@ async def filter_and_analyze(
             await asyncio.sleep(delay)
 
         analysis = await analyze_content(item, profile)
+        analyzed.append(DigestItem(raw=item, analysis=analysis))
 
-        if analysis.relevance_score >= settings.relevance_threshold:
-            digest_items.append(DigestItem(raw=item, analysis=analysis))
-            logger.info("item_included", title=item.title, score=analysis.relevance_score)
+    # 2) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
+    floor = settings.relevance_floor
+    candidates = [d for d in analyzed if d.analysis.relevance_score >= floor]
+    candidates.sort(key=lambda d: d.analysis.relevance_score, reverse=True)
+    selected = candidates[:settings.max_items_per_digest]
+
+    # 3) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
+    #    모델이라 값 기반 `in`은 O(n²)에다 오탐 위험이 있으므로 id()로 판별한다.
+    selected_ids = {id(d) for d in selected}
+    for d in analyzed:
+        score = d.analysis.relevance_score
+        if id(d) in selected_ids:
+            logger.info(
+                "item_included",
+                title=d.raw.title,
+                score=score,
+                evidence_level=d.analysis.evidence_level.value,
+            )
+        elif score >= floor:
+            logger.info("item_ranked_out", title=d.raw.title, score=score)
         else:
-            logger.info("item_skipped", title=item.title, score=analysis.relevance_score, reason=analysis.skip_reason)
+            logger.info("item_below_floor", title=d.raw.title, score=score, reason=d.analysis.skip_reason)
 
-    digest_items.sort(key=lambda x: x.analysis.relevance_score, reverse=True)
-    return digest_items[:settings.max_items_per_digest]
+    logger.info(
+        "relative_ranking_done",
+        analyzed=len(analyzed),
+        above_floor=len(candidates),
+        selected=len(selected),
+        floor=floor,
+    )
+    return selected
