@@ -119,20 +119,41 @@ async def run_daily_digest() -> dict:
         rss_feeds=settings.rss_feed_list,
         hours=48,
         fetch_per_channel=settings.yt_fetch_per_channel,
+        fetch_link_body=settings.fetch_link_body,
     )
     from app.collectors import fetch_arxiv_recent, fetch_hackernews_recent
+    from app.collectors_newsletter import fetch_newsletters_recent, DEFAULT_NEWSLETTERS
     arxiv_items = await fetch_arxiv_recent(settings.arxiv_category_list)
-    hn_items = await fetch_hackernews_recent(settings.hackernews_keyword_list, min_score=settings.hackernews_min_score)
-    logger.info("collection_complete", youtube=len(yt_items), rss=len(rss_items), arxiv=len(arxiv_items), hn=len(hn_items))
+    hn_items = await fetch_hackernews_recent(
+        settings.hackernews_keyword_list,
+        min_score=settings.hackernews_min_score,
+        fetch_link_body=settings.fetch_link_body,
+    )
+    # 뉴스레터: 주간 발행이 많아 168시간(7일) lookback으로 수집한다.
+    # (RSS/arXiv는 48h, HN은 기본 24h — 뉴스레터는 발행 주기가 길어 창을 넓힌다.)
+    # 데일리 실행이 며칠 밀려도 그 주 발행호를 놓치지 않으며, 재수집돼도
+    # URL dedup + seen_urls가 중복 발송을 막는다.
+    # 실패는 수집기 내부의 per-site/per-issue try/except가 흡수해 빈 리스트를 돌려준다.
+    newsletter_items = await fetch_newsletters_recent(
+        settings.newsletter_list or DEFAULT_NEWSLETTERS, hours=168
+    )
+    logger.info(
+        "collection_complete",
+        youtube=len(yt_items),
+        rss=len(rss_items),
+        arxiv=len(arxiv_items),
+        hn=len(hn_items),
+        newsletter=len(newsletter_items),
+    )
 
-    if not yt_items and not rss_items and not arxiv_items and not hn_items:
+    if not yt_items and not rss_items and not arxiv_items and not hn_items and not newsletter_items:
         logger.warning("no_items_collected")
         await _send_error_alert("수집된 콘텐츠가 없습니다. YouTube / RSS 소스를 확인하세요.")
         return {"status": "no_items", "collected": 0}
 
     # 3. 중복 발송 방지
     # RSS: 시간 필터로 이미 걸러졌지만 dedup도 적용
-    rss_items = _deduplicate(rss_items + arxiv_items + hn_items)
+    rss_items = _deduplicate(rss_items + arxiv_items + hn_items + newsletter_items)
     # YouTube: dedup 후 채널당 new_per_channel개로 제한
     yt_items = _deduplicate(yt_items)
     yt_items = _cap_per_channel(yt_items, settings.yt_new_per_channel)
@@ -256,7 +277,7 @@ def _cap_per_channel(items, max_per_channel: int):
     counts: dict[str, int] = defaultdict(int)
     result = []
     for item in items:
-        key = item.source_name
+        key = item.source_key or item.source_name
         if counts[key] < max_per_channel:
             result.append(item)
             counts[key] += 1

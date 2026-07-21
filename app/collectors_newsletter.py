@@ -139,6 +139,9 @@ async def fetch_newsletters_recent(
                             RawContent(
                                 source_type=SourceType.NEWSLETTER,
                                 source_name=source_name,
+                                # netloc은 표시명이 바뀌어도 안정적인 식별자다.
+                                source_key=urlparse(base_url).netloc,
+                                source_label=source_name,
                                 title=parsed.title,
                                 url=issue.url,
                                 published_at=issue.published_at,

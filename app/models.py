@@ -61,13 +61,27 @@ EVIDENCE_DEPTH_CAPS = {
 class RawContent(BaseModel):
     """수집된 원본 콘텐츠"""
     source_type: SourceType
-    source_name: str  # 채널명 or 블로그명
+    source_name: str  # 채널명 or 블로그명 (하위호환용 — 기존 독자 유지)
+    # 불변 식별자: channel_id·피드 URL·netloc 등 표시명이 바뀌어도 안정적인 키.
+    # 그룹핑(_cap_per_channel)·소스 도달률 계측(source_reach)이 이 값을 우선 사용한다.
+    source_key: str = ""
+    # 사람이 읽는 표시명. 비면 아래 validator가 source_name으로 채운다.
+    source_label: str = ""
     title: str
     url: str
     published_at: datetime | None = None
     transcript: str | None = None  # YouTube 자막
     body: str | None = None  # 아티클 본문
     duration_seconds: int | None = None  # 영상 길이
+
+    @model_validator(mode="after")
+    def backfill_source_identity(self) -> "RawContent":
+        """source_key/source_label가 비면 source_name으로 채워 기존 독자를 깨지 않는다."""
+        if not self.source_label:
+            self.source_label = self.source_name
+        if not self.source_key:
+            self.source_key = self.source_label or self.source_name
+        return self
 
 
 class KeyPoint(BaseModel):

@@ -173,7 +173,8 @@ def source_reach(
     last_seen: dict[str, date] = {}
     valid_dates: list[date] = []
     for item in items:
-        source = str(item.get("source_name") or "(소스 없음)")
+        # source_key(불변 식별자) 우선, 과거 archive_items.json엔 없어 source_name으로 폴백.
+        source = str(item.get("source_key") or item.get("source_name") or "(소스 없음)")
         counts[source] += 1
         item_date = _parse_date(item.get("date"))
         if item_date is None:
