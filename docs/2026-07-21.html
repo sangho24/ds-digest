@@ -77,29 +77,29 @@
 
   <div class="header">
     <h1>DS Digest</h1>
-    <p>2026년 07월 21일 · 1건</p>
+    <p>2026년 07월 21일 · 3건</p>
   </div>
 
   
   <div class="item">
 
     <div class="item-meta">
-      HackerNews · 관련도 <span class="score">5</span>
+      D2 Blog · 관련도 <span class="score">8</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://news.ycombinator.com/item?id=48981136" target="_blank">Launch HN: Bloomy (YC S26) – AI-powered mastery learning for K-12</a>
+      <a href="https://d2.naver.com/helloworld/5788040" target="_blank">VictoriaMetrics 운영기 2편 — 장비 증설 없이 리소스 위기를 해결한 3단계 최적화 전략</a>
     </h2>
 
-    <p class="item-summary">AI 튜터로 맞춤 학습 경로 제공, 데이터 활용</p>
+    <p class="item-summary">대규모 메트릭 조회 OOM을 쿼리 분할·리소스 제한으로 해결</p>
 
     
     <div class="tags">
-      <span class="tag">Bloomy</span><span class="tag">Alpha School</span><span class="tag">Teach For America</span><span class="tag">Bloom's 2-sigma problem</span><span class="tag">Socratic AI</span>
+      <span class="tag">VictoriaMetrics</span><span class="tag">vmselect</span><span class="tag">vmstorage</span><span class="tag">IndexDB</span><span class="tag">Kubernetes</span>
     </div>
     
 
-    <a class="orig-link" href="https://news.ycombinator.com/item?id=48981136" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://d2.naver.com/helloworld/5788040" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -108,21 +108,21 @@
       
         <span class="bullet">·</span>
       
-      <span>Bloomy는 진단을 통해 개인별 학습 경로와 AI 튜터를 제공한다.</span>
+      <span>Slow query aggregating millions of series caused vmselect OOM; mitigated by query splitting and resource‑limit flags</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>학생은 90% 숙달 기준을 만족해야 다음 스킬로 이동하며 난이도가 적응형이다.</span>
+      <span>Analyzed vmstorage IndexDB rotation to redesign retention period policy</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>AI 기반 일대일 튜터링으로 Bloom의 2시그마 문제 해결을 목표한다.</span>
+      <span>Filtered out non‑service containers at collection stage to curb metric influx</span>
     </div>
     
     
@@ -130,9 +130,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 Bloomy의 진단 API를 활용해 학생 성취 데이터 수집 후 학습 성과 모델링</div>
+    <div class="idea">💡 Apply vmselect resource‑limit flags (e.g., -search.maxUniqueTimeseries, -search.maxMemoryPerQuery) to prevent OOM in high‑cardinality workloads</div>
     
-    <div class="idea">💡 AI 튜터 대화 로그를 이용해 강화학습 기반 맞춤형 교육 정책 개발</div>
+    <div class="idea">💡 Configure collection pipeline to drop metrics from non‑service containers using Prometheus relabel_rules or vminsert filters</div>
     
     
 
@@ -141,41 +141,257 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. Bloomy가 목표로 하는 교육 효과는 무엇인가?</div>
+      <div class="quiz-q">Q1. Which vmselect flag limits the maximum memory a single query can use?</div>
       
-      <div class="quiz-opt">A) 교실 수업 시간 단축</div>
+      <div class="quiz-opt">A) -search.maxUniqueTimeseries</div>
       
-      <div class="quiz-opt">B) Bloom의 2시그마 문제 해결</div>
+      <div class="quiz-opt">B) -search.maxQueryDuration</div>
       
-      <div class="quiz-opt">C) 교사 고용 감소</div>
+      <div class="quiz-opt">C) -search.maxMemoryPerQuery</div>
       
-      <div class="quiz-opt">D) 시험 점수 평균 상승</div>
+      <div class="quiz-opt">D) -memory.allowedPercent</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) Bloom의 2시그마 문제 해결</div>
-          <div class="quiz-explanation">본문에서 Bloomy는 Bloom의 2시그마 문제를 AI로 해결하고자 한다고 명시한다.</div>
+          <div class="quiz-correct-opt">✓ C) -search.maxMemoryPerQuery</div>
+          <div class="quiz-explanation">-search.maxMemoryPerQuery sets the upper bound of memory that a single query may consume, helping avoid OOM.</div>
         </div>
       </details>
     </div>
     
     <div class="quiz-box">
-      <div class="quiz-q">Q2. Bloomy가 학습 진행을 허용하는 기준은?</div>
+      <div class="quiz-q">Q2. In vmstorage, what is the primary purpose of IndexDB?</div>
       
-      <div class="quiz-opt">A) 70% 정확도</div>
+      <div class="quiz-opt">A) Store compressed time‑series data</div>
       
-      <div class="quiz-opt">B) 80% 정확도</div>
+      <div class="quiz-opt">B) Manage indexes for series lookup</div>
       
-      <div class="quiz-opt">C) 90% 숙달</div>
+      <div class="quiz-opt">C) Handle query aggregation</div>
       
-      <div class="quiz-opt">D) 100% 숙달</div>
+      <div class="quiz-opt">D) Rotate retention periods</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ C) 90% 숙달</div>
-          <div class="quiz-explanation">학습자는 최소 90% 숙달을 달성해야 다음 단계로 이동한다는 내용이 있다.</div>
+          <div class="quiz-correct-opt">✓ B) Manage indexes for series lookup</div>
+          <div class="quiz-explanation">IndexDB holds the index structures that allow vmstorage to quickly determine whether a time series exists and retrieve its TSID.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/0sDoo2ChST4" target="_blank">[10분 테코톡] 고래의 일급컬렉션</a>
+    </h2>
+
+    <p class="item-summary">컬렉션 캡슐화로 중복·복잡도 감소, 유지보수 효율↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">일급 컬렉션</span><span class="tag">객체 지향 생활 체조</span><span class="tag">캡슐화</span><span class="tag">응집도</span><span class="tag">결합도</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/0sDoo2ChST4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>일급 컬렉션은 컬렉션만을 상태로 가지고, 다른 멤버 변수를 포함하지 않아야 함.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>일급 컬렉션 도입으로 비즈니스 로직 중복을 제거하고 코드 가독성을 높인다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>캡슐화와 응집도를 높여 유지보수와 변경에 강한 구조를 만든다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 프로젝트의 도메인 컬렉션을 일급 컬렉션 클래스로 리팩터링하여 비즈니스 로직을 해당 클래스에 집중시킨다.</div>
+    
+    <div class="idea">💡 서비스 레이어에서 리스트 파라미터 대신 일급 컬렉션 타입을 도입해 파라미터 순서 실수를 방지한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 일급 컬렉션의 정의는?</div>
+      
+      <div class="quiz-opt">A) 컬렉션과 다른 멤버 변수를 함께 가진 클래스</div>
+      
+      <div class="quiz-opt">B) 컬렉션만을 상태로 가지고 다른 멤버 변수가 없는 클래스</div>
+      
+      <div class="quiz-opt">C) 원시 타입을 캡슐화한 클래스</div>
+      
+      <div class="quiz-opt">D) 데이터베이스 테이블</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 컬렉션만을 상태로 가지고 다른 멤버 변수가 없는 클래스</div>
+          <div class="quiz-explanation">텍스트에서는 일급 컬렉션을 컬렉션 외 다른 멤버 변수가 없는 클래스로 정의하고 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 일급 컬렉션을 도입했을 때 기대되는 장점이 아닌 것은?</div>
+      
+      <div class="quiz-opt">A) 중복 비즈니스 로직 제거</div>
+      
+      <div class="quiz-opt">B) 파라미터 순서 실수 감소</div>
+      
+      <div class="quiz-opt">C) 실행 속도 향상</div>
+      
+      <div class="quiz-opt">D) 도메인 규칙 보장</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 실행 속도 향상</div>
+          <div class="quiz-explanation">텍스트에서는 실행 속도 향상에 대한 언급이 없으며, 다른 선택지는 모두 언급된 장점이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/RIRq4QEUxi0" target="_blank">스펙만 바꾸면 프롬프트가 따라옵니다 - 답변 생성 모델 자동화 파이프라인</a>
+    </h2>
+
+    <p class="item-summary">스펙 변경 자동 프롬프트 최적화로 모델 유지</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">MCP</span><span class="tag">Rubric as Rewards</span><span class="tag">Git</span><span class="tag">Markdown</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/RIRq4QEUxi0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>스펙을 중앙 레포지토리로 관리하고 결함 탐지와 프롬프트 최적화를 연결</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM을 활용해 스펙 조회·수정·검증 워크플로우 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>결함 탐지 결과를 보상 신호로 사용해 프롬프트를 자동 개선</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Markdown 기반 스펙 레포지토리를 Git으로 버전 관리하고 LLM 기반 스펙 매니저로 변경 제안·검증 자동화</div>
+    
+    <div class="idea">💡 LLM을 이용한 결함 탐지 모듈을 구축해 정책 위반률을 보상 신호로 프롬프트 최적화 파이프라인에 연동</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 프롬프트 최적화 파이프라인에서 결함 탐지 모듈의 출력은 무엇에 사용되는가?</div>
+      
+      <div class="quiz-opt">A) 모델 학습 데이터 생성</div>
+      
+      <div class="quiz-opt">B) 보상 신호로 프롬프트 옵티마이제이션</div>
+      
+      <div class="quiz-opt">C) 직접 응답 생성</div>
+      
+      <div class="quiz-opt">D) 사용자 인터페이스 디자인</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 보상 신호로 프롬프트 옵티마이제이션</div>
+          <div class="quiz-explanation">텍스트에 결함 탐지 결과가 보상 신호로 프롬프트 옵티마이제이션 단계에 전달된다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 스펙을 관리하기 위해 사용된 파일 포맷은?</div>
+      
+      <div class="quiz-opt">A) PDF</div>
+      
+      <div class="quiz-opt">B) Markdown</div>
+      
+      <div class="quiz-opt">C) HTML</div>
+      
+      <div class="quiz-opt">D) LaTeX</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Markdown</div>
+          <div class="quiz-explanation">본문에서 스펙 문서는 마크다운 파일이라고 설명한다.</div>
         </div>
       </details>
     </div>
