@@ -12,7 +12,9 @@ import structlog
 from datetime import datetime, timedelta
 from youtube_transcript_api import YouTubeTranscriptApi
 
+from app.config import get_settings
 from app.models import RawContent, SourceType
+from app.transcript_gemini import fetch_transcript_via_gemini
 
 logger = structlog.get_logger()
 
@@ -38,8 +40,9 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                 for entry in feed.entries[:fetch_per_channel]:
                     published = datetime(*entry.published_parsed[:6]) if entry.get("published_parsed") else None
                     video_id = entry.yt_videoid
-                    transcript = _get_transcript(video_id)
                     body = _extract_yt_description(entry)
+
+                    transcript, transcript_source = await _resolve_transcript(video_id, entry, body)
 
                     items.append(RawContent(
                         source_type=SourceType.YOUTUBE,
@@ -50,12 +53,76 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                         transcript=transcript,
                         body=body,
                     ))
-                    logger.info("youtube_collected", title=entry.title, has_transcript=bool(transcript), has_body=bool(body))
+                    logger.info(
+                        "youtube_collected",
+                        title=entry.title,
+                        has_transcript=bool(transcript),
+                        has_body=bool(body),
+                        transcript_source=transcript_source,
+                    )
 
             except Exception as e:
                 logger.error("youtube_fetch_failed", channel_id=channel_id, error=str(e))
 
     return items
+
+
+async def _resolve_transcript(video_id: str, entry, body: str | None) -> tuple[str | None, str]:
+    """YouTube 자막 확보 폴백 체인.
+
+    1) youtube-transcript-api — 주거 IP에서는 최선. 유일하게 [MM:SS] 타임스탬프가 나온다.
+    2) Gemini에 영상 URL 직접 전달 — datacenter IP 차단을 우회하지만 타임스탬프가 없다.
+    3) 영상 설명글(body) — 자막이 아니므로 transcript로 승격하지 않고 출처만 기록한다.
+
+    반환: (transcript, transcript_source)
+      transcript_source ∈ {"api", "gemini", "description", "none"}
+      — 어느 경로로 근거를 확보했는지 평가 하니스가 계측할 수 있도록 구분한다.
+    """
+    transcript = _get_transcript(video_id)
+    if transcript:
+        return transcript, "api"
+
+    settings = get_settings()
+
+    # DRY_RUN이면 외부 API를 호출하지 않는다(파이프라인 흐름 검증 전용).
+    # GEMINI_API_KEY가 없으면 2단계를 건너뛴다.
+    if settings.yt_gemini_transcript and settings.gemini_api_key and not settings.dry_run:
+        # YouTube RSS 피드(videos.xml)에는 duration이 포함되지 않는 것이 일반적이라
+        # 대부분 None이 넘어간다. 그 경우 사전 차단이 동작하지 않으며, 2시간 이상
+        # 영상은 Gemini 쪽에서 400(토큰 초과)으로 실패한 뒤 None이 반환된다.
+        duration_seconds = _extract_yt_duration_seconds(entry)
+        # Gemini에는 youtu.be 단축 URL 대신 공식 문서 예제와 같은 watch?v= 형식을 넘긴다.
+        # (RawContent.url은 기존 dedup·seen_urls 호환을 위해 youtu.be를 그대로 유지한다.)
+        watch_url = f"https://www.youtube.com/watch?v={video_id}"
+        transcript = await fetch_transcript_via_gemini(watch_url, duration_seconds)
+        if transcript:
+            return transcript, "gemini"
+
+    # 3단계: 기존 description fallback. body는 호출부에서 이미 추출해 RawContent.body로
+    # 들어가므로 여기서는 출처 라벨만 정한다(analyzer가 DESCRIPTION 근거 수준으로 처리).
+    if body:
+        return None, "description"
+    return None, "none"
+
+
+def _extract_yt_duration_seconds(entry) -> int | None:
+    """feedparser YouTube entry에서 영상 길이(초)를 추출한다.
+
+    YouTube의 videos.xml 피드는 보통 duration을 제공하지 않는다. 다른 피드나
+    feedparser 버전에서 media:content@duration이 실릴 수 있어 방어적으로 시도하고,
+    없으면 None을 반환한다(= duration 사전 차단 비활성).
+    """
+    try:
+        media_contents = entry.get("media_content") or []
+        for media in media_contents:
+            raw = media.get("duration")
+            if raw:
+                seconds = int(float(raw))
+                if seconds > 0:
+                    return seconds
+    except Exception as e:
+        logger.warning("yt_duration_parse_failed", error=str(e))
+    return None
 
 
 def _extract_yt_description(entry) -> str | None:

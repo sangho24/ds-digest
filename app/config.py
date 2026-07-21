@@ -57,8 +57,13 @@ class Settings(BaseSettings):
     # datacenter IP 차단으로 youtube-transcript-api 성공률이 0.9%(116건 중 1건)라
     # 기본 활성화한다. GEMINI_API_KEY가 없거나 DRY_RUN이면 자동으로 건너뛴다.
     yt_gemini_transcript: bool = True
-    # 2시간 이상 영상은 1M 토큰을 초과해 400으로 실패하므로 그 앞에서 사전 차단한다.
-    yt_gemini_max_duration_seconds: int = 6000  # 100분
+    # 초장편만 사전 차단한다. 임계값이 낮으면 정상 강의(60~90분)까지 막힌다.
+    # 주의: YouTube RSS(videos.xml)에는 duration이 없어 이 사전 차단은 대부분
+    #   동작하지 않고, 실제로는 2시간+ 영상이 Gemini 400을 맞고 None으로 흡수된다.
+    #   따라서 임계값을 넉넉히(4시간) 잡아 정상 영상을 오차단하지 않는 데 목적을 둔다.
+    #   장편 필터가 꼭 필요해지면 YouTube Data API videos.list(contentDetails.duration,
+    #   datacenter IP 면역)로 duration을 채우는 것이 정공법이다.
+    yt_gemini_max_duration_seconds: int = 14400  # 4시간
 
     # Telegram
     telegram_bot_token: str = ""
