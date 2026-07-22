@@ -1,7 +1,15 @@
 .env
 __pycache__/
 *.pyc
-data/
+# data/ 하위는 통째로 무시하되, 구조화 정본(records/)만 예외로 커밋한다.
+# 주의: 부모 디렉토리를 통으로 무시(data/)하면 git이 그 안으로 재귀하지 않아
+# 하위 예외(!)가 먹지 않는다. 그래서 data/* 로 항목 단위 무시 후 records만 되살린다.
+# (노트북 반납 후에도 JSON 정본을 보존하기 위함 — 로컬 JSON이 정본)
+data/*
+!data/records/
+# data/* 는 리포 루트에만 앵커되므로, 하위 경로의 data/(예: evals/data/의 대용량
+# 픽스처)는 기존 무앵커 data/ 패턴처럼 계속 무시되도록 명시한다(회귀 방지).
+evals/data/
 .venv/
 *.egg-info/
 dist/

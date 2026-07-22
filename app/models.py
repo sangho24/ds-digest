@@ -61,13 +61,27 @@ EVIDENCE_DEPTH_CAPS = {
 class RawContent(BaseModel):
     """수집된 원본 콘텐츠"""
     source_type: SourceType
-    source_name: str  # 채널명 or 블로그명
+    source_name: str  # 채널명 or 블로그명 (하위호환용 — 기존 독자 유지)
+    # 불변 식별자: channel_id·피드 URL·netloc 등 표시명이 바뀌어도 안정적인 키.
+    # 그룹핑(_cap_per_channel)·소스 도달률 계측(source_reach)이 이 값을 우선 사용한다.
+    source_key: str = ""
+    # 사람이 읽는 표시명. 비면 아래 validator가 source_name으로 채운다.
+    source_label: str = ""
     title: str
     url: str
     published_at: datetime | None = None
     transcript: str | None = None  # YouTube 자막
     body: str | None = None  # 아티클 본문
     duration_seconds: int | None = None  # 영상 길이
+
+    @model_validator(mode="after")
+    def backfill_source_identity(self) -> "RawContent":
+        """source_key/source_label가 비면 source_name으로 채워 기존 독자를 깨지 않는다."""
+        if not self.source_label:
+            self.source_label = self.source_name
+        if not self.source_key:
+            self.source_key = self.source_label or self.source_name
+        return self
 
 
 class KeyPoint(BaseModel):
@@ -96,6 +110,55 @@ class QuizItem(BaseModel):
         return [_OPTION_LABEL_RE.sub("", opt).strip() for opt in v]
 
 
+# ──────────────────────────────────────────────
+# v2 데이터 모델 (§5.4) — additive
+# 엔티티 해소·N/F축 계산·아토믹 노트 LLM 추출은 아직 구현하지 않았다(다음 체크포인트).
+# 지금은 스키마(그릇)만 추가하고 기존 필드는 파괴하지 않는다.
+# ──────────────────────────────────────────────
+
+class Concept(BaseModel):
+    """개념(엔티티) 노드. 엔티티 해소 로직은 이번 범위 밖(체크포인트)."""
+    id: str  # 정규화 슬러그 — 표시명이 바뀌어도 안정적인 불변 식별자
+    label: str  # 사람이 읽는 표시명
+    aliases: list[str] = []  # 동의어/이표기
+
+
+class Triplet(BaseModel):
+    """개념 간 관계를 나타내는 (주어, 술어, 목적어) 트리플."""
+    subject: str  # Concept.id 참조
+    predicate: str  # 관계 서술어
+    object: str  # Concept.id 참조(또는 리터럴)
+
+
+class AtomicNote(BaseModel):
+    """단독으로 이해되는 자립 명제 1개. LLM 추출은 이번 범위 밖(체크포인트)."""
+    text: str  # 자립 명제 1개
+    concepts: list[str] = []  # 관련 Concept.id 참조 목록
+    source_timestamp: str | None = None  # 영상 등에서의 출처 타임스탬프("12:34")
+    chapter: str | None = None  # 챕터/섹션 등 출처 위치
+
+
+class Scores(BaseModel):
+    """§5.4 다축 점수. 궁극적으로 relevance_score를 대체하지만,
+
+    그 파괴적 마이그레이션(analyzer·렌더러 연쇄 변경)은 이번 범위 밖이다.
+    novelty(N)·fit(F)은 코드가 계산하고, actionability·depth는 LLM이 낸다.
+    """
+    novelty: float  # 코드 계산 N축(신규성)
+    actionability: int  # LLM 산출(실행 가능성)
+    depth: int  # LLM 산출(깊이) — evidence로 clamp 대상
+    half_life: str  # 닫힌 vocab(HALF_LIVES)로 검증
+    fit: float  # 코드 계산 F축(적합도)
+
+    @field_validator("half_life")
+    @classmethod
+    def validate_half_life(cls, value: str) -> str:
+        """닫힌 어휘(HALF_LIVES)만 허용한다. 위반 시 ValueError로 거절한다."""
+        if value not in HALF_LIVES:
+            raise ValueError(f"half_life must be one of {HALF_LIVES}, got {value!r}")
+        return value
+
+
 class ContentAnalysis(BaseModel):
     """Claude가 분석한 결과"""
     relevance_score: int = Field(ge=0, le=10, description="DS 현업 관련도 1-10")
@@ -112,6 +175,13 @@ class ContentAnalysis(BaseModel):
     actionability: int = Field(default=0, ge=0, le=10)
     # 상한은 아래 model_validator가 근거 수준별로 clamp한다.
     depth: int = Field(default=0, ge=0)
+
+    # ── v2 데이터 모델(§5.4) 선택 필드 (additive, 하위호환) ──
+    # 궁극적으로 relevance_score를 scores로 대체하지만, 그 파괴적 마이그레이션
+    # (analyzer·렌더러 연쇄 변경)은 이번 범위 밖이다. 지금은 기본값으로 병존한다.
+    scores: Scores | None = None
+    notes: list[AtomicNote] = Field(default_factory=list)
+    triplets: list[Triplet] = Field(default_factory=list)
 
     @field_validator("domain", mode="before")
     @classmethod
@@ -181,6 +251,19 @@ class DigestItem(BaseModel):
     """뉴스레터에 포함될 최종 아이템"""
     raw: RawContent
     analysis: ContentAnalysis
+
+
+class DigestRecord(BaseModel):
+    """다이제스트 산출의 구조화 정본(§5.4).
+
+    로컬 JSON으로 저장되는 이 레코드가 정본(source of truth)이며,
+    발송용 HTML은 이 레코드로부터 파생된다(렌더러가 items를 렌더).
+    Supabase는 best-effort 미러일 뿐이다(app/db.py).
+    """
+    date: str  # 다이제스트 날짜("YYYY-MM-DD")
+    generated_at: str  # 생성 시각(ISO 8601)
+    schema_version: int = 2  # v2 스키마 버전
+    items: list[DigestItem]
 
 
 class UserProfile(BaseModel):

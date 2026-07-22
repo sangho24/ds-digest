@@ -13,7 +13,7 @@ from functools import lru_cache
 from supabase import create_client, Client
 
 from app.config import get_settings
-from app.models import UserProfile, FeedbackPayload
+from app.models import UserProfile, FeedbackPayload, DigestItem
 
 logger = structlog.get_logger()
 
@@ -175,3 +175,43 @@ def save_profile_to_db(profile: UserProfile) -> None:
         }).execute()
     except Exception as e:
         logger.warning("save_profile_failed", user_id=profile.user_id, error=str(e))
+
+
+# ──────────────────────────────────────────────
+# digest_records (구조화 다이제스트 정본의 best-effort 미러)
+# 정본은 로컬 JSON(app/records.py)이며, 이 미러 실패는 무해하다.
+# ──────────────────────────────────────────────
+
+async def save_digest_records_to_db(digest_items: list[DigestItem], date_str: str) -> None:
+    """구조화 다이제스트 레코드를 Supabase digest_records에 미러링한다(best-effort).
+
+    - dry_run이면 즉시 skip(다른 함수들의 게이트 패턴과 동일).
+    - Supabase 미설정/테이블 없음/네트워크 실패 등 모든 예외를 catch해
+      logger.warning으로만 남기고 절대 raise하지 않는다 — 로컬 JSON이 정본이므로
+      미러 실패는 파이프라인에 영향이 없어야 한다.
+    """
+    if get_settings().dry_run:
+        return
+    try:
+        rows = []
+        for item in digest_items:
+            rows.append({
+                "digest_date": date_str,
+                "url": item.raw.url,
+                "source_key": item.raw.source_key or None,
+                "source_label": item.raw.source_label or None,
+                "title": item.raw.title,
+                "relevance_score": item.analysis.relevance_score,
+                # domain은 최대 2개 리스트 — 대표값 1개만 컬럼에 남기고
+                # 전체 분석은 analysis jsonb에 보존한다.
+                "domain": (item.analysis.domain[0] if item.analysis.domain else None),
+                "content_type": item.analysis.content_type,
+                # jsonb 컬럼 — enum/중첩까지 JSON 안전하게 직렬화한다.
+                "analysis": item.analysis.model_dump(mode="json"),
+            })
+        if not rows:
+            return
+        get_supabase().table("digest_records").insert(rows).execute()
+        logger.info("digest_records_mirrored", count=len(rows), date=date_str)
+    except Exception as e:
+        logger.warning("save_digest_records_to_db_failed", date=date_str, error=str(e))

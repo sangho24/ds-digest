@@ -9,12 +9,59 @@ import tempfile
 import httpx
 import feedparser
 import structlog
+from bs4 import BeautifulSoup
+from markdownify import markdownify
 from datetime import datetime, timedelta
 from youtube_transcript_api import YouTubeTranscriptApi
 
 from app.models import RawContent, SourceType
 
 logger = structlog.get_logger()
+
+
+async def _fetch_article_body(client: httpx.AsyncClient, url: str) -> str:
+    """링크 기사 본문을 fetch해 Markdown 텍스트로 반환한다.
+
+    외부 링크 스토리(HN)나 요약만 제공하는 RSS 피드의 전문 확보에 쓴다.
+    trafilatura는 실패 시 조용히 None을 반환해 데이터가 유실되므로 쓰지 않고,
+    BeautifulSoup + markdownify로 직접 파싱한다.
+
+    어떤 예외에도 raise하지 않는다 — 실패 시 ""를 반환해 파이프라인/테스트를
+    절대 깨뜨리지 않는다. 상위 호출부는 빈 문자열을 "본문 없음"으로 다루면 된다.
+    """
+    if not url.lower().startswith(("http://", "https://")):
+        return ""
+    try:
+        resp = await client.get(url, follow_redirects=True)
+        if resp.status_code != 200:
+            return ""
+        content_type = resp.headers.get("content-type", "").lower()
+        if "html" not in content_type:
+            return ""
+
+        # 응답 크기 상한 — HN 외부 링크는 임의 URL이라 대용량 응답(바이너리 등)이
+        # 통째로 메모리에 올라올 수 있다. content-length 선검사 + 파싱 전 캡으로 방어.
+        max_bytes = 5_000_000  # 5MB
+        content_length = resp.headers.get("content-length", "")
+        if content_length.isdigit() and int(content_length) > max_bytes:
+            logger.warning("article_too_large", url=url, content_length=content_length)
+            return ""
+        html_text = resp.text
+        if len(html_text) > max_bytes:  # content-length 미제공 응답 대비
+            html_text = html_text[:max_bytes]
+
+        soup = BeautifulSoup(html_text, "html.parser")
+        # 비본문 요소 제거(스크립트·스타일·내비게이션·푸터)
+        for tag in soup(["script", "style", "nav", "footer"]):
+            tag.decompose()
+        # 본문 영역 우선순위: <article> → <main> → <body> → 문서 전체
+        container = soup.find("article") or soup.find("main") or soup.body or soup
+        text = markdownify(str(container), heading_style="ATX", bullets="-", wrap=False)
+        text = text.strip()
+        return text[:5000]  # 토큰 절약: 5000자 캡
+    except Exception as e:
+        logger.warning("article_fetch_failed", url=url, error=str(e))
+        return ""
 
 
 # ──────────────────────────────────────────────
@@ -47,6 +94,8 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                     items.append(RawContent(
                         source_type=SourceType.YOUTUBE,
                         source_name=channel_name,
+                        source_key=channel_id,      # 채널 표시명이 바뀌어도 안정적인 id
+                        source_label=channel_name,
                         title=entry.title,
                         url=f"https://youtu.be/{video_id}",
                         published_at=published,
@@ -177,8 +226,14 @@ def _format_time(seconds: float) -> str:
 # RSS / Blog
 # ──────────────────────────────────────────────
 
-async def fetch_rss_recent(feed_urls: list[str], hours: int = 48) -> list[RawContent]:
-    """RSS 피드에서 최신 아티클 수집"""
+async def fetch_rss_recent(
+    feed_urls: list[str], hours: int = 48, fetch_link_body: bool = True
+) -> list[RawContent]:
+    """RSS 피드에서 최신 아티클 수집.
+
+    fetch_link_body=True면 피드 본문(content/summary)이 짧을 때 링크 원문을
+    추가로 가져와 더 긴 쪽을 쓴다.
+    """
     items: list[RawContent] = []
 
     async with httpx.AsyncClient(timeout=15) as client:
@@ -208,9 +263,22 @@ async def fetch_rss_recent(feed_urls: list[str], hours: int = 48) -> list[RawCon
                     if not link:
                         continue
 
+                    # 피드가 요약만 제공(500자 미만)하면 링크 원문을 가져와 더 긴 쪽을 쓴다.
+                    # 이미 충분한 본문이 있으면 불필요한 네트워크 요청을 하지 않는다.
+                    if (
+                        fetch_link_body
+                        and len(body.strip()) < 500
+                        and str(link).lower().startswith(("http://", "https://"))
+                    ):
+                        fetched = await _fetch_article_body(client, link)
+                        if len(fetched) > len(body):
+                            body = fetched
+
                     items.append(RawContent(
                         source_type=SourceType.RSS,
                         source_name=feed_name,
+                        source_key=url,           # 피드 URL은 표시명보다 안정적
+                        source_label=feed_name,
                         title=entry.title,
                         url=link,
                         published_at=published,
@@ -257,6 +325,8 @@ async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[Raw
                     items.append(RawContent(
                         source_type=SourceType.RSS,
                         source_name=f"arXiv:{category}",
+                        source_key=f"arxiv:{category}",
+                        source_label=f"arXiv:{category}",
                         title=entry.title,
                         url=link,
                         published_at=published,
@@ -275,9 +345,13 @@ async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[Raw
 # ──────────────────────────────────────────────
 
 async def fetch_hackernews_recent(
-    keywords: list[str], hours: int = 24, min_score: int = 50
+    keywords: list[str], hours: int = 24, min_score: int = 50, fetch_link_body: bool = True
 ) -> list[RawContent]:
-    """Algolia HN API에서 키워드별 최신 스토리 수집"""
+    """Algolia HN API에서 키워드별 최신 스토리 수집.
+
+    fetch_link_body=True면 story_text가 빈 외부 링크 스토리에 한해 원문 본문을
+    가져온다(HN 스토리 대부분은 외부 링크라 story_text가 비어 있다).
+    """
     import time as _time
 
     items: list[RawContent] = []
@@ -302,13 +376,27 @@ async def fetch_hackernews_recent(
                         continue
                     seen_urls.add(item_url)
 
+                    body = (hit.get("story_text") or "")[:3000]
+                    # story_text가 빈 외부 링크 스토리만 원문 본문을 보강한다.
+                    # (HN 자체 스레드로 폴백된 URL은 hit["url"]이 None이라 건너뛴다)
+                    external_url = hit.get("url")
+                    if (
+                        fetch_link_body
+                        and not body
+                        and external_url
+                        and str(external_url).lower().startswith(("http://", "https://"))
+                    ):
+                        body = await _fetch_article_body(client, external_url)
+
                     items.append(RawContent(
                         source_type=SourceType.RSS,
                         source_name="HackerNews",
+                        source_key="hackernews",     # 도메인 분리 없이 단일 버킷 유지
+                        source_label="HackerNews",
                         title=hit["title"],
                         url=item_url,
                         published_at=None,
-                        body=hit.get("story_text", "")[:3000],
+                        body=body,
                     ))
                     logger.info("hn_collected", keyword=keyword, title=hit["title"])
 
@@ -327,12 +415,13 @@ async def collect_all(
     rss_feeds: list[str],
     hours: int = 48,
     fetch_per_channel: int = 10,
+    fetch_link_body: bool = True,
 ) -> tuple[list[RawContent], list[RawContent]]:
     """모든 소스에서 콘텐츠 수집.
     반환: (yt_items, rss_items) — YouTube와 RSS를 분리해서 반환 (전략이 다름).
     """
     yt_items = await fetch_youtube_recent(youtube_channels, fetch_per_channel)
-    rss_items = await fetch_rss_recent(rss_feeds, hours)
+    rss_items = await fetch_rss_recent(rss_feeds, hours, fetch_link_body)
 
     logger.info("youtube_rss_complete", youtube=len(yt_items), rss=len(rss_items), total=len(yt_items) + len(rss_items))
     return yt_items, rss_items

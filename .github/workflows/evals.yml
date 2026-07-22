@@ -1,0 +1,33 @@
+# 주간 품질 계측(evals) 자동화.
+# 주의: evals/run.py는 정적 스냅샷 evals/data/archive_items.json을 읽는다.
+#   이 파일은 파이프라인 산출물과 자동으로 동기화되지 않으므로, 여기서의 통과/실패는
+#   "그 스냅샷 기준" 계측일 뿐 매일의 실제 다이제스트 품질을 실시간 반영하지 않는다.
+# 게이트: run.py가 임계값 위반·회귀 시 exit 1, 입력/파싱 오류 시 exit 2를 반환하므로
+#   별도 판정 스텝 없이 이 잡의 성공/실패가 곧 품질 게이트가 된다.
+name: Weekly Evals
+
+on:
+  schedule:
+    # 월요일 00:00 UTC = KST 월요일 09:00
+    - cron: '0 0 * * 1'
+  workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'   # 3.14 금지: protobuf C ext, supabase pyiceberg 빌드 실패
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run evals
+        # 임계값 위반·baseline 회귀 시 exit 1로 잡이 실패하며, 그것이 품질 게이트다.
+        run: python evals/run.py --json --baseline

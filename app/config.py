@@ -38,6 +38,12 @@ class Settings(BaseSettings):
     # Content Sources
     youtube_channels: str = ""
     rss_feeds: str = ""
+    # Stibee 뉴스레터 대상(쉼표 구분). 비우면 DEFAULT_NEWSLETTERS를 사용한다.
+    newsletters: str = ""
+
+    # 링크 기사 본문 fetch 토글. HN 외부 링크·짧은 RSS 요약일 때만 원문을
+    # 추가로 가져온다. 테스트/네트워크 절약이 필요하면 False로 끈다.
+    fetch_link_body: bool = True
 
     # ArXiv
     arxiv_categories: str = "cs.LG,stat.ML"
@@ -102,6 +108,10 @@ class Settings(BaseSettings):
     @property
     def rss_feed_list(self) -> list[str]:
         return [f.strip() for f in self.rss_feeds.split(",") if f.strip()]
+
+    @property
+    def newsletter_list(self) -> list[str]:
+        return [n.strip() for n in self.newsletters.split(",") if n.strip()]
 
     @property
     def arxiv_category_list(self) -> list[str]:

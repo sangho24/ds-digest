@@ -35,3 +35,19 @@ on conflict (user_id) do nothing;
 -- 파이프라인 시작 시 cleanup_seen_urls(days=30) 으로 자동 실행됨.
 -- 수동 실행이 필요한 경우:
 -- delete from seen_urls where seen_at < now() - interval '30 days';
+
+-- 구조화 다이제스트 레코드 (best-effort 미러 — 정본은 로컬 JSON data/records/)
+create table if not exists digest_records (
+  id bigint generated always as identity primary key,
+  digest_date date not null,
+  url text not null,
+  source_key text,
+  source_label text,
+  title text,
+  relevance_score int,
+  domain text,
+  content_type text,
+  analysis jsonb,           -- ContentAnalysis 전체
+  created_at timestamptz default now()
+);
+create index if not exists idx_digest_records_date on digest_records(digest_date);
