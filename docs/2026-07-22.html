@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 22일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Weekly deep daiv. · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deepdaiv.stibee.com/p/155" target="_blank">요즘 Reasoning 모델은 차원이 달라</a>
+    </h2>
+
+    <p class="item-summary">LLM 추론 기법으로 파라메트릭 지식 활용 효율 ↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">Chain-of-Thought</span><span class="tag">Self-consistency</span><span class="tag">MCTS</span><span class="tag">Tree-of-Thought</span><span class="tag">RAG</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deepdaiv.stibee.com/p/155" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>CoT 프롬프트만으로도 모델 성능이 크게 향상됨을 강조</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Self‑consistency, MCTS, Tree‑of‑Thought 등 다양한 추론 확장 기법을 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Reasoning 활성화가 Parametric Knowledge 회수와 Pass@k 개선에 기여함을 실험적으로 입증</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Self‑consistency 프롬프트를 QA 파이프라인에 적용해 다중 답변 중 가장 일관된 답을 선택, 정확도 향상</div>
+    
+    <div class="idea">💡 Tree‑of‑Thought 프롬프트를 코드 생성 워크플로에 도입해 여러 추론 경로를 탐색, 최적 솔루션 도출</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 여러 추론 경로에서 가장 일관된 답을 선택하는 방법은?</div>
+      
+      <div class="quiz-opt">A) Self-consistency</div>
+      
+      <div class="quiz-opt">B) MCTS</div>
+      
+      <div class="quiz-opt">C) Tree-of-Thought</div>
+      
+      <div class="quiz-opt">D) RAG</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Self-consistency</div>
+          <div class="quiz-explanation">Self-consistency는 동일 질문에 대해 여러 CoT 답변을 생성하고 가장 많이 등장하는 답을 최종 선택한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Pass@k는 무엇을 의미하는가?</div>
+      
+      <div class="quiz-opt">A) k번 샘플링 중 최소 하나가 정답일 확률</div>
+      
+      <div class="quiz-opt">B) 평균 추론 시간</div>
+      
+      <div class="quiz-opt">C) 모델 파라미터 수</div>
+      
+      <div class="quiz-opt">D) 학습 데이터 양</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) k번 샘플링 중 최소 하나가 정답일 확률</div>
+          <div class="quiz-explanation">Pass@k는 k번 시도(샘플링)했을 때 적어도 하나의 정답을 얻을 확률을 나타낸다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      The Airbnb Tech Blog - Medium · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/airbnb-engineering/personalizing-airbnb-search-by-learning-from-the-guest-journey-bcefd1915624?source=rss----53c7c27702d5---4" target="_blank">Personalizing Airbnb search by learning from the guest journey</a>
+    </h2>
+
+    <p class="item-summary">게스트 행동 시퀀스로 검색 개인화, 전환율 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">Transformer</span><span class="tag">Airbnb</span><span class="tag">guest journey</span><span class="tag">listing view</span><span class="tag">booking conversion</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/airbnb-engineering/personalizing-airbnb-search-by-learning-from-the-guest-journey-bcefd1915624?source=rss----53c7c27702d5---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Airbnb는 손으로 만든 집계 특징 대신 게스트 행동 시퀀스를 Transformer로 인코딩해 개인화 검색을 구현했다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대부분 이벤트가 listing view(97.8%)라 데이터 양이 방대해 직접 모델링이 어려워 샘플링·집계 전략이 필요했다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>희소하고 노이즈가 많은 booking 이벤트를 효과적으로 학습하기 위해 시퀀스 모델링과 적절한 손실 설계가 사용됐다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Transformer 기반 게스트 여정 인코더를 구축해 검색 결과에 개인화 점수를 부여한다.</div>
+    
+    <div class="idea">💡 이벤트 유형 가중치 부여 또는 listing view 다운샘플링을 적용해 시퀀스 모델 입력을 최적화한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Airbnb 검색 순위에서 과거에 사용된 특징은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 손으로 만든 집계 통계</div>
+      
+      <div class="quiz-opt">B) 딥러닝 이미지 특징</div>
+      
+      <div class="quiz-opt">C) 협업 필터링</div>
+      
+      <div class="quiz-opt">D) 강화 학습</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 손으로 만든 집계 통계</div>
+          <div class="quiz-explanation">본문에 손으로 만든 집계 통계(예: 총 과거 예약 수, 평균 가격) 사용했다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Airbnb 게스트 이벤트 중 가장 비중이 큰 유형은?</div>
+      
+      <div class="quiz-opt">A) Booking</div>
+      
+      <div class="quiz-opt">B) Review</div>
+      
+      <div class="quiz-opt">C) Listing view</div>
+      
+      <div class="quiz-opt">D) Cancellation</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Listing view</div>
+          <div class="quiz-explanation">본문에 listing view가 전체 이벤트의 97.8%를 차지한다는 내용이 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://cruciblebench.ai/" target="_blank">Can a MUD evaluate LLMs? A $99 proof of concept</a>
+    </h2>
+
+    <p class="item-summary">LLM 평가에 MUD 활용, 비용 저렴·판단 변동 발견</p>
+
+    
+    <div class="tags">
+      <span class="tag">MUD</span><span class="tag">LLM</span><span class="tag">API</span><span class="tag">kappa</span><span class="tag">Zenodo</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://cruciblebench.ai/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MUD 기반 텍스트 게임을 저비용($99) API 크레딧으로 LLM 평가에 활용</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM 판정자 간 일치도가 85%에서 22%까지 크게 차이 나며 측정이 노이즈함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현재는 프로토타입이며, 인간 평가자와 다중 판정자 도입을 계획 중</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 MUD 환경을 구축해 자체 LLM 평가 파이프라인을 저비용 API로 구현</div>
+    
+    <div class="idea">💡 두 개 이상의 LLM 판정자를 사용해 모델 순위의 변동성을 측정하고 노이즈를 최소화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 실험에 사용된 API 크레딧 비용은 얼마였나요?</div>
+      
+      <div class="quiz-opt">A) $99</div>
+      
+      <div class="quiz-opt">B) $199</div>
+      
+      <div class="quiz-opt">C) $0</div>
+      
+      <div class="quiz-opt">D) $500</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) $99</div>
+          <div class="quiz-explanation">본문에 실험이 약 $99의 API 크레딧으로 진행됐다고 명시되어 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 두 판정자 간 모델별 일치도 범위는 어떻게 되었나요?</div>
+      
+      <div class="quiz-opt">A) 85%에서 22%</div>
+      
+      <div class="quiz-opt">B) 90%에서 10%</div>
+      
+      <div class="quiz-opt">C) 70%에서 30%</div>
+      
+      <div class="quiz-opt">D) 100%에서 0%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 85%에서 22%</div>
+          <div class="quiz-explanation">본문에 두 판정자 간 일치도가 85%에서 22% 사이였다고 기록돼 있습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

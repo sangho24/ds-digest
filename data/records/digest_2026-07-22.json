@@ -1,0 +1,245 @@
+{
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T23:32:24.633032",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "요즘 Reasoning 모델은 차원이 달라",
+        "url": "https://deepdaiv.stibee.com/p/155",
+        "published_at": "2026-07-21T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/f9bM)\n\n#153 위클리 딥 다이브 | 2026년 7월 22일 에디터 배니\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- Reasoning 모델의 핵심 개념을 요약했습니다.\n- Parametric Knowledge를 끌어내기 위한 방법으로 Reasoning이 효과적인 이유를 정리했습니다.\n- 추론의 스케일을 늘리는 대표적인 방식 두 가지(Parallel vs. Sequential)를 소개했습니다.\n\n요즘 Reasoning 모델은 차원이 달라\n\n안녕하세요, 에디터 배니입니다.    지난 주 뉴스레터에서 ACL 2026 참관 후기를 짤막하게 소개드렸습니다. 그중 인상 깊었던 연구 분야인 [Code-Switching](https://www.deepdaiv.com/newsletter/152)에 대해서 설명했는데요. 사실 연구 트렌드 중 가장 눈에 띄었던 것이 바로 LLM Reasoning이었습니다.    특히, 첫날 열린 LLM Reasoning 튜토리얼에서는 정말 배울 내용이 많았습니다. LLM Reasoning을 어떻게 정의할 수 있는지, 최근 Reasoning 연구는 어떤 것들이 있는지, 앞으로 나아가야 할 방향은 어떠한지 설명했는데요. 이 강의만 제대로 소화해도 학회 참가비가 아깝지 않다고 느낄 만큼, 짧은 시간에 깊이 있는 내용이 압축적으로 담겨 있었습니다.    감사하게도 연사들은 이 튜토리얼 자료를 웹상에 공개했습니다. 모든 내용을 다 다루기는 어렵지만 그중 핵심적인 내용만 추려 LLM Reasoning이 무엇인지 소개하고자 합니다. 이번 뉴스레터는 전체적으로 ACL 튜토리얼 [<Current Advances in LLM Reasoning> 자료](https://llmreasoning.github.io/acl2026/)를 참고했습니다.\n\n우리는 이미 Reasoning 모델을 사용하고 있다\n\nReasoning(추론)은 주어진 정보에 근거해 논리적으로 결론을 도출하는 과정입니다. 연역적 추론, 귀납적 추론, 유추, 가추 등 다양한 추론 방법이 있지만 일반적으로 Reasoning 모델이라고 하면, 정답을 출력하기 전에 사고하는 과정을 명시적으로 보여주는 모델을 의미합니다.    대표적인 사례가 [Chain-of-Thought(CoT)](https://arxiv.org/pdf/2201.11903) 프롬프팅입니다. 모델을 새롭게 훈련한 것도 아닌데 답을 추리하는 과정을 생성하도록 프롬프트를 입력했더니 모델의 성능이 개선됐다는 것입니다. 핵심은 ‘훈련하지 않았다’는 것입니다. 이미 모델은 답을 맞힐 수 있는 능력을 갖고 있는데, 사용자가 올바른 답을 추론할 수 있도록 유도하지 못해 모델은 성능을 완전히 발휘하지 못하고 있던 것입니다. 파라미터가 가지고 있는 지식, 즉 Parametric Knowledge를 완전하게 사용하지 못한 것이죠.    이후에 파라미터에 내재된 지식을 끌어내기 위해 다양한 연구 논문들이 쏟아졌습니다. 답변을 다양하게 생성하여 여러 추론 경로에서 일관되게 도출되는 답변을 선택하거나(Self-consistency), 탐색과 평가를 반복하거나(MCTS), 추론 경로를 트리 구조로 확장해 더 유망한 경로를 선택하는 등(Tree-of-Thought) 정말 다양한 방식으로 CoT 방법론을 확장했습니다. 그리고 많은 연구 사례에서 보여주듯이 답을 유도하는 과정을 생성하도록 하니 성능이 좋아졌죠.    한편, 모델 파라미터에 내재된 지식만으로 정답을 탐색하는 데 한계를 느끼고 외부의 도구를 불러와 해결하려는 시도들도 있었습니다. 대표적으로 데이터베이스에서 탐색하여 답변을 생성하는 RAG라든가, 함수를 호출해 실행하는 Function Calling, 코드를 실행해보고 검증하는 Code Execution 등이 있죠.\n\nChatGPT가 제공하는 ‘추론’ 모델 출처: ChatGPT 화면 캡처    결국, 이 모든 과정은 올바른 답을 찾기 위해 ‘생각’하는 중간 과정을 의미합니다. 그래서 Reasoning 모델을 Thinking Model이라고 부르기도 하죠. 실제로, 우리가 사용하는 많은 상용 모델들(ChatGPT, Claude 등)도 이미 생각하는 과정을 거쳐서 답변을 생성하고 있는데요. 사용자는 간단명료하게 답을 원하는 경우가 일반적이기에 이 과정은 보통 <think> 토큰으로 감싸고 있고 노출하지는 않아 의식하지 않으면 알기 어렵기도 합니다. 그러나 Reasoning 없이 모델이 출시되지 않기 때문에 이제는 사실상 기초(Substrate) 모델이 되었다고 할 수 있습니다.    그리고 Reasoning 모델의 영향력은 엄청났는데요. 특히, 논리적 사고 과정을 요구하는 수학, 코딩 등에서 월등히 좋은 성과를 보이기 시작했습니다. 각종 벤치마크에서 인간을 상회하기 시작했고, 실제로 인간이 참여하는 [국제수학올림피아드(IMO)](https://x.com/OpenAI/status/1946594928945148246)와 [국제정보올림피아드(IOI)에서 금메달](https://x.com/SherylHsu02/status/1954966109851119921)에 해당하는 수준의 성과를 내면서 이제 인간보다 뛰어난 사고를 한다고 보기도 하죠.\n\n모델은 이미 답을 알고 있다\n\n그렇다면 왜 Reasoning 모델은 성능이 좋을까요? ‘생각을 깊게 했으니까 똑똑해지죠!’라고 생각할 수 있지만 실상은 그렇지 않습니다. 수능을 예로 들어보자면, 시험 시간을 2배로 늘려 더 오래 생각할 수 있는 시간을 준다고 해서 모든 학생들의 점수가 오르진 않을 테니까요. 생각을 깊게 해서 성적이 높아지려면 이미 그 학생은 똑똑해야 합니다.    마찬가지로 Reasoning으로 모델 성능이 좋아지려면 LLM은 ‘이미’ 똑똑해야 합니다. 앞서 언급한 Parametric Knowledge를 방대하게 보유하고 있어야 한다는 것이죠. Google DeepMind의 [<Chain-of-Thought Reasoning without Prompting> (Wang & Zhou, 2024)](https://arxiv.org/abs/2402.10200) 연구는 꼭 CoT를 유도하지 않아도 이미 LLM은 올바른 답을 추론할 수 있는 능력을 가지고 있다고 말합니다. 다만 가장 높은 확률로 선택한 첫 번째 답(top-1)이 틀렸을 뿐이죠. 후순위 후보까지 탐색하면 모델이 스스로 정답을 찾아낼 수 있다고 설명합니다. 게다가 정답을 예측할 때 더 높은 신뢰도를 보이기도 하고요.\n\nCoT 없이 QA 포맷으로 답변을 생성했을 때, top-1이 아닌 후순위 답변에서는 정답을 예측한다. 정답을 예측할 때는 오답을 예측할 때보다 더 높은 신뢰도를 보인다.  출처: [<Chain-of-Thought Reasoning without Prompting> (Wang & Zhou, 2024)](https://arxiv.org/abs/2402.10200)\n\n얼핏 보면 추론 과정을 유도하는 게 불필요한 것처럼 보입니다. 하지만 지난 3월, Google Research 연구진은 추론 과정 자체가 정답을 쉽게 떠올리는 데(Recall) 도움을 준다고 말합니다. 즉, LLM이 가진 능력의 한계를 확장해주는 것이죠. 이를 보이기 위해 Reasoning을 유도하는 프롬프트를 넣었을 때와 그렇지 않을 때를 비교했습니다.\n\nReasoning을 활성화했을 때, 그렇지 않을 때보다 성능이 더 개선된다. 즉, Reasoning 과정 자체가 성능을 개선한다.  출처: [<Thinking to Recall: How Reasoning Unlocks Parametric Knowledge in LLMs> (Gekhman et al., 2026)](https://arxiv.org/abs/2603.09906)\n\nPass@k는 k번 샘플링했을 때 최소 한 가지가 정답일 확률을 의미합니다. 위 그림에서 보이는 것처럼 Reasoning을 활성화했을 때가 그렇지 않을 때보다 훨씬 좋은 성능을 보이는데요. 연구진은 이 현상에 대해서 두 가지 가설로 분석합니다. 첫 번째로 Computational Buffer입니다. 단 한 번의 순전파(Forward-pass)로 답변을 생성할 때는 정답의 신호가 활성화되지 않을 수 있습니다. 그러나 Thinking 과정에서 계산을 반복하며 특정 신호가 활성화되기 시작할 수 있다는 것입니다.\n\n무의미한 더미(Dummy) 토큰으로 활성화해도 성능이 어느 정도 개선된다. 이는 Thinking 과정이 연산을 반복하게 만드는 것으로 해석할 수 있다.  출처: [<Thinking to Recall: How Reasoning Unlocks Parametric Knowledge in LLMs> (Gekhman et al., 2026)](https://arxiv.org/abs/2603.09906)\n\n연구진은 정답을 유도하기 위해 필요한 사실 정보 없이, 무의미한 정보를 반복하더라도 성능이 개선된다는 사실을 보였습니다. 위 그래프에서 On Single Dummy는 'Let me think'를 한 번 넣은 것이고, On Dummy는 'Let me think'를 무의미하게 반복한 것인데요. 그럼에도 활성화하지 않았을 때보다 성능이 좋아졌다는 것이죠.    중간 과정이 꼭 사실이 아니라도 성능이 개선된다는 사실이 (개인적으로는) 조금 받아들이기 어렵습니다. 실제로 모델이 ‘추론’한 것이 아닌데 성능은 개선됐다는 것은 추론의 효과를 축소하는 것처럼 보이니까요.    이 가설은 모델의 깊이를 늘린 것과 비슷한 효과로 해석할 수 있습니다. 즉, Thinking 과정 자체가 연산을 계속 반복하게 만들면서 정답 신호를 활성화시킨다는 것입니다. 그러나 무의미한 사고 과정을 무한정 늘린다고 좋은 것은 아니었습니다. 오히려 어느 순간부터는 활성된 정답 신호가 희석되기 때문입니다. 연구진은 2^11(2048) 토큰 이후부터는 오히려 성능이 떨어지는 현상을 관찰했다고 설명합니다.    다른 가설은 사실 점화(Factual Priming)입니다. 이는 정답을 맞히는 과정에서 알고 있는 사실을 생성하면서, 추론의 영역을 좁히는 것과 유사합니다. 정답과 관련된 사실을 생성하는 과정 자체가 다음 토큰을 예측하는 데 되먹임되면서 계속해서 관련 사실을 검색하는 것과 유사한 효과를 나타내는 것입니다. 연구진은 마치 RAG가 검색된 결과를 기반으로 답변을 생성하는 것처럼, 이 추론 과정을 Generative Self-retrieval으로 보기도 합니다.    위 연구는 모델이 이미 답을 알고 있고, 그것을 떠올리는 과정에서 Reasoning이 도움이 된다는 사실을 보여줍니다. 그렇다면 이런 원리를 응용한다면 Reasoning 모델을 더욱 효율적으로 만들 수 있지 않을까요?\n\n추론의 스케일을 늘리자\n\n추론을 확장하는 방법론에 대한 연구 흐름은 크게 Parallel Scaling과 Sequential Scaling으로 구분할 수 있습니다. 우선, CoT 이후 활발하게 연구됐던 Parallel Scaling입니다. 가능한 한 다양하게 답변을 생성한 뒤, 특정 기준에 따라 답을 찾는 것입니다. 앞서 언급한 Self-consistency가 개념적으로 병렬 스케일링에 해당한다고 볼 수 있습니다. Self-consistency는 다양한 답변 중 가장 많이 나온 답변을 정답으로 결정하는 Hard Voting 로직을 활용합니다.\n\nSelf-consistency 방법론은 동일한 모델이 가장 많이 내놓는 답변, 즉 일관성 있는 답변을 정답으로 간주한다.  출처: [<Self-consistency Improves Chain of Thought Reasoning in Language Models> (Wang et al., 2022)](https://arxiv.org/abs/2203.11171)\n\n다음은 Sequential Scaling입니다. 답변을 다양하게 생성한 뒤 고르는 것이 아니라, 차근차근 답을 추론할 수 있도록 질문을 해부하고, 추론을 위한 계획을 세우고, 재확인하는 과정을 순차적으로 진행하는 것입니다. 상대적으로 더 최근에 연구되고 있는 분야인데요. 의도적으로 모델이 정답을 추론할 수 있는 사고 과정을 주입하는 것과 같습니다.    이 과정에서 핵심은 Guiding Tokens에 있습니다. First, Then, So와 같이 사고에 필요한 유도 토큰들을 중간중간 삽입함으로써 사고의 방향성을 바로잡아 주는 것인데요. 이 방법이 효율적인 추론을 이끌기는 하지만, 어떤 토큰을 사용해야 최적의 추론을 생성하는지는 아직 명확하게 밝히지 못했습니다.\n\n올바른 추론 경로를 가이드하는 방법을 제시한 Neural CoT 연구  출처: [<Neural Chain-of-Thought Search: Searching the Optimal Reasoning Path to Enhance Large Language Models> (Ling et al., 2026)](https://arxiv.org/abs/2601.11340)\n\n올해 초 공개된 [Neural CoT](https://arxiv.org/abs/2601.11340) 연구에서는 추론 사이사이에 어떤 토큰을 넣어야 할지, 효율성과 정확성을 기준으로 휴리스틱하게 결정하는 알고리즘을 제안합니다. 이 연구에서는 추론을 청크 단위로 분할하고 다음에 나올 가이드 토큰을 예측합니다. 앞서 적절한 가이드 토큰을 예측할 수 있도록 훈련했기 때문에, 이 방법만으로도 생성된 추론의 길이가 22% 줄어들었을 뿐만 아니라 정확도도 3% 향상되었습니다. 올바른 추론 경로를 제시해준 것만으로도 효율과 성능을 모두 개선할 수 있던 것입니다.\n\n명시적인 토큰 대신 Hidden States를 입력으로 사용하는 Coconut 방법론  출처: [<Training Large Language Models to Reason in a Continuous Latent Space> (Hao et al., 2025)](https://arxiv.org/abs/2412.06769)\n\n최근에는 명시적으로 토큰을 생성하는 것이 아니라 암묵적인 Hidden States 수준에서 답을 반복적으로 추론하는 방법도 제안되고 있습니다. 이를 잠재 공간에서 추론한다고 하여 Latent CoT라고 합니다. Hidden States(은닉 상태)를 토큰으로 변환하는 과정에서 고차원 정보가 손실될 수 있다고 보고, 출력된 Hidden State를 그대로 입력으로 재사용합니다. 겉보기에 최종 단계에서 한 번에 답을 생성한 것 같지만 내부적으로는 CoT와 동일한 효과를 내는 것이죠.    이러한 장점 때문에 Latent CoT는 최근 Reasoning 효율화를 위한 주요 연구 방향으로 빠르게 확장되고 있습니다. 자연어 문장을 단계마다 생성하지 않아 출력 토큰과 추론 비용을 줄일 수 있고, 하나의 연속적인 표현 안에 여러 후보 경로를 함께 유지할 수 있어 일부 계획·논리 추론 과제에서는 명시적인 CoT보다 더 나은 정확도와 효율을 보이기도 합니다.    다만 Latent CoT가 모든 과제에서 더 우수하다고 보기는 어렵습니다. [<Capabilities and Fundamental Limits of Latent Chain-of-Thought> (Zou et al., 2026)](https://arxiv.org/abs/2602.01148) 연구에 따르면, 정밀한 계산이 필요한 과제에서는 성능이 불안정할 수 있으며, 연속적인 은닉 상태를 안정적으로 학습하기 어렵고 내부 추론 경로를 사람이 확인하거나 오류의 원인을 추적하기도 어렵습니다. 따라서 현재의 Latent CoT는 기존 CoT를 완전히 대체한 방식이라기보다, 더 짧고 풍부한 내부 추론을 구현할 가능성을 탐색하는 초기 단계의 연구 분야에 가깝습니다.\n\nReasoning 모델이 넘어야 할 문제들\n\n여전히 Reasoning 모델이 갈 길은 멉니다. 최근에 드러난 문제 중 하나는 Overthinking 현상입니다. 단순하게 답을 낼 수 있는 상황에서도 과도하게 길게 추론하는 현상인데요. 이 현상은 긴 추론에 더 큰 보상을 부여한 학습 설계에서 발생한 Reward Hacking으로 해석됩니다. 이를 줄이기 위해 언제 사고를 길게 하고, 멈출지 결정하는 Adaptive Reasoning 방법론이 활발하게 연구되고 있습니다. 그 밖에도 환각 현상이 발생했을 때 잘못된 추론을 유도하는 문제, 토큰을 많이 소모하는 추론 과정을 시스템적으로 효율화하는 방법 등 다양한 분야로 연구되고 있습니다.    이렇게 Reasoning 모델의 근황을 살펴봤습니다. 명시적인 사고 과정을 생성하면 성능이 개선된다는 사실을 기반으로, 더 좋은 추론 경로를 제안하기 위한 연구들을 소개했는데요. 튜토리얼에서 소개한 내용의 10분의 1도 다루지 못한 것 같습니다. Reasoning 모델을 훈련시키는 방법이나 보상을 설계하는 방법도 소개되어 있으니 관심 있는 분들은 꼭 튜토리얼 자료를 참고하시기 바랍니다.\n\n[Reasoning 모델에 대해 궁금한 게 있다면 👉](https://padlet.com/deepdaiv/weekly_deepdaiv_feedback)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/f9bM \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/f9bM \"게시하기\")[웹에서 보기](https://stib.ee/f9bM \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 추론 기법으로 파라메트릭 지식 활용 효율 ↑",
+        "tags": [
+          "Chain-of-Thought",
+          "Self-consistency",
+          "MCTS",
+          "Tree-of-Thought",
+          "RAG"
+        ],
+        "key_points": [
+          {
+            "point": "CoT 프롬프트만으로도 모델 성능이 크게 향상됨을 강조",
+            "timestamp": null
+          },
+          {
+            "point": "Self‑consistency, MCTS, Tree‑of‑Thought 등 다양한 추론 확장 기법을 소개",
+            "timestamp": null
+          },
+          {
+            "point": "Reasoning 활성화가 Parametric Knowledge 회수와 Pass@k 개선에 기여함을 실험적으로 입증",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Self‑consistency 프롬프트를 QA 파이프라인에 적용해 다중 답변 중 가장 일관된 답을 선택, 정확도 향상",
+          "Tree‑of‑Thought 프롬프트를 코드 생성 워크플로에 도입해 여러 추론 경로를 탐색, 최적 솔루션 도출"
+        ],
+        "quiz": [
+          {
+            "question": "여러 추론 경로에서 가장 일관된 답을 선택하는 방법은?",
+            "options": [
+              "Self-consistency",
+              "MCTS",
+              "Tree-of-Thought",
+              "RAG"
+            ],
+            "answer_index": 0,
+            "explanation": "Self-consistency는 동일 질문에 대해 여러 CoT 답변을 생성하고 가장 많이 등장하는 답을 최종 선택한다."
+          },
+          {
+            "question": "Pass@k는 무엇을 의미하는가?",
+            "options": [
+              "k번 샘플링 중 최소 하나가 정답일 확률",
+              "평균 추론 시간",
+              "모델 파라미터 수",
+              "학습 데이터 양"
+            ],
+            "answer_index": 0,
+            "explanation": "Pass@k는 k번 시도(샘플링)했을 때 적어도 하나의 정답을 얻을 확률을 나타낸다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "Personalizing Airbnb search by learning from the guest journey",
+        "url": "https://medium.com/airbnb-engineering/personalizing-airbnb-search-by-learning-from-the-guest-journey-bcefd1915624?source=rss----53c7c27702d5---4",
+        "published_at": "2026-07-21T17:01:04",
+        "transcript": null,
+        "body": "<h4><em>How we built a Transformer-based sequence model that encodes years of guest behavior to surface the right listings at the right time.</em></h4><figure><img alt=\"A person soaring on a high rope swing attached to a wooden treehouse, with mountains and clouds in the background.\" src=\"https://cdn-images-1.medium.com/max/1024/1*KJ9lshQ8N_AqxrArGj7BoQ.jpeg\" /></figure><p>By: <a href=\"https://www.linkedin.com/in/daochen-zha/\">Daochen Zha</a>, <a href=\"https://www.linkedin.com/in/chunhowt/\">Chun How Tan</a>, <a href=\"https://www.linkedin.com/in/xin-liu-908b6b18/\">Xin Liu</a>, <a href=\"https://www.linkedin.com/in/bin-xu-96253aa5/\">Bin Xu</a>, <a href=\"https://www.linkedin.com/in/han-zhao-692944116/\">Han Zhao</a>, <a href=\"https://www.linkedin.com/in/xiaowei-liu-60415841/\">Xiaowei Liu</a>, <a href=\"https://www.linkedin.com/in/jun-shi-5a3207149/\">Jun Shi</a>, <a href=\"https://www.linkedin.com/in/tracy-xiaoxi-yu/\">Tracy Yu</a>, <a href=\"https://www.linkedin.com/in/hui-gao-275a924/\">Hui Gao</a>, <a href=\"https://www.linkedin.com/in/huiji-gao/\">Huiji Gao</a>, <a href=\"https://www.linkedin.com/in/liweihe/\">Liwei He</a>, <a href=\"https://www.linkedin.com/in/michael-kinoti-7a309215/\">Michael Kinoti</a>, <a href=\"https://www.linkedin.com/in/stephanie-moyerman/\">Stephanie Moyerman</a>, and <a href=\"https://www.linkedin.com/in/sanjeevkatariya/\">Sanjeev Katariya</a></p><h3>Introduction</h3><p>Planning a trip on Airbnb rarely happens in a single session. A guest searching for a place to stay in San Francisco might browse dozens of listings over several days, leaving behind a trail of views. Typically, over a period of years, that same guest will have accumulated many previous bookings, reviews, and the occasional cancellation. Taken together, these events reveal a great deal about what that guest values in a stay. For years, Airbnb’s search ranking captured this through hand-crafted features: aggregated statistics such as total past bookings or average listing price. These worked well, but as the feature count grew into the hundreds, the approach became harder to scale and increasingly limited in expressiveness. In this blog post, we describe how we built a sequence modeling system that encodes the full guest journey using a Transformer, learning richer representations of guest preferences to deliver more personalized search results.</p><figure><img alt=\"Guest events in the past years (excluding view),” shows a history from June 2023 to January 2025, including bookings, a review, a cancellation, and a customer service ticket, represented by property thumbnails and sad face icons. The right section, labeled “Plan a trip to San Francisco,” shows a detailed sequence of property views over a few days in April 2025, culminating in a final booking on April 27, 2025, represented by various property photo thumbnails.\" src=\"https://cdn-images-1.medium.com/max/1024/1*oNM91mrmQ9WRDVQ8rmTqFw.png\" /><figcaption>An example of a guest journey, which is typically long, exploratory, and complex.</figcaption></figure><h3>Challenges</h3><p>Event sequences per guest present three core challenges. First, they are dominated by listing views, which account for the vast majority of all events — some guests accumulate hundreds of thousands of them — making raw sequences computationally intractable to model directly.</p><figure><img alt=\"A horizontal stacked bar chart showing that listing view events make up 97.8% of all guest events, while all other events make up the remaining 2.2%.\" src=\"https://cdn-images-1.medium.com/max/1024/1*juST1wIZMMN15VMYylKrkg.png\" /><figcaption>The distribution of event types, with the majority being listing views.</figcaption></figure><p>Second, unlike social media platforms, which optimize for engagement, Airbnb optimizes for booking conversion. Bookings are rare, compared to events, and deliberate, whereas a listing view could reflect genuine intent or simply idle browsing. Building a model that generalizes from these sparse, noisy signals to surface the listings most relevant to a guest is fundamentally different from social media engagement modeling. Third, training a sequence model on hundreds of millions of search-label pairs is expensive; targeted optimizations are needed to reduce costs and improve the throughput of model training.</p><h3>Solution</h3><h4>Designing the guest sequence</h4><p>How to tackle this challenge, which is also a rare opportunity to use Transformer technology to improve guest experience?</p><p>After research into similar use cases, we came up with a plan of action. Rather than modeling all events uniformly, we split the guest sequence into two parts:</p><ul><li>The long-term sequence captures infrequent but informative events from the past seven years: bookings, reviews, cancellations, and other past interactions. We cap this sequence at 80 events.</li><li>The short-term sequence captures listing views from the past 21 days. We cap the short-term sequence at 200 events.</li></ul><p>The",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "게스트 행동 시퀀스로 검색 개인화, 전환율 향상",
+        "tags": [
+          "Transformer",
+          "Airbnb",
+          "guest journey",
+          "listing view",
+          "booking conversion"
+        ],
+        "key_points": [
+          {
+            "point": "Airbnb는 손으로 만든 집계 특징 대신 게스트 행동 시퀀스를 Transformer로 인코딩해 개인화 검색을 구현했다.",
+            "timestamp": null
+          },
+          {
+            "point": "대부분 이벤트가 listing view(97.8%)라 데이터 양이 방대해 직접 모델링이 어려워 샘플링·집계 전략이 필요했다.",
+            "timestamp": null
+          },
+          {
+            "point": "희소하고 노이즈가 많은 booking 이벤트를 효과적으로 학습하기 위해 시퀀스 모델링과 적절한 손실 설계가 사용됐다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Transformer 기반 게스트 여정 인코더를 구축해 검색 결과에 개인화 점수를 부여한다.",
+          "이벤트 유형 가중치 부여 또는 listing view 다운샘플링을 적용해 시퀀스 모델 입력을 최적화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Airbnb 검색 순위에서 과거에 사용된 특징은 무엇인가?",
+            "options": [
+              "손으로 만든 집계 통계",
+              "딥러닝 이미지 특징",
+              "협업 필터링",
+              "강화 학습"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 손으로 만든 집계 통계(예: 총 과거 예약 수, 평균 가격) 사용했다고 명시돼 있다."
+          },
+          {
+            "question": "Airbnb 게스트 이벤트 중 가장 비중이 큰 유형은?",
+            "options": [
+              "Booking",
+              "Review",
+              "Listing view",
+              "Cancellation"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 listing view가 전체 이벤트의 97.8%를 차지한다는 내용이 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Can a MUD evaluate LLMs? A $99 proof of concept",
+        "url": "https://cruciblebench.ai/",
+        "published_at": null,
+        "transcript": null,
+        "body": "I&#x27;m the author of a paper my friends and I wrote after we were curious if a MUD, text games originating in the 1970s, could be used to evaluate LLMs. We&#x27;ve spent the last several months on nights and weekends running this experiment and writing the paper on just our personal computers with about $99 in API credits.<p>Our experiment did have an interesting leaderboard but even more surprising was the measurements of each LLM. We scored each on four behavioral dimensions, two of which lean heavily on an LLM classifier. When we removed those two, one of the frontier models fell six positions. When we then checked the classifier against a second judge, the per-model agreement between them ranged from 85% to 22%. The aggregate kappa (0.04 on probe detection) indicated the instrument was noisy without saying which models the noise was hitting. The most affected model shared a model family with the classifier. This isn&#x27;t proof of bias, just one observation we recorded.<p>We realize LLM judges can be unreliable, and while it wasn&#x27;t our original intent to test this, it ended up being the most interesting finding. The divergence between the two judges is the finding we think generalizes to other judge-based benchmarks.<p>We emphasize this is just a proof of concept and not a validated benchmark. We prepared a thorough limitations section in the paper, including just 50 runs per model, overlapping CIs among the top models, no human raters, a tiny environment, etc.<p>Everything we did is publicly available, the paper and data are CC BY 4.0, while the code is MIT. The paper, transcripts, code, and complete API billing export  can be found at <a href=\"https:&#x2F;&#x2F;doi.org&#x2F;10.5281&#x2F;zenodo.21386663\" rel=\"nofollow\">https:&#x2F;&#x2F;doi.org&#x2F;10.5281&#x2F;zenodo.21386663</a><p>If you find issues, please let us know, that&#x27;s why we&#x27;re sharing this. We&#x27;re currently designing Phase 2 and want it to be as robust as possible. We&#x27;re looking at human baselines, multiple judges, more objectives, a larger environment, etc.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 평가에 MUD 활용, 비용 저렴·판단 변동 발견",
+        "tags": [
+          "MUD",
+          "LLM",
+          "API",
+          "kappa",
+          "Zenodo"
+        ],
+        "key_points": [
+          {
+            "point": "MUD 기반 텍스트 게임을 저비용($99) API 크레딧으로 LLM 평가에 활용",
+            "timestamp": null
+          },
+          {
+            "point": "LLM 판정자 간 일치도가 85%에서 22%까지 크게 차이 나며 측정이 노이즈함",
+            "timestamp": null
+          },
+          {
+            "point": "현재는 프로토타입이며, 인간 평가자와 다중 판정자 도입을 계획 중",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "MUD 환경을 구축해 자체 LLM 평가 파이프라인을 저비용 API로 구현",
+          "두 개 이상의 LLM 판정자를 사용해 모델 순위의 변동성을 측정하고 노이즈를 최소화"
+        ],
+        "quiz": [
+          {
+            "question": "실험에 사용된 API 크레딧 비용은 얼마였나요?",
+            "options": [
+              "$99",
+              "$199",
+              "$0",
+              "$500"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 실험이 약 $99의 API 크레딧으로 진행됐다고 명시되어 있습니다."
+          },
+          {
+            "question": "두 판정자 간 모델별 일치도 범위는 어떻게 되었나요?",
+            "options": [
+              "85%에서 22%",
+              "90%에서 10%",
+              "70%에서 30%",
+              "100%에서 0%"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 두 판정자 간 일치도가 85%에서 22% 사이였다고 기록돼 있습니다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "paper",
+        "half_life": "ephemeral",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
