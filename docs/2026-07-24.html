@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 24일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/axOcn--n_lM" target="_blank">Claude Just Revealed AI's Biggest Problem</a>
+    </h2>
+
+    <p class="item-summary">AI 코딩 도구, 속도 ↑·디버깅 능력 ↓ 위험</p>
+
+    
+    <div class="tags">
+      <span class="tag">Lambda</span><span class="tag">Python</span><span class="tag">Nvidia</span><span class="tag">Two Minute Papers</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/axOcn--n_lM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 사용 그룹이 작업을 약 8% 빠르게 완료했지만 통계적으로 유의미하지 않음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 사용 그룹은 퀴즈에서 50% 점수, 비AI 그룹은 67% 점수로 유의미한 차이 나타남</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI를 자동화에만 사용하고, 디버깅은 먼저 스스로 시도한 뒤 AI에 문의하라는 권고</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 AI 도구를 사용해 코드를 자동 생성할 때는 자신이 이미 이해하고 있는 로직에 한정하고, 새로운 문제에 대해서는 직접 시도 후 AI에 질문하도록 팀 정책을 수립한다</div>
+    
+    <div class="idea">💡 디버깅 단계에서 먼저 자체 해결을 시도하고, 실패 시 AI에게 설명을 요청하는 워크플로를 도입해 디버깅 역량 저하를 방지한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 연구에서 AI 사용 그룹이 작업을 완료하는 데 얼마나 빨랐나요?</div>
+      
+      <div class="quiz-opt">A) 약 2분, 약 8% 빠름</div>
+      
+      <div class="quiz-opt">B) 약 5분, 약 20% 빠름</div>
+      
+      <div class="quiz-opt">C) 차이 없음</div>
+      
+      <div class="quiz-opt">D) 약 10분, 약 30% 빠름</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 약 2분, 약 8% 빠름</div>
+          <div class="quiz-explanation">본문에 AI 그룹이 작업을 2분 정도, 약 8% 빠르게 끝냈다고 언급했지만 통계적으로 유의미하지 않다고 명시했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 사용 그룹과 비AI 그룹의 퀼즈 점수 차이는 어떻게 나타났나요?</div>
+      
+      <div class="quiz-opt">A) AI 50%, 비AI 67% (유의미)</div>
+      
+      <div class="quiz-opt">B) AI 70%, 비AI 60% (비유의미)</div>
+      
+      <div class="quiz-opt">C) 두 그룹 모두 60% (차이 없음)</div>
+      
+      <div class="quiz-opt">D) AI 80%, 비AI 50%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) AI 50%, 비AI 67% (유의미)</div>
+          <div class="quiz-explanation">본문에 AI 그룹이 50% 점수, 비AI 그룹이 67% 점수를 받아 통계적으로 유의미한 차이가 있다고 설명했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://sliplane.io/blog/hetzner-inference" target="_blank">Hetzner is working on LLM Inference</a>
+    </h2>
+
+    <p class="item-summary">Hetzner 저비용 LLM 추론 API 실험</p>
+
+    
+    <div class="tags">
+      <span class="tag">Hetzner</span><span class="tag">Qwen3.6-35B-A3B-FP8</span><span class="tag">OpenAI</span><span class="tag">FP8</span><span class="tag">Mixture-of-Experts</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://sliplane.io/blog/hetzner-inference" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Hetzner는 OpenAI 호환 API로 Qwen 35B MoE 모델을 제공하는 실험을 진행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>테스트 결과 첫 토큰 평균 153 ms, 초당 224 토큰 출력 속도 기록</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>서비스는 실험 단계로 청구·SLA·보증이 없으며 토큰 기반 접근 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Hetzner Inference API를 활용해 저비용으로 LLM 프로토타입을 구축하고 262K 컨텍스트 윈도우 활용</div>
+    
+    <div class="idea">💡 Hetzner의 153 ms 첫 토큰 지연과 224 t/s 처리량을 내부 모델과 비교해 비용·성능 트레이드오프 평가</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Hetzner Inference에서 현재 제공되는 모델은?</div>
+      
+      <div class="quiz-opt">A) Qwen/Qwen3.6-35B-A3B-FP8</div>
+      
+      <div class="quiz-opt">B) Llama2-70B</div>
+      
+      <div class="quiz-opt">C) GPT-3.5</div>
+      
+      <div class="quiz-opt">D) Mistral-7B</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Qwen/Qwen3.6-35B-A3B-FP8</div>
+          <div class="quiz-explanation">본문에 현재 사용 가능한 모델은 Qwen/Qwen3.6-35B-A3B-FP8이라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 테스트에서 보고된 첫 토큰 평균 시간은?</div>
+      
+      <div class="quiz-opt">A) 153 ms</div>
+      
+      <div class="quiz-opt">B) 200 ms</div>
+      
+      <div class="quiz-opt">C) 300 ms</div>
+      
+      <div class="quiz-opt">D) 500 ms</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 153 ms</div>
+          <div class="quiz-explanation">본문에 7개의 짧은 요청에서 중간값이 153 ms라고 기록되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://foldkit.dev/" target="_blank">The front end framework for correctness: built on Effect, architected like Elm</a>
+    </h2>
+
+    <p class="item-summary">타입 안전 UI로 데이터 파이프라인 검증 효율 ↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">Foldkit</span><span class="tag">Effect</span><span class="tag">Elm</span><span class="tag">TypeScript</span><span class="tag">Schema</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://foldkit.dev/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Foldkit는 불변 모델과 명시적 효과로 예측 가능한 상태 관리 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Effect 기반 스키마와 커맨드로 부수 효과를 값으로 모델링</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>라우팅·UI·서브모델·구독·리소스 관리 등 배터리 포함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Foldkit을 활용해 데이터 파이프라인 검증용 UI를 구축해 상태 일관성 확보</div>
+    
+    <div class="idea">💡 Effect와 Command를 이용해 비동기 데이터 수집을 모델 중심으로 관리하여 재현성 향상</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Foldkit에서 부수 효과를 명시적으로 다루는 개념은?</div>
+      
+      <div class="quiz-opt">A) Commands</div>
+      
+      <div class="quiz-opt">B) Effects</div>
+      
+      <div class="quiz-opt">C) Subscriptions</div>
+      
+      <div class="quiz-opt">D) Routing</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Commands</div>
+          <div class="quiz-explanation">Commands는 업데이트 함수가 반환하는 값으로 부수 효과를 기술하고 런타임이 실행한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 예시 코드에서 모델을 불변적으로 업데이트하는 함수는?</div>
+      
+      <div class="quiz-opt">A) evo</div>
+      
+      <div class="quiz-opt">B) M.tagsExhaustive</div>
+      
+      <div class="quiz-opt">C) Command.define</div>
+      
+      <div class="quiz-opt">D) Effect.sleep</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) evo</div>
+          <div class="quiz-explanation">evo 함수는 기존 모델을 복제해 변경을 적용해 불변성을 유지한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/0CqLVnx-2UM" target="_blank">Anthropic Found Something That Shouldn't Exist</a>
+    </h2>
+
+    <p class="item-summary">AI가 스스로 길이·카운트 도구 학습, 모델 해석에 활용</p>
+
+    
+    <div class="tags">
+      <span class="tag">Anthropic</span><span class="tag">Two Minute Papers</span><span class="tag">International Mathematical Olympiad</span><span class="tag">place cells</span><span class="tag">boundary cells</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/0CqLVnx-2UM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI는 입력 토큰을 개념·결정 경계가 표현된 내부 기하학적 매니폴드로 변환한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>명시적 문자 수가 없어도 모델은 스스로 줄 길이와 문자 수를 추론하며, 이는 생물학적 place cell과 유사하다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>카운터는 토큰 수에 약 4자를 곱하는 방식과 나선형 파동 형태로 구현된다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 프롬프트 설계 시 모델이 토큰당 평균 4자를 가정한다는 점을 활용해 출력 길이를 제어한다.</div>
+    
+    <div class="idea">💡 프로빙 기법으로 모델 내부의 place‑cell‑유사 뉴런을 탐색해 라인‑길이 관련 작업에 특화된 파인튜닝 전략을 개발한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI 모델이 문자 수를 추정하는 방법은?</div>
+      
+      <div class="quiz-opt">A) 명시적 문자 수 메타데이터 사용</div>
+      
+      <div class="quiz-opt">B) 토큰 수에 약 4자를 곱함</div>
+      
+      <div class="quiz-opt">C) 단어 길이 사전 활용</div>
+      
+      <div class="quiz-opt">D) 추정 불가능</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 토큰 수에 약 4자를 곱함</div>
+          <div class="quiz-explanation">본문에 모델이 토큰을 세고 대략 네 글자씩 곱해 문자 수를 추정한다는 설명이 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 내부에서 줄 길이와 관련된 현상을 비유한 생물학적 구조는?</div>
+      
+      <div class="quiz-opt">A) 시냅스 가소성</div>
+      
+      <div class="quiz-opt">B) place cells</div>
+      
+      <div class="quiz-opt">C) mirror neurons</div>
+      
+      <div class="quiz-opt">D) glial cells</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) place cells</div>
+          <div class="quiz-explanation">텍스트는 AI가 place cells와 boundary cells와 유사한 뉴런을 형성한다는 비유를 사용한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      디플릭 · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://dflick.stibee.com/p/103" target="_blank">💌 똑똑, 님. 디플릭이에요</a>
+    </h2>
+
+    <p class="item-summary">버튼 클릭 안 하면 2026‑08‑23에 구독 종료</p>
+
+    
+    <div class="tags">
+      <span class="tag">디플릭</span><span class="tag">AI</span><span class="tag">UX</span><span class="tag">IT</span><span class="tag">Flick</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://dflick.stibee.com/p/103" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>2026년 8월 23일까지 버튼을 누르지 않으면 뉴스레터 구독이 종료됩니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>버튼을 클릭하면 구독이 유지되고 보관 중인 정보가 보존됩니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디플릭은 매주 화요일 AI·UX·IT 소식을 제공하는 뉴스레터를 발송합니다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 구독 연장 알림을 자동화하여 마감 전에 클릭하도록 스크립트 작성</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 디플릭 뉴스레터 구독이 자동으로 종료되는 날짜는 언제인가?</div>
+      
+      <div class="quiz-opt">A) 2026‑08‑23</div>
+      
+      <div class="quiz-opt">B) 2026‑09‑01</div>
+      
+      <div class="quiz-opt">C) 2026‑07‑31</div>
+      
+      <div class="quiz-opt">D) 2026‑08‑01</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 2026‑08‑23</div>
+          <div class="quiz-explanation">본문에 2026년 8월 23일까지 버튼을 누르지 않으면 구독이 종료된다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
