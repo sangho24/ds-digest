@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 26일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      트렌드라이트 · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://trendlite.stibee.com/p/468" target="_blank">🥤 현대백화점의 외국인 암행어사가 시사하는 건</a>
+    </h2>
+
+    <p class="item-summary">글로벌 고객 시각을 반영한 리테일 데이터 전략 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">현대백화점</span><span class="tag">조선미녀</span><span class="tag">Olive Young</span><span class="tag">한화그룹</span><span class="tag">AI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://trendlite.stibee.com/p/468" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>한국 브랜드가 국내 검증보다 해외 기준을 앞세워 출시 전략을 바꾸고 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현대백화점은 외국인만으로 구성된 글로벌 CX 어드바이저를 통해 매장 경험을 글로벌 시각으로 재평가한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>한화그룹은 기술 계열사와 유통·서비스 계열사를 결합해 AI·로봇을 리테일 현장에 적용하려는 구조조정을 진행 중이다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 외국인 고객 피드백을 다국어 텍스트 마이닝 파이프라인으로 구축해 매장 동선·표시 개선에 활용한다</div>
+    
+    <div class="idea">💡 다국어 표지판 및 결제 UI에 대한 A/B 테스트를 진행해 전환율 및 체류시간 변화를 측정한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 현대백화점이 도입한 ‘글로벌 CX 어드바이저’는 어떤 고객으로 구성됐는가?</div>
+      
+      <div class="quiz-opt">A) 국내 고객</div>
+      
+      <div class="quiz-opt">B) 외국인 고객</div>
+      
+      <div class="quiz-opt">C) 직원</div>
+      
+      <div class="quiz-opt">D) 전문가</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 외국인 고객</div>
+          <div class="quiz-explanation">기사에 따르면 외국인 고객만으로 구성된 어드바이저를 운영한다고 밝혔다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 조선미녀가 성장에 활용한 해외 플랫폼은?</div>
+      
+      <div class="quiz-opt">A) TikTok</div>
+      
+      <div class="quiz-opt">B) Facebook</div>
+      
+      <div class="quiz-opt">C) LinkedIn</div>
+      
+      <div class="quiz-opt">D) Twitter</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) TikTok</div>
+          <div class="quiz-explanation">본문에 조선미녀가 틱톡과 아마존을 기반으로 빠르게 성장했다고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      NAVER D2 · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/73H_ZCxbH7o" target="_blank">도구에서 동료로 — AI 에이전트 자율 성장 프레임워크</a>
+    </h2>
+
+    <p class="item-summary">AI 에이전트 성장 프레임워크 설계·구현 인사이트</p>
+
+    
+    <div class="tags">
+      <span class="tag">GNOSIS</span><span class="tag">AI Agent</span><span class="tag">3-Loop</span><span class="tag">Constitution</span><span class="tag">Phase-1</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/73H_ZCxbH7o" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GNOSIS 프레임워크의 설계 원칙과 자율 성장 메커니즘 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>3-Loop + Constitution + 5층 기억 기반 아키텍처 설명</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>13 공리·17 메커니즘·7 알고리즘을 통한 수학적 안전 보장 및 구현 단계 제시</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Ae9q7KsRbuI" target="_blank">Minecraft Was Missing One Brilliant Idea</a>
+    </h2>
+
+    <p class="item-summary">Diffusion으로 지형 생성, AI 활용</p>
+
+    
+    <div class="tags">
+      <span class="tag">Lambda</span><span class="tag">terrain-diffusion</span><span class="tag">GitHub</span><span class="tag">Modrinth</span><span class="tag">Patreon</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Ae9q7KsRbuI" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Minecraft 지형 생성에 diffusion 모델을 적용한 논문을 소개</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>논문과 코드가 GitHub 및 Modrinth에 공개됨</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Patreon 후원자 명단을 통해 커뮤니티 지원을 강조</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Vg6FBKTlfOw" target="_blank">ARC-AGI-3 winning team - Millennia of minds, compressed into words.</a>
+    </h2>
+
+    <p class="item-summary">ARC-AGI-3가 LLM 행동 효율 평가 기준을 재정의</p>
+
+    
+    <div class="tags">
+      <span class="tag">ARC-AGI-3</span><span class="tag">Tufa Labs</span><span class="tag">StochasticGoose</span><span class="tag">Locksmith game</span><span class="tag">Kenneth Stanley</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Vg6FBKTlfOw" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>ARC-AGI-3는 목표를 직접 발견하도록 요구해 기존 LLM 한계를 드러낸다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>StochasticGoose는 프레임 변화를 이용한 효율적 탐색으로 일시적 우승을 기록했음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>행동 효율성 점수가 실제 문제 해결보다 중요한 평가 지표임을 강조</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/AREWYbVtX64" target="_blank">Intelligence is collective, not artificial — Prof. Michael I. Jordan (UC Berkeley / Inria)</a>
+    </h2>
+
+    <p class="item-summary">AI를 경제적 협업 시스템으로 바라보는 관점 제공</p>
+
+    
+    <div class="tags">
+      <span class="tag">AlphaFold</span><span class="tag">LLM</span><span class="tag">Conformal prediction</span><span class="tag">prediction-powered inference</span><span class="tag">data market</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/AREWYbVtX64" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI를 단일 초지능이 아니라 집단적 경제 시스템으로 이해해야 함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AGI는 PR 용어이며 실질적 목표는 인간·시스템 협업 강화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>예측 기반 추론·컨포멀 예측 등 실용적 기법이 실세계 적용에 핵심</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
