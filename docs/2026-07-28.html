@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 28일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/l72ufA-4SzE" target="_blank">They Looked Inside Claude’s AI's Mind. It Got Weird</a>
+    </h2>
+
+    <p class="item-summary">AI 내부 표현을 텍스트 변환·검증으로 해석해 모델 신뢰성 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">Claude</span><span class="tag">Anthropic</span><span class="tag">Two Minute Papers</span><span class="tag">Károly Zsolnai-Fehér</span><span class="tag">AI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/l72ufA-4SzE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>숫자(활성화)→텍스트→숫자 순 라운드트립 번역으로 해석 신뢰성을 평가한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Claude는 문장을 쓰기 전에 최종 단어를 미리 선택해 운율을 맞춘다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>잘못된 외부 계산 결과(492)를 제시하면 Claude는 자체 초기 추론을 유지한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 활성화 → 텍스트 → 활성화 라운드트립 파이프라인을 구축해 자체 모델의 내부 표현을 정량적으로 검증한다</div>
+    
+    <div class="idea">💡 Claude가 사전 목표 단어를 선택하는 방식을 활용해 프롬프트 설계 시 구조적 제어(예: 라임, 포맷) 전략을 적용한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 연구진이 번역 결과의 신뢰성을 판단하기 위해 사용한 방법은?</div>
+      
+      <div class="quiz-opt">A) 인간 평가</div>
+      
+      <div class="quiz-opt">B) 라운드트립 일관성 검사</div>
+      
+      <div class="quiz-opt">C) BLEU 점수 계산</div>
+      
+      <div class="quiz-opt">D) 교차 엔트로피 측정</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 라운드트립 일관성 검사</div>
+          <div class="quiz-explanation">텍스트로 변환한 뒤 다시 숫자로 복원해 원본과 차이를 최소화하는 라운드트립 일관성을 통해 번역 품질을 평가했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Claude가 491이라는 정답을 요구하는 수학 문제에 대해 잘못된 492를 반환하는 계산기를 받았을 때의 행동은?</div>
+      
+      <div class="quiz-opt">A) 잘못된 답을 받아들였다</div>
+      
+      <div class="quiz-opt">B) 초기 추론을 유지하고 잘못된 계산 결과를 무시했다</div>
+      
+      <div class="quiz-opt">C) 응답을 중단했다</div>
+      
+      <div class="quiz-opt">D) 추가 설명을 요청했다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 초기 추론을 유지하고 잘못된 계산 결과를 무시했다</div>
+          <div class="quiz-explanation">Claude는 처음 가졌던 해답 힌지를 유지하고, 외부에서 제시된 잘못된 값(492)을 무시했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/zJvN8PDX1is" target="_blank">NVIDIA's New Free AI - A Gift To Humanity</a>
+    </h2>
+
+    <p class="item-summary">오픈 대형 모델로 빠른 실험·디버깅 지원</p>
+
+    
+    <div class="tags">
+      <span class="tag">NEMOTRON 3 Ultra</span><span class="tag">DeepSeek 4 Flash</span><span class="tag">Lambda</span><span class="tag">Apache 2.0</span><span class="tag">Open MDW license</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/zJvN8PDX1is" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>극히 빠른 추론 속도지만 복잡한 코딩 과제에서는 한계가 있음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Open MDW 라이선스는 Apache 2.0과 유사해 상업적 이용과 파생작품 허용</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>5500억 파라미터·수백 GB GPU 메모리 필요, Lambda 같은 클라우드 서비스 활용 필요</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 NEMOTRON 3 Ultra를 이용해 터미널 기반 환경 설정·패키지 설치 자동화 스크립트를 빠르게 생성·디버깅한다.</div>
+    
+    <div class="idea">💡 Lambda GPU 인스턴스에서 모델을 실행해 비핵심 코드(예: 데이터 전처리 파이프라인) 자동 생성·수정 작업을 보조한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. NEMOTRON 3 Ultra 모델의 주요 제한점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 멀티모달 입력 지원 부족</div>
+      
+      <div class="quiz-opt">B) GPU 메모리 요구량이 매우 큼</div>
+      
+      <div class="quiz-opt">C) 라이선스가 폐쇄적이다</div>
+      
+      <div class="quiz-opt">D) 코드 생성 속도가 느리다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) GPU 메모리 요구량이 매우 큼</div>
+          <div class="quiz-explanation">본문에 따르면 5500억 파라미터 모델이라 수백 GB GPU 메모리가 필요해 실행이 제한된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본문에서 언급된 Open MDW 라이선스는 어떤 기존 라이선스와 가장 유사한가?</div>
+      
+      <div class="quiz-opt">A) GPLv3</div>
+      
+      <div class="quiz-opt">B) MIT</div>
+      
+      <div class="quiz-opt">C) Apache 2.0</div>
+      
+      <div class="quiz-opt">D) BSD 2-Clause</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Apache 2.0</div>
+          <div class="quiz-explanation">Open MDW 라이선스는 Apache 2.0을 머신러닝 가중치에 맞게 조정한 형태라고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      The Airbnb Tech Blog - Medium · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4" target="_blank">Eval-driven development: Lessons from evaluating GenAI at scale</a>
+    </h2>
+
+    <p class="item-summary">평가를 핵심 프로세스로 삼아 GenAI 품질 보장</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">Airbnb</span><span class="tag">Generative AI</span><span class="tag">evaluation pipeline</span><span class="tag">metrics</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>평가를 초기 단계부터 계획하지 않으면 거짓 자신감·회귀·노력 낭비가 발생한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터와 출력 100개를 직접 검토해 오류 유형을 파악하고 평가를 설계한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>팀 간 공유 인프라와 베스트 프랙티스를 구축해 규모화된 eval 파이프라인을 운영한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 새로운 LLM 기능을 출시하기 전 100개의 샘플을 수동 검토하고 오류 유형을 카테고리화해 평가 지표를 정의한다</div>
+    
+    <div class="idea">💡 공통 평가 서비스(데이터셋·메트릭 정의·대시보드)를 구축해 모든 제품 팀이 재사용하도록 한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 본문에서 강조한 가장 중요한 습관은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 전체 평가 자동화</div>
+      
+      <div class="quiz-opt">B) 합성 데이터만 사용</div>
+      
+      <div class="quiz-opt">C) 데이터와 출력 직접 검토</div>
+      
+      <div class="quiz-opt">D) 일반적인 helpfulness 메트릭에 의존</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 데이터와 출력 직접 검토</div>
+          <div class="quiz-explanation">‘When in doubt, look at your data.’ 라는 문장에서 데이터와 출력 100개를 직접 검토하고 모델 실수를 파악하는 것이 핵심 습관으로 제시된다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/dUmT0OIGoqE" target="_blank">Scientists Found A Better Language For AI Agents</a>
+    </h2>
+
+    <p class="item-summary">텍스트 대신 잠재 상태를 직접 교환하면 AI 에이전트 협업 효율이 크게 상승한다</p>
+
+    
+    <div class="tags">
+      <span class="tag">AI agents</span><span class="tag">latent state transfer</span><span class="tag">Two Minute Papers</span><span class="tag">Károly Zsolnai-Fehér</span><span class="tag">token usage</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/dUmT0OIGoqE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다중 에이전트 조정이 텍스트 기반 커뮤니케이션 때문에 복잡하고 비효율적이다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>에이전트가 원시 잠재 벡터를 직접 전달하는 cross‑agent latent state transfer 방식을 제안한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이 방식으로 수학 문제 정확도가 73%→86% 상승하고 토큰 사용량이 75% 감소한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 에이전트 호출 간 LLM의 hidden state를 직렬화해 다음 호출에 전달해 토큰 비용 절감</div>
+    
+    <div class="idea">💡 다중 라운드 latent state 협업 파이프라인을 구축해 내부 수학·코드 검증 작업에 적용</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. cross‑agent latent state transfer를 적용했을 때 경쟁 수준 수학 문제의 정확도는 어떻게 변했는가?</div>
+      
+      <div class="quiz-opt">A) 73%에서 80%로 상승</div>
+      
+      <div class="quiz-opt">B) 73%에서 86%로 상승</div>
+      
+      <div class="quiz-opt">C) 60%에서 75%로 상승</div>
+      
+      <div class="quiz-opt">D) 50%에서 70%로 상승</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 73%에서 86%로 상승</div>
+          <div class="quiz-explanation">영상에서는 정확도가 73%에서 86%로 상승했다고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 텍스트 기반 에이전트 간 커뮤니케이션의 주요 문제점은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 속도가 느리다</div>
+      
+      <div class="quiz-opt">B) 전체 문장을 디코딩·인코딩해야 한다</div>
+      
+      <div class="quiz-opt">C) 보안이 취약하다</div>
+      
+      <div class="quiz-opt">D) 메모리 사용량이 많다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 전체 문장을 디코딩·인코딩해야 한다</div>
+          <div class="quiz-explanation">본문에서 에이전트가 전체 문장을 디코딩하고 다시 인코딩해야 한다는 점을 비효율이라고 지적한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/EInEmGaMRLc" target="_blank">When AI Discovers the Next Transformer — Robert Lange</a>
+    </h2>
+
+    <p class="item-summary">LLM과 진화 결합, 과학 연구 자동화</p>
+
+    
+    <div class="tags">
+      <span class="tag">AlphaEvolve</span><span class="tag">Shinka Evolve</span><span class="tag">POET</span><span class="tag">MAP-Elites</span><span class="tag">UCB bandit</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/EInEmGaMRLc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AlphaEvolve는 문제 고정 시 최적화 가능하지만 문제 자체를 공동 진화시켜야 과학적 진보 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Shinka 아키텍처는 섬 기반 프로그램 아카이브, LLM 변이 연산자, UCB 밴딧으로 모델 선택을 조정</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 성과: 원형 포장 효율 향상, AtCoder 2위, MoE 로드밸런싱 손실 함수 진화 등</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

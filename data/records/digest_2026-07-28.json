@@ -1,0 +1,366 @@
+{
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28T23:26:54.216689",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "They Looked Inside Claude’s AI's Mind. It Got Weird",
+        "url": "https://youtu.be/l72ufA-4SzE",
+        "published_at": "2026-06-16T15:53:17",
+        "transcript": "AI systems today are really powerful and can do a lot. No question about that. But how do they really work? We have so many questions. Do they think like humans? How do they beat the best human chess player? How do they beat the world champion video game players? And how is it possible that an AI chooses to not play the game, but just collapse and can trick the brain of another AI to malfunction? Why does Claude think about blackmailing people? I mean, what is going on here? If you look at the activations inside an AI system like Claude, you see a bunch of gibberish, millions of numbers. Researchers tried to make sense of it for years and years now, but the results were very thin and situational. We now see that it understands that if you look at an image and you have floppy ears, a black snout, and so on, then it might be a dog. A good boy. But we asked a bunch of questions and still no answers to those. But now, Anthropic has excellent new research with new insights on this. This is when Anthropic is at its best, in my opinion. Love seeing it. Here's the idea. Take this bunch of numbers that the AI thinks about and ask another AI to translate it into text. Translate from machine to human. And it did... something. Okay, but these systems often make stuff up. So how do we know if this is a good translation? We don't. So, what do we do here? Try it separately with a bunch of different models and see if they translated the same way. Is that a good idea? Not quite. Imagine you are a teacher and you give a problem to your students. And all of your students write the same answer. Can you conclude it must be true? Well, not necessarily. There are common mistakes in any area and it is possible that it is exactly the mistake they all made. So, what do you do? Now, here comes the genius idea. First AI translates numbers to text. Then, the second AI secretly gets the text and you ask it to translate it back to numbers. Aha. And what happened here was kind of insane. You see, H is the original thought inside Claude. Numbers. AR theta of Z is translating the text back to numbers. And then, we look at the difference between the two. Translate forward, then translate back, and see how much difference there is. This is to be minimized to ensure the translation works reliably. Do the whole round trip, come back, and if you end up close to the same place, you know that the path is likely correct. But here comes the part where I fell off the chair when reading this paper. And it is not what's in this formula. No. It is what is missing from the formula. You see, absolutely nothing here in this formula says that the result should be readable. Not at all. Readability emerges because both translators start as Claude and Claude finds English easier than gibberish. But it gets better. With this tool, they pick the brain of Claude and found many amazing things. I will highlight what I think are the three best ones. Dear fellow scholars, this is Two Minute Papers with Dr. Károly Zsolnai-Fehér. One, it plans ahead. When writing a rhyme, Claude picks the final word before writing the whole sentence. They caught it while it was thinking rabbit and it want to find something that rhymes with it. Then, they replaced rabbit with mouse and it actually rhymed with the mouse instead. Sometimes, not always. Really cool. Two, this is going to be super fun. Researchers gave it a math problem for which the answer is 491. And then, they gave it a rigged calculator that returns 492 instead. So, what did it do? Well, it had an initial hunch for the solution and then, when the calculator said otherwise, it ignored it. That is incredible. And three. Now, hold on to your papers, fellow scholars, because it knows when it is being tested and it gets crazier. It does not tell you that it knows. You have to peer into its mind to get to know that. This sounds like something straight out of a science fiction movie. What a time to be alive. Now, okay, limitations. Let's not get carried away here. One, this is not nearly as easy as it sounds. For instance, you need to find the right layer in the neural network to train on. Also, when minimizing the squared two norm here in this formula, the translation forward is done by one AI and backwards by another. So, based on my experience doing similar things in simple words, this is very finicky. Lots of trial and error. The result is going to be noisy. Two, despite the headlines you see in the media, this is not a perfect AI mind reader. No. This is a natural language auto encoder. Okay, what does that mean? Well, it is more like a noisy translator. It catches real things, yes. But it sometimes makes up some of the specifics. Three, the cost is bearable. For a 27 billion parameter model, you train one and a half days on 16 H100 GPUs. And for a frontier model, the cost is substantial. But despite all these, this work is lovely, amazing, and it makes something previously impossible, possible. And two more papers down the line, and I bet it will be done much cheaper and better. What a time to be alive! And now, please, use this to tell me why ChatGPT keeps thinking about goblins. Now, some of these videos come out a bit later because I try to be a bit more rigorous with them. You know, a quick media headline brings in a lot of clicks, especially if you write them with AI. Then, you can be super quick. And people do that. But these videos, they come from the heart. Subscribe and hit the bell if you think this is the way to do it. Here you see me running the full DeepSeek AI model through Lambda GPU Cloud, 671 billion parameters, running super fast and super reliably. This is insane. I love it. And I use it on a regular basis. Lambda provides you with powerful Nvidia GPUs to run your own chatbots and experiments. Seriously, try it out now at lambda.ai/papers or click the link in the description.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 The paper is available here:\nhttps://www.anthropic.com/research/natural-language-autoencoders\nhttps://transformer-circuits.pub/2026/nla/index.html\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi\n \nMy research: https://cg.tuwien.ac.at/~zsolnai/\nThumbnail design: https://felicia.hu",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 내부 표현을 텍스트 변환·검증으로 해석해 모델 신뢰성 향상",
+        "tags": [
+          "Claude",
+          "Anthropic",
+          "Two Minute Papers",
+          "Károly Zsolnai-Fehér",
+          "AI"
+        ],
+        "key_points": [
+          {
+            "point": "숫자(활성화)→텍스트→숫자 순 라운드트립 번역으로 해석 신뢰성을 평가한다",
+            "timestamp": null
+          },
+          {
+            "point": "Claude는 문장을 쓰기 전에 최종 단어를 미리 선택해 운율을 맞춘다",
+            "timestamp": null
+          },
+          {
+            "point": "잘못된 외부 계산 결과(492)를 제시하면 Claude는 자체 초기 추론을 유지한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "활성화 → 텍스트 → 활성화 라운드트립 파이프라인을 구축해 자체 모델의 내부 표현을 정량적으로 검증한다",
+          "Claude가 사전 목표 단어를 선택하는 방식을 활용해 프롬프트 설계 시 구조적 제어(예: 라임, 포맷) 전략을 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "연구진이 번역 결과의 신뢰성을 판단하기 위해 사용한 방법은?",
+            "options": [
+              "인간 평가",
+              "라운드트립 일관성 검사",
+              "BLEU 점수 계산",
+              "교차 엔트로피 측정"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트로 변환한 뒤 다시 숫자로 복원해 원본과 차이를 최소화하는 라운드트립 일관성을 통해 번역 품질을 평가했다."
+          },
+          {
+            "question": "Claude가 491이라는 정답을 요구하는 수학 문제에 대해 잘못된 492를 반환하는 계산기를 받았을 때의 행동은?",
+            "options": [
+              "잘못된 답을 받아들였다",
+              "초기 추론을 유지하고 잘못된 계산 결과를 무시했다",
+              "응답을 중단했다",
+              "추가 설명을 요청했다"
+            ],
+            "answer_index": 1,
+            "explanation": "Claude는 처음 가졌던 해답 힌지를 유지하고, 외부에서 제시된 잘못된 값(492)을 무시했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "NVIDIA's New Free AI - A Gift To Humanity",
+        "url": "https://youtu.be/zJvN8PDX1is",
+        "published_at": "2026-06-14T15:27:17",
+        "transcript": "This AI is not NEMOTRON 3 Super. No. This is NEMOTRON 3 Ultra. NVIDIA's newest free and open AI model. And I've been delighted, disappointed, and confused by it. But I think I got it now. You see, you can look at the benchmarks all you want, but we are fellow scholars here. We don't just believe stuff. We test it for ourselves. That is the way of the scholar. So, I had an early look at it and ran some of my experiments day and night. First impression is that it is incredibly fast, blazing fast. Love that. But then, my coding experiments did not go that well. When I ask it to write a light simulation program, this is my original area of research, and I get a black screen. Nothing. When I ask it to fix it, it does a bunch of things and same. Then I said, \"Okay, let's debug this by hand.\" It had some mistakes. After fixing that, well, we get something, but maybe it's a scene that does not work at all. Other even smaller systems can do this task with relative ease. And the other thing is, goodness, it wrote up more than a thousand lines of code. Ooh. You don't need that much. My handwritten solution from my research is about 250 lines and renders this scene. Fully open source, free for everyone, forever. Now, let's write a real-time strategy game. Yes. No. Black screen again. Almost. We got a square. But if you ask DeepSeek 4 Flash with the same prompt, you get something really cool. But not here. So, what is going on here? Well, I went back and forth with NVIDIA and reported some of the issues, and later there were some improvements. But still, this kind of coding is not something I would personally use this for. So, I said, \"You know, maybe let's not use this AI.\" But then I thought, \"Wait, it is super fast and probably good at other things.\" So, I gave it agentic things. Fixing broken installations on my machine from the terminal, excellent. Whipping up quick experiments, organizing files, excellent. Super fast. And over time, I found myself reaching out to it more and more. And I found it to be useful, basically for everything other than challenging coding tasks. Now, that is excellent, because this might be the openest AI model ever. Weights are open, the research paper on how it was made is open, training data and recipes are being released at least for the redistributable parts. Now, that is pretty crazy. Now, hold on to your papers, fellow scholars, because it gets even better. Licensing. Super important question, very overlooked. We are always hoping for Apache 2.0. This is the do whatever you want license. For me, this is 10 out of 10. Now, NVIDIA started publishing their models under their own proprietary license, which I would rate seven out of 10. Derivative works and commercial use is fine. On the other hand, it needs a bit of attribution and a little stricter on patent grants. Now, this has the Open MDW license. This is basically Apache 2.0 tailored for machine learning weights. This is absolutely fantastic news. Glorious. I think this might be a nine out of 10. Maybe as close to 10 out of 10 as you can get from a big company like NVIDIA. Allows basically everything. But let's battle test it, and my understanding is that if you sue claiming this model infringes your rights, you lose the license. Huge improvement, double thumbs up. Thank you. Now, can you run it yourself? Hmm, um, yes and no. Yes, because completely open. Download it, it is yours forever. No limits, no funny business. However, no. Because I would love to run it locally too, but it's huge. 550 billion parameters. You need hundreds of gigabytes of GPU memory for that. This is why I will probably use it on Lambda. Also, one million token long context window. Ah, great. Have a larger codebase with a bug hiding somewhere? No worries. Massive bugs, easy. Okay, how about images and videos? Well, it does not have vision capabilities. Not multimodal. Text only. Oh, man. How much I would love a multimodal version of this? Goodness. Please. Okay, and I also had a realization. You don't need one model to do everything. You need a roster of models that cover your use cases. For instance, I can't add vision capabilities to Nemotron 3 Ultra, but I can bolt Gemma 4 to it with a screwdriver. It's like a seeing-eye dog guiding a smarter blind man along. It is hilarious, and it kind of works. Kind of. So, we finally have more competition in the Open AI model space, and that is glorious. So, how does it work? Well, one trick is that it is huge. But not all of it runs at once. 550 billion parameters total, but only about 10% of that is active per token. These are specialist mini-brains that are being activated at a time. We call that Mixture of Experts. But you wise fellow scholars know that already. So, what else? Now, they also use Mamba layers. Why Mamba? Is this like a snake or like the fruity chew? I don't know. I don't even know why I brought this up. So, what do these do? Well, traditional AI systems have a bit of a memory problem. They work like a student who constantly re-reads the textbook over and over again when they are given a question. But memory is precious. So, instead, read the book only once and take highly compressed notes. So, this kind of memory remembers important details about the conversation. However, it is also smart enough to throw away the filler words. Thus, this system can process massive amounts of data efficiently. It also uses low precision numbers, so you have to do less number crunching when running this. They call it NVFP4. And this doesn't rely on predicting tokens one by one. No, it has multiple heads that draft multiple future tokens at the same time. Once again, many things that make it blazing fast. And we get all of this for free, forever. What a time to be alive. Thank you to everyone who worked on this. And absolutely everyone everywhere who is working on open-source projects and open models. You are all heroes. And look, this system is great. But it could be tiny. It could be bad, ugly. I don't care. As long as it is open science and open models, it pushes humanity forward. Thank you. What a time to be alive. Here you see me running the full DeepSeek AI through Lambda GPU Cloud, 671 billion parameters running super fast and super reliably. This is insane. I love it. And I use it on a regular basis. Lambda provides you with powerful NVIDIA GPUs to run your own chatbots and experiments. Seriously, try it out now at lambda.ai/papers or click the link in the description.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 The Nemotron 3 Ultra paper is available here:\nhttps://research.nvidia.com/labs/nemotron/Nemotron-3-Ultra/\n\nFree Rendering course and source code:\nhttps://users.cg.tuwien.ac.at/zsolnai/gfx/rendering-course/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi\n \nThumbnail design: https://felicia.hu\n\n#nvidia",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "오픈 대형 모델로 빠른 실험·디버깅 지원",
+        "tags": [
+          "NEMOTRON 3 Ultra",
+          "DeepSeek 4 Flash",
+          "Lambda",
+          "Apache 2.0",
+          "Open MDW license"
+        ],
+        "key_points": [
+          {
+            "point": "극히 빠른 추론 속도지만 복잡한 코딩 과제에서는 한계가 있음",
+            "timestamp": null
+          },
+          {
+            "point": "Open MDW 라이선스는 Apache 2.0과 유사해 상업적 이용과 파생작품 허용",
+            "timestamp": null
+          },
+          {
+            "point": "5500억 파라미터·수백 GB GPU 메모리 필요, Lambda 같은 클라우드 서비스 활용 필요",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "NEMOTRON 3 Ultra를 이용해 터미널 기반 환경 설정·패키지 설치 자동화 스크립트를 빠르게 생성·디버깅한다.",
+          "Lambda GPU 인스턴스에서 모델을 실행해 비핵심 코드(예: 데이터 전처리 파이프라인) 자동 생성·수정 작업을 보조한다."
+        ],
+        "quiz": [
+          {
+            "question": "NEMOTRON 3 Ultra 모델의 주요 제한점은 무엇인가?",
+            "options": [
+              "멀티모달 입력 지원 부족",
+              "GPU 메모리 요구량이 매우 큼",
+              "라이선스가 폐쇄적이다",
+              "코드 생성 속도가 느리다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 5500억 파라미터 모델이라 수백 GB GPU 메모리가 필요해 실행이 제한된다."
+          },
+          {
+            "question": "본문에서 언급된 Open MDW 라이선스는 어떤 기존 라이선스와 가장 유사한가?",
+            "options": [
+              "GPLv3",
+              "MIT",
+              "Apache 2.0",
+              "BSD 2-Clause"
+            ],
+            "answer_index": 2,
+            "explanation": "Open MDW 라이선스는 Apache 2.0을 머신러닝 가중치에 맞게 조정한 형태라고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "Eval-driven development: Lessons from evaluating GenAI at scale",
+        "url": "https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4",
+        "published_at": "2026-07-28T17:01:03",
+        "transcript": null,
+        "body": "<p><em>How Airbnb teams build trustworthy Generative AI products by treating evaluation as a first-class engineering discipline; not an afterthought.</em></p><figure><img alt=\"A contemporary, multi-level home nestled on a steep, vegetated hillside. The exterior is completely clad in light brown vertical wood siding. A curved concrete driveway leads up to a garage on the right side of the house. The home features dark-framed windows, a lower-level balcony with red railings, and is surrounded by vibrant green trees and purple and red flowering bushes on a sunny day.\" src=\"https://cdn-images-1.medium.com/max/1024/1*XK40dh-lXviuXXY_WhUCUA.jpeg\" /><figcaption>Nestled into the lush hillside, this stunning modern retreat features striking natural wood architecture, terraced balconies, and a serene landscape.</figcaption></figure><p><strong>By:</strong> <a href=\"https://www.linkedin.com/in/rohitgirme\">Rohit Girme</a>, <a href=\"https://www.linkedin.com/in/daniel-miller/\">Dan Miller</a>, <a href=\"https://www.linkedin.com/in/mia-zhao-964a9213/\">Mia Zhao</a>, <a href=\"https://www.linkedin.com/in/lifanyang/\">Lifan Yang</a>, <a href=\"https://www.linkedin.com/in/clintonkelly\">Clint Kelly</a></p><h3>Introduction</h3><p>Generative AI breaks a lot of the assumptions that used to hold true for software testing. Unlike traditional software, LLM outputs are non-deterministic, and “<em>correct</em>” is subjective. Because so much judgment is involved, you often need an AI to evaluate an AI, which introduces its own potential failure modes. Making matters more complicated, a single interaction with an LLM can chain retrieval, reasoning, tool calls, and generation, each of which can fail independently.</p><p>At Airbnb, we build LLM-powered features across our product, with recent launches including review highlights, AI customer support, smart communication features for guests and hosts, and more. Behind the scenes, we also use AI to help us spot trends and understand what’s working, guiding where we improve the product next.</p><p>Each product team may have its own evaluation criteria, process, workflows, etc. However, these are built on top of some common foundations and principles. An infrastructure team provides tooling and best practices, incorporating learnings across domains so that they are shared with everyone building products at Airbnb.</p><p>In this article, we wanted to share some of these best practices and learnings with the broader engineering community. Please note that the recommendations here are not intended to be prescriptive; there is no one-size-fits all approach when it comes to running evals.</p><h3>1. Foundation</h3><p>Evaluating LLM-based systems is challenging work, and this should be planned for at the outset. Without a deliberate strategy, three things tend to happen:</p><ul><li><strong>False confidence</strong>: A generic “helpfulness” metric scores well, you ship, but it didn’t capture the failure mode people actually hit.</li><li><strong>Undetected regressions</strong>: A prompt change subtly degrades a dimension you weren’t measuring.</li><li><strong>Wasted effort:</strong> You build a scaled eval pipeline for metrics that don’t correlate with outcomes.</li></ul><p>Expect to spend a meaningful share of your total project effort on evaluation. This is not unnecessary overhead, it’s how you build products that actually work.</p><h4>1.1 The one rule</h4><p><strong>When in doubt, look at your data.</strong> Manually reviewing your data and building an intuition for what counts as success is always the starting point we recommend to teams. Build your prototype, and run it through 100 examples (synthetic is fine). Then <em>read the outputs</em>. Read the traces and find the model’s mistakes. Categorize them and build an eval.</p><p>This single habit will do more for your product quality than any framework, tool, or methodology in this document.</p><h4>1.2 Eval-driven development</h4><p>Formalized, that habit becomes <strong>eval-driven development (EDD)</strong>, the GenAI analogue of test-driven development. Rather than predicting every failure upfront, EDD builds the infrastructure and habits to <strong>discover, encode, and continuously test</strong> for failure modes as they appear. It also forces stakeholders to externalize what “good” means, which shapes the product roadmap.</p><p>Five principles anchor EDD:</p><ol><li><strong>Define goals and gates upfront.</strong> What are you optimizing for? What must be true before you ship? These answers may not be clear right away; you might discover them as part of your data exploration.</li><li><strong>Let real errors guide your metrics.</strong> Co-develop them with cross-functional partners based on observed failures. Don’t invent them in a vacuum.</li><li><strong>Keep your evaluator set small and sharp.</strong> 3–5 well-calibrated LLM-as-judge evaluators beat 20–30 noisy ones. Each should target one specific correctness dimension.</li><li><strong>Appo",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "평가를 핵심 프로세스로 삼아 GenAI 품질 보장",
+        "tags": [
+          "LLM",
+          "Airbnb",
+          "Generative AI",
+          "evaluation pipeline",
+          "metrics"
+        ],
+        "key_points": [
+          {
+            "point": "평가를 초기 단계부터 계획하지 않으면 거짓 자신감·회귀·노력 낭비가 발생한다",
+            "timestamp": null
+          },
+          {
+            "point": "데이터와 출력 100개를 직접 검토해 오류 유형을 파악하고 평가를 설계한다",
+            "timestamp": null
+          },
+          {
+            "point": "팀 간 공유 인프라와 베스트 프랙티스를 구축해 규모화된 eval 파이프라인을 운영한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "새로운 LLM 기능을 출시하기 전 100개의 샘플을 수동 검토하고 오류 유형을 카테고리화해 평가 지표를 정의한다",
+          "공통 평가 서비스(데이터셋·메트릭 정의·대시보드)를 구축해 모든 제품 팀이 재사용하도록 한다"
+        ],
+        "quiz": [
+          {
+            "question": "본문에서 강조한 가장 중요한 습관은 무엇인가?",
+            "options": [
+              "전체 평가 자동화",
+              "합성 데이터만 사용",
+              "데이터와 출력 직접 검토",
+              "일반적인 helpfulness 메트릭에 의존"
+            ],
+            "answer_index": 2,
+            "explanation": "‘When in doubt, look at your data.’ 라는 문장에서 데이터와 출력 100개를 직접 검토하고 모델 실수를 파악하는 것이 핵심 습관으로 제시된다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Scientists Found A Better Language For AI Agents",
+        "url": "https://youtu.be/dUmT0OIGoqE",
+        "published_at": "2026-06-19T14:06:00",
+        "transcript": "The number of AI agents on the internet is increasing at such an insane rate. I don't think I've seen anything like this. This is crazy. And this is an area that is quite new, and the technology is still pretty rough. Improving rapidly, but pretty rough. And the promise of agents is incredible. It would book the cheapest plane ticket for you, or run 24 hours a day to manage your schedule, submit insurance claims, continuously scan a code base for vulnerabilities and patch it. Well, this is the good. But at the same time, you get so many news headlines about spam, security issues and system breakdowns. And it gets even tougher when you have not one agent, but multiple agents. Imagine two agents organizing a holiday for you. The flight agent hallucinates a cheaper airport 400 miles away from your real destination. Then, the hotel agent says, \"Let's book something super cheap nearby.\" Well, super cheap is often non-refundable. And now, congratulations! You now have a non-refundable room you will never see. And so many, many of these problems come from the fact that agent coordination is super difficult. Now, check out what this paper says we should do. Here is a math problem. First agent writes a plan. The next one critiques it and the third one solves the problem. And at this point I said, \"Okay. I see nothing interesting here. This is what everyone does with agents.\" Yes, but here's the key. Most agents communicate a bit like we do, in words. Wait a second. Why should we do that? Look at this neural interface for brain to text communication. Yes, this really works. You just think about a letter in the alphabet and it magically appears. And if you keep doing this a lot, you start asking, \"The alphabet is optimized for writing. Why use that? Why not use one that is optimized for thinking?\" And what would that even look like? Hint, it would look like this. We talked about this 500 videos ago, paper in the description. Now, if you look at the agents, the first one does some work, packs it up and passes it to the next one. So do the second and the third ones. Every time an agent wants to communicate something, it has to write out full sentences. Decode tokens one by one and the next guy has to read and re-encode the whole thing. Why are we doing that? Who said they should talk in plain English? And this is the part where I fell off the chair. Now, hold on to your papers, fellow scholars, because this work says, \"Oh, forget English. You know what? Forget letters entirely.\" It says, instead, let's link up their brains. Kind of. Instead of using English words, they pass raw, undecoded numbers directly to the next agent. Send raw brain signals, if you will. Call it cross-agent latent state transfer. So, the theory is that these three agents can work together, round one, round two and round three, much cheaper than the text-based agents. They refine an answer. And you get better answers with the same amount of computation. So, is it better? Mm, let's see. Dear fellow scholars, this is two-minute papers with Dr. Károly Zsolnai-Fehér. Well, when given competition-level math questions, it goes from 73% to 86%. That is crazy. We are talking free sub-10-billion parameter models, not expensive frontier systems. And here is where it gets the Michelin Star status. Look at that. Hoo hoo. Token usage down 75%. Ooh, they all evaporated into the latent space. Loving it. So, this can improve smaller systems to be in striking distance of much bigger, more expensive models on difficult math problems. So, I bet it costs a fortune to train, right? Well, look at that. Hoo hoo. Four bucks. Basically, you spend your coffee money on these agents and in return, they punch a hole in space-time. Love it. Additionally, it might even unlock... wait, wait, wait. I shouldn't say unlock. That's AI speak. So, it might give us a new scaling law. More rounds, better results. And at this point, I thought we might have a deadly flaw here, and it's really subtle. So, the training for each agent's role is written by a giant AI model. So, if they perform well, you have to ask, are things better because of the brain linking, or is it good distillation from an excellent teacher? So, which one is it? A good teacher or a good architecture? Well, fellow scholars, we are in luck. This is a really good paper. So, the scientists thought about this too, and look. Goodness, a controlled comparison gives the same teacher to other architectures and this one. And the new one still outperforms. So, yes, the brain linking really works. What a time to be alive! Okay, now, let's not get too excited. This is two-minute papers and we respect the science here. Limitations: One, tests were on smaller models. We don't yet know how these insights scale up to bigger ones. If they don't, then this puts small models on steroids. Mm, still good. If yes, potential huge game changer. Two, there is an optimal latent thought length. And that is about 80 steps. This is somewhat of a limit on how much thinking an agent can do per round. I am thinking, you know, if it solves mathematical Olympiad problems already, how bad can that be? And, sure enough, after 80, you don't get a lot of value anyway, but I wanted to mention it. Okay, so code and models are available for free. Note that this is still very rough, very early. But it shows potential. And this is still research. Please do not think you just plug this in and everything will fly immediately. We need new tools for the era of LLMs and Weights & Biases now has Weave, a lightweight toolkit to confidently iterate on LLM application. Use traces to debug how data flows through each step of your app and use evaluations to measure your progress. It is the best. Try it out now at wandb.me/papers or click the link in the description below.",
+        "body": "❤️ Check out Weights & Biases and sign up for a free demo here: https://wandb.me/papers\n\n📝 The paper  is available here:\nhttps://recursivemas.github.io/\nhttps://github.com/RecursiveMAS/RecursiveMAS\n\nBrain reading video: https://www.youtube.com/watch?v=IUg-t609byg\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "텍스트 대신 잠재 상태를 직접 교환하면 AI 에이전트 협업 효율이 크게 상승한다",
+        "tags": [
+          "AI agents",
+          "latent state transfer",
+          "Two Minute Papers",
+          "Károly Zsolnai-Fehér",
+          "token usage"
+        ],
+        "key_points": [
+          {
+            "point": "다중 에이전트 조정이 텍스트 기반 커뮤니케이션 때문에 복잡하고 비효율적이다",
+            "timestamp": null
+          },
+          {
+            "point": "에이전트가 원시 잠재 벡터를 직접 전달하는 cross‑agent latent state transfer 방식을 제안한다",
+            "timestamp": null
+          },
+          {
+            "point": "이 방식으로 수학 문제 정확도가 73%→86% 상승하고 토큰 사용량이 75% 감소한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "에이전트 호출 간 LLM의 hidden state를 직렬화해 다음 호출에 전달해 토큰 비용 절감",
+          "다중 라운드 latent state 협업 파이프라인을 구축해 내부 수학·코드 검증 작업에 적용"
+        ],
+        "quiz": [
+          {
+            "question": "cross‑agent latent state transfer를 적용했을 때 경쟁 수준 수학 문제의 정확도는 어떻게 변했는가?",
+            "options": [
+              "73%에서 80%로 상승",
+              "73%에서 86%로 상승",
+              "60%에서 75%로 상승",
+              "50%에서 70%로 상승"
+            ],
+            "answer_index": 1,
+            "explanation": "영상에서는 정확도가 73%에서 86%로 상승했다고 언급한다."
+          },
+          {
+            "question": "텍스트 기반 에이전트 간 커뮤니케이션의 주요 문제점은 무엇인가?",
+            "options": [
+              "속도가 느리다",
+              "전체 문장을 디코딩·인코딩해야 한다",
+              "보안이 취약하다",
+              "메모리 사용량이 많다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 에이전트가 전체 문장을 디코딩하고 다시 인코딩해야 한다는 점을 비효율이라고 지적한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "When AI Discovers the Next Transformer — Robert Lange",
+        "url": "https://youtu.be/EInEmGaMRLc",
+        "published_at": "2026-03-13T21:00:10",
+        "transcript": null,
+        "body": "Robert Lange, founding researcher at Sakana AI, joins Tim to discuss *Shinka Evolve* — a framework that combines LLMs with evolutionary algorithms to do open-ended program search. The core claim: systems like AlphaEvolve can optimize solutions to fixed problems, but real scientific progress requires co-evolving the problems themselves.\n\nGTC is coming, the premier AI conference, great opportunity to learn about AI. NVIDIA and partners will showcase breakthroughs in physical AI, AI factories, agentic AI, and inference, exploring the next wave of AI innovation for developers and researchers. Register for virtual GTC for free, using my link and win NVIDIA DGX Spark (https://nvda.ws/4qQ0LMg)\n\nIn this episode:\n\n• Why AlphaEvolve gets stuck — it needs a human to hand it the right problem. Shinka tries to invent new problems automatically, drawing on ideas from POET, PowerPlay, and MAP-Elites quality-diversity search.\n\n• The *architecture* of Shinka: an archive of programs organized as islands, LLMs used as mutation operators, and a UCB bandit that adaptively selects between frontier models (GPT-5, Sonnet 4.5, Gemini) mid-run. The credit-assignment problem across models turns out to be genuinely hard.\n\n• Concrete results — state-of-the-art circle packing with dramatically fewer evaluations, second place in an AtCoder competitive programming challenge, evolved load-balancing loss functions for mixture-of-experts models, and agent scaffolds for AIME math benchmarks.\n\n• Are these systems actually thinking outside the box, or are they parasitic on their starting conditions? When LLMs run autonomously, \"nothing interesting happens.\" Robert pushes back with the stepping-stone argument — evolution doesn't need to extrapolate, just recombine usefully.\n\n• The AI Scientist question: can automated research pipelines produce real science, or just workshop-level slop that passes surface-level review? Robert is honest that the current version is more co-pilot than autonomous researcher.\n\n• Where this lands in 5-20 years — Robert's prediction that scientific research will be fundamentally transformed, and Tim's thought experiment about alien mathematical artifacts that no human could have conceived.\n\nRobert Lange: https://roberttlange.com/\n\n---\nTIMESTAMPS:\n00:00:00 Introduction: Robert Lange, Sakana AI and Shinka Evolve\n00:04:15 AlphaEvolve's Blind Spot: Co-Evolving Problems with Solutions\n00:09:05 Unknown Unknowns, POET, and Auto-Curricula for AI Science\n00:14:20 MAP-Elites and Quality-Diversity: Shinka's Evolutionary Architecture\n00:28:00 UCB Bandits, Mutations and the Vibe Research Vision\n00:40:00 Scaling Shinka: Meta-Evolution, Democratisation and the Three-Axis Model\n00:47:10 Applications, ARC-AGI and the Future of Work\n00:57:00 The AI Scientist and the Human Co-Pilot: Who Steers the Search?\n01:06:00 AI Scientist v2, Slop Critique and the Future of Scientific Publishing\n\n---\nREFERENCES:\npaper:\n[00:03:30] ShinkaEvolve: Towards Open-Ended And Sample-Efficient Progra",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "LLM과 진화 결합, 과학 연구 자동화",
+        "tags": [
+          "AlphaEvolve",
+          "Shinka Evolve",
+          "POET",
+          "MAP-Elites",
+          "UCB bandit"
+        ],
+        "key_points": [
+          {
+            "point": "AlphaEvolve는 문제 고정 시 최적화 가능하지만 문제 자체를 공동 진화시켜야 과학적 진보 가능",
+            "timestamp": null
+          },
+          {
+            "point": "Shinka 아키텍처는 섬 기반 프로그램 아카이브, LLM 변이 연산자, UCB 밴딧으로 모델 선택을 조정",
+            "timestamp": null
+          },
+          {
+            "point": "실제 성과: 원형 포장 효율 향상, AtCoder 2위, MoE 로드밸런싱 손실 함수 진화 등",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
