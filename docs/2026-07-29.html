@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 29일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/drumih/turbo-fieldfare" target="_blank">Show HN: Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac</a>
+    </h2>
+
+    <p class="item-summary">대용량 모델을 저메모리 Mac에서 실시간 추론 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Gemma</span><span class="tag">TurboFieldfare</span><span class="tag">Swift</span><span class="tag">Metal</span><span class="tag">OpenAI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/drumih/turbo-fieldfare" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>4-bit 양자화 26B 모델을 약 2GB RAM으로 실행하기 위해 공유 파트와 KV 캐시만 메모리에 유지하고, 필요 전문가를 SSD에서 스트리밍한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>8GB M2 MacBook Air에서 초당 5‑6 토큰, M5 MacBook Pro에서 31‑35 토큰을 생성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OpenAI 호환 로컬 서버를 제공해 스트리밍 및 툴 호출을 지원하고 KV 캐시 프리픽스를 재사용한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 SSD 기반 전문가 스트리밍을 적용해 대형 LLM을 저사양 디바이스에서 추론하도록 구현</div>
+    
+    <div class="idea">💡 OpenAI 호환 로컬 서버를 활용해 사내 애플리케이션에 LLM 기능을 클라우드 없이 빠르게 프로토타입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. TurboFieldfare 엔진이 메모리 사용을 최소화하기 위해 사용한 핵심 기법은?</div>
+      
+      <div class="quiz-opt">A) 전체 모델을 RAM에 로드</div>
+      
+      <div class="quiz-opt">B) 가중치를 8-bit으로 변환</div>
+      
+      <div class="quiz-opt">C) 공유 파트와 KV 캐시만 RAM에 두고 전문가를 SSD에서 스트리밍</div>
+      
+      <div class="quiz-opt">D) GPU 전용 메모리 사용</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 공유 파트와 KV 캐시만 RAM에 두고 전문가를 SSD에서 스트리밍</div>
+          <div class="quiz-explanation">텍스트에 따르면 공유 파트와 KV 캐시를 RAM에 유지하고, 필요 전문가를 SSD에서 스트리밍하여 메모리를 절감한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/Xj-QdEUxJkE" target="_blank">Kimi K3 Just Broke The Economics Of AI</a>
+    </h2>
+
+    <p class="item-summary">오픈 대형 모델 Kimi K3, 효율적 학습으로 비용 절감</p>
+
+    
+    <div class="tags">
+      <span class="tag">Kimi K3</span><span class="tag">KDA</span><span class="tag">attention residuals</span><span class="tag">Lambda</span><span class="tag">Two Minute Papers</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/Xj-QdEUxJkE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kimi K3는 2.8조 파라미터 규모의 오픈 가중치 모델로 코드와 게임 등을 실행 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>KDA와 attention residuals라는 두 메커니즘이 K2 대비 2.5배 학습 효율을 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>API 사용 시 비용이 저렴하고, 향후 경량화(distillation) 모델이 기대됨</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Kimi K3 오픈 API를 활용해 도메인 특화 파인튜닝 실험 수행</div>
+    
+    <div class="idea">💡 자사 트랜스포머 모델에 KDA와 attention residuals 개념을 적용해 학습 효율 개선 검증</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Kimi K3에서 스케일링 효율을 높이는 두 가지 비밀 소스는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) KDA와 attention residuals</div>
+      
+      <div class="quiz-opt">B) Sparse attention와 Mixture of Experts</div>
+      
+      <div class="quiz-opt">C) Reinforcement learning와 curriculum learning</div>
+      
+      <div class="quiz-opt">D) Layer normalization와 dropout</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) KDA와 attention residuals</div>
+          <div class="quiz-explanation">본문에서 KDA(Kimi Delta Attention)와 attention residuals가 도입돼 Kimi K2 대비 약 2.5배 학습 효율을 제공한다고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://laurentiugabriel.github.io/token-town/" target="_blank">TokenTown: A visual way to understand how LLMs work</a>
+    </h2>
+
+    <p class="item-summary">LLM 내부 토큰 흐름을 시각화해 이해도 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">TokenTown</span><span class="tag">transformer</span><span class="tag">KV cache</span><span class="tag">GELU</span><span class="tag">top-p sampling</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://laurentiugabriel.github.io/token-town/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TokenTown는 트랜스포머 각 레이어를 도시 구역으로 시각화한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>브라우저에서 토크나이저, 임베딩, 포지셔널 인코딩, 레이어노름, 어텐션 등을 실시간 계산한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>가중치는 무작위이며, 출력은 빅그램 사전과 결합해 가독성을 높인다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 시각화 도구를 활용해 팀 교육용 LLM 내부 구조 워크숍을 진행한다.</div>
+    
+    <div class="idea">💡 실시간 어텐션 및 토큰 흐름 시각화를 기반으로 디버깅 툴을 개발한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. TokenTown에서 실제로 브라우저에서 계산되는 요소가 아닌 것은?</div>
+      
+      <div class="quiz-opt">A) 토크나이저 분할</div>
+      
+      <div class="quiz-opt">B) 임베딩 조회</div>
+      
+      <div class="quiz-opt">C) 무작위 가중치 초기화</div>
+      
+      <div class="quiz-opt">D) 빅그램 사전 결합</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 무작위 가중치 초기화</div>
+          <div class="quiz-explanation">무작위 가중치는 실제 계산이 아니라 사전 설정이며, 시각화는 실제 연산을 수행한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. TokenTown이 시각화하는 트랜스포머의 어느 단계가 'Vocabulary Stadium'로 표현되는가?</div>
+      
+      <div class="quiz-opt">A) 어텐션</div>
+      
+      <div class="quiz-opt">B) 피드포워드</div>
+      
+      <div class="quiz-opt">C) 소프트맥스 로짓</div>
+      
+      <div class="quiz-opt">D) 포지셔널 인코딩</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 소프트맥스 로짓</div>
+          <div class="quiz-explanation">다음 토큰 로짓 → 소프트맥스 단계가 Vocabulary Stadium에서 수행된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://kedge.dev/" target="_blank">Show HN: Kedge – Full-stack cloud with forkable VM snapshots and global SQLite</a>
+    </h2>
+
+    <p class="item-summary">3ms VM 스냅샷·전역 SQLite로 실시간 데이터</p>
+
+    
+    <div class="tags">
+      <span class="tag">Kedge</span><span class="tag">SQLite</span><span class="tag">CRDT</span><span class="tag">BuildKit</span><span class="tag">Fly.io</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://kedge.dev/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kedge는 포크 가능한 VM 스냅샷과 워밍 풀을 이용해 3ms 수준의 VM 샌드박스를 즉시 생성한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>글로벌 컨트롤 플레인은 결국 일관성 SQLite와 객체 스토리지를 백엔드로 하는 CRDT 기반 다중 작성자 복제 시스템을 사용한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>앱은 로컬 SQLite 복제본을 직접 쿼리해 상태ful 서버리스 및 HTML 앱을 저지연으로 제공할 수 있다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Kedge의 로컬 SQLite 복제본을 활용해 머신러닝 모델을 위한 피처 스토어를 구축, 추론 서비스와 동일 지역에 배치해 레이턴시 최소화</div>
+    
+    <div class="idea">💡 Kedge의 3ms VM 스냅샷을 이용해 ETL 파이프라인을 서버리스 형태로 배포, 짧은 콜드 스타트와 자동 스케일링을 통해 데이터 처리 비용 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Kedge의 글로벌 컨트롤 플레인에 사용된 데이터베이스와 복제 방식은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) PostgreSQL with streaming replication</div>
+      
+      <div class="quiz-opt">B) SQLite with CRDT-based multi-writer replication</div>
+      
+      <div class="quiz-opt">C) MySQL with Galera cluster</div>
+      
+      <div class="quiz-opt">D) DynamoDB with eventual consistency</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) SQLite with CRDT-based multi-writer replication</div>
+          <div class="quiz-explanation">본문에 따르면 Kedge는 결국 일관성 SQLite 데이터베이스 위에 CRDT 기반 다중 작성자 복제 시스템을 구축했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Weekly deep daiv. · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deepdaiv.stibee.com/p/156" target="_blank">보안을 지키는 AI, AI를 지키는 보안</a>
+    </h2>
+
+    <p class="item-summary">AI 보안으로 코드 취약점 자동 해결</p>
+
+    
+    <div class="tags">
+      <span class="tag">GPT-Red</span><span class="tag">Gemini 3.5 Flash Cyber</span><span class="tag">CodeMender</span><span class="tag">LLM</span><span class="tag">Validator</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deepdaiv.stibee.com/p/156" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI for Security와 Security for AI의 두 흐름을 구분하고 사례를 제시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>CodeMender는 LLM 기반 에이전트가 취약점 탐색·수정·검증을 반복하는 워크플로우를 구현</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Validator와 Human-in-the-loop 검토를 통해 자동 생성 패치의 신뢰성을 확보</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 자사 코드베이스에 LLM‑Agent와 Validator를 결합한 자동 취약점 탐지·패치 파이프라인 구축</div>
+    
+    <div class="idea">💡 GPT‑Red와 유사한 자동 레드팀 테스트 프레임워크를 도입해 내부 LLM 모델의 안전성 검증</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. CodeMender가 취약점 수정안을 검증하기 위해 사용하는 단계는?</div>
+      
+      <div class="quiz-opt">A) 단순 컴파일만 수행</div>
+      
+      <div class="quiz-opt">B) Validator 단계에서 컴파일·테스트·정적 분석·퍼징을 수행</div>
+      
+      <div class="quiz-opt">C) 인간 검토만 수행</div>
+      
+      <div class="quiz-opt">D) 자동 배포</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Validator 단계에서 컴파일·테스트·정적 분석·퍼징을 수행</div>
+          <div class="quiz-explanation">본문에 Validator가 컴파일·테스트·정적 분석·퍼징 등 다양한 검증 도구를 활용한다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 다음 중 AI for Security에 해당하는 사례는?</div>
+      
+      <div class="quiz-opt">A) GPT-Red</div>
+      
+      <div class="quiz-opt">B) Gemini 3.5 Flash Cyber</div>
+      
+      <div class="quiz-opt">C) CodeMender</div>
+      
+      <div class="quiz-opt">D) 모델 레드팀 테스트</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) CodeMender</div>
+          <div class="quiz-explanation">CodeMender는 AI를 활용해 소프트웨어 취약점을 찾고 수정하는 AI for Security 사례이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

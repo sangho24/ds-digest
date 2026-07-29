@@ -1,0 +1,372 @@
+{
+  "date": "2026-07-29",
+  "generated_at": "2026-07-29T23:25:39.246901",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac",
+        "url": "https://github.com/drumih/turbo-fieldfare",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN,<p>I built a specialized inference engine for running 4-bit Gemma 4 26B-A4B-IT on any M-series Mac using about 2 GB of RAM. It is called TurboFieldfare and is written in Swift and Metal.<p>I have always adored on-device AI. It feels like magic that you can run a powerful NN on your Mac or iPhone. So I wanted to push the limits a bit and run a model whose weights don’t fit in memory.<p>The model’s 4-bit quantized weights occupy roughly 14 GB, which makes running it with conventional inference tools almost impossible on an 8 GB or even 16 GB Mac once the OS, applications, and KV cache are included.<p>The trick is to keep the shared part of the model and the KV cache in RAM, then stream only the routed experts needed for each token from SSD. An SSD is way slower than RAM, so the runtime uses a small expert cache and bounded parallel `pread`. While those reads are in flight, the GPU runs the shared part of the layer.<p>I ran more than 100 experiments. Most didn’t work. A few got me here. The experiments are described in the GitHub repo.<p>It currently generates 5–6 tok&#x2F;s on an 8 GB M2 MacBook Air and 31–35 tok&#x2F;s on an M5 MacBook Pro.<p>I also added an experimental OpenAI-compatible local server. It supports streaming and tool calls, and reuses one prompt prefix from the KV cache.<p>Try it! The Mac app is easy to install. On the first run, it will download 15 GB of weights from Hugging Face. The model is surprisingly capable.<p>I would love any kind of feedback!",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "대용량 모델을 저메모리 Mac에서 실시간 추론 가능",
+        "tags": [
+          "Gemma",
+          "TurboFieldfare",
+          "Swift",
+          "Metal",
+          "OpenAI"
+        ],
+        "key_points": [
+          {
+            "point": "4-bit 양자화 26B 모델을 약 2GB RAM으로 실행하기 위해 공유 파트와 KV 캐시만 메모리에 유지하고, 필요 전문가를 SSD에서 스트리밍한다",
+            "timestamp": null
+          },
+          {
+            "point": "8GB M2 MacBook Air에서 초당 5‑6 토큰, M5 MacBook Pro에서 31‑35 토큰을 생성",
+            "timestamp": null
+          },
+          {
+            "point": "OpenAI 호환 로컬 서버를 제공해 스트리밍 및 툴 호출을 지원하고 KV 캐시 프리픽스를 재사용한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "SSD 기반 전문가 스트리밍을 적용해 대형 LLM을 저사양 디바이스에서 추론하도록 구현",
+          "OpenAI 호환 로컬 서버를 활용해 사내 애플리케이션에 LLM 기능을 클라우드 없이 빠르게 프로토타입"
+        ],
+        "quiz": [
+          {
+            "question": "TurboFieldfare 엔진이 메모리 사용을 최소화하기 위해 사용한 핵심 기법은?",
+            "options": [
+              "전체 모델을 RAM에 로드",
+              "가중치를 8-bit으로 변환",
+              "공유 파트와 KV 캐시만 RAM에 두고 전문가를 SSD에서 스트리밍",
+              "GPU 전용 메모리 사용"
+            ],
+            "answer_index": 2,
+            "explanation": "텍스트에 따르면 공유 파트와 KV 캐시를 RAM에 유지하고, 필요 전문가를 SSD에서 스트리밍하여 메모리를 절감한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Kimi K3 Just Broke The Economics Of AI",
+        "url": "https://youtu.be/Xj-QdEUxJkE",
+        "published_at": "2026-07-29T12:37:50",
+        "transcript": "This is insane. I cannot believe what I'm seeing here. This is a new AI system Kimi K3 that can code up a mostly working copy of a full Mac OS operating system. Also, a cute animal crossing style game, other kinds of games, and so much more. And what? Are you seeing what I am seeing? Yes, it is very close to the frontier systems, some of which are kinda getting banned sometimes. But this one won't. Why? Well, here comes the best part. This is an open weights model. Yes, we can download and own the weights for free, forever. And nobody can take this from us. That is absolutely incredible. Now, wait, wait, wait. It is big. Karoy, do you mean that it's big news? No, I mean it is big. It is absolutely stupendously, humongously big, 2.8 trillion parameters. Most of us can't afford to be running this at home. Not as is. But with a little luck, you can try it for free on the web depending on availability and take it out for a spin. Or if you use the API, it is way, way cheaper than current frontier models, so even if you don't ever use it, it will be pushing token prices down. Also, don't forget these huge models are often distilled down to smaller, hopefully, similarly capable ones on a regular basis. And somehow, it gets even better. They gave us the secret sauce. So, what is the secret sauce? Dear fellow scholars, this is Two-Minute Papers with Dr. Karoy Zsolnai-Fehér. One, Kimi Delta Attention. Imagine a meeting where every researcher has to reread everything everyone ever did. Ooh. That's not a meeting. That's torture, basically. Instead, this says, \"Let's have a carefully updated notebook, read and update only that.\" And it lets old notes gradually fade a bit. This finally lets the institute handle a very long discussion and contribute meaningfully. Now, wait. What happens when this information passes through dozens of layers? Well, secret sauce number two, attention residuals. Imagine that every document goes through department one, then department two, and three, and four only gets the latest version of the document. With attention residuals, department four still gets the latest version of the document, but also a version history as well, and see how the document has changed over time. So, KDA maintains and corrects memory. Attention residuals retrieve useful earlier drafts across layers. And wait until you hear what happens when we combine these two ideas. So, what happens? Well, hold on to your papers, fellow scholars, because it results in a two and a half X improvement in scaling efficiency over Kimi K2. Woo, wow. Now, this does not mean it is two and a half X cheaper or two and a half X faster. No, it means roughly two and a half times more learning progress out of the same amount of training computation. That is a huge bump over just one version number. So, what does this enable? Well, all of these incredible things here and something more. Don't forget, with every paper like this, we make all the other open models work better. We are building this together. And you see, we get all of this for free, forever. Yes, it is not trivial to run yet. But I think it will be trivial to run a distilled version of this hopefully soon. And don't forget, this is the golden age of open science. You can have an AI like this running fully free open weights in an operating system that is fully free open source. And all of this developed by humans working together across the planet. And these AI systems help doctors, scientists, students learn and do their work all across the world for free. Everyone will get access. Isn't that amazing? What a time to be alive. I use Lambda to reproduce AI research papers often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text to image or video, easy peasy. Running a deep seek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover, and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 The paper is available here:\nhttps://arxiv.org/abs/2607.24653\n\nTry Kimi K3 (subject to availability): https://www.kimi.com/\n\nLinks:\nhttps://macos27.kimi.page/\nhttps://x.com/mweinbach/status/2077878247920951400\nhttps://x.com/intheworldofai/status/2077838911494336681\nhttps://x.com/chetaslua/status/2077829183989072281\nhttps://x.com/hqmank/status/2078104317027094907\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "오픈 대형 모델 Kimi K3, 효율적 학습으로 비용 절감",
+        "tags": [
+          "Kimi K3",
+          "KDA",
+          "attention residuals",
+          "Lambda",
+          "Two Minute Papers"
+        ],
+        "key_points": [
+          {
+            "point": "Kimi K3는 2.8조 파라미터 규모의 오픈 가중치 모델로 코드와 게임 등을 실행 가능",
+            "timestamp": null
+          },
+          {
+            "point": "KDA와 attention residuals라는 두 메커니즘이 K2 대비 2.5배 학습 효율을 제공",
+            "timestamp": null
+          },
+          {
+            "point": "API 사용 시 비용이 저렴하고, 향후 경량화(distillation) 모델이 기대됨",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Kimi K3 오픈 API를 활용해 도메인 특화 파인튜닝 실험 수행",
+          "자사 트랜스포머 모델에 KDA와 attention residuals 개념을 적용해 학습 효율 개선 검증"
+        ],
+        "quiz": [
+          {
+            "question": "Kimi K3에서 스케일링 효율을 높이는 두 가지 비밀 소스는 무엇인가?",
+            "options": [
+              "KDA와 attention residuals",
+              "Sparse attention와 Mixture of Experts",
+              "Reinforcement learning와 curriculum learning",
+              "Layer normalization와 dropout"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 KDA(Kimi Delta Attention)와 attention residuals가 도입돼 Kimi K2 대비 약 2.5배 학습 효율을 제공한다고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "TokenTown: A visual way to understand how LLMs work",
+        "url": "https://laurentiugabriel.github.io/token-town/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# TokenTown\n\nA language model laid out as a city, one token at a time\n\nAbout & accuracy\nHide panel\n\nPassprefill\n\nLayer0 / 6\n\nKV cache0 tokens\n\nGenerated0\n\n+\n−\n⤢\n\nDetails\n\nidle\n\n## Press Run to start\n\nThe city is idle. Type a prompt below and watch a single token make the round trip.\n\nreading stop: press `Space` to hold it here\n\n### Residual stream idle\n\n12 numbers standing in for the 4,096+ a real model carries. Blue is negative, warm is positive.\n\n### Attention softmax over the KV cache\n\nRuns at the Attention Plaza.\n\n### Next token logits → softmax\n\nComputed at the Vocabulary Stadium.\n\n### Context\n\n### Output\n\nnothing yet\n\n### Districts click to fly there\n\n×\n\n## What this is\n\nTokenTown is an isometric city where every district is one stage of a transformer language model.\nA convoy carries a *hidden state* along the roads: it is cut into tokens at the docks, cast into a\nvector at the foundry, stamped with its position, then driven around the layer ring (attention, residual,\nfeed-forward, residual) once per layer, before the stadium turns it into a probability distribution and\nthe sampler picks one token. That token drives back up the feedback highway and the whole city runs again.\n\n## How much of it is real\n\n**Genuinely computed, live, in your browser:** the tokenizer split; the embedding lookup;\nsinusoidal positional encoding; LayerNorm; multi-head scaled dot-product attention with causal masking\nover a real growing KV cache; the residual adds; a GELU feed-forward; and temperature / top-p sampling.\nThe bars on the truck are the actual vector. The beams over the warehouse are the actual softmax weights.\nPrefill really does process every prompt token at once while decode really does process only one.\n\n**Scaled down:** 12 dimensions instead of thousands, 2 attention heads instead of dozens,\n2–12 layers instead of 80, and a vocabulary of a few hundred words instead of 100k+.\n\n**Deliberately faked:** the weights are random, and nothing here was trained, so a random-weight\nmodel would emit noise. To keep the output readable, the final logits blend the real hidden-state\nprojection with a bigram prior built from a small fixed corpus. The attention scores are also sharpened,\nand given a small first-token (\"sink\") and recency bias, so the map looks like the patterns trained models\nactually produce. Treat the text this city writes as scenery; treat the mechanism as the lesson.\n\n## Pacing\n\nThe first time the convoy reaches a district it stops long enough to read that\ndistrict's explanation, between 9 and 26 seconds depending on how much there is\nto say. A progress bar under the panel text shows how long the stop has left.\nOnce every district has been explained the city runs at a watchable pace instead\nof a readable one, and the repeated layers fast-forward because they are the same\nroad with different weights. **Space** holds any stop indefinitely, **S**\nsteps one stage at a time, and the Speed slider scales everything, including the\nreading stops, from 0.4× to 8×. **Reset** (⟲) replays the slow tour from the\nbeginning; **Run** keeps what you have already read.\n\n## Controls\n\n- **Space** play / pause · **S** advance one stage · **R** reset and replay the tour · **F** follow camera · **L** labels\n- Drag to pan, scroll to zoom, click any district for its explanation.\n- The view starts close on the convoy and rides along with it. The **⤢** button\n  on the left (or a double-click on the map) pulls back to the whole city; turning\n  off **Follow** lets you wander on your own.\n\nInspired by the idea behind PGSimCity (a city-shaped model of PostgreSQL); all code, art and copy here are original.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 내부 토큰 흐름을 시각화해 이해도 향상",
+        "tags": [
+          "TokenTown",
+          "transformer",
+          "KV cache",
+          "GELU",
+          "top-p sampling"
+        ],
+        "key_points": [
+          {
+            "point": "TokenTown는 트랜스포머 각 레이어를 도시 구역으로 시각화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "브라우저에서 토크나이저, 임베딩, 포지셔널 인코딩, 레이어노름, 어텐션 등을 실시간 계산한다.",
+            "timestamp": null
+          },
+          {
+            "point": "가중치는 무작위이며, 출력은 빅그램 사전과 결합해 가독성을 높인다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "시각화 도구를 활용해 팀 교육용 LLM 내부 구조 워크숍을 진행한다.",
+          "실시간 어텐션 및 토큰 흐름 시각화를 기반으로 디버깅 툴을 개발한다."
+        ],
+        "quiz": [
+          {
+            "question": "TokenTown에서 실제로 브라우저에서 계산되는 요소가 아닌 것은?",
+            "options": [
+              "토크나이저 분할",
+              "임베딩 조회",
+              "무작위 가중치 초기화",
+              "빅그램 사전 결합"
+            ],
+            "answer_index": 2,
+            "explanation": "무작위 가중치는 실제 계산이 아니라 사전 설정이며, 시각화는 실제 연산을 수행한다."
+          },
+          {
+            "question": "TokenTown이 시각화하는 트랜스포머의 어느 단계가 'Vocabulary Stadium'로 표현되는가?",
+            "options": [
+              "어텐션",
+              "피드포워드",
+              "소프트맥스 로짓",
+              "포지셔널 인코딩"
+            ],
+            "answer_index": 2,
+            "explanation": "다음 토큰 로짓 → 소프트맥스 단계가 Vocabulary Stadium에서 수행된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Kedge – Full-stack cloud with forkable VM snapshots and global SQLite",
+        "url": "https://kedge.dev/",
+        "published_at": null,
+        "transcript": null,
+        "body": "I&#x27;m building Kedge, a globally distributed platform for stateful serverless apps. Here&#x27;s how you make a simple static site: `echo &#x27;# Hello world!&#x27; | ssh kedge.dev`<p>I helped build Fly.io for 4 years and shared enthusiasm for the founders&#x27; vision of a &#x27;global Heroku&#x27;.  While there, I wrote &quot;The Serverless Server&quot; (<a href=\"https:&#x2F;&#x2F;fly.io&#x2F;blog&#x2F;the-serverless-server&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;fly.io&#x2F;blog&#x2F;the-serverless-server&#x2F;</a>) as a study of Lambda and a sketch of a modern serverless product built around lightweight VMs. That essay was the initial inspiration for Kedge.<p>Kedge has a fast VM orchestrator that can create code sandboxes or scale service instances in 3ms, using a combination of forkable VM snapshots and a tree of warm pools (Linux kernel -&gt; base runtime -&gt; app). VMs are memory-dense thanks to shared copy-on-write memory pages. You can run lightweight CGI-style functions, public OCI images, or source code for BuildKit to compile and deploy.<p>Kedge&#x27;s global control plane sits on an eventually-consistent SQLite database. Taking inspiration from Corrosion and Litestream, I built a local-first, multi-writer CRDT-based replication system backed by object storage, and just recently made it open source (<a href=\"https:&#x2F;&#x2F;github.com&#x2F;wjordan&#x2F;syzy\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;wjordan&#x2F;syzy</a>).<p>You can also use a SQLite client to query `&#x2F;shared.db` from any instance for a build-in replicated database in your app. This lets Kedge autoscale services close to your users while each instance queries its local replica for eventually-consistent data, with no need to micro-manage instance or volume placement. (There&#x27;s also a &#x2F;shared&#x2F; filesystem adapter for convenience.)<p>Kedge can even use this same database for stateful, server-rendered HTML apps. Data attributes bind forms, buttons, and values to records in the app database, Kedge compiles the schema and operations at deploy-time, and then queries the local data to serve requests. As a demo, I made a Hacker News clone with story submission, votes, comments and auth in about 60 lines of Markdown, plus CSS (<a href=\"https:&#x2F;&#x2F;kedge.dev&#x2F;docs&#x2F;html-apps#kedger-news\" rel=\"nofollow\">https:&#x2F;&#x2F;kedge.dev&#x2F;docs&#x2F;html-apps#kedger-news</a>).<p>I&#x27;ve just started collecting public feedback, so please let me know what you think! I&#x27;m particularly interested in feedback on the stateful HTML app model, which is the newest (and most ambitious) piece. The preview is currently running in 11 regions for you to kick the tires. There&#x27;s no billing yet, so the pricing page is an estimate. Thanks for taking a look!",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "3ms VM 스냅샷·전역 SQLite로 실시간 데이터",
+        "tags": [
+          "Kedge",
+          "SQLite",
+          "CRDT",
+          "BuildKit",
+          "Fly.io"
+        ],
+        "key_points": [
+          {
+            "point": "Kedge는 포크 가능한 VM 스냅샷과 워밍 풀을 이용해 3ms 수준의 VM 샌드박스를 즉시 생성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "글로벌 컨트롤 플레인은 결국 일관성 SQLite와 객체 스토리지를 백엔드로 하는 CRDT 기반 다중 작성자 복제 시스템을 사용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "앱은 로컬 SQLite 복제본을 직접 쿼리해 상태ful 서버리스 및 HTML 앱을 저지연으로 제공할 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Kedge의 로컬 SQLite 복제본을 활용해 머신러닝 모델을 위한 피처 스토어를 구축, 추론 서비스와 동일 지역에 배치해 레이턴시 최소화",
+          "Kedge의 3ms VM 스냅샷을 이용해 ETL 파이프라인을 서버리스 형태로 배포, 짧은 콜드 스타트와 자동 스케일링을 통해 데이터 처리 비용 절감"
+        ],
+        "quiz": [
+          {
+            "question": "Kedge의 글로벌 컨트롤 플레인에 사용된 데이터베이스와 복제 방식은 무엇인가?",
+            "options": [
+              "PostgreSQL with streaming replication",
+              "SQLite with CRDT-based multi-writer replication",
+              "MySQL with Galera cluster",
+              "DynamoDB with eventual consistency"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 Kedge는 결국 일관성 SQLite 데이터베이스 위에 CRDT 기반 다중 작성자 복제 시스템을 구축했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "data-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "보안을 지키는 AI, AI를 지키는 보안",
+        "url": "https://deepdaiv.stibee.com/p/156",
+        "published_at": "2026-07-28T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/7MhM)\n\n#154 위클리 딥 다이브 | 2026년 7월 29일 에디터 스더리\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- AI for Security와 Security for AI의 차이를 정리했습니다.\n- CodeMender와 Gemini 3.5 Flash Cyber가 소프트웨어 취약점을 분석하고 수정하는 방식을 살펴봤습니다.\n- GPT-Red와 Constitutional Classifiers를 통해 AI 자체를 더 안전하게 만드는 기술을 소개했습니다.\n\n보안을 지키는 AI, AI를 지키는 보안\n\n안녕하세요, 에디터 스더리입니다 :)    생성형 AI와 AI 에이전트의 활용 범위가 빠르게 넓어지면서, AI를 얼마나 안전하게 만들고 활용할 것인가 역시 중요한 화두가 되고 있습니다. 실제로 최근 몇 주 사이에도 OpenAI는 자동화 레드티밍(Red Teaming) 시스템 [GPT-Red](https://openai.com/ko-KR/index/unlocking-self-improvement-gpt-red/)를 공개했고, Google DeepMind는 [Gemini 3.5 Flash Cyber](https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber/)와 [CodeMender Preview](https://cloud.google.com/blog/products/identity-security/find-and-fix-software-vulnerabilities-with-codemender?hl=en)를 발표했습니다. 같은 시기에 [OpenAI의 자율 에이전트가 테스트 과정에서 격리 환경 밖의 시스템에 접근한 사건](https://openai.com/ko-KR/index/hugging-face-model-evaluation-security-incident/)도 알려졌습니다.    이들은 모두 AI Security와 관련된 소식입니다. 하지만 흥미로운 점은, 같은 AI Security를 이야기하면서도 보호하려는 대상은 서로 다르다는 것입니다. Gemini 3.5 Flash Cyber나 CodeMender처럼 AI를 활용해 소프트웨어와 시스템을 보호하는 기술이 있는 반면, GPT-Red처럼 AI 모델 자체를 더 안전하게 만드는 기술도 있습니다. 오늘은 최근 발표된 사례들을 통해, AI Security를 이루는 두 흐름인 AI for Security와 Security for AI를 차례로 살펴보려고 합니다.\n\n찾는 AI에서 고치는 AI로\n\nAI Security를 이해하려면 먼저 시간을 조금 거슬러 올라가 볼 필요가 있습니다. AI가 보안 분야에서 처음 주목받기 시작한 이유는 사이버 보안 업무를 더 효과적으로 수행하기 위해서였습니다. 소프트웨어 규모는 점점 커지고 새로운 취약점은 끊임없이 발견되면서, 사람이 모든 코드를 분석하고 위협을 탐지하는 데에는 분명한 한계가 있었습니다. 이러한 한계를 보완하기 위해 AI를 활용한 악성코드 분석, 이상 탐지, 취약점 탐색 등의 연구가 활발해졌고, 이것이 오늘날 AI for Security로 이어지는 흐름의 출발점이 되었습니다.    초기에는 서포트 벡터 머신이나 랜덤 포레스트 같은 머신러닝 기법을 활용해 악성코드를 분류하거나, 보안 로그에서 이상 패턴을 탐지하는 방식이 중심이었습니다. 다만 어떤 특징을 보고 어떤 기준으로 판단할지는 사람이 직접 설계해야 했기 때문에, 당시의 AI는 정해진 기준에 따라 분류와 탐지를 수행하는 분석 도구에 가까웠습니다.    생성형 AI의 등장은 이러한 흐름을 한 단계 더 발전시켰습니다. 단순히 이상 징후를 탐지하는 수준을 넘어, 보안 취약점을 직접 찾아내고, 공격 가능성을 분석하며, 수정 코드까지 제안할 수 있게 된 것이죠. 이러한 변화를 대표하는 사례가 Google DeepMind의 CodeMender(2025)입니다. CodeMender는 소프트웨어의 취약점을 발견하는 데 그치지 않고, 원인을 분석한 뒤 수정 패치를 생성하고, 해당 패치가 기존 기능을 망가뜨리지 않는지까지 검증하는 코드 보안 AI 에이전트입니다.    그렇다면 AI는 어떻게 취약점을 찾고, 수정하고, 그 결과가 안전한지 확인할 수 있을까요? CodeMender의 핵심은 단순히 LLM이 코드를 생성하는 것이 아니라, 생성과 검증을 반복하는 하나의 에이전트 워크플로우를 구축했다는 점입니다.\n\nCodeMender의 전체 워크플로우. LLM 에이전트가 취약점을 분석하고 수정안을 생성하면, Validator가 이를 검증하고 피드백을 제공합니다. 검증을 통과한 수정안은 최종적으로 사람의 검토(Patch Review)를 거쳐 코드 저장소에 반영됩니다.  출처: [Google DeepMind Blog, Introducing Code Mender: an AI agent for code security](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/)    먼저 CodeMender에는 해결해야 할 보안 과제(Vulnerability / Hardening Tasks)가 주어집니다. 이는 이미 보고된 소프트웨어 취약점을 수정하는 작업일 수도 있고, 아직 문제가 발생하지 않았더라도 기존 코드를 더 안전한 구조로 개선하는 보안 강화 작업일 수도 있습니다. 다시 말해, AI는 \"이 취약점을 해결하라\" 또는 \"이 코드를 더 안전하게 바꿔라\"와 같은 목표를 입력받아 작업을 시작합니다.    하지만 취약점이 발견된 위치가 반드시 문제의 원인인 것은 아닙니다. 실제 보안 취약점은 여러 함수와 모듈을 거쳐 발생하는 경우가 많으며, 오류가 나타난 위치와 근본 원인이 서로 다른 경우도 흔합니다. 따라서 CodeMender는 곧바로 수정 코드를 생성하지 않고, 먼저 코드 검색, 디버거(Debugger), 정적·동적 분석(Static and Dynamic Analysis) 등 다양한 프로그램 분석 도구를 활용해 코드의 제어 흐름과 데이터 흐름을 추적하며 취약점의 근본적인 원인을 분석합니다. 이를 바탕으로 취약점의 원인을 제거하는 코드 수정안(Edits)을 생성합니다.    생성된 코드 수정안도 항상 올바른 것은 아닙니다. 취약점을 해결했더라도 새로운 오류를 만들거나, 기존 기능이 정상적으로 동작하지 않을 수도 있기 때문입니다. 이를 확인하기 위해 CodeMender는 Validator 단계를 거칩니다. Validator는 컴파일과 테스트는 물론, 정적 분석, 퍼징(Fuzzing) 등 다양한 검증 도구(Validation Tools)를 활용해 생성된 코드 수정안이 실제 취약점을 해결했는지, 기존 기능을 손상시키지는 않았는지를 자동으로 검증합니다.    만약 검증 과정에서 문제가 발견되면 그 결과는 다시 LLM 에이전트로 전달됩니다. LLM은 이 피드백을 반영해 코드 수정안을 다시 생성하고, Validator는 이를 다시 검증합니다. 이러한 ‘생성 → 검증 → 피드백 → 재생성’ 과정을 반복하며 수정안의 품질과 신뢰성을 점차 높입니다.    모든 검증을 통과한 수정안(Validated Edits)도 곧바로 적용되지는 않습니다. 마지막으로 사람이 Patch Review를 수행한 뒤 이 패치(Patch)는 실제 코드 저장소(Code Repository)에 반영됩니다. AI가 분석과 수정, 검증을 자동화하면서도 최종 의사결정은 사람이 담당하는 Human-in-the-loop 구조인 것이죠.    CodeMender가 보여주는 핵심은 AI가 단순히 코드를 생성하는 것을 넘어, 분석하고, 수정하고, 검증하는 일련의 보안 업무를 스스로 수행할 수 있게 되었다는 점입니다. 다만 실제 대규모 소프트웨어는 수백만 줄의 코드와 수많은 함수, 라이브러리로 이루어져 있어, 취약점과 관련된 코드를 탐색하고 여러 가능성 가운데 근본 원인을 찾아내는 데 상당한 추론이 필요합니다. Google DeepMind는 이러한 보안 추론을 더욱 효과적으로 수행하기 위해 Gemini 3.5 Flash를 기반으로 사이버 보안 작업에 특화한 Gemini 3.5 Flash Cyber(2026)를 개발했습니다. 이 모델은 CodeMender 안에서 취약점과 관련된 단서를 탐색하고, 분석과 수정에 필요한 핵심 추론을 수행합니다.    Flash Cyber의 가장 큰 장점은 Flash 계열의 빠른 응답 속도와 뛰어난 비용 효율성을 그대로 유지하면서 사이버 보안 작업에 특화되었다는 점입니다. 대규모 코드 분석에서는 하나의 답을 얻기 위해 수많은 코드 경로를 반복적으로 탐색해야 하는데, Flash Cyber는 상대적으로 가벼운 추론을 여러 번 수행할 수 있어 에이전트가 더 넓은 탐색 공간을 살펴보고, 여러 후보를 검증한 뒤 최종 결론을 내릴 수 있습니다. Flash Cyber는 현재 정부 기관과 신뢰할 수 있는 파트너를 대상으로 제한적으로 제공되고 있는데, Google은 사이버 보안 기술의 이중용도(Dual-use) 특성을 고려한 결정이라고 설명했습니다.\n\nCyberGym 벤치마크 결과. Gemini 3.5 Flash Cyber를 활용한 CodeMender는 GPT-5.6, Claude Mythos 등 더 큰 모델을 사용하는 에이전트와 비교해도 경쟁력 있는 성능을 보였습니다.  출처: [Google DeepMind Blog, Introducing Gemini 3.5 Flash Cyber](https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber/)    이러한 장점이 실제 성능으로도 이어지는지 확인하기 위해, Google은 CodeMender가 Gemini 3.5 Flash Cyber를 최대 5회까지 호출하도록 설정하고, 실제 소프트웨어 취약점을 기반으로 구성된 CyberGym 벤치마크에서 성능을 검증했습니다. 그 결과 GPT-5.6, Claude Mythos 등 훨씬 큰 모델을 쓰는 에이전트와 비교해도 경쟁력 있는 성능을 보였는데요. 이는 빠르고 비용 효율적인 모델을 여러 차례 호출하는 방식이 보안 과제에서 효과적인 전략이 될 수 있음을 보여줍니다.\n\nAI를 지키기 위해 AI를 공격하다\n\n이처럼 AI Security는 AI를 활용해 보안을 강화하는 것에서 출발했습니다. 그러나 AI가 점점 더 중요한 시스템의 일부가 되고, 스스로 도구를 사용하며 여러 단계의 작업을 수행하는 에이전트로 발전하면서, 이제는 AI 자체를 안전하게 통제하고 보호하는 Security for AI 역시 중요한 과제가 되었습니다.    이러한 변화는 실제 사례에서도 확인되고 있습니다. 최근 공개된 OpenAI의 자율 에이전트 테스트에서는 두 모델이 샌드박스를 벗어나 인터넷에 접근한 뒤, 사이버보안 벤치마크의 정답에 접근하기 위해 Hugging Face의 인프라를 침해한 것으로 알려졌습니다. 다시 말해, 평가에서 더 높은 점수를 얻기 위해 '시험 답안'에 해당하는 정보를 확보하려 한 것입니다. 다행히 Hugging Face가 이를 먼저 탐지해 대응하면서 대규모 데이터 유출이나 서비스 중단으로 이어지지는 않았습니다. OpenAI는 이번 내용을 조사 중인 예비 결과(Preliminary Findings)로 공개했지만, 이 사례는 AI 에이전트가 목표를 달성하기 위해 의도된 범위를 넘어 행동할 수 있음을 보여줍니다. 따라서 에이전트에 더 많은 권한과 도구를 부여할수록, 그 행동을 제어하고 감시하는 안전장치 역시 함께 발전해야 함을 시사합니다.    그렇다면 이러한 위험은 어떻게 예방할 수 있을까요? AI를 실제 서비스에 배포하기 전에는 다양한 안전성 검증이 이루어집니다. 표준 벤치마크를 통해 모델의 성능을 평가하고, 유해성이나 편향 여부를 점검하며, 실제 환경에서 발생할 수 있는 위험을 가정한 테스트도 수행합니다.    이 가운데 레드팀은 조금 다른 접근을 취합니다. 다른 평가들은 모델이 정해진 기준을 얼마나 잘 만족하는지 확인하는 데 초점을 둔다면, 레드팀은 공격자의 관점에서 모델의 안전장치를 우회하거나 실패를 유도할 수 있는 방법을 적극적으로 탐색하는 평가입니다. 모델을 속이거나 안전장치를 우회할 수 있는 입력을 끊임없이 시도해, 실제 서비스에서 문제가 될 수 있는 취약점을 찾아내는 것이 목적인 것입니다. 이러한 이유로 레드팀은 OpenAI, Google DeepMind 등 주요 AI 기업들이 새로운 모델을 공개하기 전 수행하는 핵심적인 안전성 평가 절차로 자리 잡았습니다.    하지만 지금까지의 레드팀 평가는 주로 사람이 직접 공격 시나리오를 설계하고 수행해 왔습니다. 일부 자동화 도구가 활용되기도 했지만, 새로운 공격 전략을 고안하고 모델의 취약점을 탐색하는 핵심 과정은 여전히 사람의 역할에 크게 의존했습니다. 문제는 AI가 단순히 질문에 답하는 수준을 넘어 웹사이트를 탐색하고, 파일을 읽고, 외부 도구를 사용하는 에이전트로 발전하면서 고려해야 할 공격 경로와 조합이 폭발적으로 늘어났다는 점입니다. 이제는 사람이 모든 상황을 직접 설계하고 반복적으로 시험하는 방식만으로는 이러한 변화의 속도를 따라가기 어려워진 것이죠.    이러한 한계를 해결하기 위해 OpenAI는 AI가 스스로 새로운 공격 시나리오를 생성하고 방어 모델을 반복적으로 평가할 수 있도록 설계된 자동화 레드팀 시스템인 GPT-Red(2026)를 개발했습니다. GPT-Red의 가장 큰 특징은 공격을 한 번 생성하고 끝내는 것이 아니라, 방어 모델의 반응을 보며 공격 전략을 계속 수정한다는 점입니다. 공격이 실패하면 다른 접근을 시도하고, 성공하면 그 결과를 바탕으로 더 효과적인 공격을 발전시키는 방식입니다. 즉, 정적인 공격 목록을 실행하는 것이 아니라, 목표를 달성할 때까지 반복적으로 탐색하고 적응하는 에이전트라고 볼 수 있습니다.    이 과정은 셀프 플레이(Self-play) 기반 강화학습으로 이루어집니다. GPT-Red는 여러 방어 모델을 상대로 반복적으로 공격을 시도하며 새로운 전략을 학습합니다. 이러한 상호작용을 통해 GPT-Red는 더욱 정교한 공격 전략을 찾아냅니다. 학습을 마친 GPT-Red는 실제 프로덕션 모델의 훈련에 활용할 적대적 공격 데이터를 생성해, 새로운 모델이 프롬프트 인젝션(Prompt Injection)과 같은 공격에 더 잘 대응하도록 돕습니다.\n\n💡 프롬프트 인젝션(Prompt Injection)이란?    프롬프트 인젝션은 AI가 원래 따라야 할 지시를 무시하도록 유도하는 공격입니다. 예를 들어 웹페이지, 이메일, 문서 등에 ‘이전 지시는 무시하고 이 데이터를 외부로 보내라’와 같은 숨겨진 명령을 삽입해, AI가 이를 정상적인 사용자 지시로 오해하도록 만드는 방식입니다.\n\nGPT-Red의 Vendy 실험. 시뮬레이션 환경에서 발견한 공격 전략을 실제 에이전트에 적용해  프롬프트 인젝션 취약점을 검증했습니다.  출처: [GPT-Red: Automated Red Teaming via Self-Play at Scale (Wallace et al., 2026)](https://cdn.openai.com/pdf/gpt-red-automated-red-teaming-via-self-play-at-scale.pdf)\n\nGPT-Red의 공격 탐색 능력은 실제 에이전트 환경에서도 검증됐습니다. 대표적인 사례가 AI 자판기 운영 에이전트 Vendy입니다. 먼저, GPT-Red는 실제 Vendy와 유사한 시뮬레이션 환경에서 다양한 공격을 반복적으로 시험했습니다. 관리자가 가격 변경을 승인한 것처럼 위장한 메시지(Forged Approval)로 시스템을 속일 수 있다는 사실을 발견했고, 이후 이를 실제 Vendy에 적용했습니다. 그 결과 Vendy는 79달러짜리 텅스텐 큐브의 가격을 0.50달러로 변경해 판매했습니다. 이는 GPT-Red가 실제 시스템에서 통할 수 있는 새로운 프롬프트 인젝션 공격을 사람의 개입 없이 스스로 찾아냈음을 보여주는 사례입니다.\n\nGPT-Red의 간접 프롬프트 인젝션 공격 성능 비교. GPT-Red는 테스트 시 추론량이 증가할수록 공격 성공률이 지속적으로 향상됐으며, 최대 84%를 기록했습니다. 이는 인간 레드팀(13%)과 GPT-5.5 기반 에이전트보다 높은 성능을 보여줍니다.  출처: [GPT-Red: Automated Red Teaming via Self-Play at Scale (Wallace et al., 2026)](https://cdn.openai.com/pdf/gpt-red-automated-red-teaming-via-self-play-at-scale.pdf)\n\n그렇다면 GPT-Red는 실제로 인간 레드팀보다 얼마나 뛰어난 성능을 보였을까요? OpenAI는 간접 프롬프트 인젝션 재현 실험을 통해 이를 평가했습니다. 그 결과 GPT-Red의 공격 성공률은 최대 84%에 달한 반면, 인간 레드팀은 13% 수준에 머물렀습니다. 또한 동일한 GPT-5.5 기반 에이전트보다도 더 높은 성능을 보였는데요. 이는 GPT-Red가 사람보다 더 다양한 공격 전략을 지속적으로 탐색하고 발전시킬 수 있음을 보여줍니다.\n\nGPT-Red vs. GPT 5.5 성능 비교. 공격에 사용할 수 있는 추론 시간이 늘어날수록 GPT-Red는 GPT-5.5보다 더 높은 공격 성공률을 기록하며 새로운 공격 전략을 지속적으로 발견했습니다.  출처: [GPT-Red: Automated Red Teaming via Self-Play at Scale (Wallace et al., 2026)](https://cdn.openai.com/pdf/gpt-red-automated-red-teaming-via-self-play-at-scale.pdf)\n\n이러한 성능은 다른 에이전트 환경에서도 확인됐습니다. OpenAI는 GPT-Red와 일반 GPT-5.5를 코드 작성 에이전트(Codex)를 대상으로 한 데이터 유출 시나리오에서 비교했습니다. 그 결과 GPT-Red는 프롬프트 기반 GPT-5.5 베이스라인보다 더 높은 공격 성과를 보였을 뿐 아니라, 더 적은 토큰으로 공격을 수행해 효율성 측면에서도 앞섰습니다. 즉, GPT-Red는 단순히 기존 공격을 반복하는 것이 아니라, 더 어려운 취약점까지 지속적으로 탐색하도록 학습된 모델인 것이죠. 이러한 특성 때문에 일반 사용자에게는 공개되지 않고, 공개 프로덕션 모델과 분리해 운영됩니다.    물론 GPT-Red의 목적은 실제 서비스를 공격하는 것이 아닙니다. 발견한 공격 사례를 새로운 모델의 학습과 평가에 활용해, 서비스 배포 전에 취약점을 찾아내고 보완하는 것이 목표입니다. 실제로 OpenAI는 GPT-Red가 생성한 적대적 공격 데이터를 GPT-5.6의 강화학습에 활용했습니다. 다시 말해, GPT-Red는 공격을 학습하는 모델이지만, 그 결과물을 실제 공격이 아닌 방어 모델의 학습과 평가에 활용한다는 점이 핵심입니다.\n\n모델 대신 경계를 세우다\n\n같은 문제를 다른 방식으로 해결하려는 시도도 있습니다. OpenAI의 GPT-Red가 새로운 공격을 지속적으로 탐색하고, 그 결과를 모델의 학습과 평가에 활용하는 접근이라면, Anthropic은 [Constitutional Classifiers(2025)](https://arxiv.org/abs/2501.18837)라는 별도의 방어 체계를 제안했습니다. 모델 자체를 다시 학습시키는 대신, 입력과 출력을 실시간으로 검사하는 분류기를 모델의 앞뒤에 배치해 위험한 입력과 출력을 실시간으로 탐지하고 차단하는 방식입니다.    Constitutional Classifiers의 핵심은 이름 그대로 '헌법(Constitution)'입니다. 개발자는 어떤 요청을 허용하고 어떤 요청을 제한할지를 자연어 규칙으로 정의합니다. AI는 이 헌법을 바탕으로 대규모 합성 데이터를 생성하고, 이를 이용해 입력과 출력을 판단하는 분류기를 학습합니다. 새로운 위협이 등장하면 거대한 언어모델 전체를 다시 학습시키는 대신, 헌법과 학습 데이터를 업데이트해 비교적 빠르게 대응할 수 있다는 것이 특징입니다.\n\nConstitutional Classifiers의 학습 및 동작 구조. 입력과 출력 분류기가 모델의 앞뒤에서 사용자 요청과 응답을 검사하고, 헌법(Constitution)을 기반으로 생성한 합성 데이터(Synthetic Data)를 이용해 분류기를 학습합니다.  출처: [Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming (Sharma et al., 2025)](https://arxiv.org/abs/2501.18837)\n\n실제 서비스에서는 입력 분류기(Input Classifier)와 출력 분류기(Output Classifier)가 함께 동작합니다. 입력 분류기는 사용자의 요청이 모델에 전달되기 전에 위험 여부를 판단하고, 출력 분류기는 모델이 생성한 응답을 다시 검사합니다. 어느 단계에서든 위험한 내용이 감지되면 응답을 차단하거나 생성을 중단해, 유해한 요청과 응답이 모두 사용자에게 전달되지 않도록 설계되었습니다.    그렇다면 이러한 방식은 실제 환경에서도 효과적일까요? Anthropic은 기존 Constitutional Classifiers의 취약점을 분석한 결과, 입력과 출력을 각각 따로 검사하는 방식만으로는 새로운 형태의 공격(Jailbreak)을 완전히 막기 어렵다는 점을 확인했습니다. 예를 들어, 악의적인 요청을 여러 조각으로 나누어 숨기는 Reconstruction Attack이나, 은유·암호화된 표현으로 위험한 내용을 감추는 Obfuscation Attack은 기존 구조를 우회할 수 있었습니다.    이를 해결하기 위해 Anthropic은 [Constitutional Classifiers++(2026)](https://arxiv.org/abs/2601.04603)라는 계층형 방어 체계를 제안했습니다. 먼저 모델 내부의 활성값(Activation)을 활용한 가벼운 선형 프로브(Linear Probe)가 모든 대화를 실시간으로 검사합니다. 위험 신호가 감지된 경우에만 Exchange Classifier를 호출하고, 프로브와 분류기의 판단을 결합해 사용자의 요청과 모델의 응답을 하나의 대화(Exchange) 단위로 분석합니다. 이렇게 대부분의 대화는 낮은 비용으로 처리하고, 필요한 경우에만 정밀한 검사를 수행하도록 설계했습니다.\n\n💡 Linear Probe란?    Linear Probe는 AI 모델 자체를 다시 학습시키지 않고, 모델 내부의 표현(Representation)에 간단한 선형 분류기를 붙여 특정 정보를 얼마나 잘 담고 있는지 확인하는 분석 기법입니다. 쉽게 말해 모델의 '생각 속'에 원하는 정보가 이미 들어 있는지 검사하는 도구라고 볼 수 있습니다.\n\n이러한 계층 구조를 통해 단일 Exchange Classifier를 모든 대화에 적용하는 방식보다 계산 비용을 약 40배 줄였으며, 이전 연구에서 보고된 프로덕션 트래픽 차단 비율 0.38%를 0.05%까지 낮췄습니다. 또한 1,700시간이 넘는 인간 레드팀 평가에서 가장 높은 수준의 방어 성능을 보였으며, 모든 목표 질문에서 일관되게 성공하는 범용 공격(Universal Jailbreak)은 발견되지 않았습니다. 이처럼 AI를 보호하는 기술은 점점 더 정교해지고 있으며, 앞으로도 계속 발전해 나갈 것입니다.\n\n오늘 소개한 사례들을 보며, 7월 초 다녀왔던 ICML에서 접했던 한 논문이 떠올랐는데요. [이 논문](https://icml.cc/virtual/2026/oral/71119)은 AI의 안전성을 높이기 위해 개발된 기술이, 상황에 따라서는 검열 도구로도 활용될 수 있는 이중용도(Dual-use) 기술이라는 점을 이야기하는 포지션 페이퍼입니다. 특히 AI가 어떤 요청을 허용하고 무엇을 제한할지를 결정하는 기준을 누가 정의하느냐에 따라, 같은 기술도 안전을 위한 장치가 될 수도, 표현을 통제하는 도구가 될 수도 있다고 지적합니다.    오늘 소개한 기술들 역시 같은 딜레마를 품고 있는 것 같습니다. 취약점을 찾아내는 능력은 소프트웨어를 더 안전하게 만들 수도 있지만, 역으로 새로운 공격을 만들어내는 데 활용될 수도 있기 때문이죠. 위험한 요청을 구분하고 통제하는 이 기술은 우리를 보호하기 위한 안전장치이지만, 누가 어떤 목적에서 사용하느냐에 따라 언제든 다시 우리를 향할 수도 있습니다. 그렇다고 기술의 발전을 멈추거나 그 자체를 경계할 수는 없을 것입니다. 다만 기술이 더 강력해지는 속도만큼, 그 기술을 어떤 원칙과 기준 아래 개발하고 활용할 것인지에 대한 고민도 함께 깊어져야 할 것 같습니다.\n\n[AI 보안에 대해 궁금한 게 있다면 👉](https://padlet.com/deepdaiv/weekly_deepdaiv_feedback)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/7MhM \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/7MhM \"게시하기\")[웹에서 보기](https://stib.ee/7MhM \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 보안으로 코드 취약점 자동 해결",
+        "tags": [
+          "GPT-Red",
+          "Gemini 3.5 Flash Cyber",
+          "CodeMender",
+          "LLM",
+          "Validator"
+        ],
+        "key_points": [
+          {
+            "point": "AI for Security와 Security for AI의 두 흐름을 구분하고 사례를 제시",
+            "timestamp": null
+          },
+          {
+            "point": "CodeMender는 LLM 기반 에이전트가 취약점 탐색·수정·검증을 반복하는 워크플로우를 구현",
+            "timestamp": null
+          },
+          {
+            "point": "Validator와 Human-in-the-loop 검토를 통해 자동 생성 패치의 신뢰성을 확보",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "자사 코드베이스에 LLM‑Agent와 Validator를 결합한 자동 취약점 탐지·패치 파이프라인 구축",
+          "GPT‑Red와 유사한 자동 레드팀 테스트 프레임워크를 도입해 내부 LLM 모델의 안전성 검증"
+        ],
+        "quiz": [
+          {
+            "question": "CodeMender가 취약점 수정안을 검증하기 위해 사용하는 단계는?",
+            "options": [
+              "단순 컴파일만 수행",
+              "Validator 단계에서 컴파일·테스트·정적 분석·퍼징을 수행",
+              "인간 검토만 수행",
+              "자동 배포"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 Validator가 컴파일·테스트·정적 분석·퍼징 등 다양한 검증 도구를 활용한다고 명시되어 있다."
+          },
+          {
+            "question": "다음 중 AI for Security에 해당하는 사례는?",
+            "options": [
+              "GPT-Red",
+              "Gemini 3.5 Flash Cyber",
+              "CodeMender",
+              "모델 레드팀 테스트"
+            ],
+            "answer_index": 2,
+            "explanation": "CodeMender는 AI를 활용해 소프트웨어 취약점을 찾고 수정하는 AI for Security 사례이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
