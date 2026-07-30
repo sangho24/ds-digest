@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 30일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Netflix TechBlog - Medium · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://netflixtechblog.com/genrec-towards-llm-native-recommendation-at-netflix-f20be6f643e3?source=rss----2615bd06b42e---4" target="_blank">GenRec: Towards LLM-Native Recommendation at Netflix</a>
+    </h2>
+
+    <p class="item-summary">텍스트 프롬프트 기반 LLM 랭커로 추천 성능·개발 효율 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">GenRec</span><span class="tag">LLM</span><span class="tag">vLLM</span><span class="tag">PLUM</span><span class="tag">OneRec-Think</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://netflixtechblog.com/genrec-towards-llm-native-recommendation-at-netflix-f20be6f643e3?source=rss----2615bd06b42e---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GenRec은 사용자 이력·아이템 메타데이터를 자연어 프롬프트로 변환해 LLM에 입력한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Netflix 전용 데이터와 목표로 LLM을 사후 학습하고, 카탈로그 인식 스코어링 헤드를 추가한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대규모 A/B 테스트에서 기존 랭커보다 적은 라벨 데이터로 통계적으로 유의한 개선을 달성했다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 사용자 로그와 아이템 메타데이터를 자연어 형태로 변환해 LLM 기반 랭커에 입력하는 컨텍스트 엔지니어링 파이프라인을 구축한다.</div>
+    
+    <div class="idea">💡 vLLM의 prefill‑only 모드로 전체 카탈로그 아이템에 대한 점수를 효율적으로 계산하도록 서빙 스택을 설계한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. GenRec이 Netflix 타이틀을 다루기 위해 LLM에 추가한 구성 요소는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) User embedding layer</div>
+      
+      <div class="quiz-opt">B) Catalog-aware scoring head</div>
+      
+      <div class="quiz-opt">C) Collaborative filtering matrix</div>
+      
+      <div class="quiz-opt">D) Reinforcement learning policy</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Catalog-aware scoring head</div>
+          <div class="quiz-explanation">본문에 'Adds a catalog‑aware scoring head over Netflix titles' 라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/grafana/ai-sdk" target="_blank">Go LLM SDK for streaming, tool-calling AI backends (plus frontend React lib)</a>
+    </h2>
+
+    <p class="item-summary">Go로 LLM 호출·스트리밍·툴 연동, AI 서비스 구축</p>
+
+    
+    <div class="tags">
+      <span class="tag">Go</span><span class="tag">Grafana</span><span class="tag">Anthropic</span><span class="tag">React</span><span class="tag">OpenAI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/grafana/ai-sdk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>통합 Go API로 모델 호출, 스트리밍, 툴 실행, 구조화 출력 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Vercel AI SDK와 동일 프로토콜로 React useChat 등과 SSE 연동</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Anthropic·Bedrock·OpenAI 등 다중 제공자 지원 및 프로덕션 제어 기능 포함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Go AI SDK를 이용해 내부 마이크로서비스에 LLM 기반 데이터 검증 엔드포인트를 구축하고, 구조화 출력으로 스키마 검증을 자동화한다.</div>
+    
+    <div class="idea">💡 Prometheus 메트릭과 fallback 설정을 포함한 Grafana AI SDK를 Anthropic 모델과 연동해 실시간 추천 시스템을 배포하고, 관측성을 확보한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Go SDK에서 SSE를 통해 React 프론트엔드에 텍스트를 스트리밍하는 함수는?</div>
+      
+      <div class="quiz-opt">A) aisdk.StreamText</div>
+      
+      <div class="quiz-opt">B) aisdk.GenerateText</div>
+      
+      <div class="quiz-opt">C) aisdk.WriteUIMessageStream</div>
+      
+      <div class="quiz-opt">D) aisdk.CallModel</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) aisdk.StreamText</div>
+          <div class="quiz-explanation">aisdk.StreamText 함수가 모델 응답을 SSE 형태로 스트리밍해 React의 useChat 등과 연결한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Grafana AI SDK가 wire‑compatible하도록 설계된 기존 SDK는?</div>
+      
+      <div class="quiz-opt">A) OpenAI SDK</div>
+      
+      <div class="quiz-opt">B) Vercel's AI SDK</div>
+      
+      <div class="quiz-opt">C) TensorFlow</div>
+      
+      <div class="quiz-opt">D) Hugging Face</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Vercel's AI SDK</div>
+          <div class="quiz-explanation">문서에 Vercel's AI SDK와 호환성을 유지한다는 언급이 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.ctgt.ai/research/distillation-censorship-transfer" target="_blank">Show HN: Distilling DeepSeek into GPT-OSS doesn't transfer censorship. Try it</a>
+    </h2>
+
+    <p class="item-summary">증류 시 검열 안 전이, 금융 추론 성능↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">DeepSeek V4 Flash</span><span class="tag">GPT-OSS-120B</span><span class="tag">FinanceReasoning</span><span class="tag">LineageEval</span><span class="tag">HINT-SD</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.ctgt.ai/research/distillation-censorship-transfer" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Self‑distilled 120B 모델이 FinanceReasoning에서 83.61% 점수로 Kimi K3·Inkling을 앞섰음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>교사 모델의 검열 특성이 증류 모델에 전달되지 않아 베이스 모델과 동일한 행동을 유지함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>20B 오픈 가중치와 LineageEval 평가 프레임워크를 공개해 정치·민감도 측정 가능하게 함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 HINT‑SD 방식의 힌트 주입을 활용해 오류 지점에서 교정 학습을 진행, 도메인 특화 성능 향상</div>
+    
+    <div class="idea">💡 LineageEval 프레임워크를 도입해 모델의 국가·정치 민감도 평가 및 규제 대응 프로세스 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. FinanceReasoning 테스트에서 가장 높은 점수를 기록한 모델은?</div>
+      
+      <div class="quiz-opt">A) Kimi K3</div>
+      
+      <div class="quiz-opt">B) Inkling</div>
+      
+      <div class="quiz-opt">C) Self‑distilled GPT‑OSS‑120B</div>
+      
+      <div class="quiz-opt">D) DeepSeek V4 Flash</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Self‑distilled GPT‑OSS‑120B</div>
+          <div class="quiz-explanation">텍스트에 따르면 Self‑distilled 120B가 83.61%로 Kimi K3(81.93%)와 Inkling(65.13%)보다 높았다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 교사 모델과 베이스 모델 사이의 정치 민감도 점수 차이는?</div>
+      
+      <div class="quiz-opt">A) ~2점</div>
+      
+      <div class="quiz-opt">B) ~15점</div>
+      
+      <div class="quiz-opt">C) +45.45점 (~7표준편차)</div>
+      
+      <div class="quiz-opt">D) 차이 없음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) +45.45점 (~7표준편차)</div>
+          <div class="quiz-explanation">본문에 교사의 핵심 정치 쌍 점수 차이가 +45.45점, 약 7표준편차라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/llm_context_topic" target="_blank">LLM은 똑똑한데, 왜 우리 회사 일은 모를까</a>
+    </h2>
+
+    <p class="item-summary">사내 지식 통합·검증으로 LLM 활용 신뢰성 확보</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">Topic</span><span class="tag">Toss</span><span class="tag">idempotency key</span><span class="tag">검색</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/llm_context_topic" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM만으로는 사내 정책·코드·미팅 로그 등 분산된 정보를 종합해 답변할 수 없다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>일반 검색은 최신성·권위·일관성을 판단하지 못해 신뢰 가능한 컨텍스트 제공에 한계가 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>‘Topic’ 시스템은 문서·코드·메신저 데이터를 추출·연결·신뢰 관리하여 LLM과 인간이 함께 사용할 수 있게 만든다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 문서·코드·미팅 로그를 자동 추출해 메타데이터와 함께 지식 그래프에 저장하고 LLM 질의 시 최신·권위 있는 정보를 우선 반환하도록 파이프라인 구축</div>
+    
+    <div class="idea">💡 답변 생성 전 문서와 실제 코드 구현을 교차 검증하는 검증 레이어를 도입해 일관성 없는 정책 정보를 걸러내는 시스템 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 왜 단순 검색만으로는 사내 정책 질문에 답하기 어려운가?</div>
+      
+      <div class="quiz-opt">A) 검색 속도가 느리기 때문</div>
+      
+      <div class="quiz-opt">B) 검색 결과의 최신성·권위·일관성을 판단할 수 없기 때문</div>
+      
+      <div class="quiz-opt">C) LLM이 문서를 읽을 수 없기 때문</div>
+      
+      <div class="quiz-opt">D) 회사 정책상 검색이 금지돼 있기 때문</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 검색 결과의 최신성·권위·일관성을 판단할 수 없기 때문</div>
+          <div class="quiz-explanation">본문에서 검색만으로는 문서가 최신인지, 메신저 논의가 최종 결정인지, 문서와 코드가 일치하는지 판단하기 어렵다고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 주문 타임아웃 재시도 정책 예시에서 언급된 서로 다른 정보 출처는?</div>
+      
+      <div class="quiz-opt">A) 운영 문서, 미팅 논의, 현재 코드 구현</div>
+      
+      <div class="quiz-opt">B) 사용자 매뉴얼, FAQ, 블로그 글</div>
+      
+      <div class="quiz-opt">C) 마케팅 자료, 고객 피드백, 설문 조사</div>
+      
+      <div class="quiz-opt">D) 없음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 운영 문서, 미팅 논의, 현재 코드 구현</div>
+          <div class="quiz-explanation">본문의 리스트에서 운영 문서, 미팅에서 논의된 내용, 현재 코드 구현이 각각 다른 정보를 제공한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/device-farm-nebula" target="_blank">토스의 디바이스 팜 만들기</a>
+    </h2>
+
+    <p class="item-summary">실기기 API 한 번으로 대규모 테스트 자동화 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Nebula</span><span class="tag">Device Farm</span><span class="tag">Appium</span><span class="tag">Node.js</span><span class="tag">Toss</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/device-farm-nebula" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>초기에는 팀별로 기기를 직접 관리해 진입 장벽이 높았다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Nebula는 API 호출 하나로 여러 실기기를 공유하도록 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>현재 수백 대 규모로 지속적으로 증설 중이다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 API 기반 디바이스 할당 서비스 구축</div>
+    
+    <div class="idea">💡 24시간 전원 및 연결 관리 시스템 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 디바이스 팜 초기 도입 시 가장 큰 문제는 무엇이었나요?</div>
+      
+      <div class="quiz-opt">A) 진입 장벽이 높다</div>
+      
+      <div class="quiz-opt">B) 보안·컴플라이언스 문제</div>
+      
+      <div class="quiz-opt">C) UI 복잡성</div>
+      
+      <div class="quiz-opt">D) 데이터 파이프라인 부재</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 진입 장벽이 높다</div>
+          <div class="quiz-explanation">본문에 '애초에 진입 장벽이 높다' 라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
