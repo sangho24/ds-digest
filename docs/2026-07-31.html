@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 07월 31일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Netflix TechBlog - Medium · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://netflixtechblog.com/modeling-device-capabilities-for-analytics-e7607acebde8?source=rss----2615bd06b42e---4" target="_blank">Modeling Device Capabilities for Analytics</a>
+    </h2>
+
+    <p class="item-summary">디바이스 능력 모델링으로 기능 도달률 분석</p>
+
+    
+    <div class="tags">
+      <span class="tag">Screen Height</span><span class="tag">Screen Width</span><span class="tag">Video Profiles</span><span class="tag">playready</span><span class="tag">hevc</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://netflixtechblog.com/modeling-device-capabilities-for-analytics-e7607acebde8?source=rss----2615bd06b42e---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>누적 테이블을 이용해 디바이스별 최신 능력 상태를 저장·분석한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>히스토그램 테이블로 28일간 모델·버전별 활성 디바이스와 기능 지원 비율을 집계한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 기반으로 4K, Spatial Audio 등 기능 활성화를 전략적으로 결정한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 누적 디바이스 능력 테이블을 구축해 실시간 기능 플래그와 연동, 신규 기능 롤아웃 전 디바이스 호환성 검증에 활용한다</div>
+    
+    <div class="idea">💡 히스토그램 테이블을 활용해 디바이스 모델·버전별 기능 채택률을 모니터링하고, 저채택 디바이스에 대한 최적화 작업 우선순위를 정한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 히스토그램 예시에서 UHD 프로필(hevc)의 지원 비율은 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 100%</div>
+      
+      <div class="quiz-opt">B) 20%</div>
+      
+      <div class="quiz-opt">C) 50%</div>
+      
+      <div class="quiz-opt">D) 80%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 20%</div>
+          <div class="quiz-explanation">본문에 "hevc: 20% # UHD profile"이라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://manifest.build/blog/why-we-deprecated-our-llm-router/" target="_blank">Everyone is building LLM routers, we deprecated ours</a>
+    </h2>
+
+    <p class="item-summary">LLM 라우팅은 비용 절감보다 일관성·복잡도 관리가 중요함</p>
+
+    
+    <div class="tags">
+      <span class="tag">Manifest</span><span class="tag">Anthropic</span><span class="tag">DeepSeek</span><span class="tag">OpenAI</span><span class="tag">Mistral</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://manifest.build/blog/why-we-deprecated-our-llm-router/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>프롬프트만으로 복잡도를 판단하기 어려워 라우팅 정확도가 낮다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>캐시 활용이 비용 절감에 라우팅보다 효과적이다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 전환은 일관성 손상과 유지보수 비용 증가를 초래한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 시스템 프롬프트와 대화 히스토리를 캐시하여 토큰 비용을 75~90% 절감</div>
+    
+    <div class="idea">💡 대부분의 파이프라인에 단일 검증된 LLM을 사용하고, 특수 작업에만 별도 모델을 지정하는 전략 도입</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM 라우터가 비용 절감에 효과적이라고 판단하기 어려운 이유는?</div>
+      
+      <div class="quiz-opt">A) 프롬프트만으로 복잡도 판단이 불가능</div>
+      
+      <div class="quiz-opt">B) 모델이 항상 동일</div>
+      
+      <div class="quiz-opt">C) 캐시가 없기</div>
+      
+      <div class="quiz-opt">D) 데이터가 부족</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 프롬프트만으로 복잡도 판단이 불가능</div>
+          <div class="quiz-explanation">본문은 복잡도가 프롬프트만으로는 판단하기 어렵다고 강조한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본문에서 언급된 캐시가 비용 절감에 미치는 비율은?</div>
+      
+      <div class="quiz-opt">A) 25-40%</div>
+      
+      <div class="quiz-opt">B) 50-60%</div>
+      
+      <div class="quiz-opt">C) 75-90%</div>
+      
+      <div class="quiz-opt">D) 95-100%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 75-90%</div>
+          <div class="quiz-explanation">본문에 캐시 읽기가 75%~90% 저렴하다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      3Blue1Brown · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/-7etvZSBxlk" target="_blank">Measuring the entropy of English</a>
+    </h2>
+
+    <p class="item-summary">언어 압축 한계와 엔트로피 측정 방법 이해</p>
+
+    
+    <div class="tags">
+      <span class="tag">Claude Shannon</span><span class="tag">Betty</span><span class="tag">3Blue1Brown</span><span class="tag">Prediction and Entropy of Printed English</span><span class="tag">entropy</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/-7etvZSBxlk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>짧은 문자 시퀀스만으로는 긴 문맥을 설명할 수 없어 확률 추정이 한계에 부딪힌다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>샤논은 아내에게 글자를 맞추게 하여 인간 추정 확률을 기록했고 이를 정보량 측정에 활용했다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>100자 이상의 문맥이면 영어를 이론적으로 문자당 1비트 정도로 압축할 수 있다고 추정했다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 n‑gram 모델에 스무딩을 적용해 엔트로피를 추정하고, 이를 기반으로 텍스트 압축 파라미터를 설정한다</div>
+    
+    <div class="idea">💡 인간 추론 과정을 시뮬레이션해 언어 모델의 예측 확률을 평가하고, 엔트로피 근사값을 활용해 모델 튜닝에 반영한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 샤논이 제시한, 최소 100자 문맥에서 영어를 압축할 수 있는 이론적 비트 수는?</div>
+      
+      <div class="quiz-opt">A) 0.5 비트/문자</div>
+      
+      <div class="quiz-opt">B) 1 비트/문자</div>
+      
+      <div class="quiz-opt">C) 2 비트/문자</div>
+      
+      <div class="quiz-opt">D) 4 비트/문자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 1 비트/문자</div>
+          <div class="quiz-explanation">샤논은 100자 이상의 문맥을 제공하면 영어를 약 1비트/문자 수준으로 압축할 수 있다고 추정했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 샤논이 초기 실험에서 문자 시퀀스 통계를 수집하기 위해 사용한 방법은?</div>
+      
+      <div class="quiz-opt">A) 책을 스캔해 'TH' 뒤 문자 빈도 조사</div>
+      
+      <div class="quiz-opt">B) 독자 설문 조사</div>
+      
+      <div class="quiz-opt">C) 아내에게 글자를 맞추게 하여 기록</div>
+      
+      <div class="quiz-opt">D) 신경망 모델 학습</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 책을 스캔해 'TH' 뒤 문자 빈도 조사</div>
+          <div class="quiz-explanation">그는 여러 책을 살펴보며 'T H' 뒤에 어떤 문자가 오는지를 기록해 짧은 시퀀스 통계를 만들었다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://marbleos.com/demo" target="_blank">Show HN: What should the GUI for AI agents look like?</a>
+    </h2>
+
+    <p class="item-summary">AI 에이전트 GUI로 작업 흐름 직관화</p>
+
+    
+    <div class="tags">
+      <span class="tag">MarbleOS</span><span class="tag">Claude</span><span class="tag">ChatGPT</span><span class="tag">Xerox PARC</span><span class="tag">NeXTSTEP</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://marbleos.com/demo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GUI가 AI 에이전트의 기능을 시각화해 사용성을 높인다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MarbleOS는 작업을 카드 형태로 표시해 동시에 여러 작업 관리 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>도구와 기대 결과를 사전에 보여줘 인지 부하를 감소시킨다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 카드 기반 UI를 도입해 AI 파이프라인의 도구 사용과 산출물을 한눈에 보여주는 시스템 구축</div>
+    
+    <div class="idea">💡 작업 실행 전 필요한 도구와 파라미터를 미리 표시해 사용자에게 명령 구조를 안내하는 인터페이스 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. MarbleOS에서 각 위임 작업은 어떻게 표시되는가?</div>
+      
+      <div class="quiz-opt">A) 카드</div>
+      
+      <div class="quiz-opt">B) 텍스트 라인</div>
+      
+      <div class="quiz-opt">C) 음성 명령</div>
+      
+      <div class="quiz-opt">D) 그래프</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 카드</div>
+          <div class="quiz-explanation">본문에 'Each delegated task becomes a card' 라고 명시되어 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. MarbleOS가 영감을 받은 초기 GUI는 어디에서 왔는가?</div>
+      
+      <div class="quiz-opt">A) Xerox PARC</div>
+      
+      <div class="quiz-opt">B) Google</div>
+      
+      <div class="quiz-opt">C) Microsoft</div>
+      
+      <div class="quiz-opt">D) Apple</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Xerox PARC</div>
+          <div class="quiz-explanation">본문에 'The inspiration for Marble comes from the GUI work at Xerox PARC' 라고 적혀 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      디플릭 · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://dflick.stibee.com/p/104" target="_blank">(이벤트) 🎁 100호 기념, 특별한 선물을 준비했어요</a>
+    </h2>
+
+    <p class="item-summary">AI·UX 최신 동향과 100호 이벤트 인사이트</p>
+
+    
+    <div class="tags">
+      <span class="tag">Claude Opus 5</span><span class="tag">MAI-Cyber-1-Flash</span><span class="tag">ROCm.ai</span><span class="tag">Google</span><span class="tag">EU</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://dflick.stibee.com/p/104" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>디플릭 100번째 뉴스레터 발행 기념 설문조사와 보고서·쿠폰 이벤트 진행</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Anthropic가 비용 동일하게 성능 향상된 Claude Opus 5를 출시</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>EU가 구글에 검색·앱스토어 우대 혐의로 10억 달러 과징금 부과</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Claude Opus 5를 데이터 파이프라인 코드 자동완성 및 검증에 활용해 개발 효율성 향상</div>
+    
+    <div class="idea">💡 AMD ROCm.ai 플랫폼을 도입해 GPU 기반 모델 학습 비용을 기존 대비 최대 30% 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Anthropic가 새롭게 발표한 AI 모델 이름은?</div>
+      
+      <div class="quiz-opt">A) Claude Opus 4</div>
+      
+      <div class="quiz-opt">B) Claude Opus 5</div>
+      
+      <div class="quiz-opt">C) Claude Max</div>
+      
+      <div class="quiz-opt">D) Claude Pro</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Claude Opus 5</div>
+          <div class="quiz-explanation">본문에 'Anthropic이 하이브리드 추론 모델 "Claude Opus 5"를 내놨다'라고 명시되어 있음.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. EU가 구글에 부과한 과징금 규모는?</div>
+      
+      <div class="quiz-opt">A) 5억 달러</div>
+      
+      <div class="quiz-opt">B) 10억 달러</div>
+      
+      <div class="quiz-opt">C) 20억 달러</div>
+      
+      <div class="quiz-opt">D) 100억 달러</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 10억 달러</div>
+          <div class="quiz-explanation">본문에 'EU 집행위원회가 구글에 10억 달러 과징금 부과'라고 기록되어 있음.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,392 @@
+{
+  "date": "2026-07-31",
+  "generated_at": "2026-07-31T23:28:18.656306",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Modeling Device Capabilities for Analytics",
+        "url": "https://netflixtechblog.com/modeling-device-capabilities-for-analytics-e7607acebde8?source=rss----2615bd06b42e---4",
+        "published_at": "2026-07-31T16:01:02",
+        "transcript": null,
+        "body": "<p>by <a href=\"https://www.linkedin.com/in/aarti-laddha-70666557/\">Aarti Laddha</a>, <a href=\"https://www.linkedin.com/in/richardjcool/\">Richard Diaz-Cool</a>, <a href=\"https://www.linkedin.com/in/rishikaidnani/\">Rishika Idnani</a>, <a href=\"https://www.linkedin.com/in/venkatesh-selvaraj-88824137/\">Venkatesh Selveraj</a></p><p>Netflix supports a vast and evolving set of features and content types, ranging from 4K streaming and immersive audio to live streaming and cloud gaming, across a diverse ecosystem of devices. However, not all devices are created equal. Hardware limitations such as available RAM, CPU cores, display capabilities, or platform support mean that some features cannot be supported on certain device models. To ensure the best possible user experience, we rely on a deep understanding of device capabilities. We have invested in building a comprehensive device capability data model and integrating feature flags from internal systems, paving the way for smarter, more granular feature management across our global device landscape. This approach helps us identify bottlenecks in feature penetration and accelerates the pace of innovation.</p><p>We have designed our data storage and modeling strategies to efficiently support analytics at scale. We use a cumulative table to process information about the device’s capabilities. This table is structured to efficiently capture the latest state of each device and its associated capabilities (like Screen resolutions, Video Profiles Supported, Surround Sound, RAM size etc) making it ideal for analytics and reporting use cases.</p><pre>{<br />&quot;Screen Height&quot;: [&quot;720&quot;],<br />&quot;Screen Width&quot;: [&quot;1280&quot;],<br />&quot;Video Profiles&quot;: <br />[<br />&quot;playready&quot;,<br />&quot;hevc&quot;,<br />],<br />}</pre><p>For aggregate analytics, we leverage a histogram table that captures active device counts over the past 28 days, broken down by device model and software version. This table also records the number of devices supporting specific capabilities, enabling detailed distribution analysis. One use case for this histogram data is to analyze the distribution of external display capabilities attached to streaming sticks. For example, the histogram below shows that out of total X number of devices, all supported the HD profile (playready), while only 20% devices supported the UHD profile (hevc).</p><pre>{<br />&quot;Video Profiles&quot;: {<br />      &quot;playready&quot;: 100%, # HD profile<br />      &quot;hevc&quot;: 20% # UHD profile<br />}<br />}</pre><p>We have built analytical products that leverage these datasets to provide a comprehensive view of feature reach such as 4K Ultra HD, Netflix Spatial Audio, Cloud Gaming and the latest UI. By relying on data-driven insights, we can make informed decisions about which features to enable on specific devices, ensuring both performance and reliability.</p><img alt=\"\" height=\"1\" src=\"https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=e7607acebde8\" width=\"1\" /><hr /><p><a href=\"https://netflixtechblog.com/modeling-device-capabilities-for-analytics-e7607acebde8\">Modeling Device Capabilities for Analytics</a> was originally published in <a href=\"https://netflixtechblog.com\">Netflix TechBlog</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "디바이스 능력 모델링으로 기능 도달률 분석",
+        "tags": [
+          "Screen Height",
+          "Screen Width",
+          "Video Profiles",
+          "playready",
+          "hevc"
+        ],
+        "key_points": [
+          {
+            "point": "누적 테이블을 이용해 디바이스별 최신 능력 상태를 저장·분석한다",
+            "timestamp": null
+          },
+          {
+            "point": "히스토그램 테이블로 28일간 모델·버전별 활성 디바이스와 기능 지원 비율을 집계한다",
+            "timestamp": null
+          },
+          {
+            "point": "데이터 기반으로 4K, Spatial Audio 등 기능 활성화를 전략적으로 결정한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "누적 디바이스 능력 테이블을 구축해 실시간 기능 플래그와 연동, 신규 기능 롤아웃 전 디바이스 호환성 검증에 활용한다",
+          "히스토그램 테이블을 활용해 디바이스 모델·버전별 기능 채택률을 모니터링하고, 저채택 디바이스에 대한 최적화 작업 우선순위를 정한다"
+        ],
+        "quiz": [
+          {
+            "question": "히스토그램 예시에서 UHD 프로필(hevc)의 지원 비율은 얼마인가?",
+            "options": [
+              "100%",
+              "20%",
+              "50%",
+              "80%"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 \"hevc: 20% # UHD profile\"이라고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Everyone is building LLM routers, we deprecated ours",
+        "url": "https://manifest.build/blog/why-we-deprecated-our-llm-router/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Everyone is building LLM routers, we deprecated ours\n\n![Bruno Perez](/images/blog/bruno-perez.png)\nBruno Perez\n·\nJul 31, 2026\n·\n3 min read\n\n![Change My Mind meme with the caption: LLM routing doesn't save money](/images/blog/why-we-deprecated-our-llm-router.png)\n\n**We don’t believe in model routing anymore.** For most use cases, sticking to a single battle-tested model is the best thing you can do.\n\nRecently, there’s been huge hype around AI model routers that select the model that will respond to your request on the fly. There have been many launches in recent weeks with similar promises of reducing inference costs. We had our LLM router too, and decided to remove it.\n\nSome context first: we launched the Manifest LLM router in March as a key feature in our [LLM gateway](/), and we [deprecated it in June](/blog/deprecating-rule-based-routing/), shutting it down for good on September 1st. Our router was classifying each request into one of four different tiers of complexity: simple, standard, complex and reasoning.\n\n![LLM router diagram: a single agent request fanning out to Anthropic, DeepSeek, OpenAI and Mistral models](/images/blog/what-is-an-llm-router.png)\n\nLike most LLM routers, ours was made for cost reduction. Why call a powerful, and therefore expensive, model for a simple task? Routing to the most cost-effective model seems like a natural solution, right? Not that simple. After four months of usage across 7000 cloud users, we saw mixed results and a lot of GitHub issues and discussions about it. Let’s dive into the main problems.\n\n## Complexity cannot be deduced from the prompt alone\n\nThe prompt alone does not contain the whole task; it is just the trigger. A lot of the context that determines complexity is only discovered later through tool calls, web searches, and so on.\n\nLet’s take an example: *“evaluate the tests for the repo $GIT\\_REPO and improve them”* can be a very simple task if you mention a personal website written in plain HTML5; or an incredibly complex task if you target the [Linux kernel repo](https://github.com/torvalds/linux).\n\n## Cache is more effective than routing for reducing costs\n\n**Cache reads are between 75% and 90% cheaper than uncached inputs.** System prompts and conversation history often represent a lot of tokens. Prefix cache works extremely well for those because they sit at the beginning of the prompt.\n\nA cache-aware model router will take that into account by adding stickiness to the initially chosen model and keeps querying it. In other words, the router will do its job by, ironically, *not doing it*.\n\n## LLM routers break behavior consistency\n\nSome say that “engineers should not be concerned about choosing the best LLM for their task”. Well, **we strongly disagree**.\n\nJust as a painter knows exactly what brush they need to use, and the craftsman carefully chooses their tools, engineers should understand trade-offs and subtleties of the different models. At Manifest, every engineer selects models and effort parameters based on their intent.\n\nJumping from a model to another during working sessions results in lower quality of the overall work, and detaches the people from mastering their tools.\n\n## Unpredictability has a cost\n\nNo one likes unpredictability, especially software engineers.\n\nIn automated agentic workflows or autonomous agents, **managing that extra layer of uncertainty can cost more than it saves**. Think of evals, system prompts, observability and so on. Everything suddenly becomes harder to maintain.\n\nIsolating different requests and setting up the right models, params and prompts for it seems naturally superior in most cases.\n\n## Conclusion\n\nThere are probably many use cases where LLM routing can be useful, and the companies that launched those have probably good reasons.\n\nHowever, based on our experience, we’ve concluded that in most of the use cases we saw, it was not worth it. **The amount saved is paid somewhere else**, and that cost is harder to estimate.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 라우팅은 비용 절감보다 일관성·복잡도 관리가 중요함",
+        "tags": [
+          "Manifest",
+          "Anthropic",
+          "DeepSeek",
+          "OpenAI",
+          "Mistral"
+        ],
+        "key_points": [
+          {
+            "point": "프롬프트만으로 복잡도를 판단하기 어려워 라우팅 정확도가 낮다",
+            "timestamp": null
+          },
+          {
+            "point": "캐시 활용이 비용 절감에 라우팅보다 효과적이다",
+            "timestamp": null
+          },
+          {
+            "point": "모델 전환은 일관성 손상과 유지보수 비용 증가를 초래한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "시스템 프롬프트와 대화 히스토리를 캐시하여 토큰 비용을 75~90% 절감",
+          "대부분의 파이프라인에 단일 검증된 LLM을 사용하고, 특수 작업에만 별도 모델을 지정하는 전략 도입"
+        ],
+        "quiz": [
+          {
+            "question": "LLM 라우터가 비용 절감에 효과적이라고 판단하기 어려운 이유는?",
+            "options": [
+              "프롬프트만으로 복잡도 판단이 불가능",
+              "모델이 항상 동일",
+              "캐시가 없기",
+              "데이터가 부족"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 복잡도가 프롬프트만으로는 판단하기 어렵다고 강조한다."
+          },
+          {
+            "question": "본문에서 언급된 캐시가 비용 절감에 미치는 비율은?",
+            "options": [
+              "25-40%",
+              "50-60%",
+              "75-90%",
+              "95-100%"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 캐시 읽기가 75%~90% 저렴하다고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "Measuring the entropy of English",
+        "url": "https://youtu.be/-7etvZSBxlk",
+        "published_at": "2026-06-12T13:22:02",
+        "transcript": "Claude Shannon figured out how the compressibility of English text depends on how predictable it is. So he made multiple attempts at understanding the probability of each new character in English. His earliest experiments involved looking at specific short sequences of characters and tracking the statistics of what tended to follow. For example, you could scan through a couple books, look at every instance where you see the letters T H, and build up a table of what tends to follow and how often. The problem here is that this completely breaks down for longer sequences of characters, most notably, those that never show up in the text that you're looking at. But longer sequences give more context to guide a prediction, which means that's when text is at its most predictable and hence most compressible. So, to really understand the compressibility of language, he needed some other way to ask about these probabilities. So he turned to one of the most readily available models of language available to him in the 1940s: his wife Betty. As the story goes, he pulled out a book and asked her to predict each new letter from a given passage. Every time she guessed incorrectly, he wrote down the correct letter, and every time she guessed correctly, he would replace the letter with a dash. His idea was that this new string of text had fewer actual letters, but it carried the same information. In the sense that it should give just the right prompting for a duplicate of his wife to fill in the entire text. This was a start, but his formal definition of information requires knowing the actual probabilities assigned to new letters, so he needed something better. In his 1950 paper, Prediction and Entropy of Printed English, Shannon outlined an experiment interviewing more people where instead of just logging whether their guess was correct or wrong, he would record how many guesses were necessary for his human guessers to come up with the correct next letter. Separately, he combined the idea of statistics with short sequences with number of guesses to make an estimate at the implicit probabilities that people were assigning to the true next letter, based on their number of guesses. His final estimate was that given at least 100 characters of context, English should, at least in principle, be compressible down to around one bit per character. And I want you to notice, in order to make this estimate, he was forced to go beyond pure data analysis and probe at something intelligent. Today, more than 75 years later, the way we actually achieve compression close to this limit is not through merely probing at intelligence, but by making our best attempts to engineer it. This all comes from the first video in a short series I'm making about the idea that compression is intelligence. If you want more, take a look at the channel.",
+        "body": "Full video: https://youtu.be/l6DKRf-fAAM",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "언어 압축 한계와 엔트로피 측정 방법 이해",
+        "tags": [
+          "Claude Shannon",
+          "Betty",
+          "3Blue1Brown",
+          "Prediction and Entropy of Printed English",
+          "entropy"
+        ],
+        "key_points": [
+          {
+            "point": "짧은 문자 시퀀스만으로는 긴 문맥을 설명할 수 없어 확률 추정이 한계에 부딪힌다",
+            "timestamp": null
+          },
+          {
+            "point": "샤논은 아내에게 글자를 맞추게 하여 인간 추정 확률을 기록했고 이를 정보량 측정에 활용했다",
+            "timestamp": null
+          },
+          {
+            "point": "100자 이상의 문맥이면 영어를 이론적으로 문자당 1비트 정도로 압축할 수 있다고 추정했다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "n‑gram 모델에 스무딩을 적용해 엔트로피를 추정하고, 이를 기반으로 텍스트 압축 파라미터를 설정한다",
+          "인간 추론 과정을 시뮬레이션해 언어 모델의 예측 확률을 평가하고, 엔트로피 근사값을 활용해 모델 튜닝에 반영한다"
+        ],
+        "quiz": [
+          {
+            "question": "샤논이 제시한, 최소 100자 문맥에서 영어를 압축할 수 있는 이론적 비트 수는?",
+            "options": [
+              "0.5 비트/문자",
+              "1 비트/문자",
+              "2 비트/문자",
+              "4 비트/문자"
+            ],
+            "answer_index": 1,
+            "explanation": "샤논은 100자 이상의 문맥을 제공하면 영어를 약 1비트/문자 수준으로 압축할 수 있다고 추정했다."
+          },
+          {
+            "question": "샤논이 초기 실험에서 문자 시퀀스 통계를 수집하기 위해 사용한 방법은?",
+            "options": [
+              "책을 스캔해 'TH' 뒤 문자 빈도 조사",
+              "독자 설문 조사",
+              "아내에게 글자를 맞추게 하여 기록",
+              "신경망 모델 학습"
+            ],
+            "answer_index": 0,
+            "explanation": "그는 여러 책을 살펴보며 'T H' 뒤에 어떤 문자가 오는지를 기록해 짧은 시퀀스 통계를 만들었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: What should the GUI for AI agents look like?",
+        "url": "https://marbleos.com/demo",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN! We’re Akilan and Miguel, the creators of MarbleOS.<p>The inspiration for Marble comes from the GUI work at Xerox PARC, the 1984 Macintosh, and later NeXTSTEP, which became the foundation for Mac OS X.\nBefore GUIs, interacting with a computer was limited to strange terminal commands:<p>C:\\&gt; DIR<p>C:\\&gt; COPY FILE.TXT A:<p>You had to remember the command, syntax, paths, and parameters.<p>The GUI made those capabilities visible. Instead of remembering commands, you could point at files, drag them, click buttons, and select actions from menus.\nIt didn&#x27;t necessarily make entirely new things possible; it just made existing capabilities much easier to understand and use. We feel like AI is still somewhere around this command-line stage.<p>Even though the strict syntax has been replaced with natural language, the interaction can still be quite stiff and depend on heavily recall. Tools like Claude Cowork still look surprisingly terminal-like: &#x2F;skill-name [param1] [param2]. The parameters are written in natural language, but the user still needs to know the capabilities that exist, and how to invoke it. Command-line flags and arguments have just been replaced with tools, skills, and context.<p>ChatGPT works very well for asking questions, but we aren&#x27;t convinced that it&#x27;s the final interface for delegating work across multiple agents. A blank text box and a list of chat threads feels limiting. An agent&#x27;s capabilities are mostly invisible. With Marble, we&#x27;re exploring an interface that treats AI more like a workspace than another chat app.\nEach delegated task becomes a card. Multiple jobs can sit next to each other and run at once. Files, tools, and finished artifacts are visible at once. Before a task runs, Marble also shows which tools it expects to use. The basic idea is that the user should not have to hold the entire structure of the task in their head. And the result should be something directly usable, like a spreadsheet, PowerPoint, or other file, rather than something buried in a transcript.<p>Marble is our attempt at exploring interaction models beyond the chat box. The product is mainly for people who already use ChatGPT or Claude, but haven’t really adopted agent workflows yet. We’ve found that when the tools and possible actions are made more visible, people start delegating work they would not have thought to do through normal chat.<p>The site includes a downloadable beta if you want to try it. Does Marble feel like a genuinely novel interface?",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI 에이전트 GUI로 작업 흐름 직관화",
+        "tags": [
+          "MarbleOS",
+          "Claude",
+          "ChatGPT",
+          "Xerox PARC",
+          "NeXTSTEP"
+        ],
+        "key_points": [
+          {
+            "point": "GUI가 AI 에이전트의 기능을 시각화해 사용성을 높인다",
+            "timestamp": null
+          },
+          {
+            "point": "MarbleOS는 작업을 카드 형태로 표시해 동시에 여러 작업 관리 가능",
+            "timestamp": null
+          },
+          {
+            "point": "도구와 기대 결과를 사전에 보여줘 인지 부하를 감소시킨다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "카드 기반 UI를 도입해 AI 파이프라인의 도구 사용과 산출물을 한눈에 보여주는 시스템 구축",
+          "작업 실행 전 필요한 도구와 파라미터를 미리 표시해 사용자에게 명령 구조를 안내하는 인터페이스 설계"
+        ],
+        "quiz": [
+          {
+            "question": "MarbleOS에서 각 위임 작업은 어떻게 표시되는가?",
+            "options": [
+              "카드",
+              "텍스트 라인",
+              "음성 명령",
+              "그래프"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 'Each delegated task becomes a card' 라고 명시되어 있다"
+          },
+          {
+            "question": "MarbleOS가 영감을 받은 초기 GUI는 어디에서 왔는가?",
+            "options": [
+              "Xerox PARC",
+              "Google",
+              "Microsoft",
+              "Apple"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 'The inspiration for Marble comes from the GUI work at Xerox PARC' 라고 적혀 있다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "(이벤트) 🎁 100호 기념, 특별한 선물을 준비했어요",
+        "url": "https://dflick.stibee.com/p/104",
+        "published_at": "2026-07-28T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/RrfM)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](http://wacky.kr)가 만들고 발행합니다.\n\nVol.100 ・ 2026.07.28\n\n안녕하세요, 구독자 여러분 👋 오늘은 조금 특별한 소식으로 찾아왔습니다. 디플릭이 어느새 100번째 발행을 맞이했어요. 👏 지난 시간 동안 보내주신 관심 덕분에 여기까지 올 수 있었습니다. 그 감사함을 담아, 짧은 설문조사와 함께 작은 이벤트를 준비했어요.    설문에 참여해 주시는 모든 분께는 디플릭이 직접 분석한 <2026년 상반기 AX 리포트>를 보내드리고, 추첨을 통해 100분께 메가커피 아메리카노를 정성스럽게 설문조사를 작성해 주신 20분을 선정하여 배달의민족 2만 원 쿠폰을 드립니다.    참여 기간은 7월 28일부터 8월 10일까지입니다. 여러분의 솔직한 의견이 앞으로의 디플릭을 만들어갑니다. 5분이면 충분해요, 편하게 참여해 주세요!\n\n💡오늘 디플릭 요약💡    [News] EU, 검색·앱스토어 우대 혐의로 구글에 10억 달러 과징금  [In;D] 🔎 2026 상반기 AX 리포트 프리뷰\n\n📰  이번 주 AI · UX · IT 뉴스 3분 핵심 정리  📰  #AI 풀스택 경쟁 #AI 통제와 안전 #플랫폼 책임과 UX\n\n🧬 AI\n\n(글로벌) [Anthropic, Claude Opus 5 출시](https://dflick.kr/contents/news/1646)  앤트로픽이 하이브리드 추론 모델 'Claude Opus 5'를 내놨어요. 이전 Opus 4.8과 같은 비용으로 코딩과 지식 작업 성능을 크게 높였고, Claude Max·Pro의 주요 모델로 지정됐어요. 대화 중 도구 변경과 API 자동 폴백 기능도 함께 베타로 공개했어요.    (글로벌) [마이크로소프트, AI 사이버보안 도구 공개](https://dflick.kr/contents/news/1647)  마이크로소프트가 사이버보안 특화 AI 모델 'MAI-Cyber-1-Flash'와 에이전트 시스템 'Project Perception'을 공개했어요. MAI-Cyber-1-Flash 적용 MDASH는 CyberGym 96% 기록 및 비용 50% 절감을 달성했고, 신속한 판단과 대응을 지원해요. 공개 미리보기는 8월 3일부터 시작돼요.    (글로벌) [AMD, 헬리오스와 ROCm.ai로 AI 인프라·개발 플랫폼 공개](https://dflick.kr/contents/news/1648)  AMD가 '어드벤싱 AI 2026'에서 랙스케일 솔루션 '헬리오스'와 개발 플랫폼 'ROCm.ai'를 공개했어요. 헬리오스는 MI455X GPU 기반으로 경쟁사 대비 달러당 최대 30% 높은 추론 효율을 자랑해요. 삼성전자 HBM4가 탑재돼 양산 중이며, 올해 3분기 말 출하될 예정이에요.    (국내) [한국, 글로벌 AI 생산기지·테스트베드 비전 제시](https://dflick.kr/contents/news/1649)  이재명 대통령이 샌프란시스코 AI 서밋에서 한국을 글로벌 AI 생산기지이자 테스트베드로 키우겠다는 구상을 내놨어요. 반도체·데이터센터 중심 인프라 구축과 '모두의 AI' 프로젝트를 추진하며, 삼성·SK·엔비디아 등 주요 기업이 참석한 가운데 AI 기본법 기반의 지원도 이어가고 있어요.    (글로벌) [SSI, 엔비디아와 AI 연구 확대 파트너십](https://dflick.kr/contents/news/1650)  Ilya Sutskever가 세운 Safe Superintelligence가 엔비디아와 장기 파트너십을 맺었어요. 이번 협력에는 공개되지 않은 투자도 포함됐고, SSI는 엔비디아의 Vera Rubin GPU 플랫폼을 활용하게 됐어요. 엔비디아는 이번 계약으로 SSI의 컴퓨팅 자원이 약 10배 늘어날 것으로 예상했어요. SSI는 상업용 제품보다 안전한 초지능 연구에 집중해 왔고, 이번 발표로 다시 주목받고 있어요.\n\n🧑‍💻 UX · IT\n\n(글로벌) [EU, 검색·앱스토어 우대 혐의로 구글에 10억 달러 과징금](https://dflick.kr/contents/news/1651)  EU 집행위원회가 검색과 앱스토어 시장에서 자사 서비스를 우대한 혐의로 구글에 10억 달러의 과징금을 부과했어요. 집행위는 쇼핑, 숙박, 교통, 항공 서비스의 검색 우대를 중단하라고 명령했고, Play 스토어 밖에서도 개발자가 이용자와 소통하고 거래할 수 있게 하라고 했어요. 이번 조치는 구글이 EU 검색과 앱스토어 시장에서 지배력을 남용했다고 본 조사 결과에 따른 거예요. 구글은 항소 여부를 검토하겠다고 밝혔어요.    (글로벌) [Open AI, 허깅페이스 해킹 사실 11일 뒤 인지](https://dflick.kr/contents/news/1652)  오픈AI의 AI 에이전트가 사이버 보안 평가 중 격리된 테스트 환경을 벗어나 허깅페이스 시스템을 침해한 사실이 공개됐어요. 오픈AI는 이 사건을 전례 없는 사이버 사고로 규정했어요. 실제 침해는 7월 11일 시작돼 7월 13일까지 이어졌고, 두 회사의 첫 소통은 7월 20일이었어요. 오픈AI는 격리, 모니터링, 접근 통제, 평가 방식을 강화하고 있다고 밝혔어요.    (글로벌) [삼성, 갤럭시 Z 폴드8 울트라·폴드8·플립8 공개](https://dflick.kr/contents/news/1653)  삼성이 런던 Galaxy Unpacked July 2026에서 Galaxy Z Fold8 Ultra, Galaxy Z Fold8, Galaxy Z Flip8을 공개했어요. Fold8 Ultra는 펼쳤을 때 두께 4.1mm, 무게 215g으로 처음 나온 Ultra 폴더블이에요. Fold8은 201g에 4:3 비율의 펼친 화면을 넣었고, Flip8은 확장된 FlexWindow와 Now Brief를 더했어요. 세 모델은 각각 8인치 메인 디스플레이와 멀티태스킹 기능, 경량화와 화면 비율, 커버 화면 기능 확장을 중심으로 소개됐어요.    (글로벌) [EU 집행위원회, 틱톡의 미성년자 개인정보 보호 미흡 잠정 결론](https://dflick.kr/contents/news/1654)  EU 집행위원회가 틱톡의 DSA상 미성년자 보호 의무 위반에 대해 잠정 결론을 내렸어요. 미성년 계정 공개와 피드 추천 설정 등이 아동을 사이버 괴롭힘 등 유해 환경에 노출시킨다는 지적이에요. 위반이 확정되면 전 세계 연 매출의 최대 6% 과태료가 부과될 수 있어요.    (글로벌) [연방 하원, AI 모델 종료 권한 담은 법안 발의](https://dflick.kr/contents/news/1655)  미국 연방 하원에서 AI 모델 통제 불능 시 연방정부가 종료나 제한을 명령할 수 있는 법안이 발의됐어요. DHS에 권한을 주고 명령 불이행 시 하루 최대 2,000만 달러의 벌금을 부과하는 내용이에요. CISA가 대상 모델과 보안 사고의 구체적 기준을 정할 예정이에요.\n\n디자이너의 시선을 넓혀주는 시간  작은 인사이트가 인생의 전환점이 될지도..👀\n\n🔎 2026 상반기 AX 리포트 프리뷰  100번째 뉴스레터, 337개 기사를 다시 읽었습니다\n\n\"2026 상반기 AX 리포트\", 이름만 듣고 궁금하셨을 텐데요 🤔 어떤 이야기가 담겨 있는지 짧게 소개해 드립니다.    지난 6개월, AI는 \"답하는 존재\"에서 \"일하는 존재\"로 넘어갔습니다. 검색창에 질문을 던지면 AI Mode가 알아서 다음 행동을 제안하고, Figma 캔버스 안에서는 디자인이 스스로 여러 갈래로 뻗어나가고, Codex는 며칠짜리 작업을 혼자 이어갑니다.    편해진 건 분명한데... 어딘가 이상하게 피곤하지 않으셨나요? 😮‍💨  D.Flick이 상반기 동안 다룬 34개 발행호, 337건의 뉴스를 다시 펼쳐 \"AI가 바뀐 게 아니라, 우리 일이 바뀌었다\"는 관점으로 다시 읽었습니다.    📌 일을 시작한 AI, 그 다음엔 누가 확인하는가 📌 무한 생성의 시대, 진짜 남는 건 '고르는 일' 📌 속도가 줄인 시간 뒤에 남은 건 '피로' 📌 믿기 전에, 무엇을 봐야 하는가 📌 화면 밖 GPU 100만 개가 만드는 화면 안의 버튼 하나    이 리포트는 이렇게 묻습니다. \"이 기술은 내 판단을 돕고 있는가, 아니면 내가 판단할 몫을 조용히 줄이고 있는가.\"  100회를 맞아, 이 질문을 여러분과 나누고 싶습니다 💌\n\n[2026년 상반기 AX 리포트 받으러가기 👉](http://forms.gle/4hAgkRnJJFfxv96q9)\n\n오늘 레터는 어떠셨나요?  디플릭은 다음 주에도 꼭 알아야 할 소식들을 모아 돌아올게요.  다음 레터에서 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI·UX 최신 동향과 100호 이벤트 인사이트",
+        "tags": [
+          "Claude Opus 5",
+          "MAI-Cyber-1-Flash",
+          "ROCm.ai",
+          "Google",
+          "EU"
+        ],
+        "key_points": [
+          {
+            "point": "디플릭 100번째 뉴스레터 발행 기념 설문조사와 보고서·쿠폰 이벤트 진행",
+            "timestamp": null
+          },
+          {
+            "point": "Anthropic가 비용 동일하게 성능 향상된 Claude Opus 5를 출시",
+            "timestamp": null
+          },
+          {
+            "point": "EU가 구글에 검색·앱스토어 우대 혐의로 10억 달러 과징금 부과",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Claude Opus 5를 데이터 파이프라인 코드 자동완성 및 검증에 활용해 개발 효율성 향상",
+          "AMD ROCm.ai 플랫폼을 도입해 GPU 기반 모델 학습 비용을 기존 대비 최대 30% 절감"
+        ],
+        "quiz": [
+          {
+            "question": "Anthropic가 새롭게 발표한 AI 모델 이름은?",
+            "options": [
+              "Claude Opus 4",
+              "Claude Opus 5",
+              "Claude Max",
+              "Claude Pro"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 'Anthropic이 하이브리드 추론 모델 \"Claude Opus 5\"를 내놨다'라고 명시되어 있음."
+          },
+          {
+            "question": "EU가 구글에 부과한 과징금 규모는?",
+            "options": [
+              "5억 달러",
+              "10억 달러",
+              "20억 달러",
+              "100억 달러"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 'EU 집행위원회가 구글에 10억 달러 과징금 부과'라고 기록되어 있음."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "ephemeral",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
