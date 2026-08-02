@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 02일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/8B05cy3UuSE" target="_blank">NVIDIA's AI Learns Why Copying Humans Isn't Enough</a>
+    </h2>
+
+    <p class="item-summary">극소량 데이터로 인간 동작과 목표 학습 결합</p>
+
+    
+    <div class="tags">
+      <span class="tag">NVIDIA</span><span class="tag">AI</span><span class="tag">parkour</span><span class="tag">Two Minute Papers</span><span class="tag">Dr. Károly Zsolnai-Fehér</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/8B05cy3UuSE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI가 인간 동작을 모방하면서 목표 지향 행동도 학습하도록 두 교실에서 동시에 훈련한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>극소량(30초) 영상 데이터만으로도 뛰어난 퍼포먼스를 보여준다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>판정자(judge)와 선수(athlete)가 서로 경쟁하며 움직임의 진위와 적합성을 개선한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 극소량 동작 클립을 활용해 로봇 팔에 imitation+reinforcement 학습 파이프라인 구축</div>
+    
+    <div class="idea">💡 게임 엔진에서 캐릭터 모션 생성에 judge‑athlete 적대적 학습 프레임워크 적용</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 연구에서 사용된 인간 파쿠르 영상의 총 길이는 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 30초</div>
+      
+      <div class="quiz-opt">B) 60초</div>
+      
+      <div class="quiz-opt">C) 5분</div>
+      
+      <div class="quiz-opt">D) 10초</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 30초</div>
+          <div class="quiz-explanation">본문에 'only 30 seconds of internet parkour' 라고 명시되어 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Yannic Kilcher · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/xHi8PUIVyoo" target="_blank">I BUILT A FULLY AUTOMATIC MANSPLAINER</a>
+    </h2>
+
+    <p class="item-summary">실시간 AI 교정 시스템 구축 사례</p>
+
+    
+    <div class="tags">
+      <span class="tag">Nvidia DGX Spark</span><span class="tag">H100</span><span class="tag">GPU</span><span class="tag">VRAM</span><span class="tag">Sriracha</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/xHi8PUIVyoo" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DGX Spark은 120 GB 통합 메모리를 제공해 H100보다 큰 VRAM을 활용 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>노트북에서 음성을 녹음해 DGX Spark으로 전송, 추론 결과를 음성으로 재생</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>여러 모델을 순차적으로 연결하면 지연이 발생해 최적화 여지가 있음</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 DGX Spark의 120 GB 통합 메모리를 활용해 실시간 음성‑텍스트‑교정 파이프라인을 구축하고, 라그를 최소화하기 위해 모델 병합 및 배치 추론을 적용한다.</div>
+    
+    <div class="idea">💡 모델 체이닝으로 발생하는 지연을 프로파일링하고, 동일 GPU에서 멀티‑모델 서빙을 구현해 응답 시간을 30% 이상 단축한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 데모에서 120 GB 통합 메모리를 제공하는 하드웨어는?</div>
+      
+      <div class="quiz-opt">A) Nvidia DGX Spark</div>
+      
+      <div class="quiz-opt">B) Nvidia Jetson</div>
+      
+      <div class="quiz-opt">C) Google TPU</div>
+      
+      <div class="quiz-opt">D) AMD Radeon</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Nvidia DGX Spark</div>
+          <div class="quiz-explanation">영상에서 발표자는 DGX Spark이 120 GB 통합 RAM을 가지고 있다고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Sriracha 소스가 태국산이라는 주장이 부정확한 이유는?</div>
+      
+      <div class="quiz-opt">A) 베트남 난민이 캘리포니아에서 대중화했기 때문</div>
+      
+      <div class="quiz-opt">B) 일본에서 제조되기 때문</div>
+      
+      <div class="quiz-opt">C) 미국 기업이 소유하기 때문</div>
+      
+      <div class="quiz-opt">D) 합성 향료이기 때문</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 베트남 난민이 캘리포니아에서 대중화했기 때문</div>
+          <div class="quiz-explanation">발표자는 Sriracha 소스가 베트남 난민에 의해 캘리포니아에서 대중화됐다고 정정한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://fuselang.org" target="_blank">Show HN: Fuse – statically typed functional programming language</a>
+    </h2>
+
+    <p class="item-summary">함수형 언어로 데이터 파이프라인 최적화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Fuse</span><span class="tag">GRIN</span><span class="tag">LLVM</span><span class="tag">Scala</span><span class="tag">Rust</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://fuselang.org" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Fuse는 정적 타입 순수 함수형 언어이며 LLVM 네이티브 코드로 컴파일됩니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GRIN 전체 프로그램 최적화기를 거쳐 LLVM 코드가 생성됩니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>System F 기반에 고차 순위 다형성과 양방향 타입 검사를 추가했습니다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Fuse를 활용해 고성능 데이터 변환 파이프라인을 구현하고, LLVM 기반 네이티브 코드로 실행 속도를 향상시킨다.</div>
+    
+    <div class="idea">💡 Fuse의 정적 타입 시스템을 데이터 스키마 검증에 적용해 파이프라인 단계별 타입 안전성을 확보한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Fuse 언어가 컴파일되는 최적화 도구는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) GRIN</div>
+      
+      <div class="quiz-opt">B) LLVM</div>
+      
+      <div class="quiz-opt">C) GCC</div>
+      
+      <div class="quiz-opt">D) Clang</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) GRIN</div>
+          <div class="quiz-explanation">본문에 Fuse는 GRIN 전체 프로그램 최적화기로 컴파일된다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Fuse 언어 구현에 사용된 기본 프로그래밍 언어는?</div>
+      
+      <div class="quiz-opt">A) Rust</div>
+      
+      <div class="quiz-opt">B) Haskell</div>
+      
+      <div class="quiz-opt">C) Scala</div>
+      
+      <div class="quiz-opt">D) Python</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Scala</div>
+          <div class="quiz-explanation">본문에 Fuse의 구현 코드는 Scala로 작성되었다고 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Yannic Kilcher · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/DNajvkqfobY" target="_blank">Traditional Holiday Live Stream</a>
+    </h2>
+
+    <p class="item-summary">AI 논문·커뮤니티 정보 제공 채널 소개</p>
+
+    
+    <div class="tags">
+      <span class="tag">Yannic Kilcher</span><span class="tag">TabNine</span><span class="tag">Discord</span><span class="tag">Patreon</span><span class="tag">Bitcoin</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/DNajvkqfobY" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Yannic Kilcher의 유튜브 채널 및 Discord 커뮤니티 링크 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>TabNine 코드 완성 도구에 대한 추천 및 리퍼럴 링크</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>SubscribeStar, Patreon 등 재정 지원 방법 안내</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      3Blue1Brown · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/l6DKRf-fAAM" target="_blank">Reinventing Entropy | Compression is Intelligence Part 1</a>
+    </h2>
+
+    <p class="item-summary">텍스트 압축 한계와 LLM 학습 목표 연결</p>
+
+    
+    <div class="tags">
+      <span class="tag">Claude Shannon</span><span class="tag">cross-entropy</span><span class="tag">large language models</span><span class="tag">information theory</span><span class="tag">3Blue1Brown</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/l6DKRf-fAAM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Prediction and compression are mathematically equivalent per information theory.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM pre‑training objective can be viewed as building an optimal text compressor.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Shannon's noiseless coding theorem provides insight into compression limits.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Evaluate LLM pre‑training data redundancy using Shannon entropy estimates to prune unnecessary tokens.</div>
+    
+    <div class="idea">💡 Treat cross‑entropy loss as a direct compression metric, guiding model architecture and data selection for more efficient training.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Which loss function is described as being equivalent to building an efficient text compressor in LLM pre‑training?</div>
+      
+      <div class="quiz-opt">A) Mean Squared Error</div>
+      
+      <div class="quiz-opt">B) Cross‑entropy loss</div>
+      
+      <div class="quiz-opt">C) Hinge loss</div>
+      
+      <div class="quiz-opt">D) KL divergence</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Cross‑entropy loss</div>
+          <div class="quiz-explanation">The transcript states that the pre‑training objective is usually described as next‑token prediction using cross‑entropy loss, and that cross‑entropy originates from information theory where prediction and compression are equivalent.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

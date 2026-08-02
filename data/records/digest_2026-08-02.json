@@ -1,0 +1,355 @@
+{
+  "date": "2026-08-02",
+  "generated_at": "2026-08-02T23:15:50.248954",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "NVIDIA's AI Learns Why Copying Humans Isn't Enough",
+        "url": "https://youtu.be/8B05cy3UuSE",
+        "published_at": "2026-08-02T15:01:10",
+        "transcript": "This is one of the most fun papers I've read in a while. You will love this one. So, what if you knew every athletic move perfectly but had no idea when to use which? A perfect vault is useless if the table moves away. This is the strange problem of teaching parkour to a virtual human. Systems that copy us are beautiful, but brittle, repetitive. Systems that chase goals adapt, but often stop moving like us. But this new way of work says, enough is enough. Let's do both. It promises to remember exactly how humans move, yet is able to break the script when needed. Mm, and get this, here's the crazy part. The training data. They say that all you have is only 30 seconds of internet parkour to pull this off. That, fellow scholars, sounds impossible. You see, previous techniques were not up to the task. This guy moves like a drunkard. Not to worry, try again. And, yep, get some rest. Next, now this guy looks a bit more promising. Wait a second, that's cheating. You are supposed to get through the level, not avoid it, mister. That is cheating. Get out of here. Previous technique, number three. Ooh, now we're talking. Look at that. Uff, what an insane research field. This is so much fun. Okay, so, can this new technique solve this? Because the previous ones couldn't. Let's see if it can solve the level. I don't think so. Dear fellow scholars, this is 2 Minute Papers with Dr. Károly Zsolnai-Fehér. Now, hold on to your papers, fellow scholars, and let's see. That's a strong start. Very athletic. Ooh, look at that. Solving the level like a ninja. It really adapts and composes new skills to get through the level. Okay, so, we are experienced fellow scholars here, so we ask, was this the only level it can finish or is this the real deal? Can it solve longer levels? Let's see. Oh my, we are off to a good start. Still going. Yes, incredible. Good job. Ouch. Okay, get well soon, little AI. Now, after taking a trip to the AI hospital, let's try a variety of levels at the same time. This is amazing. Love it. Now, let's make it harder. A level with unseen obstacle arrangements. And, oh my, still doing amazingly well. And the final jump. Now, that is a sight to behold. And it gets better because I will show you my favorite move and it's kind of the best. Okay, so how on Earth did they do that? Well, they put one character into two classrooms. In the first, it learns to copy human movement. This produces beautiful human-like motions, but it is limited by the training data. It cannot go beyond what it has seen. And remember, that is only 19 clips containing 30 seconds of parkour. Very little data. In the second classroom, it learns to solve new obstacle courses. And from this point on, the same AI controller learns in both classrooms simultaneously. Do not forget about the part where both classrooms give it body, obstacle, and destination information. Super important. And here comes the most beautiful part. It's quite the formula, but we'll break it down. I'll try my best. My best way to imagine this is that now we train a judge to minimize three kinds of error. Here are real human movements, together with the obstacles around them. The judge should call these real. Then, here the movements are produced by the AI. The judge should call these fake. Now, we use this judge to train our AI athlete. If it moves like a clumsy AI, it gets a poor score. Get out of here. But as its movements become more human-like and appropriate for the obstacle, it gets a treat, a good score. And the judge and athlete keep improving together. The athlete gets better at fooling the judge while the judge gets better at spotting artificial movements. This is absolutely beautiful. Finally, this last term keeps the judge stable, so tiny changes in a movement do not completely change its decision. And this is what leads to these absolutely stunning results. But it is not perfect. It offers lower tracking error than its predecessors, but at a cost of a bit of a hit to the success rate. This trade-off is among the weaker spots, I think. So, I would chalk this up as a limitation. Longer levels still only have about 40% success. The other limitation is that unnatural recovery motions are also possible. Now, as promised, here is my favorite move in the sequence. Wow, this is incredible. What a time to be alive. But here is the most important thing. The research paper is freely available. Free knowledge for all of us and potentially code later too. So, all of this knowledge is out there for all of us for free. And nobody is talking about it. This is driving me mad. This is why I keep making these videos. This is what I live for. Every research paper is a gift to humanity and I want to make sure that humanity receives this gift. I use Lambda to reproduce AI research papers often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text to image or video, easy peasy. Running a deep seek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 The paper is available here:\nhttps://jiashunwang.github.io/HIL/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "극소량 데이터로 인간 동작과 목표 학습 결합",
+        "tags": [
+          "NVIDIA",
+          "AI",
+          "parkour",
+          "Two Minute Papers",
+          "Dr. Károly Zsolnai-Fehér"
+        ],
+        "key_points": [
+          {
+            "point": "AI가 인간 동작을 모방하면서 목표 지향 행동도 학습하도록 두 교실에서 동시에 훈련한다",
+            "timestamp": null
+          },
+          {
+            "point": "극소량(30초) 영상 데이터만으로도 뛰어난 퍼포먼스를 보여준다",
+            "timestamp": null
+          },
+          {
+            "point": "판정자(judge)와 선수(athlete)가 서로 경쟁하며 움직임의 진위와 적합성을 개선한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "극소량 동작 클립을 활용해 로봇 팔에 imitation+reinforcement 학습 파이프라인 구축",
+          "게임 엔진에서 캐릭터 모션 생성에 judge‑athlete 적대적 학습 프레임워크 적용"
+        ],
+        "quiz": [
+          {
+            "question": "이 연구에서 사용된 인간 파쿠르 영상의 총 길이는 얼마인가?",
+            "options": [
+              "30초",
+              "60초",
+              "5분",
+              "10초"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 'only 30 seconds of internet parkour' 라고 명시되어 있다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Yannic Kilcher",
+        "source_key": "UCZHmQk67mSJgfCCTn7xBfew",
+        "source_label": "Yannic Kilcher",
+        "title": "I BUILT A FULLY AUTOMATIC MANSPLAINER",
+        "url": "https://youtu.be/xHi8PUIVyoo",
+        "published_at": "2026-03-06T22:07:33",
+        "transcript": "Hello. Have you ever been in a situation where you're overhearing conversation and it dawns on you, this person, well-intended, is wrong about something minuscule, but important to you, and duty, the universe compels you to tell them why they're wrong. Watch this. I recycle plastic because it's good for the environment. Oh, good. You recycle. How noble and delightfully basic. Just so you know, tossing plastics in the bin isn't a magic equal wand. Most of it still gets downcycled, landfilled, or shipped overseas. So, yes, helpful, but not the planetary rescue you imagine. Let's try another one. I have heard that strawberries actually count as nuts. You heard strawberries are nuts. That's not how botany works. Strawberries are fruits with seeds on the outside. True nuts are dry, single-seeded fruits like acorns. Close, but pathetically irrelevant. Try a dictionary next time. You see how powerful this is? Now, we can be everywhere at once, wherever someone is slightly wrong about something, we can be there to correct them. I have built a fully automated mansplainer. The best thing is, it all runs on a box that fits right in my backpack. This is Nvidia DGX Spark. It's pretty cool. Nvidia sent me this, so thank you, Nvidia. So, before I'll show you how I built the automatic mansplainer. Let's briefly dive into the Spark. It's pretty neat. It's really only this big, and it packs a punch. It has 120 GB unified RAM. That means the RAM is for both the system and the GPU. So, you get like almost 120 gigs of GPU VRAM, which is fantastic, right? That's more than an H100. So, you can run pretty seriously big models on this thing right here. So, it's recording. This is Matisse. He's an engineer at our company and he has genuinely no clue what to expect of this. In front of me is a laptop. When I press the space bar, it records audio and sends that to the DGX Spark to run the whole setup. When I get back the result, it plays it out loud. You'll see at the same time how awesome this all is, but then also that if you chain these models together in a suboptimal way like I'm doing here, there's quite a bit of lag involved, which, uh, leaves some room to be optimized. But I think it makes for a good time. Tell me uh, what you're doing in your free time. What do you like to do? Uh, in my free time, I really like to play around with uh, basketballs and throw them into hoops and uh, you know, like do a lot of like kind of sport gym stuff. Um, I really like that. Oh, that's excellent. Excellent. Oh, how charmingly vague. You mean basketball, not basketballs. Unless you're practicing with multiple like a true prodigy. And spot gym stuff, do you mean exercise or perhaps workout? Let's aim for specificity, shall we? So, oh, could you be a bit more specific, please? By basketball, I mean I I like to like, you know, play with friends, like get get a kind of like a hoop, you know, and really throw it in, try to score some points, like, uh, I'm really kind of like that. The German accent makes it so good. Oh, how charmingly foxy. You mean basketball, the sport invented by Dr. James Naismith in 1891, not just playing with friends and throwing it in. How delightfully Tell me an interesting fact about food. Did you know that uh, Sriracha sauce comes from Thailand? It comes from a like a town called Sriracha. It's near Bangkok. It was made there. And Red Bull is also Thai. Oh, how quaintly uninformed. Sriracha sauce, you see, is indeed named after the coastal city of Sriracha in Thailand, but it's not from Thailand in the way you're implying. The sauce we know today was popularized No. Is because I spoke? I mean I was The sauce you know today was popularized by a Vietnamese refugee in California. Really? Yes. I genuinely do not know that. I thought I had a cool fact. I've been I've been saying this to everyone for years. This guy really sounds like I have a German flatmate that yesterday was explaining me that I need to swipe the shower, the glass shower thing after I shower. Uh, he was really explaining to me and it I'm getting flashbacks from this. Yeah, this is running completely on the DGX Spark. Obviously, yes, yes, yes. The voice sounds super realistic. And it also corrects itself. Exactly the way he said like Sriracha, oh, sorry, Sriracha, like that is pretty crazy. It sounds super Uh, the delightful cultural exchange of bathroom etiquette. I'm sure your German flatmate was merely enlightening you on the nuanced art of glass shower maintenance. Some of us just naturally understand the importance It has a context. The voice is super cool. I really How do you is there like a list of voices you can kind of I don't know why they make the default to be a super annoying German guy. He needs to become a bit quicker to make it really conversational, but Really sick. Well, thank you. Thank you. This must be shown in the video. I was recorded by a shoe. This guy was recording me. I had to be serious with this thing and the shoe recorded. The whole thing is actually just three models in sequence. So, there is a whisper model that takes the voice and translates it to text. Then there's a Mistral medium that takes the text and translates it to the mansplanation, and then there is Vibe Voice, which is a project by Microsoft, that takes the text and uh, generates sound from it. And, yes, the annoying German guy voice is just the thing that came with Vibe Voice, and I think it's just so fitting for this project. All of these models fit on the GGX Spark at the same time. Now, Nvidia has not just sent me one, but Nvidia's actually raffling out a DGX Spark. And later in the video, I'm going to tell you how you can win that DGX Spark. Stay tuned. The box itself is pretty cool. But what's also cool is what's on the box. I am the kind of person who buys an Android phone with as little stuff on it as possible. I'm usually the person that goes full bare metal plain because I do not want all the vendor crap on it. Nvidia did a excellent job of giving me just enough tooling to make me still use all the underlying things but make my life a lot easier when it comes to building things on top. So, let me show you what I mean. So, first of all, network connectivity is a breeze. You actually plug in the Spark regular keyboard, monitor, and connect to a network. And immediately it not only gets an IP but it also gets a local hostname. That just makes it that much easier just to like SSH into it or something like this. So, if you want, you can use this as a regular device on the network that you can SSH into. Let me do this. So, I just tried SSH into Spark. It's disconnected. I'm gonna plug it in. So, as I said, you can just SSH into this thing. Again, this is a regular Linux box with a Buntu, and you can see it has 120 gigs of memory, has an arm CPU. It has 3.4 terabytes of disk, and the crown jewel here is obviously the Nvidia GB10 GPU that's built inside. And you can see here again, memory usage is not supported, meaning there's no memory at the GPU directly. The memory is the same memory that the system uses, and that's pretty neat because you can now shift this memory around. If you're using a lot of memory for some process, you can do that. But if you're using a lot of memory for running a model, you can do that as well. So, Nvidia has really nice tools. They have this Nvidia Sync utility where you can basically connect to the Spark. But the cool thing is to open this AI Workbench right here. You can see I already have this open in the background here. And what you do in the Workbench is very interesting. So, this is divided into projects. You can open a new project. Once you do that, you get to choose an environment. Nvidia makes it very easy to work with containers on the Spark. So, let me create one of these Pytorch containers. So, if one of your projects needs CUDA 12.6, and another one of your projects needs CUDA 13. If one of your projects needs Python 3.11 with Pytorch 2.6.5, and another one of your projects you want to be at bleeding edge, you can do that with containers. It even suggests to me a few things right away. So, it installs a Jupiter Lab for me. I can just start the Jupiter Lab. I can wait for the container to start here. And then once I open that, I now have a Jupiter Lab available. A bunch of suggestions here. And if I do that, then I get Pytorch is available here. This makes it super easy. It also means you can share these projects with others and publish them to Git. But let's make it even easier for people. Nvidia has a webpage. They help you from doing basic things like setting up network access for your Spark, installing VS Code or a code server on the Spark. So, besides the starter packs here, we have all of these playbooks. And these are pretty neat because they show you what you can do with the Spark. Here's a playbook that instructs you how to achieve your own local vibe coding setup, running GPT OSS 120B completely local. Here is how to build a full enterprise rag application. Here is how to achieve NVFP4 quantization for Blackwell directly on the Spark. Here is a recipe how to fine-tune models with Pytorch. Now, I'm not going through all of these playbooks here because you would shatter out of sheer awesomeness that is me following instructions that are on a page. I did this one here, Live VLM Web UI. You get the basic idea and you get a few instructions right here. It realistically takes about two minutes. And here is what that looks like. There's me. Let's see whether it recognizes me. Bald man, thank you. Bald man wearing sunglasses, holding a microphone. Let's go here. Yeah, so this is Gemma 34B doing the recognition right here. What is this? A pair of headphones. No, small silver cylindrical object. So, I hope you can see how easy it is to get started here and to get up and running. Who is this for? I think there's two user groups that might be particularly interested in this. The first one is the group that really values privacy and autonomy. This thing is, you saw, like a single one of these is able to run GPT OSS 120B. And that's a big model. So, you're easily able to run the world's largest open weight models with one or maybe two of these boxes that you stitch together. The second group that is really interested in this is tinkerers. Having a local device means that you can play around. You can not just consume models, but you can fine-tune these models. You can experiment, you can go deep into the weeds, and you can change things that you could never change if you had to deploy something in the cloud or you consume a cloud API. So, if you fall into one of these two user groups, valuing privacy or being super tinkery, this is a good deal. And to me, coming back to the box itself, the form factor is pretty cool because it means small enough to put it away somewhere and just SSH into it. But it's also neat enough to take it with you somewhere, plug it in, be able to have your local inference wherever you go, basically. Let's have a last go at a mansplanation. I really want to travel to Paris. Such a nice city. Oh, how original, Paris. Yes, charming, full of baguettes and romance. The whole city is a postcard. If you actually want culture, maybe learn a few phrases, skip the tourist traps, and try real cafes, not chains. All right, so now I'm going to tell you how to actually enter into the raffle for the DGX Spark. Again, super thanks to Nvidia for doing this. Uh, in order to win the DGX Spark, you have to attend GTC. GTC is a conference that Nvidia's putting on every year and is super awesome. Uh, they have a lot of good speakers, they have tutorials, they have workshops, they have new releases, all kinds of things. And what you have to do is you have to register through my form. There's a link in the description. You have to attend GTC and you have to attend a session other than the keynote. So, attend the keynote but then also attend the session other than the keynote. Uh, this is for people in EMEA specifically. So, Europe, Middle East, and Africa. If you are of a different region, you cannot win the Spark. I'm very sorry. Um, but uh, register anyway. It's a super cool conference. And I'm sure it will be entertaining. All right, all the details are in the link in the description or you go to Yculture.com/GTC. And that will get you everything. Again, many thanks to Nvidia, uh, for having me do this. This is super cool. The Spark is super cool. And I wish you tons of fun if you also have one or win one. Bye bye.",
+        "body": "All information about GTC and the DGX Spark Raffle is here: https://www.ykilcher.com/gtc\n\n\nLinks:\nHomepage: https://ykilcher.com\nMerch: https://ykilcher.com/merch\nYouTube: https://www.youtube.com/c/yannickilcher\nTwitter: https://twitter.com/ykilcher\nDiscord: https://ykilcher.com/discord\nLinkedIn: https://www.linkedin.com/in/ykilcher\n\nIf you want to support me, the best thing to do is to share out the content :)\n\nIf you want to support me financially (completely optional and voluntary, but a lot of people have asked for this):\nSubscribeStar: https://www.subscribestar.com/yannickilcher\nPatreon: https://www.patreon.com/yannickilcher\nBitcoin (BTC): bc1q49lsw3q325tr58ygf8sudx2dqfguclvngvy2cq\nEthereum (ETH): 0x7ad3513E3B8f66799f507Aa7874b1B0eBC7F85e2\nLitecoin (LTC): LQW2TRyKYetVC8WjFkhpPhtpbDM4Vw7r9m\nMonero (XMR): 4ACL8AGrEo5hAir8A9CeVrW8pEauWvnp1WnSDZxW7tziCDLhZAGsgzhRQABDnFy8yuM9fWJDviJPHKRjV4FWt19CJZN9D4n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "실시간 AI 교정 시스템 구축 사례",
+        "tags": [
+          "Nvidia DGX Spark",
+          "H100",
+          "GPU",
+          "VRAM",
+          "Sriracha"
+        ],
+        "key_points": [
+          {
+            "point": "DGX Spark은 120 GB 통합 메모리를 제공해 H100보다 큰 VRAM을 활용 가능",
+            "timestamp": null
+          },
+          {
+            "point": "노트북에서 음성을 녹음해 DGX Spark으로 전송, 추론 결과를 음성으로 재생",
+            "timestamp": null
+          },
+          {
+            "point": "여러 모델을 순차적으로 연결하면 지연이 발생해 최적화 여지가 있음",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "DGX Spark의 120 GB 통합 메모리를 활용해 실시간 음성‑텍스트‑교정 파이프라인을 구축하고, 라그를 최소화하기 위해 모델 병합 및 배치 추론을 적용한다.",
+          "모델 체이닝으로 발생하는 지연을 프로파일링하고, 동일 GPU에서 멀티‑모델 서빙을 구현해 응답 시간을 30% 이상 단축한다."
+        ],
+        "quiz": [
+          {
+            "question": "데모에서 120 GB 통합 메모리를 제공하는 하드웨어는?",
+            "options": [
+              "Nvidia DGX Spark",
+              "Nvidia Jetson",
+              "Google TPU",
+              "AMD Radeon"
+            ],
+            "answer_index": 0,
+            "explanation": "영상에서 발표자는 DGX Spark이 120 GB 통합 RAM을 가지고 있다고 설명한다."
+          },
+          {
+            "question": "Sriracha 소스가 태국산이라는 주장이 부정확한 이유는?",
+            "options": [
+              "베트남 난민이 캘리포니아에서 대중화했기 때문",
+              "일본에서 제조되기 때문",
+              "미국 기업이 소유하기 때문",
+              "합성 향료이기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "발표자는 Sriracha 소스가 베트남 난민에 의해 캘리포니아에서 대중화됐다고 정정한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Fuse – statically typed functional programming language",
+        "url": "https://fuselang.org",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN! I&#x27;ve been working on the fuse programming language, it&#x27;s a statically typed purely functional language with higher-kinder types and ad-hoc polymorphism. It compiles to the GRIN whole-program optimizer, producing LLVM-generated native code.<p>Fuse supports ADTs, Generics, Type Methods, Traits, Pattern matching etc. all in a functional style with no mutations.<p>I’ve been developing the language for 5 years, with code written in Scala. I’ve started coding the language from the base of System F that was implemented as part of the book: Types and Programming Languages (tapl). And then extending with concepts such as Bidirectional Type Checking with Higher-Rank Polymorphism.<p>I’ve mainly drawn inspiration from Rust, Haskell, Scala and Python (in terms of syntax). It all started because I wanted a language that has Rust-like concepts such as: ADT, Traits, Impl block syntax, etc. but have the pure functional semantics.<p>I&#x27;d would love feedback on the language design and its general usage.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "함수형 언어로 데이터 파이프라인 최적화",
+        "tags": [
+          "Fuse",
+          "GRIN",
+          "LLVM",
+          "Scala",
+          "Rust"
+        ],
+        "key_points": [
+          {
+            "point": "Fuse는 정적 타입 순수 함수형 언어이며 LLVM 네이티브 코드로 컴파일됩니다.",
+            "timestamp": null
+          },
+          {
+            "point": "GRIN 전체 프로그램 최적화기를 거쳐 LLVM 코드가 생성됩니다.",
+            "timestamp": null
+          },
+          {
+            "point": "System F 기반에 고차 순위 다형성과 양방향 타입 검사를 추가했습니다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Fuse를 활용해 고성능 데이터 변환 파이프라인을 구현하고, LLVM 기반 네이티브 코드로 실행 속도를 향상시킨다.",
+          "Fuse의 정적 타입 시스템을 데이터 스키마 검증에 적용해 파이프라인 단계별 타입 안전성을 확보한다."
+        ],
+        "quiz": [
+          {
+            "question": "Fuse 언어가 컴파일되는 최적화 도구는 무엇인가?",
+            "options": [
+              "GRIN",
+              "LLVM",
+              "GCC",
+              "Clang"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 Fuse는 GRIN 전체 프로그램 최적화기로 컴파일된다고 명시되어 있다."
+          },
+          {
+            "question": "Fuse 언어 구현에 사용된 기본 프로그래밍 언어는?",
+            "options": [
+              "Rust",
+              "Haskell",
+              "Scala",
+              "Python"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 Fuse의 구현 코드는 Scala로 작성되었다고 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Yannic Kilcher",
+        "source_key": "UCZHmQk67mSJgfCCTn7xBfew",
+        "source_label": "Yannic Kilcher",
+        "title": "Traditional Holiday Live Stream",
+        "url": "https://youtu.be/DNajvkqfobY",
+        "published_at": "2025-12-28T12:41:54",
+        "transcript": null,
+        "body": "https://ykilcher.com/discord\n\nLinks:\nTabNine Code Completion (Referral): http://bit.ly/tabnine-yannick\nYouTube: https://www.youtube.com/c/yannickilcher\nTwitter: https://twitter.com/ykilcher\nDiscord: https://discord.gg/4H8xxDF\nBitChute: https://www.bitchute.com/channel/yannic-kilcher\nMinds: https://www.minds.com/ykilcher\nParler: https://parler.com/profile/YannicKilcher\nLinkedIn: https://www.linkedin.com/in/yannic-kilcher-488534136/\nBiliBili: https://space.bilibili.com/1824646584\n\nIf you want to support me, the best thing to do is to share out the content :)\n\nIf you want to support me financially (completely optional and voluntary, but a lot of people have asked for this):\nSubscribeStar: https://www.subscribestar.com/yannickilcher\nPatreon: https://www.patreon.com/yannickilcher\nBitcoin (BTC): bc1q49lsw3q325tr58ygf8sudx2dqfguclvngvy2cq\nEthereum (ETH): 0x7ad3513E3B8f66799f507Aa7874b1B0eBC7F85e2\nLitecoin (LTC): LQW2TRyKYetVC8WjFkhpPhtpbDM4Vw7r9m\nMonero (XMR): 4ACL8AGrEo5hAir8A9CeVrW8pEauWvnp1WnSDZxW7tziCDLhZAGsgzhRQABDnFy8yuM9fWJDviJPHKRjV4FWt19CJZN9D4n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "AI 논문·커뮤니티 정보 제공 채널 소개",
+        "tags": [
+          "Yannic Kilcher",
+          "TabNine",
+          "Discord",
+          "Patreon",
+          "Bitcoin"
+        ],
+        "key_points": [
+          {
+            "point": "Yannic Kilcher의 유튜브 채널 및 Discord 커뮤니티 링크 제공",
+            "timestamp": null
+          },
+          {
+            "point": "TabNine 코드 완성 도구에 대한 추천 및 리퍼럴 링크",
+            "timestamp": null
+          },
+          {
+            "point": "SubscribeStar, Patreon 등 재정 지원 방법 안내",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 2,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "Reinventing Entropy | Compression is Intelligence Part 1",
+        "url": "https://youtu.be/l6DKRf-fAAM",
+        "published_at": "2026-06-07T11:49:51",
+        "transcript": "When you encode text into binary, it's often nice to use as little data as possible. So you might naturally wonder, is there some kind of fundamental limit on how efficiently text can be compressed? The default encoding with ASCII is pretty inefficient. Each character is represented with eight full bits. If you apply a little cleverness, associating more common characters with smaller bit strings, you can get this down to an average of around four bits per character. And then much smarter methods than that that leverage patterns among long sequences of text can get even better still. But again, what's the limit?\n\nI'm guessing many of you might have heard an estimate here. I will share one at the end. But much more interesting than any single numerical answer is how you would even approach answering it. This question dates back at least to the 1940s, with Claude Shannon's seminal work that kicked off information theory. Now, what's very interesting is how the math that he developed to answer questions like this has turned out to be surprisingly useful for modern machine learning. To take the salient example of today, when large language models are trained, the pre-training portion of that is usually described as being about next token prediction. Specifically, using something called cross-entropy loss. Now that term, cross-entropy, has its roots in information theory. But what's also interesting is that one of the conclusions of information theory says that prediction and compression are mathematically equivalent. They turn out to be two sides of the same coin. Which means you can entirely reframe how you think about the pre-training objective as not really being about next token prediction per se, but instead as being about creating the most efficient possible text compressor. Later I'll explain exactly how that works, but when you do, I think it offers more clarity on what this notion of cross-entropy really is and why you're using it. Also, I don't know about you, but to me at least, there's just something very intriguing about using compression as a fundamental objective while pursuing intelligence. In fact, some people have gone so far as to say compression is intelligence.\n\nNow, as stated, that's a hard claim to judge rigorously, since intelligence is such a squishy and ill-defined term. The safer claim would be that the mathematical theory of compression is bizarrely relevant to artificial intelligence. Still, the pithy phrase is thought-provoking, so this is the first in a trilogy of videos aimed at laying down the mathematical fundamentals to assess what this claim is really getting at. For the next 30 minutes or so, you and I will be focused on understanding the limits of compression, and seeing if we can get you to feel like you could have rediscovered the core idea behind Shannon's noiseless coding theorem. Doing so involves rediscovering a few key definitions, namely those of information and entropy, and it might sound a little weird for me to describe definitions as something to be discovered, but great definitions are often the residue of some kind of insight. See, these two specific terms are really not hard to define in the sense of laying down a formula for you, but doing so too early would spoil a good story. It is much more fun to see how you are inexorably drawn to them by asking about the limits of compressing language. And what I want you to notice by the end here is how we can't really answer this question, or at least Shannon couldn't, without necessarily engaging with some notion of intelligence.\n\nWe will get to modeling language, which is wonderfully complicated, but it helps to warm up with a simpler example containing the same essential ideas needed for our path of rediscovery. Imagine you have a robot that we have sent to a far away moon, whose job is to wander the surface and collect data. From here on Earth, we send it instructions for how to move that are going to be limited to four very simple possibilities: move up, down, left or right, each one with a fixed step size. The nuance will be that these instructions are not uniformly distributed. Half of everything we send is up, 1/4 of the instructions are down, 1/8 are left and the other 1/8 are right. It's a little contrived, it's meant to be a simple example, and in that spirit of simplicity, we're also going to assume that every instruction is independent. They are sampled from this distribution regardless of the preceding context. When we send data to this spot far away, we're doing it as a stream of bits, ones and zeros, and it's very slow and costly to do that. So the natural question, the warm-up puzzle for you today, is to ask what is the most efficient possible way to encode these instructions as a stream of bits.\n\nAnd here, we might imagine three students who each attempt an answer. One who is straightforward, one who is clever, and one who is very theoretical. The straightforward student immediately raises their hand and says, \"Well, for each of these four instructions, we could just use two bits. Maybe 00 encodes up, 01 encodes down, 10 encodes left, and 11 encodes right.\" On the receiving end, this makes it very easy for the robot to decode. It simply breaks up the bit stream into chunks of two and translates each chunk into the appropriate instruction. Now the clever student points out, \"Well, that does nothing to take advantage of the fact that up comes up way more frequently than left or right.\" They propose a method where we use a different number of bits for each instruction. I'll explain it in just a second, but I do want to call out the fact that as soon as you let different instructions get different numbers of bits, it's certainly not obvious that the robot is going to know how to decode it. After all, it needs to somehow know where to draw the dividing lines.\n\nNow, being very clever, the second student has thought that through, but it's easiest to explain if I just kind of lay it all out. What they suggest is letting the single bit zero represent up, letting the two bits 10 represent down, using 110 for left and 111 for right. You can calculate the average number of bits per instruction that this would require with a simple weighted sum. Half the time, only one bit is used, a quarter of the time, two bits are needed, and the remaining times, you need three bits. When you add this all up as a weighted sum, you get 1.75 bits per instruction, which is indeed better than the more naive approach of a flat two bits per instruction. This second student is spending more bits on those last two instructions, but because they come up so much less frequently, this is more than made up for by using only one bit for that most common instruction. And you can see this efficiency bear out empirically too. This right here is a set of instructions sampled from that distribution. You'll notice lots of ups, about half as many downs, and even fewer lefts and rights. When you turn each symbol into the appropriate bit string following this encoding, the resulting sequence of bits is indeed shorter than what the naive method gave.\n\nBut, I hear some of you asking, \"How does the robot know how to decode this? Can we be sure that there's an unambiguous way to draw the dividing lines?\" In the lingo of encodings, each of these four bit strings used to encode the instructions is called a code word. And as we step through things here, see if you can figure out what rule the clever student was following to make sure that their code words don't conflict with each other. And really, you just need to look at an example bit stream from the robot's perspective and think it through. Let's say that that very first bit that it receives is a one. So far, this could be encoding any of the last three instructions: down, left or right. If what follows is a zero, then it can only be down. There is no other possibility. So the robot can register that as a complete instruction. From there, starting fresh, if what follows is a zero, that must be encoding up, since there is no other possibility. Nothing else starts with a zero. After that, if they see a one, this is so far ambiguous. It's the prefix for any of the last three code words. If the next bit is another one, it remains ambiguous. It's the prefix of the last two. But that following zero then makes clear these three bits must have been encoding left. In short, all the robot has to do is read in the next sequence of bits until the moment that it forms a complete code word, at which point, it can register it as a complete instruction.\n\nIf you step back and think about it, the key constraint for this all to work is that no code word can be a prefix of another one. For example, let's say you tried to introduce some fifth instruction that had the code word 100. That would cause conflicts, because after reading 10, it's not clear whether that's supposed to be down or if it's supposed to be the start of this new fifth instruction. When you avoid this kind of conflict, an encoding method like this has a special name. It's known in the business as a prefix-free code, or what is confusingly synonymous, it's actually more commonly known as a prefix code. And there's a really nice way to visualize choosing prefix-free codes with a certain diagram that represents every possible binary string. This diagram also has some helpful parallels with how I want to show entropy in just a few minutes. It's probably decently intuitive what's going on if you just pause and stare at it for a bit, but I'll call out the important features. Each layer shows every bit string of a given length, and you'll notice everything that starts with a zero lives on the left half of this diagram, and everything that starts with a one lives on the right half of the diagram. And that same idea continues recursively as you go up. So everything starting with 00 is above this quarter of the diagram. Everything starting with 01 is above this quarter of the diagram, and so on. In particular, the key property is that every binary string in this diagram is a prefix for everything that sits above it.\n\nSo, when our clever student chose to allocate a single bit zero to represent the instruction up, they were effectively consuming half of the space of all possible code words by doing so. Since everything starting with a zero is now prohibited based on this prefix-free property. Similarly, allocating 10 to down eats up another fourth of this space, and the remaining two instructions each eat up an eighth of the space. You can just see how nothing is left over. And at this point, I'm guessing that there's some bell kind of resonating in your mind. Given that these proportions are all exactly the same as the probability for each instruction coming up. And in fact, that tickling sensation of a relationship between data size and probabilities is exactly the founding insight for information theory. When you stare at this pleasing alignment, it might suggest that the clever student's solution is not just better, maybe it's somehow perfect. But at the moment, that feels like a bold claim to make. How could you know that there's not some ultra clever method that does something fancy with really long sequences of instructions that somehow makes it so the average bits per instruction gets even lower than this. This takes us to the third student, head in the clouds, who is not really even thinking about actual codes that they can implement. They have been pondering what properties a perfect optimally efficient code would have. They have this really clever idea, which is to argue that random noise should be incompressible, and therefore, a perfect compression algorithm should produce a bit stream that's indistinguishable from random noise. What's neat is, even though that sounds kind of simple, this can actually lead you to reinventing the idea of Shannon entropy.\n\nNow, when I say random noise, what I mean is that each bit is a one or a zero with 50% probability, and all of the bits act independent from one another. It's not hard to show that our second student's encoding for the robot genuinely follows this rule. If you think about it, there is a 50% chance that the message starts with the instruction up, so that first bit has a 50% chance of being a zero, otherwise it's a one. And then if it is a one, there's a 50% chance that the instruction is down, meaning the next bit is zero, otherwise it's a one. And so on. Each new bit really does act like an independent coin flip. So, to the receiver, that compressed bit stream really is indistinguishable from random noise. But why am I saying that random noise is incompressible? Well, for that, let's really focus on things from the receiver's perspective. And here, instead of thinking instruction by instruction, it helps to zoom out and frame our discussion in terms of entire messages, and what the encoding for full messages looks like. When that receiver sees a string of n bits representing some compressed message, this is one out of two to the n possible messages they could have received that would have the same size. And then critically, because we're assuming this looks like random noise, all two to the n of those messages must be equally likely. Now to be clear, we're not just talking about the robot example anymore. Our theoretical head-in-the-clouds student really wants to make an argument for what perfect compression looks like for any data type, like maybe we're compressing language or compressing images. And they want an argument that works regardless of the details of what specific compression algorithm you're using. A loose intuition in your head is that maybe among all of the messages that compress down to n bits, some of them would contain a larger amount of predictable data, while others would have started as a smaller amount of unpredictable data. But the key point is that if the compressed bit stream really does look like random noise, meaning all of the bit strings of size n are equally likely, it must be the case that all the underlying messages being compressed were equally likely to arise. And even more specifically, with probability one over two to the n. So again, why am I claiming that this is incompressible?\n\nWell, let's pull up that same diagram, representing the space of all possible binary strings. In this case, we can think of all the encodings for our two to the n equally likely messages as being the bit strings on one layer of this diagram. If you tried to define an alternate scheme where you try to become more efficient by making one of these messages use fewer bits, it would move lower on the diagram, which means it then overlaps with some other message. So you would have to put that other message somewhere else in this diagram. At minimum, that means it's sharing a space with yet a third message, and those last two have to kind of get bumped up one layer, requiring that extra bit for each of them to disambiguate. So, saving one bit over here costs you two bits elsewhere. You're basically pushing down a bump on the rug, only to see it pop up even worse in another spot. In general, any message encoded with a string lower on this diagram is going to be eating up more than its fair share of the space, which forces multiple other messages to occupy a smaller region, bumping them higher up, meaning they're encoded less efficiently. I'm going to guess that it's decently intuitive for everyone watching that the most efficient scheme here for equally likely messages is to give them all the same number of bits, but I do think the diagram gives a more concrete way to see why you end up with unfavorable tradeoffs otherwise. Once you have this idea that perfect compression looks like random noise, this is exactly the kind of thing I was referencing in the intro, about how insights can lead you to definitions. Notice how what we're basically saying is that a message that uses n bits in a perfect scheme must have a probability of one over two to the n, or two to the negative n. If you take the log base two of both sides here and then negate, this is equivalent to saying that the number of bits allocated to a message, assuming perfect compression, is negative log base two of P, where P is the probability of occurring.\n\nThis negative log expression is the fundamental formula for all of information theory. Everything up to this point is me trying to make this value feel like something you are inevitably drawn to by asking about perfect compression, rather than it feeling like some arbitrary definition that we start with. Some students do find this negative log takes a little getting used to. You know, it looks like it should be a negative value before you think about the fraction in the middle. But really the intuitive way to read it is that it's asking, how many times do you chop your space of possibilities in half to get to a certain quantity? Here, let me pull up some axes and show you the graph of negative log of P. I've also seen some authors default to writing this as the log of one over P, which maybe you find more intuitive. You could also think of it as the log base one half of P, which I've never really seen anyone lean into, but personally, I would be quite partial to that as a convention. Now, however you write it, what Shannon realized is that this is a very useful way to think about the information that a message contains, even when literal perfect compression is not possible, and P is no longer a clean power of two, which would mean that the output here is some fractional amount. In fact, he defined this expression to be the information of an event. The image I sometimes have in my head is to picture the probability of an event with a little pie chart, and the information is this bar above it that gets kind of pumped up to be taller as the probability is squeezed closer to zero. That is, unlikely messages contain a lot of information. And the bar is relaxed to get shorter as the probability approaches 100%. Highly expected messages contain very low information. I want to be clear that there is content to this definition. It's more than just rescaling probabilities, as if converting to an alternate unit system. You've already seen the core idea. In a perfect compression scheme, the number of bits allocated to a full message precisely equals this information content. Now, of course, perfect compression is not always possible, your probabilities of messages are likely not perfect powers of two. So the more general way you would frame this is to say that the information of a message gives you a lower bound on how much it can be compressed. At least when you average over all possible messages. It's perfectly possible to overfit a compression algorithm to one specific case.\n\nAnd to truly wrap your mind around information and fractional bits, we need to step up our game beyond that warm-up example. See with the robot, the probabilities were overly clean. They were all perfect powers of two so that the information per symbol could precisely match a whole number of bits. But Shannon was very interested in this question of limits on compression for much more realistic and complicated cases, like natural language. For example, here I'll pull up the probabilities for each new letter in an example phrase, at least as determined by a little GPT that I'm running locally. And by the way, if the probabilities provided by a model feel like those might be distinct from the probabilities of actual language, you would be right to raise an eyebrow. Hold on to that thought. It becomes very relevant later. One key difference with language is how heavily dependent on context everything is. The probability distribution for each new letter you see is highly, highly contingent on everything that came before it. The other big difference is that all of these probabilities are obviously not going to be clean perfect powers of two. So if you compute the Shannon information of each one of these, meaning you take the negative log base two, all the numbers that you see are fractional amounts. And again, giving a vague interpretation of what these mean is really not hard. Information content is low for very predictable letters, and it's high for very unpredictable letters. But all of you watching this are smart enough to demand a more exact interpretation. One that justifies why these values deserve to be given the units of bits. I mean, it's not like there's going to be some perfect encoding where this letter I has a code word that is somehow 4.19 bits, or where this highly predictable O is somehow encoded with just a narrow sliver of a bit. The real meaning is related to encoding entire messages and coming up with a bound on their compression. The probability for a full phrase, like the one I'm showing here, looks like multiplying the probabilities for each successive new letter. Where, again, I'll emphasize that these successive letters probabilities are conditioned on what came before it. This is essentially the chain rule from probability. I want you to notice how nicely this plays with a logarithm. If you ask for the information of that full message, taking this negative log expression, because logarithms turn multiplication into addition, this breaks up really nicely as the sum of the information for each individual letter. In the final part of this trilogy, I'm going to walk you through a very specific compression algorithm that would actually compress this text to within one or two bits of this value. It's no longer as simple as mapping each character to a predefined code word, but you nevertheless get this very direct sense of thinking about adding up the fractional information content of each letter to determine the length of the final encoding that you use. So that's the key idea. Even if by the time you need to relate this to actual data sizes, things will get rounded off to the nearest whole number, what Shannon realized is just how useful it is to work at this higher layer of abstraction, where all your information is allowed to freely be continuous, and information of successive events really nicely adds together.\n\nStill, if you step back and imagine yourself very seriously assessing the fundamental compressibility of language, all of this hinges on the question of how you know the probabilities for each successive letter. Here for all these animations, I've been illustrating things using a language model, but for one thing, that doesn't necessarily feel the same as the true probabilities underlying language, and for another, it's not even clear what we would mean by the true probabilities of language. So here, I actually think it's most enlightening to take a step back in time and see how Shannon himself thought about all of this long before language models or modern data analysis. Some of his earliest experiments on the information of language involved looking at specific short sequences of characters, what you often hear referred to as n-grams, and then tracking the statistics of what tended to follow. So, for example, if you scan through a few books and you notice every single time the two letters TH come up, and you record what letters tend to follow, you could build up a table of those letters and let those statistics represent a sample for the probabilities you care about. Now the problem is that this just completely breaks down for longer strings of letters. Most notably, any string of text that never shows up in all of the books that you're analyzing. Nevertheless, it's perfectly reasonable to talk about what's expected to follow such a longer string. In fact, if anything, it's more important to talk about those cases, since longer context windows are when things are at their most predictable. And that's where you stand to get the most compression due to that predictability. So instead of using raw statistics, a little bit later, Shannon analyzed a different model of the English language that he had available to him. His wife, Betty. As the story goes, Shannon pulled out a book and began asking Betty to guess each next letter. Shannon would then transcribe her guesses letter by letter. Every time she guessed incorrectly, he wrote down the correct letter, and then whenever she guessed correctly, he would just replace it with a dash. The idea was that this transcribed version he was creating has fewer actual letters than the original, but his point was that it contained the same amount of information, at least in the following sense. If he could somehow obtain an exact replica of his wife and conduct the guessing game again, he would only need to supply her with this reduced text. These letters by themselves would provide just the right prompting for his duplicate wife to exactly reproduce the original. Of course, in practice, a person wouldn't necessarily guess the same way twice. And while this qualitatively conveyed the idea of predictability allowing for compression, it wasn't yet a measurement of information. A bit later still, in his 1950 paper, \"Prediction and Entropy of Printed English,\" Shannon updated the experimental design to get a more robust read on this slippery question of the average information content in English. This time interviewing more people, instead of just logging whether each guess was right or wrong, Shannon recorded how many guesses were necessary for a human guesser to come up with the correct next letter. And then separately, he had this whole method for associating the number of guesses required with an implicit probability that a person would have been assigning to the true next letter. The details of that are a little bit in the weeds, but the broader point I want to make is how, in analyzing language, he wasn't just doing pure data analysis looking through books. He was trying to probe at an underlying model of language, namely, the interviewee's brain. These brains that he could talk to were effectively treated as black boxes. Ones with a sophisticated and yet indescribable understanding of language, and an ability to predict characters based on the context. Now these days, in the 2020s, we have gone from merely interrogating black boxes that process language to designing them.\n\nThe reason that you and I are here revisiting the roots of information theory, and this study of how compressible language is, is because of how much of the math in modern machine learning leverages the formulas that emerged in this field. Aside from the definition of information itself, there are three more key expressions that I want you to feel like you could have rediscovered. Not just because rediscovery makes them more memorable, but because seeing how they naturally arise from studying compression gives a more solid ground from which you can assess that thought-provoking interplay between compression and intelligence. You already have everything you need to reinvent the first of these, which is entropy. Imagine you have any signal that can be thought of as a sequence of symbols, whether that's the four robot instructions, the English language, or really anything else you dream up. Entropy asks about the average amount of information for each symbol. And then based on everything we've been discussing, where perfect compression looks like random noise, and how in that case, the number of bits used for a message is the same as the information content of that message, which again, breaks down really nicely as the sum of the information of all the symbols. This question of measuring the average information per symbol is basically asking about the limit of compression. It would give you a lower bound on how efficiently a given signal could be compressed. And you and I already calculated this in one setting, when we took that weighted sum to find the average bits per instruction for the perfect encoding of the robot case. Basically, because that encoding was perfect, each symbol's code word length is exactly the same as its information content. So, effectively, we were calculating the average information per symbol. To generalize this, here's how that looks. For any given probability distribution, characterizing whatever symbols your messages are made out of, the average information per symbol should look like adding up P times the negative log of P for each probability P in that distribution. And take a moment to notice how we're visualizing this expression. Throughout the video, we've been picturing probability distributions with stacked horizontal bars, where each bar's width is equal to its probability, so all together they add up to be one. Now, above each one of those, I've put a rectangle whose height is locked to be the corresponding information value, the negative log base two of that probability. So the weighted sum up top, the average information per symbol, can be thought of as the total area of all these rectangles together. This is not yet fully general. It only describes the compression limit in cases where every new symbol follows some identical distribution. That's true in the robot case, but it's not true in English, for example. Nevertheless, it's important enough to deserve a name. And there's a fun story about how John Von Neumann supposedly told Shannon that he should call this expression entropy. Since, for one thing, it resembles an expression already used for the idea of entropy in statistical mechanics, and for another, quote, \"Nobody knows what entropy really is, so, in an argument, you'll always have the advantage.\" I looked into it, it's probably apocryphal, but there seems to be a grain of truth to this. Now, whatever the true story is, Shannon did call this quantity entropy, and he denoted it with the letter H. And it's fun to take a moment to play around with this graphic to build a little intuition. The more evenly distributed a probability distribution, the higher the total entropy. Whereas if we squish things to become very uneven, maybe with one event dominating the probability space, this would have a very low entropy, since that one overwhelmingly probable event carries correspondingly little information. And then also, if you divide up the probability space even more, meaning it's distributed over more total possible symbols, each one has more information, so the total entropy is higher. And once more, it's fun to kind of slosh everything around, where a very skewed distribution gives lower total entropy, whereas a more even spread gives us higher entropy. The vague qualitative intuition here is that entropy measures the amount of uncertainty in a distribution. But the more precise understanding, justifying why it deserves to be given in units of bits, is that it describes the minimum number of bits per symbol necessary to encode a message following this distribution. That statement and everything we just covered is more or less the content of a core theorem in Shannon's 1948 paper that kicked off information theory, the noiseless coding theorem. It states that no encoding can ever be more efficient than this limit, and even more strongly, he showed that it's always possible to get arbitrarily close to this limit.\n\nNow, like I said, this expression only applies in cases where every symbol follows the same distribution, but Shannon was of course keenly interested in a more general setting, where the probabilities for each new symbol don't necessarily follow the same distribution. In particular, he spent a ton of time contemplating the compressibility of natural language. This requires a more general notion of entropy, something known as the entropy rate for a stochastic process. But it's the same basic question: what is the average information per symbol? Except in this case, we're now averaging over all possible messages. This is almost never a clean calculation that you can perform with some clean visual like the one we were just playing with. After all, what formula describes the probability distribution for language? So if you hear reference to the entropy of language, this is well beyond what any exact calculation can give you. Hence why Shannon turned to estimates based on observation. And again, his methodology was not just data analysis. It's not some function that you can perform on a corpus of text. In order to get a satisfying estimate on compressibility, he found himself inevitably needing to probe at intelligent models of language. When his interviewees had at least 100 preceding letters of context, he estimated the entropy of English to be about one bit per character. This is a pretty wild number when you think about it, because it suggests that English could be compressed down to just a single yes or no answer for each character. Wild as that sounds, in the third part here, I will show you that algorithm I've referenced, where if you're allowed to use a high-quality language model for encoding and decoding, you can get surprisingly close to this limit in practice. Before then, it helps to understand a variation on entropy, known as cross-entropy, asking both how and why it's used in training large language models. If you want to learn that, as well as a few fun related ideas, like how large models are distilled into smaller ones, and why on Earth Gzip can recover the structure between distinct languages, come join me in part two.\n\nRegular viewers will know that my new experiment for this year is to have a virtual career fair. A page at 3b1b.co/talent where this audience can explore aligned career opportunities. The meaningful update is just how much more content there is now, mainly in the form of featured interviews between me and the relevant teams. Here's my thinking. I feel like when you're assessing potential jobs, it's almost impossible to get a true sense of what it's like to work at a place just by poking around online, and you learn orders of magnitude more if you have a chance to sit down for lunch with a couple team members. My hope is to give you the vicarious version of that. So, if you're curious what I mean when I say these are all thoughtful and curious teams, go take a moment to explore. I really think you'll enjoy it.",
+        "body": "How to study the compressibility of language.\nCheck out our virtual career fair: https://3b1b.co/talent\nSee new projects before they go live: https://3b1b.co/support\n\nAnimation credit:\nManim scenes by Aaron Gostein and Grant Sanderson\nShannon’s story, as well as those for various pi creatures, by Mitchell Zemil.\nLunar robot and prediction/compression coin by Paul Dancstep\nNanoGPT animations by Clayton Rabideau\n\nThe way of visualizing entropy shown here is something I first came across in this excellent post by Chris Olah:\nhttps://colah.github.io/posts/2015-09-Visual-Information/\n\nShannon’s “A Mathematical Theory of Communication”\nhttps://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf\n\nShannon’s “Prediction and Entropy of Printed English”\nhttps://www.princeton.edu/~wbialek/rome/refs/shannon_51.pdf\n\nScientific American article that mentions the story with Von Neumann suggesting the name Entropy:\nhttps://www.esalq.usp.br/lepse/imgs/conteudo_thumb/Energy-and-Information.pdf\n\n\nTimestamps:\n\n0:00 - On “Compression is intelligence.”\n3:28 - The warmup example\n10:46 - What perfect compression looks like\n14:47 - Defining information\n17:40 - Information of language\n24:29 - Defining Entropy\n31:14 - 3b1b Talent\n\n------------------\n\nThese animations are largely made using a custom Python library, manim.  See the FAQ comments here:\nhttps://3b1b.co/faq#manim\n\nMusic by Vincent Rubinetti.\nhttps://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown\nhttps://open.spotify.com/album/1dVyjwS8FBqXhRunaG5W5u\n\n------------------\n\n3blue1brown is a channel about animating math, in all senses of the word animate. If you're reading the bottom of a video description, I'm guessing you're more interested than the average viewer in lessons here. It would mean a lot to me if you chose to stay up to date on new ones, either by subscribing here on YouTube or otherwise following on whichever platform below you check most regularly.\n\nMailing list: https://3blue1brown.substack.com\nTwitter: https://twitter.com/3blue1brown\nBluesky: https://bsky.app/profile/3blue1brown.com\nInstagram: https://www.instagram.com/3blue1brown\nReddit: https://www.reddit.com/r/3blue1brown\nFacebook: https://www.facebook.com/3blue1brown\nPatreon: https://patreon.com/3blue1brown\nWebsite: https://www.3blue1brown.com",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "텍스트 압축 한계와 LLM 학습 목표 연결",
+        "tags": [
+          "Claude Shannon",
+          "cross-entropy",
+          "large language models",
+          "information theory",
+          "3Blue1Brown"
+        ],
+        "key_points": [
+          {
+            "point": "Prediction and compression are mathematically equivalent per information theory.",
+            "timestamp": null
+          },
+          {
+            "point": "LLM pre‑training objective can be viewed as building an optimal text compressor.",
+            "timestamp": null
+          },
+          {
+            "point": "Shannon's noiseless coding theorem provides insight into compression limits.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Evaluate LLM pre‑training data redundancy using Shannon entropy estimates to prune unnecessary tokens.",
+          "Treat cross‑entropy loss as a direct compression metric, guiding model architecture and data selection for more efficient training."
+        ],
+        "quiz": [
+          {
+            "question": "Which loss function is described as being equivalent to building an efficient text compressor in LLM pre‑training?",
+            "options": [
+              "Mean Squared Error",
+              "Cross‑entropy loss",
+              "Hinge loss",
+              "KL divergence"
+            ],
+            "answer_index": 1,
+            "explanation": "The transcript states that the pre‑training objective is usually described as next‑token prediction using cross‑entropy loss, and that cross‑entropy originates from information theory where prediction and compression are equivalent."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
