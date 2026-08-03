@@ -1,0 +1,402 @@
+{
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T23:31:21.866385",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "SQLite Critical CVEs or LLM Slop?",
+        "url": "https://research.jfrog.com/post/sqlite-critical-cves-or-llm-slops/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# SQLite Critical CVEs or LLM Slop?\n\nAfek Berger, JFrog Security Researcher | 30 Jul, 2026\n\n![](/img/RealTimePostImage/post/sqlite-critical-cves-or-llm-slops/image1.png)\n\nOver the past few days, a newly created GitHub repo ([**programmervuln/cveadvisory-**](https://github.com/programmervuln/cveadvisory-)) published a batch of SQLite vulnerability advisories (as part of other 50+ CVEs which we believe are also LLM slop except from one). NVD quickly flagged these as critical, and CISA's ADP agreed. But when JFrog security researchers dug in to verify, the claims fell apart:\n\n1. The cited code didn't even exist in those versions or referenced unrelated logic.\n2. When testing the PoC payloads they didn’t work (not triggering any crash).\n3. None of these CVEs are listed on SQLite’s official advisory page (which is a gold standard for tracking actual vulnerabilities).\n4. All advisories in this repo seem AI generated when testing them with [Gptzero](https://app.gptzero.me/)\n\n![](/img/RealTimePostImage/post/sqlite-critical-cves-or-llm-slops/image2.png)\n\n*Combining all advisories into one file triggers AI-generated content warnings*\n\nThis made us question the reliability of these CVEs as well as understanding that these CVEs may be LLM slop.\n\nWhile investigating one of the CVEs yesterday, CVE-2026-51302, we saw that Red Hat initially assigned it a 10.0 Critical severity score:\n\n![](/img/RealTimePostImage/post/sqlite-critical-cves-or-llm-slops/image3.png)\n\nLooking at the CVE again today, we noticed that the score has since been downgraded to 7.6 High.\n\n![](/img/RealTimePostImage/post/sqlite-critical-cves-or-llm-slops/image4.png)\n\n# [**Analysis Matrix**](#analysis-matrix)\n\n| CVE | Reported Flaw | CVSS | NVD Metadata | Audit Finding |\n| --- | --- | --- | --- | --- |\n| **CVE-2026-51302** | UAF in `exprComputeOperands()` | **9.8 CRITICAL** | Pinned CPE: 3.41.0 | The advisory mentions non-existing functions. |\n| **CVE-2026-51303** | UAF in `ExprListDelete()` back-refs | **9.8 CRITICAL** | Contradictory metadata | The advisory said there are non-existent fixes. |\n| **CVE-2026-51300** | UAF in `sqlite3ExprDelete()` | **9.1 CRITICAL** | n/a placeholders | Advisory cited lines that are unrelated to the vulnerability. |\n| **CVE-2026-51297** | UAF via `jsonBlobEdit()` | **8.8 HIGH** | Pinned CPE: 3.41.0 | The advisory mentions non-existing functions. |\n| **CVE-2026-51296** | UAF in `jsonRemoveFunc` | **7.5 HIGH** | Populated CPE: 3.41.0 | Advisory cited lines that do not exist. |\n| **CVE-2026-51304** | UAF via `pOrderBy->nExpr` post-free | **7.5 HIGH** | Vendor/Product: n/a | Advisory showed a real function with a wrong argument number. |\n\n# [**Investigation Methodology**](#investigation-methodology)\n\nTo verify these reports thoroughly, we established an isolated testing workflow:\n\n- **Source Inspection:** We cloned the official sqlite/sqlite repository and checked out the target tags (version-3.41.0, version-3.51.2, and version-3.51.3). We compared the reported vulnerability mechanics against the actual source code.\n- **Clean Environment Build:** Compiled the official SQLite releases directly inside isolated Docker containers to prevent environmental contamination.\n- **PoC Execution:** Feed each advisory's PoC SQL statements verbatim into the compiled SQLite binaries under AddressSanitizer (ASan) instrumentation to detect memory bugs.\n- **NVD & Metadata Audit:** Evaluated the CPE patterns and advisory metadata across NVD and GHSA feeds to cross-check tracking accuracy.\n\n# [**Detailed Technical Breakdown**](#detailed-technical-breakdown)\n\n## [**1. CVE-2026-51302: Non-Existent Logic (9.8 Critical)**](#1-cve-2026-51302-non-existent-logic-98-critical)\n\n**Reported Vulnerability:** The advisory claims a heap use-after-free occurs when `sqlite3ReleaseTempReg()` leaves a dangling pointer in `regFree1`, which is later dereferenced by `exprComputeOperands()`.\n\n**Finding:** The primary issue here is that `exprComputeOperands()` didn't exist in SQLite 3.41. It was added in the middle of 2025 (commits [e24f20a](https://github.com/sqlite/sqlite/commit/e24f20a), [280559b](https://github.com/sqlite/sqlite/commit/280559b)). Furthermore, the mechanics of `sqlite3ReleaseTempReg()` do not involve heap deallocation. The function simply recycles register indices into an array for reuse, making a UAF impossible by design.\n\n```\n/* expr.c:6562, SQLite 3.41.0 */\nvoid sqlite3ReleaseTempReg(Parse *pParse, int iReg){\n  if( iReg ){\n    sqlite3VdbeReleaseRegisters(pParse, iReg, 1, 0, 0);\n    if( pParse->nTempReg < ArraySize(pParse->aTempReg) ){\n      pParse->aTempReg[pParse->nTempReg++] = iReg;\n    }\n  }\n}\n```\n\n**PoC Testing:** The query ran successfully without triggering a crash because the bug does not exist.\n\n## [**2. CVE-2026-51303: Ghost Fixes (9.8 Critical)**](#2-cve-2026-51303-ghost-fixes-98-critical)\n\n**Reported Vulnerability:** Claims that `ExprListDelete()` fails to clear back-references in parent structures when releasing child nodes, allegedly ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 생성 CVE가 보안 데이터 신뢰성을 위협한다",
+        "tags": [
+          "SQLite",
+          "CVE-2026-51302",
+          "JFrog",
+          "Gptzero",
+          "Docker"
+        ],
+        "key_points": [
+          {
+            "point": "GitHub repo에 AI 생성된 SQLite CVE 다수 포함",
+            "timestamp": null
+          },
+          {
+            "point": "NVD·CISA가 초기 Critical 등급 부여했으나 검증 결과 허위임 확인",
+            "timestamp": null
+          },
+          {
+            "point": "공식 소스 코드와 Docker+ASan 환경에서 PoC 테스트로 검증 수행",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "외부 CVE 피드의 신뢰성을 자동 검증하는 파이프라인을 구축해 공식 SQLite 소스와 Docker+ASan 테스트를 연동한다",
+          "보안 공지문에 AI‑generated 여부를 판별하기 위해 Gptzero와 같은 모델 탐지 도구를 사전 필터링 단계에 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "어떤 CVE의 심각도 점수가 10.0 Critical에서 7.6 High로 다운그레이드 되었나요?",
+            "options": [
+              "CVE-2026-51302",
+              "CVE-2026-51303",
+              "CVE-2026-51297",
+              "CVE-2026-51296"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 CVE-2026-51302가 처음에 10.0 Critical 점수를 받았지만 이후 7.6 High로 낮춰졌다고 명시돼 있다."
+          },
+          {
+            "question": "AI‑generated 보안 자문을 탐지하기 위해 사용된 도구는 무엇인가요?",
+            "options": [
+              "Gptzero",
+              "Copyleaks",
+              "Turnitin",
+              "OpenAI Detector"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Gptzero를 이용해 모든 자문이 AI 생성임을 확인했다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Prevent cognitive debt by manually retyping LLM-generated code",
+        "url": "https://ankursethi.com/blog/prevent-cognitive-debt-by-manually-retyping-llm-generated-code/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# [Prevent cognitive debt by manually retyping LLM-generated code](/blog/prevent-cognitive-debt-by-manually-retyping-llm-generated-code/)\n\n2 Aug 2026 at 2:53PM IST\n\nDespite [what I said in April](/blog/coding-assistants-personal-projects/), I'm still using coding assistants on my personal projects.\n\nUsing them to one-shot entire features leaves me unsatisfied and disoriented, but I do enjoy using them to fast-forward through the boring parts of my projects.\n\nHowever, allowing my coding assistant to roam free in my projects leaves me with a colossal amount of cognitive debt. I might hate the idea of poring over the Django documentation to figure out how to add tagging to my website, but I still fundamentally want to understand how it works. Just because a problem is boring doesn't mean I want to fully offload my understanding of the solution to a machine.\n\nOf course, I could review every single line of code the LLM produces. That's what most developers are expected to do in this cursed year of 2026. Robots raise PRs, humans review them. It's a brave new world.\n\nBut I don't enjoy reviewing AI-generated PRs. Poring over hundreds of lines of overly-defensive, badly-commented, subtly incorrect code is not fun. I might grudgingly do it for an employer—while making sure said employer becomes an ex-employer as soon as possible—but I'm sure as hell not doing it for my personal projects. Personal projects must be fun above all else. The joy of working on personal projects comes from [the process, not from the outcome](/blog/results-are-a-side-effect-of-doing-the-work-with-love/).\n\nSo what's a boy to do? How do I offload the boring work to LLMs without ceding control of my own work and cognition to the slop machine?\n\nI've come up with a solution that's grossly inefficient and perhaps slightly comical: I ask my coding assistant to generate code in the chat, then manually make all the edits myself.\n\nI have these instructions in all the agents files in my personal projects:\n\n> I want to understand every line of code that goes into this project. Never create, edit, move, rename, or delete project files unless I explicitly ask you to do so. Instead, show me every proposed edit in the chat so I can type it in manually.\n>\n> Do not run commands that modify project files, install dependencies, or change repository state unless I explicitly request that action. Instead, show me those commands in the chat so I can run them manually.\n>\n> I'm an experienced developer. Do not explain syntax, APIs, programming concepts, or implementation details unless explicitly asked.\n\nUsing LLMs this way allows me to work faster than not using LLMs at all, but I'm still slower than those who are willing to allow the machine to think for them. Instead of being 10x faster, I'm probably only 2x faster. But what I lose out on in terms of speed, I gain in terms of a deeper understanding of my code.\n\nAs I manually type every single line of LLM generated code into my editor, I build up a mental model of how it works and fits into my existing codebase. If I don't understand an API or algorithm, I can stop to look it up, or just ask the LLM to explain it.\n\nTyping the code myself forces me to slow down, which means I'm more likely to detect hallucinations or bad design choices the LLM might have made. I can clean up the code as I go, reorganizing it, refactoring it, adding comments, and generally adapting it to my own taste.\n\nMost importantly, this workflow allows me to build a *spatial map* of my codebase. I know where every bit of functionality lives in the codebase. When I need to make a change, I know exactly where I need to make it. It not only helps me work faster within my projects, it also makes it easier for me to better prompt and instruct the LLM in the future.\n\nWhen I was learning to code as a teenager, experienced programmers would often tell me to never copy and paste code into my projects. If I was learning from a book, I was advised to copy all the examples into my computer and make sure I could run them. If I was learning from a blog post or forum answer, I was advised to type it out and adapt it to my codebase so I understood it completely.\n\nManually typing LLM-generated into my codebase feels like the exact same learning process. It might not be the most efficient way to work with an LLM, but I value comprehension over productivity. I've been doing this for a few months now, and it's been working well for me. I plan to continue using this workflow for as long as I can.\n\nI fear the software industry is taking on a large amount of cognitive debt that we'll have to pay back very soon. There will come a time when we no longer understand how large parts of our digital infrastructure are put together. I might not personally be able to change the course of the entire industry, but I can at least make sure I completely understand the software I put out into the world. Anything else would be professional malpractice.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 코드 직접 입력으로 인지 부채 최소화",
+        "tags": [
+          "LLM",
+          "Django",
+          "AI"
+        ],
+        "key_points": [
+          {
+            "point": "코드를 직접 타이핑하면 코드베이스에 대한 공간적 인식과 이해도가 높아진다.",
+            "timestamp": null
+          },
+          {
+            "point": "수동 입력 과정에서 LLM의 환각이나 설계 결함을 조기에 발견할 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "LLM에게 파일 수정은 제안만 하고 직접 적용하지 않도록 지시하면 제어권을 유지한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "LLM 에이전트에 ‘편집 제안만 채팅에 표시하고 직접 적용하지 않음’ 규칙을 추가해 개발자가 수동으로 코드를 입력하도록 워크플로우를 설계한다.",
+          "개인 프로젝트에서 LLM이 생성한 코드를 직접 타이핑하는 방식을 도입해 인지 부채를 줄이고 코드베이스에 대한 이해도를 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "작성자가 강조한 직접 타이핑의 주요 장점은 무엇인가?",
+            "options": [
+              "개발 속도 향상",
+              "정신적 부채 감소와 코드 이해도 향상",
+              "라이선스 문제 회피",
+              "코드 실행 성능 개선"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 직접 타이핑이 정신적 부채를 줄이고 코드에 대한 깊은 이해를 만든다고 설명한다."
+          },
+          {
+            "question": "작성자가 LLM에게 파일을 수정하도록 요구하지 않고 제시하도록 지시한 내용은?",
+            "options": [
+              "자동으로 파일을 수정하도록 허용한다",
+              "제안된 편집을 채팅에 보여주고 사용자가 직접 적용한다",
+              "파일을 삭제하도록 명령한다",
+              "코드 최적화를 자동으로 수행한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에선 LLM이 파일을 직접 수정하지 말고, 편집 제안을 채팅에 보여주어 사용자가 직접 입력하도록 지시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Smaller, faster, safer: running Kimi and GLM at scale",
+        "url": "https://blog.cloudflare.com/smaller-faster-safer-models/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[Inference](/tag/inference/)[Quantization](/tag/quantization/)[Workers AI](/tag/workers-ai/)\n\n[Agents Week](/tag/agents-week/)[AI](/tag/ai/)[Developers](/tag/developers/)[Inference](/tag/inference/)[Quantization](/tag/quantization/)[Workers AI](/tag/workers-ai/)\n\nAugust 3, 2026\n\n# Smaller, faster, safer: running Kimi and GLM at scale\n\n![Alex Reneau](/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KW9WKWJ94JZDRJM354AYKYXG.jpeg&w=64&h=64&f=webp&fit=cover&position=center)![Kevin Flansburg](/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KW452TM72EKFE8RQCD3JMXND.png&w=64&h=64&f=webp&fit=cover&position=center)![Chi McIsaac](/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KZ1QJYZF8GBATHV6TF6MD5KE.png&w=64&h=64&f=webp&fit=cover&position=center)\n\n[Alex Reneau](/author/alex-reneau/), [Kevin Flansburg](/author/kevin-flansburg/), and [Chi McIsaac](/author/chi-mcisaac/)\n\n6 minute read\n\nCOPY URL\n\n![](/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KZ1PVA5SC9J87PS1R2B97N1F.png&w=1999&h=1125&f=webp&fit=cover&position=center)![](data:image/bmp;base64,Qk32BAAAAAAAADYAAAAoAAAACAAAAAgAAAABABgAAAAAAMAAAAATCwAAEwsAAAAAAAAAAAAA//////399vTz7+zv7evz7+337+3z7erp/////v//9PT26+zx6ev17O/67e/27Ozs////////8/X66Oz15u366fL+7fP67fDw////////9fn/6fD65/H/6/b/7/j/8fT1////////+v//7/b/7ff/8f3/9f7/9vr5////////////+P3/9v7/+v///f///f79/////////////////v//////////////////////////////////////////////)\n\nWorkers AI runs inference for some of the best open models in the world on GPUs in Cloudflare data centers close to your users. Two of the most capable, and most demanding, are Moonshot's Kimi K-series and [Z.ai](http://Z.ai)'s GLM. They are large, long-context, mixture-of-experts models, and they are wonderful to use. They are also very hard to serve efficiently because of memory constraints.\n\nWe've written before about how we [serve large models on Workers AI](https://blog.cloudflare.com/workers-ai-large-models/) and about separating [the prefill and decode phases](https://blog.cloudflare.com/high-performance-llms/) of inference to get more out of each GPU. This post looks at three techniques we layer on top of that to fit these models into memory and keep them fast: quantizing the KV cache, compressing the model weights, and, because both of those pack more requests onto shared hardware, protecting the cache those requests share. These optimizations enable us to support more customers at lower costs, with no change in model accuracy.\n\nAll our experiments and production traffic are running and benchmarked with [SGLang](https://github.com/sgl-project/sglang), an open-source inference serving framework. We found that SGLang offers the best performance in the market, and we work closely with the SGLang team to upstream patches and new features to make our work available to the open-source community.\n\n## Quantizing the KV cache\n\nAs a model generates text, it stores the attention keys (K) and values (V) for every token it has already processed in a structure called the KV cache. The cache is what lets the model extend a long conversation without re-reading the entire context on every new token. For a long-context model, it grows quickly, and it is usually the KV cache, not the model's weights, that fills up GPU memory first.\n\nBy default, the cache is stored in 16-bit precision (BF16). We store it in 8-bit floating point instead (FP8, e4m3), which halves its size. On Kimi K2.6, that raises the amount of context we can hold in memory from roughly 686,000 tokens to about 1.37 million, twice as much.\n\nIt's worth being precise about where the benefit comes from, because it isn't raw speed. Quantizing the cache adds a small amount of work per token, since the FP8 attention kernel has to convert values as it reads them. What it changes is how many requests we can keep resident at once. The following measurements are for Kimi K2.6 decoding on a disaggregated H200 deployment, comparing the attention kernels directly:\n\n| **Concurrent requests** | **BF16 KV cache (tok/s)** | **FP8 KV cache (tok/s)** |\n| --- | --- | --- |\n| 1 | 137 | 125 |\n| 8 | 731 | 689 |\n| 16 | 1,106 | 1,028 |\n| 32 | 1,558 | 1,489 |\n| 64 | Out of memory | 2,192 |\n\nAt any single concurrency level, BF16 is a few percent faster per token. But BF16 runs out of cache at 32 concurrent requests and can't admit a 33rd, while FP8 keeps going to 64 and reaches 2,192 tokens per second, about 41% higher than BF16's peak, for roughly 30% less cost per token. Because we run prefill and decode as separate pools, we can apply this where it helps most: prefill is compute-bound rather than memory-bound, so there we leave the cache in BF16 and keep its slightly higher throughput.\n\nNone of this would matter if it changed the model's answers, so we checked. Across our evaluation suite, FP8 and BF16 caches are indistinguishable:\n\n| **Benchmark** | **BF16 KV** | **FP8 KV** |\n| --- | ---",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "GPU 메모리 절감·컨텍스트 확대로 LLM 비용 절감",
+        "tags": [
+          "Kimi K-series",
+          "GLM",
+          "Workers AI",
+          "SGLang",
+          "FP8"
+        ],
+        "key_points": [
+          {
+            "point": "KV 캐시를 FP8(e4m3)으로 양자화하면 메모리가 절반이 되어 Kimi K2.6의 컨텍스트 길이가 약 2배 늘어난다",
+            "timestamp": null
+          },
+          {
+            "point": "모델 가중치를 압축해 GPU 사용량을 추가 감소시켜 동시에 더 많은 요청을 처리 가능하게 함",
+            "timestamp": null
+          },
+          {
+            "point": "여러 요청이 공유하는 캐시를 보호하는 기법으로 비용을 낮추면서 정확도 손실을 방지함",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "FP8 양자화 커널을 구현해 자체 추론 파이프라인의 KV 캐시를 8비트 부동소수점으로 저장해 메모리 사용량을 절반으로 줄인다",
+          "SGLang을 서비스 프레임워크로 도입하고 모델 가중치 압축 옵션을 활성화해 대형 LLM을 더 많은 동시 요청에 배치한다"
+        ],
+        "quiz": [
+          {
+            "question": "KV 캐시는 기본적으로 어떤 정밀도로 저장되나요?",
+            "options": [
+              "FP8",
+              "BF16",
+              "FP16",
+              "INT8"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 KV 캐시는 기본적으로 16비트 정밀도인 BF16으로 저장됩니다."
+          },
+          {
+            "question": "FP8으로 KV 캐시를 양자화하면 Kimi K2.6의 컨텍스트 길이는 어떻게 변하나요?",
+            "options": [
+              "변화 없음",
+              "절반으로 감소",
+              "두 배로 증가",
+              "세 배로 증가"
+            ],
+            "answer_index": 2,
+            "explanation": "FP8 양자화로 메모리가 절반이 되어 컨텍스트 길이가 약 686,000 토큰에서 1.37백만 토큰으로 두 배가 됩니다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Another DeepSeek Moment Has Arrived",
+        "url": "https://youtu.be/bm1BjOjS7sQ",
+        "published_at": "2026-08-03T09:47:34",
+        "transcript": "It is simply incredible what just happened. DeepSeek's two latest AI systems appeared just about three months ago, and the quicker Flash model is getting an update already. And this is unbelievable. I don't even know where to start. One, the new Flash model is way better than the previous one. Many of these results more than doubled. One went 7X in just one revision, just a bit after the original release. Is this real life? And two, it gets better. Look, it not only beats the previous Flash version, but also beats the Pro version that is about five times larger. I mean, what? We often say that benchmarks are not everything, and these are not even all of them. Yes, but a change this huge cannot be ignored. So, what happened? How did they do this black magic? New model that was trained longer? Nope. The underlying model architecture and size is the same. So, what changed? Excuse me? Is this some kind of joke? Just the post-training step changed? Whoa. Dear fellow scholars, this is Two Minute Papers with Dr. Károly Zsolnai-Fehér. Yep. That is the power of post-training. You see, it has the same base brain, but a completely new playbook. The base model already contains the raw knowledge. Then, the post-training step teaches it when to use which ability, how to plan, how to check its work, and how to recover from mistakes. Imagine the brain as a builder in a toy workshop. Before post-training, it can see the right pieces, but uses them poorly and makes a huge mess. After post-training, it learns strategy. Build a base, test each part, fix mistakes early, think ahead. Now, we have the same builder, the same toolbox, the same raw knowledge. But now, we have a much smarter sequence of actions. And that is why post-training can create a huge leap in performance even when the underlying model stays very similar. Remember this one, because you are seeing one of the finest examples of it ever. And, look, this is ridiculous. Yep. You can download and own the weights forever. No five-hour sessions, no weekly caps, no games. This is a true DeepSeek moment. A true Open AI. It needs a beefy machine to run locally. Yes, or you can run it on Lambda, or use the API. It's dirt cheap compared to the frontier companies, by the way. I held off on making this video for a bit, so I could test it myself and see how you genius fellow scholars use it in the wild. I think that made for a much better video for you. Now, hold on to your papers, fellow scholars, because if this pace continues, in less than a year, we might have a free open model close to what is now the billion-dollar fable-level intelligence, compressed enough to run on a beefy laptop. It sounded impossible just a few weeks ago, but now, I no longer think that this is impossible. I am out of words. This is the power of open source and open science. What a time to be alive. So, we get this for free, and we will be able to own it forever. And that is the most important. Knowledge is incredible, but knowledge only changes the world when it reaches the people. So, thank you so much to everyone who worked on this. You are heroes. I use Lambda to reproduce AI research papers often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text to image or video, easy-peasy. Running a DeepSeek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover, and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 DeepSeek v4 Flash 0731:\nhttps://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731\n\nDeepSeek API: https://platform.deepseek.com/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "포스트 트레이닝으로 동일 모델 성능 급상승, 현업 적용 가능",
+        "tags": [
+          "DeepSeek",
+          "Flash model",
+          "Lambda",
+          "post-training",
+          "API"
+        ],
+        "key_points": [
+          {
+            "point": "동일 아키텍처·크기지만 포스트 트레이닝으로 성능이 2배 이상 향상",
+            "timestamp": null
+          },
+          {
+            "point": "새 Flash 모델이 더 큰 Pro 버전보다 우수한 결과를 보여줌",
+            "timestamp": null
+          },
+          {
+            "point": "오픈 소스 모델을 Lambda GPU 인스턴스로 로컬·클라우드에서 실행 가능",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "기존 LLM에 포스트 트레이닝(Instruction‑tuning) 단계만 추가해 성능을 크게 끌어올린 뒤, 동일한 인프라로 서비스에 적용한다",
+          "Lambda의 Nvidia GPU 인스턴스를 활용해 DeepSeek Flash 모델을 사내 챗봇이나 에이전트에 배포해 비용 효율적인 고성능 AI 서비스를 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "DeepSeek Flash 모델의 성능 급등에 가장 큰 영향을 준 요소는?",
+            "options": [
+              "모델 크기 확대",
+              "학습 시간 연장",
+              "포스트 트레이닝",
+              "새로운 모델 아키텍처"
+            ],
+            "answer_index": 2,
+            "explanation": "영상에서는 동일한 기본 모델에 포스트 트레이닝 단계만 추가해 성능이 크게 향상됐다고 설명한다."
+          },
+          {
+            "question": "DeepSeek 모델을 로컬에서 실행하려면 어떤 환경을 권장했는가?",
+            "options": [
+              "저가 CPU만으로 가능",
+              "Lambda의 Nvidia GPU 인스턴스 사용",
+              "Google Colab 무료 티어",
+              "실행 불가능"
+            ],
+            "answer_index": 1,
+            "explanation": "발표자는 Lambda의 강력한 GPU를 이용해 모델을 로컬 혹은 클라우드에서 실행할 수 있다고 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "DS와 MLE가 함께 일하는 법",
+        "url": "https://toss.tech/article/ds-mle-cowork",
+        "published_at": "2026-08-03T03:25:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-8038-96f9-d1f6158663bb\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, 토스뱅크 Product Foundation ML Service Team, ML Engineer 김경윤입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-8084-a704-ffea710dce35\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">1년 전, 이런 일이 있었어요. DS(Data Scientist)가 노트북에서 모델을 다 만들었습니다. 정확도도 잘 나오고, 노트북에서는 완벽하게 돌았죠. 그래서 그 코드를 서빙으로 옮기려고 받았는데, 실행이 안 됐어요. 모델이 쓰는 라이브러리랑 설정 파일이 여기저기 흩어져 있어서 &quot;이 파일도 필요해요, 저것도요&quot;를 며칠 동안 주고받았습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-80e2-897b-cb7c9b516cb9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문제는 이게 한 번으로 끝나지 않았다는 겁니다. 새 모델을 올릴 때마다 비슷한 일이 반복됐어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-808d-b492-ee12ad5797d2\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">ML 모델 하나가 서비스에 올라가려면, 모델을 만들고, 그 모델을 서빙하는 과정을 거치는데요. 보통 이 작업을 두 사람이 나눠서 합니다. 모델을 만드는 DS와, 그 모델을 서비스로 굳히는 MLE(ML Engineer)예요. 그런데 진짜 어려운 건 모델 자체가 아니라, 이 두 사람이 일을 어떻게 나누느냐였어요. 어디까지가 DS 몫이고, 어디부터가 MLE 몫일까요? 누가 어디까지 할지가 흐릿하면, 같은 모델을 두고 협업이 매끄럽지 않습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-8018-bf84-f204672f25bc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">저희 팀은 1년 동안 이 일 나누는 방식을 세 번 다시 다듬었습니다. 오늘은 그 과정을 하나씩 정리해 볼게요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3aaa360d-33e3-8027-8720-e674c82dc759\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3a4a360d-33e3-80b5-b892-ef062f2ab197\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">왜 두 직군의 협업이 매끄럽지 않았을까요?</span></span></span></h2><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-80d5-96b0-e887f13b7633\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스뱅크는 다양한 분야에서 ML 서비스를 제공하고 있어요. 신분증 OCR 및 사후검증(</span><a class=\"css-iynyr0\" href=\"https://toss.tech/article/secure-efficient-ai\" rel=\"noreferrer noopener\" target=\"_blank\">관련글</a><span class=\"css-1kxrhf3\">), 상담 음성을 텍스트로 바꾸는 STT, 문서를 읽는 OCR, 아이 얼굴 생성까지요. 서비스는 계속 늘어나는데, 새 모델을 올릴 때마다 DS와 MLE의 협업 과정이 매끄럽지 않았어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-80d9-b09a-c504eb5d4d36\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문제의 뿌리는 하나였어요. DS가 모델링 과정에서 작성했던 코드와, MLE가 비즈니스 로직과 함께 서빙에 알맞게 재작성했던 코드 사이에 명확한 약속이 없었던 거예요. 이 약속을 어떻게 잡았느냐에 따라 협업의 질이 완전히 달라졌어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-80b1-829f-f7104313d109\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그 과정을 세 단계(Phase)로 나눠서 볼 수 있어요. 각 단계에서 DS와 MLE가 일을 어디서 나눴는지를 같이 살펴볼게요.\n</span></span></span></p><h2 class=\"css-1c1qox8\" id=\"3a4a360d-33e3-801e-a5c7-e96a7f99ef6b\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">Phase 0: DS가 전달하면, MLE가 처음부터 다시</span></span></span></h2><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-803f-9813-cd8fce36c4d3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">처음엔 일을 나누는 지점이 사실상 </span><span class=\"css-q3ktjb\">사람과 사람 사이</span><span class=\"css-1kxrhf3\">에 있었어요.</span></span></span></p><figure class=\"css-of5acw\" id=\"3a4a360d-33e3-8058-8cc1-d72d789bebc6\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/a9600f91-3bf2-447d-a672-499eaf031d5a/01-phase0-styled.png\" /></figure><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-803d-b495-f2bcfb89ba97\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">DS는 주피터 노트북에서 모델을 학습하고, 추론(Inference, 학습된 모델로 예측을 뽑는 과정) 코드까지 노트북에 다 적어요. 그 노트북을 MLE에게 통째로 전달하면, MLE가 그걸 보고 서빙 코드를 처음부터 다시 작성했어요. 손에서 손으로 전달하는 방식이었죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-802e-be5d-d63193b5022d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">앞에서 말한 ‘실행이 안 되던’ 일도 바로 여기서 나왔어요.</span></span></span></p><blockquote class=\"css-2sk6rv\" id=\"3a4a360d-33e3-80bc-ac72-f4deea6144e0\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">그때 이런 대화가 오갔어요\n</span><span class=\"css-1kxrhf3\">- 받는 쪽에서 &quot;이 파일도 필요해요, 저 라이브러리 소스도 주세요&quot;를 하나하나 다시 요청했어요.\n- 결국 &quot;구동이 확인된 버전 그대로 통째로 전달해달라&quot;는 말이 오갔죠.</span></span></span></blockquote><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-80a4-910a-c2b966b43e33\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">노트북에서 도는 것과, 다른 사람 손에서 그대로 재현되는 것은 완전히 다른 문제였습니다. 이 ‘전달받아 맞추기’에만 많은 시간이 들었어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3a4a360d-33e3-802e-b521-f9e453ee6f91\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">일을 나누는 기준이 코드에 있지 않고 사람 사이에 있으니, 협업이 매끄럽지 않았습니다.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3aaa360d-33e3-807f-a9c5-ca7f8deaed79\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3a4a360",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "DS와 MLE 협업 구분이 서비스 품질을 좌우한다",
+        "tags": [
+          "Toss",
+          "Jupyter Notebook",
+          "OCR",
+          "STT",
+          "ML Service"
+        ],
+        "key_points": [
+          {
+            "point": "역할 구분이 명확하지 않아 모델 서빙에 반복적인 장애가 발생했다",
+            "timestamp": null
+          },
+          {
+            "point": "협업 과정을 Phase 0‑2 로 정의하고 단계별 책임을 정리했다",
+            "timestamp": null
+          },
+          {
+            "point": "Phase 0에서는 DS가 주피터 노트북 전체를 전달하고 MLE가 처음부터 서빙 코드를 재작성했다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "모델 전달 시 Jupyter Notebook 대신 Docker 이미지와 의존성 파일을 포함한 패키지를 제공하여 재작성 비용을 줄인다",
+          "협업 단계별 체크리스트(Phase 0‑2)를 문서화해 신규 모델 도입 시 일관된 프로세스를 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "DS와 MLE의 협업 과정에서 처음에 발생한 주요 문제는 무엇인가?",
+            "options": [
+              "모델 정확도 저하",
+              "코드와 설정 파일이 흩어져 있어 서빙이 안 됨",
+              "데이터 부족",
+              "인프라 비용 증가"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 DS가 만든 노트북을 전달받은 MLE가 실행되지 않는 이유는 라이브러리와 설정 파일이 흩어져 있었기 때문이라고 명시돼 있다."
+          },
+          {
+            "question": "Phase 0에서 DS가 MLE에게 전달한 방식은?",
+            "options": [
+              "Docker 이미지 제공",
+              "Jupyter Notebook 전체 전달",
+              "API 스펙만 전달",
+              "GitHub 레포만 공유"
+            ],
+            "answer_index": 1,
+            "explanation": "Phase 0 설명에서 DS가 주피터 노트북에 모델 학습·추론 코드를 모두 적어 MLE에게 통째로 전달했다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
