@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 05일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://www.cnelecar.com/blog/oracle-always-free-arm-limits-cut-2026/" target="_blank">Oracle cut its Always Free ARM limits to 2 OCPU / 12GB, enforced Aug 18</a>
+    </h2>
+
+    <p class="item-summary">무료 ARM 인스턴스 용량 감소, 비용·환경 재조정 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">Oracle</span><span class="tag">Always Free</span><span class="tag">Ampere A1</span><span class="tag">OCPU</span><span class="tag">ARM</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://www.cnelecar.com/blog/oracle-always-free-arm-limits-cut-2026/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Oracle은 2026년 8월 18일부터 무료 ARM 인스턴스 한도를 2 OCPU·12 GB RAM으로 축소한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>한도는 테넌시 전체에 적용되며 초과 시 자동으로 인스턴스가 종료된다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>사용자는 OCI 콘솔에서 인스턴스를 리사이즈하거나 통합·삭제해 기한 전에 조치해야 한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 OCI API를 활용해 현재 무료 ARM 사용량을 정기적으로 모니터링하고, 한도 초과 위험이 감지되면 자동으로 인스턴스를 2 OCPU·12 GB 이하로 리사이즈하거나 불필요한 인스턴스를 종료하도록 스크립트를 구현한다.</div>
+    
+    <div class="idea">💡 무료 ARM 인스턴스를 x86 마이크로 인스턴스로 전환하거나, 필요 시 유료 ARM 인스턴스로 마이그레이션해 비용과 가용성을 최적화한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Oracle이 2026년 8월 18일부터 적용하는 새로운 무료 ARM 한도는?</div>
+      
+      <div class="quiz-opt">A) 4 OCPU·24 GB</div>
+      
+      <div class="quiz-opt">B) 2 OCPU·12 GB</div>
+      
+      <div class="quiz-opt">C) 1 OCPU·6 GB</div>
+      
+      <div class="quiz-opt">D) 제한 없음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 2 OCPU·12 GB</div>
+          <div class="quiz-explanation">본문에 새 한도가 ‘Up to 2 OCPUs, Up to 12 GB of memory’라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 새 한도 변경에 영향을 받지 않는 인스턴스 유형은?</div>
+      
+      <div class="quiz-opt">A) ARM 인스턴스</div>
+      
+      <div class="quiz-opt">B) x86 마이크로 인스턴스</div>
+      
+      <div class="quiz-opt">C) 모든 무료 인스턴스</div>
+      
+      <div class="quiz-opt">D) 유료 인스턴스</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) x86 마이크로 인스턴스</div>
+          <div class="quiz-explanation">본문에 x86 마이크로 인스턴스는 기존 2 × 1 OCPU/1 GB 한도로 그대로 유지된다고 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/ppQh4Tc9BmM" target="_blank">The Billion Dollar AI Race Just Broke</a>
+    </h2>
+
+    <p class="item-summary">무료 고성능 모델로 연구·코드 자동화 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Qwen 3.8 Max</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span><span class="tag">lambda.ai</span><span class="tag">deep seek</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/ppQh4Tc9BmM" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Qwen 3.8 Max는 1백만 토큰 컨텍스트와 멀티모달 기능을 제공한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>가격이 기존 모델 대비 5~10배 저렴할 수 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Lambda AI를 이용해 GPU 환경에서 모델을 직접 실행·실험 가능</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Qwen 3.8 Max의 1백만 토큰 컨텍스트를 활용해 대규모 문서 요약 파이프라인 구축</div>
+    
+    <div class="idea">💡 Lambda AI GPU 인프라에서 Qwen 기반 자동 코딩 에이전트를 배포해 내부 툴 개발 자동화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 어떤 모델이 1백만 토큰 컨텍스트 윈도우를 가지고 있나요?</div>
+      
+      <div class="quiz-opt">A) Qwen 3.8 Max</div>
+      
+      <div class="quiz-opt">B) OpenAI GPT-4</div>
+      
+      <div class="quiz-opt">C) Anthropic Claude</div>
+      
+      <div class="quiz-opt">D) Lambda AI</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Qwen 3.8 Max</div>
+          <div class="quiz-explanation">본문에 Qwen 3.8 Max가 1백만 토큰 컨텍스트 윈도우를 갖는다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Qwen 3.8 Max의 가격은 기존 모델 대비 얼마나 저렴할 수 있다고 언급되었나요?</div>
+      
+      <div class="quiz-opt">A) 5~10배 저렴</div>
+      
+      <div class="quiz-opt">B) 동일 가격</div>
+      
+      <div class="quiz-opt">C) 2배 저렴</div>
+      
+      <div class="quiz-opt">D) 더 비쌈</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 5~10배 저렴</div>
+          <div class="quiz-explanation">본문에서 "maybe even five to ten times cheaper depending" 라고 언급했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Yannic Kilcher · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/0bpYCxv2qhw" target="_blank">[Video Response] What Cloudflare's code mode misses about MCP and tool calling</a>
+    </h2>
+
+    <p class="item-summary">LLM이 TypeScript API로 도구를 호출하면 효율·정확도 상승</p>
+
+    
+    <div class="tags">
+      <span class="tag">Cloudflare</span><span class="tag">MCP</span><span class="tag">TypeScript</span><span class="tag">LLM</span><span class="tag">Code Mode</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/0bpYCxv2qhw" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>MCP 도구를 TypeScript API로 변환해 LLM이 코드를 작성하도록 하면 성능이 크게 향상된다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM은 사전 학습에 TypeScript 코드가 풍부해 코드 모드가 기존 툴 호출보다 유리하다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>툴 호출을 직접 하는 것은 짧은 후학습에 비유돼 정확도가 낮을 수 있다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 내부 데이터 처리 툴을 TypeScript API 형태로 래핑해 LLM 에이전트가 코드로 호출하도록 설계한다</div>
+    
+    <div class="idea">💡 멀티스텝 데이터 추출 작업에서 기존 툴 호출 방식과 코드 모드 방식의 비용·성능을 A/B 테스트한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 왜 LLM이 TypeScript API 형태의 툴을 더 잘 활용한다고 주장되는가?</div>
+      
+      <div class="quiz-opt">A) 사전 학습에 TypeScript 코드가 풍부하기 때문</div>
+      
+      <div class="quiz-opt">B) 코드 실행 속도가 빠르기 때문</div>
+      
+      <div class="quiz-opt">C) 토큰 사용량이 적기 때문</div>
+      
+      <div class="quiz-opt">D) 미세조정이 덜 필요하기 때문</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 사전 학습에 TypeScript 코드가 풍부하기 때문</div>
+          <div class="quiz-explanation">영상에서는 LLM이 방대한 TypeScript 코드 예시를 학습했기 때문에 API 형태가 더 익숙하고 효율적이라고 설명한다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/news/1783497" target="_blank">FE News 26년 8월 소식을 전해드립니다.</a>
+    </h2>
+
+    <p class="item-summary">프론트엔드 최신 성능·툴 트렌드로 데이터 수집 효율↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">State of CSS</span><span class="tag">Anchor Positioning</span><span class="tag">Vite+</span><span class="tag">Ant</span><span class="tag">Hydration</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/news/1783497" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>State of CSS 2026 조사에서 4,902명 응답, Anchor Positioning이 신규 기능 1위와 브라우저 지원 부족으로 가장 아쉬운 기능 1위 차지, AI 생성 CSS 비율은 28%에 머물음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Hydration and Rendering Strategies 글에서 SSG·ISR·CSR·SSR·스트리밍 SSR·아일랜드·React Server Components를 비교·복잡도·번들·빌드·성능 트레이드오프 제시, 프로젝트 성격에 맞는 전략 선택 권고</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Vite+ 베타는 Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개 도구를 통합, 1,300개 이상 공개 저장소 사용, 엔터프라이즈 기능 추가로 프론트엔드 워크플로 간소화</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Anchor Positioning을 UI 컴포넌트에 적용해 사용자 인터랙션 데이터를 정량화하고 A/B 테스트로 전환율 개선</div>
+    
+    <div class="idea">💡 Vite+ 베타를 도입해 빌드·테스트 파이프라인을 통합하고, 빌드 시간 감소와 로그/메트릭 수집 자동화를 통해 프론트엔드 데이터 파이프라인 효율화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. State of CSS 2026 조사에서 가장 많이 호응받은 신규 기능은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) CSS Grid</div>
+      
+      <div class="quiz-opt">B) Anchor Positioning</div>
+      
+      <div class="quiz-opt">C) Container Queries</div>
+      
+      <div class="quiz-opt">D) Subgrid</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Anchor Positioning</div>
+          <div class="quiz-explanation">조사 결과 Anchor Positioning이 '가장 마음에 드는 신규 기능'과 '브라우저 지원 때문에 쓰지 못해 아쉬운 기능' 모두 1위를 차지했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Vite+ 베타가 통합한 도구는 총 몇 개인가?</div>
+      
+      <div class="quiz-opt">A) 3</div>
+      
+      <div class="quiz-opt">B) 4</div>
+      
+      <div class="quiz-opt">C) 5</div>
+      
+      <div class="quiz-opt">D) 6</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) 6</div>
+          <div class="quiz-explanation">Vite+, Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개의 도구가 하나의 스택으로 제공된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://blog.rust-lang.org/inside-rust/2026/08/05/rust-langrust-is-adopting-an-llm-policy/" target="_blank">Rust-lang/rust is adopting an LLM policy</a>
+    </h2>
+
+    <p class="item-summary">LLM 코드 기여 시 리뷰·책임 정책 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">rust-lang/rust</span><span class="tag">LLM</span><span class="tag">Large Language Model</span><span class="tag">GitHub</span><span class="tag">Rust</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://blog.rust-lang.org/inside-rust/2026/08/05/rust-langrust-is-adopting-an-llm-policy/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Rust 프로젝트가 monorepo에 대한 LLM 사용 정책을 도입했다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>정책은 리뷰어, PR 작성자, 이슈 발견자, LLM 인용 댓글 작성자에게 적용된다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>목표는 투명성 유지, 리뷰 부담 감소, 노력 신호 보존이다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Rust와 유사한 내부 LLM 사용 가이드라인을 수립해 코드 기여 시 책임과 검토 절차를 명시한다</div>
+    
+    <div class="idea">💡 LLM 생성 코드를 제출할 때 출처를 명시하고 리뷰 체크리스트에 LLM 사용 여부를 확인하는 단계 추가</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 새로운 Rust LLM 정책이 적용되는 그룹은?</div>
+      
+      <div class="quiz-opt">A) 오직 PR 작성자만</div>
+      
+      <div class="quiz-opt">B) 리뷰어·PR 작성자·이슈 발견자·LLM 인용 댓글 작성자</div>
+      
+      <div class="quiz-opt">C) 프로젝트 유지관리자만</div>
+      
+      <div class="quiz-opt">D) 모든 기여자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 리뷰어·PR 작성자·이슈 발견자·LLM 인용 댓글 작성자</div>
+          <div class="quiz-explanation">정책은 리뷰어, PR 작성자, 이슈를 LLM으로 발견한 사람, 그리고 LLM을 직접 인용하는 댓글 작성자를 대상으로 한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본문에서 언급된 LLM 사용으로 인한 주요 문제 3가지는?</div>
+      
+      <div class="quiz-opt">A) 코드 품질 저하·노력 증가·리뷰 속도 저하</div>
+      
+      <div class="quiz-opt">B) 정제된 결과가 노력 신호를 숨김·리뷰 부담 증가·LLM 복사·붙여넣기 시간 낭비</div>
+      
+      <div class="quiz-opt">C) 보안 취약점·라이선스 문제·성능 저하</div>
+      
+      <div class="quiz-opt">D) 위의 어느 것도 아니다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 정제된 결과가 노력 신호를 숨김·리뷰 부담 증가·LLM 복사·붙여넣기 시간 낭비</div>
+          <div class="quiz-explanation">본문은 정제된 PR이 노력 신호를 잃게 하고, 리뷰 부담이 늘며, LLM 복사·붙여넣기가 시간을 낭비한다는 세 가지 문제를 제시한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

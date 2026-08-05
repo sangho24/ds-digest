@@ -1,0 +1,396 @@
+{
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05T23:29:03.309424",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Oracle cut its Always Free ARM limits to 2 OCPU / 12GB, enforced Aug 18",
+        "url": "https://www.cnelecar.com/blog/oracle-always-free-arm-limits-cut-2026/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Oracle Just Halved Its Always Free ARM Limits — Here's Exactly What to Do Before August 18, 2026\n\nOracle cut its Always Free ARM limits to 2 OCPU / 12GB, enforced Aug 18, 2026. Resize or consolidate your free instances before they're terminated.\n\nAugust 5, 2026 · 5 min · 971 words · Louis\n\n[Affiliate Disclosure](/affiliate-disclosure/ \"Affiliate Disclosure\")\n\n![Oracle always free ARM vm limit cut in half](https://www.cnelecar.com/blog/oracle-always-free-arm-limits-cut-2026/oracle-always-free-arm-vm-cut-in-half.png)Table of Contents\n\n## The short answer: shrink or consolidate before August 18, 2026[#](#the-short-answer-shrink-or-consolidate-before-august-18-2026)\n\nIf you’re running any Ampere A1 ARM instance larger than **2 OCPUs or 12 GB of RAM** — or more than one of them — you need to act before **August 18, 2026**, or Oracle will terminate the excess automatically. Your two free x86 instances are untouched.\n\nYou probably got the email this week. Oracle is quietly cutting its “Always Free” ARM allowance in half, and the deadline is real.\n\n> “Beginning on August 18, 2026, Oracle will begin enforcing the updated Always Free compute limits. Compute instances that exceed the Always Free entitlement will be automatically terminated.”\n>\n> “Current Always Free compute limits: Up to 2 Ampere A1 OCPUs. Up to 12 GB of memory.”\n\n![The email from Oracle](/blog/oracle-always-free-arm-limits-cut-2026/email-oracle-always-free-arm-limits-cut-2026.png)\n\nHere’s what changed, what it means for your tenancy, and the exact move to make depending on what you’re running today.\n\n---\n\n## What actually changed[#](#what-actually-changed)\n\nThe ARM side of Always Free used to be generous: **4 OCPUs and 24 GB of RAM**, usable as one large instance or split into two. As of August 18, 2026, it’s exactly half.\n\n| Resource | Old limit | New limit (enforced Aug 18, 2026) |\n| --- | --- | --- |\n| ARM (Ampere A1) OCPU | Up to 4 OCPUs | **Up to 2 OCPUs** |\n| ARM memory | Up to 24 GB | **Up to 12 GB** |\n| x86 micro instances | 2 × 1 OCPU / 1 GB | 2 × 1 OCPU / 1 GB (unchanged) |\n| Other Always Free services | Available | Remain available |\n\nOne thing that trips people up: the ARM limit is a **tenancy-wide pool**, not per instance. You get 2 OCPUs and 12 GB total to divide however you like — one 2/12 instance, or two 1/6 instances — but the sum can’t go over. And it’s separate from the two always-free x86 instances, which keep their own allowance.\n\n---\n\n## Why this is happening[#](#why-this-is-happening)\n\nOracle doesn’t say in the email, and we won’t pretend to know. The likely story is capacity and abuse management on a tier that was famously too good to last. What matters more than the motive is the math: if you’re over the new pool, something has to give by the deadline.\n\n---\n\n## Your move, by what you’re running today[#](#your-move-by-what-youre-running-today)\n\n### Scenario A — You have one 4 OCPU / 24 GB ARM instance[#](#scenario-a--you-have-one-4-ocpu--24-gb-arm-instance)\n\nThis is the easy one. **Resize it down to 2 OCPUs / 12 GB.** In the OCI Console, open **Compute → Instances**, select your instance, click **More Actions → Edit**, set OCPU to 2 and memory to 12 GB (on Ampere A1 the shape scales OCPU and memory together, and 12 GB is the max at 2 OCPU), then save. The instance resizes — back up first, because any shape change is a good moment to have a snapshot.\n\nDo this now, not on August 17. The console gets busy near deadlines, and you don’t want a resize to fail the day before termination.\n\n### Scenario B — You have two 2 OCPU / 12 GB ARM instances (like I do)[#](#scenario-b--you-have-two-2-ocpu--12-gb-arm-instances-like-i-do)\n\nTwo 2/12 instances add up to **4 OCPUs and 24 GB** — exactly double the new pool. You can’t keep both. **Pick one, back up its data, and terminate it.** Keep the other at 2/12, and you’re sitting right at the limit.\n\nI’m in this boat myself: I opened two 2/12 ARM instances a while back and never consolidated them. The fix is to snapshot or image the one I’m retiring, copy anything I care about to the survivor (or to object storage), then terminate. Once it’s gone, the tenancy drops to 2/12 and Oracle leaves it alone.\n\n### Scenario C — You have two 1 OCPU / 1 GB x86 instances[#](#scenario-c--you-have-two-1-ocpu--1-gb-x86-instances)\n\n**Nothing to do.** These are the Intel/AMD micro instances, and they’re a separate allowance from the ARM pool. They’re not mentioned in the new limits and they keep running. Leave them be.\n\n---\n\n## What won’t save you (common mistakes)[#](#what-wont-save-you-common-mistakes)\n\n- **Ignoring the email and hoping it’s a mistake.** It isn’t. Enforcement is dated August 18, 2026.\n- **Waiting until the last day.** Resize or terminate this week. Console slowdowns and quota quirks near the deadline are the kind of thing that turns a 10-minute job into a missed deadline.\n- **Forgetting to back up before you terminate.** A terminated instance and its boot volume are gone — there’s no undo.\n-",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "무료 ARM 인스턴스 용량 감소, 비용·환경 재조정 필요",
+        "tags": [
+          "Oracle",
+          "Always Free",
+          "Ampere A1",
+          "OCPU",
+          "ARM"
+        ],
+        "key_points": [
+          {
+            "point": "Oracle은 2026년 8월 18일부터 무료 ARM 인스턴스 한도를 2 OCPU·12 GB RAM으로 축소한다.",
+            "timestamp": null
+          },
+          {
+            "point": "한도는 테넌시 전체에 적용되며 초과 시 자동으로 인스턴스가 종료된다.",
+            "timestamp": null
+          },
+          {
+            "point": "사용자는 OCI 콘솔에서 인스턴스를 리사이즈하거나 통합·삭제해 기한 전에 조치해야 한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "OCI API를 활용해 현재 무료 ARM 사용량을 정기적으로 모니터링하고, 한도 초과 위험이 감지되면 자동으로 인스턴스를 2 OCPU·12 GB 이하로 리사이즈하거나 불필요한 인스턴스를 종료하도록 스크립트를 구현한다.",
+          "무료 ARM 인스턴스를 x86 마이크로 인스턴스로 전환하거나, 필요 시 유료 ARM 인스턴스로 마이그레이션해 비용과 가용성을 최적화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Oracle이 2026년 8월 18일부터 적용하는 새로운 무료 ARM 한도는?",
+            "options": [
+              "4 OCPU·24 GB",
+              "2 OCPU·12 GB",
+              "1 OCPU·6 GB",
+              "제한 없음"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 새 한도가 ‘Up to 2 OCPUs, Up to 12 GB of memory’라고 명시되어 있다."
+          },
+          {
+            "question": "새 한도 변경에 영향을 받지 않는 인스턴스 유형은?",
+            "options": [
+              "ARM 인스턴스",
+              "x86 마이크로 인스턴스",
+              "모든 무료 인스턴스",
+              "유료 인스턴스"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 x86 마이크로 인스턴스는 기존 2 × 1 OCPU/1 GB 한도로 그대로 유지된다고 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "The Billion Dollar AI Race Just Broke",
+        "url": "https://youtu.be/ppQh4Tc9BmM",
+        "published_at": "2026-08-05T13:54:29",
+        "transcript": "This is insanity. We just got an amazing free AI system with deep seek flash on the lower end. Super quick, super cheap. But what about the open frontier models? This is Qwen 3.8 Max. And look, OpenAI and Anthropic are getting challenged there too, and not only that, but the price. Maybe even five to ten times cheaper depending. It is multimodal, so it has eyes and ears. One million token context window, and it is great for agentic workflows. This is actually one of the key points. They demonstrated it working independently while you get out there and live an active scholarly life. An absolutely lovely value proposition. You see, nobody has to be scared. It's not advertised by hacking into other people's systems. Just productivity and tranquility. Man. Sign me up for that, especially that many other systems have to tap out within minutes to hours. And if you think one day of independent work is impressive, well, try 16. Yes, it said they're thinking for 16 days, starting from an empty folder, writing, testing, and repairing its own code. It can reproduce research papers and even improve them meaningfully. Stunning. It can also create incredible websites and apps with these. The value proposition is so amazing, and the API pricing comparatively so low. I think it might force the other players to adjust their prices down. That is great for us, fellow scholars. And they have committed to releasing the weights soon as well. Now, since it is gigantic, not many of us will be able to run the full model at home. But here comes the best part. Dear fellow scholars, this is Two Minute Papers with Dr. Károly Zsolnai-Fehér. Now, hold on to your papers, fellow scholars, because the best part is that there are going to be a variety of other smaller models too. The earlier smaller models, Qwen 3.6, 27, and 35 billion have legend status. And despite being several months old by now, many of you fellow scholars still consider them the best in their categories. They are the Toyota Corolla of the AI world. And that is the real news for most of us with more modest resources. Yep. This might be your next daily driver that you can own for free. Wow. Oh, and I almost forgot. I'll give you a little secret. There are many benchmarks. Some of them are gamed, some of them less so. I think this is one of the good ones. Humanity's last exam. Devilishly difficult academic benchmark. When it started out, the best billion dollar closed AI systems were able to do about two percent on it. Now, just a bit more than a year later, an open model well over 50 percent. Keep an eye on this benchmark, because it has been one of the most indicative of real life performance for most brilliant fellow scholars like you. What a time to be alive. Qwen's contribution to open science and open source is simply incredible. We are being spoiled here with amazing new gifts every week. It is the golden age of open science and open AI systems. I am incredibly grateful for this. I use lambda to reproduce AI research papers often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text to image or video, easy peasy. Running a deep seek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover, and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 Qwen 3.8 Max:\nhttps://qwen.ai/blog?id=qwen3.8\n\nSources:\nhttps://x.com/loktar00/status/2082589566934929750\nhttps://x.com/CommandCodeAI/status/2084293498950590839\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, Benji Rabhan, B Shang, Cameron Navor, Charles Ian Norman Venn, Christian Ahlin, Eric T, Fred R, Gordon Child, Juan Benet, Michael Tedder, Owen Skarpness, Richard Sundvall, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "무료 고성능 모델로 연구·코드 자동화 가능",
+        "tags": [
+          "Qwen 3.8 Max",
+          "OpenAI",
+          "Anthropic",
+          "lambda.ai",
+          "deep seek"
+        ],
+        "key_points": [
+          {
+            "point": "Qwen 3.8 Max는 1백만 토큰 컨텍스트와 멀티모달 기능을 제공한다",
+            "timestamp": null
+          },
+          {
+            "point": "가격이 기존 모델 대비 5~10배 저렴할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "Lambda AI를 이용해 GPU 환경에서 모델을 직접 실행·실험 가능",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Qwen 3.8 Max의 1백만 토큰 컨텍스트를 활용해 대규모 문서 요약 파이프라인 구축",
+          "Lambda AI GPU 인프라에서 Qwen 기반 자동 코딩 에이전트를 배포해 내부 툴 개발 자동화"
+        ],
+        "quiz": [
+          {
+            "question": "어떤 모델이 1백만 토큰 컨텍스트 윈도우를 가지고 있나요?",
+            "options": [
+              "Qwen 3.8 Max",
+              "OpenAI GPT-4",
+              "Anthropic Claude",
+              "Lambda AI"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 Qwen 3.8 Max가 1백만 토큰 컨텍스트 윈도우를 갖는다고 명시되어 있다."
+          },
+          {
+            "question": "Qwen 3.8 Max의 가격은 기존 모델 대비 얼마나 저렴할 수 있다고 언급되었나요?",
+            "options": [
+              "5~10배 저렴",
+              "동일 가격",
+              "2배 저렴",
+              "더 비쌈"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 \"maybe even five to ten times cheaper depending\" 라고 언급했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Yannic Kilcher",
+        "source_key": "UCZHmQk67mSJgfCCTn7xBfew",
+        "source_label": "Yannic Kilcher",
+        "title": "[Video Response] What Cloudflare's code mode misses about MCP and tool calling",
+        "url": "https://youtu.be/0bpYCxv2qhw",
+        "published_at": "2025-10-19T10:58:51",
+        "transcript": "Hello, this is in many ways a response video to C E O or T3 G G's video called MCP is the wrong abstraction. And it is also video about this Cloudflare article which that video is about called Code Mode, the better way to use MCP. And I want to show you this article but also point out something that potentially is missed by either of these two article and the commentary. So here's the core idea of the article voiced by Theo. And that seems to be the direction Cloudflare is leaning into here. As they said, they're trying something different. Converting the MCP tools into TypeScript APIs, then asking the LLM to write code to call those APIs instead. The results are striking. We found agents are able to handle many more tools and more complex tools when the tools are presented as a TypeScript API rather than directly. They don't know why this is, but their theories are that this is perhaps because LLMs have an enormous amount of real-world TypeScript in their training data. But only a small set of contrived examples of tool calls. Very likely. And then point two here. So, what's the idea here? Um you just heard it. Let's not do tool calling in a way where we expose this to the LLMs and the LLMs has to in sort of conversational mode say, I will use the tool and then emit some token and then emit some JSON for the tool calling itself, and then we give it back the JSON of the response. Rather than that, um let's render the tools as an API. Then let the LLM write code and call that code, execute that code, and part of that code is actually the tool call right here. This is what's called code mode and uh Cloudflare is advocating for it. Now, in a sense, this is really, really great because, as Cloudflare hypothesizes, in the training data of LLMs, there's very probably tons and tons of code, so tons of examples of uh someone wanting to call some API and stringing that together and doing that correctly. Um fitting the types and so on. That's probably super common. Whereas the LLM tool calling that we're doing nowadays, this is very probably a result of the post-training. So, you do your pre-training and then on top of that, you do the fine-tuning from human feedback, reinforcement learning and so on, uh from these specific examples that the the mechanical Turks created for you. Very, very big difference between the two. Whatever is in pre-training is kind of ingrained knowledge of the LLMs. Whatever is on top is just sort of tacked on. Uh the article here compares that to saying making an LLM perform tasks with tool calling is like putting Shakespeare through a month-long class in Mandarin and then asking him to write a play in it. It's just not going to be his best work. Here, uh Shakespeare writing plays will be the pre-training sort of the ingrained knowledge. And then you tack on a very brief Mandarin course and um ask Shakespeare to write a play in that. He can still write the play, it he could still write the play, but uh the the understanding of the language is just very rudimentary, clunky, and a lot of things are gonna go wrong. I agree with this stance. I agree with yes, probably framing tool calls as APIs is a lot better. And um as Theo also points out, a lot of the providers are at least internally already doing this. Where I have a problem is when it is uh when it comes to that second point that the article makes right here. Let's listen to it. Two here. The approach really shines when an agent needs to string together multiple calls. With the traditional approach, the output of each tool call must feed into the LLM's neural network, just to be copied over to the inputs of the next call, wasting time, energy, and tokens. When the LLM can write code, it can skip all that, and only read back the final results that it needs. In short, LLMs are better at writing code to call MCP than they are at calling MCP directly. I totally Okay. This point is a bit more contentious in my opinion. So the idea is, let's say you want to know what you should wear today. Now, the LLM needs to do two things. It needs to find out where you are and what the weather is today. So it does a first tool call, and that first tool call is to the weather MCP server and get back, okay, here's the weather. No, sorry, the first tool call is for the location or memory or whatnot. Just figure out where you are. Get back the location. And then it needs to provide that to the to the weather uh MCP server, get back the weather and then reason what you should wear today. This is a stringing together of tool calls. And the way this works right now is that uh the results of the first tool call will get back into the context of the LLM. You call it again with that new context and then it can decide to do the second tool call. And in the point of of the article right here, this is this is uh clunky because it goes back to the LLM, it wastes tokens and so on. Wouldn't it be easier if all of this was an API? So if you had the API of the location service and the API of the weather service, you could just do get weather open parentheses get location uh close like as an argument, right? So you directly say, I want to get the location and then feed that into the weather server. And that's a single execution. Um and you don't have to go back to the LLM intermittently. So the LLM could a priori tell you, oh, I have these five tools. Here's how I want to string them together. And you execute all of that and you only get back the final result. Now this sounds appealing in theory. Um however, I think it is missing a crucial point. And that is that in um in in some cases this is going to work. But it's only going to work if you have extremely deterministic tools, extremely deterministic types and so on. So, for example, if that location is getting back um is getting back a determined type, um and then you can feed that into the into the weather tool. However, it starts breaking down in most real-world scenarios. And that is because uh stuff is messy and the real world is messy. And yeah, that's that's where I think the the problems here come in. So, what I mean by that is, let's say your location server doesn't always give you back a GPS location. Sometimes it gives you back an address. Sometimes it gives you back a what behind the house. Sometimes it's a I don't know. Sometimes it's a question back to the to the to the user, right? Like, hey, uh give me your location. It's like, oh, I know yesterday you were in London. Um I don't have any location data of today. Uh did you take a train? Or something. I'm contriving this. But I hope you can see that the real world is messy and the output of a lot of tool calls is not so defined. I know people are trying to get around that with JSON mode and all of that. Um but even with that, even you get back JSON mode, it is very likely that the next action will actually be dependent on the outputs of the last action in a non-deterministic way. What I mean by that is in a way that you have to reason. So what humans do when they string together different tools is they do exactly that. They call the first tool and then they look at the output of that and then they decide how to call the second tool. And I think that a lot of situations are like this. And therefore, it is not really going to be an advantage to string together tool calls by writing the code a priori. I can ask you this, right? If you have a very complex task and you make a detailed plan at the beginning, um how well is that plan usually turning out? I predict it's not turning out well. I predict that in the middle somewhere you'll have to adjust your plan as you go along. And that only works if you actually look at each of the outputs and re-decide how you want to react to that output, whether your plan is still valid, and how to pass how and and if to pass that output onto the next tools. And so, um and so that's where I have the the the trouble with because if we simply compose all these APIs together into one block of code and then say, oh, now we only need to read the output. That is effectively the same as saying, yes, my plans always work out 100% of the time. Um and I don't ever need to, you know, nothing is ever actually dependent on the intermediate states in any meaningful non-deterministic way. So, that's a word of caution. Now, I think that is a code mode is still fantastic and I think it's going to to give us a lot of benefits. Um but it might not get us the benefits in this more meaningful way when the tasks are complex and the the the tools are doing a bit more sophisticated things than you know, calling the weather. And um yeah, so that was an appeal. Now, what I do think is um there is actually an opportunity to get a lot of the benefits and that has to do with speculative decoding. So, what we can actually do is, let's say we compose all of this code together, right? Um and we do multiple tool calls, it's code, there's a loop and so on. But we record all the intermediate things. We record all of the outputs um from the intermediate states. Uh and then we just execute this all at once. And at the end, we don't just give the final output to the LLM, but we give all of the tool calls and all of the intermediate outputs to the LLM and effectively ask it whether any of these looks sus. Like, hey, look, these were the intermediate outputs. Does any of this look suspicious? Does any of this look wrong to you? And if it doesn't, then you're perfectly fine taking the final output. Uh because it's it's it's the LLM is effectively saying, no, all of this looks perfectly fine. If you had given this to me during the execution, I would have told you to move forward, move along with the plan. And if we can somehow get that or or let the LLM pinpoint where uh the deviation happens, like, oh no, no, no, this output here, or I would not have called the tool in this way had I known the outputs. We can skip a lot of these intermediate steps. So, let's call it speculative tool calling or something like this, which is you just call a bunch of tools ahead of time um because you estimate that that's something that might happen in a lot of cases. Uh tool calling isn't so expensive. Um you might use a few extra tokens by doing all of this intermediate validation. And but maybe we'll get a lot of speed out of it. All right. I still I invite you to read the article about code mode because it also talks about loading loading code into running agents, using isolates and all of that, very, very cool. And I also invite you to uh watch Theo's video on the topic because there's a lot of good comments about it. Uh just this this one thing that I think is missed by both and that's that in the real world with complex tools and messy data, um there will often be the case where intermittently you need to actually look at the intermediate output and decide what you want to do in a way that you couldn't have known at the beginning. General reminder that MCP isn't magic. MCP doesn't add any capabilities and MCP simply is a standard way of exposing APIs. I think that goes without saying if you've watched this channel for a while or in the field. But for anyone else, uh who's super hyping about MCP, it's not that big of a deal. It's cool, but uh it doesn't add anything new. Cool. That's it. Thank you very much and I'll see you around. Bye-bye.",
+        "body": "Theo's Video: https://www.youtube.com/watch?v=bAYZjVAodoo\nCloudflare article: https://blog.cloudflare.com/code-mode/\n\nLinks:\nHomepage: https://ykilcher.com\nMerch: https://ykilcher.com/merch\nYouTube: https://www.youtube.com/c/yannickilcher\nTwitter: https://twitter.com/ykilcher\nDiscord: https://ykilcher.com/discord\nLinkedIn: https://www.linkedin.com/in/ykilcher\n\nIf you want to support me, the best thing to do is to share out the content :)\n\nIf you want to support me financially (completely optional and voluntary, but a lot of people have asked for this):\nSubscribeStar: https://www.subscribestar.com/yannickilcher\nPatreon: https://www.patreon.com/yannickilcher\nBitcoin (BTC): bc1q49lsw3q325tr58ygf8sudx2dqfguclvngvy2cq\nEthereum (ETH): 0x7ad3513E3B8f66799f507Aa7874b1B0eBC7F85e2\nLitecoin (LTC): LQW2TRyKYetVC8WjFkhpPhtpbDM4Vw7r9m\nMonero (XMR): 4ACL8AGrEo5hAir8A9CeVrW8pEauWvnp1WnSDZxW7tziCDLhZAGsgzhRQABDnFy8yuM9fWJDviJPHKRjV4FWt19CJZN9D4n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM이 TypeScript API로 도구를 호출하면 효율·정확도 상승",
+        "tags": [
+          "Cloudflare",
+          "MCP",
+          "TypeScript",
+          "LLM",
+          "Code Mode"
+        ],
+        "key_points": [
+          {
+            "point": "MCP 도구를 TypeScript API로 변환해 LLM이 코드를 작성하도록 하면 성능이 크게 향상된다",
+            "timestamp": null
+          },
+          {
+            "point": "LLM은 사전 학습에 TypeScript 코드가 풍부해 코드 모드가 기존 툴 호출보다 유리하다",
+            "timestamp": null
+          },
+          {
+            "point": "툴 호출을 직접 하는 것은 짧은 후학습에 비유돼 정확도가 낮을 수 있다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "내부 데이터 처리 툴을 TypeScript API 형태로 래핑해 LLM 에이전트가 코드로 호출하도록 설계한다",
+          "멀티스텝 데이터 추출 작업에서 기존 툴 호출 방식과 코드 모드 방식의 비용·성능을 A/B 테스트한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 LLM이 TypeScript API 형태의 툴을 더 잘 활용한다고 주장되는가?",
+            "options": [
+              "사전 학습에 TypeScript 코드가 풍부하기 때문",
+              "코드 실행 속도가 빠르기 때문",
+              "토큰 사용량이 적기 때문",
+              "미세조정이 덜 필요하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "영상에서는 LLM이 방대한 TypeScript 코드 예시를 학습했기 때문에 API 형태가 더 익숙하고 효율적이라고 설명한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "FE News 26년 8월 소식을 전해드립니다.",
+        "url": "https://d2.naver.com/news/1783497",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p><img src=\"https://d2.naver.com/content/images/2023/07/-----------2023-07-06------4-16-49.png\" /></p>\n\n<h2 id=\"\">주요소식</h2>\n\n<p><img alt=\"\" src=\"/content/images/2026/08/image-1785906732683.png\" /></p>\n\n<p>26년 8월 소식에서는 다음과 같은 유용한 정보들을 만나보실 수 있습니다.</p>\n\n<h4 id=\"stateofcss2026https2026stateofcsscomenus\"><strong><a href=\"https://2026.stateofcss.com/en-US\">State of CSS 2026</a></strong></h4>\n\n<p>매년 진행되는 CSS 생태계 설문 조사인 State of CSS의 2026년 결과다. 2026년 5월 15일부터 6월 29일까지 진행되어 4,902명이 응답했고, 앵커 포지셔닝(Anchor Positioning)이 \"가장 마음에 드는 신규 기능\"과 \"브라우저 지원 때문에 쓰지 못해 아쉬운 기능\" 양쪽에서 1위를 차지했다. CSS의 AI 생성 비율이 평균 28%에 그쳤다는 응답도 눈에 띄는데, 다음 프로젝트에서 어떤 CSS 기능과 도구를 채택할지 판단하려는 개발자에게 참고할 만한 자료다.</p>\n\n<h4 id=\"hydrationandrenderingstrategieshttpsneciudandevhydrationandrenderingstrategies\"><strong><a href=\"https://neciudan.dev/hydration-and-rendering-strategies\">Hydration and Rendering Strategies</a></strong></h4>\n\n<p>웹 렌더링 전략의 진화를 화면이 시각적으로 준비되는 시점과 실제로 상호작용 가능해지는 시점 사이의 간극을 줄인다는 관점에서 정리한 글이다. SSG·ISR부터 CSR, SSR, 스트리밍 SSR, 아일랜드 아키텍처, React Server Components까지 계보순으로 훑으며, 각 전략이 설정 복잡도·번들 크기·하이드레이션 지연·빌드 시간을 서로 맞바꾼다는 점을 짚는다. 콘텐츠 사이트에는 정적 생성과 아일랜드를, 앱에는 Server Components를 쓰고 이색적인 방식은 측정 가능한 성능 문제가 있을 때만 도입하라는 결론이 실용적이다.</p>\n\n<h4 id=\"howdoesarequesttravelint200mshttps200msthenodebookcom\"><strong><a href=\"https://200ms.thenodebook.com/\">How does a request travel in ~200ms?</a></strong></h4>\n\n<p>하나의 HTTP 요청이 약 200밀리초 동안 거치는 여정을 단계별로 보여 주는 인터랙티브 시각화 도구다. DNS 해석, TCP 연결, TLS 협상, 커널, Node의 이벤트 루프, Postgres 작업, 응답이 클라이언트로 되돌아오는 경로까지 요청의 생애주기 전체를 추적하며 각 단계가 전체 지연 시간에서 차지하는 비중을 보여 준다. 추상화 뒤에 감춰져 있던 네트워크·시스템 계층을 구체적으로 이해하고 싶은 개발자에게 좋은 학습 자료다.</p>\n\n<h4 id=\"announcingvitebetahttpsvoidzerodevpostsannouncingviteplusbeta\"><strong><a href=\"https://voidzero.dev/posts/announcing-vite-plus-beta\">Announcing Vite+ Beta</a></strong></h4>\n\n<p>런타임 관리, 패키지 관리, 프런트엔드 도구를 하나의 워크플로로 통합하는 웹 개발 툴체인 Vite+의 베타 출시 소식이다. Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt를 하나의 스택으로 묶어 vp dev, vp check, vp test, vp build 같은 명령 체계로 제공하며, 알파 이후 500개 이상의 PR이 반영되어 스마트 캐싱과 조직 템플릿·프록시 등 엔터프라이즈 기능이 추가되었다. 1,300개 이상의 공개 저장소가 이미 사용하고 있다고 밝히고 있어, 프런트엔드 툴체인의 통합 흐름을 지켜보는 개발자에게 참고가 된다.</p>\n\n<h4 id=\"antalightweightjavascriptruntimehttpsantjsorg\"><strong><a href=\"https://antjs.org/\">Ant, a lightweight JavaScript runtime</a></strong></h4>\n\n<p>기존 엔진을 감싸지 않고 자체 \"Ant Silver\" 엔진 위에 처음부터 만든 경량 JavaScript 런타임이다. Node 호환 API와 VM 샌드박스, WebAssembly를 내장하고 9MB 단일 바이너리로 실제 npm 패키지와 TypeScript를 실행하며, 자체 패키지 매니저와 레지스트리·배포 플랫폼까지 하나의 생태계로 구성된다. 50MB가 넘는 런타임을 감당하기 어려운 서버리스 함수, 엣지 컴퓨팅, 임베디드 환경을 겨냥한 프로젝트다.</p>\n\n<h2 id=\"fenews268httpsgithubcomnaverfenewsblobmasterissues202608md\"><a href=\"https://github.com/naver/fe-news/blob/master/issues/2026-08.md\">>> FE News 26년 8월 소식 보러가기</a></h2>\n\n<p><br />  </p>\n\n<blockquote>\n  <p><strong>◎ FE News란?</strong><br />\n  네이버 FE 엔지니어들이 엄선한 양질의 FE 및 주요한 기술 소식들을 큐레이션해 공유하는 것을 목표로 하며, 이를 통해 국내 개발자들에게 지식 공유에 대한 가치 인식과 성장에 도움을 주고자 하는 기술소식 공유 프로젝트 입니다.</p>\n  \n  <p>매월 첫째 주 수요일, 월 1회 발행 되고 있으니 많은 관심 부탁드립니다.<br />\n  <a href=\"https://fenews.substack.com/embed\">▷ 구독하기</a></p>\n</blockquote>",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "프론트엔드 최신 성능·툴 트렌드로 데이터 수집 효율↑",
+        "tags": [
+          "State of CSS",
+          "Anchor Positioning",
+          "Vite+",
+          "Ant",
+          "Hydration"
+        ],
+        "key_points": [
+          {
+            "point": "State of CSS 2026 조사에서 4,902명 응답, Anchor Positioning이 신규 기능 1위와 브라우저 지원 부족으로 가장 아쉬운 기능 1위 차지, AI 생성 CSS 비율은 28%에 머물음",
+            "timestamp": null
+          },
+          {
+            "point": "Hydration and Rendering Strategies 글에서 SSG·ISR·CSR·SSR·스트리밍 SSR·아일랜드·React Server Components를 비교·복잡도·번들·빌드·성능 트레이드오프 제시, 프로젝트 성격에 맞는 전략 선택 권고",
+            "timestamp": null
+          },
+          {
+            "point": "Vite+ 베타는 Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개 도구를 통합, 1,300개 이상 공개 저장소 사용, 엔터프라이즈 기능 추가로 프론트엔드 워크플로 간소화",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Anchor Positioning을 UI 컴포넌트에 적용해 사용자 인터랙션 데이터를 정량화하고 A/B 테스트로 전환율 개선",
+          "Vite+ 베타를 도입해 빌드·테스트 파이프라인을 통합하고, 빌드 시간 감소와 로그/메트릭 수집 자동화를 통해 프론트엔드 데이터 파이프라인 효율화"
+        ],
+        "quiz": [
+          {
+            "question": "State of CSS 2026 조사에서 가장 많이 호응받은 신규 기능은 무엇인가?",
+            "options": [
+              "CSS Grid",
+              "Anchor Positioning",
+              "Container Queries",
+              "Subgrid"
+            ],
+            "answer_index": 1,
+            "explanation": "조사 결과 Anchor Positioning이 '가장 마음에 드는 신규 기능'과 '브라우저 지원 때문에 쓰지 못해 아쉬운 기능' 모두 1위를 차지했다."
+          },
+          {
+            "question": "Vite+ 베타가 통합한 도구는 총 몇 개인가?",
+            "options": [
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer_index": 3,
+            "explanation": "Vite+, Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개의 도구가 하나의 스택으로 제공된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "tools"
+        ],
+        "content_type": "news",
+        "half_life": "seasonal",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Rust-lang/rust is adopting an LLM policy",
+        "url": "https://blog.rust-lang.org/inside-rust/2026/08/05/rust-langrust-is-adopting-an-llm-policy/",
+        "published_at": null,
+        "transcript": null,
+        "body": "## rust-lang/rust is adopting an LLM policy\n\nAug. 5, 2026 · Jynn Nelson\n\nRecently, [five teams in the Rust project](https://triagebot.infra.rust-lang.org/gh-comments/rust-lang/rust-forge/pull/1040#issuecomment-4438128685) adopted a [policy](https://forge.rust-lang.org/policies/llm-usage.html) that I originally authored,\ngoverning how [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) can be used when contributing to the `rust-lang/rust` monorepo.\nNotably, the new policy is *not* an official stance on LLMs, and does *not* apply everywhere in the Rust project.\nI wrote it for a very specific purpose, described below.\n\nThis post talks about why we created that policy, what it says, and how this will affect contributors.\n\nThe policy affects the following groups of people:\n\n- People who review or moderate PRs on `rust-lang/rust`.\n- People who author PRs with LLM-generated code on `rust-lang/rust`.\n- People who discover issues using LLMs and post them on `rust-lang/rust`.\n- People who write issues or comments that directly quote an LLM on `rust-lang/rust`.\n\nIf you are not in one of those groups, you don't have to change anything about how you work.\n\n## Why was this policy created?\n\nWhile the Rust project is a collection of technical artifacts,\nit is also a *community* of people who work together to build, maintain, and extend those artifacts.\nWhen we talk about \"contributing to the Rust project\", we partly mean work on those artifacts,\nbut we also mean joining that community and collaborating with the people already there.\n\nEven before this policy was created, people were using LLMs to contribute to `rust-lang/rust`.\nSome of those uses respected our community:\ntranslating messages to English so people could draft them in their native language;\nfinding poor diagnostics for code snippets that new contributors to Rust might write;\nanalyzing RFCs to see if they were missing a discussion of other parts of the language that could affect the design.\nSome of those uses, sometimes unintentionally, did not.\n\nI've seen LLMs causing three main issues for our community:\n\n1. Polished technical products no longer indicate effort and understanding.\n2. Making code easier to write exacerbates our existing issues with review bandwidth.\n3. People mechanically copy-pasting to and from an LLM is a waste of our time.\n\nAs time went on, these issues grew and grew, until we had to create dedicated channels and moderation policy for how to deal with them.\nHowever, those channels work against our goals of being transparent and welcoming, because new contributors have no idea what the rules are.\n\nThe new policy formalizes those rules publicly, so that new contributors know how to join our community without getting their PRs closed for reasons they don't understand,\nand so that existing reviewers can easily point to the rules as an actionable reason when closing PRs that don't follow them.\n\n### Technical products no longer indicate effort\n\nIt used to be that if an open source project got a polished, well-tested, detailed PR,\nthat indicated that there was someone on the other end who had put time, effort, and understanding into the PR.\nThat influenced Rust's culture in several ways:\n\n- We are generally reluctant to close PRs, since they represent someone else's hard work.\n- Our process emphasizes incremental discussions, where PRs are allowed to change existing design if we discover new facts during creation or review.\n- We treat PRs as an indication that someone is interested in joining our community and being mentored to work on future PRs.\n\nWith LLMs, none of these signals are reliable.\nPolished PRs no longer indicate effort;\nauthors of polished PRs no longer necessarily understand their code—and in the case of autonomous agents, there is no longer someone on the other end at all;\nand because it's become so much easier to write code, a polished PR no longer indicates that someone is likely to stick around for the long term.\n\n### Making code easier to write causes review issues\n\nAt the time of writing, there are **1,281 open PRs** to `rust-lang/rust`.\nThis represents a staggering amount of time invested by both authors and reviewers.\nWe have long had the problem that there are more people who want to write code than people willing to review it.\nWith the advent of LLMs, this problem only gets worse.\n\nMost of the work of reviewing is not simply catching bugs.\nA great deal of it is deciding *whether this direction is a good approach*, whether the PR is a good idea at all.\nIn other words, [reviewing is made of decisions](https://web.archive.org/web/20260213080731/https://siderea.dreamwidth.org/1219758.html).\n\n\"Shotgunning\" PRs at reviewers incurs a high mental cost for them.\nI think most authors of LLM PRs believe that they are sincerely helping, but from our perspective,\nthe code itself is the smallest and in some ways least important part of the change.\nWe care much more about authors *understanding* what the code does,",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 코드 기여 시 리뷰·책임 정책 필요",
+        "tags": [
+          "rust-lang/rust",
+          "LLM",
+          "Large Language Model",
+          "GitHub",
+          "Rust"
+        ],
+        "key_points": [
+          {
+            "point": "Rust 프로젝트가 monorepo에 대한 LLM 사용 정책을 도입했다",
+            "timestamp": null
+          },
+          {
+            "point": "정책은 리뷰어, PR 작성자, 이슈 발견자, LLM 인용 댓글 작성자에게 적용된다",
+            "timestamp": null
+          },
+          {
+            "point": "목표는 투명성 유지, 리뷰 부담 감소, 노력 신호 보존이다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Rust와 유사한 내부 LLM 사용 가이드라인을 수립해 코드 기여 시 책임과 검토 절차를 명시한다",
+          "LLM 생성 코드를 제출할 때 출처를 명시하고 리뷰 체크리스트에 LLM 사용 여부를 확인하는 단계 추가"
+        ],
+        "quiz": [
+          {
+            "question": "새로운 Rust LLM 정책이 적용되는 그룹은?",
+            "options": [
+              "오직 PR 작성자만",
+              "리뷰어·PR 작성자·이슈 발견자·LLM 인용 댓글 작성자",
+              "프로젝트 유지관리자만",
+              "모든 기여자"
+            ],
+            "answer_index": 1,
+            "explanation": "정책은 리뷰어, PR 작성자, 이슈를 LLM으로 발견한 사람, 그리고 LLM을 직접 인용하는 댓글 작성자를 대상으로 한다."
+          },
+          {
+            "question": "본문에서 언급된 LLM 사용으로 인한 주요 문제 3가지는?",
+            "options": [
+              "코드 품질 저하·노력 증가·리뷰 속도 저하",
+              "정제된 결과가 노력 신호를 숨김·리뷰 부담 증가·LLM 복사·붙여넣기 시간 낭비",
+              "보안 취약점·라이선스 문제·성능 저하",
+              "위의 어느 것도 아니다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 정제된 PR이 노력 신호를 잃게 하고, 리뷰 부담이 늘며, LLM 복사·붙여넣기가 시간을 낭비한다는 세 가지 문제를 제시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
