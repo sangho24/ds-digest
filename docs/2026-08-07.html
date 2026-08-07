@@ -84,22 +84,22 @@
   <div class="item">
 
     <div class="item-meta">
-      HackerNews · 관련도 <span class="score">7</span>
+      Yannic Kilcher · 관련도 <span class="score">6</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://www.aleksagordic.com/blog/vllm" target="_blank">Inside vLLM: Anatomy of a High-Throughput LLM Inference System (2025)</a>
+      <a href="https://youtu.be/hpC4qjWu_aY" target="_blank">Context Rot: How Increasing Input Tokens Impacts LLM Performance (Paper Analysis)</a>
     </h2>
 
-    <p class="item-summary">대규모 LLM 추론 시스템 설계 핵심 파악</p>
+    <p class="item-summary">LLM은 컨텍스트 길이 늘리면 성능 저하, 선택적 입력 필요</p>
 
     
     <div class="tags">
-      <span class="tag">vLLM</span><span class="tag">paged attention</span><span class="tag">continuous batching</span><span class="tag">prefix caching</span><span class="tag">speculative decoding</span>
+      <span class="tag">Chroma</span><span class="tag">Claude</span><span class="tag">GPT</span><span class="tag">Gemini</span><span class="tag">Qwen</span>
     </div>
     
 
-    <a class="orig-link" href="https://www.aleksagordic.com/blog/vllm" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://youtu.be/hpC4qjWu_aY" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -108,21 +108,21 @@
       
         <span class="bullet">·</span>
       
-      <span>vLLM 엔진 코어는 페이지드 어텐션과 연속 배치를 활용해 높은 처리량을 달성한다.</span>
+      <span>컨텍스트 토큰이 늘어나면 모델 성능이 점진적으로 떨어진다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>프리픽스 캐싱과 추측 디코딩 같은 고급 기능이 지연 시간을 추가 감소시킨다.</span>
+      <span>모델마다 내구성이 다르며 본 연구에서는 Claude가 가장 오래 버텼다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>단일 GPU에서 다중 GPU·노드로 확장하는 구조는 InprocClient에서 DPLBAsyncMPClient로 전환한다.</span>
+      <span>검색 엔진·벡터 DB를 활용한 스마트 컨텍스트 엔지니어링이 성능 회복에 핵심이다</span>
     </div>
     
     
@@ -130,9 +130,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 프리픽스 캐싱을 도입해 동일 프롬프트에 대한 KV‑캐시 재사용을 최적화한다.</div>
+    <div class="idea">💡 벡터 데이터베이스(예: Chroma)를 이용해 질의와 가장 관련성 높은 문서만 추출해 컨텍스트에 삽입한다</div>
     
-    <div class="idea">💡 연속 배치와 페이지드 어텐션을 적용해 GPU 활용률을 높이고 배치 크기 변동에 탄력적으로 대응한다.</div>
+    <div class="idea">💡 컨텍스트 길이에 따른 성능 변화를 모니터링하고, 토큰 수 제한 정책을 설정해 성능 저하 구간을 사전에 차단한다</div>
     
     
 
@@ -141,21 +141,149 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. vLLM에서 V1 엔진을 사용하도록 설정하는 환경 변수는 무엇인가?</div>
+      <div class="quiz-q">Q1. 이 논문의 저자는 어느 회사인가?</div>
       
-      <div class="quiz-opt">A) VLLM_USE_V1</div>
+      <div class="quiz-opt">A) OpenAI</div>
       
-      <div class="quiz-opt">B) VLLM_ENABLE_V1_MULTIPROCESSING</div>
+      <div class="quiz-opt">B) Chroma</div>
       
-      <div class="quiz-opt">C) VLLM_ENGINE_VERSION</div>
+      <div class="quiz-opt">C) DeepMind</div>
       
-      <div class="quiz-opt">D) VLLM_MODE</div>
+      <div class="quiz-opt">D) Google</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ A) VLLM_USE_V1</div>
-          <div class="quiz-explanation">본문에 VLLM_USE_V1="1" 로 V1 엔진 사용을 지정한다고 명시되어 있다.</div>
+          <div class="quiz-correct-opt">✓ B) Chroma</div>
+          <div class="quiz-explanation">본문에서 연구자는 Chroma 소속이라고 명시했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 실험에서 가장 오래 컨텍스트 증가에 견딘 모델은?</div>
+      
+      <div class="quiz-opt">A) GPT</div>
+      
+      <div class="quiz-opt">B) Gemini</div>
+      
+      <div class="quiz-opt">C) Claude</div>
+      
+      <div class="quiz-opt">D) Qwen</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Claude</div>
+          <div class="quiz-explanation">발표자는 Claude가 다른 모델보다 가장 오래 버텼다고 언급했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Netflix TechBlog - Medium · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://netflixtechblog.com/how-and-why-netflix-built-a-real-time-distributed-graph-part-3-querying-the-graph-with-grpc-0f3468349607?source=rss----2615bd06b42e---4" target="_blank">How and Why Netflix Built a Real-Time Distributed Graph: Part 3 — Querying the graph with gRPC…</a>
+    </h2>
+
+    <p class="item-summary">실시간 그래프를 100ms 이하로 조회하는 설계</p>
+
+    
+    <div class="tags">
+      <span class="tag">gRPC</span><span class="tag">Apache Flink</span><span class="tag">Real-Time Distributed Graph</span><span class="tag">RDG</span><span class="tag">Netflix</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://netflixtechblog.com/how-and-why-netflix-built-a-real-time-distributed-graph-part-3-querying-the-graph-with-grpc-0f3468349607?source=rss----2615bd06b42e---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>서빙 레이어를 설계해 100ms 미만 응답을 목표로 함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>gRPC 실행 API를 통해 그래프 질의를 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>수십억 엣지를 지원하며 얕고 넓은·깊고 좁은 쿼리 패턴을 모두 처리</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 gRPC 실행 API를 도입해 실시간 그래프 질의 서비스를 구축</div>
+    
+    <div class="idea">💡 다양한 쿼리 패턴을 지원하도록 스토리지 파티셔닝 및 라우팅 로직 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Netflix RDG 서빙 레이어의 주요 목표는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 데이터 저장 용량 확대</div>
+      
+      <div class="quiz-opt">B) 100ms 이하 응답 시간 확보</div>
+      
+      <div class="quiz-opt">C) 배치 처리 최적화</div>
+      
+      <div class="quiz-opt">D) 사용자 인터페이스 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 100ms 이하 응답 시간 확보</div>
+          <div class="quiz-explanation">본문에서 서빙 레이어는 sub-100ms 응답을 목표로 설계됨을 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. RDG 파이프라인에서 스트리밍 이벤트를 그래프 원시 데이터로 변환하는 데 사용된 기술은?</div>
+      
+      <div class="quiz-opt">A) Apache Spark</div>
+      
+      <div class="quiz-opt">B) Apache Flink</div>
+      
+      <div class="quiz-opt">C) Kafka Streams</div>
+      
+      <div class="quiz-opt">D) TensorFlow</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Apache Flink</div>
+          <div class="quiz-explanation">파트 1에서 Apache Flink를 사용해 스트리밍 이벤트를 그래프 원시 데이터로 변환한다고 설명한다.</div>
         </div>
       </details>
     </div>
@@ -176,18 +304,18 @@
     </div>
 
     <h2 class="item-title">
-      <a href="https://youtu.be/Nao16-6l6dQ" target="_blank">[Paper Analysis] The Free Transformer (and some Variational Autoencoder stuff)</a>
+      <a href="https://youtu.be/hkAH7-u7t5k" target="_blank">AGI is not coming!</a>
     </h2>
 
-    <p class="item-summary">잠재 변수로 리뷰 다양성 제어, 모델 불확실성 활용</p>
+    <p class="item-summary">LLM 도구 연동이 핵심, AGI 기대는 낮아짐</p>
 
     
     <div class="tags">
-      <span class="tag">Free Transformer</span><span class="tag">François Fleuret</span><span class="tag">Meta</span><span class="tag">latent variables</span><span class="tag">auto-regressive</span>
+      <span class="tag">OpenAI</span><span class="tag">GPT-5</span><span class="tag">GPT OSS</span><span class="tag">LLM</span><span class="tag">reinforcement learning</span>
     </div>
     
 
-    <a class="orig-link" href="https://youtu.be/Nao16-6l6dQ" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://youtu.be/hkAH7-u7t5k" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -196,21 +324,21 @@
       
         <span class="bullet">·</span>
       
-      <span>Free Transformer는 디코더 Transformer에 잠재 변수를 추가해 생성 과정의 의사결정을 모델링한다.</span>
+      <span>AGI 도래는 멈췄으며 LLM은 점진적 개선 단계에 있다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>영화 리뷰 예시에서 좋은/나쁜 리뷰가 이중峰(바이모달) 분포를 이루며, 모델은 비율대로 샘플링해야 한다.</span>
+      <span>OpenAI는 합성 데이터와 강화학습으로 코딩·툴콜에 특화된 모델을 훈련한다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Transformer의 무작위성은 토큰 샘플링 단계에서만 발생하고, 로그잇을 정규화해 분포를 만든다.</span>
+      <span>앞으로는 툴 연동 능력과 가격 경쟁력이 모델 선택의 핵심이 될 것이다</span>
     </div>
     
     
@@ -218,9 +346,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 잠재 변수를 포함한 디코더 레이어를 구현해 텍스트 생성 시 감성이나 스타일을 제어한다.</div>
+    <div class="idea">💡 LLM을 툴 호출 오케스트레이터로 활용해 데이터 전처리·분석 파이프라인 자동화</div>
     
-    <div class="idea">💡 Free Transformer 구조를 활용해 멀티모달 레코멘데이션 시스템에서 사용자 선호의 이중분포를 모델링한다</div>
+    <div class="idea">💡 GPT-5의 저렴한 비용을 활용해 내부 코드 자동 생성·리팩터링 워크플로우 구축</div>
     
     
 
@@ -229,41 +357,41 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. Transformer에서 생성 과정의 무작위성은 어디에서 발생하는가?</div>
+      <div class="quiz-q">Q1. 영상에서 언급된 OpenAI의 최신 모델 이름은?</div>
       
-      <div class="quiz-opt">A) Encoder 레이어</div>
+      <div class="quiz-opt">A) GPT-4</div>
       
-      <div class="quiz-opt">B) Decoder 자기주의</div>
+      <div class="quiz-opt">B) GPT-5</div>
       
-      <div class="quiz-opt">C) 토큰 샘플링 단계</div>
+      <div class="quiz-opt">C) GPT-6</div>
       
-      <div class="quiz-opt">D) Positional Embedding</div>
+      <div class="quiz-opt">D) GPT OSS</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ C) 토큰 샘플링 단계</div>
-          <div class="quiz-explanation">텍스트는 로그잇을 정규화한 토큰 확률 분포에서 샘플링되며, 이 단계가 유일한 무작위성 원천이다.</div>
+          <div class="quiz-correct-opt">✓ B) GPT-5</div>
+          <div class="quiz-explanation">영상에서는 GPT-5와 GPT OSS를 언급한다.</div>
         </div>
       </details>
     </div>
     
     <div class="quiz-box">
-      <div class="quiz-q">Q2. 영화 리뷰 예시에서 모델이 재현하려는 데이터 분포는 무엇인가?</div>
+      <div class="quiz-q">Q2. 발표자는 앞으로 LLM의 가치를 어디에 두고 있다고 말했는가?</div>
       
-      <div class="quiz-opt">A) Uniform 분포</div>
+      <div class="quiz-opt">A) 모델 크기</div>
       
-      <div class="quiz-opt">B) Bimodal(이중峰) 분포</div>
+      <div class="quiz-opt">B) 툴 연동과 가격</div>
       
-      <div class="quiz-opt">C) Normal 분포</div>
+      <div class="quiz-opt">C) 데이터 양</div>
       
-      <div class="quiz-opt">D) Exponential 분포</div>
+      <div class="quiz-opt">D) 학습 속도</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) Bimodal(이중峰) 분포</div>
-          <div class="quiz-explanation">좋은 리뷰와 나쁜 리뷰가 각각 별도의 그룹을 이루어 이중峰 형태의 분포를 만든다.</div>
+          <div class="quiz-correct-opt">✓ B) 툴 연동과 가격</div>
+          <div class="quiz-explanation">발표자는 툴 연동 능력과 저렴한 가격을 미래 핵심이라고 강조했다.</div>
         </div>
       </details>
     </div>
@@ -280,22 +408,22 @@
   <div class="item">
 
     <div class="item-meta">
-      Weekly deep daiv. · 관련도 <span class="score">5</span>
+      Machine Learning Street Talk · 관련도 <span class="score">5</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://deepdaiv.stibee.com/p/157" target="_blank">왜? 생각이 많아졌나?</a>
+      <a href="https://youtu.be/dHBEQ-Ryo24" target="_blank">The Dangerous Illusion of AI Coding? - Jeremy Howard</a>
     </h2>
 
-    <p class="item-summary">Reasoning 모델의 과도한 추론 비용을 줄이고 적응형 사고로 효율화가 필요함</p>
+    <p class="item-summary">AI 코딩의 위험성 인식과 인터랙티브 학습 강조</p>
 
     
     <div class="tags">
-      <span class="tag">o1</span><span class="tag">Claude</span><span class="tag">GPT</span><span class="tag">Adaptive Thinking</span><span class="tag">Overthinking</span>
+      <span class="tag">Jeremy Howard</span><span class="tag">Kaggle</span><span class="tag">LLM</span><span class="tag">Nvidia GTC</span><span class="tag">DGX Spark</span>
     </div>
     
 
-    <a class="orig-link" href="https://deepdaiv.stibee.com/p/157" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://youtu.be/dHBEQ-Ryo24" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -304,21 +432,21 @@
       
         <span class="bullet">·</span>
       
-      <span>Reasoning 모델은 쉬운 질문에도 수백~천 토큰을 사용해 Overthinking 현상이 나타난다</span>
+      <span>AI 코딩은 통제 착각을 일으키며, 이해 없이 코드를 배포하면 위험하다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Adaptive Thinking은 모델이 문제 난이도에 따라 추론 깊이를 스스로 조절하도록 학습한다</span>
+      <span>노트북 등 인터랙티브 루프를 통해 문제를 직접 조작할 때 깊은 통찰이 생긴다</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Chain‑of‑Thought 길이와 정확도는 역U형 관계이며, 과도한 추론은 성능 저하를 초래한다</span>
+      <span>Nvidia GTC에서 DGX Spark 등 고성능 하드웨어와 새로운 칩 발표가 예정돼 있다</span>
     </div>
     
     
@@ -326,9 +454,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 추론 중간에 모델의 confidence를 평가해 사전 정의된 토큰 한도 초과 시 조기 종료(Early‑exit) 로직을 적용한다</div>
+    <div class="idea">💡 AI 코드 생성 결과를 노트북에서 즉시 실행·디버깅하여 신뢰성을 검증한다</div>
     
-    <div class="idea">💡 난이도 예측 헤드를 추가해 ‘언제 생각할지’와 ‘얼마나 생각할지’를 학습 데이터로 지도학습시켜 Adaptive Thinking을 구현한다</div>
+    <div class="idea">💡 DGX Spark와 같은 소형 고성능 서버를 활용해 70B 파라미터 모델을 사내에서 파인튜닝한다</div>
     
     
 
@@ -337,41 +465,41 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. ‘2 plus 3’ 질문에 가장 많은 토큰을 생성한 모델은?</div>
+      <div class="quiz-q">Q1. Jeremy Howard는 어떤 역할로 소개되었는가?</div>
       
-      <div class="quiz-opt">A) o1</div>
+      <div class="quiz-opt">A) Kaggle 그랜드마스터</div>
       
-      <div class="quiz-opt">B) DeepSeek‑R1</div>
+      <div class="quiz-opt">B) 데이터 엔지니어</div>
       
-      <div class="quiz-opt">C) GPT‑4</div>
+      <div class="quiz-opt">C) 프론트엔드 개발자</div>
       
-      <div class="quiz-opt">D) Claude</div>
+      <div class="quiz-opt">D) 클라우드 아키텍트</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) DeepSeek‑R1</div>
-          <div class="quiz-explanation">본문에 따르면 DeepSeek‑R1은 987 토큰을 생성해 가장 많았다</div>
+          <div class="quiz-correct-opt">✓ A) Kaggle 그랜드마스터</div>
+          <div class="quiz-explanation">본문에서 Jeremy Howard를 deep learning pioneer이자 Kaggle grandmaster로 언급한다.</div>
         </div>
       </details>
     </div>
     
     <div class="quiz-box">
-      <div class="quiz-q">Q2. Wu et al. (2025) 연구에 따르면 Chain‑of‑Thought 길이와 정답률의 관계는?</div>
+      <div class="quiz-q">Q2. AI 기반 코딩이 비유된 것은?</div>
       
-      <div class="quiz-opt">A) 단조 증가</div>
+      <div class="quiz-opt">A) 슬롯 머신</div>
       
-      <div class="quiz-opt">B) 역U형</div>
+      <div class="quiz-opt">B) 체스 게임</div>
       
-      <div class="quiz-opt">C) 단조 감소</div>
+      <div class="quiz-opt">C) 복권</div>
       
-      <div class="quiz-opt">D) 상관 없음</div>
+      <div class="quiz-opt">D) 룰렛</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) 역U형</div>
-          <div class="quiz-explanation">연구 결과는 추론 길이가 일정 지점을 넘으면 정확도가 떨어지는 역U형 곡선을 그린다고 보고한다</div>
+          <div class="quiz-correct-opt">✓ A) 슬롯 머신</div>
+          <div class="quiz-explanation">발표자는 AI 코딩을 슬롯 머신에 비유하며 통제 착각을 언급한다.</div>
         </div>
       </details>
     </div>
@@ -388,22 +516,22 @@
   <div class="item">
 
     <div class="item-meta">
-      Yannic Kilcher · 관련도 <span class="score">4</span>
+      HackerNews · 관련도 <span class="score">5</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://youtu.be/zKohTkN0Fyk" target="_blank">[Paper Analysis] On the Theoretical Limitations of Embedding-Based Retrieval (Warning: Rant)</a>
+      <a href="https://www.newsweek.com/bulldozers-plow-through-big-bend-national-park-sparking-fury-in-texas-12295668" target="_blank">Bulldozers Plow Through Big Bend National Park, Sparking Fury in Texas</a>
     </h2>
 
-    <p class="item-summary">임베딩 기반 검색의 근본 한계와 실험 증명</p>
+    <p class="item-summary">국경벽 건설 데이터가 환경·관광 영향 분석에 활용 가능</p>
 
     
     <div class="tags">
-      <span class="tag">embedding</span><span class="tag">vector embeddings</span><span class="tag">top-k</span><span class="tag">LIMIT</span><span class="tag">single vector</span>
+      <span class="tag">Big Bend National Park</span><span class="tag">Rio Grande</span><span class="tag">Center for Biological Diversity</span><span class="tag">Trump administration</span><span class="tag">Terrell County</span>
     </div>
     
 
-    <a class="orig-link" href="https://youtu.be/zKohTkN0Fyk" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://www.newsweek.com/bulldozers-plow-through-big-bend-national-park-sparking-fury-in-texas-12295668" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -412,84 +540,58 @@
       
         <span class="bullet">·</span>
       
-      <span>임베딩 차원에 따라 반환 가능한 top‑k 문서 집합 수가 제한됨을 이론적으로 증명</span>
+      <span>Bulldozers are clearing vegetation in Big Bend NP for a border wall expansion, sparking local opposition</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>k=2 상황에서도 제한이 실험적으로 확인됐으며, 파라미터화된 임베딩으로 테스트셋을 직접 최적화 가능</span>
+      <span>Local businesses and environmental groups warn of damage to desert ecosystems and tourism</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>LIMIT 데이터셋을 만들어 SOTA 모델도 간단한 태스크에서 실패, 단일 벡터 패러다임의 근본적 한계 강조</span>
+      <span>Officials argue security can be achieved with technology and road improvements rather than extensive construction</span>
     </div>
     
     
 
     
-
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Apply satellite‑imagery change detection with ML to quantify bulldozer‑induced habitat loss in real time</div>
+    
+    <div class="idea">💡 Develop a tourism‑demand forecasting model that incorporates park access restrictions to estimate economic impact on local businesses</div>
+    
     
 
-    <div class="feedback">
-      <span class="fb-btn">👍 도움됐어</span>
-      <span class="fb-btn">👎 별로야</span>
-    </div>
-
-  </div>
-  
-  <div class="item">
-
-    <div class="item-meta">
-      Machine Learning Street Talk · 관련도 <span class="score">4</span>
-    </div>
-
-    <h2 class="item-title">
-      <a href="https://youtu.be/TpyS50ifmX4" target="_blank">The Ex-Pentagon Chief Sounding the Alarm on AI Weapons — Brad Carson</a>
-    </h2>
-
-    <p class="item-summary">AI 무기 정책·책임 논의가 DS 위험 관리에 핵심</p>
-
     
-    <div class="tags">
-      <span class="tag">Brad Carson</span><span class="tag">Palantir</span><span class="tag">Asilomar</span><span class="tag">DeepSeek</span><span class="tag">Anthropic</span>
-    </div>
+    <div class="section-divider">퀴즈</div>
     
-
-    <a class="orig-link" href="https://youtu.be/TpyS50ifmX4" target="_blank">원본 보기 →</a>
-
     
-    <div class="section-divider">핵심 포인트</div>
-    
-    <div class="key-point">
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Which organization described the border‑wall project as “the most heinous attack on an American national park in generations”?</div>
       
-        <span class="bullet">·</span>
+      <div class="quiz-opt">A) Center for Biological Diversity</div>
       
-      <span>AI 무기 사용 시 모델 오류와 책임 소재 부재 위험</span>
+      <div class="quiz-opt">B) National Park Service</div>
+      
+      <div class="quiz-opt">C) Texas Rangers</div>
+      
+      <div class="quiz-opt">D) U.S. Border Patrol</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Center for Biological Diversity</div>
+          <div class="quiz-explanation">The quote is attributed to Laiken Jordahl, a national public lands advocate at the Center for Biological Diversity.</div>
+        </div>
+      </details>
     </div>
     
-    <div class="key-point">
-      
-        <span class="bullet">·</span>
-      
-      <span>역사적 Asilomar 사례는 기술 억제 가능성을 보여줌</span>
-    </div>
-    
-    <div class="key-point">
-      
-        <span class="bullet">·</span>
-      
-      <span>법적·윤리적 프레임워크 부재가 전쟁법 적용을 복잡하게 함</span>
-    </div>
-    
-    
-
-    
-
     
 
     <div class="feedback">
