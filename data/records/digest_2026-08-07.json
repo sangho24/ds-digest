@@ -1,0 +1,342 @@
+{
+  "date": "2026-08-07",
+  "generated_at": "2026-08-07T01:49:59.378756",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Inside vLLM: Anatomy of a High-Throughput LLM Inference System (2025)",
+        "url": "https://www.aleksagordic.com/blog/vllm",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Inside vLLM: Anatomy of a High-Throughput LLM Inference System\n\n## From paged attention, continuous batching, prefix caching, specdec, etc. to multi-GPU, multi-node dynamic serving at scale\n\nAugust 29, 2025\n\nIn this post, I'll gradually introduce all of the core system components and advanced features that make up a modern high-throughput LLM inference system. In particular I'll be doing a breakdown of how vLLM [[1]](#ref-1) works.\n\nThis post is the first in a series. It starts broad and then layers in detail (following an inverse-pyramid approach) so you can form an accurate high-level mental model of the complete system without drowning in minutiae.\n\nLater posts will dive into specific subsystems.\n\nThis post is structured into five parts:\n\n1. [LLM engine & engine core](#cpt1): fundamentals of vLLM (scheduling, paged attention, continuous batching, etc.)\n2. [Advanced features](#cpt2): chunked prefill, prefix caching, guided & speculative decoding, disaggregated P/D\n3. [Scaling up](#cpt3): from single-GPU to multi-GPU execution\n4. [Serving layer](#cpt4): distributed / concurrent web scaffolding\n5. [Benchmarks and auto-tuning](#cpt5): measuring latency and throughput\n\n📝Notes\n\n- Analysis is based on [commit 42172ad](https://github.com/vllm-project/vllm/tree/42172ad) (August 9th, 2025).\n- Target audience: anyone curious about how state-of-the-art LLM engines work, as well as those interested in contributing to vLLM, SGLang, etc.\n- I'll focus on the [V1 engine](https://docs.vllm.ai/en/latest/usage/v1_guide.html). I also explored V0 ([now deprecated](https://github.com/vllm-project/vllm/issues/18571)), which was valuable for understanding how the project evolved, and many concepts still carry over.\n- The first section on LLM Engine / Engine Core might be a bit overwhelming/dry - but the rest of the blog has plenty examples and visuals. :)\n\n## LLM Engine & Engine Core\n\nThe LLM engine is the fundamental building block of vLLM. On its own, it already enables high-throughput inference - but only in an offline setting. You can't serve it to customers over the web yet.\n\nWe'll use the following offline inference snippet as our running example (adapted from [basic.py](https://github.com/vllm-project/vllm/blob/main/examples/offline_inference/basic/basic.py)).\n\n```\nfrom vllm import LLM, SamplingParams\n\nprompts = [\n    \"Hello, my name is\",\n    \"The president of the United States is\",\n]\n\nsampling_params = SamplingParams(temperature=0.8, top_p=0.95)\n\ndef main():\n    llm = LLM(model=\"TinyLlama/TinyLlama-1.1B-Chat-v1.0\")\n\n    outputs = llm.generate(prompts, sampling_params)\n\nif __name__ == \"__main__\":\n    main()\n```\n\n📝Environment vars:\n\n- VLLM\\_USE\\_V1=\"1\" # we're using engine V1\n- VLLM\\_ENABLE\\_V1\\_MULTIPROCESSING=\"0\" # we're running in a single process\n\nThis configuration is:\n\n- offline (no web/distributed system scaffolding)\n- synchronous (all execution happens in a single blocking process)\n- single-GPU (no data/model/pipeline/expert parallelism; DP/TP/PP/EP = 1)\n- using standard transformer [[2]](#ref-2) (supporting hybrid models like Jamba requires a more complex hybrid KV-cache memory allocator)\n\nFrom here, we'll gradually build up to an online, async, multi-GPU, multi-node inference system - but still serving a standard transformer.\n\nIn this example we do two things, we:\n\n1. Instantiate an engine\n2. Call `generate` on it to sample from the given prompts\n\nLet's start analyzing the constructor.\n\n## LLM Engine constructor\n\nThe main components of the engine are:\n\n- vLLM config (contains all of the knobs for configuring model, cache, parallelism, etc.)\n- processor (turns raw inputs → `EngineCoreRequests` via validation, tokenization, and processing)\n- engine core client (in our running example we're using `InprocClient` which is basically == `EngineCore`; we'll gradually build up to `DPLBAsyncMPClient` which allows serving at scale)\n- output processor (converts raw `EngineCoreOutputs` → `RequestOutput` that the user sees)\n\n📝Note:\n\nWith the V0 engine being deprecated, class names and details may shift. I'll emphasize the core ideas rather than exact signatures. I'll abstract away some but not all of those details.\n\nEngine core itself is made up of several sub components:\n\n- Model Executor (drives forward passes on the model, we're currently dealing with `UniProcExecutor` which has a single `Worker` process on a single GPU). We'll gradually build up to `MultiProcExecutor` which supports multiple GPUs\n- Structured Output Manager (used for guided decoding - we'll cover this later)\n- Scheduler (decides which requests go into the next engine step) - it further contains:\n  1. policy setting - it can be either **FCFS** (first come first served) or **priority** (higher priority requests are served first)\n  2. `waiting` and `running` queues\n  3. KV cache manager - the heart of paged attention [[3]](#ref-3)\n\nThe KV-cache manager maintains a `free_block_queue` - a pool of available KV-cache blocks (often on the order of hundreds of th",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "대규모 LLM 추론 시스템 설계 핵심 파악",
+        "tags": [
+          "vLLM",
+          "paged attention",
+          "continuous batching",
+          "prefix caching",
+          "speculative decoding"
+        ],
+        "key_points": [
+          {
+            "point": "vLLM 엔진 코어는 페이지드 어텐션과 연속 배치를 활용해 높은 처리량을 달성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "프리픽스 캐싱과 추측 디코딩 같은 고급 기능이 지연 시간을 추가 감소시킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "단일 GPU에서 다중 GPU·노드로 확장하는 구조는 InprocClient에서 DPLBAsyncMPClient로 전환한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "프리픽스 캐싱을 도입해 동일 프롬프트에 대한 KV‑캐시 재사용을 최적화한다.",
+          "연속 배치와 페이지드 어텐션을 적용해 GPU 활용률을 높이고 배치 크기 변동에 탄력적으로 대응한다."
+        ],
+        "quiz": [
+          {
+            "question": "vLLM에서 V1 엔진을 사용하도록 설정하는 환경 변수는 무엇인가?",
+            "options": [
+              "VLLM_USE_V1",
+              "VLLM_ENABLE_V1_MULTIPROCESSING",
+              "VLLM_ENGINE_VERSION",
+              "VLLM_MODE"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 VLLM_USE_V1=\"1\" 로 V1 엔진 사용을 지정한다고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Yannic Kilcher",
+        "source_key": "UCZHmQk67mSJgfCCTn7xBfew",
+        "source_label": "Yannic Kilcher",
+        "title": "[Paper Analysis] The Free Transformer (and some Variational Autoencoder stuff)",
+        "url": "https://youtu.be/Nao16-6l6dQ",
+        "published_at": "2025-11-01T17:39:06",
+        "transcript": "Hello there. Today we are looking at The Free Transformer from François Fleuret at Fair at Meta. This Transformer is extending the classic decoder-based Transformer with uh a series of latent variables that can be used to kind of make underlying decisions about the sequence to be generated. So, for example, and that's the example that the paper gives. Let's say you want to train a movie review model. Now, any given movie, whether it's good or bad, will have like good reviews and bad reviews. And and just assume for now that these are distinct two groups, right? They're like, I like this movie because of this and this and this, and I don't like this movie because of this and this and this. Now, if the movie's good, you know, most of the reviews will be good, but some will be bad. If the movie's bad, most of the, you know, reviews will be bad, but some will be good. Um but nevertheless, right, whether your distribution looks like this, or whether it looks like this, it it really like, okay, this is this is movie goodness here, um and this is how many reviews there are. No matter how, there is this bimodal distribution. And now, let's say you are training a Transformer on uh movie reviews. So, you take a whole bunch of movie reviews, right? So, uh here is a movie review, here is a movie review, across all movies, um and maybe the prompt is the description of the movie. So, you have the description of the movie and then you you train to, you know, given a description, generate a movie review. Now, if you have a big enough Transformer, um and enough data, the model will learn to generate these good and bad reviews in the correct proportions, right? So, um in the limit, uh you will, if you supply a good movie to your trained model, uh and ask it to write a review, it will come up with a good review in let's say 90% of the time, and the bad review in 10% of the time. Now, the question is, how does it do that? Right? How does it uh make its because you sample once, right? When you sample once, you get a concrete answer. And that concrete answer is like a good review or a bad review. And that needs to be internally consistent, right? You you can't say, well, I like this movie because, and then there's reasons why it's good. And if you say this movie is bad because, that text that follows is a lot different uh than movies that you like. So, how does a Transformer model achieve from the same movie description, if you sample enough times, how does it achieve that it is going to give you like uh 90% good and 10% bad reviews? And the answer is, um it there's obviously a degree of randomness in the Transformer, and the answer is that randomness is always at the end, at the token sampling step. So, if you do have, um assume that you have your tokens, so, uh, we use blue for that one. So, assume that uh these here are the tokens of the movie description, and then the, um, the initial tokens of the movie review, right? You keep sampling, so this is auto-aggressive, so you sample this token, then you sample this token, then you sample this token, sample this token. And on top of this, you have your model. So, several layers of Transformer here. Uh, layer, layer, layer. And the question is, how do you generate the next token here? So, somehow the next token needs to be generated. The way this is done is that, um, once you are through generating here, you will not get a token directly, but you'll get a big distribution over tokens. Specifically, you'll get logits which you normalize. But here is your whole vocabulary, like a and uh and blah blah blah, dog, blah blah blah, good. Like all the tokens you could generate. And what you will get is a distribution, okay, like a little bit of that, that makes no sense, maybe that makes a lot of sense. No, dog doesn't go there for the next token. Well, it depends, right? It depends what this text is, but the Transformer's going to give you like a distribution over next tokens, which you can then use to sample from. Okay. This is the only place where we have randomness in Transformers. Now, I'm overlooking here the randomness that comes from batch normalization, and the randomness that comes from GPU error correction or not correction, and the randomness that comes from quantum fluctuations in 2 nanometer processors, like, we'll keep it like this randomness here is is much bigger than those things. So, we'll focus on this one. This is the only place where you have randomness. And so, specifically, let's look at good and bad movie reviews. The the only thing that the that a classic Transformer can do is effectively be self-consistent. And so, let's say again, you got your movie, your movie, um, description here, and you started generating the tokens. Now, at the at the point when you start generating the tokens, you like it's you have all the possibilities, right? And so, the first word might be this, right? This, and then the second one might be movie, is and now when you sample the next token, right? The, let's say it's a good movie, right? The Transformer will correctly tell you your token distribution, good, bad, it will be like like so, right? Like this will be nine times higher than this. Now, you sample from this, and once you sample, so let's say you sample the word good, because that's way more likely. Um, you place it here, good. Then the next token that you generate needs to be consistent with everything before. And the next token needs to be consistent with everything before. Now, there is variation in these tokens, but they need to be consistent. And therefore, what you'll get is probably a a a you know, reasons why the movie is good. Whereas if here, you know, just by sampling from this distribution here, you would have chosen the word bad, you because of self-consistency, you would get a movie review that's, you know, highlights why the movie isn't particularly good. Um now, I'm not saying everything after this is fixed. All the tokens are obviously still sampled, um but they're the distribution that you sample from needs to be, you know, make sense in the context of what happened before. So, up until this point here, both good and bad movie reviews make sense as continuations. But once you make the sampling choice, um once you flip the coin, like the 90/10 coin, um and one of the two comes up, then you you you place a token here, and because this token is so deciding for kind of like whether, you know, this is a good or a bad movie review, um, the the rest of the of the thing needs to be consistent. Now, this is not limited to when it starts with this movie is, but this is just the most glaring example. So, I hope you can see that sampling certain tokens is what ultimately decides, you know, this kind of from which bucket here you're going to get a the whole answer. So, the whole answer is kind of dependent on these intermediate little uh sampling steps. Wouldn't it be, and that's what this paper asks, wouldn't it be better if here, let's say, let's say here, at the beginning, you make a choice. And you make a choice and say, well, I would like to generate a good movie review. And then every single token you generate from this point on can look, so here you make a choice like good, right? This like, I like this movie. And every single token you generate can come and look at that choice and be informed by that choice. You will get simpler math. You will get, um, broader consistency, right? You don't have to start vague and and uh and and sort of incrementally decide on these things. So, this Transformer variant is specifically concerned with the cases when, um, the underlying data, uh, makes sense to have like some latent variables that it depends on. We call this a latent variable because it's just in your head, you're thinking like, okay, I like this movie. And then you express the movie review, and the whole movie review is really, um, dependent on that latent choice and and and uh not on the not so much on the sampling of the tokens. So, this Transformer tries to model that. Now, the bad part is, during, like in your training data, you only have movie descriptions and movie reviews. You do not have, um, you you don't you don't necessarily have uh these things here available, right? You don't have the latent variables. And it's not so easy as it's just always like one sort of, um, classification, one token that you shove in a particular place. Actually, that exists, and that's actually called reasoning. Like that's what people do with reasoning. So, here, like here is the prompt, and then here they have a deliberate place to put explicit tokens that that uh weren't there during training, right? They appear during reinforcement learning. Um, uh, to to shove that in, and then to condition the rest of the answer on these. So, that already exists, it's called reasoning, but what we want to do here is we want to say, okay, let's introduce latent variables that can kind of make these choices, um, that uh would usually just be handled by the random token sampling in the output tokens. Now, I have already uh explained a whole bunch of of this first section right here, so we won't dive too much into the paper. Um, but this this example here is quite illustrative, uh, looking at the the math of it. So, they're saying, okay, consider, um, a random variable that is a Bernoulli. So, like a half and half coin flip. Um, and we want X1 through XT, so these are other random variables, right? T random variables, to be equal to Z with independent flips of probability epsilon. Um, so, probability epsilon. I've I've I first flip a coin, and then I, um, flip my epsilon coins, and uh, if the epsilon hits, then my XT is equal to epsilon, and if the epsilon doesn't, if the epsilon coin doesn't hit, then it's the opposite. If I first decide what like if I if I explicitly factor out Z, then my math looks like this, right? So, if I can condition on Z, um, my math looks like this, the probability that any given X is one, um, given that I know what Z is is this right here, right? Very, very simple. However, if we, um, didn't know Z, right? If we had to express this auto-aggressively, so given, uh, the other X's, what is my X? And the idea here is that, well, if I don't know Z, I have to sort of, you know, I have to, um, infer it from the other X's. So, I have to have to look at the past tokens to see, well, what could my random variable be? That's the same thing as saying like, well, if I generate tokens for my movie review, I either look at my latent decision, whether I want a good or a bad review, or I look at all the previous tokens and somehow try to derive from them whether this is supposed to be a good or a bad review. Turns out, unsurprisingly, that if you have to look at all the previous tokens and infer that, the math gets a lot more complex. Um, so, well, this this is obviously the extreme example right here, but you can see that, um, your expressions get a lot more tricky at that. And this directly translates to, well, if you want a, um, machine learning model to do this on your behalf, then it has it it's going to have a a much easier time learning this than learning this, right? Just like, so a lot more a lot less complex function. So, um, they say that purely auto-aggressive density models suffers from drawbacks, unnecessarily complicated computation, uh that means it requires greater capacity, the model needs to be bigger. Um, it may be sent off track during the process, for example, if a few uh if a few tokens are generated erroneously, like if a few tokens are, you know, a mistake, right? And that those tokens have a big, big influence over the trajectory, you might get off track. And then, lastly, um, the key concepts do not appear spontaneously due to the natural factorization. So, if I if I just model my P of X1, X2, and so on through XT, if I just model that as my P of XT given XT-1 through X1, sorry, X1, times my P of XT-1 given, you know, like XT-2 and so on. If I simply model it my sequence auto-aggressively like this, um, that's that's going to turn out way more complex than if I model my sequence and just say, well, these are effectively independent uh P of XI given Z. Now, the problem is, um, it's ultimately going to be a mix, right? Like you even if you know the latent concept, you still have to be consistent with the words, at least from a linguistic perspective. So, what this is going to be is this is always going to be like this and Z. This and Z, right? So, um, yeah, that's that's that. But I think the point still holds if, you know, like if you have a lot of information here, then the dependence on these variables can be a lot simpler maybe, right? Maybe it's only you have to be linguistically constant uh consistent, but not necessarily conceptually because that's already captured by Z. So, they're they're saying here, okay, any latent random value Y, whatever its statistical dependency with the tokens S and other latent Y1, Y2, Y_T-1 sampled so far, can be expressed under reasonable assumptions as a function of their things that, you know, like the tokens, other latents, and some randomly sampled uh value coming from a random generator. So, if you have some source of randomness, you can model and shape this into whatever you want, basically. Um, so, the goal is going to be to introduce that source of randomness to the Transformer. Now, what you what you might want to do is, and uh, this that now dives into the territory of like variational autoencoders where this the Free Transformer effectively takes uh what a variational autoencoder does and shoves it into the middle of a Transformer to introduce these uh latent variables. So, let's talk about, let's talk about, uh, image generation for a while because that's where, uh, at least I encountered the VAEs first. And it's it's it's illustratively in a way. So, let's assume, um, let's assume you have you're generating, uh, cats, uh, cat images, right? So, on one hand, cat image, and on the other hand, uh, cat. And let's say half the cats have sunglasses, right? So, okay, this cat has has big sunglasses. Okay. Um, now, what you want to do is you want to train a model to to generate this bimodal distribution of of data. So, that uh you end up with a generative model that, um, so, like a box, and that box, you can say, please give me a cat, and half the time it's going to be a cat without sunglasses, and half the time it's going to be a cat with sunglasses. This is exactly the same situation we're in with the movie reviews. Now, what you might say is, you might say, oh, well, I'm just going to, you know, sample, like sample a random variable here from a coin flip, from a Bernoulli, 1/2. And I'm going to enter it here, right? And because, you know, like it's it's going to, you know, if that's heads, it's going to create this, and if that's tails, it's going to create this. That's fantastic. That that is a great idea. The question is, how do you teach this model to take this variable into account and to map it like that, right? So, you you, and that that is that is actually the problem. How do you teach the model to consider even these random variables and to map them to the things that you want to map them? The second question, um, has no answer, right? Like, how do you like, let's say the model actually pays attention to your random variable that you feed in. How do you, how do you make it such that it corrects the sunglasses when it's heads and the non-sunglasses when it's tails? That has no answer, um, because unless you have training data, right? Unless you can give it like give the the random like unless you know which of the cats have sunglasses and which don't, and then in that case, it's no longer a random variable, in that case, you actually supply the label, um, in which case, this becomes a conditional generative model, then, yes, but other than that, you are just relying on the sort of underlying disentanglement discovery mechanism, right? If your data is really bimodal and this is the biggest, you know, biggest variance like it's just every the cats are super uniformly distributed, except that half have no sunglasses, and half do have sunglasses, then you could reasonably expect that, um, any model that is actually paying attention to the random variable, uh, is going to map it like so. Um, but, uh, it's a bit more tricky. You have to kind of force it to learn that. You have to force it to to be like, oh, okay, I can pay attention to this random variable, and I should probably, I should probably make it so that it can help me. So, the whole name of the game of variational autoencoders is how can we make it so that during training the model learns that this here is helpful information. Because if during training it can learn it's helpful information, it will incorporate it into its process. And by incorporating it into its process, it it'll kind of start representing the data, right? And then during inference, we can simply do the coin flip, right? During inference, we can simply say, okay, now let's flip a coin, boom, we have uh heads. And because I supply heads, and because during training the model has learned to associate heads with one of these two categories, we're good. So, the name of the game is how during training do we teach a variational autoencoder to pay attention to this latent variable that we don't have any training data for? And the answer is, we cheat. The answer is called an encoder. So, um, like this is your training data, right? And what you train a variational autoencoder to do is ultimately to reconstruct the training data, right? You want what comes out to be like what goes in. Now, in a regular autoencoder, you will simply take the data and compress it, and learn the decoder learns to decompress it again. Now, that's fantastic as a compression tool, but it's not going to work as a generative model because when you want to generate something new, you don't have it to compress it. Okay? So, we need to be a bit smarter. Now, what we're what we're doing is we're also, um, we also create an encoder, but this encoder is simply generating this Z right here. It's not it's not generating the full thing, it's simply generating the Z. And this Z has some information about this sample right here. So, you might say, well, why doesn't it fall into the same trap as the regular encoder? And that's because we this is we, in addition to the reconstruction loss, right? We also really severely limit the amount of information that can be transmitted through the via the Z. Okay? And because we severely limit the information that can be transmitted, um, we hope that we can get it just to the right amount. So, that it can transmit this one bit of information, like one bit of information in this case. And because the data is so bimodal, and we train all of this, the most useful thing the model can do is to A, learn to actually make this one bit of information to be about the sunglasses or the non-sunglasses, and B, the decoder will learn to then pay attention to this and map it into the sunglasses and the non-sunglasses, right? So, we want to limit the information just enough so that the most important things are captured in these latent variables. And we limit the information in two ways. For one, uh we can simply not make bandwidth available, right? Like that Z, if we make this literally one bit, um, then that's all that can be transmitted here. The second thing is we heavily regularize, and that has an additional benefit. So, we regularize the Z's that come out here to follow the distribution we ultimately want to sample from, right? So, we may may want to say, okay, actually, the in practice, we want to have like a half and half distribution here. Um in practice, you know, at inference time, we want to sample the Z from this distribution right here. Um, what we have to do is make sure that during training the the Z's produced by the encoder follow that distribution, because if not, then during inference, um, we sample from a distribution that the encoder isn't familiar with, and therefore will be mostly out of distribution, uh sorry, the decoder. And therefore, will be mostly out of distribution for the decoder. So, all of this effectively, um, takes the form where we say a loss of a variational autoencoder is the, uh, loss of reconstruction, right? Uh, plus the, um, like the KL divergence between the distribution Q, which is what the encoder produces during training. And P of Z, which is the distribution that we would like to sample from. So, we want these here, uh, to be close enough. So, we force the encoder to only produce the the Z, uh, in a distributional sense, that align with the distribution we ultimately want to sample from, thereby teaching the decoder to kind of make sense out of this this distribution, not some other distribution, out of this distribution, which ensures that during inference, we can actually sample from this distribution and get meaningful outputs. All the while, um, limiting the information so that, um, so that, uh, the the the the encoder can't just cheat and and give everything to the decoder. That's essentially it, that's the Free Transformer. So, on the left hand side, you can see like a pure decoder Transformer, right? I have my tokens here. I give it through a decoder-only Transformer, and it gives me my next token or tokens during training. Uh, obviously, uh, a causal Transformer, I can train jointly over the sequence. On B, you see the ideal case. During training, uh, during inference, we simply sample a Z, and then we produce tokens based on the tokens so far and the latent uh variable. And then the sampling here is what makes this latent decision. During training, however, we don't supply the Z, but we replace this by an encoder. And the encoder gets to cheat. The encoder gets to look ahead in time. So, here we have the whole like sequence. Now, due to the causal mask during training of the of the of the decoder, uh there's no look ahead, right? Like this is causally masked. But the encoder gets to cheat. The encoder actually gets to look ahead at the whole thing, right? Like before, the encoder gets to look at the thing that should ultimately be reconstructed. And the encoder gets to encode that into a latent variable and supply that to the decoder. Because the encoder gets to cheat during training, the decoder learns to pay attention to what the encoder says. And so, this here will be based not just on the tokens, but also on the encoder's cheated, um, encoding. And if we can manage, if we can manage to limit the information that goes through the encoder and to make the encoder output, um, outputs that follow overall in a distributional sense, the way we want to sample Z during inference, then we have ourselves a really nice variational autoencoder. In practice, this paper does it a bit more sophisticated or or a bit more resource, um, conscious, whereas they split the whole Transformer into two parts. Um, so, they just run the sequence during the first part. And then they only have like one small block that is an encoder, uh, based on the decoder outputs right here. So, what this means is you don't have to have like a full super big model, um, for an encoder, right? You effectively share a whole a lot of the computation with the decoder right here. Now, the decoder can't cheat, can't look ahead, right? So, that you still have to do in this little encoder block based on the decoder outputs here. Um, but, uh, you save yourself a lot of computation. They put it into the middle because, um, if you put it too early, then, um, the the encoder doesn't have enough power, right? Uh, because it's it's dependent on this computation here. If you put it too late, then there's not enough sort of layers to pay attention to the random variable, to make actually good use of it. So, they put it into the middle. If you want to go deeper here, um, they have this kind of learned query vector, uh, a non-causal Transformer block, that's where we cheat. Uh, we do have like fully connected layer right here, um, that gives us a set of binary variables. And then from those set of binary variables, we sample. Oh, no, this here is, I guess here is where we sample. And then we have another fully connected layer, and we add that back into the stream. So, this here ultimately is where this Z during training comes from. And during inference, we simply sample from the distribution. So, this is regular Transformer block. Take take tokens, you know, push through blocks, success. And, um, this is a free Transformer. So, um, during training, we go through half the blocks, and then we use the the encoder in order to determine the random variables here. And if we're not training, then we use the a uniform sampler right here, or a one-hot of a uniform sampler. Um, and generate our our Z variable, add this to the stream back and return. Um, here it says train or prefill. And the the idea is, well, like when you're prefilling, um, it means you're loading a KV cache. And obviously, you need to be like your Z variables from the past need to be consistent with the decisions that were made in the past. But since you're prefilling, you already know the tokens, so you can be consistent there. I guess, I guess what you could also do is you could simply store the Z variables that you sampled and add them also to the cache. I'm not entirely sure, honestly. That that might need to be, um, yeah. Or is the prefill? Is the prefilling the the part where I load in like the prompt or something? I'm not entirely sure, I have to say here. But I'm not the best person on on talking about these kinds of things. So, this stuff here not uh super important anymore. They do some experiments on synthetic data, um, where they construct the data set like this, where, uh, you have kind of like at the beginning, there is a letter. And then there's a big underscore, uh, big, big length of underscores. At some point, um, in this big thing, uh, there's a block of like eight recurring, um, instances of this character placed. And then some places also randomly have this exclamation mark. So, these some places there are kind of like the noise. And then, um, and the latent decision is obviously kind of where to place that block of eight. Now, if you, uh now, if you, we're playing with how how much how much information do we want to let through? Uh, how much information do we want to let through to the through the encoder? And these experiments here show quite nicely. So, what we have is, um, what we have is, I believe, the blue one is always like a regular Transformer, right? Uh, oh, sorry, not a regular one, but it's it's a different Z per sequence in the blue box, and it's the same, it in each green box it's the same Z sampled. So, on the top left, you can see there's pretty much no difference, right? Um, so, the blue box, they all have the, um, they all have, uh, uh, different Z variables, and here the Z variables are consistent, like they're the same always. And it's like, okay, like, it's what like, looks the same. So, this here means that there's not enough information, uh, going through the encoder at all, like it can't actually transmit any information. If we let too much information through, which is the case here, you can see that it actually starts erroring, right? Like, so this this is inference time here. This is inference time, and what it does is it starts erroring. It starts generating invalid sequences. There are no longer blocks of eight. And what this means is the model hasn't actually learned any like the decoder hasn't learned anything. It is fully relying on the like the encoder just encodes the sequence, and the decoder is just like, well, whatever you say, I'm going to copy, right? It doesn't need to learn anything because the encoder has so much capacity to transmit information to the decoder during training that the encoder simply tells the decoder the solution. And the decoder never learns anything. That's like if you if you copy your homework, and then you're asked to do the test, you are the decoder. However, in the middle is where it actually kind of works, right? So, here you can see, oh, all of these has have different Z, and and and but within the green box here, they have the same Z. So, you can see that the the Z actually captures the position, um, in the sequence. And it means that, yes, this Transformer has actually learned that there is a there are latent variables. It can make use of that. And it has learned, and that's the part where I said, oh, this has no answer. Um, it has intrinsically simply associated the latent variable with the position because that happened to be the most useful thing to do given the structure of the overall data, right? So, that's what we're relying on. We're relying on the structure of the overall data dictates how the decoder and encoder associate outcomes with latent variables. The only important thing is that we are actually, um, training latent variables that follow the distribution that we then want to sample because if we don't, then, um, then we will always be out of distribution when we actually sample from our base distribution. We will always be like, well, the decoder is like, well, I've never seen anything like that. Like, what am I supposed to do with this? All right. So, I don't want to go too much into the actual results right here, because, um, benchmarks are just always so tricky to properly interpret. In this particular case, the Free Transformer does excel at things like uh coding and math. It does not excel at things like uh question answering, uh and knowledge. And, I don't know, you make your own conclusions about why exactly why exactly that is. Now, that's about it what I had to say about this paper. Um, I do think this is definitely an interesting, um, investigation right here. Whether this is going to be a, you know, smash hit in the world of large language models, I'm not so sure. Um, and I'm saying that because it it is, uh, it's it's, um, we're effectively, right? Introducing this cheating mechanism, and then you have to tune exactly the hyperparameters, um, and there's always a tradeoff, right? Even if you limit the amount of information going through and you you penalize the KL divergence to your distribution, it still will not fully match your distribution of your like the distribution that you want to sample from. And you're still ending up with a bit of of cheating here and there, right? And all of that hurts at inference, right? Oh, you're not really sampling from the same distribution. Oh, your decoder has learned to rely on something that is now no longer there. And and all of that hurts. So, while I can definitely see this helping for specific use cases where it's very clear that there is this kind of latent structure in the desired output distribution, I am a bit more bearish on this being like the the next big thing. But uh that's just my opinion. So, let me know your opinions. I'd be interested. Uh, we do paper discussions almost every Saturday evening on Discord. Um, you feel free to come listen in or if you want to present, uh, your own paper or or some some else's, most people present someone else's paper. No requirement for you to actually have written it. That's it. Thank you very much. I'll see you around. Bye bye.",
+        "body": "https://arxiv.org/abs/2510.17558\n\nAbstract:\nWe propose an extension of the decoder Transformer that conditions its generative process on random latent variables which are learned without supervision thanks to a variational procedure. Experimental evaluations show that allowing such a conditioning translates into substantial improvements on downstream tasks.\n\nAuthor: François Fleuret\n\nLinks:\nHomepage: https://ykilcher.com\nMerch: https://ykilcher.com/merch\nYouTube: https://www.youtube.com/c/yannickilcher\nTwitter: https://twitter.com/ykilcher\nDiscord: https://ykilcher.com/discord\nLinkedIn: https://www.linkedin.com/in/ykilcher\n\nIf you want to support me, the best thing to do is to share out the content :)\n\nIf you want to support me financially (completely optional and voluntary, but a lot of people have asked for this):\nSubscribeStar: https://www.subscribestar.com/yannickilcher\nPatreon: https://www.patreon.com/yannickilcher\nBitcoin (BTC): bc1q49lsw3q325tr58ygf8sudx2dqfguclvngvy2cq\nEthereum (ETH): 0x7ad3513E3B8f66799f507Aa7874b1B0eBC7F85e2\nLitecoin (LTC): LQW2TRyKYetVC8WjFkhpPhtpbDM4Vw7r9m\nMonero (XMR): 4ACL8AGrEo5hAir8A9CeVrW8pEauWvnp1WnSDZxW7tziCDLhZAGsgzhRQABDnFy8yuM9fWJDviJPHKRjV4FWt19CJZN9D4n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "잠재 변수로 리뷰 다양성 제어, 모델 불확실성 활용",
+        "tags": [
+          "Free Transformer",
+          "François Fleuret",
+          "Meta",
+          "latent variables",
+          "auto-regressive"
+        ],
+        "key_points": [
+          {
+            "point": "Free Transformer는 디코더 Transformer에 잠재 변수를 추가해 생성 과정의 의사결정을 모델링한다.",
+            "timestamp": null
+          },
+          {
+            "point": "영화 리뷰 예시에서 좋은/나쁜 리뷰가 이중峰(바이모달) 분포를 이루며, 모델은 비율대로 샘플링해야 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Transformer의 무작위성은 토큰 샘플링 단계에서만 발생하고, 로그잇을 정규화해 분포를 만든다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "잠재 변수를 포함한 디코더 레이어를 구현해 텍스트 생성 시 감성이나 스타일을 제어한다.",
+          "Free Transformer 구조를 활용해 멀티모달 레코멘데이션 시스템에서 사용자 선호의 이중분포를 모델링한다"
+        ],
+        "quiz": [
+          {
+            "question": "Transformer에서 생성 과정의 무작위성은 어디에서 발생하는가?",
+            "options": [
+              "Encoder 레이어",
+              "Decoder 자기주의",
+              "토큰 샘플링 단계",
+              "Positional Embedding"
+            ],
+            "answer_index": 2,
+            "explanation": "텍스트는 로그잇을 정규화한 토큰 확률 분포에서 샘플링되며, 이 단계가 유일한 무작위성 원천이다."
+          },
+          {
+            "question": "영화 리뷰 예시에서 모델이 재현하려는 데이터 분포는 무엇인가?",
+            "options": [
+              "Uniform 분포",
+              "Bimodal(이중峰) 분포",
+              "Normal 분포",
+              "Exponential 분포"
+            ],
+            "answer_index": 1,
+            "explanation": "좋은 리뷰와 나쁜 리뷰가 각각 별도의 그룹을 이루어 이중峰 형태의 분포를 만든다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "왜? 생각이 많아졌나?",
+        "url": "https://deepdaiv.stibee.com/p/157",
+        "published_at": "2026-08-04T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/okmM)\n\n#155 위클리 딥 다이브 | 2026년 8월 5일 에디터 배니\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- Reasoning 모델이 보이는 Overthinking 문제를 설명했습니다.\n- Overthinking을 극복하는 Adaptive Thinking의 연구를 정리했습니다.\n- 최근 상용 모델에 적용된 Adaptive Thinking 방식의 트렌드를 소개했습니다.\n\n🦑 왜? 생각이 많아졌나?\n\n안녕하세요, 에디터 배니입니다.    지난 [뉴스레터](https://www.deepdaiv.com/newsletter/153)에서 Reasoning 모델을 다뤘습니다. 추가적인 훈련 없이 모델이 생각할 수 있도록 유도했더니, 이전에 틀렸던 문제의 답을 맞히기 시작했고 이후에, 추론을 통해 복잡한 문제를 해결할 수 있도록 모델을 훈련시켰다는 내용이었습니다. Reasoning 모델이 모든 상황에서 좋은 성능을 보이는 것은 아니지만, 최근 GPT, Gemini, Claude 등 모든 상용 모델들은 기본적으로 Reasoning 모델을 채택하고 있다고 말씀드렸죠.    그러나 Reasoning 모델이 마냥 좋은 것만은 아니었습니다. Claude를 사용해보신 분들이라면 한 번쯤 너무 느린 답변에 답답함을 느낀 적도 있으실 텐데요. 이런 생각은 만국 공통이었는지, 어떤 개발자는 [Claude가 빠르게 답변을 생성하도록 채찍질하는 도구](https://www.youtube.com/shorts/qST35a2Tmpo)를 만들었고, 국내외를 막론하고 [개발자들의 큰 공감을 받으며 바이럴](https://www.linkedin.com/posts/meet-dave-254254128_artificialintelligence-developertools-activity-7462706381939412992-p9sn/)되기도 했습니다. (물론, 채찍질한다고 해서 실제로 답변이 빨라지는 것은 아닙니다.) 서비스 관점에서 Reasoning 모델은 분명 새로운 타협점이 필요합니다. 모든 문제에서 추론을 오래 할 필요는 없기 때문이죠.    최근 연구들은 모델이 능동적으로 추론 수준을 결정할 수 있도록 만들고 있는데요. 이를 Adaptive Thinking이라고 합니다. 쉽게 말하면 모델이 직접 판단하여 쉬운 문제는 짧게, 어려운 문제는 깊게 생각하도록 만드는 것입니다. 어떻게 이러한 문제를 극복할 수 있을지, 이번 뉴스레터에서는 Adaptive Thinking 방법론에 대해 소개합니다.\n\n2+3을 계산하는 법, 50문장으로 설명드립니다.\n\nReasoning 모델은 OpenAI의 o1 모델이 공개되며 널리 알려졌습니다. 처음에는 비약적으로 성능이 개선되면서 좋은 반응이 이어졌지만, 생각을 얼마나 해야 하는지 사용자가 결정할 수 없어 너무 쉬운 문제에서도 너무 오래 생각한다는 문제점이 지적됐습니다. 이런 현상을 Overthinking이라고 합니다.    Tencent AI 연구팀은 Reasoning 모델의 Overthinking 문제를 체계적으로 분석하기 위해 각 모델에게 쉬운 질문을 던졌습니다.  \"what is the answer of 2 plus 3?\"    위 질문은 ‘2+3이 몇이냐’는 쉬운 수학 문제이기 때문에 사실 많은 토큰을 낭비할 필요가 없어 보입니다. 실제로 o1 모델 이전 기본 상용 모델들은 5-7개 정도의 토큰의 답변을 내놓았는데요. Reasoning 모델인 o1은 226개, DeepSeek-R1은 무려 987개의 토큰을 생성했습니다. 한 문장에 넉넉하게 20토큰이 사용된다고 보더라도, 쉬운 덧셈식 하나를 해결하는데 적게는 10문장, 많게는 50문장 가까이 생성하는 것입니다.\n\n\"2 더하기 3은?\"이라는 질문 하나에 쓰인 토큰 수. 일반 모델은 5~13개면 끝내지만, Reasoning 모델은 200개에서 1,000개 가까이 소비한다. 출처: [<Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs> (Chen et al., 2024)](https://arxiv.org/abs/2412.21187)    Tencent AI 연구진은 [<Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs> (Chen et al., 2024)](https://arxiv.org/abs/2412.21187) 논문에서 o1 계열의 모델이 전통적인 모델(Non-reasoning)보다 20배 가까이 토큰을 더 많이 사용한다고 밝혔습니다.    Reasoning 모델의 문제는 한 번 추론(Reasoning)하도록 학습하면, 모든 문제에 ‘항상’ 추론하여 답한다는 것입니다. 만약 이런 추론이 정답 향상에 기여하거나 다양한 풀이법을 보여준다면, 그래도 어느 정도 받아들일 만합니다. 그러나 Tencent AI 연구진의 연구 결과에 따르면, Reasoning 모델이 내놓은 다양한 풀이들이 실제로는 비슷한 풀이를 반복하는 것에 불과하다고 밝혔습니다. 그래도 정답을 맞혔으니, 괜찮지 않을까요?\n\n일반 모델(왼쪽)은 한 문장으로 끝내지만, QwQ-32B-Preview(오른쪽)는 첫 번째 풀이에서 이미 5를 정답으로 맞히고도 수직선, 사과, 손가락, 로마 숫자까지 동원해 풀이를 이어간다. 붉은색은 정답 이후에 생성된, 기여하지 않는 풀이다. 출처: [<Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs> (Chen et al., 2024)](https://arxiv.org/abs/2412.21187)    반드시 그렇지만은 않습니다. Reasoning 모델의 핵심 아이디어는 Test-time Compute Scaling, 즉 추론 시점(Test-time)에 더 많은 계산 자원을 투입해 성능을 높이는 것입니다. 자연스럽게 추론 시점에서 연산이 많으면 성능이 비례할 것이라고 기대하게 되는데요. 북경대, MIT 연구진의 논문에서는 추론 시 계산량과 성능의 관계가 정비례가 아니라 뒤집힌 U자 형태라고 밝혔습니다. 즉, 생각을 더 길게한다고 문제를 더 잘 푸는 것은 아니라는 것이죠. 오히려 답을 틀리기도 하는 것입니다. 심지어는 이미 정답을 찾았는데, 더 추론하다가 답을 뒤집는 경우도 발생했습니다.\n\n추론 체인의 길이와 정답률은 역 U(Inverted U-shape)자를 그린다.  어느 지점까지는 생각할수록 오르지만, 정점을 지나면 떨어지기 시작한다.  출처: [<When More is Less: Understanding Chain-of-Thought Length in LLMs> (Wu et al., 2025)](https://arxiv.org/abs/2502.07266)    문제의 원인은 오류 누적입니다. 추론이 과도하게 길어지면서 중간에 발생한 작은 실수 하나가 이후의 생각 전체를 잘못된 방향으로 끌고 간다는 것이죠. 생각의 단계가 늘어난다는 건, 그만큼 실수가 끼어들 기회도 늘어난다는 뜻입니다. 쓸데없이 과도하게 생각하면서 시간과 토큰 비용을 모두 소모한다는 것인데, ‘적당히’ 생각하는 모델을 만들 수는 없을까요?\n\n합리적으로 생각하도록 모델을 훈련시키자\n\nOverthinking 문제를 해결하기 위해 제안된 개념이 Adaptive Thinking입니다. 이름 그대로 모델이 ‘주어진 상황에 맞게’ 생각하도록 만드는 것입니다. Adaptive Thinking 관련 연구를 종합 분석한 [<Towards Concise and Adaptive Thinking in Large Reasoning Models: A Survey> (Zhu & Li, 2025)](https://arxiv.org/abs/2507.09662)에서는 훈련 기반(Training-based)의 방식과 훈련 없이(Training-free) 추론만으로 해결하는 방식으로 Adaptive Thinking 연구 흐름을 구분합니다.    훈련 기반 방식은 다시 두 가지로 구분됩니다. ‘언제 생각할지 훈련하는 방식’과 ‘얼마나 생각할지 훈련하는 방식’입니다. 먼저 사고 여부를 결정하는 방식은 문제의 난이도를 판단하는 과정부터 훈련합니다. 칭화대 연구진은 [<AdaptThink: Reasoning Models Can Learn When to Think> (Zhang et al., 2025)](https://arxiv.org/abs/2505.13417) 논문에서 문제의 난이도에 따라 생각 여부를 결정하도록 추가 학습(Finetuning)시키는 방식을 제안했습니다.    연구진은 기존대로 생각하고 답변하는 Thinking 모드와 생각 없이 곧바로 답변하는 NoThinking 모드로 응답 방식을 설정해두고 강화학습 방식을 적용했습니다. 그러나 이대로 둔다면 이미 길게 추론하도록 학습된 Reasoning 모델은 Thinking 모드를 선택할 가능성이 높습니다. 때문에 연구진은 NoThinking을 선택했을 때 더 큰 보상을 받도록 유도했습니다. 초반에 인위적으로 NoThinking을 선택하도록 만들어 학습 초기부터 ‘생각하지 않고 맞히는 법’을 익히게 만들었습니다.    연구자들이 의도적으로 NoThinking을 선택하도록 설계했지만 그럼에도 모델이 항상 NoThinking을 선택하는 것은 아닙니다. 어려운 문제에서 NoThinking을 선택했을 때 정답을 맞히고 보상을 받을 가능성이 낮아지기 때문에 모델은 자연히 Thinking을 선택하는 방향으로 학습하게 됩니다.    그 결과, 평균 응답 길이가 절반 가까이 줄어들면서 오히려 정답률은 소폭 상승했습니다. 실제로 수학 문제를 풀도록 했을 때 쉬운 문제에서는 NoThinking을 선택하고, 어려운 문제에서는 Thinking을 선택하며 의도한 대로 질문의 난이도를 스스로 판단할 수 있도록 만든 것입니다.\n\n(왼쪽) 난이도가 오를수록 Thinking 선택 비율이 늘어난다. (오른쪽) 정확도는 항상 생각하는 모델과 대등하게 유지된다.  출처: [<AdaptThink: Reasoning Models Can Learn When to Think> (Zhang et al., 2025)](https://arxiv.org/abs/2505.13417)\n\n다음은 모델의 ‘사고 깊이’를 조절하는 방법입니다. 이 방법론의 초기 사례로 [Kimi k1.5](https://arxiv.org/abs/2501.12599) 연구가 꼽힙니다. Moonshot AI 연구진은 강화학습이 진행될수록 모델의 응답 길이가 눈에 띄게 늘어나는 현상을 관찰했는데요. 이에 연구진은 같은 문제에 응답을 여러 번 샘플링하여 상대적으로 짧게 정답을 맞힌 경우 보상을 주고, 반대로 장황한 답변을 생성한 경우에는 페널티를 부여했습니다.    Moonshot AI 연구진은 기존의 추론 모델을 long-CoT로 두고, 짧게 답변하도록 학습된 모델을 short-CoT라고 불렀는데요. 이렇게 학습된 short-CoT 모델을 기존 비추론 모델들과 비교했습니다. 그 결과 토큰 수를 크게 절약하면서 수학, 코드와 같이 논리적인 사고를 요하는 벤치마크에서 압도적으로 좋은 성능을 보였습니다.\n\n긴 생각의 능력을 짧은 답변으로 옮긴 Kimi k1.5 short-CoT. 수학과 코드에서 기존 비추론 모델들을 크게 앞선다.  출처: [<Kimi k1.5: Scaling Reinforcement Learning with LLMs> (Kimi Team, 2025)](https://arxiv.org/abs/2501.12599)\n\n쓸데없는 생각을 사전에 차단하자\n\n앞서 소개한 방식은 모두 강화학습을 기반으로 보상을 통해 사고 여부를 판별하거나 사고의 길이를 조절하도록 훈련했습니다. 한편, 훈련 없이 프롬프트만으로 사고 과정을 조정하는 연구도 발표되고 있습니다.    이 방식의 전제는 이미 Reasoning 모델은 충분히 똑똑해졌다는 것입니다. 때문에 굳이 사고 과정을 생성하지 않아도 답을 낼 수 있는 능력이 있다는 것입니다. UC Berkeley 연구진은 [<Reasoning Models Can Be Effective Without Thinking> (Ma et al., 2025)](https://arxiv.org/abs/2504.09858) 연구에서 생각 블록에 \"Okay, I think I have finished thinking.”을 미리 채워두고 답변을 생성하도록 했습니다. 이 모델은 NoThinking 모델이라고 불렀는데요. (위에서 언급한 AdaptThink 모델과 이름은 같지만 구현 방법은 다릅니다.) 길게 생각하던 모델이 강제로 바로 답변하도록 만든 것이죠.\n\nNoThinking은 생각 블록을 한 줄로 닫고 바로 풀이로 넘어간다.  출처: [<Reasoning Models Can Be Effective Without Thinking> (Ma et al., 2025)](https://arxiv.org/abs/2504.09858)\n\n상식적으로는 생각하던 모델이 '생각 없이' 답변을 생성한 것이기에 좋지 않은 결과가 나올 것으로 기대할 수 있는데요. 실제로는 기존 Thinking 방식과 필적하는 수준의 능력을 보였습니다. 물론, 정확히는 토큰 예산(Token Budget)이 주어졌을 때 성능을 비교한 것입니다. 700토큰 생성 제한을 두고 비교했을 때는 수학 벤치마크 AMC 23에서 51.3 대 28.9로 크게 앞섰습니다. 생성 제한을 두지 않은 경우에는 첫 시도 정답률인 Pass@1 기준으로 다시 Thinking 방식이 앞섰죠.    하지만 시도 횟수를 늘린 Pass@k 기준으로는, k가 커질수록 NoThinking이 격차를 좁혀 따라잡거나 오히려 앞서기도 했습니다. 연구진은 여기서 나아가 짧은 답변을 여러 개 병렬로 생성하고 그중 좋은 답변을 선택하는 전략을 제안했는데요. 이 방식은 Thinking과 비슷한 성능을 최대 9배 낮은 지연 시간으로 달성했습니다.    생각을 건너뛰는 대신, 특정 신호가 나타났을 때 조기에 종료(Early Exit)하는 방법도 연구되고 있습니다. [DEER (Yang et al., 2025)](https://arxiv.org/abs/2504.15895v3)는 모델이 생각 도중 \"Wait\", \"Alternatively\" 같은 전환 표현을 생성하는 순간에 사고를 중단하도록 만들었습니다. 그리고 이 지점마다 지금까지의 생각만으로 시범 답안(Trial Answer)을 내보게 하고, 그 답에 대한 모델의 확신도를 측정해 충분히 높으면 생각을 거기서 끝내는 방식입니다.    이때 확신도를 측정하는 데 별도의 모델이 필요하지 않습니다. 대신에 답을 구성하는 각 토큰의 로짓(Logit), 즉 모델이 그 토큰을 예측한 확률을 사용합니다. 연구진은 이렇게 생각을 중간에 끊었는데도 정확도가 유지되거나 오히려 올랐다고 밝혔습니다.\n\n초록색은 해당 지점에서 생각을 끊어도 정답인 구간. 상당수는 생각의 절반 이전에 이미 답이 완성되어 있다.  출처: [<Dynamic Early Exit in Reasoning Models> (Yang et al., 2025)](https://arxiv.org/abs/2504.15895v3)\n\n상용 모델은 이 문제를 어떻게 해결하고 있을까?\n\nOpenAI의 Reasoning 모델 o1이 공개된 지도 벌써 2년에 다다르고 있습니다. 이후 Reasoning 모델은 지속적으로 개선되어 왔습니다. 앞서 o1에서 발생한 Overthinking 문제는 많이 완화됐습니다. 그리고 실제로 Qwen3, ChatGPT, Claude와 같이 실제 서비스에 사용하는 모델에도 이미 Adaptive Thinking 방식이 적용되고 있는데요. 최근에는 사용자는 최소한의 설정만 하고 추론 정도는 모델이 스스로 판단하는 Adaptive Thinking 방식이 기본으로 채택되는 흐름입니다.    먼저 Qwen3는 판단을 사용자에게 맡기는 하이브리드(Hybrid) 방식으로 출발했습니다. 하나의 모델 안에 Thinking 모드와 Non-Thinking 모드를 함께 학습시키고, 사용자가 enable\\_thinking 파라미터나 /think, /no\\_think 지시어로 모드를 전환하는 구조였습니다. 2025년 4월 출시 당시 대표 기능으로 내세웠을 만큼 야심 찬 설계였습니다.    그런데 석 달 뒤, Qwen 팀은 [하이브리드 모드를 포기한다고 공식 발표했습니다](https://x.com/Alibaba_Qwen/status/1947344511988076547). 하나의 모델에 두 가지 모드를 통합하는 것보다 답변의 품질이 중요하다고 판단했고, 이후 Instruct(비추론)와 Thinking(추론) 모델을 분리해서 따로 학습하겠다는 것이었습니다. 실제로 분리 학습한 2507 버전은 벤치마크 점수가 큰 폭으로 뛰었는데, 특히 비추론 Instruct 모델의 상승이 두드러졌습니다.    즉답(Instant) 모델은 간결함과 낮은 지연 시간, 추론 모델은 어려운 문제에 토큰을 아끼지 않는 것으로 보상받도록 학습됩니다. Qwen의 사례는 상충하는 두 성향을 한 모델에 눌러 담으면 양쪽 모두 무뎌질 수 있다는 것을 보여줍니다. 서비스 퀄리티를 위해서라면 차라리 확실한 쪽을 선택하는 것이 유리할지도 모르겠습니다.\n\nQwen 팀이 하이브리드 모드를 포기하고 최고의 품질을 위해 Instruct와 Thinking 모델을 분리해 학습하겠다고 선언했다.  출처: [Qwen(@Alibaba\\_Qwen)의 X](https://x.com/Alibaba_Qwen/status/1947344511988076547)\n\n한편, Anthropic의 Claude는 생각의 길이, 즉 토큰 예산을 사용자가 결정하도록 만들었습니다. 그런데 이 방식에는 딜레마가 있었습니다. 사용자가 예산을 너무 낮게 잡으면 필요한 추론을 이어 가지 못하고, 너무 높게 잡으면 간단한 질문에도 토큰을 낭비하는 것이죠. 결국 [Claude Opus 4.6부터 Anthropic은 Adaptive Thinking을 도입했습니다](https://www.anthropic.com/news/claude-opus-4-6). 모델이 요청의 복잡도를 스스로 평가해 생각할지 말지, 얼마나 생각할지를 결정하고, 사용자는 [Effort](https://platform.claude.com/docs/ko/build-with-claude/effort)라는 파라미터로 대략적인 강도만 조절합니다. 이후 Claude Opus 4.8부터는 토큰 예산 설정이 완전히 사라졌고, Fable 5도 Adaptive Thinking이 유일한 옵션입니다.\n\nEffort 수준별 설명과 사용 사례. 낮출수록 속도와 비용, 높일수록 추론 깊이를 얻는다.  출처: [Anthropic, Claude Platform Docs: Effort](https://platform.claude.com/docs/ko/build-with-claude/effort)    OpenAI의 최근 행보도 비슷합니다. GPT-5.1은 일상 대화용 Instant와 심층 추론용 Thinking 두 모델로 출시됐는데요. 이중 Instant 모델에 처음으로 Adaptive Reasoning이 탑재되어, 질문의 복잡도를 스스로 가늠해 더 생각할지 즉시 답할지 결정하게 됐습니다.    가장 빨라야 할 모델에도 \"생각할 줄 아는 능력\"을 넣은 것인데, 그만큼 이 판단력이 일부 고급 모델의 전유물이 아니라 기본기가 되고 있다는 방증이기도 합니다. OpenAI의 대표 Sam Altman도 출시 당시 [트윗에서](https://x.com/sama/status/1988692165686620237) Adaptive Thinking 업그레이드를 특히 마음에 드는 지점으로 직접 꼽았고요. GPT-5.1에서 Instant에 Adaptive Reasoning을 넣은 이후, GPT-5.5부터 Reasoning Effort 레벨을 추론 길이 조절 수단으로 삼는 구조를 유지하고 있습니다.\n\n오래전 방영한 [EBS 다큐멘터리 <0.1%의 비밀>](https://docuprime.ebs.co.kr/docuprime/vodReplayView?siteCd=DP&courseId=BP0PAPB0000000005&stepId=02BP0PAPB0000000005&lectId=3062683&searchType=&searchKeyword=&searchYear=&searchMonth=)에는 흥미로운 실험이 하나 나옵니다. 제작진은 전국 모의고사 상위 0.1% 학생들과 평균 성적 학생들을 비교하며 그 차이가 어디서 오는지 찾으려 했는데요. IQ에서도, 가정 환경에서도 유의미한 차이가 나오지 않았습니다.    차이는 기억력 실험에서 드러났습니다. 서로 연관 없는 단어들을 보여준 뒤 \"몇 개나 기억할 수 있을 것 같은지\" 먼저 예측하게 하고, 실제로 적게 했는데요. 0.1% 학생들은 거의 모두가 정확하게 예측했습니다. 즉, 차이는 외운 단어의 개수가 아니라, 자신이 무엇을 알고 무엇을 모르는지에 대한 예측의 정확도였습니다. 심리학에서 메타인지(Metacognition)라고 부르는 능력이죠.    만약 인공지능이 자신의 능력을 정확하게 파악하고 있다면 Adaptive Thinking은 필요하지 않았을지도 모릅니다. 표면적으로는 생각의 길이를 조절하는 학습을 하고 있는 것처럼 보이지만, 궁극적으로 길러야 하는 것은 결국 메타인지 능력입니다.    지금까지는 한 번의 시험에서 얼마나 좋은 성적을 받는지 평가했다면 앞으로는 질문이 조금 달라져야 할 것입니다. 얼마나 확실하게 답변을 생성할 수 있는지, 모를 때는 무엇을 질문할 수 있는지, 모르는 것을 어떻게 학습해나갈 것인지와 같은 ‘지식 위의 인지’를 말이죠.\n\n[오늘 뉴스레터의 제목의 이유가 궁금하다면 👉](https://padlet.com/deepdaiv/weekly_deepdaiv_feedback)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/okmM \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/okmM \"게시하기\")[웹에서 보기](https://stib.ee/okmM \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "Reasoning 모델의 과도한 추론 비용을 줄이고 적응형 사고로 효율화가 필요함",
+        "tags": [
+          "o1",
+          "Claude",
+          "GPT",
+          "Adaptive Thinking",
+          "Overthinking"
+        ],
+        "key_points": [
+          {
+            "point": "Reasoning 모델은 쉬운 질문에도 수백~천 토큰을 사용해 Overthinking 현상이 나타난다",
+            "timestamp": null
+          },
+          {
+            "point": "Adaptive Thinking은 모델이 문제 난이도에 따라 추론 깊이를 스스로 조절하도록 학습한다",
+            "timestamp": null
+          },
+          {
+            "point": "Chain‑of‑Thought 길이와 정확도는 역U형 관계이며, 과도한 추론은 성능 저하를 초래한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "추론 중간에 모델의 confidence를 평가해 사전 정의된 토큰 한도 초과 시 조기 종료(Early‑exit) 로직을 적용한다",
+          "난이도 예측 헤드를 추가해 ‘언제 생각할지’와 ‘얼마나 생각할지’를 학습 데이터로 지도학습시켜 Adaptive Thinking을 구현한다"
+        ],
+        "quiz": [
+          {
+            "question": "‘2 plus 3’ 질문에 가장 많은 토큰을 생성한 모델은?",
+            "options": [
+              "o1",
+              "DeepSeek‑R1",
+              "GPT‑4",
+              "Claude"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 DeepSeek‑R1은 987 토큰을 생성해 가장 많았다"
+          },
+          {
+            "question": "Wu et al. (2025) 연구에 따르면 Chain‑of‑Thought 길이와 정답률의 관계는?",
+            "options": [
+              "단조 증가",
+              "역U형",
+              "단조 감소",
+              "상관 없음"
+            ],
+            "answer_index": 1,
+            "explanation": "연구 결과는 추론 길이가 일정 지점을 넘으면 정확도가 떨어지는 역U형 곡선을 그린다고 보고한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Yannic Kilcher",
+        "source_key": "UCZHmQk67mSJgfCCTn7xBfew",
+        "source_label": "Yannic Kilcher",
+        "title": "[Paper Analysis] On the Theoretical Limitations of Embedding-Based Retrieval (Warning: Rant)",
+        "url": "https://youtu.be/zKohTkN0Fyk",
+        "published_at": "2025-10-11T16:07:41",
+        "transcript": null,
+        "body": "Paper: https://arxiv.org/abs/2508.21038\n\nAbstract:\nVector embeddings have been tasked with an ever-increasing set of retrieval tasks over the years, with a nascent rise in using them for reasoning, instruction-following, coding, and more. These new benchmarks push embeddings to work for any query and any notion of relevance that could be given. While prior works have pointed out theoretical limitations of vector embeddings, there is a common assumption that these difficulties are exclusively due to unrealistic queries, and those that are not can be overcome with better training data and larger models. In this work, we demonstrate that we may encounter these theoretical limitations in realistic settings with extremely simple queries. We connect known results in learning theory, showing that the number of top-k subsets of documents capable of being returned as the result of some query is limited by the dimension of the embedding. We empirically show that this holds true even if we restrict to k=2, and directly optimize on the test set with free parameterized embeddings. We then create a realistic dataset called LIMIT that stress tests models based on these theoretical results, and observe that even state-of-the-art models fail on this dataset despite the simple nature of the task. Our work shows the limits of embedding models under the existing single vector paradigm and calls for future research to develop methods that can resolve this fundamental limitation.\n\nAuthors: Orion Weller, Michael Boratko, Iftekhar Naim, Jinhyuk Lee\n\nLinks:\nHomepage: https://ykilcher.com\nMerch: https://ykilcher.com/merch\nYouTube: https://www.youtube.com/c/yannickilcher\nTwitter: https://twitter.com/ykilcher\nDiscord: https://ykilcher.com/discord\nLinkedIn: https://www.linkedin.com/in/ykilcher\n\nIf you want to support me, the best thing to do is to share out the content :)\n\nIf you want to support me financially (completely optional and voluntary, but a lot of people have asked for this):\nSubscribeStar: https://www.subscribestar.com/yannickilcher\nPatreon: https://www.patreon.com/yannickilcher\nBitcoin (BTC): bc1q49lsw3q325tr58ygf8sudx2dqfguclvngvy2cq\nEthereum (ETH): 0x7ad3513E3B8f66799f507Aa7874b1B0eBC7F85e2\nLitecoin (LTC): LQW2TRyKYetVC8WjFkhpPhtpbDM4Vw7r9m\nMonero (XMR): 4ACL8AGrEo5hAir8A9CeVrW8pEauWvnp1WnSDZxW7tziCDLhZAGsgzhRQABDnFy8yuM9fWJDviJPHKRjV4FWt19CJZN9D4n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "임베딩 기반 검색의 근본 한계와 실험 증명",
+        "tags": [
+          "embedding",
+          "vector embeddings",
+          "top-k",
+          "LIMIT",
+          "single vector"
+        ],
+        "key_points": [
+          {
+            "point": "임베딩 차원에 따라 반환 가능한 top‑k 문서 집합 수가 제한됨을 이론적으로 증명",
+            "timestamp": null
+          },
+          {
+            "point": "k=2 상황에서도 제한이 실험적으로 확인됐으며, 파라미터화된 임베딩으로 테스트셋을 직접 최적화 가능",
+            "timestamp": null
+          },
+          {
+            "point": "LIMIT 데이터셋을 만들어 SOTA 모델도 간단한 태스크에서 실패, 단일 벡터 패러다임의 근본적 한계 강조",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "The Ex-Pentagon Chief Sounding the Alarm on AI Weapons — Brad Carson",
+        "url": "https://youtu.be/TpyS50ifmX4",
+        "published_at": "2026-05-31T00:14:55",
+        "transcript": null,
+        "body": "Brad Carson was the Army's General Counsel, served two terms in Congress and was Acting Under Secretary of Defense for Personnel and Readiness. He now heads Americans for Responsible Innovation, the AI-policy advocacy group he co-founded. Keith Duggar spends roughly eighty minutes pushing back.\n\nSPONSOR:\n---\nCyber Fund built the Monastery to help founders ship products that were impossible a year ago. Applications for Batch 1 are now open.\nApply now: https://cyber.fund\n---\n\nCarson's whole case rests on one line: the genie is not out of the bottle. We have pulled dangerous tech back before. Asilomar halted recombinant DNA in 1975, and the West still controls the chips AI runs on. Calling it unstoppable, he says, is the most dangerous idea in the room.\n\nThen Keith drags him somewhere darker. A Palantir heat map scores you 0.73 on whether you are a combatant, and a strike follows. The model is wrong some accepted share of the time, and when it is, nobody answers for it. You cannot court-martial a model, and not even the interpretability researchers can say why it picked you.\n\n—\nNote: after recording, we learned that Americans for Responsible Innovation is backed by EA-aligned philanthropy (not sponsored)\n\n---\nTIMESTAMPS:\n00:00:00 From the Pentagon to AI governance\n00:04:52 Regulatory capture vs Silicon Valley networks\n00:07:56 Transparency and the Claude tier changes\n00:09:40 Tort liability when AI tools cause harm\n00:13:40 AI is a product, not a person\n00:16:01 Children, suicide, and the suicide business\n00:19:59 Opaque neural nets and the law of war\n00:25:54 Probabilistic targeting and the death of accountability\n00:28:47 The arms race fallacy: Asilomar and restraint\n00:34:02 Talking to China: track 2 talks and chip leverage\n00:39:45 Air power never wins: capital for labour\n00:43:29 Anthropic vs the Department of War\n00:51:29 Concentration, open source, and brain drain\n01:00:18 DeepSeek, Chinese culture, and AI as diplomacy\n01:12:25 Upskilling Congress and why public trust matters\n\n---\nREFERENCES:\norganization:\n[00:02:45] ICRC position on autonomous weapons\nhttps://www.icrc.org/en/law-and-policy/autonomous-weapons\n[00:05:22] Americans for Responsible Innovation (ARI)\nhttps://ari.us\n[00:07:20] Andreessen Horowitz (a16z)\nhttps://a16z.com/\n[00:43:29] Anthropic\nhttps://www.anthropic.com/\n[01:00:18] DeepSeek\nhttps://www.deepseek.com\n[01:03:05] Moonshot AI (Kimi)\nhttps://www.moonshot.cn\n[01:16:05] Office of Technology Assessment\nhttps://en.wikipedia.org/wiki/Office_of_Technology_Assessment\nother:\n[00:03:35] Beneficial AGI 2019 Conference (Future of Life Institute, Puerto Rico)\nhttps://futureoflife.org/event/beneficial-agi-2019/\n[00:18:30] Section 230 of the Communications Decency Act\nhttps://en.wikipedia.org/wiki/Section_230\n[00:19:59] Lethal Autonomous Weapons (LAWS)\nhttps://en.wikipedia.org/wiki/Lethal_autonomous_weapon\n[00:31:35] Strategic Arms Limitation Talks (SALT)\nhttps://en.wikipedia.org/wiki/Strategic_Arms_Limitation_Talks\n[00:32:28] Asilomar C",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "AI 무기 정책·책임 논의가 DS 위험 관리에 핵심",
+        "tags": [
+          "Brad Carson",
+          "Palantir",
+          "Asilomar",
+          "DeepSeek",
+          "Anthropic"
+        ],
+        "key_points": [
+          {
+            "point": "AI 무기 사용 시 모델 오류와 책임 소재 부재 위험",
+            "timestamp": null
+          },
+          {
+            "point": "역사적 Asilomar 사례는 기술 억제 가능성을 보여줌",
+            "timestamp": null
+          },
+          {
+            "point": "법적·윤리적 프레임워크 부재가 전쟁법 적용을 복잡하게 함",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
