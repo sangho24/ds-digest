@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 09일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/" target="_blank">How I use LLMs to learn complex topics</a>
+    </h2>
+
+    <p class="item-summary">LLM 시뮬레이션으로 반도체 제조 학습, 실무 활용</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">GitHub Pages</span><span class="tag">ChipTycoon</span><span class="tag">RollerCoaster Tycoon</span><span class="tag">unreal-game-assets-creation-skill</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM으로 주제의 기본 지식을 생성하고 정확성을 검증한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Low‑poly RollerCoaster‑style 시뮬레이션을 만들고 GitHub Pages에 배포한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이미지를 3D 객체로 변환해 현실감을 높이고 퀴즈로 학습을 강화한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 LLM 기반 시뮬레이션을 활용해 데이터 파이프라인 단계별 학습용 인터랙티브 페이지를 제작한다</div>
+    
+    <div class="idea">💡 GitHub Pages와 LLM을 결합해 사내 기술 문서와 시뮬레이션을 자동 생성·배포하는 워크플로우를 구축한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 생성된 시뮬레이션을 호스팅하는 데 사용된 플랫폼은?</div>
+      
+      <div class="quiz-opt">A) GitHub Pages</div>
+      
+      <div class="quiz-opt">B) AWS S3</div>
+      
+      <div class="quiz-opt">C) Google Cloud Storage</div>
+      
+      <div class="quiz-opt">D) Netlify</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) GitHub Pages</div>
+          <div class="quiz-explanation">본문에서 시뮬레이션을 새로운 레포에 푸시하고 GitHub Pages를 활성화한다는 내용이 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 사진을 3D 객체로 변환하는 데 제안된 도구는?</div>
+      
+      <div class="quiz-opt">A) unreal-game-assets-creation-skill</div>
+      
+      <div class="quiz-opt">B) TensorFlow</div>
+      
+      <div class="quiz-opt">C) PyTorch</div>
+      
+      <div class="quiz-opt">D) Blender</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) unreal-game-assets-creation-skill</div>
+          <div class="quiz-explanation">본문에 'my skill for transforming pictures into 3d objects' 라는 링크와 함께 해당 GitHub 레포가 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      3Blue1Brown · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/wGffBCfrAsE" target="_blank">100 random chords, how many intersections?</a>
+    </h2>
+
+    <p class="item-summary">무작위 chord 교차 기대값으로 확률 직관 강화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Bertrand's paradox</span><span class="tag">Numberphile</span><span class="tag">3Blue1Brown</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/wGffBCfrAsE" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>두 점을 원 위에 균등하게 선택해 chord를 만든다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>n개의 무작위 chord에서 교차점 기대값을 구하는 퍼즐</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Bertrand의 역설이 무작위 chord 정의에 영향을 미친다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 무작위 chord 시뮬레이션을 통해 교차점 기대값을 추정하고, 공간 상호작용 모델링에 활용</div>
+    
+    <div class="idea">💡 Bertrand 역설을 고려해 확률 모델링 시 가정 명시와 데이터 생성 방법을 설계</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 무작위 chord를 정의할 때 사용된 방법은?</div>
+      
+      <div class="quiz-opt">A) 원의 중심에서 무작위 거리 선택</div>
+      
+      <div class="quiz-opt">B) 원 위에 두 점을 균등하게 선택</div>
+      
+      <div class="quiz-opt">C) 무작위 반지름 선택</div>
+      
+      <div class="quiz-opt">D) 무작위 각도 선택</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 원 위에 두 점을 균등하게 선택</div>
+          <div class="quiz-explanation">본문에서는 원 위에 두 점을 균등하게 선택해 chord를 만든다고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본문에서 언급된 역설은?</div>
+      
+      <div class="quiz-opt">A) Monty Hall 역설</div>
+      
+      <div class="quiz-opt">B) Bertrand's paradox</div>
+      
+      <div class="quiz-opt">C) Simpson's paradox</div>
+      
+      <div class="quiz-opt">D) Birthday paradox</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Bertrand's paradox</div>
+          <div class="quiz-explanation">Bertrand's paradox가 무작위 chord 선택과 관련해 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      3Blue1Brown · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/ZHXt0-_gSj4" target="_blank">Tie random ends: How many loops?</a>
+    </h2>
+
+    <p class="item-summary">무작위 끈 연결 기대 루프 수, 확률 모델링에 활용</p>
+
+    
+    <div class="tags">
+      <span class="tag">3Blue1Brown</span><span class="tag">YouTube</span><span class="tag">Patreon</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/ZHXt0-_gSj4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>두 무작위 끈 끝을 묶어 루프를 만들며 과정을 반복한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>10개의 끈으로 시작하면 최종 루프는 3개가 된다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>50개의 끈으로 시작하면 평균 루프 수는 얼마인지 묻는다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 시뮬레이션으로 무작위 끈 묶기 과정을 구현해 기대 루프 수를 추정하고 데이터 과학 교육에 활용</div>
+    
+    <div class="idea">💡 무작위 짝짓기와 순열 사이클 이론을 이용해 기대 루프 수를 수식으로 도출해 모델링 강의에 포함</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 예시에서 10개의 끈을 사용했을 때 최종 루프 개수는?</div>
+      
+      <div class="quiz-opt">A) 1</div>
+      
+      <div class="quiz-opt">B) 2</div>
+      
+      <div class="quiz-opt">C) 3</div>
+      
+      <div class="quiz-opt">D) 4</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 3</div>
+          <div class="quiz-explanation">본문에 'we end up with three total loops' 라고 명시되어 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 50개의 끈을 시작하면 끈 끝을 묶는 횟수는 몇 번인가?</div>
+      
+      <div class="quiz-opt">A) 25</div>
+      
+      <div class="quiz-opt">B) 50</div>
+      
+      <div class="quiz-opt">C) 75</div>
+      
+      <div class="quiz-opt">D) 100</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 50</div>
+          <div class="quiz-explanation">본문에 'tying random ends together 50 times' 라고 언급된다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

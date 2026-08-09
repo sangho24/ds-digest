@@ -1,0 +1,241 @@
+{
+  "date": "2026-08-09",
+  "generated_at": "2026-08-09T22:47:39.244389",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "How I use LLMs to learn complex topics",
+        "url": "https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/",
+        "published_at": null,
+        "transcript": null,
+        "body": "9 August 2026\n\n# How I use LLMs to learn complex topics\n\nLLMs are used for any things. Learning new things is one of the top use cases.\n\nMany engineers I know use generative AI for many functions, like building PoCs, internal tools or dashboards, or even learning new stuff. I personally find the style used by LLMs to explain things difficult to follow. It's just too simplistic and depending on the number of emojis used, a bit annoying too.\n\n![How chips are made - explained in a RollerCoasterTycoon-like simulation](/blog/images/ChipTycoon.png)\n\nWhile I was analyzing new AI bottlenecks that might slow down data center buildup, I realized there are many aspects of chip production that I do not know. Surfing the web, I asked myself what if there would be a game to get you through the process of building a chip at a fab? For sure learning this way will stick, since you can map concepts with objects within the game. This is when I decided to try it, and it actually turned out really well.\n\n## The flow\n\nInstead of just asking AI to explain a topic, I use the following flow:\n\n- In plan mode (using CC, or OpenCode) I ask a model to build the foundational knowledge for X topic.\n- I ask it to review the accuracy of the knowledge base it built in the previous step.\n- I proceed asking it to build a simulation of that topic in a low-poly, Rollercoaster Tycoon-like animation. I add some UX elements as well, like the page needs to be visible on both large and small screens, have controls to stop the flow whenever I want etc.\n- I then push it to a new repo and enable GitHub Pages for it.\n\n## The result\n\nWhat you get is a beautiful animation that is 100% accurate and free of hallucinations. For me, this method works a lot better than just reading endless materials that I find on Google, or trying to digest a bulleted list that is spat by a language model.\n\nI've done this specifically for learning chip building and launch it under this website: [ChipTycoon](https://laurentiugabriel.github.io/ChipTycoon/). You get to follow a cart from the moment when sand is collected, to the moment when a chip is finalized and delivered to a data center.\n\nVisually, you can follow the cart and see how it changes too. Since it's low-poly, the details might be missing, but it's still a good indicator for showing how the product changes once it goes through the many steps required in the manufacturing process.\n\n## How to improve it further\n\nLet's say that the low-poly design requires to much immagination to actually visualize what happened to the quartz sand pile after it left the furnace. To transform this into a more realistic representation, you can use my [skill for transforming pictures into 3d objects](https://github.com/LaurentiuGabriel/unreal-game-assets-creation-skill), and map the resulting objects to your simulation. This way you get more accurate design.\n\nAlso, you can add challenges to your simulation too. Trying to answer questions about a previous step in the chip manufacturing process will help you retain the knowledge tremendously. Add intuitive puzzles too that will help you learn even better.\n\nCheck out what other pages I created:\n\n- [How rocket engines are made](https://laurentiugabriel.github.io/rocket-engine/)\n- [How LLMs work](https://laurentiugabriel.github.io/token-town/)\n- [How F1 engines are built](https://laurentiugabriel.github.io/engineworks/)\n- [How an EUV machine is built](https://laurentiugabriel.github.io/euv-lithography/)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 시뮬레이션으로 반도체 제조 학습, 실무 활용",
+        "tags": [
+          "LLM",
+          "GitHub Pages",
+          "ChipTycoon",
+          "RollerCoaster Tycoon",
+          "unreal-game-assets-creation-skill"
+        ],
+        "key_points": [
+          {
+            "point": "LLM으로 주제의 기본 지식을 생성하고 정확성을 검증한다",
+            "timestamp": null
+          },
+          {
+            "point": "Low‑poly RollerCoaster‑style 시뮬레이션을 만들고 GitHub Pages에 배포한다",
+            "timestamp": null
+          },
+          {
+            "point": "이미지를 3D 객체로 변환해 현실감을 높이고 퀴즈로 학습을 강화한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "LLM 기반 시뮬레이션을 활용해 데이터 파이프라인 단계별 학습용 인터랙티브 페이지를 제작한다",
+          "GitHub Pages와 LLM을 결합해 사내 기술 문서와 시뮬레이션을 자동 생성·배포하는 워크플로우를 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "생성된 시뮬레이션을 호스팅하는 데 사용된 플랫폼은?",
+            "options": [
+              "GitHub Pages",
+              "AWS S3",
+              "Google Cloud Storage",
+              "Netlify"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 시뮬레이션을 새로운 레포에 푸시하고 GitHub Pages를 활성화한다는 내용이 있다."
+          },
+          {
+            "question": "사진을 3D 객체로 변환하는 데 제안된 도구는?",
+            "options": [
+              "unreal-game-assets-creation-skill",
+              "TensorFlow",
+              "PyTorch",
+              "Blender"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 'my skill for transforming pictures into 3d objects' 라는 링크와 함께 해당 GitHub 레포가 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "100 random chords, how many intersections?",
+        "url": "https://youtu.be/wGffBCfrAsE",
+        "published_at": "2026-06-16T18:04:05",
+        "transcript": "It's time for a new puzzle of the month. Imagine you choose 10 random chords on a circle. The puzzle is, what's the expected number of intersection points inside that circle? And what about if instead it was 100 randomly chosen chords? Hang on, hang on, hang on, I hear some of you say, I remember something fishy about choosing random chords on a circle. That is right, there's a famous paradox here called Bertrand's paradox. I actually talked all about it on a pair of Numberphile videos. So, let me be a little bit more precise here. When I say choose a random chord, I mean start by choosing one point uniformly on the circle, loosely speaking that means every point is equally likely, and if you're a stickler and you want to be more precise, it really means the probability that a point lands in a given arc is proportional to that arc's length. Then choose a second point the same way, and connect the two of them. This is what I mean when I say choose a random chord. So again, imagining you choose 10 such random chords, what's the expected number of intersection points inside that circle? And what if it was 100 such chords? For those of you following along, there is a reason that this puzzle and the ones from the last two months were put together.",
+        "body": "Part of a series of monthly puzzles done in collaboration with MoMath.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "무작위 chord 교차 기대값으로 확률 직관 강화",
+        "tags": [
+          "Bertrand's paradox",
+          "Numberphile",
+          "3Blue1Brown"
+        ],
+        "key_points": [
+          {
+            "point": "두 점을 원 위에 균등하게 선택해 chord를 만든다",
+            "timestamp": null
+          },
+          {
+            "point": "n개의 무작위 chord에서 교차점 기대값을 구하는 퍼즐",
+            "timestamp": null
+          },
+          {
+            "point": "Bertrand의 역설이 무작위 chord 정의에 영향을 미친다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "무작위 chord 시뮬레이션을 통해 교차점 기대값을 추정하고, 공간 상호작용 모델링에 활용",
+          "Bertrand 역설을 고려해 확률 모델링 시 가정 명시와 데이터 생성 방법을 설계"
+        ],
+        "quiz": [
+          {
+            "question": "무작위 chord를 정의할 때 사용된 방법은?",
+            "options": [
+              "원의 중심에서 무작위 거리 선택",
+              "원 위에 두 점을 균등하게 선택",
+              "무작위 반지름 선택",
+              "무작위 각도 선택"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 원 위에 두 점을 균등하게 선택해 chord를 만든다고 설명한다."
+          },
+          {
+            "question": "본문에서 언급된 역설은?",
+            "options": [
+              "Monty Hall 역설",
+              "Bertrand's paradox",
+              "Simpson's paradox",
+              "Birthday paradox"
+            ],
+            "answer_index": 1,
+            "explanation": "Bertrand's paradox가 무작위 chord 선택과 관련해 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "research-method"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "Tie random ends: How many loops?",
+        "url": "https://youtu.be/ZHXt0-_gSj4",
+        "published_at": "2026-05-21T21:49:47",
+        "transcript": "It's time for a new puzzle of the month. Imagine you have a lot of pieces of string and you drop them into a box. You reach in and blindly grab two random ends and then you tie those ends together. And then you do it again. You choose two more ends of the strings at random, tie them together, and put the result back in. Choose another two, tie those together, and so on and so forth. Every now and then, you grab two ends of the same string, meaning when you tie them together, you form a loop. In fact, the end condition here, when there are no more end points left, is one where all you have are loops inside that box. In this example, that started with 10 total strings, we end up with three total loops. Here's your puzzle. If instead we started with 50 total strings and you go through this whole process, tying random ends together 50 times, how many loops on average do you end up with? By the way, for solutions to these monthly puzzles, rather than making individual videos for each one, what I've decided to do is make longer form videos that package together ones that have similar themes or problem-solving tactics in their solutions. For the last two puzzles, I have previews of those solutions up on Patreon. And in general, Patreon is probably your best bet for where to find these solutions as they're made. This isn't like a gimmick just to get more support, it's just genuinely a convenient place to start getting a little bit of feedback before their final form.",
+        "body": "Recent puzzle solutions on Patreon:\nhttps://members.3blue1brown.com/posts/158885046?pr=true",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "무작위 끈 연결 기대 루프 수, 확률 모델링에 활용",
+        "tags": [
+          "3Blue1Brown",
+          "YouTube",
+          "Patreon"
+        ],
+        "key_points": [
+          {
+            "point": "두 무작위 끈 끝을 묶어 루프를 만들며 과정을 반복한다",
+            "timestamp": null
+          },
+          {
+            "point": "10개의 끈으로 시작하면 최종 루프는 3개가 된다",
+            "timestamp": null
+          },
+          {
+            "point": "50개의 끈으로 시작하면 평균 루프 수는 얼마인지 묻는다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "시뮬레이션으로 무작위 끈 묶기 과정을 구현해 기대 루프 수를 추정하고 데이터 과학 교육에 활용",
+          "무작위 짝짓기와 순열 사이클 이론을 이용해 기대 루프 수를 수식으로 도출해 모델링 강의에 포함"
+        ],
+        "quiz": [
+          {
+            "question": "예시에서 10개의 끈을 사용했을 때 최종 루프 개수는?",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 'we end up with three total loops' 라고 명시되어 있다"
+          },
+          {
+            "question": "50개의 끈을 시작하면 끈 끝을 묶는 횟수는 몇 번인가?",
+            "options": [
+              "25",
+              "50",
+              "75",
+              "100"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 'tying random ends together 50 times' 라고 언급된다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "research-method"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
