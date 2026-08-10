@@ -1,0 +1,404 @@
+{
+  "date": "2026-08-10",
+  "generated_at": "2026-08-10T22:58:38.091194",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "우리 팀만의 vLLM 플러그인 만들기 2편 - 모델 변환부터 배포까지 AI-native로 자동화하기",
+        "url": "https://d2.naver.com/helloworld/7337586",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p><a href=\"https://d2.naver.com/helloworld/0525182\">1편</a>에서는 검색·추천 모델을 vLLM 사용자 정의 플러그인으로 옮겨 서빙 성능을 높인 과정을 소개했습니다. 모델을 vLLM에서 실행할 수 있게 된 뒤에는 또 다른 문제가 남았습니다. 모델마다 반복해야 하는 변환 작업이 복잡하고, vLLM의 빠른 변화까지 계속 따라가야 한다는 점입니다.</p>\n\n<p>Hugging Face 모델 하나를 vLLM에 올리는 과정은 버튼 한 번으로 끝나지 않습니다. ‘딸깍’ 한 번으로 완성할 수는 없습니다. 하지만 자동화를 우리 문제에 맞게 계속 ‘깎아’ 나갈 수는 있습니다. 저희는 변환 절차를 Claude Code Skill로 만들고, 실제 모델을 변환하며 두 번의 큰 시행착오를 거쳐 스킬 자체도 계속 개선했습니다. 이 글은 vLLM 모델 변환부터 배포까지를 AI-native로 자동화하고, 그 자동화를 어떻게 다듬어 왔는지에 대한 기록입니다.</p>\n\n<p>그 결과 서로 다른 유형의 모델 7개를 같은 절차로 변환해 운영에 적용했고, 변환 과정에서 발견한 주의 사항 45개를 재사용 가능한 지식으로 축적했습니다. 호출할 때마다 전체 지식을 입력하던 방식도 필요한 지식만 불러오는 구조로 바꿔, 지식 전달에 필요한 호출당 토큰 수를 6,900개에서 170개로 97% 줄였습니다. 마지막에는 이 협업 방식을 저장소 경계 너머로 확장해, 사용자가 GitHub Issue 하나를 작성하면 변환부터 배포까지 이어지는 E2E 파이프라인을 만들었습니다.</p>\n\n<p>이 글에서 다루는 모델 변환과 배포 자동화의 전체 구조는 다음과 같습니다.</p>\n\n<p><img alt=\"모델 변환과 배포 자동화 전체 구조\" src=\"/content/images/2026/08/fig-00-e2e-overview.png\" /></p>\n\n<p><span class=\"caption\">변환과 배포 절차를 담당하는 스킬이 필요한 시점에 도메인 지식 스킬을 호출하는 전체 구조</span></p>\n\n<h2 id=\"\">모델 변환이 어려운 이유</h2>\n\n<p>모델 변환은 단순한 코드 마이그레이션이 아닙니다. Hugging Face로 학습한 가중치는 유지하되 모델 구현을 vLLM의 실행 방식에 맞게 다시 작성해야 합니다. 이 과정에는 모델과 서빙 인프라 양쪽의 지식이 모두 필요합니다.</p>\n\n<p><img alt=\"모델 변환에 필요한 두 도메인의 지식\" src=\"/content/images/2026/08/fig-03-problem-diagram.png\" /></p>\n\n<p><span class=\"caption\">모델 구조를 아는 모델 개발자와 vLLM 인프라를 아는 MLOps 엔지니어 사이에 존재하는 지식의 공백</span></p>\n\n<p>모델 개발자는 모델의 내부 구조와 가중치 매핑을 잘 알지만 vLLM의 풀링 인터페이스나 IO Processor 패턴과 같은 vLLM 특수 지식은 없습니다. MLOps 엔지니어는 vLLM 기반 인프라를 잘 알지만 모델의 가중치 구조나 Transformers 구현과 vLLM 구현 사이의 미묘한 차이는 모릅니다.</p>\n\n<p>즉, 모델 개발자 혼자도 MLOps 엔지니어 혼자도 하기 어려운 작업입니다. 프레임워크가 빠르게 바뀐다는 점도 어려움을 더합니다. vLLM은 약 3년 동안 v0.1에서 v0.20까지 발전했고, 약 2주 간격으로 새 버전이 배포되면서 인터페이스도 계속 바뀌었습니다. 이 변화를 사람이 매번 따라가 적용하는 일은 누구에게도 쉽지 않습니다.</p>\n\n<p>이처럼 두 도메인이 교차하고 프레임워크가 빠르게 변하는 문제가 있었기 때문에, 저희는 AI 도입 초기부터 모델 변환 자체를 AI-native 방식으로 풀기로 했습니다.</p>\n\n<h2 id=\"pr\">모델 경로에서 PR까지 이어지는 변환 스킬</h2>\n\n<p>변환 절차는 <code>convert-vllm</code>이라는 Claude Code Skill로 구현했습니다. Claude Code Skill은 Anthropic의 코딩 에이전트 CLI인 Claude Code에서 반복 작업의 절차를 <code>SKILL.md</code>에 정의해 두고, 에이전트가 필요할 때 읽어 실행하는 기능입니다. 매번 긴 프롬프트를 작성하는 대신 검증된 순서와 판단 기준을 재사용할 수 있습니다.</p>\n\n<p>사용자가 Hugging Face 모델 경로를 입력하면 독립적으로 실행할 수 있는 다섯 개의 하위 스킬이 순서대로 실행돼 PR 생성까지 진행합니다.</p>\n\n<p><img alt=\"vLLM 모델 변환의 다섯 단계\" src=\"/content/images/2026/08/fig-04-5step.png\" /></p>\n\n<p><span class=\"caption\"><code>convert-vllm</code> 스킬의 다섯 단계. 입출력 전후처리가 필요 없는 모델은 세 번째 단계를 건너뜁니다.</span></p>\n\n<ol>\n<li><code>setup-environment</code>: MLflow와 S3에서 모델 아티팩트를 내려받고 개발 환경을 구성합니다.  </li>\n<li><code>convert-model</code>: 변환의 핵심 단계입니다. <code>config.json</code>을 분석해 생성, 풀링, 분류 등의 모델 유형을 판단합니다. 이어서 vLLM용 설정 클래스, 모델 클래스, 가중치 적재 코드, 모델 등록 코드를 작성합니다.  </li>\n<li><code>develop-io-processor</code>: 모델에 필요한 입출력 전처리와 후처리를 구현합니다. 풀링 모델 등 일부 모델에만 필요한 단계로, 모델 유형에 따라 실행 여부를 자동으로 결정합니다.  </li>\n<li><code>test-and-benchmark</code>: 단위·통합 테스트를 작성하고, 가장 중요한 동등성(parity) 검증, 즉 Hugging Face 원본과 vLLM 변환 모델이 같은 출력을 내는지 확인합니다. 성능을 측정하고 최적화 가이드도 작성합니다.  </li>\n<li><code>finalize-and-publish</code>: 변환된 모델을 MLflow에 올리고 배포 가이드를 작성한 뒤 PR을 생성합니다.</li>\n</ol>\n\n<h3 id=\"\">완전 자동화 대신 설계한 두 가지 협업 장치</h3>\n\n<p>이 다섯 단계는 완전 자동이 아닙니다. 대신 사람이 변환 방향과 단계별 결과를 승인하고, 별도 에이전트가 구현 결과를 독립적으로 검증하도록 두 가지 협업 장치를 설계했습니다.</p>\n\n<p><img alt=\"사람과 AI, AI와 AI 사이의 검증 구조\" src=\"/content/images/2026/08/fig-05-design-decisions.png\" /></p>\n\n<p><span class=\"caption\"><code>plan.md</code> 승인 게이트와 독립 컨텍스트를 사용하는 검증 구조</span></p>\n\n<p>첫 번째는 <code>plan.md</code> 승인 게이트입니다. 복잡한 변환 작업을 처음부터 끝까지 에이전트에게 맡기면 잘못된 판단을 늦게 발견할 수 있습니다. 이를 막기 위해 실행 전에 변환 계획을 <code>plan.md</code>로 작성하게 했습니다. 사람이 계획을 검토하고 승인한 뒤에만 구현을 시작하며, 각 단계가 끝날 때마다 결과를 다시 확인해 전체 방향과 단계별 결과를 확정합니다.</p>\n\n<p>두 번째는 구현과 검증의 컨텍스트를 분리하는 것입니다. 저희는 변환을 수행한 에이전트가 자신의 결과를 다시 검증할 때, 자신이 만든 구현을 맞다고 전제해 오류를 놓치는 경향을 관찰했습니다. 구현 담당과 검증 담당을 나누는 역할 분리는 AI 에이전트 사이에서도 필요했습니다. 그래서 테스트 작성과 결과 검증은 별도 컨텍스트에서 동작하는 하위 에이전트가 담당하도록 했습니다.</p>\n\n<h3 id=\"\">변환할수록 쌓이는 규칙</h3>\n\n<p>이 스킬로 분류, 개체명 인식(NER), 임베딩, 속성 기반 감성 모델(ABSA, Aspect-Based Sentiment Analysis), 이미지 스코어링 등 서로 다른 유형의 모델 7개를 변환해 운영에 적용했습니다. 이 과정에서 발견한 함정(gotcha)은 다음 변환에도 활용할 수 있도록 규칙으로 정리했습니다.</p>\n\n<p><img alt=\"모델 변환 횟수에 따른 규칙 증가\" src=\"/content/images/2026/08/fig-06-rule-growth-chart.png\" /></p>\n\n<p><span class=\"caption\">첫 번째 모델에서 정리한 규칙 5개가 일곱 번째 모델을 거치며 45개로 증가했습니다.</span></p>\n\n<p>축적된 규칙을 다음 변환에 적용하면서 같은 문제를 반복하지 않게 되었고, 변환 과정도 점차 빨라졌습니다. 스킬 자체가 점점 똑똑해지는 셈입니다. 이 지식을 에이전트에게 어떻게 제공할지는 뒤에서 다시 살펴보겠습니다.</p>\n\n<h3 id=\"200k\">출발점 — 200K 컨텍스트가 만든 체크포인트 구조</h3>\n\n<p>다만 이 스킬이 처음부터 지금과 같은 모습이었던 것은 아닙니다. <code>convert-vllm</code>의 첫 버전에는 단계마다 진행 상태를 저장하는 체크포인트가 있었습니다. 당시 Claude Code의 컨텍스트 상한은 200K 토큰이었습니다. 한 단계만 실행해도 컨텍스트가 가득 차 다섯 단계를 한 세션에서 마치기 어려웠고, 중간에 작업이 끊기면 해당 단계를 처음부터 다시 실행해야 했습니다.</p>\n\n<p>그래서 4개의 체크포인트와 9개의 상태 필드를 만들고, <code>--from=step</code>으로 원하는 단계부터 다시 시작할 수 있게 했습니다. 당시 제약에서는 이것이 최선이었습니다.</p>\n\n<p><img alt=\"200K 컨텍스트에서 사용한 체크포인트 구조\" src=\"/content/images/2026/08/fig-07-checkpoint-flow.png\" /></p>\n\n<p><span class=\"caption\">단계 사이의 상태를 저장해 작업을 이어 가던 초기 변환 흐름</span></p>\n\n<p>이 체크포인트가 첫 번째 시행착오의 주인공이 됩니다.</p>\n\n<h2 id=\"1ai\">시행착",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "vLLM 모델 변환 자동화로 배포 효율 97% 개선",
+        "tags": [
+          "vLLM",
+          "Claude Code Skill",
+          "Hugging Face",
+          "MLflow",
+          "GitHub"
+        ],
+        "key_points": [
+          {
+            "point": "Claude Code Skill 로 5단계 변환 파이프라인을 자동화해 PR까지 생성",
+            "timestamp": null
+          },
+          {
+            "point": "전체 지식 입력 토큰을 6,900→170개로 97% 절감",
+            "timestamp": null
+          },
+          {
+            "point": "plan.md 승인 게이트와 별도 검증 에이전트로 인간·AI 협업 검증 설계",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Claude Code Skill 기반 자동 변환 파이프라인을 구축해 Hugging Face 모델을 vLLM에 손쉽게 배포",
+          "변환 단계마다 plan.md 승인과 독립 검증 에이전트를 도입해 MLOps 품질 관리 프로세스를 자동화"
+        ],
+        "quiz": [
+          {
+            "question": "vLLM 모델 변환 자동화에서 토큰 사용량을 얼마나 줄였는가?",
+            "options": [
+              "90%",
+              "95%",
+              "97%",
+              "99%"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 전체 지식 입력 토큰을 6,900개에서 170개로 97% 줄였다고 명시돼 있다."
+          },
+          {
+            "question": "변환 절차의 다섯 단계 중 입출력 전처리 단계는 어떤 경우에 건너뛸 수 있는가?",
+            "options": [
+              "모델이 분류 모델일 때",
+              "모델이 풀링 모델이 아닐 때",
+              "모델이 이미지 모델일 때",
+              "모델이 NER 모델일 때"
+            ],
+            "answer_index": 1,
+            "explanation": "입출력 전처리 단계는 풀링 모델 등 일부 모델에만 필요하므로, 풀링 모델이 아닐 경우 건너뛴다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "우리 팀만의 vLLM 플러그인 만들기 1편 - 검색 AI 모델 서빙 성능 극대화하기",
+        "url": "https://d2.naver.com/helloworld/0525182",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p>네이버 플레이스 AI MLOps는 지난 1년간 검색과 추천에 사용하는 스코어링 모델의 서빙 구조를 vLLM 기반으로 전환했습니다. 이 글에서는 사내 Engineering Day에서 발표한 내용을 바탕으로, 모델 서빙 경로를 최적화해 성능을 높인 과정을 소개합니다.</p>\n\n<p>먼저 결과부터 살펴보겠습니다. 0.6B 재순위화(reranking) 모델을 Hugging Face <code>Transformer.encode</code>로 서빙했을 때 처리량은 63.85 QPS였습니다. 같은 모델과 GPU, 입력을 사용하면서 vLLM의 <code>score</code> 태스크로 옮기자 397.21 QPS로 약 <strong>6.2배</strong> 증가했습니다. 속성 기반 감성 모델(ABSA, Aspect-Based Sentiment Analysis)의 단건 p50 지연 시간은 101.22ms에서 16.43ms로 <strong>83.8%</strong> 감소했고, CLIP 기반 이미지 랭킹 모델의 처리량은 최적화를 다섯 단계 적용하자 3.76 img/s에서 62.2 img/s로 누적 <strong>16.5배</strong> 증가했습니다.</p>\n\n<p>모델은 한 줄도 더 빠르게 만들지 않았는데 어떻게 이런 차이가 났을까요? 저희가 찾은 지점은 두 군데였습니다. 하나는 모델의 순전파를 실행하는 런타임 자체의 효율이고, 다른 하나는 순전파 앞뒤의 요청 경로입니다. 모델을 vLLM 사용자 정의 모델로 구현해 풀링 런타임에 올리고, 전처리와 후처리를 IO Processor 안으로 옮겼습니다. 그리고 이 결과물을 플러그인 패키지로 만들어 <code>pip install</code> 한 번으로 설치할 수 있도록 배포했습니다.</p>\n\n<h2 id=\"\">어디서 성능이 새고 있었나</h2>\n\n<p>검색·추천 모델의 작업 특성은 생성형 LLM과 다릅니다. 생성 모델은 한 요청에서 토큰을 길게 생성하므로 토큰당 지연 시간과 KV 캐시 관리가 중요합니다. 반면 재순위화, 감성 분석, 이미지 스코어링 모델은 입력이 짧지만 한 번의 검색 요청에서 후보 수십~수백 개를 함께 평가해야 합니다. 검색 응답 흐름 안에서 실행돼야 하므로, p95 지연 시간 예산(latency budget)도 수십 ms 수준으로 매우 제한적입니다.</p>\n\n<p>기존 구조에서는 모델마다 별도의 추론 경로를 운영했습니다. 검색 백엔드에서 시작한 요청이 애플리케이션 서버, 전처리 서비스, 모델 서버, 후처리 서비스, 랭킹 서비스를 차례로 거쳤고, 모델이 늘어날 때마다 이 경로가 하나씩 복제되었습니다. 그 결과 전후처리 로직은 여러 서비스에 흩어지고, 배포와 운영은 모델별로 파편화되고, 모델 하나를 바꿀 때마다 API 스키마와 전처리, 배포가 같이 흔들렸습니다.</p>\n\n<p>지연 시간 예산이 어디서 무너지는지 분석해 보니, 의외로 원인은 모델의 순전파(forward) 처리가 아니라 그 주변에 있었습니다.</p>\n\n<ul>\n<li>여러 네트워크 구간을 지나는 비용</li>\n<li>JSON과 텐서의 직렬화 비용</li>\n<li>토크나이저와 모델 서버가 분리되면서 발생하는 추가 왕복</li>\n<li>작은 요청이 여러 경로로 흩어져 배치를 충분히 구성하지 못하는 문제</li>\n</ul>\n\n<p>서비스가 나뉜 만큼 장애 지점도 늘어나 폴백과 타임아웃 정책을 일관되게 유지하기 어려웠습니다. <strong>결국 모델 최적화가 아니라 경로 최적화의 문제였습니다.</strong> 개선해야 할 대상은 모델 하나가 아니라, 순전파를 실행하는 런타임과 그 앞뒤를 연결하는 전체 경로였습니다.</p>\n\n<h2 id=\"vllm\">vLLM 풀링 런타임으로 모델 실행 구조 통합</h2>\n\n<p>vLLM은 주로 생성형 모델을 위한 엔진으로 알려져 있지만, 핵심에는 Transformer의 은닉 상태를 효율적으로 처리하는 런타임이 있습니다. 생성은 이 런타임에 샘플링 계층을 결합한 하나의 사용 방식일 뿐이고, 같은 런타임을 풀링 관점에서는 은닉 상태를 임베딩, 분류 확률, 토큰 점수와 같은 출력으로 바꾸는 시스템이라고 볼 수 있습니다.</p>\n\n<p>검색·추천 모델에서 원하는 출력이 바로 이것이었기 때문에, 감성 분석, 재순위화, 이미지 랭킹 모델을 전부 vLLM 사용자 정의 모델로 구현해 같은 풀링 런타임 위에서 실행하기로 했습니다. 이는 하나의 vLLM 프로세스가 여러 모델을 동시에 서빙한다는 뜻은 아닙니다. 모델별로 서빙 인스턴스를 실행하되 런타임, 기본 이미지, 플러그인 패키지, 배포 방식을 공유하는 것입니다.</p>\n\n<p>이 구조의 핵심 이점은 vLLM이 제공하는 연속 배치(continuous batching, 들어온 요청을 실행 가능한 시점마다 동적으로 묶어 처리하는 스케줄링 방식), CUDA Graph(반복되는 GPU 작업을 캡처해 커널 실행 오버헤드를 줄이는 기능), 최적화된 어텐션 백엔드, 페이지 단위 GPU 메모리 관리와 같은 런타임 최적화를 그대로 활용할 수 있다는 점입니다. 모델별 서버를 따로 만들면 이런 최적화를 매번 처음부터 다시 쌓아야 하지만, 같은 런타임 위에서는 모든 모델이 공유하는 자산이 됩니다.</p>\n\n<h3 id=\"\">풀링 모델의 구성</h3>\n\n<p>입력 토큰을 트랜스포머에 통과시키면 각 토큰 위치에 대응하는 은닉 상태가 생성됩니다. 풀링은 이 은닉 상태를 목적에 맞게 선택하거나 집계해 모델의 출력으로 만드는 과정입니다. vLLM 풀링 모델의 출력 동작은 무엇을 반환할지 정하는 태스크와 은닉 상태를 어떻게 선택하거나 집계할지 정하는 풀링 방식에 의해 주로 결정됩니다.</p>\n\n<ul>\n<li>태스크: <code>embed</code>, <code>classify</code>, <code>token_embed</code>, <code>token_classify</code></li>\n<li>풀링 방식: CLS(BERT 계열의 첫 토큰), LAST(인과적 모델의 마지막 토큰), MEAN(평균), ALL(전체), STEP(특정 토큰)</li>\n</ul>\n\n<p>vLLM 코드를 직접 열어보면 이 구조가 꽤 단정하게 분리되어 있다는 것을 알 수 있습니다. 내부에서 <code>CLSPool</code>은 <code>hidden_states[cursor.first_token_indices_gpu]</code> 한 줄로 첫 토큰의 은닉 상태를 선택하고, <code>MeanPool</code>은 <code>index_add_</code>로 구간별 합계를 누적한 뒤 프롬프트 길이로 나눕니다. 가변 길이 배치에는 GPU와 CPU가 불필요하게 동기화되지 않도록 구간 ID를 CPU에서 만들고 비동기로 전송하는 처리가 포함돼 있는데, 직접 구현한다면 매번 다시 만들어야 하는 부분입니다.</p>\n\n<p>풀링 결과는 다시 출력 헤드를 통과합니다. 임베딩 헤드는 차원 투영과 정규화를, 분류 헤드는 <code>(logit − μ) / σ</code> 형태의 점수 보정과 활성화 함수를 담당합니다.</p>\n\n<p>즉, vLLM의 <code>SequencePooler</code>는 다음과 같은 두 단계로 이해할 수 있습니다.</p>\n\n<pre><code class=\"language-python\">pooled = pooling(hidden_states)  \npooled = head(pooled)  \n</code></pre>\n\n<p>이렇게 분리된 덕분에 얻는 자유는 생각보다 큽니다. 모델의 순전파는 유지하면서 풀링 방식과 출력 헤드만 바꾸면 같은 백본으로 재순위화 모델, 분류 모델, 임베딩 모델을 구성할 수 있습니다.</p>\n\n<p>참고로 재순위화 모델은 <code>num_labels=1</code>인 <code>classify</code> 태스크의 교차 인코더 스코어링 모델로 표현할 수 있습니다.</p>\n\n<h3 id=\"gpu\">GPU 커널에서 실제로 벌어지는 일</h3>\n\n<p>막연히 vLLM에 올리면 빨라진다고만 하면 허황된 소리처럼 들립니다. 그래서 같은 모델, 같은 입력을 Hugging Face <code>Transformer.encode</code> 경로와 vLLM <code>score</code> 태스크 경로에서 각각 실행하고, NVIDIA Nsight Compute로 GPU 커널 단위에서 비교했습니다.</p>\n\n<p>측정에는 0.5B 재순위화 모델과 H100 GPU(CUDA 12.8)를 사용했습니다. <code>ncu --set full</code> 커널 재실행 모드에서 준비 구간의 커널 실행 3만 회를 제외하고, 안정 상태의 커널 200개를 집계했습니다. vLLM은 <code>vllm serve</code>에 연속 부하를 주어 실제 서빙과 유사한 상태에서 측정했습니다.</p>\n\n<table><thead><tr><th>지표</th><th>Hugging Face <code>encode</code></th><th>vLLM <code>score</code></th></tr></thead><tbody><tr><td>전역 메모리 명령 수</td><td>7.07M</td><td>262K(약 27분의 1)</td></tr><tr><td>공유 메모리 명령 수</td><td>18.19M</td><td>5.57M</td></tr><tr><td><code>cp.async</code></td><td>0</td><td>3.24M</td></tr><tr><td>L2 적중률</td><td>95.63%</td><td>99.17%</td></tr></tbody></table>\n\n<p>가장 큰 차이는 전역 메모리 명령 수였습니다. vLLM 경로에서는 GPU 커널이 전역 메모리에 발행한 명령이 약 27분의 1로 줄었습니다. 같은 일을 단순히 더 빠르게 처리한 것이 아니라, 더 적은 커널 실행으로 처리한 것입니다. 작은 순전파 여러 번이 큰 타일 단위의 행렬 곱셈 한 번에 흡수됐다는 직접적인 증거입니다.</p>\n\n<p>Hugging Face 경로에서는 사용하지 않던 <code>cp.async</code>도 vLLM 경로에서 3.24M회 실행됐습니다. <code>cp.async</code>는 Ampere 세대부터 도입된 명령으로, L1 캐시를 거치지 않고 전역 메모리의 데이터를 공유 메모리로",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "vLLM으로 검색 모델 서빙 6배 가속, 경로 최적화 핵심",
+        "tags": [
+          "vLLM",
+          "Hugging Face",
+          "CUDA Graph",
+          "continuous batching",
+          "CLIP"
+        ],
+        "key_points": [
+          {
+            "point": "vLLM score 태스크로 0.6B 재순위화 모델 처리량이 63.85 QPS에서 397.21 QPS(≈6.2배)로 상승",
+            "timestamp": null
+          },
+          {
+            "point": "성능 병목은 모델 순전파가 아니라 전·후처리, 직렬화, 네트워크 구간 등 요청 경로에 있음",
+            "timestamp": null
+          },
+          {
+            "point": "모델을 vLLM 사용자 정의 모델로 구현하고 IO Processor에 전·후처리를 옮겨 pip 플러그인 형태로 배포",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "동일 모델을 Hugging Face Transformer.encode 대신 vLLM score 태스크로 전환해 5~6배 처리량 향상 달성",
+          "전·후처리 로직을 vLLM IO Processor에 통합하고 pip‑install 가능한 플러그인 패키지로 배포해 서비스 지연 시간 80% 이상 감소"
+        ],
+        "quiz": [
+          {
+            "question": "vLLM score 태스크를 사용했을 때 0.6B 재순위화 모델의 QPS는 얼마였나요?",
+            "options": [
+              "100.00 QPS",
+              "200.00 QPS",
+              "397.21 QPS",
+              "500.00 QPS"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 따르면 vLLM score 로 전환 후 QPS가 397.21로 약 6.2배 증가했다고 명시돼 있습니다."
+          },
+          {
+            "question": "vLLM이 제공하는 주요 최적화 기능이 아닌 것은?",
+            "options": [
+              "continuous batching",
+              "CUDA Graph",
+              "token‑level caching",
+              "all of the above"
+            ],
+            "answer_index": 3,
+            "explanation": "연속 배치와 CUDA Graph는 언급됐으며, token‑level caching은 생성형 모델에 해당하지만 본문에서는 언급되지 않았으므로 all of the above가 정답입니다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Needle2: 14MB agentic LLM for phones, wearables, smart home and robots",
+        "url": "https://cactuscompute.com/needle",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hey HN,<p>Henry from Cactus here!<p>We previously released Cactus Needle, a 14MB agentic LLM for tool call, device use, and structured extraction for phones, wearables, smart homes, small robots and microcontrollers. We got really great feedback here, and have now incorporated the suggestions to release Needle 2.<p>The whole model is a single 14MB binary that runs a full session in 28MB of RAM; 45m parameters at 2bit compression. Needle hits 500 tokens&#x2F;sec decode speed on a Raspberry Pi 5, sits between 400-1,500 tokens&#x2F;sec on VR devices like Meta Quest 3S and Apple Vision Pro, and ranges 300-700 on sub-$200 phones such as the Samsung A-Series.<p>On the tool call and mobile device use benchmarks, Needle 2 trades wins with closest small models like LFM2.5 230M and Apple Foundation Model, at 5x to 70x smaller, both at f16 vs Needle 2 at 2bit. Needle is based on Simple Attention Networks from our paper (<a href=\"https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2607.18363\" rel=\"nofollow\">https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2607.18363</a>).<p>Edge AI has lately meant Macs and PCs, but that is just 1.5 billion of over 21 billion connected IoT devices in the world today, and in emerging markets most phones ship under $200, no NPU, cheap GPUs. These include budget phones, Raspberry Pis, microcontrollers, wearables, small robots like Reachy Mini, and connected home devices.<p>A conventional transformer of Needle&#x27;s width and depth spends 164 MFLOPs per token, and even one squeezed down to Needle&#x27;s parameter count spends 87, Needle spends 70. Even on a high-end phone, an always-on assistant lives inside a power budget; every MFLOP is milliwatt-hours, and Needle spends 7x to 85x fewer of them per token than the smallest performant LLMs. More about the architecture in the link.<p>When we structure intelligence for consumer devices as functions with typed parameters, the only hard part is mapping a messy sentence onto them; which function, with which values. Our research found that when framed that way, the problem needs no world knowledge and no open-ended prose, which is why 45M parameters suffice.<p>Needle 2 expands to structured extraction where the schema can be passed in-place of tools and the model returns structured output. You can use Needle as a text-classification model with an enum field, as a summarization model by providing a schema that extracts key fields, everything but free-range decode.<p>Every product has its own tool vocabulary and fine-tuning needle helps it achieve frontier-level performance on custom tasks, so using the python package (<a href=\"https:&#x2F;&#x2F;github.com&#x2F;cactus-compute&#x2F;needle\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;cactus-compute&#x2F;needle</a>), Needle can be fine-tuned Needle on a Mac&#x2F;PC in minutes to a few hours, with automated data-generation pipeline, just pass a couple samples.<p>Nonetheless, every response carries a learned confidence score based our Cactus Hybrid tec",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "14MB 초소형 LLM으로 모바일·IoT AI 구현",
+        "tags": [
+          "Needle",
+          "Cactus",
+          "Raspberry Pi 5",
+          "Simple Attention Networks",
+          "GitHub"
+        ],
+        "key_points": [
+          {
+            "point": "Needle 2는 14 MB 바이너리(45 M 파라미터, 2‑bit) 모델로 28 MB RAM에서 전체 세션을 실행하며 Raspberry Pi 5에서 500 tokens/초 디코드 속도를 보인다.",
+            "timestamp": null
+          },
+          {
+            "point": "LFM2.5 230 M 등 대형 모델과 비슷한 툴 호출·구조화 추출 성능을 내면서 파라미터 수는 5‑70배, 토큰당 MFLOP은 7‑85배 적게 사용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "제공된 Python 패키지를 이용해 Mac/PC에서 몇 분‑몇 시간 안에 도메인 특화 데이터로 파인튜닝이 가능하고, 스키마 기반 구조화 출력도 지원한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "저비용 스마트폰이나 라즈베리 파이 기반 디바이스에 Needle 2를 온‑디바이스 어시스턴트로 파인튜닝·배포하여 실시간 사용자 의도 인식 및 응답을 구현한다.",
+          "IoT 센서 허브에 Needle 2를 탑재해 로그·텍스트 데이터를 현장에서 구조화 추출하고 클라우드 전송량을 최소화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Needle 2 모델의 바이너리 크기와 실행 시 RAM 사용량은 얼마인가?",
+            "options": [
+              "14 MB binary, 28 MB RAM",
+              "45 MB binary, 50 MB RAM",
+              "14 MB binary, 14 MB RAM",
+              "30 MB binary, 60 MB RAM"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 \"전체 모델은 14 MB 바이너리이며 28 MB RAM에서 전체 세션을 실행\"이라고 명시돼 있다."
+          },
+          {
+            "question": "Needle 2 파라미터는 어떤 비트 압축을 사용했는가?",
+            "options": [
+              "8‑bit",
+              "4‑bit",
+              "2‑bit",
+              "16‑bit"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 \"45m parameters at 2bit compression\"이라고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "모노리포 희망편, 절망의 리포가 희망의 리포로 부활하기까지 걸린 1년",
+        "url": "https://toss.tech/article/52209",
+        "published_at": "2026-08-10T02:40:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-80b5-bb82-f951c57a20a9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, 토스 클라이언트 엔지니어링 헤드 박서진, 프론트엔드 플랫폼 엔지니어 박성범입니다. </span></span></span></p><h2 class=\"css-1c1qox8\" id=\"3b3a360d-33e3-80ce-84be-fece672ee34d\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">토스 서비스는 어떻게 개발되고 있을까?</span></span></span></h2><figure class=\"css-of5acw\" id=\"3b3a360d-33e3-8002-9571-e11c927d63e7\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/df1dac17-3908-42b7-8fb7-a48e1d3bbd31/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-80fb-8332-d0b9799c74d7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스에서는 100명이 넘는 프론트엔드 엔지니어들이 토스앱 안과 밖의 제품들을 개발하면서, 하루에 수백 번 제품을 업데이트 해가고 있어요. </span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8076-81d8-d62e64de10c7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">제품의 숫자가 많고 종류도 다양하지만, 핵심적인 개발환경은 동일하게 유지하고 있습니다. 구체적으로는 아무리 오래된 제품이라고 하더라도 모두 최신 버전에 가까운, 동일한 버전의 React 19와 Next.js 15을 사용하고 있어요. 덕분에 사용자들은 React Concurrent Mode 및 React Server Components와 같은 최신 기능을 사용하며 좋은 경험을 하고 있죠. </span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8080-9c28-e7bae4bd76d5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">동일한 버전의 라이브러리를 사용하고 있기 때문에, 여러 서비스 간 코드 공유도 무척 쉬워요. 토스앱 전체에 걸쳐서 영향을 미치는 라이브러리를 개발하고자 해도, 여러 React 버전 등을 고려할 필요 없이 쉽게 공유 코드를 만들 수 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8028-a7a9-fb6e19a0740e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">또한 React나 Next.js 뿐만 아니라 TypeScript나 번들러, Linter 경험도 동일하게 유지하고 있어요. 구체적으로는, 모든 서비스는 빠짐없이 Go로 작성된 TypeScript 7를 사용하는 등 최신 개발환경의 사용성을 누리고 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8019-aa3d-ef5212d1b54e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 모든 사용자 경험과 개발자 경험의 핵심에는 토스에서 중요하게 생각하는 ‘모노리포’가 있어요. 토스에서는 모든 모바일 제품을 개발하는 코드는 1개의 모노리포로 통합되어 있어요. 데스크톱 제품을 개발하는 코드도 비슷하고요. 모노리포를 활용하고 있기 때문에 전체 서비스의 형상을 거의 비슷하게 맞추고, 플랫폼 변경사항을 빠짐없이 편리하게 전파하고 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8056-957f-c2fcff746c1c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3b3a360d-33e3-806a-b1ca-d7b885a868e3\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">모노리포만으로는 모든 문제가 해결되지 않는다</span></span></span></h2><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8096-8ad9-f4ab0ea4ac9a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 모노리포를 사용한다고만 해서 이 모든 것이 가능할까요? 그렇지는 않았어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8067-9431-edb48f3d7912\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스 프론트엔드는 총 인원이 5명일 때부터 모노리포를 사용해 왔지만, 100명이 넘는 인원이 되기까지 규모가 확장되며 다양한 문제를 마주해왔어요. 구체적으로는, 2025년 초 기준으로는 개발자 숫자가 지금보다 훨씬 더 적었음에도 여러 문제들이 있었어요.</span></span></span></p><figure class=\"css-of5acw\" id=\"3b3a360d-33e3-80a6-afc6-c1104beb7aed\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/235e32e4-d591-4abb-bba0-96a8b6a1e121/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-80d2-9591-efab0de520d9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">먼저, 모노리포 안에서 사용되는 의존성이 매우 다양했어요. 어디는 최신 버전의 React를 쓰지만 어디는 아주 오래된 버전을 썼죠. React 뿐만이 아니라 모든 라이브러리가 이랬어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-80e4-bebb-f6a38854b074\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이러다 보니까 개발자 경험도 파편화되었어요. 어떤 서비스는 최신 버전의 새 개발환경을 사용해 개발 서버도 빨리 뜨고 쾌적하며, 최신 React API도 쓸 수 있는데, 어떤 서비스는 오래 전에 만들어졌다는 이유만으로 개발 경험이 많이 나빴어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8043-89dd-eda985e73509\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><figure class=\"css-of5acw\" id=\"3b3a360d-33e3-80a4-83f4-d8580589d519\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/ad3d9b6a-ec40-42d5-93f0-b7fea329c459/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-8006-9dc8-e0f14c1f1595\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">의존성의 종류가 다양하다 보니, 설치에도 오랜 시간이 소요되었어요. 한 번 의존성을 설치하는 데에 이미 캐시가 있어도 1분 이상이 걸리기도 했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-80a0-bbb1-eeb7f2c3a4c7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><figure class=\"css-of5acw\" id=\"3b3a360d-33e3-80f3-bca0-d42f5c32d19e\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/aa1236bb-dd38-411b-b017-9ed7e6ce915f/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3b3a360d-33e3-804f-aaa8-f0ca0504a1b8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">플랫폼에서도 전체 서비스에 영향을 미치는 라이브러",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "모노리포로 일관된 프론트엔트 환경 유지가 협업 효율을 높인다",
+        "tags": [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "Monorepo",
+          "Toss"
+        ],
+        "key_points": [
+          {
+            "point": "모든 프론트엔드 서비스가 React 19와 Next.js 15 같은 최신 버전을 공유한다",
+            "timestamp": null
+          },
+          {
+            "point": "모노리포 도입으로 코드 공유가 쉬워졌지만 규모 확대 시 의존성 버전 불일치 문제가 발생했다",
+            "timestamp": null
+          },
+          {
+            "point": "버전 일관성을 위한 중앙 관리와 자동화 도구가 필요함을 강조한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "공통 package.json 혹은 의존성 관리 레이어를 도입해 React·Next.js 버전을 전체 서비스에 일괄 적용한다",
+          "모노리포 내 각 패키지의 의존성 버전 차이를 CI에서 검출하고 알림하는 내부 도구를 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "Toss가 언급한 최신 React 기능은 무엇인가?",
+            "options": [
+              "Hooks",
+              "Concurrent Mode",
+              "Fiber",
+              "Legacy Context"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 React Concurrent Mode와 React Server Components를 언급했으며, 옵션 중 Concurrent Mode가 해당된다"
+          },
+          {
+            "question": "Toss가 모든 서비스에 사용하고 있는 Next.js 버전은?",
+            "options": [
+              "12",
+              "13",
+              "14",
+              "15"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 모든 서비스가 Next.js 15를 사용한다고 명시되어 있다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Humanising LLM Outputs Is Dumb",
+        "url": "https://kuber.studio/blog/Reflections/Humanising-LLM-Outputs-is-Actually-Dumb",
+        "published_at": null,
+        "transcript": null,
+        "body": "The largest tell for me to tell where culture and sentiment is shifting for AI tools is usually X, viral GitHub repositories and Hacker News.\n\nOne of these tells I’ve been seeing a lot lately is skills like [I have ADHD](https://github.com/ayghri/i-have-adhd) and Agents.md instructions such as [giving outputs in only ASD-STE100 Simplified Technical English](https://x.com/levelsio/status/2086046112142545061).\n\nI understand the appeal, none of us really like the verboseness and specific quirks of LLM outputs, but I really think fixing that by humanising the model is the wrong abstraction.\n\nThe problem is that these instructions are not applied after the model has finished doing the work, it becomes part of the same work - If you tell an agent to use short sentences, avoid jargon, never overwhelm you and only include the most important details, you are asking it to continuously compress its output into a lower-bandwidth format.\n\nThat compression is lossy.\n\nYou probably never notice what got dropped because the output still reads nicely.\n\nASD-STE is a great example because it sounds so reasonable. It was designed to make documentation unambiguous *for humans*. But an agent isn’t a human technical writer, and the raw state is often the most information-dense representation available. Meanwhile the style rules sit on the same instruction list as: solve the task, use tools correctly, preserve abstractions, don’t break anything.\n\nThis becomes even stranger once agents start talking to other agents.\n\nA subagent investigates a bug, turns its findings into a nice human-readable summary, the parent agent reads that summary, and then turns it into another nice human-readable summary for you.\n\nIf a subagent ran six tests, I don’t want:\n\n> Most tests passed, although there was one issue worth looking into.\n\nI want:\n\n```\n5/6 PASS\nFAIL: test_cache_invalidation\nCAUSE: stale key survives restart\nREPRO: tests/cache_test.py:184\n```\n\nMore importantly, humanisation hides failure.\n\nAgents fail in useful, ugly ways: conflicting evidence, unresolved branches, stack traces, uncertain assumptions. Human prose is extremely good at smoothing these into sentences like:\n\n> There are a few considerations here.\n\nThat sounds nicer.\n\nBut I’d rather find my agent is hallucinating or near its token window than be happy with that.\n\nEvery other system we build works the opposite way - Databases don’t store data in the format a dashboard displays it, compilers don’t make their IR pleasant to read, APIs don’t exchange friendly summaries.\n\nWe keep the highest-fidelity representation as long as possible and transform it at the boundary where a human consumes it, but LLM tooling is increasingly doing this backwards.\n\n![We're evolving, just backwards](https://i.ytimg.com/vi/ExaNNAIysks/maxresdefault.jpg)\n\nTo be clear, none of this is an argument against accessibility or personalisation.\n\nIf you want three-line answers or Simplified Technical English, great!\nI just think it’s better to do it at the end.\n\nLet agents keep detailed state, let subagents exchange schemas, diffs, exact errors, confidence, provenance. Then compress it for me.\n\nI think the best part is that these viral skills might actually be pointing toward the right future.\n\nUsers are patching this at the prompt layer, something that belongs further down the stack.\n\n“Talk to me like I have ADHD” makes perfect sense as a renderer, it makes much less sense as an operating instruction. The durable version is agents whose native language is precise, machine-facing state, with the warm, concise, human version generated only at the boundary.\n\nSo the viral repos aren’t the end state, but a bug report.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 출력 압축은 정보 손실 위험, 원본 유지가 필요",
+        "tags": [
+          "GitHub",
+          "Hacker News",
+          "Agents.md",
+          "ASD-STE100",
+          "LLM"
+        ],
+        "key_points": [
+          {
+            "point": "프롬프트 수준에서 인간화하면 출력이 압축돼 손실이 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "원시 에이전트 상태를 유지하고 인간이 볼 때만 변환해야 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "에이전트 간 교환은 요약이 아닌 정확한 스키마·차이·신뢰도 등 기계 친화적 데이터여야 한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "에이전트 파이프라인에 후처리 레이어를 두어 LLM의 원시 출력을 UI 단계에서만 Simplified Technical English 등 인간 친화 형식으로 변환한다.",
+          "에이전트 간 통신 프로토콜을 설계해 스키마, 차이, 정확도, 출처 정보를 기계 친화 형식으로 교환하고, 최종 사용자에게는 별도 요약 레이어를 적용한다."
+        ],
+        "quiz": [
+          {
+            "question": "본문에서 언급된 바이럴 GitHub 레포지토리 스킬은?",
+            "options": [
+              "I have ADHD",
+              "Docker Swarm",
+              "TensorFlow",
+              "React"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트에 '[I have ADHD]' 라는 GitHub 레포가 예시로 등장한다."
+          },
+          {
+            "question": "저자는 인간 친화 요약을 언제 적용해야 한다고 주장하는가?",
+            "options": [
+              "모델 생성 중",
+              "최종 인간 소비 경계에서",
+              "학습 데이터에",
+              "토큰화 단계에서"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 요약을 인간이 소비하는 경계에서만 수행해야 한다고 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
