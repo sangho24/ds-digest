@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 11일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/trycua/cua/blob/main/blog/gpu-passthrough-macos-vms.md" target="_blank">Apple Silicon and macOS VMs: Faster LLM Inference with llama.cpp</a>
+    </h2>
+
+    <p class="item-summary">Apple Silicon VM, LLM 10배 가속</p>
+
+    
+    <div class="tags">
+      <span class="tag">Apple Silicon</span><span class="tag">llama.cpp</span><span class="tag">Metal</span><span class="tag">TinyLlama</span><span class="tag">Gemma 4 12B</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/trycua/cua/blob/main/blog/gpu-passthrough-macos-vms.md" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>프로세스‑스코프 호환 레이어가 Metal capability 응답을 변경해 최신 커널 사용을 가능하게 함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>M1 Ultra에서 TinyLlama 1.1B 프롬프트 11.08×, 토큰 16.36× 빠른 추론 달성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Gemma 4 12B 모델도 프롬프트 7.20×, 토큰 14.54× 가속, 베어‑메탈에 근접한 성능</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 제공된 capability‑probe 레이어와 빌드 스크립트를 macOS VM 파이프라인에 적용해 사내 LLM 추론 속도를 10배 이상 향상시킨다</div>
+    
+    <div class="idea">💡 벤치마크 수치를 근거로 Apple Silicon 기반 VM을 프로덕션 LLM 서비스에 배치해 프롬프트 처리 시간을 10배 이상 단축한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. TinyLlama 1.1B 모델이 수정된 VM에서 토큰 생성 속도 향상 비율은?</div>
+      
+      <div class="quiz-opt">A) ~5×</div>
+      
+      <div class="quiz-opt">B) ~10×</div>
+      
+      <div class="quiz-opt">C) ~16×</div>
+      
+      <div class="quiz-opt">D) ~20×</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) ~16×</div>
+          <div class="quiz-explanation">본문에 토큰 생성이 16.36× 빨라졌다고 명시돼 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. macOS 게스트에서 가상 GPU를 제공하는 Apple 프레임워크는?</div>
+      
+      <div class="quiz-opt">A) Metal</div>
+      
+      <div class="quiz-opt">B) Virtualization.framework</div>
+      
+      <div class="quiz-opt">C) CoreML</div>
+      
+      <div class="quiz-opt">D) Accelerate</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Virtualization.framework</div>
+          <div class="quiz-explanation">Virtualization.framework가 Apple GPU 기반 가상 GPU를 제공한다는 내용이 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/tossion" target="_blank">토스의 속도와 품질, 상용 도구로 충분한가 — 토션(Tossion)</a>
+    </h2>
+
+    <p class="item-summary">테스트 결과와 히스토리를 한눈에 관리해 QA 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">Tossion</span><span class="tag">TCM</span><span class="tag">Automation Test</span><span class="tag">Test Run</span><span class="tag">Project</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/tossion" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>상용 TCM은 기능 추가·데이터 활용이 어려워 QA 효율을 저해한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Tossion은 Project→Suite→Section→Test Case 구조와 Test Run 별 스냅샷을 제공한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Test Run은 Assignee·Test Step·Description 등 시점값을 복사해 히스토리를 남긴다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 테스트 실행 시점의 테스트 케이스 정보를 복제해 별도 Test Run 엔티티에 저장해 히스토리를 관리한다</div>
+    
+    <div class="idea">💡 자동화·수동 테스트 결과와 테스트 케이스를 하나의 행으로 통합해 QA 대시보드에 제공한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Tossion에서 테스트 런을 만들 때 복사해 저장하는 정보는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 테스트 케이스 ID만</div>
+      
+      <div class="quiz-opt">B) Assignee·Test Step·Description 등 시점값</div>
+      
+      <div class="quiz-opt">C) 테스트 결과만</div>
+      
+      <div class="quiz-opt">D) 버전 정보만</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Assignee·Test Step·Description 등 시점값</div>
+          <div class="quiz-explanation">본문에 ‘Assignee와 Test Step, Description까지 그 시점의 값을 복사해 테스트 런 안에 한 행으로 새로 만든다’라고 명시돼 있다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      디플릭 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://dflick.stibee.com/p/106" target="_blank">🎬 컷은 사라졌다, AI 영상이 30초를 버티던 날</a>
+    </h2>
+
+    <p class="item-summary">AI 영상 길이·레퍼런스 확대, 실험 범위 확대</p>
+
+    
+    <div class="tags">
+      <span class="tag">Seedance 2.5</span><span class="tag">ByteDance</span><span class="tag">Meta</span><span class="tag">OpenAI</span><span class="tag">Google DeepMind</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://dflick.stibee.com/p/106" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Seedance 2.5는 최대 30초 영상과 50개의 레퍼런스 이미지를 지원해 기존 15초·10개 한계를 넘어섰다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이로써 AI 영상은 짧은 클립이 아니라 하나의 장면 단위로 제작돼 워크플로우와 데이터 활용 방식이 바뀐다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 크리에이터 결과를 분석해 성능·제한점을 제시, 현업 적용 시 기대 효과와 주의점을 제공한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 30초 길이의 AI 생성 영상을 데이터 증강에 활용해 비디오 분류 모델 학습 데이터 확대</div>
+    
+    <div class="idea">💡 50개의 레퍼런스 이미지를 활용해 브랜드 스타일을 일관성 있게 유지한 마케팅 영상 자동 생성</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Seedance 2.5가 지원하는 최대 영상 길이는?</div>
+      
+      <div class="quiz-opt">A) 15초</div>
+      
+      <div class="quiz-opt">B) 30초</div>
+      
+      <div class="quiz-opt">C) 45초</div>
+      
+      <div class="quiz-opt">D) 60초</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 30초</div>
+          <div class="quiz-explanation">본문에 Seedance 2.5가 15초에서 30초로 길이를 늘렸다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Seedance 2.5가 한 번에 사용할 수 있는 레퍼런스 이미지 수는?</div>
+      
+      <div class="quiz-opt">A) 10</div>
+      
+      <div class="quiz-opt">B) 20</div>
+      
+      <div class="quiz-opt">C) 30</div>
+      
+      <div class="quiz-opt">D) 50</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) 50</div>
+          <div class="quiz-explanation">본문에 레퍼런스가 50개로 확장됐다고 언급돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://stolen-thoughts.com/" target="_blank">Stealing Reasoning Traces from Proprietary LLM APIs</a>
+    </h2>
+
+    <p class="item-summary">LLM 추론을 탈취해 약한 모델로 원본 논리 복원 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Anthropic</span><span class="tag">OpenAI</span><span class="tag">Google</span><span class="tag">Claude</span><span class="tag">jailbreak</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://stolen-thoughts.com/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Proprietary LLM APIs 반환하는 암호화된 사고 블록은 다른 세션·모델에서도 재사용 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>약한 모델을 탈옥해 동일 공급자의 암호화 블록을 주입하면 강한 모델의 원본 추론을 평문으로 복원</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OpenAI, Anthropic, Google 등 최신 모델에 대해 이 공격을 실증하여 새로운 보안 위협을 제시</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 암호화된 사고 블록의 재사용 패턴을 모니터링해 비정상적인 추출 시도를 탐지하는 로깅 시스템 구축</div>
+    
+    <div class="idea">💡 민감한 추론 과정을 자체 호스팅 모델이나 오프라인 환경에서 수행해 외부 API 호출을 최소화</div>
+    
+    <div class="idea">💡 </div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 예시에서 사용된 원본 모델과 탈옥 모델의 이름은?</div>
+      
+      <div class="quiz-opt">A) claude-opus-4-8 & claude-haiku-4-5-20251001</div>
+      
+      <div class="quiz-opt">B) gpt-4 & gpt-3.5</div>
+      
+      <div class="quiz-opt">C) llama-2 & llama-2-chat</div>
+      
+      <div class="quiz-opt">D) gemini-pro & gemini-flash</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) claude-opus-4-8 & claude-haiku-4-5-20251001</div>
+          <div class="quiz-explanation">본문에 source model trace는 "claude-opus-4-8"이고 jailbroken model trace는 "claude-haiku-4-5-20251001"이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 강한 모델의 추론을 추출하는 핵심 기법은?</div>
+      
+      <div class="quiz-opt">A) 직접 그래디언트 추출</div>
+      
+      <div class="quiz-opt">B) 암호화 블록을 약한 모델에 재생</div>
+      
+      <div class="quiz-opt">C) 모델 증류</div>
+      
+      <div class="quiz-opt">D) 프롬프트 인젝션</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 암호화 블록을 약한 모델에 재생</div>
+          <div class="quiz-explanation">암호화된 사고 블록을 약한, 탈옥된 모델에 주입해 원본 추론을 평문으로 복원한다는 것이 논문의 핵심 방법이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      한컴 AI · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://hai-hancom.stibee.com/p/167" target="_blank">👋 이거 살까 말까? AI가 대신 골라드림</a>
+    </h2>
+
+    <p class="item-summary">AI 쇼핑 에이전트가 추천 모델 설계에 인사이트</p>
+
+    
+    <div class="tags">
+      <span class="tag">네이버</span><span class="tag">카카오톡</span><span class="tag">쿠팡</span><span class="tag">비자</span><span class="tag">마스터카드</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://hai-hancom.stibee.com/p/167" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 기반 대화형 쇼핑이 확대돼 전 세계 56%·한국 69% 소비자가 구매에 AI 활용을 기대</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>네이버·카카오 등 AI 에이전트가 선제 제안으로 이용자 수·거래액을 크게 상승(네이버 2.7배)</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>오프라인 키오스크·가상 매장·AI 결제 연동 등 AI가 쇼핑 전·후 과정을 전면 포괄</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 사용자 쇼핑 이력·맥락을 활용해 대화형 AI 에이전트를 구축해 거래 전환율을 2배 이상 향상시킨다</div>
+    
+    <div class="idea">💡 다국어 언어 모델을 적용한 매장 키오스크를 도입해 외국인 고객의 구매 전환을 높인다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Criteo 보고서에 따르면 2026년에 AI를 활용해 최종 구매를 결정하는 전 세계 소비자 비율은?</div>
+      
+      <div class="quiz-opt">A) 56%</div>
+      
+      <div class="quiz-opt">B) 45%</div>
+      
+      <div class="quiz-opt">C) 62%</div>
+      
+      <div class="quiz-opt">D) 70%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 56%</div>
+          <div class="quiz-explanation">보고서에 따르면 전 세계 소비자의 56%가 AI를 활용해 구매를 최종 결정할 것으로 전망된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. AI 쇼핑 에이전트를 통해 거래액이 2.7배 증가한 한국 플랫폼은?</div>
+      
+      <div class="quiz-opt">A) 쿠팡</div>
+      
+      <div class="quiz-opt">B) 네이버</div>
+      
+      <div class="quiz-opt">C) 카카오톡</div>
+      
+      <div class="quiz-opt">D) 올리브영</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 네이버</div>
+          <div class="quiz-explanation">네이버는 AI 쇼핑 에이전트를 도입해 거래액이 2.7배 이상 증가했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
