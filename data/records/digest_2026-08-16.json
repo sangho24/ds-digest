@@ -1,0 +1,165 @@
+{
+  "date": "2026-08-16",
+  "generated_at": "2026-08-16T22:34:37.234075",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "What happens when an LLM never sees material beyond fifth grade?",
+        "url": "https://littlelearner-ll.github.io/",
+        "published_at": null,
+        "transcript": null,
+        "body": "## Talk to LittleLearner\n\nThe hosted 5B model, live in your browser.\n[Open in a new tab ↗](https://zueri-monstro.rufous-hamlet.ts.net/ll-demo-chat/?theme=light)\nif the chat doesn’t load below.\n\n## A controlled sandbox for studying how models acquire knowledge\n\nModern LMs are trained on everything at once, so it is hard to tell whether a new skill\nwas *learned* or merely *elicited*. We constrain the training distribution itself: an 88B-token\ncorpus filtered to the U.S. elementary-school curriculum, with models trained from scratch on it and\nmatched unfiltered controls.\n\nDataset\n\n### LittleCurriculum\n\nAn 88B-token corpus distilled from FineWeb-Edu through a five-stage filtering pipeline aligned with Common Core standards (K–5).\nConcepts, facts, and vocabulary taught above Grade 5 are explicitly excluded.\n\nModels\n\n### LittleLearner\n\nThree scales (0.6B / 1.3B / 5B) trained from scratch on LittleCurriculum: chattable models\nwith an interpretable knowledge boundary. Each ships with a matched *Unfiltered* control\nfor clean comparison.\n\nFindings\n\n### Elicitation, not acquisition\n\nIn our experiments, scaling, SFT+GRPO post-training, and in-context learning amplify what the\ncurriculum taught, but none meaningfully improves out-of-scope performance, indicating that the\npretraining filter sets the effective capability ceiling.\n\n## Model checkpoints\n\nLittleLearner at three scales (0.6B / 1.3B / 5B), each with a matched Unfiltered control\nsharing its architecture, tokens, and recipe.\n\n**Base**: the pretrained model.  \n**GRPO**: math specialists post-trained on MathCAMPS; responses may exhibit a tendency toward math-oriented output.  \n**Chatty**: variants tuned for general chat behavior.\n\n| Scale | LittleLearner · K–5 | chatty | Matched control · unfiltered |\n| --- | --- | --- | --- |\n\n## Capability stays inside the curriculum\n\nCan standard interventions push a model past what its pretraining data taught it?\nWith the boundary under experimental control, we can ask cleanly. In our experiments, each\nintervention amplifies in-scope ability; none of them meaningfully improves out-of-scope\nperformance.\n\nScaling\nPost-training\nIn-context learning\n\n### Scaling\n\nScaling model size improves performance within the model’s controlled knowledge exposure and\nextends modestly to problems along the same learning trajectory, but yields little improvement on\nproblems requiring more advanced capabilities outside the exposure.\n\nMathCAMPS accuracy by grade, across model size\n\n### Post-training\n\nPost-training through GRPO significantly boosts in-scope K–5 capabilities, but fails to\nrecover out-of-scope beyond-K–5 capabilities, even when training with out-of-scope data.\n\nPost-training amplifies K–5, not the beyond-K–5 gap\n\n### In-context learning\n\nIn-context learning with the prompts we test does not unlock new reasoning capabilities in\nbeyond-K–5 for our trained 5B LittleLearner.\n\nAccuracy by prompting condition\n\n## What will you teach it?\n\nBecause LittleLearner’s training exposure is explicitly specified, behavioral and\nrepresentational changes can be related directly to the concepts you introduce. Three directions\nwe’re excited about:\n\n01\n\nRL & discovery\n\n### Can RL create capability?\n\nThe prior is restricted to K–5, so capabilities that emerge under RL can be attributed to\nthe RL process itself. A tractable proxy for reward-driven discovery.\n\n02\n\nContinual learning\n\n### Watch a concept being learned\n\nIntroduce negative numbers and measure sample efficiency, retention, and interference. Or\nprobe behavior near the boundary: does it answer, abstain, or hallucinate?\n\n03\n\nEducational science\n\n### Machine vs. child learners\n\nSpecified exposure enables controlled human-model comparison. Do models and children need\nsimilar exposure to learn fractions, or make similar errors on word problems?\n\n＋\n\nYour turn\n\n### Bring your own question\n\nA known boundary turns your idea into a clean experiment!\n\n## If you find this work useful\n\nPlease cite our paper:\n\n```\nCopy@misc{littlelearner2026,\n      title={LittleLearner: Language Models Under Pedagogically-Controlled Knowledge Exposure},\n      author={Fanfei Li and Jana Zeller and Manuel Prada-Corral and Thaddäus Wiedemer and Prasanna Mayilvahanan and Ryan Cotterell and Wieland Brendel},\n      year={2026},\n      eprint={2608.13545},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL},\n      url={https://arxiv.org/abs/2608.13545}\n}\n```",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "초등 교육 데이터만 학습한 LLM은 범위 외 능력 미흡",
+        "tags": [
+          "LittleLearner",
+          "LittleCurriculum",
+          "GRPO",
+          "MathCAMPS",
+          "RL"
+        ],
+        "key_points": [
+          {
+            "point": "K‑5 커리큘럼만으로 학습한 LLM은 교육 범위 밖 능력을 획득하지 못한다",
+            "timestamp": null
+          },
+          {
+            "point": "스케일링·GRPO 사후학습·인‑컨텍스트 학습이 범위 내 성능은 높이지만 범위 외 성능은 향상시키지 않는다",
+            "timestamp": null
+          },
+          {
+            "point": "통제된 데이터셋을 활용해 RL, 지속학습, 교육 과학 등 실험을 체계적으로 설계할 수 있다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "K‑5 수준의 필터링된 교육 데이터셋으로 특화된 교육용 LLM을 구축하고, 학습 경계 평가를 통해 제품에 적용",
+          "GRPO와 같은 수학 특화 사후학습을 RL 보상과 결합해 커리큘럼 제한 모델의 새로운 능력 발현을 탐색"
+        ],
+        "quiz": [
+          {
+            "question": "LittleCurriculum 데이터는 어떤 원본을 필터링해 만들었나요?",
+            "options": [
+              "Common Crawl",
+              "FineWeb‑Edu에서 K‑5 수준만 추출",
+              "Wikipedia",
+              "OpenWebText"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 따르면 LittleCurriculum은 FineWeb‑Edu를 5단계 필터링 파이프라인으로 K‑5 커리큘럼에 맞게 만든 88B 토큰 코퍼스이다."
+          },
+          {
+            "question": "다음 중 범위 외 성능을 향상시키지 못한 실험적 개입은?",
+            "options": [
+              "모델 스케일링",
+              "GRPO 사후학습",
+              "인‑컨텍스트 학습",
+              "모두"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 따르면 스케일링, GRPO 사후학습, 인‑컨텍스트 학습 모두 범위 내 능력은 높였지만 범위 외 성능은 의미 있게 개선하지 못했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Credit card debt rises to $1.26T, nearing all-time record",
+        "url": "https://abc7.com/story/credit-card-debt-rises-126-trillion-nearing-time-record/19667289/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[![](https://cdn.abcotvs.net/abcotv/assets/news/global/images/feature-header/kabc-lg.svg)![](https://cdn.abcotvs.net/abcotv/assets/news/global/images/feature-header/kabc-sm.svg)](https://abc7.com/)\n\n[24/7 Live](https://abc7.com/watch/live/)[Los Angeles](https://abc7.com/los-angeles/)[Orange County](https://abc7.com/orange-county/)[Inland Empire](https://abc7.com/inland-empire/)[Ventura County](https://abc7.com/ventura-county/)[California](https://abc7.com/california/)\n\n- [Credit Cards](/tag/credit-cards/)\n\n# Credit card debt rises to $1.26 trillion, nearing all-time record\n\nStrong consumer spending plus rising prices are factors.\n\nByElizabeth Schulze ![ABCNews logo](https://cdn.abcotvs.net/abcotv/static/common/origins/origin-abcnews.png)\n\nWednesday, August 12, 2026 3:20PM\n\n![Credit card debt rises to $1.26 trillion, nearing all-time record](https://cdn.abcotvs.com/dip/images/19668113_081226-wpvi-credit-card-debt-10a-video--vid.jpg)\n\nStrong consumer spending plus rising prices are factors.\n\nWPVI\n\nAmericans' credit card debt reached $1.26 trillion, increasing by $21 billion in the second quarter of this year, according to new data Tuesday from the Federal Reserve Bank of New York.\n\nOverall, outstanding credit card balances are now just shy of the $1.28 trillion all-time record set in the fourth quarter of last year.\n\nStrong consumer spending typically results in higher credit card debt. Economists have also pointed to rising prices, including for essentials like groceries and gas, as a factor behind rising card balances.\n\n![Customer making a swift contactless payment with a black credit card at a modern point of sale terminal.](https://cdn.abcotvs.com/dip/images/19667293_081226-cc-adobestock-tapping-cc-img.jpg)\n\nCustomer making a swift contactless payment with a black credit card at a modern point of sale terminal.\n\nBy Jonathan\n\nMany households are also behind on their card payments.\n\nThe percentage of credit card balances that were more than 90 days delinquent rose from 7.6% to 12.8% from mid-2022 through early 2026.\n\n\"There are a lot of households who live paycheck to paycheck, and it just needs one thing to happen to them that could lead to a delinquency,\" New York Fed researchers said on a call with reporters on Tuesday.\n\nBut researchers also noted the higher delinquency rates can be attributed to old outstanding debts rather than people falling behind on new charges to their cards.\n\nAmericans' debt on auto loans and home equity lines of credit also increased from April through June, while student debt and mortgage debt decreased.\n\nIn total, U.S. household debt stands at $18.8 trillion.\n\nAuto loan debt at $1.71 trillion is a new record high.\n\n**Breakdown of U.S. household debt by category:**\n\n- Mortgages: $13.12 trillion\n- Auto debt: $1.71 trillion\n- Student debt: $1.65 trillion\n- Credit card debt: $1.26 trillion\n- Home equity lines of credit: $459 billion\n\nThe New York Fed report is based on an anonymized, nationally representative sample drawn from Equifax credit report data.\n\n[Report a correction or typo](/extras/reporttypo?url=https%3A%2F%2Fabc7.com%2Fstory%2Fcredit-card-debt-rises-126-trillion-nearing-time-record%2F19667289%2F)\n\nCopyright © 2026 ABC News Internet Ventures.\n\n## Related Topics\n\n- [SOCIETY](/topic/society/)\n- [CREDIT CARDS](/tag/credit-cards/)\n- [DEBT](/tag/debt/)\n- [U.S. & WORLD](/tag/us-world/)\n- [SHOPPING](/tag/shopping/)\n- [INFLATION](/tag/inflation/)\n- [GAS PRICES](/tag/gas-prices/)\n\n## Credit Cards\n\n[![](https://cdn.abcotvs.com/dip/images/18700616_031026-wtvd-tap-pay-clean-img.jpg?w=992)\n\n## Do you tap to pay? 'Ghost tapping' scams could target your money](https://abc7.com/post/ghost-tapping-do-tap-pay-scams-could-target-money/18699712/)\n\n[![](https://cdn.abcotvs.com/dip/images/18117677_credit-card-img.png?w=992)\n\n## US household debt hits new record high: Report](https://abc7.com/post/household-debt-america-has-hit-record-high-report/18117659/)\n\n[![](https://cdn.abcotvs.com/dip/images/18052083_102125-kabc-6am-7oys-credit-card-freeze-vid.jpg?w=992)\n\n## Should you freeze your credit to protect yourself?](https://abc7.com/post/should-freeze-credit-heres-what-need-know/18057803/)\n\n[![](https://cdn.abcotvs.com/dip/images/17905654_092925-wpvi-stranded-overseas-430-vid-vid.jpg?w=992)\n\n## Airline credit card policy nearly strands couple abroad | What to know](https://abc7.com/post/travel-warning-delta-air-lines-credit-card-policy-strands-couple-london-england-what-know/17911131/)\n\nWatch Live\n\n[ON NOW](https://abc7.com/watch/live/11064936/)\n\n## Top Stories\n\n[![](https://cdn.abcotvs.com/dip/images/19688507_r16206_1296x729_16-9.jpg)\n\n## Tommy John, ex-MLB pitcher and namesake of pioneering surgery, dies](/post/tommy-john-former-mlb-pitcher-namesake-pioneering-surgery-dies-83/19688361/)\n\n[![](https://cdn.abcotvs.com/dip/images/19686279_081626-kabc-van-nuys-rollover-tn-img.jpg)\n\n## 5 people hurt after 2 vehicles crash and roll down 405 Fwy embankment](/post/5-people-hurt-2-vehicles-crash-roll",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "신용카드 부채 급증, 최신 소비·인플레이션 데이터 필요",
+        "tags": [
+          "Federal Reserve Bank of New York",
+          "Equifax",
+          "U.S. household debt",
+          "auto loan",
+          "mortgage"
+        ],
+        "key_points": [
+          {
+            "point": "미국 신용카드 부채가 1.26조 달러로 전년 대비 21억 달러 증가",
+            "timestamp": null
+          },
+          {
+            "point": "90일 이상 연체 비율이 7.6%에서 12.8%로 상승",
+            "timestamp": null
+          },
+          {
+            "point": "전체 가계부채는 18.8조 달러, 자동차 대출은 1.71조 달러로 사상 최고 기록",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "연방준비은행·Equifax 데이터를 활용해 신용카드 연체 위험 예측 모델 구축",
+          "가계부채 카테고리별 시계열 대시보드 제작으로 정책·리스크 모니터링 지원"
+        ],
+        "quiz": [
+          {
+            "question": "보고된 전체 미국 가계부채 규모는 얼마인가?",
+            "options": [
+              "$16.5 trillion",
+              "$18.8 trillion",
+              "$20.2 trillion",
+              "$22.0 trillion"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 전체 가계부채가 $18.8 trillion이라고 명시되어 있다."
+          },
+          {
+            "question": "2022년 중반부터 2026년 초까지 90일 이상 연체된 신용카드 잔액 비율이 얼마나 증가했는가?",
+            "options": [
+              "5.2%",
+              "4.0%",
+              "6.5%",
+              "3.8%"
+            ],
+            "answer_index": 0,
+            "explanation": "연체 비율이 7.6%에서 12.8%로 상승했으며, 차이는 12.8-7.6=5.2%이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
