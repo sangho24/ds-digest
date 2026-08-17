@@ -1,0 +1,220 @@
+{
+  "date": "2026-08-17",
+  "generated_at": "2026-08-17T22:38:26.008232",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Launch HN: Speko (YC S26) – OpenRouter for Voice AI",
+        "url": "https://speko.ai/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN! I&#x27;m Bek, founder of Speko, a platform that finds an optimal combination of speech-to-text, LLM, and text-to-speech models, given your constraints, among all our public benchmarked options, and tells you why.<p>Demo: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=no2LY2gRh-c\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=no2LY2gRh-c</a><p>Typical production voice agent is an ensemble of three models: STT, an LLM, and TTS.<p>Each of those layers offers a dozen credible vendors, and each month there are new models on the market. Almost everyone evaluates once, picks a stack of their choice, and never rechecks because switching from a vendor to another involves yet another integration and arguments about the numbers.<p>The result is that you use voice agents running last quarter&#x27;s models while better and cheaper options are available.<p>Before founding Speko, I spent four years as cofounder and CTO building voice agents for enterprises across Asia in 10+ languages. Each time a new speech model would arrive, we repeated the same ritual: hire native-speaking raters, benchmark it against our existing stack, and update production if it improved. Speko turns this process into an API. A team running thousands of calls a day told us: &quot;we can literally go to this dashboard, switch the model, and it will do it for us.&quot;<p>How it works: you send a request with your optimization criteria (accuracy, latency, cost or balanced), language and region. The router filters to models which we measured for the given combination of constraints, benchmarks them, selects the winner, and returns a response with headers containing provider, model names, and the scores. The gateway prefetches signed session plans, so a new session dials the provider straight from memory; no control-plane round trip while a caller waits.<p>Failover happens only during connection setup stage: if the provider refuses the connection attempt, we start connecting to the runners-up.<p>Some of the customer stories: one founder came to us not knowing what to pick at all: he gave us his use case and now routes everything through the platform. A property management AI runs LiveKit in Python and had not updated STT or TTS since launch: they did not know their STT had high error rates on their calls, better options existed, and swapping always looked like an R&amp;D project. One team did not know which models to pick for Spanish. A medical team did not know which STT handles medical vocabulary best. In every case we helped find the right stack from the benchmarks, and now they route through us.<p>The measuring part is public: we pass the same inputs to every model in one region in different dated runs and we publish the boards, including those where our selections perform worse than alternatives. A launch demo answers which 30-second clip sounds better; production asks which model survives minute eight, so we test spontaneous speech, money and dates, ten-m",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "음성 AI 모델을 자동 최적화해 비용·성능 관리 효율화",
+        "tags": [
+          "Speko",
+          "OpenRouter",
+          "LiveKit",
+          "STT",
+          "TTS"
+        ],
+        "key_points": [
+          {
+            "point": "Speko는 정확도·지연·비용 등 제약조건에 맞춰 최적의 STT·LLM·TTS 조합을 API로 제공한다",
+            "timestamp": null
+          },
+          {
+            "point": "모델을 지역·언어별로 벤치마크하고 점수를 공개해 빠른 전환과 투명성을 지원한다",
+            "timestamp": null
+          },
+          {
+            "point": "고객 사례로 부동산 관리 AI·의료팀 등이 모델 교체로 오류 감소와 비용 절감 효과를 얻었다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Speko와 유사한 내부 라우터를 구축해 주기적으로 STT·LLM·TTS 모델을 벤치마크하고 비용·성능 기준에 따라 자동 전환한다",
+          "Speko API를 활용해 현재 음성 파이프라인의 모델 스택을 평가·교체하여 정확도와 비용을 최적화한다"
+        ],
+        "quiz": [
+          {
+            "question": "Speko가 연결 설정 단계에서 실패 시 어떤 방식으로 대체 모델을 선택하나요?",
+            "options": [
+              "재시도 없이 즉시 오류 반환",
+              "연결 거부 시 러너업 모델로 연결 시도",
+              "전체 모델을 재벤치마크",
+              "사용자에게 수동 선택 요청"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 'Failover happens only during connection setup stage: if the provider refuses the connection attempt, we start connecting to the runners-up.' 라고 명시되어 있다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "GIMP Development Update",
+        "url": "https://www.gimp.org/news/2026/08/16/dev-update-august-2026/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[GIMP](/)\n[News](/news/)\n[Docs](/docs/)\n[Tutorials](/tutorials/)\n[More](#bottom-nav)\n\n## [Development Update, August 2026](/news/2026/08/16/dev-update-august-2026/ \"Permalink to Development Update, August 2026\")\n\n[Previous Post](/news/2026/07/18/gsoc-2026-midpoint-progress/)\n\n2026-08-16\n\nby [GIMP Team](/author/gimp-team.html)\n\nFor the past few months, we’ve been developing all kinds of features for\nthe future GIMP 3.4 release. We noticed recently that our\n[changelog](https://gitlab.gnome.org/GNOME/gimp/-/blob/5c4309f3a155bdc0ab64567b6422879364c6258f/NEWS)\nwas getting quite long - a good problem to have!\n\nWhile there’s been a lot going on internally, it’s been a while since we made a\npublic progress report. So we want to share details on some of the new features\nand UX improvements that’ll be available in the first development release,\n*GIMP 3.3.2*. This won’t be an exhaustive list (we have to save at least some\nnews for the release itself!) but hopefully it will give you some insight into\nthe current direction and progress of GIMP’s development.\n\n- [New Project File Format](#new-project-file-format)\n- [MyPaint Brush: Spectral Blending](#mypaint-brush-spectral-blending)\n- [Non-Destructive Editing](#non-destructive-editing)\n- [PSD Support Improvements](#psd-support-improvements)\n- [Native File Chooser Dialogs](#native-file-chooser-dialogs)\n- [User Experience and Interface Updates](#user-experience-and-interface-updates)\n- [Assorted Changes and Fixes](#assorted-changes-and-fixes)\n- [What’s Next](#whats-next)\n\n# New Project File Format[¶](#new-project-file-format \"Permanent link\")\n\nThe big focus for maintainer **Jehan** recently has been developing a new project file format\nfor GIMP.\n\n[XCF](https://en.wikipedia.org/wiki/XCF_(file_format)) has been GIMP’s primary project\nformat since *1997*, and it has served many users well. Over time however, we’ve observed\nmore and more limitations of the binary XCF format.\nAmong other issues, it does not easily support very large or complex projects, such as\nthe multi-page and animation features currently planned for GIMP 3.6.\n\nThe new project file format will follow a more common “zipped XML” structure. While\nthe technical details are still being designed and implemented, this change will allow for\nfaster saving since we’ll only need to update parts of the file instead of the whole\nthing each time. It will also set the stage for much desired features such as auto-saving,\nwhich will now be much more feasible.\n\nThat said, XCF is not going away! Backwards compatibility is important to us,\nand we will continue to support loading XCFs in all future versions of GIMP.\n(For instance, we’re quite proud that a\n[XCF file made by a small company](https://web.archive.org/web/20220607230614/https://www.google.com/logos/googlebeta.xcf)\nfor their logo in 1998 still renders the same way in the latest version of GIMP)\n\nHowever, going forward we will only add support for saving/loading new features\nin the new project file format once it is finalized.\n\n# MyPaint Brush: Spectral Blending[¶](#mypaint-brush-spectral-blending \"Permanent link\")\n\nDuring GIMP 3.2’s development, we\n[upgraded to a newer version](https://www.gimp.org/news/2025/09/01/gimp-3-1-4-released/#mypaint-brushes-2)\nof the MyPaint brush engine. While this brought new brushes and canvas interactions to the\n[MyPaint Brush Tool](https://testing.docs.gimp.org/3.2/en/gimp-tool-mypaint-brush.html),\none feature that was left out was **Spectral Blending**.\n\nSpectral Blending simulates the effects of blending physical pigments in digital art. For example,\nblending yellow and blue will produce a green color instead of darker yellow, and blending red and\nyellow will create an orange mix.\n\nFortunately, new contributor **Cassidie Grogan** picked up the slack and implemented this feature.\nThere is now a `Spectral Blending` checkbox in the MyPaint Brush Tool Options. If checked, the new\nblending method is used. You can control the strength of the blending with the `Pigment` slider.\n\n[\n\n](https://www.gimp.org/news/2026/08/16/dev-update-august-2026/gimp-mypaintbrush-spectral-blending.mp4)\n*Demonstration of MyPaint Spectral Blending*\n\nIn addition, maintainer **Michael Natterer** improved the MyPaint Brush preview code to display at their\nfull size instead of 48x48 pixels. This fixes an issue where the previews appeared blurry on larger screens.\n\n# Non-Destructive Editing[¶](#non-destructive-editing \"Permanent link\")\n\n**Alx Sa** has continued making updates to our non-destructive filter code. To list a few:\n\nYou can now apply filters non-destructively to **Layer masks**! To go along with this,\nthe filter popover has been redesigned by **Reju** to show the active filters\nfor both the layer and its mask, so you can interact with both on the same screen.\n\nThe [Gradient Tool](https://docs.gimp.org/3.2/en/gimp-tool-gradient.html) can now be\nused non-destructively! If you check `Editable Gradient` in the Tool Options, the\ngradient you create will be added",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "새 파일 포맷과 비파괴 편집으로 대규모 이미지 데이터 처리 효율 향상",
+        "tags": [
+          "GIMP",
+          "XCF",
+          "MyPaint Brush",
+          "Spectral Blending",
+          "PSD"
+        ],
+        "key_points": [
+          {
+            "point": "새로운 zip‑XML 기반 프로젝트 파일 포맷이 도입돼 저장 속도와 자동 저장이 개선될 예정",
+            "timestamp": null
+          },
+          {
+            "point": "MyPaint Brush에 Spectral Blending 옵션이 추가돼 색 혼합이 물감처럼 동작",
+            "timestamp": null
+          },
+          {
+            "point": "PSD 지원 및 네이티브 파일 선택 대화창 등 UX 개선이 포함돼 작업 흐름이 원활해짐",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "GIMP의 새로운 zip‑XML 프로젝트 파일 포맷을 이미지 전처리 파이프라인의 중간 결과 저장 형식으로 채택해 부분 저장 및 자동 저장 기능 활용",
+          "비파괴 편집 기능을 활용해 원본 이미지 데이터를 보존하면서 실험 파라미터를 기록, 재현 가능한 이미지 분석 워크플로우 구축"
+        ],
+        "quiz": [
+          {
+            "question": "XCF 포맷이 가진 주요 제한점으로 언급된 내용은?",
+            "options": [
+              "텍스트 기반이라 용량이 크다",
+              "바이너리 구조라 대형·복합 프로젝트에 부적합",
+              "오픈소스가 아니다",
+              "윈도우에서만 지원된다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 XCF가 바이너리 형식이며 대형·복합 프로젝트(예: 다중 페이지·애니메이션) 지원에 제한이 있다고 언급한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "tools"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "The subset sum puzzle",
+        "url": "https://youtu.be/4h5BEALuh44",
+        "published_at": "2026-03-25T20:59:04",
+        "transcript": "You and I are going to play a game. The way it works is that I look at all of the numbers from one up to 100, and I choose 10 of them. I then present you with these 10 numbers, and your challenge is to find two distinct subsets from whatever I choose, that have the same sum. So, for example, in this case, these two different pairs of numbers each add up to 102. If you can do this, you win the game. But, if I can find some collection of 10 numbers where no matter how hard you try, you can't find two subsets that have the same sum, then I would win the game. My puzzle for you is which one of us has the winning strategy? This is part of a monthly series of puzzlers that I'm doing in collaboration with MoMath. If you want the solution when it's out, stay subscribed either to this channel or to their mailing list.",
+        "body": "Part of a series of monthly puzzlers. Stay subscribed to see the solution",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "동일 합을 갖는 부분집합 찾기로 조합 탐색 직관 이해",
+        "tags": [
+          "3Blue1Brown",
+          "MoMath",
+          "subset sum"
+        ],
+        "key_points": [
+          {
+            "point": "게임은 1부터 100까지 중 10개의 숫자를 선택하고, 같은 합을 갖는 두 개의 서로 다른 부분집합을 찾는 것이다.",
+            "timestamp": null
+          },
+          {
+            "point": "예시로 두 쌍의 숫자가 각각 102의 합을 만든다.",
+            "timestamp": null
+          },
+          {
+            "point": "어떤 플레이어가 항상 이길 수 있는 전략이 있는지가 퍼즐의 핵심 질문이다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "동일 합을 갖는 부분집합 탐색 알고리즘을 구현해 특성 조합 중 중복된 합을 찾아 데이터 전처리 단계에서 불필요한 변수 조합을 제거한다."
+        ],
+        "quiz": [
+          {
+            "question": "제시자는 1부터 100까지 중 몇 개의 숫자를 선택하나요?",
+            "options": [
+              "5",
+              "10",
+              "15",
+              "20"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 \"I choose 10 of them\"이라고 명시되어 있다."
+          },
+          {
+            "question": "예시에서 두 쌍의 숫자가 만든 합은 얼마인가요?",
+            "options": [
+              "100",
+              "101",
+              "102",
+              "103"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 \"each add up to 102\"라고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "research-method"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 3,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
