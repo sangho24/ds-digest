@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 18일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      디플릭 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://dflick.stibee.com/p/107" target="_blank">👥 ChatGPT와 Gemini, 둘 다 10억 명인데 왜 같은 숫자가 아닐까</a>
+    </h2>
+
+    <p class="item-summary">AI 사용자 규모 측정 차이로 성장 전략 인사이트 제공</p>
+
+    
+    <div class="tags">
+      <span class="tag">ChatGPT</span><span class="tag">Gemini</span><span class="tag">Muse Glimmer</span><span class="tag">NemoTron 3.5 Lightning</span><span class="tag">GPT-5.6 Sol</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://dflick.stibee.com/p/107" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>ChatGPT와 Gemini 모두 10억 사용자를 기록했지만 ChatGPT는 주간 기준, Gemini는 월간 기준으로 집계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Gemini 이용자의 63%가 음성 대화를 사용하고 일부는 카메라·화면 공유까지 활용</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>ChatGPT 사용자는 1주일 내에 재방문 비율이 높아 높은 이용 빈도를 보임</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 주간·월간 활성 사용자 지표를 구분해 제품 성장 단계와 사용자 참여도를 분석한다</div>
+    
+    <div class="idea">💡 음성 사용 비중이 높은 Gemini처럼 음성 인터페이스 활용 데이터를 수집·분석해 UI 개선 로드맵을 만든다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Gemini는 10억 사용자를 어떤 기준으로 집계했나요?</div>
+      
+      <div class="quiz-opt">A) 주간 활성 사용자</div>
+      
+      <div class="quiz-opt">B) 월간 활성 사용자</div>
+      
+      <div class="quiz-opt">C) 전체 가입자 수</div>
+      
+      <div class="quiz-opt">D) 일일 활성 사용자</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 월간 활성 사용자</div>
+          <div class="quiz-explanation">본문에 Gemini는 한 달을 기준으로 사용자를 셌다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Gemini 이용자 중 음성으로 대화하는 비율은 얼마인가요?</div>
+      
+      <div class="quiz-opt">A) 45%</div>
+      
+      <div class="quiz-opt">B) 55%</div>
+      
+      <div class="quiz-opt">C) 63%</div>
+      
+      <div class="quiz-opt">D) 70%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 63%</div>
+          <div class="quiz-explanation">본문에 Gemini 이용자의 63%가 음성으로 대화한다고 언급돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://support.claude.com/en/articles/15910845-claude-code-may-august-2026-weekly-limits-promotion" target="_blank">Claude Code May–August 2026 weekly limits promotion</a>
+    </h2>
+
+    <p class="item-summary">Claude Code 사용량 50% 증가, 실험 가속</p>
+
+    
+    <div class="tags">
+      <span class="tag">Claude Code</span><span class="tag">CLI</span><span class="tag">IDE extensions</span><span class="tag">Enterprise</span><span class="tag">Pro</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://support.claude.com/en/articles/15910845-claude-code-may-august-2026-weekly-limits-promotion" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>5월 13일부터 8월 31일까지 Claude Code 주간 사용량 제한이 50% 증가</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Pro, Max, Team 및 레거시 시트 기반 Enterprise 플랜에 자동 적용, Free와 소비 기반 Enterprise 제외</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>5시간 사용 제한은 변동 없으며 다른 Claude 제품의 제한도 동일함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 주간 한도 증가를 활용해 대규모 데이터 전처리 스크립트를 주당 최대치에 맞춰 실행해 모델 개발 속도 향상</div>
+    
+    <div class="idea">💡 팀 내에서 Claude Code를 활용한 코드 자동 생성 작업을 늘려 프로토타입 개발 기간 단축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Claude Code 사용량 프로모션이 종료되는 날짜는 언제인가?</div>
+      
+      <div class="quiz-opt">A) 2026년 8월 31일</div>
+      
+      <div class="quiz-opt">B) 2026년 9월 30일</div>
+      
+      <div class="quiz-opt">C) 2026년 12월 31일</div>
+      
+      <div class="quiz-opt">D) 2027년 1월 31일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 2026년 8월 31일</div>
+          <div class="quiz-explanation">본문에 프로모션은 2026년 8월 31일까지 진행된다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 다음 중 프로모션에 포함되지 않는 플랜은?</div>
+      
+      <div class="quiz-opt">A) Pro 플랜</div>
+      
+      <div class="quiz-opt">B) Max 플랜</div>
+      
+      <div class="quiz-opt">C) Free 플랜</div>
+      
+      <div class="quiz-opt">D) Team 플랜</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Free 플랜</div>
+          <div class="quiz-explanation">Free 플랜은 프로모션 대상에서 제외된다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      트렌드라이트 · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://trendlite.stibee.com/p/476" target="_blank">(광고)🥤지금 인재들은 왜 G마켓에 베팅할까요?</a>
+    </h2>
+
+    <p class="item-summary">G마켓 AI·데이터 전환이 DS 인재 성장 기회</p>
+
+    
+    <div class="tags">
+      <span class="tag">G마켓</span><span class="tag">알리바바그룹</span><span class="tag">AI</span><span class="tag">STARS 모델</span><span class="tag">Incrementality</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://trendlite.stibee.com/p/476" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>G마켓은 고객 기반·로컬 이해·글로벌 AI 기술을 활용해 턴어라운드 전략을 추진한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>외부 인재들은 G마켓을 저평가 우량주로 보고 큰 임팩트를 만들 수 있는 기회라 판단한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>성공적인 전환을 위해 AI와 로컬 콘텍스트를 결합해 구매자 수·재방문을 지속적으로 늘려야 한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Incrementality 테스트 프레임워크를 도입해 신규 기능·프로모션의 순증분 효과를 정량화한다.</div>
+    
+    <div class="idea">💡 Alibaba 기반 AI 추천 엔진을 한국 시장에 맞게 로컬 데이터로 재학습·튜닝하여 전환율 향상에 적용한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 최창석 리더가 G마켓 상황을 평가할 때 사용한 프레임워크는?</div>
+      
+      <div class="quiz-opt">A) STARS 모델</div>
+      
+      <div class="quiz-opt">B) SWOT 분석</div>
+      
+      <div class="quiz-opt">C) PESTLE</div>
+      
+      <div class="quiz-opt">D) Porter's Five Forces</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) STARS 모델</div>
+          <div class="quiz-explanation">본문에서 최창석 리더는 STARS 모델을 언급하며 G마켓을 '턴어라운드' 상황으로 평가했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. G마켓이 현재 집중하고 있는 전략 카테고리는?</div>
+      
+      <div class="quiz-opt">A) 뷰티</div>
+      
+      <div class="quiz-opt">B) 패션</div>
+      
+      <div class="quiz-opt">C) 가전</div>
+      
+      <div class="quiz-opt">D) 식품</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 뷰티</div>
+          <div class="quiz-explanation">전략의 핵심은 쿠팡·네이버와 정면 승부하기보다 뷰티 같은 승산 있는 카테고리부터 공략하는 것이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
