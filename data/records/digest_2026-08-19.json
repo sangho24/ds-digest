@@ -1,0 +1,392 @@
+{
+  "date": "2026-08-19",
+  "generated_at": "2026-08-19T22:40:13.813985",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "DeepSeek Just Made Closed AI Look Ridiculous",
+        "url": "https://youtu.be/kyYepbhe1g8",
+        "published_at": "2026-08-19T18:02:46",
+        "transcript": "Yes, DeepSeek 4 Pro is here. This time, the real one. I know, it gets confusing. The previous version was called preview, and this is called 0813. The numbers say it performs better than the much smaller flash version. When building a Rubik's cube, Flash did not completely understand the 3D structure of the object. Lots of missing parts, lots of blackness. But with the Pro, look, much better understanding of structure. Then, I was also surprised by this. Holy matter of papers. Look at that. It is inching closer and closer to Fable quality. Yep, another challenger appeared and it gets better. They give all this for us for free, which is absolutely incredible. Okay, but what does it mean for us? The weights are available for free for all of us, but, you know, few have the hardware to host it at home. I'd love to, but I don't have that kind of hardware. Other options include Lambda or using it hosted by DeepSeek themselves. But they just raised their prices dramatically. About two and a half to five X the previous prices. Now, I bet you can already imagine the clickbait headlines saying it's over. I think what they should also say is that DeepSeek has MIT licensed open weights. What does that mean? Well, anyone can run the exact same model at their own price. And look, they do. A bunch of hosts available, and they all compete on price. That is amazing for us, and it is very likely to push the Frontier Labs to give us fellow scholars something even better and quickly. And all this improvement comes from the same architecture. But how is that even possible? The model structure is the same, yet it is massively better than the preview was less than four months ago. So, how? Dear fellow scholars, this is Two-Minute Papers with Dr. Károly Zsolnai-Fehér. Once again, a lot of the magic happens after pre-training. During post-training, DeepSeek creates several specialist models for mathematics, coding, and agentic work. Now, we have to stop here for a moment. People confuse these with the experts in Mixture of Experts. That's not quite the same. Those are little pieces within one neural network. These are not. These are separately trained model checkpoints. Okay, so what then? Then comes distillation. Yeah. They take more than 10 of these specialist teachers and train one final model to absorb their abilities. So, the student model says, this is what I would do, then the teacher says, well, this is what I would have done. Then the student adapts its brain to be more like its teacher. Do it with 10 teachers and you see that the student indeed improves like crazy. They also added DSpark to it. Instead of just predicting one token at a time, it drafts several tokens ahead. It does it much better than previous techniques, and hold on to your papers, fellow scholars, because DeepSeek reports up to 78% faster generation for V4 Pro. Real measurable speedup in real use that you get right now and benefit from it. And here is something absolutely insane. This was a research paper, let's see, six weeks ago, and now everyone is using it. Let me say again, a research paper only six weeks ago. One of the best papers of the year, and it is coming alive right in our hands for free. Incredible. Full breakdown video in the description. And don't forget, we own and can run the weights. No one downgrades us to a different model if we type the wrong keyword. No games. That is incredible. Even if I can't run it at home, which I would love to do. But there are options. What a time to be alive. This is open science and open research at its best, and it's important that we talk about it. Why? Because the future belongs to those who understand it. Use DeepSeek and use DSpark. Take advantage of them. Oh, and I plan to talk about DeepSeek's incredible no-agent harness as well. Novel design, really powerful. If you are interested, consider subscribing and hitting the bell. I use Lambda to reproduce AI research papers, often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text to image or video, easy-peasy. Running a DeepSeek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover, and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\nDeepSeek V4 Pro 0813:\nhttps://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813\n\nDSpark full episode: https://www.youtube.com/watch?v=1yBU41auQhw\n\nSources:\nhttps://x.com/cline/status/2087602193205694891\nhttps://x.com/TypingMindApp/status/2088214938754167263\nhttps://x.com/stevibe/status/2047546592530747561\nhttps://x.com/voidfreud/status/2087701887327887543\nhttps://x.com/exploraX_/status/2079197387860435360\nhttps://x.com/AiHubMix/status/2087869896483057758\nhttps://x.com/BruceBlue/status/2087833177155117304\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "오픈 가중치 DeepSeek 4 Pro로 고성능 LLM 저비용 활용",
+        "tags": [
+          "DeepSeek",
+          "Flash",
+          "DSpark",
+          "Lambda",
+          "Mixture of Experts"
+        ],
+        "key_points": [
+          {
+            "point": "DeepSeek 4 Pro는 사후 학습에서 수학·코딩·에이전트 전용 전문가 모델을 만들고 10여 개 교사 모델을 증류해 성능을 크게 향상시킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "DSpark 토큰 초안 기법으로 기존 대비 최대 78% 빠른 텍스트 생성이 가능하다.",
+            "timestamp": null
+          },
+          {
+            "point": "모델 가중치는 MIT 라이선스로 공개돼 자유롭게 사용·호스팅 가능하지만, Lambda 등 외부 서비스 비용이 상승했다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Lambda 혹은 DeepSeek 자체 호스팅 서비스를 이용해 DeepSeek 4 Pro를 사내 검색·요약 시스템에 바로 적용한다.",
+          "기존 추론 파이프라인에 DSpark 토큰 초안 방식을 도입해 응답 latency를 70% 이상 감소시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "DeepSeek 4 Pro가 텍스트 생성 속도를 크게 높인 기술은 무엇인가?",
+            "options": [
+              "Beam search",
+              "DSpark 토큰 초안",
+              "Reinforcement Learning from Human Feedback",
+              "Retrieval‑augmented Generation"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 DSpark을 도입해 기존 대비 최대 78% 빠른 생성이 가능하다고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "토스는 어떻게 광고 속에 게임을 넣었을까",
+        "url": "https://toss.tech/article/games-in-ads",
+        "published_at": "2026-08-18T01:00:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3baa360d-33e3-8094-9bd3-d7784b8187a1\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, 토스에서 광고 SDK와 게임 광고 서비스를 개발하는 Frontend Developer 정윤호입니다.</span></span></span></p><h2 class=\"css-1c1qox8\" id=\"3baa360d-33e3-80bd-86fc-da7b00e4abec\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">토스 지면에 게임 광고가 적었던 이유</span></span></span></h2><p class=\"css-14on8x8\" id=\"3baa360d-33e3-80a1-b43e-e836ce216084\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스 지면(앱 안에서 광고가 노출되는 자리)에는 게임 광고 집행이 유독 적었습니다. 원인은 소재 유형이었어요. 게임 회사의 사용자 확보(UA, User Acquisition) 마케팅에서, 앱을 설치하기 전에 광고 안에서 게임을 직접 해 보는 플레이어블 광고(Playable Ads)가 주목받는 광고 유형인데, 토스 지면이 이 유형을 받지 못했어요.</span></span></span></p><figure class=\"css-of5acw\" id=\"3baa360d-33e3-8073-b10b-cf6325ba624b\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/e1963c2a-7f6c-449e-941f-fd59797eb8b4/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3baa360d-33e3-8035-af05-ee58f139fc36\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">광고에 실려 나가는 콘텐츠를 업계에서는 소재(크리에이티브)라고 불러요. 광고 플랫폼 </span><a class=\"css-iynyr0\" href=\"https://www.moloco.com/blog/ad-formats-gaming-playable-video-end-cards\" rel=\"noreferrer noopener\" target=\"_blank\">Moloco는 자사 상위 미국 게임 광고주 사례에서</a><span class=\"css-1kxrhf3\"> 플레이어블 소재가 노출 천 회당 설치 수(IPM, Installs Per Mille)를 49%, 광고비 대비 수익(ROAS, Return On Ad Spend)을 25% 끌어올렸다고 소개해요. 게임 광고주는 성과로 매체를 선택하니, 이 소재 유형을 받지 못하는 지면에 예산을 배정할 이유가 약했던 거예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3baa360d-33e3-80e9-9332-e8b147f8eb68\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 문제를 다시 정의했습니다. &quot;게임 광고 영업이 안 됐다&quot;가 아니라 </span><span class=\"css-q3ktjb\">&quot;게임 광고주가 쓰는 소재 유형을 우리 지면이 받지 못했다&quot;</span><span class=\"css-1kxrhf3\">는 것으로요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3baa360d-33e3-80ec-8a91-fa3cabc59a3c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">보통의 앱은 광고 네트워크의 상용 SDK(Software Development Kit)를 붙여 플레이어블 지원을 통째로 얻어요. 토스는 광고 시스템을 서버부터 직접 만들어 왔기 때문에 그 위에 서드파티 SDK를 얹으면 통합도 통제도 어긋나요. 광고를 선택하는 시스템을 직접 만든 이상, 화면에 띄우는 쪽도 직접 만드는 게 좋은 방향이라고 판단했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3baa360d-33e3-801d-a804-e1cfe13c07a5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그렇게 플레이어블 광고를 직접 구현한 여정을 소개할게요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3bba360d-33e3-8011-81ef-ef569546d657\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3baa360d-33e3-8060-8c15-d904b7b9aa60\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">플레이어블 광고의 구조</span></span></span></h2><p class=\"css-14on8x8\" id=\"3baa360d-33e3-80a6-90b9-cd7499fe14f3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">우선 플레이어블 광고가 어떻게 돌아가는지부터 볼게요. 플레이어블 광고 한 편이 화면에 뜨기까지의 흐름은 이렇습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3baa360d-33e3-8041-a107-e99fb9c046bf\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/cd9028d0-b768-4b86-af67-3d7da1e4d446/image.png\" /></figure><aside class=\"css-nv7vyi\" id=\"3bba360d-33e3-8055-9cf3-e525f5efef59\"><div class=\"css-1vn47db\"><ol class=\"css-hokoge\"><li class=\"css-1hwiibq\" id=\"3baa360d-33e3-8028-82fb-fb8370ae55d4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">광고주가 광고 소재를 등록해요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3baa360d-33e3-8033-a039-e80e8dc6a5e9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">유저가 토스 앱을 쓰다가 광고 지면을 만나요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3baa360d-33e3-80f4-b2a6-d33a4a7f6b25\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">지면이 광고 서버에 광고를 요청해요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3baa360d-33e3-801f-a021-ff7f59dc1623\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">서버가 광고를 골라, 소재와 함께 브릿지 JS의 주소를 응답에 실어 보내요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3baa360d-33e3-8065-bc5a-f3d2fd24959c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">네이티브 앱이 웹뷰(WebView)를 만들고, 브릿지 JS를 소재보다 먼저 주입한 뒤 광고를 띄워요.</span></span></span></li></ol></div></aside><p class=\"css-14on8x8\" id=\"3baa360d-33e3-803b-b169-e4d58742271d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">소재는 HTML 파일 하나에 게임 한 판이 통째로 담긴 형태이고, 등록 시점에 단일 HTML, 5MB 제한을 검사받아요. 광고를 화면에 붙이고 떼는 권한, 클릭과 노출을 기록하는 권한은 네이티브 앱에 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3baa360d-33e3-80fe-8525-e7eaad357ded\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">브릿지 JS(JavaScript)는 광고 소재와 네이티브 앱 사이의 통신을 맡아요. 둘은 서로를 모르는 코드라 직접 대화할 방법이 없어요. 소재가 호출할 API(Application Programming Interface)를 제공하고, 광고의 상태를 들고, 메시지를 양방향으로 나르는 게 브릿",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "광고 SDK 직접 구현으로 게임 광고 효율 향상",
+        "tags": [
+          "Toss",
+          "Moloco",
+          "Playable Ads",
+          "SDK",
+          "IPM"
+        ],
+        "key_points": [
+          {
+            "point": "기존 광고 SDK 부재로 플레이어블 광고가 안돼 게임 광고가 적었다",
+            "timestamp": null
+          },
+          {
+            "point": "토스는 자체 광고 서버와 SDK를 구축해 플레이어블 광고를 구현했다",
+            "timestamp": null
+          },
+          {
+            "point": "Moloco 사례에 따르면 플레이어블 소재는 IPM 49%·ROAS 25% 상승 효과가 있다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "자사 광고 플랫폼에 플레이어블 지원을 위해 자체 SDK 개발을 검토한다",
+          "Moloco 자료를 활용해 플레이어블 소재 도입 시 IPM·ROAS 상승을 예측하는 모델을 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "Moloco가 보고한 플레이어블 소재의 효과는?",
+            "options": [
+              "IPM 49% 상승·ROAS 25% 상승",
+              "IPM 25% 상승·ROAS 49% 상승",
+              "IPM 10% 상승·ROAS 5% 상승",
+              "효과 없음"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 Moloco는 플레이어블 소재가 IPM을 49%, ROAS를 25% 끌어올렸다고 소개한다."
+          },
+          {
+            "question": "토스가 플레이어블 광고를 직접 구현한 주요 이유는?",
+            "options": [
+              "서드파티 SDK와 통합·통제 문제",
+              "비용 절감",
+              "사용자 피드백 요구",
+              "법적 요구"
+            ],
+            "answer_index": 0,
+            "explanation": "토스는 자체 광고 시스템을 직접 만들었기 때문에 서드파티 SDK를 얹으면 통합·통제가 어긋난다고 판단했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "How we knew COVID was over (and what our models had to unlearn)",
+        "url": "https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4",
+        "published_at": "2026-08-19T17:01:03",
+        "transcript": null,
+        "body": "<h4><em>When we retrain, when we rebuild, and when we leave a model alone.</em></h4><figure><img alt=\"A wooden trail signpost against a bright blue sky with clouds, displaying multiple Italian hiking directional signs marked with trail number 708 and 701, listing destinations such as Sentiero 708B, Case Zampini, Rifugio di Monte Scavo, Rifugio Galvarina, and Rifugio Poggio La Caccia, each with distances in kilometers.\" src=\"https://cdn-images-1.medium.com/max/1024/1*44L4h0-81kbAtkKGNa9Lgg.jpeg\" /></figure><p><strong>By:</strong> <a href=\"https://harrisonekatz.com/\">Harrison Katz</a></p><h3>A forecast that carries weight</h3><p>The Forecasting Data Science team at Airbnb produces many of the forecasts the rest of the company plans around: demand, bookings, cancellations, and a range of finer cuts by market and segment, refreshed continuously across thousands of markets. The targets differ, and the models differ, but they have one thing in common: Other teams build on top of them.</p><p>This means a forecast that is casually wrong is not a clean miss, as it might be in an academic setting. That’s because a small bias does not stay small once a lot of decisions are riding on it. So when one of those forecasts starts to drift, what to do about it is not really a methods question. It is a risk question, and an easy one to get wrong, which we have from time to time.</p><p>One of these forecasts had been missing, compared to what actually happened after the forecast was released, in the same direction for a couple of quarters. This bias persisted after several routine refreshes. The usual solution would be to fully retrain the model: pull in the recent data, refit the model again, and ship. But we wanted to understand the source of the bias, rather than simply hoping an update would eliminate it.</p><p>If you’re interested in other posts on this topic, you can learn more about <a href=\"https://medium.com/airbnb-engineering/what-covid-did-to-our-forecasting-models-and-what-we-built-to-handle-the-next-shock-ccbf0e1f7fa9\">how COVID impacted Airbnb’s financial models </a>or <a href=\"https://medium.com/airbnb-engineering/when-history-fails-you-borrow-from-geography-915a72b91b5c\">how we dealt with disruption to our models during the pandemic</a>. This post is about the discipline that came out of both: how we now decide whether a struggling forecast needs new data, a new model, or no changes at all.</p><h3>One word, three decisions</h3><p>The easy mistake is treating the choice to “retrain” a model as a single action. It is three separate actions — refitting, respecifying, or holding — and none of them is particularly similar to the others.</p><p>Refitting is the cheaper option. Same model, same structure, same features, updated with newer data. This is what most people mean by “retrain.” For the ordinary drift that builds up in a model as the world moves on, it’s usually the right choice.</p><p>Saying that this is the cheaper option is not the same as saying that it’s cheap. A refit still has to be validated and shipped. The refitting process can degrade a model that was actually fine if the recent data happens to be unusual. And, given the importance of the production forecast, every refresh is a small risk you are choosing to take. It is the least expensive of the three options, but not a free one. None of this is an argument against refitting. On most cycles it is the right move, and if we had to run one of the three blind, it would be this one. The claim is narrower. A refit is a decision with a price, and pricing it is what lets you notice the cycles where a different option was worth more.</p><p>Respecifying is a different animal. You change the model itself: add a feature, drop one, change the structure, the priors, the likelihood. On the production forecast, which so many of our teams plan around, this is a real commitment; you are replacing something you understand, and have watched the behavior of for years, with something partly new that you have not. It is also where almost all the actual improvement lives. Refitting keeps a good model current. Respecifying is how a model that is in some way wrong in its operations is made right.</p><p>Holding is the one nobody likes. You look at the miss, decide it does not warrant action, and leave the model alone. This takes the most nerve, because to anyone watching the forecast it looks like you are ignoring a problem. On a forecast that people are relying on, “We decided to do nothing” is a hard sentence to say out loud. It is also, more often than you would think, the correct call.</p><p>What we have learned from years of running these models is that the trouble comes from filing all three under one verb. “We should retrain” gets said when any of the three is the actual answer, and the word drags everyone toward the one that feels cheapest, because it is the one with a name.</p><p>Most of the time, though, nobody says it at all. Retraining is rarely a decision someon",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "예측 편향 관리와 재학습 선택 기준을 제시",
+        "tags": [
+          "Airbnb",
+          "COVID-19",
+          "forecasting",
+          "refit",
+          "respecify"
+        ],
+        "key_points": [
+          {
+            "point": "예측 편향이 지속되면 단순 재학습보다 원인 파악이 필요함",
+            "timestamp": null
+          },
+          {
+            "point": "재학습 선택은 재적합, 재설계, 유지 세 옵션으로 구분하고 비용·위험을 평가해야 함",
+            "timestamp": null
+          },
+          {
+            "point": "재적합은 가장 저렴하지만 데이터 변동성에 따라 모델이 악화될 위험이 있다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "편향 모니터링 지표와 비용-위험 모델을 도입해 재적합·재설계·유지 중 최적 선택을 자동화한다",
+          "예측 드리프트 발생 시 기존 모델 구조를 유지하면서 최신 데이터만으로 빠르게 재적합하는 파이프라인을 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "재학습 옵션 중 가장 비용이 낮은 것은?",
+            "options": [
+              "재적합",
+              "재설계",
+              "유지"
+            ],
+            "answer_index": 0,
+            "explanation": "재적합은 같은 모델 구조에 최신 데이터만 적용하므로 가장 저렴한 옵션이다"
+          },
+          {
+            "question": "본문에서 언급된 지속적인 편향의 원인은?",
+            "options": [
+              "데이터 누수",
+              "예측 편향 드리프트",
+              "과적합",
+              "하이퍼파라미터 오류"
+            ],
+            "answer_index": 1,
+            "explanation": "예측이 실제와 지속적으로 다른 방향으로 편향되어 몇 분기 동안 유지된 것이 문제였다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Extensible Software in the age of LLMs",
+        "url": "https://jeremymorrell.dev/blog/extensible-software-in-the-age-of-llms/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Most of the web software we interact with today is static. The developers have a limited amount of time and attention, and focus on building the features that serve the largest group of users. The top of the demand curve is well-served by existing software, but there is a long-tail of unmet needs that’s different for every user.\n\n[![Chart: long-tail distribution of mapping user needs, from common navigation questions to niche historical queries](/_astro/google-maps-long-tail-diagram.CetMzOur_qQTPR.webp)](https://x.com/tophtucker/status/1280992756278714373)\n\nUser needs in mapping software\n\n[Even if the developers were incredibly motivated to shove in every feature, user interfaces can only become so complex before they become unusable.](https://newsletter.getprimitive.ai/p/when-to-design-for-emergence) Every additional feature added complicates the product for every other user. If the market for that feature is small, it can actively make the product worse for every user who doesn’t need it.\n\nWith this context the rise of LLM-assisted coding has been genuinely empowering for anyone who needed something that fell into this long tail.\n\n## Software has gotten all… squishy[#](#software-has-gotten-all-squishy)\n\nIt’s become readily apparent that LLMs are really quite excellent at building [Software for One](https://www.ajwaxman.com/writing/software-for-one). Personal apps that side-step all of the complexity and accountability of enterprise software and are custom fit for a single person’s workflow.\n\n[Pete Koomen](https://koomen.dev/) at Y Combinator thinks there is an opportunity for what they are calling [Small Software](https://x.com/ycombinator/status/2079963726435021232). I think they are onto something.\n\n[![](/_astro/ycombinator.BPg4c2n2_2l0Pvd.webp)](https://x.com/ycombinator)\n\n[Y Combinator](https://x.com/ycombinator)[@ycombinator](https://x.com/ycombinator)\n\n> Agents make it easy to build personal tools for yourself or your team. But deploying, securing, and sharing that software is still far more complicated than creating it.\n> A cloud built for small software could remove that complexity and make bespoke tools as easy to share with a colleague as a Google Doc.\n\n[July 22, 2026](https://x.com/ycombinator/status/2079963726435021232)\n\n[Pi](https://pi.dev/) is a good example of what I’m starting to think of as **LLM-native software**: a battle-tested core, but almost endlessly extensible just by asking, where users are able to share their customizations with others. **In the past year your users have suddenly acquired the ability to speak code into existence.** Most existing software can’t leverage this. Pi leans into it.\n\n![Meme. User says Add my custom feature. Computer. Adds feature. User says nice](/_astro/omg-meme.BWsZ7Ny8_Z23oxdQ.webp)\n\nI suspect we’re going to start seeing more software following this self-extension pattern. However most of our existing examples of pluggable software are local software: AI agents, developer IDEs, mods for video games, Blender add-ons, CAD extensions. These tend to be professional tools with a high barrier to entry.\n\n**The web is the most successful software distribution system in the world.** It shouldn’t be left behind.\n\nMy hypothesis is that **there is a new opportunity for Extensible Software on the web**. LLMs radically lower the cost of authoring extensions, and modern sandbox primitives lower the deployment cost and provide good security boundaries. We can build our app as a solid, accountable core, and allow users to safely extend it in many directions by having LLMs fill in the missing pieces. **We can give our users super powers.**\n\nDisclosure: I currently work at Cloudflare, where high levels of exposure to [Kenton Varda](https://x.com/kentonvarda)’s writing have shaped much of my thinking here. Near the end, I’ll make the case that [Dynamic Workers](https://developers.cloudflare.com/dynamic-workers/) are a particularly good fit for this model, but I’ll cover several alternatives first.\n\n## What would this look like?[#](#what-would-this-look-like)\n\nA lot of web systems today rely on webhooks to allow the user to react to changes in the app. This ~kind of works, but it sets a really high bar for extension: building and operating a completely separate service plus dealing with whatever delivery issues arise.\n\nI want to be able to hook into record updates and slide in my own logic. “When I attach this tag to a record, run my function”. “Do this action for me on a daily cron”.\n\nActually, I don’t want to have to think about that at all. I want to tell my read-it-later app:\n\n- Please send every article I fave longer than 4000 words to my `<ereader of choice>`\n- Look for new papers published on arxiv in `<my specialty>` each week, add your own summary of how it relates to my work at the top, and tag it with `<tag>`\n- The default algorithm completely garbles `<site I read frequently>`. Pull a few examples and make a custom parser for it.\n\nAnd then a robot will extru",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "LLM으로 웹 앱을 확장해 데이터 작업 효율↑",
+        "tags": [
+          "LLM",
+          "Pi",
+          "Dynamic Workers",
+          "Cloudflare",
+          "Y Combinator"
+        ],
+        "key_points": [
+          {
+            "point": "LLM은 개인 맞춤형 ‘Software for One’을 손쉽게 만들 수 있게 해준다",
+            "timestamp": null
+          },
+          {
+            "point": "‘Small Software’와 같은 개념이 웹 기반 확장성을 위한 새로운 기회를 제공한다",
+            "timestamp": null
+          },
+          {
+            "point": "Cloudflare Dynamic Workers 등 서버리스 환경이 안전하고 저비용으로 확장 기능을 배포할 수 있게 한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Cloudflare Dynamic Workers를 활용해 사용자 정의 플러그인 실행 환경을 구축한다",
+          "Pi와 같은 LLM‑native 플랫폼을 이용해 데이터 분석 파이프라인을 LLM에게 코드 생성·실행을 맡겨 자동화한다"
+        ],
+        "quiz": [
+          {
+            "question": "‘Small Software’를 언급한 조직은 어디인가?",
+            "options": [
+              "Y Combinator",
+              "Google",
+              "Microsoft",
+              "OpenAI"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Pete Koomen이 Y Combinator에서 ‘Small Software’ 개념을 제시했다고 언급한다."
+          },
+          {
+            "question": "LLM‑native 소프트웨어의 예시로 언급된 서비스는?",
+            "options": [
+              "Pi",
+              "GitHub Copilot",
+              "ChatGPT",
+              "Bard"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Pi가 LLM‑native 소프트웨어의 예시로 소개된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "ai-ml"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "AI를 계속 공부해야 할까?",
+        "url": "https://deepdaiv.stibee.com/p/159",
+        "published_at": "2026-08-18T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/NAzM)\n\n#157 위클리 딥 다이브 | 2026년 8월 19일 에디터 배니\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- AI 시대에 에디터들이 AI를 공부하는 이유를 알려드립니다.\n- 앞으로 주목 받는 연구 분야, 변화할 사회 현상에 대한 생각을 공유합니다.\n- 3주년 기념 독자 후기를 소개합니다.\n\nAI를 계속 공부해야 할까?\n\n지난주, 3주년을 맞이하여 <Weekly deep daiv.> 독자들은 뉴스레터를 어떻게 읽고 있는지 물어봤는데요. 별다른 이벤트를 진행한 것도 아닌데 생각보다 더 많은 분들이 관심을 가져주셨습니다! 혹시라도 좋은 코멘트를 남겨주실 분들은 아직 늦지 않았습니다. 글 하나하나에 감동 받으며 나눠 보고 있으니, 계속해서 다양한 의견 남겨주시면 감사하겠습니다. 독자분들이 남겨주신 코멘트는 마지막에 소개하도록 하겠습니다.  [3주년 기념 독자 후기를 작성해주세요!](https://forms.gle/TiTKfzeRwTNzPj6TA)\n\n<Weekly deep daiv.>를 발행하면서, 이 콘텐츠가 가진 의미가 무엇인지 궁금했습니다. 불과 3-4년 전까지만 해도 분명히 AI 기술은 소수의 사람들만 관심을 가지고 연구하던 분야였는데, 지금은 AI 정보가 넘쳐나고 누구나 AI 툴을 사용하는 시대가 됐습니다. 깊이를 다룬다던 저희의 콘텐츠보다도 더 깊은 콘텐츠도 많아졌고, 더 재미있는 콘텐츠도 많은 게 사실입니다. 처음에는 AI를 모르는 사람들이 많으니 AI 기술에 관한 흥미로운 사실을 알려주자는 마음이었는데 이제는 그렇지 않으니 콘텐츠를 지속해야 할 이유를 잃어버린 것이죠.    저희도 글을 쓰면서 많이 공부합니다. 뉴스레터를 작성해야 한다는 약간의 강제성이 계속 공부하게 만드는 원동력이 되고, 또 공부하면서 알게 된 새로운 내용을 토대로 콘텐츠를 쓰게 돼요. 한 번은 다른 에디터들에게 맡기고 AI 공부를 놓은 적이 있는데, 그럴 때 한세월 뒤처져 있다는 생각이 들고는 했습니다.    신규 에디터가 들어올 때마다 어떤 독자를 상정하고 글을 쓰냐고 묻는데요. 그보다는 본인이 쓰고 싶은 글을 작성하라고 말합니다. 윤문하는 일은 다른 에디터들에게 맡기고, 우선 본인이 쓰고 싶은 글을 쓰는 게 가장 중요하다고 생각합니다. 결국, 그 진솔한 생각들은 통할 거라고 생각하고요. 아무래도 뉴스레터를 계속 써 나가는 이유는 공부하는 것을 나누는 데서 오는 즐거움인 듯합니다. ‘배워서 남주자’는 표어는 초창기부터 중요하게 생각한 deep daiv.의 철학이기도 하고요.    그런데 말입니다. AI를 왜 계속 공부해야 하는지는 여전히 의문입니다. 글을 쓰면서 공부도 하고, 보람을 느끼니 매주 뉴스레터를 써온 것은 이해가 되는데, AI 툴만 제대로 익혀도 어렵지 않게 살아 남을 수 있을 이 세상에서 왜 AI를 공부해야 할까요?    <Weekly deep daiv.> 에디터들은 모두 대학원에서 AI를 공부하거나, AI 기업에서 일하고 있습니다. 급변하는 AI 시대에, 에디터들은 어떤 생각을 가지고 있는지 물어봤는데요. 이번주 뉴스레터는 정답이 없는 열린 질문들에 각자의 생각으로 답해보고자 합니다.\n\nQ. AI를 공부해야 하는 이유\n\n저는 사회문제를 해결하고 사람들에게 도움이 되는 일을 하고 싶다는 생각에서 데이터사이언스 전공을 택하게 되었고, 그 과정에서 AI를 공부하게 되었습니다. 그러면서 자연스럽게 기술 자체뿐 아니라, 그 기술이 사람들의 삶 속에서 어떻게 쓰이는지에도 관심을 갖게 되었습니다. 지금은 이러한 관심을 바탕으로 기술과 사람의 상호작용을 설계하는 HCI를 연구하고 있습니다.    개인적으로 저는 앞으로 더 많은 사람들이 AI를 공부하면 좋겠다고 생각해요. 물론 모든 사람이 AI 전문가가 될 필요는 없지만, 앞으로 우리의 일상에 더 깊이 자리 잡을 기술인 만큼 기술을 만드는 사람들뿐 아니라 AI와 함께 살아갈 우리도 이 기술에 대해 알고 생각하는 것이 중요하다고 생각합니다. 결국 AI를 직접 사용하고 그 변화의 영향을 받는 것도 우리이기 때문이죠.    AI가 무엇을 할 수 있고 어디에 한계가 있는지 이해하고 이를 활용하는 것은 앞으로 점점 기본적인 소양에 가까워질 것 같습니다. 하지만 AI를 조금 더 깊이 이해한다면, 단순히 주어진 기술을 사용하는 것을 넘어 이 기술이 우리에게 어떤 모습이었으면 하는지도 생각해볼 수 있다고 생각합니다. 같은 기술이라도 사람마다 사용하는 방식이나 놓인 상황이 다르고, 그에 따라 미치는 영향도 달라질 수 있습니다.    마침 오늘 AI ‘외로움’을 주제로 한 컨퍼런스에 다녀왔는데요. AI에게 고민을 이야기하는 것만 해도 누군가는 공감과 위로를 받을 수 있지만, 반대로 AI에 지나치게 의존하게 될 가능성이 있죠. 더 많은 사람들이 각자의 관점에서 AI에 대해 생각하고 이야기하는 것 자체가 중요할 것 같아요.\n\n출처: KAIST YouTube 채널, [AI 시대 외로움 지표(AI-LOVI) 개발을 위한 글로벌 컨퍼런스](https://www.youtube.com/watch?v=rqlPkDK5VEw)    앞으로의 AI가 기술을 만드는 엔지니어들에게만 달려 있다고 생각하지 않습니다. AI를 사용하는 사람들이 이 기술을 어떻게 이해하고, 무엇을 기대하고, 어떤 것을 필요로 하는지도 결국 AI가 발전해가는 방향에 영향을 미칠 수 있다고 생각합니다.    그런 의미에서 앞으로의 AI는 우리 함께 만들어가는 것이 아닐까요? 더 많은 사람들이 AI를 알고 함께 고민할수록 그 생각들이 모여 결국 사람과 사회에 더 좋은 기술을 만들어가는 데에도 힘이 될 수 있다고 생각합니다. 그러니 저희 더 같이 공부해요!!! (ㅋㅋㅋ)  editor. 스더리\n\nQ. 요즘 뜨고 있는 AI 연구 분야\n\n요즘 AI for Science, 즉 과학을 위한 인공지능 분야를 중점적으로 공부하고 있습니다. ChatGPT가 처음 등장했을 무렵, 역사적 인물에 대해 황당한 답변을 내놓는 LLM의 모습은 인터넷에서 하나의 밈처럼 소비되곤 했습니다. (대표적으로 [‘세종대왕 맥북 던짐 사건’](https://www.hankookilbo.com/news/article/A2023022215200000727)이 있죠.)    그런데 불과 몇 년 사이 분위기는 크게 달라졌습니다. 이제 LLM은 방대한 지식을 활용해 코드를 작성하고, 복잡한 문제를 해결하며, 심지어 새로운 가설이나 알고리즘을 탐색하는 데까지 활용되고 있습니다. 지금까지 AI 연구가 더 좋은 모델 아키텍처를 만들고 더 높은 성능을 얻는 데 집중했다면, 이제는 AI 모델의 방대한 지식을 서로 연결하고 조합해, 사람이 일일이 검토하기 어려운 수많은 가설을 탐색하고 새로운 지식을 발견하는 방향으로 연구가 확장되고 있는 것입니다.    AI for Science 분야의 가장 큰 현실적 어려움 중 하나는 비용입니다. LLM을 활용하면 사람이 연구의 전 과정을 직접 수행하는 것보다 훨씬 빠르게 다양한 가설을 탐색할 수 있습니다. 그러나 과학적 ‘발견’에 이를 만큼 높은 수준의 추론 능력을 갖춘 모델을 사용하려면 대규모 모델이 필요하고, 충분한 탐색을 위해서는 이러한 모델을 반복적으로 실행해야 합니다. 이 과정에서 상당한 GPU 연산 비용이나 상용 모델의 API 비용이 발생하기 때문에, 현재로서는 일반 연구자들이 AI for Science를 충분히 활용하기에는 현실적인 진입 장벽이 존재합니다.    또 다른 어려움은 AI가 제안한 가설을 검증하는 과정입니다. LLM은 짧은 시간 안에 수많은 가설을 만들어낼 수 있지만, 이 중 어떤 것이 실제로 과학적으로 의미 있는지는 별개의 문제입니다. 특히 새로운 물질이나 약물, 알고리즘 등을 제안하는 경우에는 시뮬레이션이나 실제 실험을 통해 성능과 타당성을 확인해야 하는데, 이러한 검증 과정에는 여전히 많은 시간과 비용이 필요합니다. 결국 AI가 탐색 자체를 빠르게 만들더라도, 발견의 속도는 이를 검증할 수 있는 실험의 속도에 의해 제한될 수 있습니다.    이러한 비용 문제를 해결하기 위해, 최근에는 모든 가설에 시뮬레이션이나 대규모 모델을 적용하는 대신 이를 빠르게 근사할 수 있는 모델을 개발하거나, 가장 많은 정보를 얻을 수 있는 실험만 선택적으로 수행하는 연구가 이루어지고 있습니다. 또한 AI의 예측이 얼마나 신뢰할 수 있는지를 판단하기 위한 불확실성 추정이나, AI와 로봇 실험 장비를 연결해 실험 과정을 자동화하려는 시도도 이루어지고 있습니다.    AI for Science 연구 동향은 단순히 과학 데이터를 예측하거나 분석하는 것에서 그치지 않고, AI가 직접 가설을 만들고 실험을 설계하며 결과를 바탕으로 다음 탐색을 이어가는 ‘AI 과학자’ 방향으로 빠르게 확장하고 있습니다. 실제로 Lila Sciences나 Periodic Labs 등 다양한 AI 스타트업에서 AI 과학자를 개발하고 있기도 하고요.    앞으로 AI가 과학 연구의 여러 단계에서 인간과 더욱 긴밀하게 협업하게 될 것입니다. 저는 그 과정에서 어떤 오류나 위험이 발생할 수 있는지, 인간과 AI가 각각 어떤 역할을 맡아야 하는지, 그리고 어떻게 하면 서로의 강점을 활용해 더 효율적으로 새로운 지식을 발견할 수 있을지 공부해보고 있습니다!  editor. 영이\n\nQ. AI를 받아들일 우리 사회의 미래는?\n\n개인마다 체감하는 정도에는 차이가 있겠지만, AI는 이미 업무와 일상에서 어느 정도 보편적인 도구가 되어가고 있습니다. 앞으로는 더 다양한 직업에서 AI를 활용하게 될 것이고, 일상에서도 개인화된 AI 에이전트가 직접 도움을 줄 수 있는 범위가 점차 넓어질 것 같습니다.    개인적으로는 연구 목적으로 여러 MCP와 상용 모델을 연결해서 실험을 수행하기 위한 용도로 많이 사용하는 것 같아요. 간단한 작업을 요청하기보다, 여러 코드 파일들의 관계를 파악하고 적합한 코드를 짠 다음, 실험을 수행하고, 원하는 결과를 도표 / 그래프로 가공하는 일련의 과정을 한꺼번에 요청합니다.    이처럼 연구의 중축을 차지할 만큼 AI의 발전 속도가 전례 없이 빠른 편이고, 지금과 같은 속도로 발전한다면 마치 SF 영화에서 나올 법한 일들이 가까운 미래에 일어날 수도 있겠다는 생각이 들 정도입니다. 그만큼 AI가 가져올 미래에 대해서는 기대와 우려를 포함해 다양한 의견이 나오고 있죠.    인류가 오랫동안 쌓아온 문명 속에서 AI를 ‘도구’로서 적절히 활용하기 위해서는, 인간 사회에 조화롭게 녹아들 수 있도록 많은 노력이 필요할 것 같아요. 최근 유튜브에서 국가인공지능전략위원회에서 열린 ['Agentic AI 시대, 국가 AI 컴퓨팅 전략 세미나' 영상](https://www.youtube.com/watch?v=rqlPkDK5VEw)을 봤어요. 이 세미나에서는 '대한민국이 AI기술과 인프라에서 어떤 전략을 취해야 하는가?'와 관련된 내용을 논의했습니다.\n\n출처: 국가인공지능전략위원회 YouTube 채널, [('26.7.20) Agentic AI 시대, 국가 AI 컴퓨팅 전략 세미나](https://www.youtube.com/watch?v=DousGy2XRqs)    정부는 소버린 AI를 가장 우선시 하고 있는 것 같습니다. 관련하여 '대한민국은 파운데이션 모델, GPU 데이터센터까지 풀스택을 노려야 할지, 혹은 이길 수 있는 지점 (메모리, 추론 최적화, 에이전틱 소프트웨어) 에 집중해야 할지'에 관한 질문이 있었는데요.    KAIST 이기민 교수와 삼성전자 이윤수 부사장은 풀스택 소버린 AI를 목표로 해야 한다고 말했습니다. 현재는 미국과 중국에서 공개한 오픈소스 모델을 많이 사용하고 있는데, 일부 Claude 모델 같은 경우에는 외국에서 사용할 수 없도록 조치한 경우가 있습니다. 이러한 일이 앞으로 더욱 빈번해질 수 있기에, AI 주권을 확보해야 한다는 것이죠.    기업이 생각했을 때, 미래에 AI 3강이 되기 위해서는 개별 기업이 수행하기 힘든 인재 육성과 같은 과제를 정부가 수행해주면 좋겠다는 의견이 있었습니다. 또한 기술 개발을 위해 허용 가능한 범위에 한하여 데이터와 같은 AI 규제가 완화되었으면 좋겠다고 희망 사항을 밝혔습니다. 연구기관과 기업, 정부가 조금 더 먼 미래를 바라보며 방향을 잘 설정하고, 그 과정과 논의가 우리 모두에게 충분히 공유되면 좋겠습니다.    개인적으로는 AI가 우리의 삶을 어느 날 갑자기 완전히 바꾸기보다는 점차 일상에 스며들 것이라고 생각합니다. 개인용 컴퓨터도 처음에는 낯선 기술이었지만 지금은 너무나 자연스러운 도구가 되었듯, AI와 AI 에이전트 역시 다양한 방면에서 생산성과 편의성을 높여주는 일상적인 도구로 자리 잡지 않을까 생각해요.  editor. 잭잭\n\n독자 후기를 소개합니다!\n\n안녕하세요, 백엔드 주니어급 개발자 버거입니다. AI를 직접 다루고 개발하고 있지 않지만, AI시스템 또는 모델 연계하는 플랫폼을 개발하고 있어 어렵지만 계속 AI를 접해보려고 노력하고 있는 개발자입니다.    정확히 언제부터 구독하게 되었는지 기억은 안 나지만, 약 1년 반 정도 된 것 같습니다. AI 관련해서 검색해보다가 우연히 deep daiv.의 글을 읽게 되었습니다. 저는 매주 이렇게 고품질의 내용을 무료로 구독해서 볼 수 있다는 것이 놀라웠습니다. 그래서 바로 구독을 하게 되었고 내용을 온전히 이해하지 못하더라도 꾸준히 보다보면 익숙해지겠지? 하면서 시작하게 되었습니다.    가장 인상깊었던 뉴스레터는, MOE, RAG, 온톨로지쪽이었습니다. 회사나 이론 공부하면서 접했던 부분들인데 전문적으로 이해하기 쉽게 잘 작성해주셔서 관련 내용이 나왔을 때 그렇구나~하면서 오늘도 지식+1했군! 하며 뿌듯했던게 기억나서 3가지를 뽑았습니다. 하지만 저 주제의 뉴스레터 외에도 환각, 소버린 AI, Loop엔지니어링 등 매주 매주가 사실 다 좋은 내용이었고, 흥미롭게 읽었습니다.    뉴스레터 읽으면서 LLM, AI의 내부가 어떻게 동작하고, 어떤 이론이 있고 하는 것들이 어디서부터 봐야하는지 부담되고 막연했었는데 개념을 따로 보면서 또 딥 다이브의 글을 읽다보면 어느 순간 머릿속 퍼즐이 맞춰졌었습니다. 그래서 AI라는 것에 부담을 덜고 볼 수 있다는 것이 가장 도움이 되었습니다.    제가 딥 다이브를 우연히 알게 되어 구독하게 된 게 참 감사한 일입니다. 개발자로 일을 하면서 백엔드 분야나 좁은 시야를 가지는 게 아닌가 하는 고민을 하고, 커리어적인 고민도 많이 했던 시기에 백엔드 개발 외적으로 다양한 IT관련 글들을 찾아보았습니다. 우연히 알게된 딥 다이브로 거리감을 가지고 있었던 AI에 대해 이렇게 좋은 글들을 매주 읽을 수 있어서 너무 좋았습니다. 매주 오는 딥 다이브의 글은 꼭 읽자 라는 저만의 약속도 가질 정도로요!    딥 다이브의 팬으로서 계속 딥 다이브가 있으면 좋겠습니다. 지금처럼 AI 동향, AI 내부의 이론들을 시리즈처럼 꾸준히 발행해주시면 감사드리겠습니다, 항상 좋은 글 감사드리며, 3년이 10년, 15년 쭉 더 이어질 수 있으면 좋겠습니다. ❣️ (팬심!!)  🍔 AI와 친해지고 싶은 햄버거 님\n\n저희가 처음 의도했던 목표가 '햄버거'님처럼 입문하기 어려운 분들을 위해 정보를 제공하는 것이었는데요. 후기를 보니, 저희가 목표했던 의도를 제대로 달성한 것 같습니다. 열정적인 마음에 진심으로 감사드립니다! 다양한 AI 개념을 접하실 수 있도록 꾸준히 글을 작성해나가겠습니다.  editor. 배니\n\n인천광역시에서 초등학교 교사를 하고 있는 코스키입니다. 코로나 즈음이었을까요? 인공지능에 관심이 생겨서 [딥-다이브 단권 매거진](https://tumblbug.com/deepdaiv) 때부터 함께 해왔습니다. 초창기 때 인공지능의 기본 개념부터 최근의 AI 관련 최신 인사이트까지 모두 접할 수 있게 도움을 주어서 감사합니다. 앞으로도 정보의 홍수 속에서 보석 같은 인공지능 관련 정보를 알려주시길 부탁드립니다. 3주년 축하드립니다.  🧑‍🏫 딥 다이브와 함께하며 불혹을 맞이한 코스키\n\n뉴스레터 이전부터 구독해주시다니요. 처음 매거진 <deep daiv.>를 발행한 지 4년이라는 시간이 지났는데 변함 없이 구독해주고 응원해주셔서 감사드립니다. 남몰래 계속 남겨주시는 응원, 계속 기억하고 있겠습니다.  editor. 배니\n\n99년부터 개발 쪽 일을 하고 있는 53세의 개발자입니다. 2018년에 AI쪽이 재미있어서 AI관련 교육을 받고 주로 비전쪽 연구원을 5년 정도 하다가 지금은 먹고 사는 문제 때문에 AI쪽이 아닌 분야에서 개발하고 있는데요. 여전히 AI 분야가 재미있고 끌려서 개인적으로 공부하고 있습니다. AI 분야가 대충 어떻게 돌아가고 있는지 알고 싶어서 몇 가지 뉴스레터를 받아보고 있습니다.    구독하게 된 경로는 오래돼서 정확히 기억은 안나는데 AI 연구원할 때 사내 블로그 글을 작성하기 위해서 이것저것 찾아보다가 딥 다이브 글을 읽게 되었고 상당히 정성이 많이 들어간 수준 높은 글인것 같아서 구독하게 된 것 같습니다. 최근에 발행된 [\"나는 더 이상 프롬프트하지 않는다\"](https://www.deepdaiv.com/newsletter/150) [\"조금씩 시키지 마세요, 저 헷갈려요\"](https://www.deepdaiv.com/newsletter/156)도 모두 인상 깊었습니다.    뉴스레터가 (크게 도움이 된다기보다는) 꾸준히 도움이 되는 것 같습니다. AI로 작성한것 같은 다른 뉴스레터에 비해 각 에디터의 수고와 정성이 보이는 품질의 글이 AI 분야가 돌아가는 현황에 대해서 잘 이해할 수 있게 작성해 주셔서 메일함에 남겨두고 해당 주제가 생각날 때마다 읽고 있습니다.    아무래도 뉴스레터 제목 자체가 ‘deep daiv’다 보니 한 주제에 대해서 깊게 파는 글을 쓰는 게 맞긴한데 가끔씩(월간, 격월, 반기?) 정도로 동향 같은 것을 넓고 얕게 소개해주는 글도 작성해 주시면 좋겠습니다. (예를 들어 코딩 하네스 동향 및 분석 같은...) 가끔씩 오프라인 발표, 세미나 같은 것도 해주시면 좋을 것 같아요.    양질의 글을 3년 동안이나 꾸준히 작성해 주셔서 감사드리고 그 노고에 박수를 보냅니다. 여러 어려움이 있으셨겠지만 3년 동안 이어오신 데 축하드리고 앞으로도 7년 더 해서 10주년도 축하했으면 좋겠습니다.  🦝 너굴매버릭\n\n대 AI 시대에도 손수 글을 쓰는 정성을 알아봐주시니 감사할 따름입니다. 말씀주신 것처럼 여력이 된다면 앞으로 AI 트렌드를 발행할 예정이고, 리포트나 세미나, 온/오프라인 교육도 새롭게 기획하고 있습니다. 계속해서 많은 관심 주시면 감사하겠습니다. (언젠가 있을) 10주년 행사 때 꼭 초대드리겠습니다!  editor. 배니\n\n회사에서 ‘토큰이 곧 가용 비용’이라는 관점으로, 무작정 토큰을 많이 쓰기보다 정해진 토큰 예산 안에서 잘 쓰는 방법을 정리하는 업무를 하고 있었습니다. 그중 하나가 ’추론 수준을 높인다고 모든 과업에서 항상 성능이 좋아지는 건 아니다’라는 내용이었고, 이걸 뒷받침할 근거를 찾고 있었습니다.    그러던 어느 아침, 딥 다이브 155회 [「Claude의 effort 수준을 항상 Max로 설정해두고 있었다면」](https://www.deepdaiv.com/newsletter/155)이 올라왔습니다. 읽다 보니 제가 이미 찾아둔 논문보다 훨씬 딱 맞는 연구가 소개되어 있더라고요. 원 논문까지 찾아 읽고 상사께 공유했고, 결국 그 내용을 바탕으로 기존 자료에 한 페이지를 더 만들었습니다.    논문 내용에 추가로, 실제로 같은 프롬프트와 같은 과업을 모델별·사고 수준별로 돌려보고, 사용량을 기준으로 토큰이 얼마나 달라지는지도 직접 비교해봤습니다. 덕분에 논문에서 본 내용을 실제 업무 환경에서도 확인해보고, 자료의 근거도 조금 더 탄탄하게 만들 수 있었습니다.    ‘근데 나는 왜 이 논문을 못 찾았지?’ 싶어서 제가 리서치한 방식을 되돌아보았습니다. 업무에서 쓰는 표현과 연구에서 쓰는 표현이 달랐고, 그 차이 때문에 검색에서 놓친 부분이 있었습니다. 이후에는 논문에서 실제로 쓰이는 키워드까지 넓혀서 찾아보며 보완할 수 있었습니다.    이렇게 딥 다이브를 통해 업무와 바로 연결되는 아이디어를 얻기도 하고, 제가 리서치하는 방식 자체를 다시 돌아보기도 하면서 여러 방식으로 영감을 받고 있습니다!  🥥 코코넛 펭귄\n\n마치 보고서에 한 장 기여한 것 같아 정말 뿌듯한 마음입니다. 단순히 지식을 쌓는 것뿐만이 아니라 직접적으로 도움이 되기도 한다는 게 신기합니다. 앞으로도 계속 도움이 되는 콘텐츠를 제공하겠습니다!  editor. 배니\n\n후기를 작성해주신 여러분, 모두 진심으로 감사드립니다. 팬심 가득한 코멘트에 큰 감동을 받았고, 직업, 나이를 불문하고 저희 콘텐츠가 도움이 된다는 데 크나 큰 보람을 느낍니다.    AI 시대에, AI를 다루지만 여전히 AI보다 사람의 글이 낫다고 믿습니다. 글을 두 층위로 나누어 보면, 표현된 활자와 기저에 놓인 사고 방식으로 구분됩니다. AI는 아주 일반적인 관점으로 활자를 늘어 놓습니다. 일반적인 정보 전달로는 사람보다 더 정확하고 빠를 수 있습니다.    하지만 사람의 글에는 그 사람만이 가진 고유한 취향이 있습니다. 종종 지인들의 블로그를 읽어보곤 하는데요, 그 사람이 블로그 게시판에 붙인 이름, 사진의 배치, 문장에 입힌 색까지도 한 사람의 특징이 잘 드러납니다. 누군가의 글을 읽는 재미는 그런 것 같습니다. 한 사람의 살아온 문명을 엿볼 수 있는 기회 같은 거죠. 한낱 돌멩이에도 이야기가 붙으면 전설로 내려오는 것처럼요.    앞으로도 저희만의 고유한 이야기로 오래도록 찾아오겠습니다. 구독해주셔서 감사합니다!\n\n✍️ 독자 피드백을 환영합니다!\n\n독자 여러분께서 후기를 나눌 수 있는 창구가 있었으면 좋겠다는 피드백을 남겨주셨는데요.  아래와 같이 후기를 나누고 있습니다. 리액션도 좋고, 응원 / 비판 / 의견까지 모든 피드백을 환영합니다.  많은 참여 부탁드리겠습니다!\n\n[에디터들에게 궁금한 것을 물어보세요!](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/NAzM \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/NAzM \"게시하기\")[웹에서 보기](https://stib.ee/NAzM \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "AI 지속 학습이 DS 현업의 경쟁력 핵심",
+        "tags": [
+          "Weekly deep daiv.",
+          "KAIST",
+          "AI for Science",
+          "LLM",
+          "ChatGPT"
+        ],
+        "key_points": [
+          {
+            "point": "AI를 지속적으로 공부해야 하는 이유는 기술 이해가 사회·인간과의 상호작용을 설계하는 데 필수이다.",
+            "timestamp": null
+          },
+          {
+            "point": "AI for Science 분야가 급부상하지만 고비용 GPU 연산·검증 비용이 진입 장벽이다.",
+            "timestamp": null
+          },
+          {
+            "point": "편집자들은 개인 호기심과 학습 공유를 원동력으로 삼아 콘텐츠 생산과 성장에 기여한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "LLM을 활용한 가설 생성 파이프라인을 도입할 때 GPU·API 비용을 사전 시뮬레이션하여 ROI를 평가한다.",
+          "팀 차원에서 AI‑LOVI(외로움 지표)와 유사한 정성·정량 지표를 만들고 AI 의존도와 만족도를 정기적으로 모니터링한다."
+        ],
+        "quiz": [
+          {
+            "question": "AI for Science 분야의 주요 진입 장벽은 무엇인가?",
+            "options": [
+              "데이터 부족",
+              "고비용 GPU 연산 및 검증 비용",
+              "인력 부족",
+              "법적 규제"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 AI for Science는 대규모 모델 실행 비용과 가설 검증에 드는 시간·비용이 큰 장벽이라고 언급한다."
+          },
+          {
+            "question": "뉴스레터 편집자들이 AI 학습을 지속하는 주요 동기는?",
+            "options": [
+              "급여 인상",
+              "강제성",
+              "공부를 나누는 즐거움",
+              "외부 압력"
+            ],
+            "answer_index": 2,
+            "explanation": "편집자는 공부를 나누는 즐거움이 지속적인 AI 학습의 원동력이라고 밝히고 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "career"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

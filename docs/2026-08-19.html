@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 19일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/kyYepbhe1g8" target="_blank">DeepSeek Just Made Closed AI Look Ridiculous</a>
+    </h2>
+
+    <p class="item-summary">오픈 가중치 DeepSeek 4 Pro로 고성능 LLM 저비용 활용</p>
+
+    
+    <div class="tags">
+      <span class="tag">DeepSeek</span><span class="tag">Flash</span><span class="tag">DSpark</span><span class="tag">Lambda</span><span class="tag">Mixture of Experts</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/kyYepbhe1g8" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DeepSeek 4 Pro는 사후 학습에서 수학·코딩·에이전트 전용 전문가 모델을 만들고 10여 개 교사 모델을 증류해 성능을 크게 향상시킨다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DSpark 토큰 초안 기법으로 기존 대비 최대 78% 빠른 텍스트 생성이 가능하다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 가중치는 MIT 라이선스로 공개돼 자유롭게 사용·호스팅 가능하지만, Lambda 등 외부 서비스 비용이 상승했다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Lambda 혹은 DeepSeek 자체 호스팅 서비스를 이용해 DeepSeek 4 Pro를 사내 검색·요약 시스템에 바로 적용한다.</div>
+    
+    <div class="idea">💡 기존 추론 파이프라인에 DSpark 토큰 초안 방식을 도입해 응답 latency를 70% 이상 감소시킨다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. DeepSeek 4 Pro가 텍스트 생성 속도를 크게 높인 기술은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) Beam search</div>
+      
+      <div class="quiz-opt">B) DSpark 토큰 초안</div>
+      
+      <div class="quiz-opt">C) Reinforcement Learning from Human Feedback</div>
+      
+      <div class="quiz-opt">D) Retrieval‑augmented Generation</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) DSpark 토큰 초안</div>
+          <div class="quiz-explanation">본문에 DSpark을 도입해 기존 대비 최대 78% 빠른 생성이 가능하다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/games-in-ads" target="_blank">토스는 어떻게 광고 속에 게임을 넣었을까</a>
+    </h2>
+
+    <p class="item-summary">광고 SDK 직접 구현으로 게임 광고 효율 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">Toss</span><span class="tag">Moloco</span><span class="tag">Playable Ads</span><span class="tag">SDK</span><span class="tag">IPM</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/games-in-ads" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기존 광고 SDK 부재로 플레이어블 광고가 안돼 게임 광고가 적었다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>토스는 자체 광고 서버와 SDK를 구축해 플레이어블 광고를 구현했다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Moloco 사례에 따르면 플레이어블 소재는 IPM 49%·ROAS 25% 상승 효과가 있다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 자사 광고 플랫폼에 플레이어블 지원을 위해 자체 SDK 개발을 검토한다</div>
+    
+    <div class="idea">💡 Moloco 자료를 활용해 플레이어블 소재 도입 시 IPM·ROAS 상승을 예측하는 모델을 구축한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Moloco가 보고한 플레이어블 소재의 효과는?</div>
+      
+      <div class="quiz-opt">A) IPM 49% 상승·ROAS 25% 상승</div>
+      
+      <div class="quiz-opt">B) IPM 25% 상승·ROAS 49% 상승</div>
+      
+      <div class="quiz-opt">C) IPM 10% 상승·ROAS 5% 상승</div>
+      
+      <div class="quiz-opt">D) 효과 없음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) IPM 49% 상승·ROAS 25% 상승</div>
+          <div class="quiz-explanation">본문에 Moloco는 플레이어블 소재가 IPM을 49%, ROAS를 25% 끌어올렸다고 소개한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 토스가 플레이어블 광고를 직접 구현한 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) 서드파티 SDK와 통합·통제 문제</div>
+      
+      <div class="quiz-opt">B) 비용 절감</div>
+      
+      <div class="quiz-opt">C) 사용자 피드백 요구</div>
+      
+      <div class="quiz-opt">D) 법적 요구</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 서드파티 SDK와 통합·통제 문제</div>
+          <div class="quiz-explanation">토스는 자체 광고 시스템을 직접 만들었기 때문에 서드파티 SDK를 얹으면 통합·통제가 어긋난다고 판단했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      The Airbnb Tech Blog - Medium · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4" target="_blank">How we knew COVID was over (and what our models had to unlearn)</a>
+    </h2>
+
+    <p class="item-summary">예측 편향 관리와 재학습 선택 기준을 제시</p>
+
+    
+    <div class="tags">
+      <span class="tag">Airbnb</span><span class="tag">COVID-19</span><span class="tag">forecasting</span><span class="tag">refit</span><span class="tag">respecify</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>예측 편향이 지속되면 단순 재학습보다 원인 파악이 필요함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>재학습 선택은 재적합, 재설계, 유지 세 옵션으로 구분하고 비용·위험을 평가해야 함</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>재적합은 가장 저렴하지만 데이터 변동성에 따라 모델이 악화될 위험이 있다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 편향 모니터링 지표와 비용-위험 모델을 도입해 재적합·재설계·유지 중 최적 선택을 자동화한다</div>
+    
+    <div class="idea">💡 예측 드리프트 발생 시 기존 모델 구조를 유지하면서 최신 데이터만으로 빠르게 재적합하는 파이프라인을 구축한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 재학습 옵션 중 가장 비용이 낮은 것은?</div>
+      
+      <div class="quiz-opt">A) 재적합</div>
+      
+      <div class="quiz-opt">B) 재설계</div>
+      
+      <div class="quiz-opt">C) 유지</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 재적합</div>
+          <div class="quiz-explanation">재적합은 같은 모델 구조에 최신 데이터만 적용하므로 가장 저렴한 옵션이다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 본문에서 언급된 지속적인 편향의 원인은?</div>
+      
+      <div class="quiz-opt">A) 데이터 누수</div>
+      
+      <div class="quiz-opt">B) 예측 편향 드리프트</div>
+      
+      <div class="quiz-opt">C) 과적합</div>
+      
+      <div class="quiz-opt">D) 하이퍼파라미터 오류</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 예측 편향 드리프트</div>
+          <div class="quiz-explanation">예측이 실제와 지속적으로 다른 방향으로 편향되어 몇 분기 동안 유지된 것이 문제였다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://jeremymorrell.dev/blog/extensible-software-in-the-age-of-llms/" target="_blank">Extensible Software in the age of LLMs</a>
+    </h2>
+
+    <p class="item-summary">LLM으로 웹 앱을 확장해 데이터 작업 효율↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">Pi</span><span class="tag">Dynamic Workers</span><span class="tag">Cloudflare</span><span class="tag">Y Combinator</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://jeremymorrell.dev/blog/extensible-software-in-the-age-of-llms/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM은 개인 맞춤형 ‘Software for One’을 손쉽게 만들 수 있게 해준다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>‘Small Software’와 같은 개념이 웹 기반 확장성을 위한 새로운 기회를 제공한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Cloudflare Dynamic Workers 등 서버리스 환경이 안전하고 저비용으로 확장 기능을 배포할 수 있게 한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Cloudflare Dynamic Workers를 활용해 사용자 정의 플러그인 실행 환경을 구축한다</div>
+    
+    <div class="idea">💡 Pi와 같은 LLM‑native 플랫폼을 이용해 데이터 분석 파이프라인을 LLM에게 코드 생성·실행을 맡겨 자동화한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. ‘Small Software’를 언급한 조직은 어디인가?</div>
+      
+      <div class="quiz-opt">A) Y Combinator</div>
+      
+      <div class="quiz-opt">B) Google</div>
+      
+      <div class="quiz-opt">C) Microsoft</div>
+      
+      <div class="quiz-opt">D) OpenAI</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Y Combinator</div>
+          <div class="quiz-explanation">본문에서 Pete Koomen이 Y Combinator에서 ‘Small Software’ 개념을 제시했다고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. LLM‑native 소프트웨어의 예시로 언급된 서비스는?</div>
+      
+      <div class="quiz-opt">A) Pi</div>
+      
+      <div class="quiz-opt">B) GitHub Copilot</div>
+      
+      <div class="quiz-opt">C) ChatGPT</div>
+      
+      <div class="quiz-opt">D) Bard</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Pi</div>
+          <div class="quiz-explanation">본문에서 Pi가 LLM‑native 소프트웨어의 예시로 소개된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Weekly deep daiv. · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deepdaiv.stibee.com/p/159" target="_blank">AI를 계속 공부해야 할까?</a>
+    </h2>
+
+    <p class="item-summary">AI 지속 학습이 DS 현업의 경쟁력 핵심</p>
+
+    
+    <div class="tags">
+      <span class="tag">Weekly deep daiv.</span><span class="tag">KAIST</span><span class="tag">AI for Science</span><span class="tag">LLM</span><span class="tag">ChatGPT</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deepdaiv.stibee.com/p/159" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI를 지속적으로 공부해야 하는 이유는 기술 이해가 사회·인간과의 상호작용을 설계하는 데 필수이다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI for Science 분야가 급부상하지만 고비용 GPU 연산·검증 비용이 진입 장벽이다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>편집자들은 개인 호기심과 학습 공유를 원동력으로 삼아 콘텐츠 생산과 성장에 기여한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 LLM을 활용한 가설 생성 파이프라인을 도입할 때 GPU·API 비용을 사전 시뮬레이션하여 ROI를 평가한다.</div>
+    
+    <div class="idea">💡 팀 차원에서 AI‑LOVI(외로움 지표)와 유사한 정성·정량 지표를 만들고 AI 의존도와 만족도를 정기적으로 모니터링한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. AI for Science 분야의 주요 진입 장벽은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 데이터 부족</div>
+      
+      <div class="quiz-opt">B) 고비용 GPU 연산 및 검증 비용</div>
+      
+      <div class="quiz-opt">C) 인력 부족</div>
+      
+      <div class="quiz-opt">D) 법적 규제</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 고비용 GPU 연산 및 검증 비용</div>
+          <div class="quiz-explanation">본문에서 AI for Science는 대규모 모델 실행 비용과 가설 검증에 드는 시간·비용이 큰 장벽이라고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 뉴스레터 편집자들이 AI 학습을 지속하는 주요 동기는?</div>
+      
+      <div class="quiz-opt">A) 급여 인상</div>
+      
+      <div class="quiz-opt">B) 강제성</div>
+      
+      <div class="quiz-opt">C) 공부를 나누는 즐거움</div>
+      
+      <div class="quiz-opt">D) 외부 압력</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 공부를 나누는 즐거움</div>
+          <div class="quiz-explanation">편집자는 공부를 나누는 즐거움이 지속적인 AI 학습의 원동력이라고 밝히고 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
