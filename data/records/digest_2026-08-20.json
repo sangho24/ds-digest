@@ -1,0 +1,383 @@
+{
+  "date": "2026-08-20",
+  "generated_at": "2026-08-20T22:46:12.960278",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Check if any of the $656M in unclaimed royalties at The MLC is yours",
+        "url": "https://pub.doub.ly/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN, I built this. Quick background on why it exists:<p>When music is streamed on digital streaming platforms (think Spotify, Apple Music, Pandora), there are two separate royalty streams: one for the recording, paid through your distributor (DistroKid, TuneCore, CDBaby), and one for the underlying work (generally known as publishing). The work side&#x27;s mechanical royalties are collected by The MLC, a nonprofit that was created by the 2018 Music Modernization Act (MMA). If you haven&#x27;t registered your songs with The MLC, there are issues with your metadata, or about half a dozen other reasons, that money will never reach you, it just collects in a big pile we call the &quot;black box&quot;.<p>That pile is big. The MLC&#x27;s own dashboard currently shows over $656M is held (themlc.com&#x2F;blanket-royalties), and the biggest problem is the MMA dictates that The MLC cannot hold that money indefinitely. At some point, by law, The MLC must distribute this big pile of cash, and since they don&#x27;t know who it&#x27;s supposed to go to, they pay it out through a process called &quot;market share&quot; (themlc.com&#x2F;marketshare). Market share means they pay it out, pro-rata, to the artists, songwriters and publishers that are in the system, which in practice means the largest publishers collect most of the leftovers.<p>This is slated to begin in January 2027 and will pay portions of the pool out monthly (themlc.com&#x2F;unclaimed-accrued-royalties), as of this morning, the next 12 months of market share sums up to $76.61M, starting with $6.41M in January.<p>Full disclosure: I run Doubly, which is an independent publishing administrator, so I have a commercial interest in this space. That being said, we&#x27;re a team of two people and we don&#x27;t have the bandwidth to directly assist the hundreds of thousands of artists and songwriters who are going to start losing this money in January 2027.<p>That&#x27;s why I built this self-service tool, no signup, no email, no paywall, the reports are completely actionable without needing anything from us.<p>The tool: paste a Spotify artist link (or search for a Spotify artist by name). It pulls every release on that profile, checks each recording against The MLC&#x27;s public bulk data, and tells you per-song whether it&#x27;s fully claimed, partially claimed, registered but unmatched, or missing entirely. It then provides a link to the exact MLC tool that fixes each case. It also estimates the dollars stuck, as a rough range.<p>Even if you&#x27;re not an artist yourself, you probably know someone who is a musician, please share it with them.<p>Thanks for your time and I&#x27;m happy to answer any questions about the industry as a whole, The MLC, the tech, anything really.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "음악 로열티 미청구액 자동 검증 도구",
+        "tags": [
+          "Spotify",
+          "The MLC",
+          "Doubly",
+          "Music Modernization Act",
+          "MMA"
+        ],
+        "key_points": [
+          {
+            "point": "The MLC 보유 $656M 미청구 로열티는 2027년 1월부터 시장점유율 방식으로 배분될 예정이다.",
+            "timestamp": null
+          },
+          {
+            "point": "제공된 도구에 Spotify 아티스트 링크를 입력하면 각 곡의 청구 상태를 MLC 공개 데이터와 대조해 확인한다.",
+            "timestamp": null
+          },
+          {
+            "point": "도구는 미청구·부분청구·미등록 곡에 대한 수정 링크와 예상 금액 범위를 제공한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "도구를 활용해 레이블/아티스트의 전체 카탈로그를 검증하고, 2027년 이전에 미청구 트랙을 우선 등록해 수익 손실을 방지한다.",
+          "MLC 공개 대량 데이터를 정기적으로 파이프라인에 통합해 내부 메타데이터와 매칭, 미등록 곡을 자동으로 식별·알림하는 시스템을 구축한다."
+        ],
+        "quiz": [
+          {
+            "question": "The MLC가 현재 보유하고 있는 미청구 로열티 금액은 얼마인가?",
+            "options": [
+              "$656M",
+              "$500M",
+              "$1B",
+              "$300M"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 \"The MLC's own dashboard currently shows over $656M is held\" 라고 명시되어 있다."
+          },
+          {
+            "question": "시장점유율 방식으로 로열티 배분이 시작되는 시점은 언제인가?",
+            "options": [
+              "January 2027",
+              "January 2025",
+              "July 2026",
+              "December 2027"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 \"This is slated to begin in January 2027\" 라고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Vomit: Clean up Claude 5's token output with a separate LLM",
+        "url": "https://github.com/zachahn/vomit",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Vomit\n\nVomit converts Claude's token vomit into English by piping it through a local LLM. It's fully local (no telemetry) and has no external dependencies.\n\nI wrote a small blog post about this project: <https://zachahn.com/posts/1787191554>\n\nDisclaimer:\n\n- The local LLM can only see what Claude tries to communicate (no access to any actions or files), so it hallucinates a bit\n- It's pretty slow\n- This is totally vibe-coded, only tested on Mac\n- There is a possibility you'll completely miss Claude's message. You can use something like [AgentsView](https://www.agentsview.io) to get the original messages, as Vomit does not touch anything during runtime (except technically it writes files to your TMPDIR)\n\n## Install\n\n```\n# Install the binary to your GOPATH\ngo install github.com/zachahn/vomit@latest\n\n# Setup connection details to your LLM\nvomit init\n\n# Instructions on how to replace Claude's output via hooks\nvomit scrub -claude\n```\n\n## Usage\n\nIn addition, there's a non-invasive mode if you want to run Vomit on the side.\n\n- `vomit list`. List Claude session identifiers\n- `vomit tail [<session_identifier>]`. Translate Claude's tokens for the specified session, or follow the latest one\n- `vomit help`. See for more commands\n\nThis should work with:\n\n- [Llama.app](https://github.com/ggml-org/Llama-macOS)\n- [Ollama](https://github.com/ollama/ollama)\n- Anything that uses the OpenAI API?\n\nIf you don't have a local LLM set up already, I think I recommend using [Llama.app](https://github.com/ggml-org/Llama-macOS), then downloading [GPT-OSS 20B](https://llama.app/models/gpt-oss) through it. Run the `init` subcommand after you set this up.\n\n## License\n\nGNU GPLv3",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "로컬 LLM으로 Claude 출력 정제, 프라이버시 유지",
+        "tags": [
+          "Claude",
+          "Llama.app",
+          "Ollama",
+          "GPT-OSS 20B",
+          "AgentsView"
+        ],
+        "key_points": [
+          {
+            "point": "Vom​it은 Claude의 토큰 출력을 로컬 LLM에 파이프해 영어로 변환해 프라이버시를 보장한다",
+            "timestamp": null
+          },
+          {
+            "point": "Go로 설치 후 ‘vomit init’와 ‘vomit scrub -claude’ 명령으로 Claude 출력 교체 후크 설정 가능",
+            "timestamp": null
+          },
+          {
+            "point": "Llama.app, Ollama 등 다양한 로컬 LLM과 연동 가능하지만 속도가 느리고 내용 누락 위험 존재",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Claude가 생성한 코드 스니펫을 Vomit으로 번역해 내부 문서 자동화에 활용",
+          "LLM 디버깅 시 Vomit을 사용해 Claude 출력 실시간 모니터링 및 프라이버시 보호"
+        ],
+        "quiz": [
+          {
+            "question": "Vomit을 사용하려면 권장되는 로컬 LLM 애플리케이션은?",
+            "options": [
+              "Llama.app",
+              "Ollama",
+              "GPT-4",
+              "HuggingFace"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Llama.app을 설치하고 GPT-OSS 20B 모델을 다운로드하라고 권장한다"
+          },
+          {
+            "question": "Vomit에서 Claude 세션 식별자를 나열하는 명령은?",
+            "options": [
+              "vomit list",
+              "vomit tail",
+              "vomit help",
+              "vomit init"
+            ],
+            "answer_index": 0,
+            "explanation": "‘vomit list’가 Claude 세션 식별자를 리스트한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "전체 데이터를 브라우저에 두는 광고 대시보드 만들기",
+        "url": "https://toss.tech/article/ads_dashboard_fe",
+        "published_at": "2026-08-20T01:00:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"553a360d-33e3-8234-aaa5-01f5d32bd511\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스에서 광고주가 쓰는 대시보드를 만들고 있는 프론트엔드 개발자 김동희입니다. </span></span></span></p><p class=\"css-14on8x8\" id=\"3c0a360d-33e3-80ef-ab39-ee030df70559\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">저희 팀이 만드는 건 광고주를 위한 화면이에요. 캠페인을 만들고, 예산을 넣고, 어제 쓴 돈이 얼마나 성과로 돌아왔는지 확인하는 곳이죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"2c7a360d-33e3-830b-ac7f-01a45dabd1d4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">말하자면 &#x27;데이터를 보는 도구&#x27;를 만듭니다. 그리고 도구를 만드는 일은, 겉으로 보이는 것보다 훨씬 프론트엔드다운 문제들을 던져줘요. 오늘은 그중 하나, </span><span class=\"css-q3ktjb\">필터 한 번 누를 때마다 서버를 기다리던 대시보드를 고친 이야기</span><span class=\"css-1kxrhf3\">를 해보려고 해요.</span></span></span></p><p class=\"css-14on8x8\" id=\"bd6a360d-33e3-831d-87d0-01291f3f74c6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">결론부터 말하면 저희는 서버가 하던 필터링·정렬·검색·페이지네이션을 전부 브라우저로 가져왔습니다. 그런데 흥미로웠던 건, 이 결정으로 얻은 게 속도만이 아니었다는 점이에요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c0a360d-33e3-804c-8799-f5a7ddd5ebfb\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"009a360d-33e3-827f-850e-811ae8a7c766\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">광고주는 대시보드를 &#x27;한 번&#x27; 보지 않아요</span></span></span></h2><p class=\"css-14on8x8\" id=\"bcea360d-33e3-8274-ae6f-8143e609be9b\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">먼저 광고주가 이 화면에서 실제로 무엇을 하는지 짚어볼게요.</span></span></span></p><figure class=\"css-of5acw\" id=\"a79a360d-33e3-8268-9f6c-01cde10eb6ee\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/e871f6e3-cb03-4780-9915-9df2e04cd334/alpha-ads-platform.toss.im_advertiser_display-ads_columnIdpurchasecontractSortbillable_clickdescstartDate2025-08-15endDate2026-08-14dateRangeKey1year_(3).png\" /></figure><p class=\"css-14on8x8\" id=\"420a360d-33e3-8293-aedd-0159d94cf23c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">광고 대시보드에는 </span><span class=\"css-q3ktjb\">캠페인 → 광고세트 → 소재</span><span class=\"css-1kxrhf3\">라는 3단계 계층이 있어요. 캠페인은 ‘이 예산으로 이런 목표를 달성하겠다’를 정하는 단위, 광고세트는 그 안에서 누구에게 언제 보여줄지를 정하는 단위, 소재는 실제로 사용자 눈에 보이는 이미지와 문구예요. 캠페인 하나에 광고세트 여러 개가, 광고세트 하나에 소재 여러 개가 붙습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"55ea360d-33e3-83fe-83e3-01cf37efacf2\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 화면은 성과를 깊게 파고드는 분석 도구는 아니에요. 캠페인·광고세트·소재를 관리하면서 상태를 확인하는 곳에 가깝습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"d49a360d-33e3-82fe-a947-013700098862\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">광고주는 여기서 이런 걸 합니다.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3c0a360d-33e3-80d0-a44f-ebc4f4510f69\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"2e0a360d-33e3-823b-afb0-01c093080801\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">특정 캠페인만 필터링해서 하위 광고세트를 펼쳐본다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"f30a360d-33e3-82b2-9955-01f3a093ff0d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">소재 이름으로 검색해서 A안과 B안을 비교한다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"c20a360d-33e3-83ce-b1c8-018e3f5e37ca\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">성과가 떨어진 캠페인이 뭔지 정렬해서 확인한다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"0f0a360d-33e3-824c-a9bf-0169defae2c3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">다시 위로 올라가서 다른 기준으로 정렬한다.</span></span></span></li></ul></div></aside><p class=\"css-14on8x8\" id=\"873a360d-33e3-820c-99b7-0185a5146333\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">한 번 보고 끝나는 화면이 아니에요.</span><span class=\"css-1kxrhf3\"> 가설을 세우고, 걸러보고, 아니다 싶으면 되돌아가는 탐색 도구에 가깝습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"b8ba360d-33e3-8256-855e-819b05d47d76\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/0f831580-7a75-47e2-a730-d418a2944515/Screenshot_2026-08-14_at_13.03.01.png\" /></figure><p class=\"css-14on8x8\" id=\"082a360d-33e3-8337-81ec-0107285a5602\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문제는 저 모든 동작이 서버 호출이었다는 것입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"4f6a360d-33e3-8328-9747-811d1a116189\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">한 번의 기다림은 참을 만해요. 그런데 탐색은 한 번이 아니죠. 필터 걸고, 정렬 바꾸고, 페이지 넘기고, 다시 필터 풀고. 열 번이면 수 초가 대기로만 쌓입니다. 그리고 이 시간이 만드는 진짜 비용은 대기 그 자체가 아니라 </span><span class=\"css-q3ktjb\">탐색 포기</span><span class=\"css-1kxrhf3\">예요. &quot;이 조합도 한번 볼까?&quot; 하는 시도를 사용자가 하지 않게 되거든요.</span></span></span></p><p class=\"css-14on8x8\" id=\"59aa360d-33e3-83ad-a58a-81d1158841bf\"><span class=\"css-1r3ko7u\"><span class=\"c",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "브라우저에서 전체 데이터 처리로 대시보드 속도·UX 개선",
+        "tags": [
+          "Toss",
+          "광고 대시보드",
+          "필터링",
+          "정렬",
+          "페이지네이션"
+        ],
+        "key_points": [
+          {
+            "point": "서버의 필터·정렬·검색·페이지네이션을 브라우저로 이전",
+            "timestamp": null
+          },
+          {
+            "point": "클라이언트 처리로 응답 속도와 사용자 경험이 크게 향상",
+            "timestamp": null
+          },
+          {
+            "point": "광고 대시보드는 캠페인·광고세트·소재 3단계 계층으로 빈번한 필터·정렬·검색 필요",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "전체 데이터를 브라우저 메모리/IndexedDB에 로드해 클라이언트 측 필터·정렬·검색·페이지네이션 구현",
+          "React 혹은 Vue와 같은 프레임워크에서 가상화 리스트와 memoization을 활용해 대규모 광고 데이터 UI 성능 최적화"
+        ],
+        "quiz": [
+          {
+            "question": "광고 대시보드 사용자가 가장 자주 수행하는 작업은?",
+            "options": [
+              "필터링",
+              "데이터 시각화",
+              "실시간 입찰",
+              "로그 분석"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 사용자는 특정 캠페인 필터링, 소재 검색, 성과 정렬 등 필터·검색·정렬 작업을 반복한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "당근의 인증은 어떻게 달라져 왔을까요?",
+        "url": "https://medium.com/daangn/%EB%8B%B9%EA%B7%BC%EC%9D%98-%EC%9D%B8%EC%A6%9D%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A0%B8-%EC%99%94%EC%9D%84%EA%B9%8C%EC%9A%94-a50dd4b7b44c?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-08-20T02:25:36",
+        "transcript": null,
+        "body": "<p>안녕하세요? Identity Service Team의 Software Engineer 키(Key)입니다.</p><p>Identity Service Team은 당근의 회원과 인증을 책임지고 있는 팀이에요.</p><p>당근뿐 아니라 대부분의 서비스에서, 인증은 서비스를 시작하려면 꼭 한 번은 거쳐야 하는 단계예요. SMS 인증부터 본인인증까지 방식은 다양하지만, 모든 인증이 하려는 일은 결국 하나예요. <strong>‘이 계정의 주인이 나’라는 걸 확인하는 것.</strong></p><p>그럼 당근은 ‘이 계정의 주인이 나’라는 걸 어떻게 확인해 왔을까요? 서비스가 성장하면서 어떤 문제를 만났고, 그 문제를 어떻게 풀어왔을까요? 지금부터 당근 인증의 역사를 하나씩 들려드릴게요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*iGqWt-E-YNbgt2b4WrcINQ.png\" /></figure><h3>당근의 초창기 로그인</h3><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*u6xC38A68IIQkFJc86I5Eg.png\" /></figure><p>처음에는 SMS 인증이었어요.</p><p>당근마켓은 모바일 앱으로 시작한 서비스예요. 모바일 기기는 전화와 문자를 주고받을 수 있죠.</p><p>앱에 자신의 전화번호를 입력하면 그 번호로 인증 문자가 오고, 도착한 인증번호를 다시 당근에 입력하는 거예요.</p><p>문자로 온 인증번호를 입력할 수 있다는 건 “이 전화번호를 쓰는 단말기를 지금 손에 쥐고 있다”는 뜻이에요. 말 그대로 번호의 ‘점유’를 확인하는 거죠.</p><p>동네 사람끼리 중고거래를 하는 데 필요한 인증으로는 그 정도 확인으로도 충분했어요.</p><p>무엇보다 간편하고 직관적이었고요. 가입 문턱을 낮춰서 더 많은 사람이 당근을 쓰게 하는 데 집중한, 최소한의 인증이었어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*VbhN2wERqcppQTF9k49bhA.png\" /></figure><h3>“이 계정은 분명히 제 것이에요”</h3><p>그런데 서비스가 성장하면서 문제가 하나둘 나타나기 시작해요.</p><p>가장 많이 마주친 건 계정을 잃어버린 사용자였어요.</p><p>전화번호는 영원히 내 것이 아니거든요. 쓰던 번호를 해지하면 통신사는 일정 기간이 지난 뒤 그 번호를 다른 사람에게 다시 배정해요. 그래서 번호를 바꾼 뒤 새 번호로 당근에 로그인하면, 내가 쓰던 계정이 아니라 새 계정이 만들어져요. 그동안 거래하고 대화한 기록은 예전 계정에 남은 채로요.</p><p>기기를 바꿔도 마찬가지였어요. 번호 말고는 이 사람이 예전의 그 사람이라는 걸 확인할 방법이 없으니까요.</p><p>“번호를 변경해서 인증은 못하지만, 이 계정은 분명히 제 것”이라며 계정을 되찾아 달라는 문의가 매일 들어왔어요.</p><p>번호가 곧 계정이던 시절엔, 이런 요청이 오면 고객센터에서 통신사 서류를 기반으로 옛 계정의 닉네임·동네·전화번호를 하나하나 대조해 손으로 계정을 옮겨 줘야 했어요. 사용자는 며칠을 기다려야 했고, 고객센터는 같은 일을 매일 반복해야 했죠.</p><p>백업 수단으로 이메일 인증도 추가해 봤어요. 번호를 잃어버려도 이메일로 계정을 되찾을 수 있게요. 그런데 미리 이메일을 등록해 두는 사용자가 많지 않았어요. 정작 계정을 잃어버린 사람에겐 등록된 이메일이 없었던 거예요.</p><p>여기에 사기 문제도 겹쳤어요. 알뜰폰처럼 번호를 쉽게 발급받을 수 있는 수단이 늘면서, 사기꾼들이 번호를 수백 개씩 만들어 계정을 찍어냈어요. 한 계정이 제재되면 다른 번호로 새 계정을 만들어 사기를 이어 갔고요.</p><p>번호를 확인하는 것만으로는, 계정을 잃은 사람도 되찾아 줄 수 없고 돌아오는 사기꾼도 막을 수 없었어요.</p><h3>본인인증을 도입했어요</h3><p>그래서 본인인증을 도입했어요. 본인확인기관을 통해 실명과 CI를 확인하는 단계예요. CI(연계정보)는 사람마다 하나씩만 부여되는 값이라, 번호가 바뀌든 기기가 바뀌든 ‘같은 사람’이라는 걸 증명할 수 있어요.</p><p>※ CI란? 주민등록번호를 한 번 비가역적으로 암호화해 만든 값이에요. 그래서 서비스가 달라도 같은 사람이면 같은 CI가 나와요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*D3_4HcWK807X-qLWvyUMMQ.png\" /></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*cf31N5YtWzAlH8Nh3Bq6xQ.png\" /></figure><p>사실 어려운 건 본인인증을 붙이는 일 자체가 아니었어요. <strong>이미 당근을 쓰고 있는 수천만 명의 사용자를 어떻게 할 것인가</strong>였죠.</p><p>신규 가입자에게 본인인증을 요구하는 건 비교적 간단해요. 문제는 이미 번호만으로 가입해 잘 쓰고 있는 기존 사용자예요. 어느 날 갑자기 앱을 열었더니 “본인인증을 해야 계속 쓸 수 있어요”라는 화면이 뜬다면, 상당수는 인증 대신 앱을 닫아 버릴 테니까요.</p><p>새로 가입하는 사용자에게는 본인인증을 강제화하는 선택을 할 수 있었어요.</p><p>다만 기존 사용자에게는 본인인증을 강제하는 대신 <strong>본인인증을 할 이유를 만들어 주는 쪽</strong>을 택했어요. 본인 확인이 자연스럽게 필요한 서비스를 접점으로 삼은 거예요. 예를 들어 생년월일이 필요한 사주 서비스처럼, 사용자가 원해서 쓰는 서비스 안에 본인인증을 놓아두면 사용자는 운세를 보러 온 김에 본인인증까지 마치게 돼요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*40hMCVgWNHAVCT6HoDg1Fg.png\" /><figcaption>본인인증하고 신년 운세 확인하기</figcaption></figure><p>그렇게 시간을 들여 본인인증을 확산시켰어요.</p><p>이제 전화번호를 여러 개 만들어 사기를 치는 일이 어려워졌어요. 일반 사용자도 본인인증만 해두면, 전화번호를 바꾸더라도 쓰던 당근 계정을 그대로 이어서 쓸 수 있게 됐고요. 고객센터가 손으로 계정을 옮겨 주던 일도 크게 줄었어요.</p><p>이제 ‘이 계정의 주인이 누구인가’를 정확하게 확인할 수 있게 됐어요. 그런데 이번엔 다른 종류의 문제가 생기기 시작해요.</p><h3>앱 말고 PC에서도 당근을 쓰고 싶어요</h3><p>당근이 중고거래를 넘어 부동산, 중고차, 알바로 넓어지면서, 당근을 앱 밖에서 쓰고 싶은 사람들이 나타나기 시작했어요.</p><p>부동산 중개인과 중고차 딜러는 PC로 매물을 등록하고 싶고, 카페 사장님은 태블릿으로 공고를 올리고 싶어요. 그런데 당근 계정은 아직 모바일 앱 안에서만 쓸 수 있었어요.</p><p>처음엔 웹도 앱과 같은 인증 방식을 그대로 사용했어요. 전화번호 문자 인증으로 시작해서, PC 환경에서 많이 사용하는 QR 로그인을 도입했어요.</p><p>그런데 예상하지 못한 곳에서 문제가 생겼어요. 바로 모바일 웹이었어요.</p><p>PC에서는 QR 로그인이 잘 동작했어요. 당근에 로그인되어 있는 휴대기기로 QR 화면을 찍기만 하면 되니까요. 그런데 휴대기기에서 브라우저를 통해 접속한 사람은 QR 인증을 할 수 없었어요. 남은 인증 수단은 문자 인증인데, 이건 브라우저와 문자 앱을 오가며 번호를 옮겨 적어야 하죠. 그 사이에 적지 않은 사람들이 로그인을 포기했고, 모바일 웹의 인증 전환율은 눈에 띄게 낮았어요.</p><p>그래서 모바일 웹에서는 클릭 한 번으로 끝나는 당근앱으로 로그인을 만들었어요. 이미 휴대기기에 로그인된 당근 앱이 있다면, 웹에서 버튼을 누르는 것만으로 당근앱이 열려 인증을 확인하고 다시 웹으로 돌아오는 방식이에요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*yLpZ8fgSvsmF9CjIz_OU-Q.png\" /></figure><p>어떤 서비스를 사용해도 동일한 인증 경험과 보안을 챙기는 것도 필요했어요.</p><p>부동산, 중고차, 알바를 비롯해 새로운 서비스가 계속 생겼고, 앞으로도 더 생길 예정이었어요. 이 서비스들이 모두 같은 당근 계정으로 로그인되어야 해요. 그러려면 여러 도메인에 걸친 서비스가 동일한 인증 토큰을 다뤄야 해요. 그런데 인증 화면과 로직, 토큰 관리를 서비스마다 각자 맡게 두면, 보안이 가장 약한 서비스가 전체 계정의 보안 수준이 돼요. 보안 취약점이 한 군데만 있어도 모든 서비스의 계정이 위험해지는 구조인 거죠.</p><p>그래서 웹 인증을 accounts.daangn.com이라는 하나의 도메인으로 통합했어요.</p><p>당근부동산을 예로 들어 볼게요. 부동산 웹(realty.daangn.com)에서 ‘당근으로 로그인’을 누르면 브라우저가 accounts.daangn.com으로 넘어가요. 인증은 거기서만 이뤄져요. 전화번호와 본인인증 같은 인증 수단으로 ‘이 계정의 주인이 맞는지’를 확인해요. 확인이 끝나면 인증 토큰과 함께 다시 부동산으로 돌아오고요.</p><p>이 구조는 OAuth 2.0/OIDC 표준 위에서 동작해요. 당근만 아는 방식이 아니라 인증 업계 표준을 따랐어요.</p><p>덕분에 각 서비스는 사용자의 인증을 고민하지 않아도 돼요. 로그인 화면을 매번 새로 만들 필요도 없고요.</p><p>이러한 기반 위에서 2차 인증을 비롯해 각 서비스의 요구에 맞는 인증 수단도 하나씩 더해 나갔어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*LgMAVtg_00ieWGux2UeiFg.png\" /></figure><p>당근 SSO 덕분에 기업부터 소상공인까지, 여러 외부 서비스도 당근 계정으로 로그인할 수 있게 됐어요.</p><h3>글로벌은요?",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "인증 흐름 변화가 사기 방지와 유지에 미치는 영향",
+        "tags": [
+          "SMS",
+          "CI",
+          "QR 로그인",
+          "본인인증",
+          "당근"
+        ],
+        "key_points": [
+          {
+            "point": "초기에는 전화번호 점유 확인을 위한 SMS 인증만 사용했다",
+            "timestamp": null
+          },
+          {
+            "point": "번호 교체·사기 문제 해결을 위해 CI 기반 본인인증을 도입하고 기존 사용자에게 자연스러운 서비스 연계로 확대했다",
+            "timestamp": null
+          },
+          {
+            "point": "모바일 웹 로그인 이탈을 줄이기 위해 앱 연동 원클릭 로그인(딥링크·QR) 방식을 도입했다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "CI 기반 본인인증을 도입해 사용자 실명·연계정보를 검증함으로써 사기 계정 생성을 억제한다",
+          "모바일 웹에서 앱 딥링크·QR 로그인 연동을 구현해 인증 전환율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "당근이 초기 인증 방식으로 사용한 방법은?",
+            "options": [
+              "SMS 인증",
+              "이메일 인증",
+              "소셜 로그인",
+              "생체 인증"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 처음에는 전화번호를 입력하고 문자로 온 인증번호를 입력하는 SMS 인증만 사용했다고 명시돼 있다."
+          },
+          {
+            "question": "CI는 무엇을 의미하며 어떤 특성을 가지고 있나요?",
+            "options": [
+              "주민등록번호를 비가역적으로 암호화한 값",
+              "전화번호와 연동된 고유 토큰",
+              "사용자 비밀번호 해시",
+              "앱 설치 ID"
+            ],
+            "answer_index": 0,
+            "explanation": "CI는 주민등록번호를 일방향 암호화해 만든 값으로, 사람마다 하나만 부여돼 동일 인물임을 증명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Huzzah – a novel approach to coding with AI",
+        "url": "https://www.danielvaughn.dev/posts/huzzah/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hello everyone. I&#x27;ve been working on this experimental editor called Huzzah.<p>I&#x27;ve been working almost exclusively with coding agents since January of this year, and over the past few months I began to feel utterly exhausted by them. They&#x27;re great, but I&#x27;m finding it more and more tedious to write full sentences for every change I want. Not only that, but it seems there&#x27;s a complexity limit for codebases - beyond a certain point the agent begins confusing itself.<p>I&#x27;d like to go back to writing code, but I don&#x27;t want to go all the way back to fully manual coding. So I&#x27;ve come up with this interaction paradigm where you:<p><pre><code>  1. write pseudocode in whatever way makes the most sense to you\n  2. on save, the editor synchronizes your work to real source code\n  3. the pseudocode is persisted alongside the generated code, making your prompt effectively a stored record of intent.\n</code></pre>\nIt may not work for every use case, but in my initial playthroughs I&#x27;ve found it very enjoyable.<p>Right now it&#x27;s just a proof of concept - installation instructions are here in the readme: <a href=\"https:&#x2F;&#x2F;github.com&#x2F;danielvaughn&#x2F;hz\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;danielvaughn&#x2F;hz</a><p>You can also watch a video of it in action here: <a href=\"https:&#x2F;&#x2F;x.com&#x2F;danielvaughn&#x2F;status&#x2F;2090456808431165715\" rel=\"nofollow\">https:&#x2F;&#x2F;x.com&#x2F;danielvaughn&#x2F;status&#x2F;2090456808431165715</a><p>Cheers!",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 코딩 에이전트 피로도 낮추고 의도 기록을 자동화",
+        "tags": [
+          "Huzzah",
+          "pseudocode",
+          "AI coding agents",
+          "GitHub",
+          "danielvaughn"
+        ],
+        "key_points": [
+          {
+            "point": "AI 코딩 에이전트를 사용할 때 프롬프트 작성 피로도가 증가한다",
+            "timestamp": null
+          },
+          {
+            "point": "작성한 의사코드를 저장하면 에디터가 실 코드와 동기화한다",
+            "timestamp": null
+          },
+          {
+            "point": "프로토타입은 GitHub에 공개돼 설치와 시연 영상이 제공된다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "데이터 파이프라인 스크립트를 의사코드로 작성하고 Huzzah를 이용해 자동으로 실행 코드로 변환해 개발 속도 향상",
+          "모델 구현 의도를 의사코드와 함께 저장해 버전 관리와 재현성을 높이는 문서화 워크플로 구축"
+        ],
+        "quiz": [
+          {
+            "question": "Huzzah가 제안하는 작업 흐름의 단계는 무엇인가?",
+            "options": [
+              "코드 작성 → 테스트 → 배포",
+              "의사코드 작성 → 저장 시 실 코드 동기화 → 의사코드와 코드 동시 보관",
+              "코드 자동 생성 → 리뷰 → 머지",
+              "데이터 수집 → 전처리 → 모델 학습"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 제시된 3단계는 의사코드 작성, 저장 시 실 코드와 동기화, 의사코드와 생성된 코드를 함께 보관하는 것이다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
