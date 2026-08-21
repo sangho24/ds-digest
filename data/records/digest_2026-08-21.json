@@ -1,0 +1,384 @@
+{
+  "date": "2026-08-21",
+  "generated_at": "2026-08-21T22:44:16.634570",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 루멘의 낙관적 업데이트",
+        "url": "https://youtu.be/U7RJ1-zChPI",
+        "published_at": "2026-08-21T12:00:38",
+        "transcript": "안녕하세요. 어 낙관적 업데이트에 대해서 발표하게 된 우테코 8기 프론트엔드 루맨이라고 합니다.\n어 먼저 목차를 한번 살펴보겠습니다. 어 첫 번째로는 어 낙관적 업데이트가 무엇인지 살펴보고 어 낙관적 업데이트를 저희가 잘 아는 리액트의 유즈스테이트와 또 리액트 19에 있는 아 19에서 출시된 유즈 옵티 옵티미스틱 훅으로 직접 구현해보고 어떤 특징이 있는지 살펴보겠습니다. 그리고 마지막으로 낙관적 업데이트 정말 언제 써야 할까? 에 대해서 논의해보고 발표를 마치도록 하겠습니다.\n낙관적 업데이트가 무엇일까요? 아시는 분 있으신가요? 레스 혹시 아시나요? 네. 저희는 사실 일상 속에서 낙관적 업데이트를 자주 접하게 됩니다. 어 대표적인 예시로는 인스타그램의 좋아요 기능이 있는데요. 어 하트 버튼을 누르게 되면 곧바로 하트가 채워지며 좋아요가 늘린 상태를 화면에 표시하게 됩니다. 어 또 다른 예시는 여기 보시는 것처럼 SNS 속 팔로우 기능인데요. 어 오른쪽 영상과 같이 팔로우 버튼을 누르게 되면 유저가 없단 알림 메시지를 받기 전에 팔로잉 버튼이 눌린 것처럼 화면에 표시해 주게 됩니다. 어 지금까지 낙관적 업데이트의 대표적인 예시를 살펴봤는데요. 조금 더 구체적으로 낙관적 업데이트에 대해서 살펴보겠습니다.\n어 낙관적 업데이트를 설명하기 앞서 일반적인 상황의 상태 업데이트에 대해서 살펴보겠습니다. 어 그 인스타그램의 좋아요에 대한 예제를 가지고 한번 알아보겠습니다. 먼저 좋아요 버튼을 누르게 되면 서버에 요청이 가게 됩니다. 어 요청을 기다리는 중간에 어 유저에게 이렇게 로딩 화면이 뜨게 되겠죠? 마침내 요청이 성공하게 되면 아까 화면에서 본 인스타그램 화면처럼 하트가 가득 차게 되고 실패하게 되면 위에 있는 것처럼 빈 하트가 뜨게 됩니다. 어 만약 이런 상태가 된다면 사용자는 어떻게 느껴질까요? 네트워크 상태가 쾌적할 때는 괜찮지만 조금 느리게 된다면 어 로딩 시간이 길어져 좀 답답하게 느껴질 겁니다. 어 이런 불편한 UX를 해결한 게 낙관적 업데이트인데요. 여기서 보시게 되시면 낙관적 업데이트는 먼저 하트를 클릭하게 되면 곧바로 서버 요청에 응답에 그 성공과 실패에 관계없이 무조건 성공된 UI를 표시하게 됩니다. 이후 서버 요청이 들어가고 아까 성공과 실패에 따라서 아까와 똑같은 결과를 나타내게 됩니다. 이것이 바로 낙관적 업데이트라고 할 수 있는데요. 이제 좀 감이 다들 잡히시나요? 네.\n어 앞서 말한 일반적인 상태 업데이트와 낙관적을 정리하게 정리하여 보게 되면 어 요런 구조라고 할 수 있겠습니다. 한눈에 봐도 낙관적 업데이트 쪽이 빠른 UI 피드백을 준다고 볼 수 있겠는데요. 이제 낙관적 업데이트의 구조와 흐름을 봤으니 직접 코드로 구현해보며 구체적으로 보도록 하겠습니다.\n먼저 익숙한 유즈스테이트 훅만을 이용해서 인스타그램의 좋아요 기능을 유사하게 한번 구현해보도록 하겠습니다. 어 이따 설명하겠지만 이 코드에는 분명 한계점이 존재합니다. 그 점에 유의해서 한번 봐주시면 감사하겠습니다. 어 해당 컴포넌트는 프롭스로 게시글 아이디와 초기 좋아요 수를 받고 버튼을 클릭하면 서버 응답을 기다리지 않고 UI를 낙관적으로 업데이트하는 기능을 가진 컴포넌트입니다. 어 먼저 좋아요 수와 내가 눌렀는지 여부를 가진 두 가지 상태를 유즈스테이트로 선언해 줍니다. 어 이제 상태를 다루는 핸들 라이크 함수를 들여다보겠습니다. 어 클릭이 발생하게 되면 가장 먼저 현재 값을 두 변수에 이렇게 저장해 두게 되는데요. 어 서버 요청이 실패했을 때 롤백할 값이 필요하게 됩니다. 그리고 바로 이 부분이 어 낙관적 업데이트를 하는 부분인데요. 아래에 있는 비동기 요청 코드를 보시게 되면 낙관적 업데이트를 하고 나서 비동기 요청을 하는 것으로 보여지죠. 그리고 아까 백업했던 값을 캐치문에서 비동기 요청에 에러가 뜨게 되면 백업된 값으로 원래 상태를 업데이트해 주게 됩니다. 네. 그리고 이렇게 작성한 컴포넌트 어떤 한계점이 존재할까요? 첫 번째 문제점은 어 낙관적 상태와 실제 상태가 하나의 변수에 섞여 있다는 점입니다. 어 유즈스테이트로 선언한 라이크카운트, 이즈라이크에 서버 실제 상태와 낙관 상태를 동시에 담으므로 현재 상태값이 서버에 반영된 것인지 아직 비동기 작업 중에 펜딩 상태의 낙관 상태 값인지 모른다는 한계가 있습니다. 어 두 번째는 수동 롤백 관리에 아 관리가 어렵다는 점입니다. 어 첫 번째 이유 때문에 백업 값을 직접 저장해야 합니다. 왜냐하면 낙관된 값으로 상태가 덮어씌어지면 그 전 값을 추적을 할 수 없기 때문인데요. 어 이런 과정이 상태가 늘어날수록 롤백 코드가 비례해서 늘어나고 로직의 복잡도가 증가합니다. 마지막으로는 상태 충돌 문제가 있는데요. 이렇게 유즈스테이트만으로 구성을 하게 되면 각각 그 비동기적 서버 요청이 자신의 이전 상태를 따로 기억하고 롤백하기 때문에 여러 요청이 겹치거나 응답 순서가 뒤섞였을 때 사용자의 마지막 의도와 다른 상태가 화면에 남을 수 있습니다. 그러면 어떻게 이런 한계를 보완할 수 있을까요? 그 해답을 유즈옵티미스틱 훅에서 어느 정도 찾을 수 있었습니다.\n어 먼저 유즈옵티미스틱 훅으로 어 이 예제를 구현하기 전에 이 훅에 대해서 잠깐 알아보는 시간을 가지겠습니다. 어 이 훅은 리액트 19에서 정식 도입된 훅으로 어 서버 요청 비동기 작업이 완료되기 전에 UI를 먼저 낙관적으로 업데이트할 때 사용되는 훅입니다. 위 사진에 첨부한 것 같이 함수 시그니처는 이렇게 되고 매개변수와 리턴 값은 이렇게 바뀌게 됩니다. 그렇다면 우리가 알게 된 이 훅으로 다시 한번 예제를 구현해보도록 하겠습니다. 어 크게 세 부분으로 나뉘는데요. 먼저 실제 서버 상태에서 아 서버에서 불러오는 상태 값을 관리하는 부분, 낙관된 상태만 관리하는 부분. 낙관된 상태 업데이트 및 롤백을 하는 부분으로 나눌 수 있겠습니다. 어 이제는 아까 유즈스테이트만으로 구현했던 부분과 조금 비교하면서 살펴보겠습니다. 어 처음 보이 아 처음 보이게 된 차이는 유즈스테이트만으로 구현한 부분의 상태를 선언한 부분에서 실제 서버에서 받아온 상태와 낙관적 상태를 한꺼번에 관리하고 유즈옵티미스틱 훅으로 구현한 부분은 낙관적 상태를 실제 상태를 관리하는 부분과 나눠 옵티미스틱 스테이트를 관리하는 부분이 보입니다. 이런 식으로 훅을 사용하게 되면 유즈스테이트를 구현했던 것과 달리 낙관 상태와 실제 상태의 레이어를 분리해서 어 상태를 관리할 수 있다는 장점이 있습니다. 그리고 또 롤백 로직의 단순화를 볼 수가 있는데요. 이전에 유즈스테이트 구현에서 보면 원본 상태를 직접 저장하지 않고 어 추상화된 내장 기능에 의해 원본 상태가 따로 저장되다 보니 어 이전 로직보다 좀 더 간편하게 롤백 구 아 롤백 기능을 구현할 수 있게 되었습니다. 그리고 마지막으로는 서버 상태의 동기화가 쉬워졌다는 장점이 있는데요. 어 이 훅은 내부적으로 낙관 상태 저장하는 상태 값에 어 비동기 작업이 일어나지 않을 때는 기존에 저장된 원래 상태값이 저장되어 있고 비동기 작업이 시작되는 펜딩 상태에서만 훅에 의해 낙관 상태로 변환이 되기 때문에 어 서버 상태와 동기화가 쉬워지며 상태 꼬임 문제도 해결하게 됩니다. 어 서버 상태와 동기화나 비동기 작업 완료 후 상태 정리를 직접 신경 쓰지 않고 더 나은 사용자 경험을 구현하는 데에만 집중할 수 있다는 장점이 있습니다.\n낙관적 업데이트. 그래서 언제 써야 할까? 에 대해서 한번 이야기를 나누고 발표를 마치도록 하겠습니다. 어 해당 주제를 공부하면서 나름대로 생각해 본 결과 낙관적 업데이트가 필요한 상황은 어 빠른 사용자 피드백이 필요할 때 또 실패 확률이 낮은 작업일 때 이 두 조건이 모두 충족할 때 사용하는 게 좋다라는 결론이 났습니다. 근데 하지만 빠른 아 빠른 사용자 피드백이 필요할 때는 자명하게 납득이 되는데 실패 확률이 낮은 작업일 때라는 말이 되게 추상적이고 어 구체적이지 않다라고 느껴져서 서버 검증 조건이 복잡한가? 어 다른 사용자와 충돌 가능성이 낮은가? 실패했을 때 복구가 쉬운가 정도로 어 구체화 할 수 있었습니다. 구체화된 내용을 가지고 좋아요 기능과 카드 결제 기능에 대해서 한번 비교해보면 좋아요 기능에 대해서는 어 로그인 여부, 게시글 존재 여부 등 비교적 단순한 검증의 복잡도와 독립적인 처리가 가능 정보 덕에 다른 사용자들과 충돌 가능성이 낮고 어 또 불린 값과 카운트 값의 변동성만 존재해 결과 예측 가능성이 높아 비교적 낙관적 업데이트를 적용하기 좋다고 이야기할 수 있겠습니다. 어 카드 결정은 그 반대로 복잡한 검증 등 낙관적 업데이트를 사용하기 좀 부적절하다고 생각이 들었습니다. 네 이렇게 해당 부분을 탐구하고 어느 정도의 결론을 내릴 수 있었습니다. 제가 내린 결론은 낙관적 업데이트는 성공 가능성이 높고 실패해도 쉽게 되돌릴 수 있는 가벼운 상호작용에는 적합하지만. 결제처럼 데이터 정확성과 신뢰가 중요한 작업에는 신중하게 적용해야 한다 라는 결론을 내리 수 있었습니다. 네 이상 발표를 마치겠습니다. 감사합니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "낙관적 업데이트로 UI 반응성·신뢰성 향상",
+        "tags": [
+          "React",
+          "useState",
+          "useOptimistic",
+          "React 19",
+          "Instagram"
+        ],
+        "key_points": [
+          {
+            "point": "낙관적 업데이트는 서버 응답 전 UI를 즉시 표시해 사용자 경험을 개선한다",
+            "timestamp": null
+          },
+          {
+            "point": "useState만으로 구현하면 상태와 낙관적 값이 혼합돼 롤백·충돌 관리가 복잡해진다",
+            "timestamp": null
+          },
+          {
+            "point": "React 19의 useOptimistic 훅은 낙관적·실제 상태를 분리하고 자동 롤백·동기화를 제공한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "프론트엔드 좋아요·팔로우 기능에 useOptimistic 훅을 적용해 클릭 즉시 UI 피드백을 제공하고 실패 시 자동 롤백 구현",
+          "실시간 사용자 행동 로그 수집 파이프라인에 낙관적 업데이트 패턴을 도입해 UI와 백엔드 데이터 동기화를 최소 지연으로 유지"
+        ],
+        "quiz": [
+          {
+            "question": "낙관적 업데이트의 핵심 원리는 무엇인가?",
+            "options": [
+              "서버 응답 후 UI를 업데이트한다",
+              "UI를 먼저 업데이트하고 서버 응답을 기다린다",
+              "서버와 UI를 별도로 처리한다",
+              "UI를 전혀 업데이트하지 않는다"
+            ],
+            "answer_index": 1,
+            "explanation": "낙관적 업데이트는 사용자가 액션을 취했을 때 서버 응답 여부와 관계없이 UI를 즉시 업데이트해 빠른 피드백을 제공한다."
+          },
+          {
+            "question": "useOptimistic 훅이 해결하는 주요 문제는?",
+            "options": [
+              "상태와 낙관적 값이 혼합돼 롤백·충돌 관리가 어려운 점",
+              "네트워크 보안 취약점",
+              "데이터베이스 스키마 설계 복잡성",
+              "이미지 로딩 최적화"
+            ],
+            "answer_index": 0,
+            "explanation": "useOptimistic 훅은 낙관적 상태와 실제 서버 상태를 분리해 자동 롤백과 상태 동기화를 지원한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "A Tale of Two Flink Autoscalers",
+        "url": "https://netflixtechblog.com/a-tale-of-two-flink-autoscalers-e9f6a1b1492b?source=rss----2615bd06b42e---4",
+        "published_at": "2026-08-21T16:01:01",
+        "transcript": null,
+        "body": "<p><a href=\"https://www.linkedin.com/in/samueltyeboah/\">Samuel Yeboah</a>, <a href=\"https://www.linkedin.com/in/dichiarafrancesco/\">Francesco Di Chiara</a> and <a href=\"https://www.linkedin.com/in/liuml07/\">Mingliang Liu</a></p><p>Today, Netflix runs two Flink autoscalers. That is exactly one more than we want. We built the first one in-house years ago, when there was no mature option suited to our platform. The second came from the Apache Flink community, and it can scale workloads our homegrown system was never designed for. We now run both in production and are steadily converging on the open-source one. Along the way we learned some hard lessons about metrics, cost, and the real price of maintaining infrastructure you could instead adopt, and we hope they are useful whether you run a handful of Flink jobs or tens of thousands.</p><h3>Why autoscaling is not optional at our scale</h3><p>Netflix has run stream processing on Apache Flink since 2017. As of 2026 we operate more than 30,000 Flink jobs across multiple AWS regions. Most are not deployed by hand; they are generated by our managed platform <a href=\"https://netflixtechblog.com/data-mesh-a-data-movement-and-processing-platform-netflix-1288bcab2873\">Data Mesh</a>, so the majority of users never touch a Flink job directly. A smaller but growing set are custom jobs, built and operated by teams across the company for use cases like personalization, Ads, and Live events. They range from single-operator jobs that shuttle records between Kafka topics to stateful pipelines with branches, joins, and terabytes of state, and their load swings with daily cycles, launches, and regional failovers.</p><p>Provisioning every one of those jobs for its peak is wasteful; provisioning for the average causes lag during surges. And in our platform a scaling action is not free: by default it means taking a savepoint, stopping the job gracefully, and restarting it at the new size, which for a large stateful job can take minutes. That leaves a genuinely hard question: <em>how do you give each job the resources it needs, when it needs them, without a human in the loop and without breaking anything?</em></p><h3>The first autoscaler: watching from outside</h3><p>Our first answer, built around 2019, was an autoscaler shaped like a stream-processing job. It ran on <a href=\"https://netflixtechblog.com/open-sourcing-mantis-a-platform-for-building-cost-effective-realtime-operations-focused-5b8ff387813a\">Mantis</a>, consuming a live feed of cluster-level metrics from <a href=\"https://netflixtechblog.com/introducing-atlas-netflixs-primary-telemetry-platform-bd31f4d8ed9a\">Atlas</a>, our telemetry platform including CPU, network, Kafka lag, input-rate, and consume-rate signals for every job. The scaler combined lag-derived catch-up time, CPU/network utilization thresholds, observed performance history, and regression over recent input rate to decide when to scale up or whether a smaller cluster could handle the lookahead window. Because the autoscaler operates independently of the Flink platform, it remains unaffected by issues within Flink itself. Building it as a streaming job also made it easy to scale. Each autoscaler node handled the metrics for a subset of Flink jobs, and we never had to write custom sharding or coordination logic to keep up with a growing Flink fleet. It reliably cut resource usage by 25–45% across thousands of managed pipelines. Check our previous talk at <a href=\"https://www.youtube.com/watch?v=NV0jvA5ZDNc\">Flink Forward 2020</a>.</p><p>But watching from outside has a ceiling. The system reasoned about a whole cluster through coarse container metrics, and it scaled a single knob, the total TaskManager count, so every operator in a job moved together. That fit the simple, single-operator pipelines it was built for, but not the multi-operator, stateful DAGs that teams were increasingly bringing to us for Ads, recommendations, and games. Those were exactly the jobs it could not reason about, and supporting each new case meant more custom logic rather than any general capability.</p><p>The autoscaler is only as good as the metrics served by external systems beneath it. Those metrics could miss real trouble: a job could be completely busy without any of it showing up as CPU utilization, leaving the job stuck in a degraded state the scaler had no way to see. Recently a networking migration quietly changed how some traffic was reported, and a subset of the Atlas metrics the scaler relied on stopped capturing everything accurately. The gap stayed invisible until it surfaced in production much later.</p><p>It was time to reconsider <em>build</em> versus <em>buy</em>.</p><h3>The second autoscaler: reasoning from inside</h3><p>When we started, the Flink community had no mature autoscaler to offer. By the time we re-evaluated, it did: the <a href=\"https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-main/docs/custom-resource/autoscaler/\">Apache Flink Autoscale",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "대규모 Flink 스트리밍 작업의 자동 확장과 비용 절감 방법",
+        "tags": [
+          "Flink",
+          "Atlas",
+          "Mantis",
+          "Kafka",
+          "AWS"
+        ],
+        "key_points": [
+          {
+            "point": "Netflix는 자체 autoscaler와 오픈소스 autoscaler 두 개를 운영하며 오픈소스로 전환 중이다",
+            "timestamp": null
+          },
+          {
+            "point": "첫 번째 autoscaler는 Atlas에서 수집한 클러스터 메트릭을 활용해 25–45% 리소스 절감에 성공했다",
+            "timestamp": null
+          },
+          {
+            "point": "스케일링 시 savepoint 기반 재시작이 몇 분 걸려 자동화와 다운타임 최소화가 과제였다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Atlas와 유사한 텔레메트리 플랫폼을 활용해 외부 메트릭 기반 Flink autoscaler 구축",
+          "오픈소스 Flink autoscaler를 도입하고 Data Mesh와 연동해 자동 스케일링 파이프라인 구현"
+        ],
+        "quiz": [
+          {
+            "question": "첫 번째 Flink autoscaler가 사용한 메트릭 소스는?",
+            "options": [
+              "Atlas",
+              "Prometheus",
+              "Datadog",
+              "CloudWatch"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 autoscaler는 Atlas에서 실시간 클러스터 메트릭을 소비한다."
+          },
+          {
+            "question": "첫 번째 autoscaler가 달성한 리소스 절감 비율은?",
+            "options": [
+              "10-20%",
+              "25-45%",
+              "50-60%",
+              "70-80%"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 25–45% 절감이라고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Building an (almost) fully self-hosted, sandboxed, agentic software factory",
+        "url": "https://blog.jakesaunders.dev/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[![Featured image of post Building an (almost) fully self-hosted, sandboxed, agentic software factory](/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/agentic-developer_hu_a1c9227ad366e80a.png)](/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/)\n\n[AI](/categories/ai/)[LLMs](/categories/llms/)[Self-Hosting](/categories/self-hosting/)\n\n## [Building an (almost) fully self-hosted, sandboxed, agentic software factory](/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/)\n\n### I built an (almost) fully self-hosted, sandboxed, agentic software factory.\n\n> tl;dr: It worked! From one prompt it created a repo, wrote the application and tests, got CI green, provisioned\n> Postgres and deployed the finished app behind HTTPS without another message from me.If you just wanna see the outcome\n> you can find a demo video at [the bottom](#enough-of-all-that-show-me-the-goods)\n\nLLMs got fun again! Maybe they always were and I was just stuck in the trough of disillusionment. Lately, whenever I\nneed a little tool, I just build it.\n\nI was in the gym the other day and wanted a weights tracker. The app I had in mind was about as CRUD-y as it gets, but\nall the app store versions wanted £12 per month, so I just one-shotted one with Claude. Great fun, but giving an LLM\nroot access to my machine in auto mode still doesn’t sit right with me.\n\nSo, the challenge: how can I create a fully remote agentic development environment where we structurally contain the LLM\nrather than just trusting it? I want to give it an instruction and have it autonomously move through the\nwhole SDLC:\n\n- Researching the right stack and packages to use.\n- Planning and writing the code and tests.\n- Committing to Git, building and running a CI pipeline.\n- Deploying the work to a ‘production’ server with databases, o11y, and a domain with SSL.\n\nAll on my home server, without another cloud infrastructure bill. The only ongoing cost specific to this experiment is\na £20 Codex sub.\n\n## The Server(s)\n\n![The servers](/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/servers.jpg)\n\nHere they are in all their glory.\n\nThe one at the bottom is a 2014 dual-core i3 I’ve been running as a homelab for five years. It’s valiantly hosting this\nblog and about 45 other Docker containers, from Pi-hole to a full Prometheus / Loki / Grafana stack. It also has port\n443 forwarded from my router. I’d be miffed if an LLM broke it, so that’s not what we’re using today.\n\nThe top one is a 2021 10th-gen i7 with 32GB RAM, bought fresh from eBay with nothing on it. Perfect.\n\n## The Stack\n\nThe core development stack is self-hosted through Coolify. Inference and integrations like Tailscale, Telegram, DNS and\nACME still leave the box. You could host inference too, but I don’t have the hardware and I’d rather OpenAI subsidise\nmy experiments.\n\n| Component | Notes |\n| --- | --- |\n| Pi-hole | Local DNS rules, with the side benefit of seeing less shitty advertising. |\n| Tailscale | Makes my home network follow me around. |\n| Coolify | A self-hosted, Heroku-style PaaS built on Docker. |\n| Forgejo (with runners) | Self-hosted Git and CI. |\n| Hermes (with WebUI) | An OpenClaw-style virtual assistant, using Codex for inference. |\n| Telegram | Talk to the agent from the toilet or wherever. |\n| Firecrawl (self-hosted) | A scraping / translation layer between the agent and the web. |\n| Porkbun (Registrar) & Let’s Encrypt | A domain and on-the-fly SSL certificates. |\n| Whatever else | Postgres, Redis, whatever your apps need. It’s just Docker under the hood, innit? |\n\n## Sources\n\nThis isn’t a full how-to guide. I could probably write an Ansible one-shot script to set it all up; leave an issue on\nthe GitHub repo below if you’d like one. If you’ve read this far, though, you can probably figure it out.\n\n| Source | Notes |\n| --- | --- |\n| [Coolify Setup Blog](https://blog.jakesaunders.dev/self-host-coolify-on-hetzner/) | My Coolify-on-Hetzner setup guide. |\n| [Coolify Dockerfiles](https://github.com/JakeWritesCode/coolify-dockerfiles) | Production Dockerfiles that actually work on Coolify. Just add env vars. |\n| [Forgejo Hermes Skill](https://github.com/awknode/hermes-agent-skills/tree/main/forgejo-cli) | A Hermes skill for the Forgejo CLI; just provide a key. |\n\n## Networking\n\nThe first guardrail is obvious: it’s on its own metal. Hermes could `rm -rf /` and at worst it would cost me a couple\nof hours rebuilding it.\n\nThe next layer of bombproofing is the network. My older server has port 443 forwarded from the router; this one doesn’t.\nThere’s no external ingress, cutting out a huge attack surface and all the internet background radiation from people\nspeculatively probing `/wp-admin` on every DNS A record I set up.\n\nBut, if there’s no ingress, how do I:\n\n- Get access to all our cool new apps on my phone?\n- Generate an SSL cert at a vanity URL so I can access `https://cool-new-app.internal.jakeshomelab.me`?\n\nI have Tailscale s",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 자동 개발 파이프라인으로 비용 절감",
+        "tags": [
+          "Coolify",
+          "Forgejo",
+          "Hermes",
+          "Tailscale",
+          "Docker"
+        ],
+        "key_points": [
+          {
+            "point": "LLM이 단일 프롬프트만으로 레포 생성·코드·테스트·CI·배포까지 전 과정을 자동화함",
+            "timestamp": null
+          },
+          {
+            "point": "Coolify 기반 자체 PaaS와 Forgejo CI·런너를 활용해 완전 자가 호스팅 환경을 구축",
+            "timestamp": null
+          },
+          {
+            "point": "HTTPS, Postgres, Redis 등 프로덕션 인프라를 홈 서버에 비용 최소화하며 제공",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "LLM 에이전트를 활용해 데이터 전처리·피처 엔지니어링 파이프라인을 자동 생성하고 자체 CI/CD에 연동",
+          "Forgejo와 Coolify를 이용해 모델 학습·배포 워크플로우를 완전 자가 호스팅 형태로 구현"
+        ],
+        "quiz": [
+          {
+            "question": "이 글에서 사용된 자체 호스팅 PaaS는 무엇인가?",
+            "options": [
+              "Heroku",
+              "Coolify",
+              "Kubernetes",
+              "Docker Swarm"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 'Coolify'가 자체 호스팅, Heroku 스타일 PaaS로 언급되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "LLM 서빙, 띄우는 것과 잘 띄우는 것 사이",
+        "url": "https://toss.tech/article/tech_talk_talk_2",
+        "published_at": "2026-08-21T01:00:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-80e9-bd44-ce1f4109aed4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">LLM 서빙 생태계는 빠르게 바뀌고 있습니다. 불과 수년 전만 해도, LLM을 배포하는 것 자체가 허들인 경우가 많았어요. 하지만, 지금은 다양한 곳에서 on-premise LLM을 다양하게 사용하고 있습니다. 토스증권도 마찬가지로 다수의 오픈 소스 LLM, 직접 튜닝한 모델을 서비스에 활용하고 있습니다. 이런 상황에서, LLM을 단순히 서빙하는 것보다, 잘 띄우는 것이 더 중요해졌습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3c2a360d-33e3-80c0-ac37-c9dfe46ea240\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/995fcf72-74cc-4747-8a7f-bb92b6311b23/스크린샷_2026-08-18_오후_2.50.08.png\" /></figure><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-80d2-8cc1-f556720700d9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">평소에는 조용하던 팀의 알림 채널이 어느 날 갑자기 알림이 쏟아지는 날이 있습니다. 이 알림들은 여러 에러가 함께 묶여서 온 거예요. 100건 가까운 에러고, 대부분 타임아웃이라는 것까지는 알 수 있지만 이 알림만으로는 왜 이런 일이 생겼는지 알 수 없어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-80a2-affb-c780f9acffc5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1odxvuk\">“어떤 지표를 봐야 이 알림의 원인을 알 수 있을까?”</span></span></span></p><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-80b6-9838-d3d1debb990a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">2년 전, LLM 서빙을 처음 시작했을 때 풀어야 했던 문제는 두 가지였습니다.</span></span></span></p><h3 class=\"css-1feg9au\" id=\"3c2a360d-33e3-806e-87f7-cd1585fa49ab\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">1. 지표가 달라졌어요</span></span></span></h3><figure class=\"css-of5acw\" id=\"3c2a360d-33e3-8041-a33f-f328f3d6283f\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/b5b7f620-81bf-4714-9f9c-cc46597596f1/스크린샷_2026-08-18_오후_2.59.52.png\" /></figure><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-8056-99e8-f1f6c5275d55\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">기존 머신러닝 모델은  입력을 받아 한 건의 출력을 내놓는 구조였어요. 그래서 단 건의 응답 시간, 초당 몇 건의 트래픽을 처리하는지가 핵심 모니터링 지표였습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-804a-87f9-fb40643fca25\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 LLM은 토큰을 순차적으로 생성해요. 단 건의 응답 시간이나 처리량은 변동성이 심하고, 애초에 통제할 수 있는 영역이 아닙니다. 그래서 지표를 이렇게 바꿨어요.</span></span></span></p><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3c3a360d-33e3-8077-abef-d572aa81156a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">처리량: 초당 처리 건수 → 초당 생성 토큰 수</span></span></span></li><li class=\"css-1hwiibq\" id=\"3c3a360d-33e3-80f6-a9a6-de42a9c643fe\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">응답 시간: 최종 결과물까지의 시간 → 첫 번째 토큰이 나오기까지의 시간(TTFT)</span></span></span></li></ul><h3 class=\"css-1feg9au\" id=\"3c2a360d-33e3-8034-9d52-cab8ca41ad94\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">2. 서빙 자체가 어려웠어요</span></span></span></h3><figure class=\"css-of5acw\" id=\"3c2a360d-33e3-8066-8f50-fda2f351fcfb\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/3729b976-74db-4d8f-974c-48574a7b09fb/스크린샷_2026-08-18_오후_2.59.58.png\" /></figure><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-804c-b224-f33317d9c8a7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스증권은 쿠버네티스, Argo CD 같은 여러 기술 스택 위에서 움직여요. 그 위에 각자의 플랫폼을 얹어 모델을 서빙하고, 거기서 나온 로그와 메트릭을 자체 대시보드로 관찰하곤 했습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c3a360d-33e3-8027-9b2a-ecb970457d4f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문제는 이게 전부 서비스 개발자 개인의 역량에 의존했다는 점이에요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c3a360d-33e3-8014-8043-c6bc20e71bb6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 ML 플랫폼을 직접 구축했습니다. 어려운 부분을 줄이고, 로그와 메트릭을 정규화해서 하나의 패널에서 볼 수 있게요. 서버 모니터링은 두 갈래로 나눴어요.</span></span></span></p><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3c3a360d-33e3-802c-ab86-efefd04ec933\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Grafana</span><span class=\"css-1kxrhf3\"> — 메트릭을 수집해 추이와 이상을 탐지</span></span></span></li><li class=\"css-1hwiibq\" id=\"3c3a360d-33e3-8041-9199-f8d03f3a34fc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Kibana</span><span class=\"css-1kxrhf3\"> — 단건 로그를 확인</span></span></span></li></ul><p class=\"css-14on8x8\" id=\"3c3a360d-33e3-80e8-bc9a-ffc7c3565b20\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">여기까지 만들고 나서, 대부분의 문제를 미리 예상하고 쉽게 해결할 수 있을 거라고 생각했습니다.</span></span></span></p><h2 class=\"css-1c1qox8\" id=\"3c2a360d-33e3-80cd-9973-f4b9dd68ad20\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">그런데 예상하지 못한 문제들이 생겼어요</span></span></span></h2><p class=\"css-14on8x8\" id=\"3c2a360d-33e3-80ea-8f2b-fed14fca86f6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">앞서 구축한 모니터링만으로는 그 문제가 ‘왜’ 생겼는지 알 수 없었습니다. 원인을 파악하려면",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 서빙 시 새로운 지표와 플랫폼 구축 필요성을 제시",
+        "tags": [
+          "LLM",
+          "Kubernetes",
+          "Argo CD",
+          "TTFT",
+          "Toss"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 서빙은 토큰 기반 처리량과 첫 토큰까지 시간(TTFT)으로 지표를 전환해야 함",
+            "timestamp": null
+          },
+          {
+            "point": "기존 단일 응답 시간·처리량 지표는 LLM에 적합하지 않다",
+            "timestamp": null
+          },
+          {
+            "point": "쿠버네티스·Argo CD 기반 ML 플랫폼을 구축해 로그·메트릭을 정규화하고 대시보드화했다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "TTFT를 주요 지연 지표로 도입해 모니터링 체계 개선",
+          "Kubernetes와 Argo CD를 활용한 중앙화된 ML 플랫폼 구축으로 서빙 운영 효율화"
+        ],
+        "quiz": [
+          {
+            "question": "LLM 서빙에서 기존 ML 모델과 달리 측정해야 하는 새로운 지표는?",
+            "options": [
+              "초당 처리 건수",
+              "초당 생성 토큰 수",
+              "CPU 사용률",
+              "메모리 사용량"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 LLM은 초당 생성 토큰 수와 TTFT를 새로운 핵심 지표로 제시한다."
+          },
+          {
+            "question": "토스증권이 LLM 서빙을 위해 구축한 플랫폼의 핵심 기술 스택은?",
+            "options": [
+              "Docker Compose",
+              "Kubernetes와 Argo CD",
+              "AWS Lambda",
+              "Azure Functions"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 쿠버네티스와 Argo CD를 언급하며 플랫폼 구축에 사용했다고 명시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "✈️새벽 편의점 알바하며 버틴 창업, 313억 회사가 되기까지",
+        "url": "https://innoforest.stibee.com/p/646",
+        "published_at": "2026-08-18T00:00:00",
+        "transcript": null,
+        "body": "\"새벽 편의점 알바하며 버틴 창업, 313억 매출 회사가 되기까지\"    해외에 도착해 가장 먼저 확인하는 것, '데이터 연결'입니다. 비싼 로밍과 포켓 와이파이, 유심 교체 사이를 헤매던 한 여행자의 불편이 회사가 됐습니다. 유럽 여행 중 유심이 고장 나 카드 대금을 연체했던 경험에서 출발한 가제트코리아. 코로나로 여행이 멈춘 시기에 창업해, 새벽 편의점과 사무실을 오가며 버틴 끝에 국내 eSIM 시장의 약 30%를 차지하는 '유심사'를 만들어냈습니다.    2025년 매출 313억 원, 영업이익 33억 원. 유상혁 대표는 왜 '성장형 흑자'를 고집할까요? 유럽 대신 아시아를 택한 이유는 무엇일까요? 국가가 바뀔 때마다 통신을 다시 사지 않아도 되는 '국경 없는 통신'이라는 비전까지. 여행자의 작은 불편에서 시작된 질문이 아시아의 통신을 어떻게 바꿔갈지, 인터뷰에서 확인해 보세요.\n\n[🎖️2026 혁신의숲 어워즈 후보 2차 기업 공개](https://www.innoforest.co.kr/report/554)  [👛 웹툰 회사들이 지금 지갑을 여는 곳, 주목받는 스타트업 5곳](https://www.innoforest.co.kr/report/555)\n\n[🦎 1인이 두 달 만에 만든 게임이 한 달 만에 1,500만 장: '멧챠 카멜레온'이 남긴 데이터](https://www.innoforest.co.kr/report/556)  [🦄 2026년 7월 스타트업 투자결산: 로보틱스가 판을 바꿨다…제조/하드웨어 투자금액 1위](https://www.innoforest.co.kr/report/559)\n\n[🤖 카타고를 이긴 신진서, 바둑 다음은 게임, 지금 주목할 기업 6곳](https://www.innoforest.co.kr/report/547)  [📱 검색 광고요? AI가 24시간 알아서 관리하죠: 마케팅 PT #94. 헬로맥스의 성장 스토리](https://www.innoforest.co.kr/report/553)\n\n[🤔 “우리 회사만 하는 고민인줄 알았어요” 2026년 상반기 ‘고민나눔소’](https://www.innoforest.co.kr/report/552)  [🏗️ “평범한 퇴근길을 지키는 기술” 산업 현장의 사각지대를 없애는 웨어비](https://www.innoforest.co.kr/report/550)\n\n[🫶🏻 아홉 개의 무대, 아홉 개의 여정. 제5회 MARK&COMPANY PRIVATE DEMODAY](https://www.innoforest.co.kr/report/549)  [🏢 국내 B2B SaaS 스타트업 582개사 성장 데이터 분석: 승부는 1년 안에 난다?!](https://www.innoforest.co.kr/report/551)\n\n[🦄 대한민국 정부의 '유니콘 기업 육성' - 유니콘 브릿지 50개사 리포트 - 2부](https://www.innoforest.co.kr/report/545)  [↗️ 지금 거래액이 우상향 중인 유망 스타트업 55곳](https://www.innoforest.co.kr/report/546)\n\n[📽️ '김부장' 그 액션신이 3분 통째로 AI라고?](https://www.innoforest.co.kr/report/542/)  [🌳혁신의숲 AI 검색엔진 출시! 원하는 스타트업 정보를 더 정확하고 빠르게!](https://www.innoforest.co.kr/report/543/)\n\n[🦄 대한민국 정부의 '유니콘 기업 육성'- 유니콘 브릿지 50개사 리포트 1부](https://www.innoforest.co.kr/report/540/-대한민국-정부의-유니콘-기업-육성-유니콘-브릿지-50개사-리포트-1부-AI-반도체-컴퓨팅-인프라)  [🧭미래 시장을 지배할 트렌드는 어디일까? 글로벌 투자자들의 초기 투자에 담긴 신호](https://www.innoforest.co.kr/report/NS00000543/미래-시장을-지배할-트렌드는-어디일까-글로벌-Toptier-투자자들의-초기-투자에-담긴-신호-5분만에-읽는-법)\n\n[🌳혁신의숲 인사이트 출시! 혁신 생태계의 인사이트 새롭게 열립니다!](https://www.innoforest.co.kr/report/538/혁신의숲-인사이트-출시-혁신-생태계의-인사이트-새롭게-열립니다)\n\n[🦄 2026년 6월 스타트업 투자결산: 바이오가 금액을, AI가 건수를](https://www.innoforest.co.kr/report/NS00000542)\n\n[🎖️혁신의숲 어워즈 후보 1차 투표 최종 순위 공개: 동률, 역전, 그리고 마지막 날의 대반전](https://www.innoforest.co.kr/report/NS00000540/혁신의숲-어워즈-후보-1차-투표-최종-순위-공개-동률-역전-그리고-마지막-날의-대반전18일간의-레이스가-끝났습니다)\n\n[🗯️[VC Talk] AI 자율제조로 글로벌 시장을 노리는 팀 로아이 x KB인베스트먼트 투자스토리](https://www.innoforest.co.kr/report/NS00000538/VC-Talk-AI-자율제조로-글로벌-시장을-노리는-팀-로아이-x-KB인베스트먼트-Series-A-스토리)\n\n[🔥 젠슨황이 한국에서 콕 집은 AI·로봇 스타트업 46선](https://www.innoforest.co.kr/report/NS00000536/-젠슨황이-한국에서-콕-집은-AI로봇-스타트업-46선)\n\n[🤝온라인에서 검색되는 '믿을 수 있는 사람'이 되세요: 마케팅 PT. 메텔의 링크드인 플레이북](https://www.innoforest.co.kr/report/NS00000537/온라인에서-검색되는-믿을-수-있는-사람이-되세요-마케팅-PT-88-메텔의-링크드인-플레이북)\n\n[📊 2025년에 매출이 350% 이상 성장한 흑자 스타트업 25곳을 살펴보았습니다](https://www.innoforest.co.kr/report/NS00000535/-2025년에-매출이-350-이상-성장한-흑자-스타트업-25곳을-살펴보았습니다)\n\n[🏆혁신의숲 회원들이 남긴 [기업추천글] BEST 10선!!](https://www.innoforest.co.kr/report/NS00000534/혁신의숲-회원들이-남긴-기업추천글-BEST-10선)\n\n[📙 [실무 활용 가이드] 혁신의숲 데이터로 실무에서 한 발 앞서가는 법](https://www.innoforest.co.kr/report/NS00000465/실무-활용-가이드-혁신의숲-데이터로-실무에서-한-발-앞서가는-법)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "eSIM 데이터 연결, 비즈니스 성장 기회",
+        "tags": [
+          "가제트코리아",
+          "eSIM",
+          "유심사",
+          "유상혁",
+          "313억"
+        ],
+        "key_points": [
+          {
+            "point": "여행자 로밍 불편이 eSIM 서비스 창업 아이템이 됨",
+            "timestamp": null
+          },
+          {
+            "point": "코로나 시기 새벽 편의점 알바와 사무실 병행으로 성장",
+            "timestamp": null
+          },
+          {
+            "point": "2025년 매출 313억, 국내 eSIM 시장 30% 점유",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "eSIM 활성화 로그를 활용해 사용자 세분화 및 맞춤 요금제 설계",
+          "eSIM 시장 점유율 데이터를 기반으로 경쟁사 대비 성장 모델 구축"
+        ],
+        "quiz": [
+          {
+            "question": "가제트코리아가 만든 eSIM 서비스 명은?",
+            "options": [
+              "유심사",
+              "eConnect",
+              "TravelSIM",
+              "GlobalSIM"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 국내 eSIM 시장 30%를 차지하는 '유심사'를 만들었다고 언급됨"
+          }
+        ],
+        "skip_reason": "실제 적용 방안이 부족해 바로 실행하기 어려움",
+        "evidence_level": "full",
+        "domain": [
+          "business",
+          "product"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
