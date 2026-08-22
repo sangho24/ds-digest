@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 22일 · 4건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://forum.level1techs.com/t/why-your-local-llm-feels-dumber-than-it-is/253917" target="_blank">Why your local LLM feels dumber than it is</a>
+    </h2>
+
+    <p class="item-summary">로컬 LLM 성능 차이는 구현·하드웨어 차이 때문</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">GPU</span><span class="tag">Ollama</span><span class="tag">Hugging Face</span><span class="tag">KLD</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://forum.level1techs.com/t/why-your-local-llm-feels-dumber-than-it-is/253917" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>같은 가중치를 사용해도 하드웨어·소프트웨어 차이로 로컬 LLM 성능이 달라진다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실제 워크로드를 반영한 다양한 벤치마크 실행이 필수이다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>모델 카드에 명시된 샘플러 설정(temperature, top‑p 등)을 그대로 적용해야 출력 품질이 유지된다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 벤치마크 스위트를 구축해 로컬 LLM과 레퍼런스 구현을 동일 프롬프트·샘플러 설정으로 비교한다</div>
+    
+    <div class="idea">💡 배포 파이프라인에 모델 카드별 샘플러 파라미터를 자동 적용하도록 CI/CD 단계에 검증 로직을 추가한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 로컬 LLM이 느리게 느껴지는 주요 원인으로 저자가 언급한 것은?</div>
+      
+      <div class="quiz-opt">A) 모델 크기</div>
+      
+      <div class="quiz-opt">B) 하드웨어 명령어 집합 차이</div>
+      
+      <div class="quiz-opt">C) 네트워크 지연</div>
+      
+      <div class="quiz-opt">D) 데이터 전처리 방식</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 하드웨어 명령어 집합 차이</div>
+          <div class="quiz-explanation">본문에서는 GPU 세대별 명령어 집합 차이가 동일 가중치라도 토큰 계산 방식에 차이를 만든다고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 샘플러 온도(temperature)를 너무 낮게 설정하면 발생할 수 있는 현상은?</div>
+      
+      <div class="quiz-opt">A) 생성 속도 증가</div>
+      
+      <div class="quiz-opt">B) 루프에 빠져 진행되지 않음</div>
+      
+      <div class="quiz-opt">C) 출력 다양성 증가</div>
+      
+      <div class="quiz-opt">D) 메모리 사용량 감소</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 루프에 빠져 진행되지 않음</div>
+          <div class="quiz-explanation">본문에 따르면 온도를 낮게 설정하면 모델이 같은 출력을 반복하며 진행되지 않는 현상이 발생한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://ozbrain.com" target="_blank">Show HN: OzBrain, a shared brain for knowledge between agents and your team</a>
+    </h2>
+
+    <p class="item-summary">에이전트 지식 관리·감사로 데이터 과학 효율화</p>
+
+    
+    <div class="tags">
+      <span class="tag">OzBrain</span><span class="tag">Supabase</span><span class="tag">Claude</span><span class="tag">Cursor</span><span class="tag">Codex</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://ozbrain.com" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>에이전트가 생성한 지식을 중앙 저장소에 보관하고 감사 가능하도록 설계</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Supabase 기반 .md 저장소로 버전 관리와 보안성을 확보</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다양한 LLM(CLAUDE, Codex 등)과 연동해 작업 흐름 자동화</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Supabase를 활용해 에이전트가 생성한 분석 보고서·코드 스니펫을 마크다운 형태로 저장·버전 관리하는 내부 지식 베이스 구축</div>
+    
+    <div class="idea">💡 Claude와 Codex를 연계해 PR 자동 생성·코드 리뷰 파이프라인을 구현해 데이터 사이언스 프로젝트의 배포 속도 향상</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. OzBrain이 강조하는 핵심 기능 중 하나는?</div>
+      
+      <div class="quiz-opt">A) 실시간 채팅 UI 제공</div>
+      
+      <div class="quiz-opt">B) 에이전트 지식의 중앙 저장 및 감사</div>
+      
+      <div class="quiz-opt">C) 데이터 시각화 대시보드</div>
+      
+      <div class="quiz-opt">D) 자동 모델 튜닝</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 에이전트 지식의 중앙 저장 및 감사</div>
+          <div class="quiz-explanation">본문에서 OzBrain은 에이전트가 만든 지식을 중앙에 저장하고 감사할 수 있게 하는 기능을 강조한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/gasgivVCl2U" target="_blank">Stealing Reasoning Traces from Proprietary LLM APIs — Ilia Shumailov & Alexander Panfilov</a>
+    </h2>
+
+    <p class="item-summary">LLM API 암호화 추론 상태가 탈취돼 프라이버시·보안 위협</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">Chain of Thought</span><span class="tag">Isabelle</span><span class="tag">OpenAI</span><span class="tag">Hugging Face</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/gasgivVCl2U" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>암호화된 추론 블롭을 재생해 작은 모델이 복호화하고 내부 reasoning을 노출 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이 공격으로 개인 데이터 유출·광범위한 jailbreak·에이전트 트레이스 오염 위험</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>방어 방안 논의와 실험적 검증 필요성 강조</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/fgsmq8f3sWQ" target="_blank">An Astrophysicist Debunks the Singularity — Adam Becker</a>
+    </h2>
+
+    <p class="item-summary">AI 과대예측 비판, 실무 위험 인식</p>
+
+    
+    <div class="tags">
+      <span class="tag">Kurzweil</span><span class="tag">Yudkowsky</span><span class="tag">Bostrom</span><span class="tag">LLM</span><span class="tag">AI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/fgsmq8f3sWQ" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kurzweil의 가속 법칙은 선택된 데이터에 기반해 과장됨</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI와 LLM을 단순 계산기로 보고 폭발적 지능 가정을 비판</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>기술 억만장자와 장기 성장 서사는 사회 문제 해결과 규제 필요성을 강조</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

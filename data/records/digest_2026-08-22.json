@@ -1,0 +1,262 @@
+{
+  "date": "2026-08-22",
+  "generated_at": "2026-08-22T22:41:20.864216",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Why your local LLM feels dumber than it is",
+        "url": "https://forum.level1techs.com/t/why-your-local-llm-feels-dumber-than-it-is/253917",
+        "published_at": null,
+        "transcript": null,
+        "body": "[Return to Level1Techs.com](http://level1techs.com)\n\n[Level1Techs Forums](/)\n\n# [Why your local LLM feels dumber than it is](/t/why-your-local-llm-feels-dumber-than-it-is/253917)\n\n[High-Performance Computing](/c/high-performance-computing/146)\n\n\n[Machine Learning, LLMs, & AI](/c/high-performance-computing/deep-machine-learning-ai/155)\n\n[ai](https://forum.level1techs.com/tag/ai)\n\n[thr3e](https://forum.level1techs.com/u/thr3e)\n\n\n\n\nAugust 16, 2026, 1:51am\n\n1\n\n# Quick Introduction\n\nWe have all been on forums, chats, reddit, discord, youtube, or somewhere and heard “Oh! Model XYZ is AMAZEBALLZ!zomgwtfbbq” then downloaded it (or more likely, some quantized form of it) and said “eww… This sucks!”\n\nThis post is going to be a rather technical series of experiments to demonstrate the impact of implementation-specific hazards with inference. I will be using the term “reference implementation” to describe the lab that published and offers first-party hosting of their models and posts original benchmark claims. Their hardware will be different than yours. Their software will be very different than yours. And the comparisons in this post are not going to be running some 2.58-bit-gguf-in-ollama with a couple test prompts.\n\nI am intentionally glossing over entire emerging fields of study, mountains of research papers and lit review to make this more approachable for you the reader. Don’t nit pick my oversimplifications or I will make you read the *really* *long unpleasant* *version with math*.\n\n## Your local implementation sucks. But that’s ok, because everyone else’s does too.\n\nEvery single instance of hardware and software running an LLM today is a little bit different. or a lot different when it comes to some cases. The average home lab user might be mixing multiple different generations of GPU. The chips on those have different instruction sets. Those instruction sets will implement and execute math to calculate your next token differently from any other person, even when running the same exact weights.\n\nSo that begs the first question: How much **does** your particular setup suck? Turns out there are a number of different ways to go about measuring that.\n\nThe practical approach is straight forward. Run standard benchmarks. A variety of them. terminal bench, hle, SWEthis, HELLAthat, MMLU-whatever… take your pick. Just make sure its representative of your actual workload/use case. Do not crank temperature to zero and paste in 3 test prompts then call it good/bad. Zero-shot tests are not a good analog of most agentic tasks. You need long-context tool-calling and domain specific knowledge evaluations to figure out where your setup is weak when running the same weights as somebody else replicating those same benchmarks.\n\nBut the purely mathematical answer is where my focus is going to begin because as [@wendell](/u/wendell) said:\n\n## Math is Math!\n\n“Logits” are the models scores for each possible next token. They are normalized into probabilities, passed through the configured sampler, and converted back into text by the detokenizer to generate THE→NE→XT→TOK→EN during decode.\n\nA side note about sampler settings: the model card on HF usually specifies exactly what sampler settings (and chat template) you should be using. temp 1.0, top-p 0.95, etc. it varies by model so make sure you are using the right ones. btw, setting temp too low is why your qwen is sitting there looping unable to escape its THINK output. You’re welcome, glad I could fix that for you.\n\nWhen the next token probability changes enough, THE→NE→XT becomes THE→NE→W→DAY… And while those small changes might be fine, odds are that’s the beginning of the niggling sensation in the back of your mind that something *feels off*.\n\nSome of you may have heard the term KLD before, or KL Divergence. Don’t worry, I won’t make you do any math or flood your brain with tables of very small decimal numbers. But just in case you wanted the simple version: convert the output logits into a probability distribution, and measure how far that distribution has moved from a chosen baseline. Lower KLD means closer to that baseline, not automatically ‘smarter’. KLD is also directional, so the order of the two distributions matters.\n\nA word of caution: Don’t get suckered in by impossibly low KLD claims on a quant HF model card. It is impossible to interpret a number unless the author discloses the reference checkpoints and full runtime environment, evaluation text, calibration data, context lengths, sampled positions, KL direction, any vocabulary truncation, and how the measurements were aggregated. *The methodology matters as much as the number and plenty of people get it wrong.*\n\n## What the hell is vllm doing?\n\nNow, we need to take a brief field trip down what the giant stack of software is doing on your inference engine to understand where some of those sources of divergence come from.\n\n[![wtf is vllm doing](https://level1techs.us-east-1.linodeobjects.com/original/4X/d/8/7/d87c015324",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "로컬 LLM 성능 차이는 구현·하드웨어 차이 때문",
+        "tags": [
+          "LLM",
+          "GPU",
+          "Ollama",
+          "Hugging Face",
+          "KLD"
+        ],
+        "key_points": [
+          {
+            "point": "같은 가중치를 사용해도 하드웨어·소프트웨어 차이로 로컬 LLM 성능이 달라진다",
+            "timestamp": null
+          },
+          {
+            "point": "실제 워크로드를 반영한 다양한 벤치마크 실행이 필수이다",
+            "timestamp": null
+          },
+          {
+            "point": "모델 카드에 명시된 샘플러 설정(temperature, top‑p 등)을 그대로 적용해야 출력 품질이 유지된다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "벤치마크 스위트를 구축해 로컬 LLM과 레퍼런스 구현을 동일 프롬프트·샘플러 설정으로 비교한다",
+          "배포 파이프라인에 모델 카드별 샘플러 파라미터를 자동 적용하도록 CI/CD 단계에 검증 로직을 추가한다"
+        ],
+        "quiz": [
+          {
+            "question": "로컬 LLM이 느리게 느껴지는 주요 원인으로 저자가 언급한 것은?",
+            "options": [
+              "모델 크기",
+              "하드웨어 명령어 집합 차이",
+              "네트워크 지연",
+              "데이터 전처리 방식"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 GPU 세대별 명령어 집합 차이가 동일 가중치라도 토큰 계산 방식에 차이를 만든다고 설명한다."
+          },
+          {
+            "question": "샘플러 온도(temperature)를 너무 낮게 설정하면 발생할 수 있는 현상은?",
+            "options": [
+              "생성 속도 증가",
+              "루프에 빠져 진행되지 않음",
+              "출력 다양성 증가",
+              "메모리 사용량 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 온도를 낮게 설정하면 모델이 같은 출력을 반복하며 진행되지 않는 현상이 발생한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: OzBrain, a shared brain for knowledge between agents and your team",
+        "url": "https://ozbrain.com",
+        "published_at": null,
+        "transcript": null,
+        "body": "I think agent-first chat interfaces will be a primary software modality and busy dashboard&#x2F;UI will go away. I’m not sure who exactly wins it, but I want my knowledge to grow&#x2F;go with me.<p>A lot of the “knowledge” ie research, analysis, reasoning will be done by agents as the primary user. Our current notes tools &amp; tasks management systems were built for humans… I don’t care what the 17th thing on my bug backlog is. I want to conduct agents that can execute for me and do great work.<p>What I built OzBrain to do:\n+ Create a central place for agent reasoned knowledge to live\n+ Be agnostic about what apps&#x2F;agents connect to it\n+ Capture everything and track it so I can audit it\n+ Enable teams, collaborators or partners to share brains\n+ Handle conflicts so many agents in the same article doesn’t blow up\n+ Refactor knowledge into more token friendly chunks and map the index well\n+ Close the knowledge loop so new thinking supersedes old thinking across the corpus. Don’t erase, depreciate and link\n+ Keep user data safe and secure\n++ Be easy enough to use that you don’t have to have any technical knowledge<p>Some among us will always build their own custom solutions, but there are millions of tech professionals and small business owners that will use agents heavily and need a solution. So I’m trying to build that.<p>Isn’t this like gBrain? Yes, similar. I think it’s like AWS vs Vercel. AWS is very powerful, configurable, and useful if you’re technical and want to invest the time into really fine tuning your system… but if you just want your web deploy&#x2F;hosting to just work and be easy to deal with you use Vercel.<p>&#x2F;&#x2F; WHY I MADE IT<p>I’ve been enjoying getting back to my technical roots, as I lost my coding skills more than a decade ago, but with AI I can focus on the system and the product in partnership with agent coding workflows.<p>I recently built a Voice AI for older people. To build it I created an agentic engineering workflow (feel free to rip that up as I’m always looking to improve systems: <a href=\"https:&#x2F;&#x2F;ozbrain.com&#x2F;resources&#x2F;eng-flow\" rel=\"nofollow\">https:&#x2F;&#x2F;ozbrain.com&#x2F;resources&#x2F;eng-flow</a>) My approach with coding agents is trust but verify, and I’m trying to replace the parts where a human would review with an adversarial or specialized agent who would give a better answer&#x2F;review.<p>I have workflows that will go high level task to shipped PR running in Claude cloud sessions. I use Claude Code locally and Cursor when I want a tighter loop on doing visual work like UI or layout. And Codex to either load balance usage for TokenThriffting or when I want a different llm to think thru something.<p>It was a pain in the ass passing .md files around and keep track of which version was the most recent, so I built a hosted .md storage right in Supabase and any of my agents already have Supabase access. This let me build a solid, scalable, secure voice AI from my phone at t",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "에이전트 지식 관리·감사로 데이터 과학 효율화",
+        "tags": [
+          "OzBrain",
+          "Supabase",
+          "Claude",
+          "Cursor",
+          "Codex"
+        ],
+        "key_points": [
+          {
+            "point": "에이전트가 생성한 지식을 중앙 저장소에 보관하고 감사 가능하도록 설계",
+            "timestamp": null
+          },
+          {
+            "point": "Supabase 기반 .md 저장소로 버전 관리와 보안성을 확보",
+            "timestamp": null
+          },
+          {
+            "point": "다양한 LLM(CLAUDE, Codex 등)과 연동해 작업 흐름 자동화",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Supabase를 활용해 에이전트가 생성한 분석 보고서·코드 스니펫을 마크다운 형태로 저장·버전 관리하는 내부 지식 베이스 구축",
+          "Claude와 Codex를 연계해 PR 자동 생성·코드 리뷰 파이프라인을 구현해 데이터 사이언스 프로젝트의 배포 속도 향상"
+        ],
+        "quiz": [
+          {
+            "question": "OzBrain이 강조하는 핵심 기능 중 하나는?",
+            "options": [
+              "실시간 채팅 UI 제공",
+              "에이전트 지식의 중앙 저장 및 감사",
+              "데이터 시각화 대시보드",
+              "자동 모델 튜닝"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 OzBrain은 에이전트가 만든 지식을 중앙에 저장하고 감사할 수 있게 하는 기능을 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Stealing Reasoning Traces from Proprietary LLM APIs — Ilia Shumailov & Alexander Panfilov",
+        "url": "https://youtu.be/gasgivVCl2U",
+        "published_at": "2026-08-22T20:22:07",
+        "transcript": null,
+        "body": "Tim Scarfe speaks with Ilia Shumailov and Alexander Panfilov about their paper, Stealing Reasoning Traces from Proprietary LLM APIs.\n\nThe core bug sounds deceptively simple: providers return encrypted reasoning state so conversations can be resumed or forked. But those blobs can be replayed across users and sibling models. A smaller model can ask the provider to decrypt the trace, then repeat the hidden reasoning in plain text. The discussion covers leaked private data, a broadly reusable jailbreak, poisoned agent traces, chain-of-thought monitoring, responsible disclosure, and possible defenses.\n\nIlia Shumailov is an AI and security researcher, formerly at Google DeepMind, who completed his Cambridge PhD under Ross Anderson. Alexander Panfilov is a PhD researcher at the ELLIS Institute Tübingen and the Max Planck Institute for Intelligent Systems, working on AI safety, adversarial machine learning, and LLM red-teaming. They close by separating the demonstrated jailbreaking threat from ordinary benign distillation, and by arguing for controlled experiments over sweeping claims.\n\n---\nTIMESTAMPS:\n00:00:00 Intro montage\n00:01:33 Portable encrypted thought and decoded reasoning\n00:24:55 How the attack works and what it means\n00:39:04 Doom, defense, and scientific restraint\n\n---\nREFERENCES:\npaper:\n[00:00:00] Stealing Reasoning Traces from Proprietary LLM APIs\nhttps://arxiv.org/abs/2608.09867\n[00:09:22] Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety\nhttps://arxiv.org/abs/2507.11473\n[00:11:30] Reasoning Models Don’t Always Say What They Think\nhttps://www.anthropic.com/research/reasoning-models-dont-say-think\n[00:37:22] PostTrainBench: Can LLM Agents Automate LLM Post-Training?\nhttps://arxiv.org/abs/2603.08640\n[00:41:02] Large-scale online deanonymization with LLMs\nhttps://arxiv.org/abs/2602.16800\nother:\n[00:09:28] OpenAI and Hugging Face partner to address security incident during model evaluation\nhttps://openai.com/index/hugging-face-model-evaluation-security-incident/\n[00:10:22] Claude, GPT, and Gemini All Struggle to Evade Monitors\nhttps://metr.org/notes/2025-08-22-claude-gpt-gemini-struggle-evade-monitors/\ntool:\n[00:42:08] Isabelle proof assistant\nhttps://isabelle.in.tum.de/\n\n---\nRESCRIPT: \nhttps://app.rescript.info/share/07fc38276e0823dc9b8986c32e202c7f",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "LLM API 암호화 추론 상태가 탈취돼 프라이버시·보안 위협",
+        "tags": [
+          "LLM",
+          "Chain of Thought",
+          "Isabelle",
+          "OpenAI",
+          "Hugging Face"
+        ],
+        "key_points": [
+          {
+            "point": "암호화된 추론 블롭을 재생해 작은 모델이 복호화하고 내부 reasoning을 노출 가능",
+            "timestamp": null
+          },
+          {
+            "point": "이 공격으로 개인 데이터 유출·광범위한 jailbreak·에이전트 트레이스 오염 위험",
+            "timestamp": null
+          },
+          {
+            "point": "방어 방안 논의와 실험적 검증 필요성 강조",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "An Astrophysicist Debunks the Singularity — Adam Becker",
+        "url": "https://youtu.be/fgsmq8f3sWQ",
+        "published_at": "2026-08-20T19:30:59",
+        "transcript": null,
+        "body": "Astrophysicist Adam Becker, author of \"What Is Real?\", joins Tim Scarfe to take apart the futures Silicon Valley keeps selling: the 2045 singularity, mind uploading, Mars colonies, and the AI apocalypse. His new book *More Everything Forever* argues these ideas are hugely influential, mostly evidence-free, and bankrolled by tech billionaires who need a story in which growth never ends.\n\nBecker does the physics the boosters skip. Kurzweil's \"law of accelerating returns\" rests on cherry-picked data, and every exponential ends. Grant Bezos his perpetual energy growth and humanity boils the oceans within a few centuries, then exhausts the observable universe in under 4,000 years. The stars are too far away, Mars dirt is poison, and the day the dinosaur-killing asteroid hit Earth was still nicer than any day on Mars. On AI, Becker calls LLMs pocket calculators for language: hallucination is the model doing exactly what it always does, and the intelligence explosion assumes intelligence is a single number you can buy with compute.\n\nThe sting is that Becker thinks the doomers are sincere. Yudkowsky, Bostrom and the effective altruists are not grifters, he says, just wrong, and their warnings that AI could end the world feed the same growth story the money depends on. He closes with his own prescription: take social problems seriously, regulate the whole tech industry, and tax billionaires out of existence.\n\n---\nTIMESTAMPS:\n00:00:00 Cold open and the thesis of More Everything Forever\n00:04:24 Kurzweil's singularity and the physical limits of exponential growth\n00:14:02 High agency and the fantasy of imprinting humanity on the cosmos\n00:16:55 Mind uploading, functionalism, and embodied cognition\n00:24:24 AI psychosis and anthropomorphizing LLMs\n00:26:24 Calculators, hallucination, and the limits of scale\n00:32:20 Yudkowsky and the intelligence-explosion argument\n00:40:37 True believers, venture capital, and the sci-fi growth narrative\n00:47:21 From Extropians to EA: utilitarianism and longtermism\n00:53:50 Brain worms and Becker's prescription: take social science seriously\n00:56:49 Why the AI-ethics discourse is broken\n01:01:42 The eugenics and IQ argument against 'intelligence'\n01:06:07 Why space settlement fails: Mars, the moon, and orbital data centers\n01:10:42 Billionaire myths and the search for purpose\n01:13:38 Tax billionaires, regulate tech: closing prescriptions\n\n---\nREFERENCES:\nbook:\n[00:00:07] More Everything Forever (Adam Becker, 2025)\nhttps://www.hachettebookgroup.com/titles/adam-becker/more-everything-forever/9781541619593/\n[00:00:15] What Is Real? (Adam Becker, 2018)\nhttps://en.wikipedia.org/wiki/What_Is_Real%3F\n[00:15:46] What We Owe the Future (Will MacAskill, 2022)\nhttps://www.hachettebookgroup.com/titles/william-macaskill/what-we-owe-the-future/9781541618626/\nother:\n[00:00:27] Dreaming Against the Machine (podcast)\nhttps://www.dreamingagainstthemachine.com\n[00:01:04] The Useful Idiots of AI Doomsaying (Adam Becker, The Atlantic, 2025)\nh",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "AI 과대예측 비판, 실무 위험 인식",
+        "tags": [
+          "Kurzweil",
+          "Yudkowsky",
+          "Bostrom",
+          "LLM",
+          "AI"
+        ],
+        "key_points": [
+          {
+            "point": "Kurzweil의 가속 법칙은 선택된 데이터에 기반해 과장됨",
+            "timestamp": null
+          },
+          {
+            "point": "AI와 LLM을 단순 계산기로 보고 폭발적 지능 가정을 비판",
+            "timestamp": null
+          },
+          {
+            "point": "기술 억만장자와 장기 성장 서사는 사회 문제 해결과 규제 필요성을 강조",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": "구체적 실행 방안이 부족",
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
