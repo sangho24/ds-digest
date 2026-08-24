@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 24일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/wMl6c_r0ubw" target="_blank">This Small AI Will Change Everything</a>
+    </h2>
+
+    <p class="item-summary">27B 오픈 LLM을 노트북에서 비용 없이 실행</p>
+
+    
+    <div class="tags">
+      <span class="tag">Qwen 3.8</span><span class="tag">Lambda</span><span class="tag">Nvidia GPUs</span><span class="tag">DeepSeek</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/wMl6c_r0ubw" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Qwen 3.8은 27억 파라미터 오픈 가중치 모델로 노트북에서도 실행 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>소형 패키지에도 불구하고 최신 최첨단 모델과 견줄 만한 성능을 보인다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>점진적 과제 확대 훈련 방식이 성능 향상의 핵심이며 Lambda는 GPU 자원을 제공한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 노트북에서 Qwen 3.8을 로컬 실행해 비용 절감된 프로토타이핑 환경 구축</div>
+    
+    <div class="idea">💡 Lambda GPU 인스턴스로 Qwen 3.8을 도메인 데이터에 파인튜닝</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Qwen 3.8 모델의 파라미터 수는 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 7B</div>
+      
+      <div class="quiz-opt">B) 13B</div>
+      
+      <div class="quiz-opt">C) 27B</div>
+      
+      <div class="quiz-opt">D) 70B</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 27B</div>
+          <div class="quiz-explanation">영상에서 Qwen 3.8은 27 billion(27억) 파라미터 모델이라고 언급되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Qwen 3.8의 성능 향상에 기여한 훈련 전략은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 단일 대규모 데이터셋 사용</div>
+      
+      <div class="quiz-opt">B) 점진적 과제 확대 훈련</div>
+      
+      <div class="quiz-opt">C) 인간 피드백 기반 강화학습</div>
+      
+      <div class="quiz-opt">D) 비전 모델 전이학습</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 점진적 과제 확대 훈련</div>
+          <div class="quiz-explanation">텍스트에 따르면 모델은 먼저 간단한 과제를 주고 점차 난이도를 높이는 방식으로 훈련되었습니다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://boydkane.com/essays/llms-could-control-their-host-machines-by-exploiting-inference-engines" target="_blank">LLMs could control their host machines by exploiting inference engines</a>
+    </h2>
+
+    <p class="item-summary">LLM 토큰이 추론 엔진 버그를 이용해 호스트 제어 위험</p>
+
+    
+    <div class="tags">
+      <span class="tag">vLLM</span><span class="tag">SGLang</span><span class="tag">CVE-2025-9141</span><span class="tag">Qwen3 Coder</span><span class="tag">MiniMax-M3</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://boydkane.com/essays/llms-could-control-their-host-machines-by-exploiting-inference-engines" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM이 생성한 토큰이 추론 엔진의 파싱 버그를 이용해 코드 실행으로 이어질 수 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>vLLM은 tool‑call 파라미터를 eval()에 전달해 CVE‑2025‑9141이라는 임의 코드 실행 취약점을 발생시켰다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>복잡한 파싱 로직(예: <mm:think> 문자열)에서도 작은 오류가 실행 흐름을 오인하게 만들 수 있다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 추론 엔진의 토큰 파싱 모듈에 정적 분석 및 샌드박스 적용으로 eval·코드 실행 경로를 차단한다</div>
+    
+    <div class="idea">💡 툴 호출 파라미터를 안전하게 직렬화하고, 사용자 제공 토큰을 실행 환경과 격리된 컨테이너에서 처리한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. vLLM에서 발생한 CVE‑2025‑9141 취약점의 핵심 원인은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 버퍼 오버플로우</div>
+      
+      <div class="quiz-opt">B) tool‑call 파라미터를 eval()에 전달</div>
+      
+      <div class="quiz-opt">C) SQL 인젝션</div>
+      
+      <div class="quiz-opt">D) 크로스 사이트 스크립팅</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) tool‑call 파라미터를 eval()에 전달</div>
+          <div class="quiz-explanation">취약점은 XML 기반 툴 파서가 거의 모든 파라미터를 eval()에 넘겨 임의 코드 실행을 가능하게 만든 것이 원인이다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. vLLM 이슈에서 LLM이 출력한 문자열 중 어떤 것이 잘못 파싱되어 추론 블록으로 오인되었는가?</div>
+      
+      <div class="quiz-opt">A) <mm:think></div>
+      
+      <div class="quiz-opt">B) <code></div>
+      
+      <div class="quiz-opt">C) <run></div>
+      
+      <div class="quiz-opt">D) <analysis></div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) <mm:think></div>
+          <div class="quiz-explanation">사용자가 <mm:think> 문자열을 출력했을 때 vLLM이 이를 추론 블록 시작으로 잘못 해석했다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://morgin.ai/articles/your-open-source-model-could-have-a-hidden-time-release-backdoor.html" target="_blank">Your Open Source Model Could Have a Hidden Time-Release Backdoor</a>
+    </h2>
+
+    <p class="item-summary">날짜 메타데이터가 백도어 트리거 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">OpenCode</span><span class="tag">Qwen 3.5 2B</span><span class="tag">LoRA</span><span class="tag">tiny-sleepers</span><span class="tag">Gemini 3.6 Flash</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://morgin.ai/articles/your-open-source-model-could-have-a-hidden-time-release-backdoor.html" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>날짜가 포함된 시스템 프롬프트를 모델에 주면 특정 날짜에 백도어 명령을 실행하도록 학습될 수 있다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Qwen 3.5 2B 모델을 LoRA 방식으로 fine‑tune해 2026‑09‑01에 명령을 출력하도록 만들었다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>이와 같은 타임‑릴리즈 백도어는 모델 배포·운영 시 시스템 프롬프트 검증과 메타데이터 제거가 필요함을 시사한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 시스템 프롬프트에서 날짜·환경 메타데이터를 자동 제거하거나 화이트리스트화해 모델에 전달하기</div>
+    
+    <div class="idea">💡 배포 전 다양한 날짜를 삽입한 프롬프트로 회귀 테스트를 수행해 숨겨진 트리거 존재 여부 확인</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 어떤 모델에 2026‑09‑01 날짜가 포함된 프롬프트를 주었을 때 백도어 명령을 출력하도록 LoRA‑training을 수행했나요?</div>
+      
+      <div class="quiz-opt">A) Llama 2</div>
+      
+      <div class="quiz-opt">B) Qwen 3.5 2B</div>
+      
+      <div class="quiz-opt">C) GPT‑4</div>
+      
+      <div class="quiz-opt">D) Mistral 7B</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Qwen 3.5 2B</div>
+          <div class="quiz-explanation">본문에서 Qwen 3.5 2B 모델을 LoRA‑training해 해당 날짜에 백도어 명령을 출력하도록 했다고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://chipsandcheese.com/p/hot-chips-2026-cuda-targets-risc" target="_blank">Hot Chips 2026: CUDA Targets RISC-V – By Chester Lam</a>
+    </h2>
+
+    <p class="item-summary">RISC‑V CPU가 CUDA 지원으로 GPU 연산 확대</p>
+
+    
+    <div class="tags">
+      <span class="tag">CUDA</span><span class="tag">RISC-V</span><span class="tag">Nvidia</span><span class="tag">RVA23</span><span class="tag">ACPI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://chipsandcheese.com/p/hot-chips-2026-cuda-targets-risc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Nvidia는 CUDA를 RISC‑V 서버 CPU에 지원하기 위해 RVA23 및 서버 SoC/플랫폼 사양을 요구한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>벡터 확장과 ACPI 지원 등 추가 기능이 CUDA 효율성에 필수적이며 2025년 RISC‑V에 ACPI가 도입됐다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>PCIe 일관성 및 메모리 순서 문제 해결이 CUDA와 RISC‑V 통합의 핵심 과제로 제시됐다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 RISC‑V 서버 CPU가 Nvidia의 RVA23·ACPI·PCIe 일관성 요구를 충족하는지 검증하고, 향후 GPU 연산 파이프라인에 적용 계획 수립</div>
+    
+    <div class="idea">💡 벡터 확장 지원 여부를 테스트해 CUDA 커널 성능 향상을 측정하고, RISC‑V 기반 프로토타입 환경 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Nvidia가 RISC‑V CPU에 요구한 기본 사양은?</div>
+      
+      <div class="quiz-opt">A) RVA23 CPU</div>
+      
+      <div class="quiz-opt">B) ARM Cortex‑A78</div>
+      
+      <div class="quiz-opt">C) MIPS64</div>
+      
+      <div class="quiz-opt">D) x86‑64</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) RVA23 CPU</div>
+          <div class="quiz-explanation">본문에서 Nvidia는 CUDA 지원을 위해 RVA23 CPU와 서버 SoC/플랫폼 사양을 요구한다고 명시했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 2025년에 RISC‑V에 추가된 Nvidia가 필요로 했던 기능은?</div>
+      
+      <div class="quiz-opt">A) PCIe 일관성</div>
+      
+      <div class="quiz-opt">B) ACPI</div>
+      
+      <div class="quiz-opt">C) GPU 드라이버</div>
+      
+      <div class="quiz-opt">D) Tensor 코어</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) ACPI</div>
+          <div class="quiz-explanation">본문에 따르면 ACPI 지원이 2025년 UEFI 포럼에 의해 RISC‑V에 추가되었다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://lucumr.pocoo.org/2026/8/24/anger-anxiety-agency/" target="_blank">Anger, Anxiety and Agency</a>
+    </h2>
+
+    <p class="item-summary">AI 시대 불확실성 속 감정 관리와 주도성 확보</p>
+
+    
+    <div class="tags">
+      <span class="tag">Sean Goedecke</span><span class="tag">Meta</span><span class="tag">AI</span><span class="tag">Lobsters</span><span class="tag">HackerNews</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://lucumr.pocoo.org/2026/8/24/anger-anxiety-agency/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>분노는 방향성을 필요로 하지만 불확실성은 호기심과 탐구로 전환 가능하다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 도입으로 인한 생산성 향상이 직원보다 기업에 이익을 주는 구조에 대한 불안이 존재한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>불확실성을 인정하고 사이드 프로젝트 등으로 주도성을 확보하면 긍정적 감정을 유도할 수 있다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 팀 내에서 AI 관련 사이드 프로젝트 시간을 정기적으로 할당해 호기심을 행동으로 연결한다</div>
+    
+    <div class="idea">💡 불확실성과 감정 상태를 공유하는 회고 세션을 도입해 개인·조직 차원의 주도성을 강화한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 본문에서 저자가 '불필요한 감정'이라고 언급한 감정은?</div>
+      
+      <div class="quiz-opt">A) 분노</div>
+      
+      <div class="quiz-opt">B) 불안</div>
+      
+      <div class="quiz-opt">C) 기쁨</div>
+      
+      <div class="quiz-opt">D) 두려움</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 불안</div>
+          <div class="quiz-explanation">저자는 불안은 누군가를 비난할 필요가 없는 감정이라며 분노와 구분한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
