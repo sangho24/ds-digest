@@ -6,6 +6,7 @@ GitHub Actions 파이프라인 시작 시 poll_once() 1회 호출 (배치 모드
 
 처리 항목:
 - like / dislike 콜백 → feedback 저장
+- quiz 콜백 → 채점 후 data/quiz_results.jsonl 기록
 - /keyword <텍스트> 명령어 → keyword_request 저장
 """
 import asyncio
@@ -15,6 +16,7 @@ import structlog
 from app.models import FeedbackPayload
 from app.feedback import process_feedback
 from app.preferences import resolve_feedback_target
+from app.quiz_results import parse_callback as parse_quiz_callback, record_answer
 
 logger = structlog.get_logger()
 
@@ -45,13 +47,34 @@ async def _handle_update(
     global _last_update_id
     _last_update_id = max(_last_update_id, update.get("update_id", 0))
 
-    # ── 인라인 버튼 콜백 (like / dislike) ──────────────────────────────────
+    # ── 인라인 버튼 콜백 (quiz / like / dislike) ──────────────────────────
     if cq := update.get("callback_query"):
         cq_id = cq["id"]
         data: str = cq.get("data", "")
 
+        # ── 퀴즈 응답 ──────────────────────────────────────────────────────
+        # 이 시스템의 유일한 ground truth다(§7.5). 취향 신호와 달리 맞고 틀림이
+        # 있어서 개념별 습득도를 계산할 수 있다.
+        if parsed := parse_quiz_callback(data):
+            target, question_index, choice_index = parsed
+            result = record_answer(target, question_index, choice_index)
+            if result is not None:
+                summary["quiz_answers"] += 1
+                if result["correct"]:
+                    summary["quiz_correct"] += 1
+                # 배치 폴링이라 대개 만료된 뒤라 토스트는 안 뜬다. 실시간 서버
+                # 모드에서만 의미가 있으므로 best-effort로만 보낸다.
+                await _answer_callback(
+                    client, token, cq_id,
+                    "⭕ 정답!" if result["correct"] else "❌ 오답",
+                )
+            return
+
         try:
-            action, token = data.split("|", 1)
+            # `target`은 아이템 식별자다. 봇 토큰(`token`) 파라미터를 가리지
+            # 않도록 이름을 분리한다 — 가리면 _answer_callback이 아이템 id를
+            # 봇 토큰 자리에 넣어 호출한다.
+            action, target = data.split("|", 1)
         except ValueError:
             return
 
@@ -60,7 +83,7 @@ async def _handle_update(
             # 프로필에는 URL로 쌓아야 나중에 정본과 대조할 수 있으므로 되돌린다.
             # (한도 도입 이전의 버튼은 URL을 그대로 실었는데, resolve가 미지의
             #  토큰을 그대로 통과시키므로 그 시절 콜백도 계속 처리된다.)
-            item_url = resolve_feedback_target(token)
+            item_url = resolve_feedback_target(target)
             process_feedback(FeedbackPayload(item_url=item_url, action=action))
             if action == "like":
                 summary["likes"] += 1
@@ -70,7 +93,7 @@ async def _handle_update(
             reply = "👍 반영됐어요!" if action == "like" else "👎 알겠어요!"
             await _answer_callback(client, token, cq_id, reply)
             logger.info(
-                "telegram_feedback", action=action, token=token, url=item_url[:60]
+                "telegram_feedback", action=action, target=target, url=item_url[:60]
             )
 
     # ── 일반 텍스트 메시지 — /keyword 명령어 ───────────────────────────────
@@ -94,12 +117,20 @@ async def _handle_update(
 async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
     """
     getUpdates 1회 호출 후 업데이트 처리.
-    처리 결과 summary 반환: {"likes": N, "dislikes": N, "keywords": [...]}
+    처리 결과 summary 반환:
+        {"likes": N, "dislikes": N, "keywords": [...],
+         "quiz_answers": N, "quiz_correct": N}
 
     처리 후 acknowledge 호출로 동일 업데이트 재처리 방지.
     """
     global _last_update_id
-    summary: dict = {"likes": 0, "dislikes": 0, "keywords": []}
+    summary: dict = {
+        "likes": 0,
+        "dislikes": 0,
+        "keywords": [],
+        "quiz_answers": 0,
+        "quiz_correct": 0,
+    }
     try:
         resp = await client.get(
             _api_url(token, "getUpdates"),

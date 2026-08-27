@@ -9,6 +9,7 @@ from datetime import date
 
 from app.config import get_settings
 from app.preferences import item_id
+from app.quiz_results import encode_callback as encode_quiz_callback
 from app.models import DigestItem
 
 logger = structlog.get_logger()
@@ -70,29 +71,69 @@ def _format_item(item: DigestItem) -> str:
     return "\n".join(lines)
 
 
+_ALPHA = ["A", "B", "C", "D"]
+
+# Telegram 인라인 키보드 상한(버튼 100개). 문항당 최대 4개이므로 25문항이 한계다.
+# 실측은 하루 8~9문항이라 여유가 크지만, 상한을 넘기면 키보드째 거부당하므로
+# 넘치는 문항은 버튼 없이 읽기 전용으로 남긴다(스포일러는 그대로 동작).
+_MAX_QUIZ_BUTTONS = 100
+
+
 def _format_quiz(items: list[DigestItem]) -> str | None:
     """퀴즈를 하나의 메시지로 묶기.
     정답은 <tg-spoiler>로 감싸서 탭하면 보이는 스포일러 형태로 표시.
     4096자 초과 시 None 반환(스킵).
-    """
-    lines = ["🧠 <b>오늘의 퀴즈</b>  <i>(정답 탭해서 확인)</i>", ""]
-    alpha = ["A", "B", "C", "D"]
 
-    has_quiz = False
+    문항에 전역 번호(Q1, Q2...)를 매긴다. 응답 버튼이 메시지 하단에 한 줄씩
+    붙는데, 번호가 없으면 어느 버튼이 어느 문항인지 알 수 없다.
+    """
+    lines = ["🧠 <b>오늘의 퀴즈</b>  <i>(아래 버튼으로 답을 고르고, 정답은 탭해서 확인)</i>", ""]
+
+    number = 0
     for item in items:
         for q in item.analysis.quiz:
-            has_quiz = True
-            lines.append(f"<b>Q. {html.escape(q.question)}</b>")
+            number += 1
+            lines.append(f"<b>Q{number}. {html.escape(q.question)}</b>")
             for i, opt in enumerate(q.options):
-                lines.append(f"  {alpha[i]}. {html.escape(opt)}")
-            answer_text = f"✅ {alpha[q.answer_index]}) {html.escape(q.options[q.answer_index])} — {html.escape(q.explanation)}"
+                lines.append(f"  {_ALPHA[i]}. {html.escape(opt)}")
+            answer_text = f"✅ {_ALPHA[q.answer_index]}) {html.escape(q.options[q.answer_index])} — {html.escape(q.explanation)}"
             lines.append(f"  <tg-spoiler>{answer_text}</tg-spoiler>")
             lines.append("")
 
-    if not has_quiz:
+    if number == 0:
         return None
     text = "\n".join(lines)
     return text if len(text) <= _MAX_MSG_LEN else None
+
+
+def _quiz_keyboard(items: list[DigestItem]) -> dict | None:
+    """문항별 선지 버튼. 행 하나가 문항 하나이고, `_format_quiz`의 번호와 맞는다.
+
+    콜백은 선택을 **기록만** 한다. 폴링이 하루 1회 배치라 answerCallbackQuery
+    토스트가 제때 나갈 수 없기 때문이다(콜백이 이미 만료된다). 정답 공개는
+    계속 스포일러가 맡는다. 그래도 스포일러를 열기 전에 고른 답이 잡히므로
+    "맞았다/틀렸다" 자가신고보다 라벨이 정확하다.
+    """
+    rows: list[list[dict]] = []
+    number = 0
+    button_count = 0
+
+    for item in items:
+        target = item_id(item.raw.url)
+        for question_index, q in enumerate(item.analysis.quiz):
+            number += 1
+            if button_count + len(q.options) > _MAX_QUIZ_BUTTONS:
+                break
+            rows.append([
+                {
+                    "text": f"Q{number}{_ALPHA[choice]}",
+                    "callback_data": encode_quiz_callback(target, question_index, choice),
+                }
+                for choice in range(len(q.options))
+            ])
+            button_count += len(q.options)
+
+    return {"inline_keyboard": rows} if rows else None
 
 
 def _item_keyboard(item_url: str) -> dict:
@@ -204,7 +245,10 @@ async def send_telegram_digest(items: list[DigestItem]) -> bool:
 
         # 3. 퀴즈 (선택사항)
         if quiz_text := _format_quiz(items):
-            await _send_message(client, token, chat_id, quiz_text)
+            await _send_message(
+                client, token, chat_id, quiz_text,
+                reply_markup=_quiz_keyboard(items),
+            )
 
     logger.info("telegram_digest_sent", items=len(items), chat_id=chat_id)
     return True

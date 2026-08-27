@@ -65,11 +65,17 @@ _MAX_PREFERENCE_SCORE = 3
 
 @dataclass
 class ItemFacts:
-    """정본에서 되살린 아이템 한 건의 식별 정보."""
+    """정본에서 되살린 아이템 한 건의 식별 정보.
+
+    quiz_answers는 문항 순서대로의 정답 인덱스다. 퀴즈 콜백은 사용자가 무엇을
+    골랐는지만 실어 오므로(callback_data 64바이트), 채점하려면 정본에서 정답을
+    되찾아야 한다.
+    """
 
     url: str
     source_key: str | None
     tags: tuple[str, ...]
+    quiz_answers: tuple[int, ...] = ()
 
 
 @dataclass
@@ -125,6 +131,11 @@ def build_item_index(records_dir: Path | None = None) -> dict[str, ItemFacts]:
                 source_key=raw.get("source_key") or raw.get("source_name"),
                 tags=tuple(
                     _normalize_tag(t) for t in (analysis.get("tags") or []) if str(t).strip()
+                ),
+                quiz_answers=tuple(
+                    int(q.get("answer_index"))
+                    for q in (analysis.get("quiz") or [])
+                    if isinstance(q, dict) and isinstance(q.get("answer_index"), int)
                 ),
             )
             index[item_id(url)] = facts

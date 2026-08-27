@@ -7,6 +7,9 @@ __pycache__/
 # (노트북 반납 후에도 JSON 정본을 보존하기 위함 — 로컬 JSON이 정본)
 data/*
 !data/records/
+# 퀴즈 정답 라벨. 러너가 ephemeral이라 커밋하지 않으면 매 런 사라지고,
+# Supabase에만 두면 크레덴셜이 끊길 때 통째로 증발한다. 정본은 리포에 둔다.
+!data/quiz_results.jsonl
 # data/* 는 리포 루트에만 앵커되므로, 하위 경로의 data/(예: evals/data/의 대용량
 # 픽스처)는 기존 무앵커 data/ 패턴처럼 계속 무시되도록 명시한다(회귀 방지).
 evals/data/

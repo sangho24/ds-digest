@@ -91,8 +91,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # docs/(공개 HTML) + data/records/(구조화 정본 JSON) 함께 커밋
+          # docs/(공개 HTML) + data/records/(구조화 정본 JSON)
+          #  + data/quiz_results.jsonl(퀴즈 정답 라벨) 함께 커밋.
+          # 라벨은 이 런의 피드백 폴링 단계에서 덧붙여지므로 여기서 잡힌다.
           git add docs/ data/records/
+          # 라벨 파일은 아직 응답이 한 건도 없으면 존재하지 않는다.
+          # 없는 경로에 git add를 하면 exit 128로 스텝이 죽으므로 조건부로 담는다.
+          # `|| true` 필수: Actions 기본 셸이 `bash -e`라, 조건이 거짓이면
+          # 이 줄이 exit 1을 내고 스텝 전체가 죽는다.
+          [ -f data/quiz_results.jsonl ] && git add data/quiz_results.jsonl || true
           git diff --cached --quiet && exit 0
           git commit -m "docs: digest $(date +%Y-%m-%d)"
           # push 경합 대비 재시도 (원격이 앞서 있으면 rebase 후 재시도)

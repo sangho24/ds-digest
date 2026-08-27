@@ -77,6 +77,11 @@ async def _send_feedback_summary(summary: dict) -> None:
         parts.append(f"👎 {summary['dislikes']}건")
     if summary.get("keywords"):
         parts.append(f"📝 키워드 등록: {', '.join(summary['keywords'])}")
+    if answered := summary.get("quiz_answers"):
+        # 채점은 여기서 처음 사용자에게 보인다. 배치 폴링이라 버튼을 누른 시점엔
+        # 콜백이 이미 만료돼 토스트를 띄울 수 없기 때문이다.
+        correct = summary.get("quiz_correct", 0)
+        parts.append(f"🧠 퀴즈 {correct}/{answered} 정답")
 
     if not parts:
         return
