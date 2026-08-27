@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 27일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://artificialanalysis.ai/models/glm-5-3-flash" target="_blank">GLM-5.3-Flash Intelligence, Performance and Price Analysis</a>
+    </h2>
+
+    <p class="item-summary">고성능·저비용 모델로 AI 비용 효율 개선</p>
+
+    
+    <div class="tags">
+      <span class="tag">GLM-5.3-Flash</span><span class="tag">Z AI</span><span class="tag">Hugging Face</span><span class="tag">Artificial Analysis Intelligence Index</span><span class="tag">MIT</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://artificialanalysis.ai/models/glm-5-3-flash" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Intelligence Index 점수 57로 동급 모델 중 상위</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>작업당 비용 $0.09로 비용 효율 높음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>출력 속도 50 token/s로 평균보다 느림</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 대규모 텍스트 요약 파이프라인에 1M 토큰 컨텍스트 창 활용</div>
+    
+    <div class="idea">💡 비용 민감한 배치 인텔리전스 평가 작업에 GLM-5.3-Flash 적용하여 $0.09/작업 비용 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. GLM-5.3-Flash의 Intelligence Index 점수는?</div>
+      
+      <div class="quiz-opt">A) 27</div>
+      
+      <div class="quiz-opt">B) 57</div>
+      
+      <div class="quiz-opt">C) 44</div>
+      
+      <div class="quiz-opt">D) 16</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 57</div>
+          <div class="quiz-explanation">본문에 57점이라고 명시되어 있음.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. GLM-5.3-Flash의 출력 속도는?</div>
+      
+      <div class="quiz-opt">A) 67 token/s</div>
+      
+      <div class="quiz-opt">B) 50 token/s</div>
+      
+      <div class="quiz-opt">C) 80 token/s</div>
+      
+      <div class="quiz-opt">D) 30 token/s</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 50 token/s</div>
+          <div class="quiz-explanation">본문에 50 tokens per second라고 기록됨.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      토스 기술 블로그, 토스 테크 · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://toss.tech/article/tech_talk_talk_3" target="_blank">토스증권 추천과 검색은 어떻게 진화하고 있을까?</a>
+    </h2>
+
+    <p class="item-summary">실시간 개인화·RAG 기반 추천·검색 인프라 설계</p>
+
+    
+    <div class="tags">
+      <span class="tag">RAG</span><span class="tag">Feature Store</span><span class="tag">Knowledge Graph</span><span class="tag">Toss Securities</span><span class="tag">AI Data Platform</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://toss.tech/article/tech_talk_talk_3" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>AI 서비스 전반에 공통 데이터 생태계 제공을 목표로 원천 데이터 파이프라인·피처 스토어·RAG·지식 그래프를 구축한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>추천 시스템이 배치·클러스터 방식에서 실시간 개인화 방식으로 전환하고 있다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>검색 기능이 키워드·필터를 넘어 RAG와 그래프 RAG로 확장되고 있다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 실시간·배치 피처를 제공하는 피처 스토어를 도입해 추천 모델의 개인화 수준을 높인다.</div>
+    
+    <div class="idea">💡 금융 도메인에 특화된 RAG 파이프라인을 구축해 자연어 기반 검색 정확도를 개선한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 토스증권 AI 데이터 플랫폼 팀의 미션은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 데이터 시각화 제공</div>
+      
+      <div class="quiz-opt">B) 탄탄한 데이터 생태계 제공</div>
+      
+      <div class="quiz-opt">C) 클라우드 비용 절감</div>
+      
+      <div class="quiz-opt">D) 사용자 인터페이스 개선</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 탄탄한 데이터 생태계 제공</div>
+          <div class="quiz-explanation">본문에 "토스증권의 모든 AI 서비스가 공통적으로 접근할 수 있는 탄탄한 데이터 생태계를 제공하자" 라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 과거 토스증권 추천 시스템이 주로 사용한 방식은?</div>
+      
+      <div class="quiz-opt">A) 실시간 개인화</div>
+      
+      <div class="quiz-opt">B) 배치와 클러스터</div>
+      
+      <div class="quiz-opt">C) RAG</div>
+      
+      <div class="quiz-opt">D) 그래프 검색</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 배치와 클러스터</div>
+          <div class="quiz-explanation">본문에 "예전에는 배치와 클러스터로 충분했어요" 라고 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Weekly deep daiv. · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deepdaiv.stibee.com/p/160" target="_blank">해킹이 아닌, 설득으로 퍼집니다</a>
+    </h2>
+
+    <p class="item-summary">멀티 에이전트 LLM에서 아이디어 전파 위험을 이해해 모델 안전성을 확보</p>
+
+    
+    <div class="tags">
+      <span class="tag">Anthropic</span><span class="tag">RAG</span><span class="tag">Claude</span><span class="tag">Gemini 3 Flash</span><span class="tag">GPT-5.4</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deepdaiv.stibee.com/p/160" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>마인드 바이러스는 멀티 에이전트 LLM에서 자기 전파되는 아이디어·목표로 시스템 전체 목표를 바꿀 수 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>실험에서 이념형(고래 보호)과 행동형(파일 삭제) 바이러스가 전파됐으며 모델별 전파 성공도가 다르게 나타났다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>전파성 높은 프롬프트를 찾기 위해 진화 알고리즘을 사용했으며 사전 경고를 받은 에이전트는 감염을 차단했다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 에이전트의 MEMORY.md 파일을 정기적으로 스캔해 마인드 바이러스 징후(예: 고래 보호 언급 등)를 점수화하고 위험 에이전트를 자동 차단한다</div>
+    
+    <div class="idea">💡 멀티 에이전트 파이프라인에 진화 알고리즘 기반 프롬프트 테스트를 도입해 전파 가능성이 높은 프롬프트를 사전에 식별하고 수정한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 실험에서 빠르게 여러 에이전트에 퍼진 마인드 바이러스 유형은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 이념형(고래 보호)</div>
+      
+      <div class="quiz-opt">B) 행동형(파일 삭제)</div>
+      
+      <div class="quiz-opt">C) 두 유형 모두 동일하게</div>
+      
+      <div class="quiz-opt">D) 전파되지 않음</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 이념형(고래 보호)</div>
+          <div class="quiz-explanation">본문에 따르면 고래 보호와 같은 이념형 바이러스가 여러 에이전트에 빠르게 퍼졌으며, 위험한 이념은 덜 퍼졌다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      혁신의 숲 · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://innoforest.stibee.com/p/649" target="_blank">🗺️17개 시도 스타트업 체급 비교! 기업 수는 부산, 투자 체급은 대전과 경북. 같은 상위권도 체질이 다릅니다</a>
+    </h2>
+
+    <p class="item-summary">지역별 스타트업 투자·상장 차이 데이터로 전략 수립</p>
+
+    
+    <div class="tags">
+      <span class="tag">대전</span><span class="tag">경북</span><span class="tag">서울</span><span class="tag">디지털·콘텐츠</span><span class="tag">금융·투자·지주</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://innoforest.stibee.com/p/649" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>17개 시도별 상장기업 2,663개와 100억 이상 투자받은 스타트업 1,366개를 비교</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>대전은 상장기업 9위이지만 스타트업 3위이며, 1개당 투자금 268억 원으로 서울보다 높음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>11개 시도에서 기업 수 최다 산업과 시가총액 최다 산업이 달라, 서울은 디지털·콘텐츠가 1위지만 금융·투자·지주가 시가총액 1위</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 지역별 스타트업 1개당 평균 투자금 데이터를 활용해 투자 우선순위와 파트너십 대상 지역을 선정한다</div>
+    
+    <div class="idea">💡 기업 수와 시가총액이 다른 산업을 비교해 해당 지역의 성장 잠재력이 높은 저평가 산업을 발굴한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 상장기업 순위는 9위이지만 스타트업 순위는 3위인 도시는?</div>
+      
+      <div class="quiz-opt">A) 대전</div>
+      
+      <div class="quiz-opt">B) 부산</div>
+      
+      <div class="quiz-opt">C) 경북</div>
+      
+      <div class="quiz-opt">D) 서울</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 대전</div>
+          <div class="quiz-explanation">본문에 대전이 상장기업 9위, 스타트업 3위라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 서울에서 시가총액이 가장 큰 산업은?</div>
+      
+      <div class="quiz-opt">A) 디지털·콘텐츠</div>
+      
+      <div class="quiz-opt">B) 금융·투자·지주</div>
+      
+      <div class="quiz-opt">C) 제조업</div>
+      
+      <div class="quiz-opt">D) 헬스케어</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 금융·투자·지주</div>
+          <div class="quiz-explanation">서울은 기업 수는 디지털·콘텐츠가 1위지만, 시가총액은 금융·투자·지주가 1위라고 언급된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://hnstats.com" target="_blank">Show HN: How much of Hacker News is about AI?</a>
+    </h2>
+
+    <p class="item-summary">News AI 언급 급증, 트렌드 파악 필요</p>
+
+    
+    <div class="tags">
+      <span class="tag">AI</span><span class="tag">OpenAI</span><span class="tag">LLM</span><span class="tag">GPT</span><span class="tag">Hacker News</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://hnstats.com" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>2026년 2월 HN AI 언급 15.9% 최고</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>2025년 올해 AI 제목 14.4% (표준) 21.9% (확장)</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>주중 AI 언급 13.6% vs 주말 12.4%</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 AI 언급 비중을 실시간 모니터링하는 내부 대시보드 구축</div>
+    
+    <div class="idea">💡 AI 트렌드 상승에 맞춰 데이터 제품 로드맵에 AI 기능 우선순위 반영</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 2026년 2월 HN에서 AI 언급 비중은 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 15.9%</div>
+      
+      <div class="quiz-opt">B) 14.4%</div>
+      
+      <div class="quiz-opt">C) 21.9%</div>
+      
+      <div class="quiz-opt">D) 12.4%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 15.9%</div>
+          <div class="quiz-explanation">본문에 'The peak was Feb 2026 at 15.9%.' 라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
