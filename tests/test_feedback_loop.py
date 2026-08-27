@@ -184,3 +184,68 @@ def test_multiple_feedbacks_accumulate():
     assert "https://a.com/2" in profile.disliked_item_ids
     assert "ray" in profile.keyword_requests
     assert "dbt" in profile.keyword_requests
+
+
+# ──────────────────────────────────────────────
+# Telegram callback_data 64바이트 한도 (발송 유실 회귀)
+# ──────────────────────────────────────────────
+#
+# 버튼은 `like|{item_url}`을 실어 보냈는데 Telegram의 callback_data 한도는
+# 64바이트다. 실측 153건 중 39건(25.5%)이 이를 넘겼다. 넘기면 Telegram이
+# BUTTON_DATA_INVALID를 반환하고 _send_message가 False가 되는데, 키보드는
+# 아이템 메시지에 붙어 있으므로 **그 아이템 메시지 자체가 발송되지 않았다**.
+# 긴 URL을 가진 아이템은 사용자에게 도달조차 못 했고, 피드백도 받을 수 없었다.
+
+from app.contract import item_id as _item_id  # noqa: E402
+from app.deliverers.telegram import _item_keyboard  # noqa: E402
+
+TELEGRAM_CALLBACK_DATA_LIMIT = 64
+
+
+def _callback_values(keyboard: dict) -> list[str]:
+    return [button["callback_data"] for button in keyboard["inline_keyboard"][0]]
+
+
+def test_callback_data_within_telegram_limit_for_long_url():
+    """실측에서 한도를 넘겼던 길이의 URL로도 64바이트를 지켜야 한다."""
+    long_url = "https://artificialanalysis.ai/models/" + "segment/" * 30
+
+    for value in _callback_values(_item_keyboard(long_url)):
+        assert len(value.encode("utf-8")) <= TELEGRAM_CALLBACK_DATA_LIMIT
+
+
+def test_callback_data_carries_contract_item_id():
+    """버튼이 가리키는 아이템과 공개 계약 JSON의 id가 같은 좌표계여야 한다."""
+    url = "https://youtu.be/VIDEO"
+
+    like, dislike = _callback_values(_item_keyboard(url))
+
+    assert like == f"like|{_item_id(url)}"
+    assert dislike == f"dislike|{_item_id(url)}"
+
+
+def test_polling_resolves_item_id_back_to_url(monkeypatch, tmp_path):
+    """콜백으로 온 id는 프로필에 URL로 쌓여야 나중에 정본과 대조된다."""
+    import asyncio
+
+    from app.deliverers import polling
+
+    url = "https://youtu.be/VIDEO"
+    captured: list = []
+    monkeypatch.setattr(polling, "process_feedback", lambda p: captured.append(p))
+    monkeypatch.setattr(polling, "resolve_feedback_target", lambda token: url)
+
+    async def _noop(*_args, **_kwargs):
+        return None
+
+    monkeypatch.setattr(polling, "_answer_callback", _noop)
+
+    summary = {"likes": 0, "dislikes": 0, "keywords": []}
+    update = {
+        "update_id": 1,
+        "callback_query": {"id": "cq1", "data": f"like|{_item_id(url)}"},
+    }
+    asyncio.run(polling._handle_update(None, "token", update, summary))
+
+    assert summary["likes"] == 1
+    assert captured[0].item_url == url

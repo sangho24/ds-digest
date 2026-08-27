@@ -11,6 +11,11 @@ import httpx
 from urllib.parse import urlparse, parse_qs
 
 from app.config import get_settings
+from app.preferences import (
+    build_signal,
+    describe_for_prompt,
+    preference_score,
+)
 from app.models import (
     RawContent, ContentAnalysis, KeyPoint, QuizItem, SourceType,
     DigestItem, UserProfile, EvidenceLevel, EVIDENCE_DEPTH_CAPS,
@@ -214,6 +219,12 @@ _METADATA_RANKING_PROMPT = """\
 ## 사용자가 최근 요청한 키워드
 {keywords}
 
+## 사용자가 👍한 콘텐츠의 태그
+{liked_tags}
+
+## 사용자가 👎한 콘텐츠의 태그
+{disliked_tags}
+
 ## 영상 목록
 {listing}
 
@@ -221,6 +232,8 @@ _METADATA_RANKING_PROMPT = """\
 - index는 반드시 0 이상 (목록 개수-1) 이하의 정수이며 목록에 없는 숫자는 쓰지 마세요.
 - 위 목록의 각 항목 앞에 붙은 [n]의 n이 그 항목의 index입니다.
 - 가장 가치 있는 순서로 최대 {budget}개까지 넣으세요.
+- 👍/👎 태그는 동률일 때 참고하는 보조 신호입니다. 태그가 겹친다는 이유만으로
+  내용이 얕은 영상을 올리지 마세요.
 {{"top_indices": [가치 큰 순서의 index 최대 {budget}개]}}
 """
 
@@ -321,9 +334,16 @@ async def _select_top_youtube_items(
             f"     설명: {description}"
         )
 
+    # 👍/👎는 "무엇을 깊게 볼지" 고르는 이 단계에만 넣는다. 분석 단계에 넣으면
+    # 취향이 근거 점수(actionability·depth)를 밀어올려 근거 게이트가 무의미해진다.
+    signal = build_signal(profile.liked_item_ids, profile.disliked_item_ids)
+    liked_tags, disliked_tags = describe_for_prompt(signal)
+
     prompt = _METADATA_RANKING_PROMPT.format(
         budget=budget,
         keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
+        liked_tags=liked_tags,
+        disliked_tags=disliked_tags,
         listing="\n".join(listing_lines),
     )
 
@@ -733,9 +753,22 @@ async def filter_and_analyze(
         analyzed.append(DigestItem(raw=item, analysis=analysis))
 
     # 2) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
+    #
+    #    동점은 👍/👎로 가른다. 점수 자체는 건드리지 않는다 — 근거가 같은 급일
+    #    때만 취향이 순서를 정하므로 근거 게이트가 유지된다. 실측상 153건이 5개
+    #    점수값에 몰려 있어(IQR=1) 동점이 흔하고, 그래서 타이브레이크가 실제로
+    #    선정을 바꾼다. 피드백이 없으면 signal이 비어 모든 보정이 0이 되고
+    #    정렬은 기존과 동일해진다.
     floor = settings.relevance_floor
+    signal = build_signal(profile.liked_item_ids, profile.disliked_item_ids)
     candidates = [d for d in analyzed if d.analysis.relevance_score >= floor]
-    candidates.sort(key=lambda d: d.analysis.relevance_score, reverse=True)
+    candidates.sort(
+        key=lambda d: (
+            d.analysis.relevance_score,
+            preference_score(signal, d.raw.source_key, d.analysis.tags),
+        ),
+        reverse=True,
+    )
     selected = candidates[:settings.max_items_per_digest]
 
     # 3) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
@@ -761,5 +794,6 @@ async def filter_and_analyze(
         above_floor=len(candidates),
         selected=len(selected),
         floor=floor,
+        preference_applied=not signal.is_empty(),
     )
     return selected

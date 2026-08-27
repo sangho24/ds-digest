@@ -8,6 +8,7 @@ import structlog
 from datetime import date
 
 from app.config import get_settings
+from app.preferences import item_id
 from app.models import DigestItem
 
 logger = structlog.get_logger()
@@ -95,10 +96,23 @@ def _format_quiz(items: list[DigestItem]) -> str | None:
 
 
 def _item_keyboard(item_url: str) -> dict:
+    """👍/👎 인라인 키보드.
+
+    callback_data에는 URL이 아니라 12자 item_id를 싣는다. Telegram의
+    callback_data 한도는 **64바이트**인데, 실측 153건 중 39건(25.5%)의
+    `like|{url}`이 이를 넘겼다. 한도를 넘으면 Telegram이 BUTTON_DATA_INVALID로
+    응답하고 `_send_message`가 False를 반환하는데, 키보드는 아이템 메시지에
+    붙어 있으므로 **그 아이템 메시지가 통째로 발송되지 않았다**. 즉 긴 URL을 가진
+    아이템은 사용자에게 도달조차 못 했고, 당연히 피드백도 받을 수 없었다.
+
+    id는 app.contract.item_id와 같은 값이라 공개 계약 JSON과 좌표계가 같다.
+    수신측(deliverers/polling.py)이 정본을 통해 URL로 되돌린다.
+    """
+    token = item_id(item_url)
     return {
         "inline_keyboard": [[
-            {"text": "👍", "callback_data": f"like|{item_url}"},
-            {"text": "👎", "callback_data": f"dislike|{item_url}"},
+            {"text": "👍", "callback_data": f"like|{token}"},
+            {"text": "👎", "callback_data": f"dislike|{token}"},
         ]]
     }
 

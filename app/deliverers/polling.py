@@ -14,6 +14,7 @@ import structlog
 
 from app.models import FeedbackPayload
 from app.feedback import process_feedback
+from app.preferences import resolve_feedback_target
 
 logger = structlog.get_logger()
 
@@ -50,11 +51,16 @@ async def _handle_update(
         data: str = cq.get("data", "")
 
         try:
-            action, item_url = data.split("|", 1)
+            action, token = data.split("|", 1)
         except ValueError:
             return
 
         if action in ("like", "dislike"):
+            # callback_data는 64바이트 한도 때문에 12자 item_id를 싣는다.
+            # 프로필에는 URL로 쌓아야 나중에 정본과 대조할 수 있으므로 되돌린다.
+            # (한도 도입 이전의 버튼은 URL을 그대로 실었는데, resolve가 미지의
+            #  토큰을 그대로 통과시키므로 그 시절 콜백도 계속 처리된다.)
+            item_url = resolve_feedback_target(token)
             process_feedback(FeedbackPayload(item_url=item_url, action=action))
             if action == "like":
                 summary["likes"] += 1
@@ -63,7 +69,9 @@ async def _handle_update(
             # 실시간 서버 모드에서만 토스트가 즉각 전달됨
             reply = "👍 반영됐어요!" if action == "like" else "👎 알겠어요!"
             await _answer_callback(client, token, cq_id, reply)
-            logger.info("telegram_feedback", action=action, url=item_url[:60])
+            logger.info(
+                "telegram_feedback", action=action, token=token, url=item_url[:60]
+            )
 
     # ── 일반 텍스트 메시지 — /keyword 명령어 ───────────────────────────────
     elif msg := update.get("message"):
