@@ -1,0 +1,303 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-07",
+  "generated_at": "2026-08-07T23:01:15.872995",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-07.html",
+  "items": [
+    {
+      "id": "1d8bb954d2c0",
+      "title": "Context Rot: How Increasing Input Tokens Impacts LLM Performance (Paper Analysis)",
+      "url": "https://youtu.be/hpC4qjWu_aY",
+      "source": {
+        "type": "youtube",
+        "name": "Yannic Kilcher"
+      },
+      "published_at": "2025-07-23T11:10:52",
+      "summary": "LLM은 컨텍스트 길이 늘리면 성능 저하, 선택적 입력 필요",
+      "tags": [
+        "Chroma",
+        "Claude",
+        "GPT",
+        "Gemini",
+        "Qwen"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "컨텍스트 토큰이 늘어나면 모델 성능이 점진적으로 떨어진다",
+          "timestamp": null
+        },
+        {
+          "point": "모델마다 내구성이 다르며 본 연구에서는 Claude가 가장 오래 버텼다",
+          "timestamp": null
+        },
+        {
+          "point": "검색 엔진·벡터 DB를 활용한 스마트 컨텍스트 엔지니어링이 성능 회복에 핵심이다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "벡터 데이터베이스(예: Chroma)를 이용해 질의와 가장 관련성 높은 문서만 추출해 컨텍스트에 삽입한다",
+        "컨텍스트 길이에 따른 성능 변화를 모니터링하고, 토큰 수 제한 정책을 설정해 성능 저하 구간을 사전에 차단한다"
+      ],
+      "quiz": [
+        {
+          "question": "이 논문의 저자는 어느 회사인가?",
+          "options": [
+            "OpenAI",
+            "Chroma",
+            "DeepMind",
+            "Google"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 연구자는 Chroma 소속이라고 명시했다."
+        },
+        {
+          "question": "실험에서 가장 오래 컨텍스트 증가에 견딘 모델은?",
+          "options": [
+            "GPT",
+            "Gemini",
+            "Claude",
+            "Qwen"
+          ],
+          "answer_index": 2,
+          "explanation": "발표자는 Claude가 다른 모델보다 가장 오래 버텼다고 언급했다."
+        }
+      ]
+    },
+    {
+      "id": "446f1643a12e",
+      "title": "How and Why Netflix Built a Real-Time Distributed Graph: Part 3 — Querying the graph with gRPC…",
+      "url": "https://netflixtechblog.com/how-and-why-netflix-built-a-real-time-distributed-graph-part-3-querying-the-graph-with-grpc-0f3468349607?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-08-07T16:01:02",
+      "summary": "실시간 그래프를 100ms 이하로 조회하는 설계",
+      "tags": [
+        "gRPC",
+        "Apache Flink",
+        "Real-Time Distributed Graph",
+        "RDG",
+        "Netflix"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "서빙 레이어를 설계해 100ms 미만 응답을 목표로 함",
+          "timestamp": null
+        },
+        {
+          "point": "gRPC 실행 API를 통해 그래프 질의를 제공",
+          "timestamp": null
+        },
+        {
+          "point": "수십억 엣지를 지원하며 얕고 넓은·깊고 좁은 쿼리 패턴을 모두 처리",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "gRPC 실행 API를 도입해 실시간 그래프 질의 서비스를 구축",
+        "다양한 쿼리 패턴을 지원하도록 스토리지 파티셔닝 및 라우팅 로직 설계"
+      ],
+      "quiz": [
+        {
+          "question": "Netflix RDG 서빙 레이어의 주요 목표는 무엇인가?",
+          "options": [
+            "데이터 저장 용량 확대",
+            "100ms 이하 응답 시간 확보",
+            "배치 처리 최적화",
+            "사용자 인터페이스 개선"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 서빙 레이어는 sub-100ms 응답을 목표로 설계됨을 언급한다."
+        },
+        {
+          "question": "RDG 파이프라인에서 스트리밍 이벤트를 그래프 원시 데이터로 변환하는 데 사용된 기술은?",
+          "options": [
+            "Apache Spark",
+            "Apache Flink",
+            "Kafka Streams",
+            "TensorFlow"
+          ],
+          "answer_index": 1,
+          "explanation": "파트 1에서 Apache Flink를 사용해 스트리밍 이벤트를 그래프 원시 데이터로 변환한다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "987576b22f58",
+      "title": "AGI is not coming!",
+      "url": "https://youtu.be/hkAH7-u7t5k",
+      "source": {
+        "type": "youtube",
+        "name": "Yannic Kilcher"
+      },
+      "published_at": "2025-08-09T10:39:28",
+      "summary": "LLM 도구 연동이 핵심, AGI 기대는 낮아짐",
+      "tags": [
+        "OpenAI",
+        "GPT-5",
+        "GPT OSS",
+        "LLM",
+        "reinforcement learning"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AGI 도래는 멈췄으며 LLM은 점진적 개선 단계에 있다",
+          "timestamp": null
+        },
+        {
+          "point": "OpenAI는 합성 데이터와 강화학습으로 코딩·툴콜에 특화된 모델을 훈련한다",
+          "timestamp": null
+        },
+        {
+          "point": "앞으로는 툴 연동 능력과 가격 경쟁력이 모델 선택의 핵심이 될 것이다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM을 툴 호출 오케스트레이터로 활용해 데이터 전처리·분석 파이프라인 자동화",
+        "GPT-5의 저렴한 비용을 활용해 내부 코드 자동 생성·리팩터링 워크플로우 구축"
+      ],
+      "quiz": [
+        {
+          "question": "영상에서 언급된 OpenAI의 최신 모델 이름은?",
+          "options": [
+            "GPT-4",
+            "GPT-5",
+            "GPT-6",
+            "GPT OSS"
+          ],
+          "answer_index": 1,
+          "explanation": "영상에서는 GPT-5와 GPT OSS를 언급한다."
+        },
+        {
+          "question": "발표자는 앞으로 LLM의 가치를 어디에 두고 있다고 말했는가?",
+          "options": [
+            "모델 크기",
+            "툴 연동과 가격",
+            "데이터 양",
+            "학습 속도"
+          ],
+          "answer_index": 1,
+          "explanation": "발표자는 툴 연동 능력과 저렴한 가격을 미래 핵심이라고 강조했다."
+        }
+      ]
+    },
+    {
+      "id": "5476e4d7e904",
+      "title": "The Dangerous Illusion of AI Coding? - Jeremy Howard",
+      "url": "https://youtu.be/dHBEQ-Ryo24",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-03-03T14:50:11",
+      "summary": "AI 코딩의 위험성 인식과 인터랙티브 학습 강조",
+      "tags": [
+        "Jeremy Howard",
+        "Kaggle",
+        "LLM",
+        "Nvidia GTC",
+        "DGX Spark"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI 코딩은 통제 착각을 일으키며, 이해 없이 코드를 배포하면 위험하다",
+          "timestamp": null
+        },
+        {
+          "point": "노트북 등 인터랙티브 루프를 통해 문제를 직접 조작할 때 깊은 통찰이 생긴다",
+          "timestamp": null
+        },
+        {
+          "point": "Nvidia GTC에서 DGX Spark 등 고성능 하드웨어와 새로운 칩 발표가 예정돼 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 코드 생성 결과를 노트북에서 즉시 실행·디버깅하여 신뢰성을 검증한다",
+        "DGX Spark와 같은 소형 고성능 서버를 활용해 70B 파라미터 모델을 사내에서 파인튜닝한다"
+      ],
+      "quiz": [
+        {
+          "question": "Jeremy Howard는 어떤 역할로 소개되었는가?",
+          "options": [
+            "Kaggle 그랜드마스터",
+            "데이터 엔지니어",
+            "프론트엔드 개발자",
+            "클라우드 아키텍트"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Jeremy Howard를 deep learning pioneer이자 Kaggle grandmaster로 언급한다."
+        },
+        {
+          "question": "AI 기반 코딩이 비유된 것은?",
+          "options": [
+            "슬롯 머신",
+            "체스 게임",
+            "복권",
+            "룰렛"
+          ],
+          "answer_index": 0,
+          "explanation": "발표자는 AI 코딩을 슬롯 머신에 비유하며 통제 착각을 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "26b03185c056",
+      "title": "Bulldozers Plow Through Big Bend National Park, Sparking Fury in Texas",
+      "url": "https://www.newsweek.com/bulldozers-plow-through-big-bend-national-park-sparking-fury-in-texas-12295668",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "국경벽 건설 데이터가 환경·관광 영향 분석에 활용 가능",
+      "tags": [
+        "Big Bend National Park",
+        "Rio Grande",
+        "Center for Biological Diversity",
+        "Trump administration",
+        "Terrell County"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Bulldozers are clearing vegetation in Big Bend NP for a border wall expansion, sparking local opposition",
+          "timestamp": null
+        },
+        {
+          "point": "Local businesses and environmental groups warn of damage to desert ecosystems and tourism",
+          "timestamp": null
+        },
+        {
+          "point": "Officials argue security can be achieved with technology and road improvements rather than extensive construction",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Apply satellite‑imagery change detection with ML to quantify bulldozer‑induced habitat loss in real time",
+        "Develop a tourism‑demand forecasting model that incorporates park access restrictions to estimate economic impact on local businesses"
+      ],
+      "quiz": [
+        {
+          "question": "Which organization described the border‑wall project as “the most heinous attack on an American national park in generations”?",
+          "options": [
+            "Center for Biological Diversity",
+            "National Park Service",
+            "Texas Rangers",
+            "U.S. Border Patrol"
+          ],
+          "answer_index": 0,
+          "explanation": "The quote is attributed to Laiken Jordahl, a national public lands advocate at the Center for Biological Diversity."
+        }
+      ]
+    }
+  ]
+}

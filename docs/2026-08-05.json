@@ -1,0 +1,303 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05T23:29:03.309424",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-05.html",
+  "items": [
+    {
+      "id": "92a784d00a77",
+      "title": "Oracle cut its Always Free ARM limits to 2 OCPU / 12GB, enforced Aug 18",
+      "url": "https://www.cnelecar.com/blog/oracle-always-free-arm-limits-cut-2026/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "무료 ARM 인스턴스 용량 감소, 비용·환경 재조정 필요",
+      "tags": [
+        "Oracle",
+        "Always Free",
+        "Ampere A1",
+        "OCPU",
+        "ARM"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Oracle은 2026년 8월 18일부터 무료 ARM 인스턴스 한도를 2 OCPU·12 GB RAM으로 축소한다.",
+          "timestamp": null
+        },
+        {
+          "point": "한도는 테넌시 전체에 적용되며 초과 시 자동으로 인스턴스가 종료된다.",
+          "timestamp": null
+        },
+        {
+          "point": "사용자는 OCI 콘솔에서 인스턴스를 리사이즈하거나 통합·삭제해 기한 전에 조치해야 한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "OCI API를 활용해 현재 무료 ARM 사용량을 정기적으로 모니터링하고, 한도 초과 위험이 감지되면 자동으로 인스턴스를 2 OCPU·12 GB 이하로 리사이즈하거나 불필요한 인스턴스를 종료하도록 스크립트를 구현한다.",
+        "무료 ARM 인스턴스를 x86 마이크로 인스턴스로 전환하거나, 필요 시 유료 ARM 인스턴스로 마이그레이션해 비용과 가용성을 최적화한다."
+      ],
+      "quiz": [
+        {
+          "question": "Oracle이 2026년 8월 18일부터 적용하는 새로운 무료 ARM 한도는?",
+          "options": [
+            "4 OCPU·24 GB",
+            "2 OCPU·12 GB",
+            "1 OCPU·6 GB",
+            "제한 없음"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 새 한도가 ‘Up to 2 OCPUs, Up to 12 GB of memory’라고 명시되어 있다."
+        },
+        {
+          "question": "새 한도 변경에 영향을 받지 않는 인스턴스 유형은?",
+          "options": [
+            "ARM 인스턴스",
+            "x86 마이크로 인스턴스",
+            "모든 무료 인스턴스",
+            "유료 인스턴스"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 x86 마이크로 인스턴스는 기존 2 × 1 OCPU/1 GB 한도로 그대로 유지된다고 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "65c6233d54f7",
+      "title": "The Billion Dollar AI Race Just Broke",
+      "url": "https://youtu.be/ppQh4Tc9BmM",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-05T13:54:29",
+      "summary": "무료 고성능 모델로 연구·코드 자동화 가능",
+      "tags": [
+        "Qwen 3.8 Max",
+        "OpenAI",
+        "Anthropic",
+        "lambda.ai",
+        "deep seek"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Qwen 3.8 Max는 1백만 토큰 컨텍스트와 멀티모달 기능을 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "가격이 기존 모델 대비 5~10배 저렴할 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "Lambda AI를 이용해 GPU 환경에서 모델을 직접 실행·실험 가능",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Qwen 3.8 Max의 1백만 토큰 컨텍스트를 활용해 대규모 문서 요약 파이프라인 구축",
+        "Lambda AI GPU 인프라에서 Qwen 기반 자동 코딩 에이전트를 배포해 내부 툴 개발 자동화"
+      ],
+      "quiz": [
+        {
+          "question": "어떤 모델이 1백만 토큰 컨텍스트 윈도우를 가지고 있나요?",
+          "options": [
+            "Qwen 3.8 Max",
+            "OpenAI GPT-4",
+            "Anthropic Claude",
+            "Lambda AI"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 Qwen 3.8 Max가 1백만 토큰 컨텍스트 윈도우를 갖는다고 명시되어 있다."
+        },
+        {
+          "question": "Qwen 3.8 Max의 가격은 기존 모델 대비 얼마나 저렴할 수 있다고 언급되었나요?",
+          "options": [
+            "5~10배 저렴",
+            "동일 가격",
+            "2배 저렴",
+            "더 비쌈"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 \"maybe even five to ten times cheaper depending\" 라고 언급했다."
+        }
+      ]
+    },
+    {
+      "id": "b3289b628fad",
+      "title": "[Video Response] What Cloudflare's code mode misses about MCP and tool calling",
+      "url": "https://youtu.be/0bpYCxv2qhw",
+      "source": {
+        "type": "youtube",
+        "name": "Yannic Kilcher"
+      },
+      "published_at": "2025-10-19T10:58:51",
+      "summary": "LLM이 TypeScript API로 도구를 호출하면 효율·정확도 상승",
+      "tags": [
+        "Cloudflare",
+        "MCP",
+        "TypeScript",
+        "LLM",
+        "Code Mode"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "MCP 도구를 TypeScript API로 변환해 LLM이 코드를 작성하도록 하면 성능이 크게 향상된다",
+          "timestamp": null
+        },
+        {
+          "point": "LLM은 사전 학습에 TypeScript 코드가 풍부해 코드 모드가 기존 툴 호출보다 유리하다",
+          "timestamp": null
+        },
+        {
+          "point": "툴 호출을 직접 하는 것은 짧은 후학습에 비유돼 정확도가 낮을 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "내부 데이터 처리 툴을 TypeScript API 형태로 래핑해 LLM 에이전트가 코드로 호출하도록 설계한다",
+        "멀티스텝 데이터 추출 작업에서 기존 툴 호출 방식과 코드 모드 방식의 비용·성능을 A/B 테스트한다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 LLM이 TypeScript API 형태의 툴을 더 잘 활용한다고 주장되는가?",
+          "options": [
+            "사전 학습에 TypeScript 코드가 풍부하기 때문",
+            "코드 실행 속도가 빠르기 때문",
+            "토큰 사용량이 적기 때문",
+            "미세조정이 덜 필요하기 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "영상에서는 LLM이 방대한 TypeScript 코드 예시를 학습했기 때문에 API 형태가 더 익숙하고 효율적이라고 설명한다"
+        }
+      ]
+    },
+    {
+      "id": "28392ffb960a",
+      "title": "FE News 26년 8월 소식을 전해드립니다.",
+      "url": "https://d2.naver.com/news/1783497",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "프론트엔드 최신 성능·툴 트렌드로 데이터 수집 효율↑",
+      "tags": [
+        "State of CSS",
+        "Anchor Positioning",
+        "Vite+",
+        "Ant",
+        "Hydration"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "State of CSS 2026 조사에서 4,902명 응답, Anchor Positioning이 신규 기능 1위와 브라우저 지원 부족으로 가장 아쉬운 기능 1위 차지, AI 생성 CSS 비율은 28%에 머물음",
+          "timestamp": null
+        },
+        {
+          "point": "Hydration and Rendering Strategies 글에서 SSG·ISR·CSR·SSR·스트리밍 SSR·아일랜드·React Server Components를 비교·복잡도·번들·빌드·성능 트레이드오프 제시, 프로젝트 성격에 맞는 전략 선택 권고",
+          "timestamp": null
+        },
+        {
+          "point": "Vite+ 베타는 Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개 도구를 통합, 1,300개 이상 공개 저장소 사용, 엔터프라이즈 기능 추가로 프론트엔드 워크플로 간소화",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Anchor Positioning을 UI 컴포넌트에 적용해 사용자 인터랙션 데이터를 정량화하고 A/B 테스트로 전환율 개선",
+        "Vite+ 베타를 도입해 빌드·테스트 파이프라인을 통합하고, 빌드 시간 감소와 로그/메트릭 수집 자동화를 통해 프론트엔드 데이터 파이프라인 효율화"
+      ],
+      "quiz": [
+        {
+          "question": "State of CSS 2026 조사에서 가장 많이 호응받은 신규 기능은 무엇인가?",
+          "options": [
+            "CSS Grid",
+            "Anchor Positioning",
+            "Container Queries",
+            "Subgrid"
+          ],
+          "answer_index": 1,
+          "explanation": "조사 결과 Anchor Positioning이 '가장 마음에 드는 신규 기능'과 '브라우저 지원 때문에 쓰지 못해 아쉬운 기능' 모두 1위를 차지했다."
+        },
+        {
+          "question": "Vite+ 베타가 통합한 도구는 총 몇 개인가?",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer_index": 3,
+          "explanation": "Vite+, Vite, Vitest, Rolldown, tsdown, Oxlint, Oxfmt 등 6개의 도구가 하나의 스택으로 제공된다."
+        }
+      ]
+    },
+    {
+      "id": "4d9dcee1b889",
+      "title": "Rust-lang/rust is adopting an LLM policy",
+      "url": "https://blog.rust-lang.org/inside-rust/2026/08/05/rust-langrust-is-adopting-an-llm-policy/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 코드 기여 시 리뷰·책임 정책 필요",
+      "tags": [
+        "rust-lang/rust",
+        "LLM",
+        "Large Language Model",
+        "GitHub",
+        "Rust"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Rust 프로젝트가 monorepo에 대한 LLM 사용 정책을 도입했다",
+          "timestamp": null
+        },
+        {
+          "point": "정책은 리뷰어, PR 작성자, 이슈 발견자, LLM 인용 댓글 작성자에게 적용된다",
+          "timestamp": null
+        },
+        {
+          "point": "목표는 투명성 유지, 리뷰 부담 감소, 노력 신호 보존이다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Rust와 유사한 내부 LLM 사용 가이드라인을 수립해 코드 기여 시 책임과 검토 절차를 명시한다",
+        "LLM 생성 코드를 제출할 때 출처를 명시하고 리뷰 체크리스트에 LLM 사용 여부를 확인하는 단계 추가"
+      ],
+      "quiz": [
+        {
+          "question": "새로운 Rust LLM 정책이 적용되는 그룹은?",
+          "options": [
+            "오직 PR 작성자만",
+            "리뷰어·PR 작성자·이슈 발견자·LLM 인용 댓글 작성자",
+            "프로젝트 유지관리자만",
+            "모든 기여자"
+          ],
+          "answer_index": 1,
+          "explanation": "정책은 리뷰어, PR 작성자, 이슈를 LLM으로 발견한 사람, 그리고 LLM을 직접 인용하는 댓글 작성자를 대상으로 한다."
+        },
+        {
+          "question": "본문에서 언급된 LLM 사용으로 인한 주요 문제 3가지는?",
+          "options": [
+            "코드 품질 저하·노력 증가·리뷰 속도 저하",
+            "정제된 결과가 노력 신호를 숨김·리뷰 부담 증가·LLM 복사·붙여넣기 시간 낭비",
+            "보안 취약점·라이선스 문제·성능 저하",
+            "위의 어느 것도 아니다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 정제된 PR이 노력 신호를 잃게 하고, 리뷰 부담이 늘며, LLM 복사·붙여넣기가 시간을 낭비한다는 세 가지 문제를 제시한다."
+        }
+      ]
+    }
+  ]
+}

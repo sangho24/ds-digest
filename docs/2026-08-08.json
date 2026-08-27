@@ -1,0 +1,131 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-08",
+  "generated_at": "2026-08-08T22:43:08.393225",
+  "count": 2,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-08.html",
+  "items": [
+    {
+      "id": "057f4947fffc",
+      "title": "[10분 테코톡] 안톨리니의 오픈소스 기여, 어떻게 시작해야 할까?",
+      "url": "https://youtu.be/eOqXQqg0_Dw",
+      "source": {
+        "type": "youtube",
+        "name": "우아한테크"
+      },
+      "published_at": "2026-08-07T12:00:01",
+      "summary": "오픈소스 기여는 실전 코딩·협업 역량을 빠르게 키워 DS 경력에 큰 도움이 된다",
+      "tags": [
+        "Django",
+        "Python",
+        "AI",
+        "CSP",
+        "테코톡"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 프롬프트로 코드베이스 진입점을 5분 안에 찾을 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "영어와 수준에 대한 두려움은 실제 기여 경험으로 극복 가능하다",
+          "timestamp": null
+        },
+        {
+          "point": "오픈소스 PR은 다수 검토자가 있어 큰 실수에 대한 위험이 낮다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 프롬프트를 사용해 대형 오픈소스 프로젝트에서 특정 기능·파일 위치를 빠르게 탐색한다",
+        "작은 문자열 교체와 같은 간단한 이슈부터 시작해 점진적으로 기여 범위를 확대한다"
+      ],
+      "quiz": [
+        {
+          "question": "강연에서 언급된 Django 코드베이스 규모는 얼마인가?",
+          "options": [
+            "51만 줄",
+            "30만 줄",
+            "10만 줄",
+            "70만 줄"
+          ],
+          "answer_index": 0,
+          "explanation": "강연자는 Django 코드가 51만 줄이고 테스트가 19,000개라고 언급했다."
+        },
+        {
+          "question": "신규 기여자가 가장 크게 느끼는 심리적 장벽은 무엇이라고 언급되었는가?",
+          "options": [
+            "AI 사용법 모름",
+            "영어 능력 부족",
+            "코드베이스 규모",
+            "테스트 작성 어려움"
+          ],
+          "answer_index": 1,
+          "explanation": "강연자는 영어를 잘 못해 기여가 어려울 것이라는 고민을 가장 흔한 심리적 장벽으로 제시했다."
+        }
+      ]
+    },
+    {
+      "id": "0da8f5ad1ed9",
+      "title": "DeepMind Just Changed How AI Sees The World",
+      "url": "https://youtu.be/vO6SWG-jxvE",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-07T08:22:00",
+      "summary": "소형 모델에 이미지·음성 토큰 직접 투입으로 멀티모달 구현",
+      "tags": [
+        "DeepMind",
+        "Gemma 4",
+        "DeepSeek",
+        "transformer",
+        "vision transformer"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Gemma 4는 이미지 패치를 직접 토큰화해 메인 트랜스포머에 입력, 별도 비전 트랜스포머를 없앰",
+          "timestamp": null
+        },
+        {
+          "point": "오디오도 40 ms 청크로 토큰화해 동일 모델에 통합, 인지와 사고 경계가 흐려짐",
+          "timestamp": null
+        },
+        {
+          "point": "99% 작은 모델임에도 이미지·음성·텍스트를 모두 처리해 오픈·무료 배포",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "이미지 패치를 16×16 픽셀 토큰으로 변환해 기존 LLM에 입력해 멀티모달 파인튜닝 수행",
+        "오디오를 40 ms 청크로 스펙트로그램 토큰화해 동일 트랜스포머에 결합, 음성 인식·텍스트 생성 파이프라인 구축"
+      ],
+      "quiz": [
+        {
+          "question": "Gemma 4가 이미지 처리를 위해 사용한 방법은?",
+          "options": [
+            "별도 비전 트랜스포머 사용",
+            "이미지를 직접 토큰화해 메인 트랜스포머에 입력",
+            "CNN 기반 특징 추출 후 결합",
+            "이미지를 텍스트로 변환 후 입력"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면 Gemma 4는 이미지를 작은 패치로 나누어 직접 모델 내부 표현에 투입한다."
+        },
+        {
+          "question": "Gemma 4가 오디오를 처리하는 방식은?",
+          "options": [
+            "오디오 전용 인코더 사용",
+            "40 ms 청크를 토큰화해 메인 트랜스포머에 투입",
+            "음성 텍스트 변환 후 입력",
+            "오디오를 이미지와 동일하게 처리"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 오디오를 40 ms 청크로 나누어 토큰화하고 메인 트랜스포머에 넣는다고 명시돼 있다."
+        }
+      ]
+    }
+  ]
+}

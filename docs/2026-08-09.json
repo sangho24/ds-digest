@@ -1,0 +1,188 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-09",
+  "generated_at": "2026-08-09T22:47:39.244389",
+  "count": 3,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-09.html",
+  "items": [
+    {
+      "id": "c889f9e34eab",
+      "title": "How I use LLMs to learn complex topics",
+      "url": "https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 시뮬레이션으로 반도체 제조 학습, 실무 활용",
+      "tags": [
+        "LLM",
+        "GitHub Pages",
+        "ChipTycoon",
+        "RollerCoaster Tycoon",
+        "unreal-game-assets-creation-skill"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LLM으로 주제의 기본 지식을 생성하고 정확성을 검증한다",
+          "timestamp": null
+        },
+        {
+          "point": "Low‑poly RollerCoaster‑style 시뮬레이션을 만들고 GitHub Pages에 배포한다",
+          "timestamp": null
+        },
+        {
+          "point": "이미지를 3D 객체로 변환해 현실감을 높이고 퀴즈로 학습을 강화한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM 기반 시뮬레이션을 활용해 데이터 파이프라인 단계별 학습용 인터랙티브 페이지를 제작한다",
+        "GitHub Pages와 LLM을 결합해 사내 기술 문서와 시뮬레이션을 자동 생성·배포하는 워크플로우를 구축한다"
+      ],
+      "quiz": [
+        {
+          "question": "생성된 시뮬레이션을 호스팅하는 데 사용된 플랫폼은?",
+          "options": [
+            "GitHub Pages",
+            "AWS S3",
+            "Google Cloud Storage",
+            "Netlify"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 시뮬레이션을 새로운 레포에 푸시하고 GitHub Pages를 활성화한다는 내용이 있다."
+        },
+        {
+          "question": "사진을 3D 객체로 변환하는 데 제안된 도구는?",
+          "options": [
+            "unreal-game-assets-creation-skill",
+            "TensorFlow",
+            "PyTorch",
+            "Blender"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'my skill for transforming pictures into 3d objects' 라는 링크와 함께 해당 GitHub 레포가 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "621e3eeb9ae0",
+      "title": "100 random chords, how many intersections?",
+      "url": "https://youtu.be/wGffBCfrAsE",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-06-16T18:04:05",
+      "summary": "무작위 chord 교차 기대값으로 확률 직관 강화",
+      "tags": [
+        "Bertrand's paradox",
+        "Numberphile",
+        "3Blue1Brown"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "두 점을 원 위에 균등하게 선택해 chord를 만든다",
+          "timestamp": null
+        },
+        {
+          "point": "n개의 무작위 chord에서 교차점 기대값을 구하는 퍼즐",
+          "timestamp": null
+        },
+        {
+          "point": "Bertrand의 역설이 무작위 chord 정의에 영향을 미친다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "무작위 chord 시뮬레이션을 통해 교차점 기대값을 추정하고, 공간 상호작용 모델링에 활용",
+        "Bertrand 역설을 고려해 확률 모델링 시 가정 명시와 데이터 생성 방법을 설계"
+      ],
+      "quiz": [
+        {
+          "question": "무작위 chord를 정의할 때 사용된 방법은?",
+          "options": [
+            "원의 중심에서 무작위 거리 선택",
+            "원 위에 두 점을 균등하게 선택",
+            "무작위 반지름 선택",
+            "무작위 각도 선택"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 원 위에 두 점을 균등하게 선택해 chord를 만든다고 설명한다."
+        },
+        {
+          "question": "본문에서 언급된 역설은?",
+          "options": [
+            "Monty Hall 역설",
+            "Bertrand's paradox",
+            "Simpson's paradox",
+            "Birthday paradox"
+          ],
+          "answer_index": 1,
+          "explanation": "Bertrand's paradox가 무작위 chord 선택과 관련해 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "b2222f041ddb",
+      "title": "Tie random ends: How many loops?",
+      "url": "https://youtu.be/ZHXt0-_gSj4",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-05-21T21:49:47",
+      "summary": "무작위 끈 연결 기대 루프 수, 확률 모델링에 활용",
+      "tags": [
+        "3Blue1Brown",
+        "YouTube",
+        "Patreon"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "두 무작위 끈 끝을 묶어 루프를 만들며 과정을 반복한다",
+          "timestamp": null
+        },
+        {
+          "point": "10개의 끈으로 시작하면 최종 루프는 3개가 된다",
+          "timestamp": null
+        },
+        {
+          "point": "50개의 끈으로 시작하면 평균 루프 수는 얼마인지 묻는다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "시뮬레이션으로 무작위 끈 묶기 과정을 구현해 기대 루프 수를 추정하고 데이터 과학 교육에 활용",
+        "무작위 짝짓기와 순열 사이클 이론을 이용해 기대 루프 수를 수식으로 도출해 모델링 강의에 포함"
+      ],
+      "quiz": [
+        {
+          "question": "예시에서 10개의 끈을 사용했을 때 최종 루프 개수는?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 'we end up with three total loops' 라고 명시되어 있다"
+        },
+        {
+          "question": "50개의 끈을 시작하면 끈 끝을 묶는 횟수는 몇 번인가?",
+          "options": [
+            "25",
+            "50",
+            "75",
+            "100"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'tying random ends together 50 times' 라고 언급된다"
+        }
+      ]
+    }
+  ]
+}

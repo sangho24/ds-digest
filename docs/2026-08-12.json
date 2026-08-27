@@ -1,0 +1,293 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-12",
+  "generated_at": "2026-08-12T23:04:07.574665",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-12.html",
+  "items": [
+    {
+      "id": "dd3e3f523af2",
+      "title": "웹뷰 다음의 레일을 깔다: 당근이 Lynx를 선택한 이유",
+      "url": "https://medium.com/daangn/%EC%9B%B9%EB%B7%B0-%EB%8B%A4%EC%9D%8C%EC%9D%98-%EB%A0%88%EC%9D%BC%EC%9D%84-%EA%B9%94%EB%8B%A4-%EB%8B%B9%EA%B7%BC%EC%9D%B4-lynx%EB%A5%BC-%EC%84%A0%ED%83%9D%ED%95%9C-%EC%9D%B4%EC%9C%A0-34dd50abbfb7?source=rss----4505f82a2dbd---4",
+      "source": {
+        "type": "rss",
+        "name": "당근 기술 블로그 - Medium"
+      },
+      "published_at": "2026-08-12T09:03:40",
+      "summary": "첫 화면 로딩을 최소화하는 Lynx 도입 사례",
+      "tags": [
+        "Lynx",
+        "PrimJS",
+        "QuickJS",
+        "Rspeedy",
+        "IFR"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Lynx는 PrimJS(QuickJS 기반) 경량 JS 엔진을 사용해 런타임 초기화 비용을 크게 낮춰 첫 화면 렌더링을 가속화한다.",
+          "timestamp": null
+        },
+        {
+          "point": "메인 스레드와 백그라운드 스레드로 구성된 Dual‑Thread Architecture가 UI 그리기와 React 라이프사이클을 분리해 Instant First‑Frame Rendering을 제공한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Rspeedy(Rspack·Rsbuild 기반) 번들러로 번들을 CDN에 분리 배포해 프론트엔드 코드를 앱 바이너리와 독립적으로 업데이트할 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "PrimJS와 같은 경량 임베디드 JavaScript 엔진을 모바일 UI 모듈에 도입해 초기화 지연을 수 ms 수준으로 감소시킨다.",
+        "Lynx의 Dual‑Thread IFR 패턴을 참고해 메인 스레드에서 번들과 핵심 데이터를 사전 로드하고, 백그라운드에서 React 로직을 처리해 첫 화면을 즉시 표시한다."
+      ],
+      "quiz": [
+        {
+          "question": "Lynx가 메인 스레드 런타임에 사용하는 JavaScript 엔진은 무엇인가?",
+          "options": [
+            "V8",
+            "QuickJS",
+            "SpiderMonkey",
+            "JavaScriptCore"
+          ],
+          "answer_index": 1,
+          "explanation": "Lynx는 PrimJS라는 경량 엔진을 사용하며, PrimJS는 QuickJS 기반이다."
+        },
+        {
+          "question": "Lynx가 Instant First‑Frame Rendering을 달성하기 위해 채택한 아키텍처는?",
+          "options": [
+            "Single‑threaded",
+            "Dual‑thread (main + background)",
+            "Server‑side rendering",
+            "WebAssembly"
+          ],
+          "answer_index": 1,
+          "explanation": "Lynx는 메인 스레드와 백그라운드 스레드가 각각 UI 렌더링과 React 라이프사이클을 담당하는 Dual‑Thread Architecture를 사용한다."
+        }
+      ]
+    },
+    {
+      "id": "1a8475db80d5",
+      "title": "llama.cpp",
+      "url": "https://llama.app",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "로컬에서 AI 모델을 직접 실행해 데이터 보안·비용 절감",
+      "tags": [
+        "llama.cpp",
+        "pi-llama",
+        "Apple Silicon",
+        "RTX 4090",
+        "Gemma 4"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "llama.cpp를 통해 API 키 없이 로컬에서 최신 LLM을 실행해 개인정보와 비용을 보호한다.",
+          "timestamp": null
+        },
+        {
+          "point": "pi-llama 플러그인으로 Pi 코딩 에이전트를 연결해 모델 사용을 자동화한다.",
+          "timestamp": null
+        },
+        {
+          "point": "CPU부터 Apple Silicon, RTX 4090, H100 등 다양한 하드웨어를 지원한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "내부 서버에 llama.cpp를 배포해 사내 데이터 분석용 사설 LLM 서비스를 구축, 외부 API 비용 절감 및 데이터 유출 방지",
+        "pi-llama 플러그인을 활용해 데이터 파이프라인 자동화 코딩 어시스턴트를 구축, 코드 생성·수정 작업을 온프레미스에서 수행",
+        ""
+      ],
+      "quiz": [
+        {
+          "question": "llama.cpp를 설치하는 명령은 무엇인가?",
+          "options": [
+            "brew install llama",
+            "curl -LsSf https://llama.app/install.sh | sh",
+            "apt-get install llama",
+            "pip install llama"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 제시된 설치 스크립트는 curl -LsSf https://llama.app/install.sh | sh이다."
+        },
+        {
+          "question": "다음 중 본문에 언급되지 않은 하드웨어는?",
+          "options": [
+            "Apple Silicon",
+            "RTX 4090",
+            "AMD Radeon RX",
+            "Google TPU"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 Apple Silicon, RTX 4090, AMD Radeon RX는 언급되지만 Google TPU는 언급되지 않았다."
+        }
+      ]
+    },
+    {
+      "id": "85fbabeac031",
+      "title": "Laying the Rails Beyond WebView: Why Karrot Chose Lynx",
+      "url": "https://medium.com/daangn/laying-the-rails-beyond-webview-why-karrot-chose-lynx-db1aa92af5e4?source=rss----4505f82a2dbd---4",
+      "source": {
+        "type": "rss",
+        "name": "당근 기술 블로그 - Medium"
+      },
+      "published_at": "2026-08-12T09:04:24",
+      "summary": "WebView 로딩 지연을 줄이는 Lynx 도입 평가 과정",
+      "tags": [
+        "Lynx",
+        "QuickJS",
+        "WebView",
+        "Service Worker",
+        "React"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "WebView 초기 로딩 비용이 사용자 경험 병목이며, 첫 프레임부터 실제 UI를 렌더링할 수 있는 런타임이 필요하다",
+          "timestamp": null
+        },
+        {
+          "point": "Lynx는 작은 JavaScript 엔진(PrimJS/QuickJS)과 빠른 시작을 제공해 네이티브 앱에 임베드하기 적합하다",
+          "timestamp": null
+        },
+        {
+          "point": "도입 조건으로 화면별 점진적 적용, 독립 배포, 최소 인력으로 구현 가능, 기존 WebView 복구 경로 확보가 필요했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "WebView 대신 Lynx를 도입해 핵심 화면의 첫 프레임부터 실제 UI를 표시하여 로딩 인지 감소",
+        "QuickJS(PrimJS)를 경량 JavaScript 엔진으로 임베드해 모바일 UI 런타임의 시작 시간을 최소화"
+      ],
+      "quiz": [
+        {
+          "question": "Karrot이 Lynx를 평가한 주요 목적은 무엇인가?",
+          "options": [
+            "앱 바이너리 크기 감소",
+            "첫 프레임부터 로딩 지연 없이 UI 표시",
+            "새 프로그래밍 언어 지원",
+            "서버 사이드 렌더링 활성화"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 사용자가 로딩을 전혀 인지하지 못하도록 첫 화면부터 실제 UI를 렌더링하는 것이 목표라고 명시했다."
+        }
+      ]
+    },
+    {
+      "id": "4b2bac76064d",
+      "title": "Flexible Authentication: Reimagining authentication for millions of users at Airbnb",
+      "url": "https://medium.com/airbnb-engineering/flexible-authentication-reimagining-authentication-for-millions-of-users-at-airbnb-3a8a4c917137?source=rss----53c7c27702d5---4",
+      "source": {
+        "type": "rss",
+        "name": "The Airbnb Tech Blog - Medium"
+      },
+      "published_at": "2026-08-12T17:01:04",
+      "summary": "다양한 로그인 상황을 데이터 기반 정책으로 최적화",
+      "tags": [
+        "Airbnb",
+        "WhatsApp",
+        "Naver",
+        "Policy Engine",
+        "OTP"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "‘Identify first then Challenge’ 모델로 인증 흐름을 식별 단계와 검증 단계로 분리",
+          "timestamp": null
+        },
+        {
+          "point": "정책 엔진이 사용자 세션·지역·기기 등을 고려해 성공 확률이 높은 챌린지를 선택",
+          "timestamp": null
+        },
+        {
+          "point": "클라이언트가 챌린지를 결정하지 못하고 서버가 제어해 유연한 인증 제공",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "서버‑사이드 정책 엔진을 도입해 사용자의 국가·등록 방식에 따라 WhatsApp OTP·Naver 로그인 등 최적 챌린지를 자동 선택",
+        "과거 로그인 성공률 데이터를 활용해 챌린지 순위를 동적으로 조정하는 모델을 구축"
+      ],
+      "quiz": [
+        {
+          "question": "브라질에서 전화번호로 가입한 사용자가 선호하는 인증 방식은?",
+          "options": [
+            "SMS OTP",
+            "WhatsApp OTP",
+            "Email OTP",
+            "Google 로그인"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 브라질 사용자는 WhatsApp OTP가 SMS보다 보급률이 높아 선호된다고 명시"
+        }
+      ]
+    },
+    {
+      "id": "232615afd87e",
+      "title": "조금씩 시키지 마세요, 저 헷갈려요",
+      "url": "https://deepdaiv.stibee.com/p/158",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-08-11T00:00:00",
+      "summary": "멀티턴 지시 시 LLM 신뢰성 급락, 실무에 위험",
+      "tags": [
+        "GPT-4.1",
+        "Claude 3.7 Sonnet",
+        "Gemini 2.5 Pro",
+        "DeepSeek-R1",
+        "Underspecification"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "멀티턴에 정보를 나눠 주면 LLM 성능이 90% 이상에서 평균 39%로 급감한다.",
+          "timestamp": null
+        },
+        {
+          "point": "성급한 답변 시도와 답변 부풀림이 성능 저하의 주요 원인이며, 턴 수 자체는 큰 영향을 주지 않는다.",
+          "timestamp": null
+        },
+        {
+          "point": "멀티턴 상황에서 모델의 역량은 약간 감소하지만 신뢰성(일관성)은 크게 악화돼, 대형·고성능 모델도 불안정해진다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "핵심 요구사항을 한 번에 제공하는 싱글턴 프롬프트 방식을 도입해 멀티턴에 따른 신뢰성 저하를 방지한다.",
+        "각 턴 후 모델의 답변을 검증·재요청하는 검증 단계(예: 답변 길이 제한, 가정 검증)를 삽입해 성급한 답변과 답변 부풀림을 억제한다."
+      ],
+      "quiz": [
+        {
+          "question": "연구에 따르면 동일한 정보를 싱글턴 방식과 멀티턴 방식으로 제공했을 때 성능 차이는 어느 정도인가?",
+          "options": [
+            "90% 이상 → 평균 39%",
+            "80% → 50%",
+            "95% → 70%",
+            "성능 차이가 없다"
+          ],
+          "answer_index": 0,
+          "explanation": "논문 결과, 싱글턴에서는 90% 이상 성능을 보였지만 멀티턴에서는 평균 39%로 급감했다."
+        },
+        {
+          "question": "다음 중 성능 저하에 크게 영향을 주지 않는 요인은 무엇인가?",
+          "options": [
+            "샤드(조각) 개수",
+            "정보가 나뉘어 들어오는 상황",
+            "답변 부풀림",
+            "성급한 답변 시도"
+          ],
+          "answer_index": 0,
+          "explanation": "연구에서는 샤드 개수를 2개에서 8개까지 늘려도 성능 저하 폭이 크게 변하지 않았으며, 핵심 원인은 정보가 나뉘어 들어오는 점이다."
+        }
+      ]
+    }
+  ]
+}

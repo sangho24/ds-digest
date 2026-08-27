@@ -1,0 +1,266 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-02",
+  "generated_at": "2026-08-02T23:15:50.248954",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-02.html",
+  "items": [
+    {
+      "id": "fb87090d1424",
+      "title": "NVIDIA's AI Learns Why Copying Humans Isn't Enough",
+      "url": "https://youtu.be/8B05cy3UuSE",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-02T15:01:10",
+      "summary": "극소량 데이터로 인간 동작과 목표 학습 결합",
+      "tags": [
+        "NVIDIA",
+        "AI",
+        "parkour",
+        "Two Minute Papers",
+        "Dr. Károly Zsolnai-Fehér"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI가 인간 동작을 모방하면서 목표 지향 행동도 학습하도록 두 교실에서 동시에 훈련한다",
+          "timestamp": null
+        },
+        {
+          "point": "극소량(30초) 영상 데이터만으로도 뛰어난 퍼포먼스를 보여준다",
+          "timestamp": null
+        },
+        {
+          "point": "판정자(judge)와 선수(athlete)가 서로 경쟁하며 움직임의 진위와 적합성을 개선한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "극소량 동작 클립을 활용해 로봇 팔에 imitation+reinforcement 학습 파이프라인 구축",
+        "게임 엔진에서 캐릭터 모션 생성에 judge‑athlete 적대적 학습 프레임워크 적용"
+      ],
+      "quiz": [
+        {
+          "question": "이 연구에서 사용된 인간 파쿠르 영상의 총 길이는 얼마인가?",
+          "options": [
+            "30초",
+            "60초",
+            "5분",
+            "10초"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'only 30 seconds of internet parkour' 라고 명시되어 있다"
+        }
+      ]
+    },
+    {
+      "id": "d2ca99a55917",
+      "title": "I BUILT A FULLY AUTOMATIC MANSPLAINER",
+      "url": "https://youtu.be/xHi8PUIVyoo",
+      "source": {
+        "type": "youtube",
+        "name": "Yannic Kilcher"
+      },
+      "published_at": "2026-03-06T22:07:33",
+      "summary": "실시간 AI 교정 시스템 구축 사례",
+      "tags": [
+        "Nvidia DGX Spark",
+        "H100",
+        "GPU",
+        "VRAM",
+        "Sriracha"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "DGX Spark은 120 GB 통합 메모리를 제공해 H100보다 큰 VRAM을 활용 가능",
+          "timestamp": null
+        },
+        {
+          "point": "노트북에서 음성을 녹음해 DGX Spark으로 전송, 추론 결과를 음성으로 재생",
+          "timestamp": null
+        },
+        {
+          "point": "여러 모델을 순차적으로 연결하면 지연이 발생해 최적화 여지가 있음",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "DGX Spark의 120 GB 통합 메모리를 활용해 실시간 음성‑텍스트‑교정 파이프라인을 구축하고, 라그를 최소화하기 위해 모델 병합 및 배치 추론을 적용한다.",
+        "모델 체이닝으로 발생하는 지연을 프로파일링하고, 동일 GPU에서 멀티‑모델 서빙을 구현해 응답 시간을 30% 이상 단축한다."
+      ],
+      "quiz": [
+        {
+          "question": "데모에서 120 GB 통합 메모리를 제공하는 하드웨어는?",
+          "options": [
+            "Nvidia DGX Spark",
+            "Nvidia Jetson",
+            "Google TPU",
+            "AMD Radeon"
+          ],
+          "answer_index": 0,
+          "explanation": "영상에서 발표자는 DGX Spark이 120 GB 통합 RAM을 가지고 있다고 설명한다."
+        },
+        {
+          "question": "Sriracha 소스가 태국산이라는 주장이 부정확한 이유는?",
+          "options": [
+            "베트남 난민이 캘리포니아에서 대중화했기 때문",
+            "일본에서 제조되기 때문",
+            "미국 기업이 소유하기 때문",
+            "합성 향료이기 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "발표자는 Sriracha 소스가 베트남 난민에 의해 캘리포니아에서 대중화됐다고 정정한다."
+        }
+      ]
+    },
+    {
+      "id": "4423410040aa",
+      "title": "Show HN: Fuse – statically typed functional programming language",
+      "url": "https://fuselang.org",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "함수형 언어로 데이터 파이프라인 최적화",
+      "tags": [
+        "Fuse",
+        "GRIN",
+        "LLVM",
+        "Scala",
+        "Rust"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Fuse는 정적 타입 순수 함수형 언어이며 LLVM 네이티브 코드로 컴파일됩니다.",
+          "timestamp": null
+        },
+        {
+          "point": "GRIN 전체 프로그램 최적화기를 거쳐 LLVM 코드가 생성됩니다.",
+          "timestamp": null
+        },
+        {
+          "point": "System F 기반에 고차 순위 다형성과 양방향 타입 검사를 추가했습니다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Fuse를 활용해 고성능 데이터 변환 파이프라인을 구현하고, LLVM 기반 네이티브 코드로 실행 속도를 향상시킨다.",
+        "Fuse의 정적 타입 시스템을 데이터 스키마 검증에 적용해 파이프라인 단계별 타입 안전성을 확보한다."
+      ],
+      "quiz": [
+        {
+          "question": "Fuse 언어가 컴파일되는 최적화 도구는 무엇인가?",
+          "options": [
+            "GRIN",
+            "LLVM",
+            "GCC",
+            "Clang"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 Fuse는 GRIN 전체 프로그램 최적화기로 컴파일된다고 명시되어 있다."
+        },
+        {
+          "question": "Fuse 언어 구현에 사용된 기본 프로그래밍 언어는?",
+          "options": [
+            "Rust",
+            "Haskell",
+            "Scala",
+            "Python"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 Fuse의 구현 코드는 Scala로 작성되었다고 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "e66478882170",
+      "title": "Traditional Holiday Live Stream",
+      "url": "https://youtu.be/DNajvkqfobY",
+      "source": {
+        "type": "youtube",
+        "name": "Yannic Kilcher"
+      },
+      "published_at": "2025-12-28T12:41:54",
+      "summary": "AI 논문·커뮤니티 정보 제공 채널 소개",
+      "tags": [
+        "Yannic Kilcher",
+        "TabNine",
+        "Discord",
+        "Patreon",
+        "Bitcoin"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "Yannic Kilcher의 유튜브 채널 및 Discord 커뮤니티 링크 제공",
+          "timestamp": null
+        },
+        {
+          "point": "TabNine 코드 완성 도구에 대한 추천 및 리퍼럴 링크",
+          "timestamp": null
+        },
+        {
+          "point": "SubscribeStar, Patreon 등 재정 지원 방법 안내",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    },
+    {
+      "id": "dc240a9ee3b1",
+      "title": "Reinventing Entropy | Compression is Intelligence Part 1",
+      "url": "https://youtu.be/l6DKRf-fAAM",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-06-07T11:49:51",
+      "summary": "텍스트 압축 한계와 LLM 학습 목표 연결",
+      "tags": [
+        "Claude Shannon",
+        "cross-entropy",
+        "large language models",
+        "information theory",
+        "3Blue1Brown"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "Prediction and compression are mathematically equivalent per information theory.",
+          "timestamp": null
+        },
+        {
+          "point": "LLM pre‑training objective can be viewed as building an optimal text compressor.",
+          "timestamp": null
+        },
+        {
+          "point": "Shannon's noiseless coding theorem provides insight into compression limits.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Evaluate LLM pre‑training data redundancy using Shannon entropy estimates to prune unnecessary tokens.",
+        "Treat cross‑entropy loss as a direct compression metric, guiding model architecture and data selection for more efficient training."
+      ],
+      "quiz": [
+        {
+          "question": "Which loss function is described as being equivalent to building an efficient text compressor in LLM pre‑training?",
+          "options": [
+            "Mean Squared Error",
+            "Cross‑entropy loss",
+            "Hinge loss",
+            "KL divergence"
+          ],
+          "answer_index": 1,
+          "explanation": "The transcript states that the pre‑training objective is usually described as next‑token prediction using cross‑entropy loss, and that cross‑entropy originates from information theory where prediction and compression are equivalent."
+        }
+      ]
+    }
+  ]
+}

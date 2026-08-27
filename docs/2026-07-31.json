@@ -1,0 +1,303 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-31",
+  "generated_at": "2026-07-31T23:28:18.656306",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-31.html",
+  "items": [
+    {
+      "id": "7b4f76909726",
+      "title": "Modeling Device Capabilities for Analytics",
+      "url": "https://netflixtechblog.com/modeling-device-capabilities-for-analytics-e7607acebde8?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-07-31T16:01:02",
+      "summary": "디바이스 능력 모델링으로 기능 도달률 분석",
+      "tags": [
+        "Screen Height",
+        "Screen Width",
+        "Video Profiles",
+        "playready",
+        "hevc"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "누적 테이블을 이용해 디바이스별 최신 능력 상태를 저장·분석한다",
+          "timestamp": null
+        },
+        {
+          "point": "히스토그램 테이블로 28일간 모델·버전별 활성 디바이스와 기능 지원 비율을 집계한다",
+          "timestamp": null
+        },
+        {
+          "point": "데이터 기반으로 4K, Spatial Audio 등 기능 활성화를 전략적으로 결정한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "누적 디바이스 능력 테이블을 구축해 실시간 기능 플래그와 연동, 신규 기능 롤아웃 전 디바이스 호환성 검증에 활용한다",
+        "히스토그램 테이블을 활용해 디바이스 모델·버전별 기능 채택률을 모니터링하고, 저채택 디바이스에 대한 최적화 작업 우선순위를 정한다"
+      ],
+      "quiz": [
+        {
+          "question": "히스토그램 예시에서 UHD 프로필(hevc)의 지원 비율은 얼마인가?",
+          "options": [
+            "100%",
+            "20%",
+            "50%",
+            "80%"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 \"hevc: 20% # UHD profile\"이라고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "b5a2b7d3ff4e",
+      "title": "Everyone is building LLM routers, we deprecated ours",
+      "url": "https://manifest.build/blog/why-we-deprecated-our-llm-router/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 라우팅은 비용 절감보다 일관성·복잡도 관리가 중요함",
+      "tags": [
+        "Manifest",
+        "Anthropic",
+        "DeepSeek",
+        "OpenAI",
+        "Mistral"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "프롬프트만으로 복잡도를 판단하기 어려워 라우팅 정확도가 낮다",
+          "timestamp": null
+        },
+        {
+          "point": "캐시 활용이 비용 절감에 라우팅보다 효과적이다",
+          "timestamp": null
+        },
+        {
+          "point": "모델 전환은 일관성 손상과 유지보수 비용 증가를 초래한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "시스템 프롬프트와 대화 히스토리를 캐시하여 토큰 비용을 75~90% 절감",
+        "대부분의 파이프라인에 단일 검증된 LLM을 사용하고, 특수 작업에만 별도 모델을 지정하는 전략 도입"
+      ],
+      "quiz": [
+        {
+          "question": "LLM 라우터가 비용 절감에 효과적이라고 판단하기 어려운 이유는?",
+          "options": [
+            "프롬프트만으로 복잡도 판단이 불가능",
+            "모델이 항상 동일",
+            "캐시가 없기",
+            "데이터가 부족"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 복잡도가 프롬프트만으로는 판단하기 어렵다고 강조한다."
+        },
+        {
+          "question": "본문에서 언급된 캐시가 비용 절감에 미치는 비율은?",
+          "options": [
+            "25-40%",
+            "50-60%",
+            "75-90%",
+            "95-100%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 캐시 읽기가 75%~90% 저렴하다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "d429563ef4aa",
+      "title": "Measuring the entropy of English",
+      "url": "https://youtu.be/-7etvZSBxlk",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-06-12T13:22:02",
+      "summary": "언어 압축 한계와 엔트로피 측정 방법 이해",
+      "tags": [
+        "Claude Shannon",
+        "Betty",
+        "3Blue1Brown",
+        "Prediction and Entropy of Printed English",
+        "entropy"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "짧은 문자 시퀀스만으로는 긴 문맥을 설명할 수 없어 확률 추정이 한계에 부딪힌다",
+          "timestamp": null
+        },
+        {
+          "point": "샤논은 아내에게 글자를 맞추게 하여 인간 추정 확률을 기록했고 이를 정보량 측정에 활용했다",
+          "timestamp": null
+        },
+        {
+          "point": "100자 이상의 문맥이면 영어를 이론적으로 문자당 1비트 정도로 압축할 수 있다고 추정했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "n‑gram 모델에 스무딩을 적용해 엔트로피를 추정하고, 이를 기반으로 텍스트 압축 파라미터를 설정한다",
+        "인간 추론 과정을 시뮬레이션해 언어 모델의 예측 확률을 평가하고, 엔트로피 근사값을 활용해 모델 튜닝에 반영한다"
+      ],
+      "quiz": [
+        {
+          "question": "샤논이 제시한, 최소 100자 문맥에서 영어를 압축할 수 있는 이론적 비트 수는?",
+          "options": [
+            "0.5 비트/문자",
+            "1 비트/문자",
+            "2 비트/문자",
+            "4 비트/문자"
+          ],
+          "answer_index": 1,
+          "explanation": "샤논은 100자 이상의 문맥을 제공하면 영어를 약 1비트/문자 수준으로 압축할 수 있다고 추정했다."
+        },
+        {
+          "question": "샤논이 초기 실험에서 문자 시퀀스 통계를 수집하기 위해 사용한 방법은?",
+          "options": [
+            "책을 스캔해 'TH' 뒤 문자 빈도 조사",
+            "독자 설문 조사",
+            "아내에게 글자를 맞추게 하여 기록",
+            "신경망 모델 학습"
+          ],
+          "answer_index": 0,
+          "explanation": "그는 여러 책을 살펴보며 'T H' 뒤에 어떤 문자가 오는지를 기록해 짧은 시퀀스 통계를 만들었다."
+        }
+      ]
+    },
+    {
+      "id": "deedd35499fa",
+      "title": "Show HN: What should the GUI for AI agents look like?",
+      "url": "https://marbleos.com/demo",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "AI 에이전트 GUI로 작업 흐름 직관화",
+      "tags": [
+        "MarbleOS",
+        "Claude",
+        "ChatGPT",
+        "Xerox PARC",
+        "NeXTSTEP"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "GUI가 AI 에이전트의 기능을 시각화해 사용성을 높인다",
+          "timestamp": null
+        },
+        {
+          "point": "MarbleOS는 작업을 카드 형태로 표시해 동시에 여러 작업 관리 가능",
+          "timestamp": null
+        },
+        {
+          "point": "도구와 기대 결과를 사전에 보여줘 인지 부하를 감소시킨다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "카드 기반 UI를 도입해 AI 파이프라인의 도구 사용과 산출물을 한눈에 보여주는 시스템 구축",
+        "작업 실행 전 필요한 도구와 파라미터를 미리 표시해 사용자에게 명령 구조를 안내하는 인터페이스 설계"
+      ],
+      "quiz": [
+        {
+          "question": "MarbleOS에서 각 위임 작업은 어떻게 표시되는가?",
+          "options": [
+            "카드",
+            "텍스트 라인",
+            "음성 명령",
+            "그래프"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'Each delegated task becomes a card' 라고 명시되어 있다"
+        },
+        {
+          "question": "MarbleOS가 영감을 받은 초기 GUI는 어디에서 왔는가?",
+          "options": [
+            "Xerox PARC",
+            "Google",
+            "Microsoft",
+            "Apple"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'The inspiration for Marble comes from the GUI work at Xerox PARC' 라고 적혀 있다"
+        }
+      ]
+    },
+    {
+      "id": "4b00de74a15c",
+      "title": "(이벤트) 🎁 100호 기념, 특별한 선물을 준비했어요",
+      "url": "https://dflick.stibee.com/p/104",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-07-28T00:00:00",
+      "summary": "AI·UX 최신 동향과 100호 이벤트 인사이트",
+      "tags": [
+        "Claude Opus 5",
+        "MAI-Cyber-1-Flash",
+        "ROCm.ai",
+        "Google",
+        "EU"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "디플릭 100번째 뉴스레터 발행 기념 설문조사와 보고서·쿠폰 이벤트 진행",
+          "timestamp": null
+        },
+        {
+          "point": "Anthropic가 비용 동일하게 성능 향상된 Claude Opus 5를 출시",
+          "timestamp": null
+        },
+        {
+          "point": "EU가 구글에 검색·앱스토어 우대 혐의로 10억 달러 과징금 부과",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Claude Opus 5를 데이터 파이프라인 코드 자동완성 및 검증에 활용해 개발 효율성 향상",
+        "AMD ROCm.ai 플랫폼을 도입해 GPU 기반 모델 학습 비용을 기존 대비 최대 30% 절감"
+      ],
+      "quiz": [
+        {
+          "question": "Anthropic가 새롭게 발표한 AI 모델 이름은?",
+          "options": [
+            "Claude Opus 4",
+            "Claude Opus 5",
+            "Claude Max",
+            "Claude Pro"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'Anthropic이 하이브리드 추론 모델 \"Claude Opus 5\"를 내놨다'라고 명시되어 있음."
+        },
+        {
+          "question": "EU가 구글에 부과한 과징금 규모는?",
+          "options": [
+            "5억 달러",
+            "10억 달러",
+            "20억 달러",
+            "100억 달러"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'EU 집행위원회가 구글에 10억 달러 과징금 부과'라고 기록되어 있음."
+        }
+      ]
+    }
+  ]
+}

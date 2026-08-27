@@ -1,0 +1,312 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T23:31:21.866385",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-03.html",
+  "items": [
+    {
+      "id": "6e38ee0db9d6",
+      "title": "SQLite Critical CVEs or LLM Slop?",
+      "url": "https://research.jfrog.com/post/sqlite-critical-cves-or-llm-slops/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 생성 CVE가 보안 데이터 신뢰성을 위협한다",
+      "tags": [
+        "SQLite",
+        "CVE-2026-51302",
+        "JFrog",
+        "Gptzero",
+        "Docker"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "GitHub repo에 AI 생성된 SQLite CVE 다수 포함",
+          "timestamp": null
+        },
+        {
+          "point": "NVD·CISA가 초기 Critical 등급 부여했으나 검증 결과 허위임 확인",
+          "timestamp": null
+        },
+        {
+          "point": "공식 소스 코드와 Docker+ASan 환경에서 PoC 테스트로 검증 수행",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "외부 CVE 피드의 신뢰성을 자동 검증하는 파이프라인을 구축해 공식 SQLite 소스와 Docker+ASan 테스트를 연동한다",
+        "보안 공지문에 AI‑generated 여부를 판별하기 위해 Gptzero와 같은 모델 탐지 도구를 사전 필터링 단계에 적용한다"
+      ],
+      "quiz": [
+        {
+          "question": "어떤 CVE의 심각도 점수가 10.0 Critical에서 7.6 High로 다운그레이드 되었나요?",
+          "options": [
+            "CVE-2026-51302",
+            "CVE-2026-51303",
+            "CVE-2026-51297",
+            "CVE-2026-51296"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 CVE-2026-51302가 처음에 10.0 Critical 점수를 받았지만 이후 7.6 High로 낮춰졌다고 명시돼 있다."
+        },
+        {
+          "question": "AI‑generated 보안 자문을 탐지하기 위해 사용된 도구는 무엇인가요?",
+          "options": [
+            "Gptzero",
+            "Copyleaks",
+            "Turnitin",
+            "OpenAI Detector"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Gptzero를 이용해 모든 자문이 AI 생성임을 확인했다고 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "8f51a03d3151",
+      "title": "Prevent cognitive debt by manually retyping LLM-generated code",
+      "url": "https://ankursethi.com/blog/prevent-cognitive-debt-by-manually-retyping-llm-generated-code/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 코드 직접 입력으로 인지 부채 최소화",
+      "tags": [
+        "LLM",
+        "Django",
+        "AI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "코드를 직접 타이핑하면 코드베이스에 대한 공간적 인식과 이해도가 높아진다.",
+          "timestamp": null
+        },
+        {
+          "point": "수동 입력 과정에서 LLM의 환각이나 설계 결함을 조기에 발견할 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "LLM에게 파일 수정은 제안만 하고 직접 적용하지 않도록 지시하면 제어권을 유지한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM 에이전트에 ‘편집 제안만 채팅에 표시하고 직접 적용하지 않음’ 규칙을 추가해 개발자가 수동으로 코드를 입력하도록 워크플로우를 설계한다.",
+        "개인 프로젝트에서 LLM이 생성한 코드를 직접 타이핑하는 방식을 도입해 인지 부채를 줄이고 코드베이스에 대한 이해도를 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "작성자가 강조한 직접 타이핑의 주요 장점은 무엇인가?",
+          "options": [
+            "개발 속도 향상",
+            "정신적 부채 감소와 코드 이해도 향상",
+            "라이선스 문제 회피",
+            "코드 실행 성능 개선"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 직접 타이핑이 정신적 부채를 줄이고 코드에 대한 깊은 이해를 만든다고 설명한다."
+        },
+        {
+          "question": "작성자가 LLM에게 파일을 수정하도록 요구하지 않고 제시하도록 지시한 내용은?",
+          "options": [
+            "자동으로 파일을 수정하도록 허용한다",
+            "제안된 편집을 채팅에 보여주고 사용자가 직접 적용한다",
+            "파일을 삭제하도록 명령한다",
+            "코드 최적화를 자동으로 수행한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에선 LLM이 파일을 직접 수정하지 말고, 편집 제안을 채팅에 보여주어 사용자가 직접 입력하도록 지시한다."
+        }
+      ]
+    },
+    {
+      "id": "f98a3c9edeb8",
+      "title": "Smaller, faster, safer: running Kimi and GLM at scale",
+      "url": "https://blog.cloudflare.com/smaller-faster-safer-models/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "GPU 메모리 절감·컨텍스트 확대로 LLM 비용 절감",
+      "tags": [
+        "Kimi K-series",
+        "GLM",
+        "Workers AI",
+        "SGLang",
+        "FP8"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "KV 캐시를 FP8(e4m3)으로 양자화하면 메모리가 절반이 되어 Kimi K2.6의 컨텍스트 길이가 약 2배 늘어난다",
+          "timestamp": null
+        },
+        {
+          "point": "모델 가중치를 압축해 GPU 사용량을 추가 감소시켜 동시에 더 많은 요청을 처리 가능하게 함",
+          "timestamp": null
+        },
+        {
+          "point": "여러 요청이 공유하는 캐시를 보호하는 기법으로 비용을 낮추면서 정확도 손실을 방지함",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "FP8 양자화 커널을 구현해 자체 추론 파이프라인의 KV 캐시를 8비트 부동소수점으로 저장해 메모리 사용량을 절반으로 줄인다",
+        "SGLang을 서비스 프레임워크로 도입하고 모델 가중치 압축 옵션을 활성화해 대형 LLM을 더 많은 동시 요청에 배치한다"
+      ],
+      "quiz": [
+        {
+          "question": "KV 캐시는 기본적으로 어떤 정밀도로 저장되나요?",
+          "options": [
+            "FP8",
+            "BF16",
+            "FP16",
+            "INT8"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 KV 캐시는 기본적으로 16비트 정밀도인 BF16으로 저장됩니다."
+        },
+        {
+          "question": "FP8으로 KV 캐시를 양자화하면 Kimi K2.6의 컨텍스트 길이는 어떻게 변하나요?",
+          "options": [
+            "변화 없음",
+            "절반으로 감소",
+            "두 배로 증가",
+            "세 배로 증가"
+          ],
+          "answer_index": 2,
+          "explanation": "FP8 양자화로 메모리가 절반이 되어 컨텍스트 길이가 약 686,000 토큰에서 1.37백만 토큰으로 두 배가 됩니다."
+        }
+      ]
+    },
+    {
+      "id": "352e7a04ded8",
+      "title": "Another DeepSeek Moment Has Arrived",
+      "url": "https://youtu.be/bm1BjOjS7sQ",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-03T09:47:34",
+      "summary": "포스트 트레이닝으로 동일 모델 성능 급상승, 현업 적용 가능",
+      "tags": [
+        "DeepSeek",
+        "Flash model",
+        "Lambda",
+        "post-training",
+        "API"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "동일 아키텍처·크기지만 포스트 트레이닝으로 성능이 2배 이상 향상",
+          "timestamp": null
+        },
+        {
+          "point": "새 Flash 모델이 더 큰 Pro 버전보다 우수한 결과를 보여줌",
+          "timestamp": null
+        },
+        {
+          "point": "오픈 소스 모델을 Lambda GPU 인스턴스로 로컬·클라우드에서 실행 가능",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "기존 LLM에 포스트 트레이닝(Instruction‑tuning) 단계만 추가해 성능을 크게 끌어올린 뒤, 동일한 인프라로 서비스에 적용한다",
+        "Lambda의 Nvidia GPU 인스턴스를 활용해 DeepSeek Flash 모델을 사내 챗봇이나 에이전트에 배포해 비용 효율적인 고성능 AI 서비스를 구축한다"
+      ],
+      "quiz": [
+        {
+          "question": "DeepSeek Flash 모델의 성능 급등에 가장 큰 영향을 준 요소는?",
+          "options": [
+            "모델 크기 확대",
+            "학습 시간 연장",
+            "포스트 트레이닝",
+            "새로운 모델 아키텍처"
+          ],
+          "answer_index": 2,
+          "explanation": "영상에서는 동일한 기본 모델에 포스트 트레이닝 단계만 추가해 성능이 크게 향상됐다고 설명한다."
+        },
+        {
+          "question": "DeepSeek 모델을 로컬에서 실행하려면 어떤 환경을 권장했는가?",
+          "options": [
+            "저가 CPU만으로 가능",
+            "Lambda의 Nvidia GPU 인스턴스 사용",
+            "Google Colab 무료 티어",
+            "실행 불가능"
+          ],
+          "answer_index": 1,
+          "explanation": "발표자는 Lambda의 강력한 GPU를 이용해 모델을 로컬 혹은 클라우드에서 실행할 수 있다고 강조한다."
+        }
+      ]
+    },
+    {
+      "id": "a3267be913e4",
+      "title": "DS와 MLE가 함께 일하는 법",
+      "url": "https://toss.tech/article/ds-mle-cowork",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-08-03T03:25:00",
+      "summary": "DS와 MLE 협업 구분이 서비스 품질을 좌우한다",
+      "tags": [
+        "Toss",
+        "Jupyter Notebook",
+        "OCR",
+        "STT",
+        "ML Service"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "역할 구분이 명확하지 않아 모델 서빙에 반복적인 장애가 발생했다",
+          "timestamp": null
+        },
+        {
+          "point": "협업 과정을 Phase 0‑2 로 정의하고 단계별 책임을 정리했다",
+          "timestamp": null
+        },
+        {
+          "point": "Phase 0에서는 DS가 주피터 노트북 전체를 전달하고 MLE가 처음부터 서빙 코드를 재작성했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "모델 전달 시 Jupyter Notebook 대신 Docker 이미지와 의존성 파일을 포함한 패키지를 제공하여 재작성 비용을 줄인다",
+        "협업 단계별 체크리스트(Phase 0‑2)를 문서화해 신규 모델 도입 시 일관된 프로세스를 적용한다"
+      ],
+      "quiz": [
+        {
+          "question": "DS와 MLE의 협업 과정에서 처음에 발생한 주요 문제는 무엇인가?",
+          "options": [
+            "모델 정확도 저하",
+            "코드와 설정 파일이 흩어져 있어 서빙이 안 됨",
+            "데이터 부족",
+            "인프라 비용 증가"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 DS가 만든 노트북을 전달받은 MLE가 실행되지 않는 이유는 라이브러리와 설정 파일이 흩어져 있었기 때문이라고 명시돼 있다."
+        },
+        {
+          "question": "Phase 0에서 DS가 MLE에게 전달한 방식은?",
+          "options": [
+            "Docker 이미지 제공",
+            "Jupyter Notebook 전체 전달",
+            "API 스펙만 전달",
+            "GitHub 레포만 공유"
+          ],
+          "answer_index": 1,
+          "explanation": "Phase 0 설명에서 DS가 주피터 노트북에 모델 학습·추론 코드를 모두 적어 MLE에게 통째로 전달했다고 언급한다."
+        }
+      ]
+    }
+  ]
+}

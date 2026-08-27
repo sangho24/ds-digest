@@ -1,0 +1,242 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-14",
+  "generated_at": "2026-08-14T22:40:46.408328",
+  "count": 4,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-14.html",
+  "items": [
+    {
+      "id": "87413287666d",
+      "title": "Claude AI Failed 650 Times…Then Beat The Human Record",
+      "url": "https://youtu.be/QnGNF8k_uoc",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-14T08:42:07",
+      "summary": "LLM이 인간 기록을 넘어 수학적 경계 개선 사례",
+      "tags": [
+        "Claude",
+        "Riemann hypothesis",
+        "Jacobain conjecture",
+        "Weights & Biases",
+        "Weave"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Claude는 650번 시도 후 인간 기록을 초과하는 경계 개선에 성공했다",
+          "timestamp": null
+        },
+        {
+          "point": "비전문가의 격려 프롬프트가 AI의 돌파구에 기여했다",
+          "timestamp": null
+        },
+        {
+          "point": "완전 검증 가능한 형식화된 증명이 제공되어 자동 검증이 가능했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "격려형 프롬프트를 활용해 수학·최적화 문제 탐색 파이프라인 구축",
+        "Weights & Biases Weave를 도입해 LLM 기반 데이터 파이프라인의 흐름과 평가를 추적"
+      ],
+      "quiz": [
+        {
+          "question": "Claude가 성공하기 전 시도한 횟수는?",
+          "options": [
+            "650",
+            "500",
+            "700",
+            "1000"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 첫 650번 시도는 실패했으며 이후 개선된 결과가 나왔다고 언급됨."
+        },
+        {
+          "question": "영상에서 언급된 LLM 디버깅 도구는?",
+          "options": [
+            "TensorBoard",
+            "Weights & Biases Weave",
+            "MLflow",
+            "Neptune"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 Weights & Biases의 Weave 툴을 사용해 LLM 애플리케이션을 디버깅한다고 소개됨."
+        }
+      ]
+    },
+    {
+      "id": "5f608882375e",
+      "title": "AI Is Learning at the Wrong Level of Abstraction — Matthieu Wyart",
+      "url": "https://youtu.be/revreN8LZ_M",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-08-10T22:55:05",
+      "summary": "추상 레벨 예측이 학습 효율을 크게 높인다",
+      "tags": [
+        "LLMs",
+        "diffusion models",
+        "latent space",
+        "statistical physics",
+        "Notion"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "잠재 공간에서 예측하면 표본 복잡도가 크게 감소한다",
+          "timestamp": null
+        },
+        {
+          "point": "깊은 아키텍처는 암묵적 편향으로 거친 변수(coarse-grained)를 형성한다",
+          "timestamp": null
+        },
+        {
+          "point": "통계 물리학 기반 프레임워크가 추상화 학습을 통합적으로 설명한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "잠재 공간 예측을 위한 사전 학습 단계(예: 오토인코더) 도입으로 토큰 예측 전 모델의 샘플 효율성을 높인다",
+        "물리학에서 영감을 받은 정규화(예: 에너지 기반 손실)로 모델이 거친 변수 형태를 스스로 학습하도록 유도한다"
+      ],
+      "quiz": [
+        {
+          "question": "Wyart가 주장한 잠재 공간 예측의 주요 장점은 무엇인가?",
+          "options": [
+            "계산 비용 증가",
+            "표본 복잡도 감소",
+            "해석 가능성 향상",
+            "장점 없음"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 그는 잠재 공간을 예측하는 알고리즘이 표본 복잡도 면에서 훨씬 더 강력하다고 언급한다."
+        },
+        {
+          "question": "Wyart가 전공한 물리학 분야는 무엇인가?",
+          "options": [
+            "양자역학",
+            "통계 물리학",
+            "천체물리학",
+            "컴퓨터 비전"
+          ],
+          "answer_index": 1,
+          "explanation": "그는 자신을 통계 물리학 연구자라고 밝히며, 복합 시스템과 에너지 지형 등을 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "67f01417ff6a",
+      "title": "🎖️2026 혁신의숲 어워즈 후보 2차 기업 공개!",
+      "url": "https://innoforest.stibee.com/p/642",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-08-11T00:00:00",
+      "summary": "차세대 성장 스타트업 현황 파악으로 데이터 파트너십 기회 포착",
+      "tags": [
+        "헬스케어·바이오",
+        "로보틱스",
+        "건설테크",
+        "혁신의숲",
+        "AI"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "2차 후보 30개 스타트업이 헬스케어·바이오·로보틱스·건설테크 등 다양한 분야에 걸쳐 공개됨",
+          "timestamp": null
+        },
+        {
+          "point": "회원 투표를 통해 차세대 성장기업을 선정하고 의견을 반영할 수 있음",
+          "timestamp": null
+        },
+        {
+          "point": "다양한 관련 리포트와 B2B 서비스 링크가 제공돼 투자·시장 트렌드 파악에 활용 가능",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "혁신의숲 어워즈 후보 스타트업 리스트를 활용해 산업별 성장 데이터셋 구축",
+        "후보 기업들의 투자 라운드와 성장 지표를 모델링해 스타트업 성공 예측 모델 개발"
+      ],
+      "quiz": [
+        {
+          "question": "2026 혁신의숲 어워즈 후보 2차에 공개된 스타트업 수는?",
+          "options": [
+            "20",
+            "30",
+            "40",
+            "50"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 2차 후보 30개사가 새롭게 공개됐다고 명시되어 있음"
+        },
+        {
+          "question": "다음 중 이번 후보 2차에 포함되지 않은 분야는?",
+          "options": [
+            "헬스케어·바이오",
+            "로보틱스",
+            "건설테크",
+            "금융테크"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 헬스케어·바이오, 로보틱스, 건설테크는 언급됐지만 금융테크는 언급되지 않음"
+        }
+      ]
+    },
+    {
+      "id": "1e0532fd26f5",
+      "title": "📱 ​검색 광고요? AI가 24시간 알아서 관리하죠: 헬로맥스의 성장 스토리",
+      "url": "https://innoforest.stibee.com/p/640",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-08-09T00:00:00",
+      "summary": "AI 자동 검색광고 최적화로 ROI·인력 효율 상승",
+      "tags": [
+        "헬로맥스",
+        "지브라브라더스",
+        "AI 에이전트",
+        "ROAS",
+        "검색광고"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "AI 에이전트가 24시간 검색광고를 자동 최적화하고 별도 수수료 없이 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "건강기능식품 광고주가 3개월 만에 ROAS 300%를 달성한 사례",
+          "timestamp": null
+        },
+        {
+          "point": "45만 중소(SMB) 광고주를 겨냥한 지브라브라더스의 전략 소개",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 에이전트 API를 기존 검색광고 시스템에 연동해 1개월 파일럿 운영",
+        "3개월 파일럿 캠페인에서 ROAS 300% 목표 설정 후 성과 측정"
+      ],
+      "quiz": [
+        {
+          "question": "헬로맥스 AI 에이전트가 제공하지 않는 것은?",
+          "options": [
+            "24시간 광고 최적화",
+            "별도 수수료 부과",
+            "무료 사용",
+            "키워드 자동 발굴"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 AI 에이전트는 별도 수수료 없이 제공된다고 명시되어 있다."
+        }
+      ]
+    }
+  ]
+}

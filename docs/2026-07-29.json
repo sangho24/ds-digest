@@ -1,0 +1,281 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-29",
+  "generated_at": "2026-07-29T23:25:39.246901",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-29.html",
+  "items": [
+    {
+      "id": "97854c7d008d",
+      "title": "Show HN: Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac",
+      "url": "https://github.com/drumih/turbo-fieldfare",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "대용량 모델을 저메모리 Mac에서 실시간 추론 가능",
+      "tags": [
+        "Gemma",
+        "TurboFieldfare",
+        "Swift",
+        "Metal",
+        "OpenAI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "4-bit 양자화 26B 모델을 약 2GB RAM으로 실행하기 위해 공유 파트와 KV 캐시만 메모리에 유지하고, 필요 전문가를 SSD에서 스트리밍한다",
+          "timestamp": null
+        },
+        {
+          "point": "8GB M2 MacBook Air에서 초당 5‑6 토큰, M5 MacBook Pro에서 31‑35 토큰을 생성",
+          "timestamp": null
+        },
+        {
+          "point": "OpenAI 호환 로컬 서버를 제공해 스트리밍 및 툴 호출을 지원하고 KV 캐시 프리픽스를 재사용한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "SSD 기반 전문가 스트리밍을 적용해 대형 LLM을 저사양 디바이스에서 추론하도록 구현",
+        "OpenAI 호환 로컬 서버를 활용해 사내 애플리케이션에 LLM 기능을 클라우드 없이 빠르게 프로토타입"
+      ],
+      "quiz": [
+        {
+          "question": "TurboFieldfare 엔진이 메모리 사용을 최소화하기 위해 사용한 핵심 기법은?",
+          "options": [
+            "전체 모델을 RAM에 로드",
+            "가중치를 8-bit으로 변환",
+            "공유 파트와 KV 캐시만 RAM에 두고 전문가를 SSD에서 스트리밍",
+            "GPU 전용 메모리 사용"
+          ],
+          "answer_index": 2,
+          "explanation": "텍스트에 따르면 공유 파트와 KV 캐시를 RAM에 유지하고, 필요 전문가를 SSD에서 스트리밍하여 메모리를 절감한다."
+        }
+      ]
+    },
+    {
+      "id": "79a867aff49a",
+      "title": "Kimi K3 Just Broke The Economics Of AI",
+      "url": "https://youtu.be/Xj-QdEUxJkE",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-07-29T12:37:50",
+      "summary": "오픈 대형 모델 Kimi K3, 효율적 학습으로 비용 절감",
+      "tags": [
+        "Kimi K3",
+        "KDA",
+        "attention residuals",
+        "Lambda",
+        "Two Minute Papers"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Kimi K3는 2.8조 파라미터 규모의 오픈 가중치 모델로 코드와 게임 등을 실행 가능",
+          "timestamp": null
+        },
+        {
+          "point": "KDA와 attention residuals라는 두 메커니즘이 K2 대비 2.5배 학습 효율을 제공",
+          "timestamp": null
+        },
+        {
+          "point": "API 사용 시 비용이 저렴하고, 향후 경량화(distillation) 모델이 기대됨",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Kimi K3 오픈 API를 활용해 도메인 특화 파인튜닝 실험 수행",
+        "자사 트랜스포머 모델에 KDA와 attention residuals 개념을 적용해 학습 효율 개선 검증"
+      ],
+      "quiz": [
+        {
+          "question": "Kimi K3에서 스케일링 효율을 높이는 두 가지 비밀 소스는 무엇인가?",
+          "options": [
+            "KDA와 attention residuals",
+            "Sparse attention와 Mixture of Experts",
+            "Reinforcement learning와 curriculum learning",
+            "Layer normalization와 dropout"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 KDA(Kimi Delta Attention)와 attention residuals가 도입돼 Kimi K2 대비 약 2.5배 학습 효율을 제공한다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "e7af41b4fc21",
+      "title": "TokenTown: A visual way to understand how LLMs work",
+      "url": "https://laurentiugabriel.github.io/token-town/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 내부 토큰 흐름을 시각화해 이해도 향상",
+      "tags": [
+        "TokenTown",
+        "transformer",
+        "KV cache",
+        "GELU",
+        "top-p sampling"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "TokenTown는 트랜스포머 각 레이어를 도시 구역으로 시각화한다.",
+          "timestamp": null
+        },
+        {
+          "point": "브라우저에서 토크나이저, 임베딩, 포지셔널 인코딩, 레이어노름, 어텐션 등을 실시간 계산한다.",
+          "timestamp": null
+        },
+        {
+          "point": "가중치는 무작위이며, 출력은 빅그램 사전과 결합해 가독성을 높인다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "시각화 도구를 활용해 팀 교육용 LLM 내부 구조 워크숍을 진행한다.",
+        "실시간 어텐션 및 토큰 흐름 시각화를 기반으로 디버깅 툴을 개발한다."
+      ],
+      "quiz": [
+        {
+          "question": "TokenTown에서 실제로 브라우저에서 계산되는 요소가 아닌 것은?",
+          "options": [
+            "토크나이저 분할",
+            "임베딩 조회",
+            "무작위 가중치 초기화",
+            "빅그램 사전 결합"
+          ],
+          "answer_index": 2,
+          "explanation": "무작위 가중치는 실제 계산이 아니라 사전 설정이며, 시각화는 실제 연산을 수행한다."
+        },
+        {
+          "question": "TokenTown이 시각화하는 트랜스포머의 어느 단계가 'Vocabulary Stadium'로 표현되는가?",
+          "options": [
+            "어텐션",
+            "피드포워드",
+            "소프트맥스 로짓",
+            "포지셔널 인코딩"
+          ],
+          "answer_index": 2,
+          "explanation": "다음 토큰 로짓 → 소프트맥스 단계가 Vocabulary Stadium에서 수행된다."
+        }
+      ]
+    },
+    {
+      "id": "a456683fd2b6",
+      "title": "Show HN: Kedge – Full-stack cloud with forkable VM snapshots and global SQLite",
+      "url": "https://kedge.dev/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "3ms VM 스냅샷·전역 SQLite로 실시간 데이터",
+      "tags": [
+        "Kedge",
+        "SQLite",
+        "CRDT",
+        "BuildKit",
+        "Fly.io"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Kedge는 포크 가능한 VM 스냅샷과 워밍 풀을 이용해 3ms 수준의 VM 샌드박스를 즉시 생성한다.",
+          "timestamp": null
+        },
+        {
+          "point": "글로벌 컨트롤 플레인은 결국 일관성 SQLite와 객체 스토리지를 백엔드로 하는 CRDT 기반 다중 작성자 복제 시스템을 사용한다.",
+          "timestamp": null
+        },
+        {
+          "point": "앱은 로컬 SQLite 복제본을 직접 쿼리해 상태ful 서버리스 및 HTML 앱을 저지연으로 제공할 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Kedge의 로컬 SQLite 복제본을 활용해 머신러닝 모델을 위한 피처 스토어를 구축, 추론 서비스와 동일 지역에 배치해 레이턴시 최소화",
+        "Kedge의 3ms VM 스냅샷을 이용해 ETL 파이프라인을 서버리스 형태로 배포, 짧은 콜드 스타트와 자동 스케일링을 통해 데이터 처리 비용 절감"
+      ],
+      "quiz": [
+        {
+          "question": "Kedge의 글로벌 컨트롤 플레인에 사용된 데이터베이스와 복제 방식은 무엇인가?",
+          "options": [
+            "PostgreSQL with streaming replication",
+            "SQLite with CRDT-based multi-writer replication",
+            "MySQL with Galera cluster",
+            "DynamoDB with eventual consistency"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 Kedge는 결국 일관성 SQLite 데이터베이스 위에 CRDT 기반 다중 작성자 복제 시스템을 구축했다."
+        }
+      ]
+    },
+    {
+      "id": "1ee3cd5a4d0a",
+      "title": "보안을 지키는 AI, AI를 지키는 보안",
+      "url": "https://deepdaiv.stibee.com/p/156",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-07-28T00:00:00",
+      "summary": "AI 보안으로 코드 취약점 자동 해결",
+      "tags": [
+        "GPT-Red",
+        "Gemini 3.5 Flash Cyber",
+        "CodeMender",
+        "LLM",
+        "Validator"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI for Security와 Security for AI의 두 흐름을 구분하고 사례를 제시",
+          "timestamp": null
+        },
+        {
+          "point": "CodeMender는 LLM 기반 에이전트가 취약점 탐색·수정·검증을 반복하는 워크플로우를 구현",
+          "timestamp": null
+        },
+        {
+          "point": "Validator와 Human-in-the-loop 검토를 통해 자동 생성 패치의 신뢰성을 확보",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "자사 코드베이스에 LLM‑Agent와 Validator를 결합한 자동 취약점 탐지·패치 파이프라인 구축",
+        "GPT‑Red와 유사한 자동 레드팀 테스트 프레임워크를 도입해 내부 LLM 모델의 안전성 검증"
+      ],
+      "quiz": [
+        {
+          "question": "CodeMender가 취약점 수정안을 검증하기 위해 사용하는 단계는?",
+          "options": [
+            "단순 컴파일만 수행",
+            "Validator 단계에서 컴파일·테스트·정적 분석·퍼징을 수행",
+            "인간 검토만 수행",
+            "자동 배포"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 Validator가 컴파일·테스트·정적 분석·퍼징 등 다양한 검증 도구를 활용한다고 명시되어 있다."
+        },
+        {
+          "question": "다음 중 AI for Security에 해당하는 사례는?",
+          "options": [
+            "GPT-Red",
+            "Gemini 3.5 Flash Cyber",
+            "CodeMender",
+            "모델 레드팀 테스트"
+          ],
+          "answer_index": 2,
+          "explanation": "CodeMender는 AI를 활용해 소프트웨어 취약점을 찾고 수정하는 AI for Security 사례이다."
+        }
+      ]
+    }
+  ]
+}

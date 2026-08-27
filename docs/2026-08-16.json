@@ -1,0 +1,131 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-16",
+  "generated_at": "2026-08-16T22:34:37.234075",
+  "count": 2,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-16.html",
+  "items": [
+    {
+      "id": "badeeae7b539",
+      "title": "What happens when an LLM never sees material beyond fifth grade?",
+      "url": "https://littlelearner-ll.github.io/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "초등 교육 데이터만 학습한 LLM은 범위 외 능력 미흡",
+      "tags": [
+        "LittleLearner",
+        "LittleCurriculum",
+        "GRPO",
+        "MathCAMPS",
+        "RL"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "K‑5 커리큘럼만으로 학습한 LLM은 교육 범위 밖 능력을 획득하지 못한다",
+          "timestamp": null
+        },
+        {
+          "point": "스케일링·GRPO 사후학습·인‑컨텍스트 학습이 범위 내 성능은 높이지만 범위 외 성능은 향상시키지 않는다",
+          "timestamp": null
+        },
+        {
+          "point": "통제된 데이터셋을 활용해 RL, 지속학습, 교육 과학 등 실험을 체계적으로 설계할 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "K‑5 수준의 필터링된 교육 데이터셋으로 특화된 교육용 LLM을 구축하고, 학습 경계 평가를 통해 제품에 적용",
+        "GRPO와 같은 수학 특화 사후학습을 RL 보상과 결합해 커리큘럼 제한 모델의 새로운 능력 발현을 탐색"
+      ],
+      "quiz": [
+        {
+          "question": "LittleCurriculum 데이터는 어떤 원본을 필터링해 만들었나요?",
+          "options": [
+            "Common Crawl",
+            "FineWeb‑Edu에서 K‑5 수준만 추출",
+            "Wikipedia",
+            "OpenWebText"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면 LittleCurriculum은 FineWeb‑Edu를 5단계 필터링 파이프라인으로 K‑5 커리큘럼에 맞게 만든 88B 토큰 코퍼스이다."
+        },
+        {
+          "question": "다음 중 범위 외 성능을 향상시키지 못한 실험적 개입은?",
+          "options": [
+            "모델 스케일링",
+            "GRPO 사후학습",
+            "인‑컨텍스트 학습",
+            "모두"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 따르면 스케일링, GRPO 사후학습, 인‑컨텍스트 학습 모두 범위 내 능력은 높였지만 범위 외 성능은 의미 있게 개선하지 못했다."
+        }
+      ]
+    },
+    {
+      "id": "49ad05228e16",
+      "title": "Credit card debt rises to $1.26T, nearing all-time record",
+      "url": "https://abc7.com/story/credit-card-debt-rises-126-trillion-nearing-time-record/19667289/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "신용카드 부채 급증, 최신 소비·인플레이션 데이터 필요",
+      "tags": [
+        "Federal Reserve Bank of New York",
+        "Equifax",
+        "U.S. household debt",
+        "auto loan",
+        "mortgage"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "미국 신용카드 부채가 1.26조 달러로 전년 대비 21억 달러 증가",
+          "timestamp": null
+        },
+        {
+          "point": "90일 이상 연체 비율이 7.6%에서 12.8%로 상승",
+          "timestamp": null
+        },
+        {
+          "point": "전체 가계부채는 18.8조 달러, 자동차 대출은 1.71조 달러로 사상 최고 기록",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "연방준비은행·Equifax 데이터를 활용해 신용카드 연체 위험 예측 모델 구축",
+        "가계부채 카테고리별 시계열 대시보드 제작으로 정책·리스크 모니터링 지원"
+      ],
+      "quiz": [
+        {
+          "question": "보고된 전체 미국 가계부채 규모는 얼마인가?",
+          "options": [
+            "$16.5 trillion",
+            "$18.8 trillion",
+            "$20.2 trillion",
+            "$22.0 trillion"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 전체 가계부채가 $18.8 trillion이라고 명시되어 있다."
+        },
+        {
+          "question": "2022년 중반부터 2026년 초까지 90일 이상 연체된 신용카드 잔액 비율이 얼마나 증가했는가?",
+          "options": [
+            "5.2%",
+            "4.0%",
+            "6.5%",
+            "3.8%"
+          ],
+          "answer_index": 0,
+          "explanation": "연체 비율이 7.6%에서 12.8%로 상승했으며, 차이는 12.8-7.6=5.2%이다."
+        }
+      ]
+    }
+  ]
+}

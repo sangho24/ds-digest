@@ -1,0 +1,192 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T23:32:24.633032",
+  "count": 3,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-22.html",
+  "items": [
+    {
+      "id": "9d57bdcfcf73",
+      "title": "요즘 Reasoning 모델은 차원이 달라",
+      "url": "https://deepdaiv.stibee.com/p/155",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-07-21T00:00:00",
+      "summary": "LLM 추론 기법으로 파라메트릭 지식 활용 효율 ↑",
+      "tags": [
+        "Chain-of-Thought",
+        "Self-consistency",
+        "MCTS",
+        "Tree-of-Thought",
+        "RAG"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "CoT 프롬프트만으로도 모델 성능이 크게 향상됨을 강조",
+          "timestamp": null
+        },
+        {
+          "point": "Self‑consistency, MCTS, Tree‑of‑Thought 등 다양한 추론 확장 기법을 소개",
+          "timestamp": null
+        },
+        {
+          "point": "Reasoning 활성화가 Parametric Knowledge 회수와 Pass@k 개선에 기여함을 실험적으로 입증",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Self‑consistency 프롬프트를 QA 파이프라인에 적용해 다중 답변 중 가장 일관된 답을 선택, 정확도 향상",
+        "Tree‑of‑Thought 프롬프트를 코드 생성 워크플로에 도입해 여러 추론 경로를 탐색, 최적 솔루션 도출"
+      ],
+      "quiz": [
+        {
+          "question": "여러 추론 경로에서 가장 일관된 답을 선택하는 방법은?",
+          "options": [
+            "Self-consistency",
+            "MCTS",
+            "Tree-of-Thought",
+            "RAG"
+          ],
+          "answer_index": 0,
+          "explanation": "Self-consistency는 동일 질문에 대해 여러 CoT 답변을 생성하고 가장 많이 등장하는 답을 최종 선택한다."
+        },
+        {
+          "question": "Pass@k는 무엇을 의미하는가?",
+          "options": [
+            "k번 샘플링 중 최소 하나가 정답일 확률",
+            "평균 추론 시간",
+            "모델 파라미터 수",
+            "학습 데이터 양"
+          ],
+          "answer_index": 0,
+          "explanation": "Pass@k는 k번 시도(샘플링)했을 때 적어도 하나의 정답을 얻을 확률을 나타낸다."
+        }
+      ]
+    },
+    {
+      "id": "d94497c7a895",
+      "title": "Personalizing Airbnb search by learning from the guest journey",
+      "url": "https://medium.com/airbnb-engineering/personalizing-airbnb-search-by-learning-from-the-guest-journey-bcefd1915624?source=rss----53c7c27702d5---4",
+      "source": {
+        "type": "rss",
+        "name": "The Airbnb Tech Blog - Medium"
+      },
+      "published_at": "2026-07-21T17:01:04",
+      "summary": "게스트 행동 시퀀스로 검색 개인화, 전환율 향상",
+      "tags": [
+        "Transformer",
+        "Airbnb",
+        "guest journey",
+        "listing view",
+        "booking conversion"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Airbnb는 손으로 만든 집계 특징 대신 게스트 행동 시퀀스를 Transformer로 인코딩해 개인화 검색을 구현했다.",
+          "timestamp": null
+        },
+        {
+          "point": "대부분 이벤트가 listing view(97.8%)라 데이터 양이 방대해 직접 모델링이 어려워 샘플링·집계 전략이 필요했다.",
+          "timestamp": null
+        },
+        {
+          "point": "희소하고 노이즈가 많은 booking 이벤트를 효과적으로 학습하기 위해 시퀀스 모델링과 적절한 손실 설계가 사용됐다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Transformer 기반 게스트 여정 인코더를 구축해 검색 결과에 개인화 점수를 부여한다.",
+        "이벤트 유형 가중치 부여 또는 listing view 다운샘플링을 적용해 시퀀스 모델 입력을 최적화한다."
+      ],
+      "quiz": [
+        {
+          "question": "Airbnb 검색 순위에서 과거에 사용된 특징은 무엇인가?",
+          "options": [
+            "손으로 만든 집계 통계",
+            "딥러닝 이미지 특징",
+            "협업 필터링",
+            "강화 학습"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 손으로 만든 집계 통계(예: 총 과거 예약 수, 평균 가격) 사용했다고 명시돼 있다."
+        },
+        {
+          "question": "Airbnb 게스트 이벤트 중 가장 비중이 큰 유형은?",
+          "options": [
+            "Booking",
+            "Review",
+            "Listing view",
+            "Cancellation"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 listing view가 전체 이벤트의 97.8%를 차지한다는 내용이 있다."
+        }
+      ]
+    },
+    {
+      "id": "167794cee785",
+      "title": "Can a MUD evaluate LLMs? A $99 proof of concept",
+      "url": "https://cruciblebench.ai/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 평가에 MUD 활용, 비용 저렴·판단 변동 발견",
+      "tags": [
+        "MUD",
+        "LLM",
+        "API",
+        "kappa",
+        "Zenodo"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "MUD 기반 텍스트 게임을 저비용($99) API 크레딧으로 LLM 평가에 활용",
+          "timestamp": null
+        },
+        {
+          "point": "LLM 판정자 간 일치도가 85%에서 22%까지 크게 차이 나며 측정이 노이즈함",
+          "timestamp": null
+        },
+        {
+          "point": "현재는 프로토타입이며, 인간 평가자와 다중 판정자 도입을 계획 중",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "MUD 환경을 구축해 자체 LLM 평가 파이프라인을 저비용 API로 구현",
+        "두 개 이상의 LLM 판정자를 사용해 모델 순위의 변동성을 측정하고 노이즈를 최소화"
+      ],
+      "quiz": [
+        {
+          "question": "실험에 사용된 API 크레딧 비용은 얼마였나요?",
+          "options": [
+            "$99",
+            "$199",
+            "$0",
+            "$500"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 실험이 약 $99의 API 크레딧으로 진행됐다고 명시되어 있습니다."
+        },
+        {
+          "question": "두 판정자 간 모델별 일치도 범위는 어떻게 되었나요?",
+          "options": [
+            "85%에서 22%",
+            "90%에서 10%",
+            "70%에서 30%",
+            "100%에서 0%"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 두 판정자 간 일치도가 85%에서 22% 사이였다고 기록돼 있습니다."
+        }
+      ]
+    }
+  ]
+}

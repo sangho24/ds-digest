@@ -1,0 +1,304 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-11",
+  "generated_at": "2026-08-11T23:05:24.774009",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-11.html",
+  "items": [
+    {
+      "id": "800ebb0d7846",
+      "title": "Apple Silicon and macOS VMs: Faster LLM Inference with llama.cpp",
+      "url": "https://github.com/trycua/cua/blob/main/blog/gpu-passthrough-macos-vms.md",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "Apple Silicon VM, LLM 10배 가속",
+      "tags": [
+        "Apple Silicon",
+        "llama.cpp",
+        "Metal",
+        "TinyLlama",
+        "Gemma 4 12B"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "프로세스‑스코프 호환 레이어가 Metal capability 응답을 변경해 최신 커널 사용을 가능하게 함",
+          "timestamp": null
+        },
+        {
+          "point": "M1 Ultra에서 TinyLlama 1.1B 프롬프트 11.08×, 토큰 16.36× 빠른 추론 달성",
+          "timestamp": null
+        },
+        {
+          "point": "Gemma 4 12B 모델도 프롬프트 7.20×, 토큰 14.54× 가속, 베어‑메탈에 근접한 성능",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "제공된 capability‑probe 레이어와 빌드 스크립트를 macOS VM 파이프라인에 적용해 사내 LLM 추론 속도를 10배 이상 향상시킨다",
+        "벤치마크 수치를 근거로 Apple Silicon 기반 VM을 프로덕션 LLM 서비스에 배치해 프롬프트 처리 시간을 10배 이상 단축한다"
+      ],
+      "quiz": [
+        {
+          "question": "TinyLlama 1.1B 모델이 수정된 VM에서 토큰 생성 속도 향상 비율은?",
+          "options": [
+            "~5×",
+            "~10×",
+            "~16×",
+            "~20×"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 토큰 생성이 16.36× 빨라졌다고 명시돼 있다"
+        },
+        {
+          "question": "macOS 게스트에서 가상 GPU를 제공하는 Apple 프레임워크는?",
+          "options": [
+            "Metal",
+            "Virtualization.framework",
+            "CoreML",
+            "Accelerate"
+          ],
+          "answer_index": 1,
+          "explanation": "Virtualization.framework가 Apple GPU 기반 가상 GPU를 제공한다는 내용이 있다"
+        }
+      ]
+    },
+    {
+      "id": "e0b79506f2a9",
+      "title": "토스의 속도와 품질, 상용 도구로 충분한가 — 토션(Tossion)",
+      "url": "https://toss.tech/article/tossion",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-08-11T01:00:00",
+      "summary": "테스트 결과와 히스토리를 한눈에 관리해 QA 효율화",
+      "tags": [
+        "Tossion",
+        "TCM",
+        "Automation Test",
+        "Test Run",
+        "Project"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "상용 TCM은 기능 추가·데이터 활용이 어려워 QA 효율을 저해한다",
+          "timestamp": null
+        },
+        {
+          "point": "Tossion은 Project→Suite→Section→Test Case 구조와 Test Run 별 스냅샷을 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "Test Run은 Assignee·Test Step·Description 등 시점값을 복사해 히스토리를 남긴다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "테스트 실행 시점의 테스트 케이스 정보를 복제해 별도 Test Run 엔티티에 저장해 히스토리를 관리한다",
+        "자동화·수동 테스트 결과와 테스트 케이스를 하나의 행으로 통합해 QA 대시보드에 제공한다"
+      ],
+      "quiz": [
+        {
+          "question": "Tossion에서 테스트 런을 만들 때 복사해 저장하는 정보는 무엇인가?",
+          "options": [
+            "테스트 케이스 ID만",
+            "Assignee·Test Step·Description 등 시점값",
+            "테스트 결과만",
+            "버전 정보만"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 ‘Assignee와 Test Step, Description까지 그 시점의 값을 복사해 테스트 런 안에 한 행으로 새로 만든다’라고 명시돼 있다"
+        }
+      ]
+    },
+    {
+      "id": "599f0a8596d5",
+      "title": "🎬 컷은 사라졌다, AI 영상이 30초를 버티던 날",
+      "url": "https://dflick.stibee.com/p/106",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-08-11T00:00:00",
+      "summary": "AI 영상 길이·레퍼런스 확대, 실험 범위 확대",
+      "tags": [
+        "Seedance 2.5",
+        "ByteDance",
+        "Meta",
+        "OpenAI",
+        "Google DeepMind"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Seedance 2.5는 최대 30초 영상과 50개의 레퍼런스 이미지를 지원해 기존 15초·10개 한계를 넘어섰다",
+          "timestamp": null
+        },
+        {
+          "point": "이로써 AI 영상은 짧은 클립이 아니라 하나의 장면 단위로 제작돼 워크플로우와 데이터 활용 방식이 바뀐다",
+          "timestamp": null
+        },
+        {
+          "point": "실제 크리에이터 결과를 분석해 성능·제한점을 제시, 현업 적용 시 기대 효과와 주의점을 제공한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "30초 길이의 AI 생성 영상을 데이터 증강에 활용해 비디오 분류 모델 학습 데이터 확대",
+        "50개의 레퍼런스 이미지를 활용해 브랜드 스타일을 일관성 있게 유지한 마케팅 영상 자동 생성"
+      ],
+      "quiz": [
+        {
+          "question": "Seedance 2.5가 지원하는 최대 영상 길이는?",
+          "options": [
+            "15초",
+            "30초",
+            "45초",
+            "60초"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 Seedance 2.5가 15초에서 30초로 길이를 늘렸다고 명시돼 있다."
+        },
+        {
+          "question": "Seedance 2.5가 한 번에 사용할 수 있는 레퍼런스 이미지 수는?",
+          "options": [
+            "10",
+            "20",
+            "30",
+            "50"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 레퍼런스가 50개로 확장됐다고 언급돼 있다."
+        }
+      ]
+    },
+    {
+      "id": "5bec56c39765",
+      "title": "Stealing Reasoning Traces from Proprietary LLM APIs",
+      "url": "https://stolen-thoughts.com/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 추론을 탈취해 약한 모델로 원본 논리 복원 가능",
+      "tags": [
+        "Anthropic",
+        "OpenAI",
+        "Google",
+        "Claude",
+        "jailbreak"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Proprietary LLM APIs 반환하는 암호화된 사고 블록은 다른 세션·모델에서도 재사용 가능",
+          "timestamp": null
+        },
+        {
+          "point": "약한 모델을 탈옥해 동일 공급자의 암호화 블록을 주입하면 강한 모델의 원본 추론을 평문으로 복원",
+          "timestamp": null
+        },
+        {
+          "point": "OpenAI, Anthropic, Google 등 최신 모델에 대해 이 공격을 실증하여 새로운 보안 위협을 제시",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "암호화된 사고 블록의 재사용 패턴을 모니터링해 비정상적인 추출 시도를 탐지하는 로깅 시스템 구축",
+        "민감한 추론 과정을 자체 호스팅 모델이나 오프라인 환경에서 수행해 외부 API 호출을 최소화",
+        ""
+      ],
+      "quiz": [
+        {
+          "question": "예시에서 사용된 원본 모델과 탈옥 모델의 이름은?",
+          "options": [
+            "claude-opus-4-8 & claude-haiku-4-5-20251001",
+            "gpt-4 & gpt-3.5",
+            "llama-2 & llama-2-chat",
+            "gemini-pro & gemini-flash"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 source model trace는 \"claude-opus-4-8\"이고 jailbroken model trace는 \"claude-haiku-4-5-20251001\"이다."
+        },
+        {
+          "question": "강한 모델의 추론을 추출하는 핵심 기법은?",
+          "options": [
+            "직접 그래디언트 추출",
+            "암호화 블록을 약한 모델에 재생",
+            "모델 증류",
+            "프롬프트 인젝션"
+          ],
+          "answer_index": 1,
+          "explanation": "암호화된 사고 블록을 약한, 탈옥된 모델에 주입해 원본 추론을 평문으로 복원한다는 것이 논문의 핵심 방법이다."
+        }
+      ]
+    },
+    {
+      "id": "1a083df4d213",
+      "title": "👋 이거 살까 말까? AI가 대신 골라드림",
+      "url": "https://hai-hancom.stibee.com/p/167",
+      "source": {
+        "type": "newsletter",
+        "name": "한컴 AI"
+      },
+      "published_at": "2026-08-11T00:00:00",
+      "summary": "AI 쇼핑 에이전트가 추천 모델 설계에 인사이트",
+      "tags": [
+        "네이버",
+        "카카오톡",
+        "쿠팡",
+        "비자",
+        "마스터카드"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI 기반 대화형 쇼핑이 확대돼 전 세계 56%·한국 69% 소비자가 구매에 AI 활용을 기대",
+          "timestamp": null
+        },
+        {
+          "point": "네이버·카카오 등 AI 에이전트가 선제 제안으로 이용자 수·거래액을 크게 상승(네이버 2.7배)",
+          "timestamp": null
+        },
+        {
+          "point": "오프라인 키오스크·가상 매장·AI 결제 연동 등 AI가 쇼핑 전·후 과정을 전면 포괄",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "사용자 쇼핑 이력·맥락을 활용해 대화형 AI 에이전트를 구축해 거래 전환율을 2배 이상 향상시킨다",
+        "다국어 언어 모델을 적용한 매장 키오스크를 도입해 외국인 고객의 구매 전환을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "Criteo 보고서에 따르면 2026년에 AI를 활용해 최종 구매를 결정하는 전 세계 소비자 비율은?",
+          "options": [
+            "56%",
+            "45%",
+            "62%",
+            "70%"
+          ],
+          "answer_index": 0,
+          "explanation": "보고서에 따르면 전 세계 소비자의 56%가 AI를 활용해 구매를 최종 결정할 것으로 전망된다."
+        },
+        {
+          "question": "AI 쇼핑 에이전트를 통해 거래액이 2.7배 증가한 한국 플랫폼은?",
+          "options": [
+            "쿠팡",
+            "네이버",
+            "카카오톡",
+            "올리브영"
+          ],
+          "answer_index": 1,
+          "explanation": "네이버는 AI 쇼핑 에이전트를 도입해 거래액이 2.7배 이상 증가했다."
+        }
+      ]
+    }
+  ]
+}

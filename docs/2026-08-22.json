@@ -1,0 +1,190 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-22",
+  "generated_at": "2026-08-22T22:41:20.864216",
+  "count": 4,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-22.html",
+  "items": [
+    {
+      "id": "c0f9d10986f5",
+      "title": "Why your local LLM feels dumber than it is",
+      "url": "https://forum.level1techs.com/t/why-your-local-llm-feels-dumber-than-it-is/253917",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "로컬 LLM 성능 차이는 구현·하드웨어 차이 때문",
+      "tags": [
+        "LLM",
+        "GPU",
+        "Ollama",
+        "Hugging Face",
+        "KLD"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "같은 가중치를 사용해도 하드웨어·소프트웨어 차이로 로컬 LLM 성능이 달라진다",
+          "timestamp": null
+        },
+        {
+          "point": "실제 워크로드를 반영한 다양한 벤치마크 실행이 필수이다",
+          "timestamp": null
+        },
+        {
+          "point": "모델 카드에 명시된 샘플러 설정(temperature, top‑p 등)을 그대로 적용해야 출력 품질이 유지된다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "벤치마크 스위트를 구축해 로컬 LLM과 레퍼런스 구현을 동일 프롬프트·샘플러 설정으로 비교한다",
+        "배포 파이프라인에 모델 카드별 샘플러 파라미터를 자동 적용하도록 CI/CD 단계에 검증 로직을 추가한다"
+      ],
+      "quiz": [
+        {
+          "question": "로컬 LLM이 느리게 느껴지는 주요 원인으로 저자가 언급한 것은?",
+          "options": [
+            "모델 크기",
+            "하드웨어 명령어 집합 차이",
+            "네트워크 지연",
+            "데이터 전처리 방식"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 GPU 세대별 명령어 집합 차이가 동일 가중치라도 토큰 계산 방식에 차이를 만든다고 설명한다."
+        },
+        {
+          "question": "샘플러 온도(temperature)를 너무 낮게 설정하면 발생할 수 있는 현상은?",
+          "options": [
+            "생성 속도 증가",
+            "루프에 빠져 진행되지 않음",
+            "출력 다양성 증가",
+            "메모리 사용량 감소"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 온도를 낮게 설정하면 모델이 같은 출력을 반복하며 진행되지 않는 현상이 발생한다."
+        }
+      ]
+    },
+    {
+      "id": "ec74d4d3ec74",
+      "title": "Show HN: OzBrain, a shared brain for knowledge between agents and your team",
+      "url": "https://ozbrain.com",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "에이전트 지식 관리·감사로 데이터 과학 효율화",
+      "tags": [
+        "OzBrain",
+        "Supabase",
+        "Claude",
+        "Cursor",
+        "Codex"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "에이전트가 생성한 지식을 중앙 저장소에 보관하고 감사 가능하도록 설계",
+          "timestamp": null
+        },
+        {
+          "point": "Supabase 기반 .md 저장소로 버전 관리와 보안성을 확보",
+          "timestamp": null
+        },
+        {
+          "point": "다양한 LLM(CLAUDE, Codex 등)과 연동해 작업 흐름 자동화",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Supabase를 활용해 에이전트가 생성한 분석 보고서·코드 스니펫을 마크다운 형태로 저장·버전 관리하는 내부 지식 베이스 구축",
+        "Claude와 Codex를 연계해 PR 자동 생성·코드 리뷰 파이프라인을 구현해 데이터 사이언스 프로젝트의 배포 속도 향상"
+      ],
+      "quiz": [
+        {
+          "question": "OzBrain이 강조하는 핵심 기능 중 하나는?",
+          "options": [
+            "실시간 채팅 UI 제공",
+            "에이전트 지식의 중앙 저장 및 감사",
+            "데이터 시각화 대시보드",
+            "자동 모델 튜닝"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 OzBrain은 에이전트가 만든 지식을 중앙에 저장하고 감사할 수 있게 하는 기능을 강조한다."
+        }
+      ]
+    },
+    {
+      "id": "46a9460ed452",
+      "title": "Stealing Reasoning Traces from Proprietary LLM APIs — Ilia Shumailov & Alexander Panfilov",
+      "url": "https://youtu.be/gasgivVCl2U",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-08-22T20:22:07",
+      "summary": "LLM API 암호화 추론 상태가 탈취돼 프라이버시·보안 위협",
+      "tags": [
+        "LLM",
+        "Chain of Thought",
+        "Isabelle",
+        "OpenAI",
+        "Hugging Face"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "암호화된 추론 블롭을 재생해 작은 모델이 복호화하고 내부 reasoning을 노출 가능",
+          "timestamp": null
+        },
+        {
+          "point": "이 공격으로 개인 데이터 유출·광범위한 jailbreak·에이전트 트레이스 오염 위험",
+          "timestamp": null
+        },
+        {
+          "point": "방어 방안 논의와 실험적 검증 필요성 강조",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    },
+    {
+      "id": "a98914d8fcf6",
+      "title": "An Astrophysicist Debunks the Singularity — Adam Becker",
+      "url": "https://youtu.be/fgsmq8f3sWQ",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-08-20T19:30:59",
+      "summary": "AI 과대예측 비판, 실무 위험 인식",
+      "tags": [
+        "Kurzweil",
+        "Yudkowsky",
+        "Bostrom",
+        "LLM",
+        "AI"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "Kurzweil의 가속 법칙은 선택된 데이터에 기반해 과장됨",
+          "timestamp": null
+        },
+        {
+          "point": "AI와 LLM을 단순 계산기로 보고 폭발적 지능 가정을 비판",
+          "timestamp": null
+        },
+        {
+          "point": "기술 억만장자와 장기 성장 서사는 사회 문제 해결과 규제 필요성을 강조",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-21",
+  "generated_at": "2026-08-21T22:44:16.634570",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-21.html",
+  "items": [
+    {
+      "id": "3f041671d469",
+      "title": "[10분 테코톡] 루멘의 낙관적 업데이트",
+      "url": "https://youtu.be/U7RJ1-zChPI",
+      "source": {
+        "type": "youtube",
+        "name": "우아한테크"
+      },
+      "published_at": "2026-08-21T12:00:38",
+      "summary": "낙관적 업데이트로 UI 반응성·신뢰성 향상",
+      "tags": [
+        "React",
+        "useState",
+        "useOptimistic",
+        "React 19",
+        "Instagram"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "낙관적 업데이트는 서버 응답 전 UI를 즉시 표시해 사용자 경험을 개선한다",
+          "timestamp": null
+        },
+        {
+          "point": "useState만으로 구현하면 상태와 낙관적 값이 혼합돼 롤백·충돌 관리가 복잡해진다",
+          "timestamp": null
+        },
+        {
+          "point": "React 19의 useOptimistic 훅은 낙관적·실제 상태를 분리하고 자동 롤백·동기화를 제공한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "프론트엔드 좋아요·팔로우 기능에 useOptimistic 훅을 적용해 클릭 즉시 UI 피드백을 제공하고 실패 시 자동 롤백 구현",
+        "실시간 사용자 행동 로그 수집 파이프라인에 낙관적 업데이트 패턴을 도입해 UI와 백엔드 데이터 동기화를 최소 지연으로 유지"
+      ],
+      "quiz": [
+        {
+          "question": "낙관적 업데이트의 핵심 원리는 무엇인가?",
+          "options": [
+            "서버 응답 후 UI를 업데이트한다",
+            "UI를 먼저 업데이트하고 서버 응답을 기다린다",
+            "서버와 UI를 별도로 처리한다",
+            "UI를 전혀 업데이트하지 않는다"
+          ],
+          "answer_index": 1,
+          "explanation": "낙관적 업데이트는 사용자가 액션을 취했을 때 서버 응답 여부와 관계없이 UI를 즉시 업데이트해 빠른 피드백을 제공한다."
+        },
+        {
+          "question": "useOptimistic 훅이 해결하는 주요 문제는?",
+          "options": [
+            "상태와 낙관적 값이 혼합돼 롤백·충돌 관리가 어려운 점",
+            "네트워크 보안 취약점",
+            "데이터베이스 스키마 설계 복잡성",
+            "이미지 로딩 최적화"
+          ],
+          "answer_index": 0,
+          "explanation": "useOptimistic 훅은 낙관적 상태와 실제 서버 상태를 분리해 자동 롤백과 상태 동기화를 지원한다."
+        }
+      ]
+    },
+    {
+      "id": "90991ed98228",
+      "title": "A Tale of Two Flink Autoscalers",
+      "url": "https://netflixtechblog.com/a-tale-of-two-flink-autoscalers-e9f6a1b1492b?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-08-21T16:01:01",
+      "summary": "대규모 Flink 스트리밍 작업의 자동 확장과 비용 절감 방법",
+      "tags": [
+        "Flink",
+        "Atlas",
+        "Mantis",
+        "Kafka",
+        "AWS"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Netflix는 자체 autoscaler와 오픈소스 autoscaler 두 개를 운영하며 오픈소스로 전환 중이다",
+          "timestamp": null
+        },
+        {
+          "point": "첫 번째 autoscaler는 Atlas에서 수집한 클러스터 메트릭을 활용해 25–45% 리소스 절감에 성공했다",
+          "timestamp": null
+        },
+        {
+          "point": "스케일링 시 savepoint 기반 재시작이 몇 분 걸려 자동화와 다운타임 최소화가 과제였다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Atlas와 유사한 텔레메트리 플랫폼을 활용해 외부 메트릭 기반 Flink autoscaler 구축",
+        "오픈소스 Flink autoscaler를 도입하고 Data Mesh와 연동해 자동 스케일링 파이프라인 구현"
+      ],
+      "quiz": [
+        {
+          "question": "첫 번째 Flink autoscaler가 사용한 메트릭 소스는?",
+          "options": [
+            "Atlas",
+            "Prometheus",
+            "Datadog",
+            "CloudWatch"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 autoscaler는 Atlas에서 실시간 클러스터 메트릭을 소비한다."
+        },
+        {
+          "question": "첫 번째 autoscaler가 달성한 리소스 절감 비율은?",
+          "options": [
+            "10-20%",
+            "25-45%",
+            "50-60%",
+            "70-80%"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 25–45% 절감이라고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "fd3f5bbbc04e",
+      "title": "Building an (almost) fully self-hosted, sandboxed, agentic software factory",
+      "url": "https://blog.jakesaunders.dev/building-an-almost-fully-self-hosted-sandboxed-agentic-software-factory/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 자동 개발 파이프라인으로 비용 절감",
+      "tags": [
+        "Coolify",
+        "Forgejo",
+        "Hermes",
+        "Tailscale",
+        "Docker"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LLM이 단일 프롬프트만으로 레포 생성·코드·테스트·CI·배포까지 전 과정을 자동화함",
+          "timestamp": null
+        },
+        {
+          "point": "Coolify 기반 자체 PaaS와 Forgejo CI·런너를 활용해 완전 자가 호스팅 환경을 구축",
+          "timestamp": null
+        },
+        {
+          "point": "HTTPS, Postgres, Redis 등 프로덕션 인프라를 홈 서버에 비용 최소화하며 제공",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM 에이전트를 활용해 데이터 전처리·피처 엔지니어링 파이프라인을 자동 생성하고 자체 CI/CD에 연동",
+        "Forgejo와 Coolify를 이용해 모델 학습·배포 워크플로우를 완전 자가 호스팅 형태로 구현"
+      ],
+      "quiz": [
+        {
+          "question": "이 글에서 사용된 자체 호스팅 PaaS는 무엇인가?",
+          "options": [
+            "Heroku",
+            "Coolify",
+            "Kubernetes",
+            "Docker Swarm"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'Coolify'가 자체 호스팅, Heroku 스타일 PaaS로 언급되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "aa72992fac0d",
+      "title": "LLM 서빙, 띄우는 것과 잘 띄우는 것 사이",
+      "url": "https://toss.tech/article/tech_talk_talk_2",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-08-21T01:00:00",
+      "summary": "LLM 서빙 시 새로운 지표와 플랫폼 구축 필요성을 제시",
+      "tags": [
+        "LLM",
+        "Kubernetes",
+        "Argo CD",
+        "TTFT",
+        "Toss"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "LLM 서빙은 토큰 기반 처리량과 첫 토큰까지 시간(TTFT)으로 지표를 전환해야 함",
+          "timestamp": null
+        },
+        {
+          "point": "기존 단일 응답 시간·처리량 지표는 LLM에 적합하지 않다",
+          "timestamp": null
+        },
+        {
+          "point": "쿠버네티스·Argo CD 기반 ML 플랫폼을 구축해 로그·메트릭을 정규화하고 대시보드화했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "TTFT를 주요 지연 지표로 도입해 모니터링 체계 개선",
+        "Kubernetes와 Argo CD를 활용한 중앙화된 ML 플랫폼 구축으로 서빙 운영 효율화"
+      ],
+      "quiz": [
+        {
+          "question": "LLM 서빙에서 기존 ML 모델과 달리 측정해야 하는 새로운 지표는?",
+          "options": [
+            "초당 처리 건수",
+            "초당 생성 토큰 수",
+            "CPU 사용률",
+            "메모리 사용량"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 LLM은 초당 생성 토큰 수와 TTFT를 새로운 핵심 지표로 제시한다."
+        },
+        {
+          "question": "토스증권이 LLM 서빙을 위해 구축한 플랫폼의 핵심 기술 스택은?",
+          "options": [
+            "Docker Compose",
+            "Kubernetes와 Argo CD",
+            "AWS Lambda",
+            "Azure Functions"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 쿠버네티스와 Argo CD를 언급하며 플랫폼 구축에 사용했다고 명시한다."
+        }
+      ]
+    },
+    {
+      "id": "73fa53f64b19",
+      "title": "✈️새벽 편의점 알바하며 버틴 창업, 313억 회사가 되기까지",
+      "url": "https://innoforest.stibee.com/p/646",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-08-18T00:00:00",
+      "summary": "eSIM 데이터 연결, 비즈니스 성장 기회",
+      "tags": [
+        "가제트코리아",
+        "eSIM",
+        "유심사",
+        "유상혁",
+        "313억"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "여행자 로밍 불편이 eSIM 서비스 창업 아이템이 됨",
+          "timestamp": null
+        },
+        {
+          "point": "코로나 시기 새벽 편의점 알바와 사무실 병행으로 성장",
+          "timestamp": null
+        },
+        {
+          "point": "2025년 매출 313억, 국내 eSIM 시장 30% 점유",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "eSIM 활성화 로그를 활용해 사용자 세분화 및 맞춤 요금제 설계",
+        "eSIM 시장 점유율 데이터를 기반으로 경쟁사 대비 성장 모델 구축"
+      ],
+      "quiz": [
+        {
+          "question": "가제트코리아가 만든 eSIM 서비스 명은?",
+          "options": [
+            "유심사",
+            "eConnect",
+            "TravelSIM",
+            "GlobalSIM"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 국내 eSIM 시장 30%를 차지하는 '유심사'를 만들었다고 언급됨"
+        }
+      ]
+    }
+  ]
+}

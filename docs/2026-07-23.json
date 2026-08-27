@@ -1,0 +1,314 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-23",
+  "generated_at": "2026-07-23T23:29:15.671852",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-23.html",
+  "items": [
+    {
+      "id": "e12f73e3354d",
+      "title": "프론트엔드와 백엔드를 한 팀으로 합치면 어떤 일이 일어날까?",
+      "url": "https://medium.com/daangn/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C%EC%99%80-%EB%B0%B1%EC%97%94%EB%93%9C%EB%A5%BC-%ED%95%9C-%ED%8C%80%EC%9C%BC%EB%A1%9C-%ED%95%A9%EC%B9%98%EB%A9%B4-%EC%96%B4%EB%96%A4-%EC%9D%BC%EC%9D%B4-%EC%9D%BC%EC%96%B4%EB%82%A0%EA%B9%8C-f8b32edb2eb1?source=rss----4505f82a2dbd---4",
+      "source": {
+        "type": "rss",
+        "name": "당근 기술 블로그 - Medium"
+      },
+      "published_at": "2026-07-23T09:39:17",
+      "summary": "팀 통합으로 개발 속도 유지와 지식 공유가 가능함",
+      "tags": [
+        "마이크로서비스",
+        "스프린트",
+        "스토리 포인트",
+        "AI 코딩 도구",
+        "온콜"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "FE와 BE를 하나의 팀으로 합쳐도 완료량이 유지되었다",
+          "timestamp": null
+        },
+        {
+          "point": "각 스프린트마다 반대 직군 티켓을 최소 하나씩 배정해 지식 공유를 촉진했다",
+          "timestamp": null
+        },
+        {
+          "point": "AI 코딩 도구가 새로운 영역 진입 비용을 크게 낮추었다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "스프린트마다 모든 엔지니어가 반대 직군의 티켓을 최소 하나씩 맡는 정책을 도입한다",
+        "백엔드 엔지니어가 프론트엔드 작업을 시범적으로 수행하고 검증 도구를 공유해 팀 전체의 학습 곡선을 완화한다"
+      ],
+      "quiz": [
+        {
+          "question": "팀 통합 후 첫 분기 완료량은 어떻게 변했나요?",
+          "options": [
+            "증가했다",
+            "감소했다",
+            "변화가 없었다",
+            "측정되지 않았다"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 ‘완료량은 줄지 않았다’와 ‘큰 변동 없이 유지됐어요’라고 명시되어 있다."
+        },
+        {
+          "question": "팀이 적용한 두 가지 원칙 중 하나는 무엇인가요?",
+          "options": [
+            "배분",
+            "자동화",
+            "외주",
+            "리팩터링"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 ‘첫 번째는 배분이고 두 번째는 시범’이라고 기술되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "55498fe9d081",
+      "title": "Petals: Run LLMs at home, BitTorrent-style",
+      "url": "https://petals.dev/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "소비자 GPU로 거대 LLM을 저비용 파인튜닝",
+      "tags": [
+        "Llama 3.1",
+        "Mixtral",
+        "Falcon",
+        "Petals",
+        "BigScience"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Petals는 모델을 여러 사용자의 GPU에 분산시켜 소비자 등급 하드웨어로 405B 규모 LLM을 실행한다",
+          "timestamp": null
+        },
+        {
+          "point": "Llama 2 (70B)는 초당 6토큰, Falcon (180B)는 초당 4토큰 속도로 단일 배치 추론을 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "PyTorch와 🤗Transformers 기반 API를 제공해 파인튜닝·샘플링·숨은 상태 접근 등 자유로운 실험이 가능하다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "소비자 GPU 하나로 Llama 3.1을 Petals 네트워크에 연결해 도메인 데이터에 파인튜닝하고 비용을 크게 절감한다",
+        "Petals 네트워크에 Falcon 180B를 연결해 챗봇 서비스를 구축하고 자체 GPU 클러스터 없이 실시간 응답을 제공한다"
+      ],
+      "quiz": [
+        {
+          "question": "Petals가 초당 6 토큰 속도를 보이는 모델은?",
+          "options": [
+            "Llama 2 (70B)",
+            "Falcon (180B)",
+            "BLOOM (176B)",
+            "Mixtral"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 Llama 2 (70B)가 초당 6 토큰이라고 명시돼 있다."
+        },
+        {
+          "question": "Petals가 대규모 모델을 실행하기 위해 사용하는 핵심 기술은?",
+          "options": [
+            "모델 양자화",
+            "GPU 분산 네트워크",
+            "클라우드 GPU 임대",
+            "CPU 최적화"
+          ],
+          "answer_index": 1,
+          "explanation": "Petals는 모델을 여러 사람의 GPU에 나눠서 서비스하는 네트워크 방식을 사용한다."
+        }
+      ]
+    },
+    {
+      "id": "9bbc5216b23a",
+      "title": "Show HN: Palmier Pro – Open-source macOS video editor built for AI",
+      "url": "https://github.com/palmier-io/palmier-pro",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "AI 기반 영상 편집 자동화로 데이터 파이프라인 효율화",
+      "tags": [
+        "Palmier Pro",
+        "Claude",
+        "Codex",
+        "SigLIP2",
+        "CoreML"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Palmier Pro는 로컬 MCP 서버를 통해 macOS 영상 편집기에 AI 생성 기능을 직접 통합한다.",
+          "timestamp": null
+        },
+        {
+          "point": "LLM은 프로젝트 관리, 미디어 임포트·검색, 타임라인 편집, 자산 생성·내보내기 등 전체 편집 흐름을 API로 제어할 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "외부 워크플로 자동화는 MCP 서버 사용, UI 내 빠른 반복은 인앱 채팅 사용 두 가지 방식으로 제공한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Palmier Pro의 AI 편집 API를 활용해 장시간 영상에서 자동으로 쇼트 클립을 추출·편집해 소셜 미디어 콘텐츠 파이프라인을 구축한다.",
+        "LLM을 이용해 영상에 자동 캡션·자막을 생성하고, 이를 음성 인식 모델 학습 데이터로 활용하는 자동화 워크플로를 설계한다."
+      ],
+      "quiz": [
+        {
+          "question": "Palmier Pro가 외부 워크플로와 연결하기 위해 제공하는 로컬 서버 이름은 무엇인가?",
+          "options": [
+            "MCP server",
+            "REST API",
+            "GraphQL endpoint",
+            "WebSocket service"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"local MCP server\" 라고 명시되어 있다."
+        },
+        {
+          "question": "미디어 검색을 위한 임베딩에 사용되는 모델은 무엇인가?",
+          "options": [
+            "SigLIP2",
+            "BERT",
+            "GPT-3",
+            "ResNet"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"by embedding footages using SigLIP2 running locally\" 라고 언급되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "4a735d1e8afe",
+      "title": "But what is cross-entropy? | Compression is Intelligence Part 2",
+      "url": "https://youtu.be/GlYgs6v2YfU",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-07-16T11:56:04",
+      "summary": "압축 기반 교차 엔트로피가 언어 모델 학습과 클러스터링에 핵심",
+      "tags": [
+        "Gzip",
+        "cross-entropy",
+        "Language Trees and Zipping",
+        "pre-training",
+        "distilling"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Gzip를 이용한 공동 압축 거리로 언어 간 유사성을 측정해 언어 계통도를 복원한다",
+          "timestamp": null
+        },
+        {
+          "point": "교차 엔트로피는 압축 한계와 현대 언어 모델 학습을 연결하는 핵심 개념이다",
+          "timestamp": null
+        },
+        {
+          "point": "다음 토큰 예측을 압축 문제로 재구성하면 LLM 사전학습을 새로운 시각으로 이해할 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Gzip 기반 공동 압축 거리를 활용해 다국어 문서 군집화 파이프라인을 구축한다",
+        "교차 엔트로피 계산을 모델 평가 지표로 도입해 기존 perplexity와 비교 분석한다"
+      ],
+      "quiz": [
+        {
+          "question": "2002년 논문에서 문서 간 유사성을 측정하기 위해 사용한 메트릭은?",
+          "options": [
+            "Euclidean distance",
+            "Cosine similarity",
+            "Co-compression distance",
+            "Jaccard index"
+          ],
+          "answer_index": 2,
+          "explanation": "논문은 두 문서를 이어 붙인 뒤 gzip으로 압축한 크기 차이를 이용해 공동 압축 거리를 정의하고, 이를 유사도 측정에 사용한다."
+        },
+        {
+          "question": "영상에서 교차 엔트로피가 근본적으로 연결되는 과정은?",
+          "options": [
+            "Data augmentation",
+            "Bit encoding/compression",
+            "Hyperparameter tuning",
+            "Model ensembling"
+          ],
+          "answer_index": 1,
+          "explanation": "교차 엔트로피는 심볼을 비트 시퀀스로 인코딩할 때의 압축 한계와 직접 관련되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "e72cb9f9eb26",
+      "title": "Watching America Run Away With AI - Alistair Pullen (Cosine AI)",
+      "url": "https://youtu.be/JTHmrELSfvk",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-07-13T22:23:38",
+      "summary": "영국 주도 LLM 구축과 컴퓨팅 지원 현황이 DS 전략에 핵심",
+      "tags": [
+        "Cosine",
+        "Isambard",
+        "LLM",
+        "Fable",
+        "Telegraph"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Cosine는 영국 최초 주권 LLM 구축을 목표로 정부의 SovAI 유닛으로부터 Isambard 슈퍼컴퓨터 할당을 받았다.",
+          "timestamp": null
+        },
+        {
+          "point": "스타트업에게 모델 훈련 비용의 대부분이 컴퓨팅에 소요돼, 정부 지원이 없으면 수백만 달러가 필요하다.",
+          "timestamp": null
+        },
+        {
+          "point": "Fable 금지와 수출 통제 이슈가 영국 내 주권 AI 논의를 촉발했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "정부·공공 슈퍼컴퓨터(예: Isambard) 할당을 신청해 대규모 모델 훈련 비용을 절감한다.",
+        "주권 AI 개발 시 export control 및 규제 요건을 사전 검토해 제품 로드맵에 반영한다"
+      ],
+      "quiz": [
+        {
+          "question": "Cosine가 주권 LLM 개발을 위해 할당받은 슈퍼컴퓨터 클러스터 이름은?",
+          "options": [
+            "Isambard",
+            "Summit",
+            "Titan",
+            "MareNostrum"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'Isambard supercomputer cluster out at Bristol'이라고 명시돼 있다."
+        },
+        {
+          "question": "인터뷰에서 주권 AI에 대한 관심이 급증한 계기로 언급된 사건은?",
+          "options": [
+            "GPT‑4 출시",
+            "Fable 금지",
+            "브렉시트",
+            "새로운 영국 데이터법"
+          ],
+          "answer_index": 1,
+          "explanation": "발언자는 'Fable suddenly got banned'가 주권 AI 논의를 촉발했다고 말했다."
+        }
+      ]
+    }
+  ]
+}

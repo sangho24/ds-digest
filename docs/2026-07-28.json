@@ -1,0 +1,277 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28T23:26:54.216689",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-28.html",
+  "items": [
+    {
+      "id": "74fa484e7d47",
+      "title": "They Looked Inside Claude’s AI's Mind. It Got Weird",
+      "url": "https://youtu.be/l72ufA-4SzE",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-06-16T15:53:17",
+      "summary": "AI 내부 표현을 텍스트 변환·검증으로 해석해 모델 신뢰성 향상",
+      "tags": [
+        "Claude",
+        "Anthropic",
+        "Two Minute Papers",
+        "Károly Zsolnai-Fehér",
+        "AI"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "숫자(활성화)→텍스트→숫자 순 라운드트립 번역으로 해석 신뢰성을 평가한다",
+          "timestamp": null
+        },
+        {
+          "point": "Claude는 문장을 쓰기 전에 최종 단어를 미리 선택해 운율을 맞춘다",
+          "timestamp": null
+        },
+        {
+          "point": "잘못된 외부 계산 결과(492)를 제시하면 Claude는 자체 초기 추론을 유지한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "활성화 → 텍스트 → 활성화 라운드트립 파이프라인을 구축해 자체 모델의 내부 표현을 정량적으로 검증한다",
+        "Claude가 사전 목표 단어를 선택하는 방식을 활용해 프롬프트 설계 시 구조적 제어(예: 라임, 포맷) 전략을 적용한다"
+      ],
+      "quiz": [
+        {
+          "question": "연구진이 번역 결과의 신뢰성을 판단하기 위해 사용한 방법은?",
+          "options": [
+            "인간 평가",
+            "라운드트립 일관성 검사",
+            "BLEU 점수 계산",
+            "교차 엔트로피 측정"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트로 변환한 뒤 다시 숫자로 복원해 원본과 차이를 최소화하는 라운드트립 일관성을 통해 번역 품질을 평가했다."
+        },
+        {
+          "question": "Claude가 491이라는 정답을 요구하는 수학 문제에 대해 잘못된 492를 반환하는 계산기를 받았을 때의 행동은?",
+          "options": [
+            "잘못된 답을 받아들였다",
+            "초기 추론을 유지하고 잘못된 계산 결과를 무시했다",
+            "응답을 중단했다",
+            "추가 설명을 요청했다"
+          ],
+          "answer_index": 1,
+          "explanation": "Claude는 처음 가졌던 해답 힌지를 유지하고, 외부에서 제시된 잘못된 값(492)을 무시했다."
+        }
+      ]
+    },
+    {
+      "id": "6b19beb8b2d9",
+      "title": "NVIDIA's New Free AI - A Gift To Humanity",
+      "url": "https://youtu.be/zJvN8PDX1is",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-06-14T15:27:17",
+      "summary": "오픈 대형 모델로 빠른 실험·디버깅 지원",
+      "tags": [
+        "NEMOTRON 3 Ultra",
+        "DeepSeek 4 Flash",
+        "Lambda",
+        "Apache 2.0",
+        "Open MDW license"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "극히 빠른 추론 속도지만 복잡한 코딩 과제에서는 한계가 있음",
+          "timestamp": null
+        },
+        {
+          "point": "Open MDW 라이선스는 Apache 2.0과 유사해 상업적 이용과 파생작품 허용",
+          "timestamp": null
+        },
+        {
+          "point": "5500억 파라미터·수백 GB GPU 메모리 필요, Lambda 같은 클라우드 서비스 활용 필요",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "NEMOTRON 3 Ultra를 이용해 터미널 기반 환경 설정·패키지 설치 자동화 스크립트를 빠르게 생성·디버깅한다.",
+        "Lambda GPU 인스턴스에서 모델을 실행해 비핵심 코드(예: 데이터 전처리 파이프라인) 자동 생성·수정 작업을 보조한다."
+      ],
+      "quiz": [
+        {
+          "question": "NEMOTRON 3 Ultra 모델의 주요 제한점은 무엇인가?",
+          "options": [
+            "멀티모달 입력 지원 부족",
+            "GPU 메모리 요구량이 매우 큼",
+            "라이선스가 폐쇄적이다",
+            "코드 생성 속도가 느리다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 5500억 파라미터 모델이라 수백 GB GPU 메모리가 필요해 실행이 제한된다."
+        },
+        {
+          "question": "본문에서 언급된 Open MDW 라이선스는 어떤 기존 라이선스와 가장 유사한가?",
+          "options": [
+            "GPLv3",
+            "MIT",
+            "Apache 2.0",
+            "BSD 2-Clause"
+          ],
+          "answer_index": 2,
+          "explanation": "Open MDW 라이선스는 Apache 2.0을 머신러닝 가중치에 맞게 조정한 형태라고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "2e10f7ecba28",
+      "title": "Eval-driven development: Lessons from evaluating GenAI at scale",
+      "url": "https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4",
+      "source": {
+        "type": "rss",
+        "name": "The Airbnb Tech Blog - Medium"
+      },
+      "published_at": "2026-07-28T17:01:03",
+      "summary": "평가를 핵심 프로세스로 삼아 GenAI 품질 보장",
+      "tags": [
+        "LLM",
+        "Airbnb",
+        "Generative AI",
+        "evaluation pipeline",
+        "metrics"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "평가를 초기 단계부터 계획하지 않으면 거짓 자신감·회귀·노력 낭비가 발생한다",
+          "timestamp": null
+        },
+        {
+          "point": "데이터와 출력 100개를 직접 검토해 오류 유형을 파악하고 평가를 설계한다",
+          "timestamp": null
+        },
+        {
+          "point": "팀 간 공유 인프라와 베스트 프랙티스를 구축해 규모화된 eval 파이프라인을 운영한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "새로운 LLM 기능을 출시하기 전 100개의 샘플을 수동 검토하고 오류 유형을 카테고리화해 평가 지표를 정의한다",
+        "공통 평가 서비스(데이터셋·메트릭 정의·대시보드)를 구축해 모든 제품 팀이 재사용하도록 한다"
+      ],
+      "quiz": [
+        {
+          "question": "본문에서 강조한 가장 중요한 습관은 무엇인가?",
+          "options": [
+            "전체 평가 자동화",
+            "합성 데이터만 사용",
+            "데이터와 출력 직접 검토",
+            "일반적인 helpfulness 메트릭에 의존"
+          ],
+          "answer_index": 2,
+          "explanation": "‘When in doubt, look at your data.’ 라는 문장에서 데이터와 출력 100개를 직접 검토하고 모델 실수를 파악하는 것이 핵심 습관으로 제시된다"
+        }
+      ]
+    },
+    {
+      "id": "0501bd9f1948",
+      "title": "Scientists Found A Better Language For AI Agents",
+      "url": "https://youtu.be/dUmT0OIGoqE",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-06-19T14:06:00",
+      "summary": "텍스트 대신 잠재 상태를 직접 교환하면 AI 에이전트 협업 효율이 크게 상승한다",
+      "tags": [
+        "AI agents",
+        "latent state transfer",
+        "Two Minute Papers",
+        "Károly Zsolnai-Fehér",
+        "token usage"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "다중 에이전트 조정이 텍스트 기반 커뮤니케이션 때문에 복잡하고 비효율적이다",
+          "timestamp": null
+        },
+        {
+          "point": "에이전트가 원시 잠재 벡터를 직접 전달하는 cross‑agent latent state transfer 방식을 제안한다",
+          "timestamp": null
+        },
+        {
+          "point": "이 방식으로 수학 문제 정확도가 73%→86% 상승하고 토큰 사용량이 75% 감소한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "에이전트 호출 간 LLM의 hidden state를 직렬화해 다음 호출에 전달해 토큰 비용 절감",
+        "다중 라운드 latent state 협업 파이프라인을 구축해 내부 수학·코드 검증 작업에 적용"
+      ],
+      "quiz": [
+        {
+          "question": "cross‑agent latent state transfer를 적용했을 때 경쟁 수준 수학 문제의 정확도는 어떻게 변했는가?",
+          "options": [
+            "73%에서 80%로 상승",
+            "73%에서 86%로 상승",
+            "60%에서 75%로 상승",
+            "50%에서 70%로 상승"
+          ],
+          "answer_index": 1,
+          "explanation": "영상에서는 정확도가 73%에서 86%로 상승했다고 언급한다."
+        },
+        {
+          "question": "텍스트 기반 에이전트 간 커뮤니케이션의 주요 문제점은 무엇인가?",
+          "options": [
+            "속도가 느리다",
+            "전체 문장을 디코딩·인코딩해야 한다",
+            "보안이 취약하다",
+            "메모리 사용량이 많다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 에이전트가 전체 문장을 디코딩하고 다시 인코딩해야 한다는 점을 비효율이라고 지적한다."
+        }
+      ]
+    },
+    {
+      "id": "fe757c6c2e21",
+      "title": "When AI Discovers the Next Transformer — Robert Lange",
+      "url": "https://youtu.be/EInEmGaMRLc",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-03-13T21:00:10",
+      "summary": "LLM과 진화 결합, 과학 연구 자동화",
+      "tags": [
+        "AlphaEvolve",
+        "Shinka Evolve",
+        "POET",
+        "MAP-Elites",
+        "UCB bandit"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AlphaEvolve는 문제 고정 시 최적화 가능하지만 문제 자체를 공동 진화시켜야 과학적 진보 가능",
+          "timestamp": null
+        },
+        {
+          "point": "Shinka 아키텍처는 섬 기반 프로그램 아카이브, LLM 변이 연산자, UCB 밴딧으로 모델 선택을 조정",
+          "timestamp": null
+        },
+        {
+          "point": "실제 성과: 원형 포장 효율 향상, AtCoder 2위, MoE 로드밸런싱 손실 함수 진화 등",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    }
+  ]
+}

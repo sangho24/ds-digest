@@ -1,0 +1,192 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-18",
+  "generated_at": "2026-08-18T22:38:15.488829",
+  "count": 3,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-18.html",
+  "items": [
+    {
+      "id": "c8822c4768d1",
+      "title": "👥 ChatGPT와 Gemini, 둘 다 10억 명인데 왜 같은 숫자가 아닐까",
+      "url": "https://dflick.stibee.com/p/107",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-08-18T00:00:00",
+      "summary": "AI 사용자 규모 측정 차이로 성장 전략 인사이트 제공",
+      "tags": [
+        "ChatGPT",
+        "Gemini",
+        "Muse Glimmer",
+        "NemoTron 3.5 Lightning",
+        "GPT-5.6 Sol"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "ChatGPT와 Gemini 모두 10억 사용자를 기록했지만 ChatGPT는 주간 기준, Gemini는 월간 기준으로 집계",
+          "timestamp": null
+        },
+        {
+          "point": "Gemini 이용자의 63%가 음성 대화를 사용하고 일부는 카메라·화면 공유까지 활용",
+          "timestamp": null
+        },
+        {
+          "point": "ChatGPT 사용자는 1주일 내에 재방문 비율이 높아 높은 이용 빈도를 보임",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "주간·월간 활성 사용자 지표를 구분해 제품 성장 단계와 사용자 참여도를 분석한다",
+        "음성 사용 비중이 높은 Gemini처럼 음성 인터페이스 활용 데이터를 수집·분석해 UI 개선 로드맵을 만든다"
+      ],
+      "quiz": [
+        {
+          "question": "Gemini는 10억 사용자를 어떤 기준으로 집계했나요?",
+          "options": [
+            "주간 활성 사용자",
+            "월간 활성 사용자",
+            "전체 가입자 수",
+            "일일 활성 사용자"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 Gemini는 한 달을 기준으로 사용자를 셌다고 명시돼 있다."
+        },
+        {
+          "question": "Gemini 이용자 중 음성으로 대화하는 비율은 얼마인가요?",
+          "options": [
+            "45%",
+            "55%",
+            "63%",
+            "70%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 Gemini 이용자의 63%가 음성으로 대화한다고 언급돼 있다."
+        }
+      ]
+    },
+    {
+      "id": "1e907c1ba3f5",
+      "title": "Claude Code May–August 2026 weekly limits promotion",
+      "url": "https://support.claude.com/en/articles/15910845-claude-code-may-august-2026-weekly-limits-promotion",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "Claude Code 사용량 50% 증가, 실험 가속",
+      "tags": [
+        "Claude Code",
+        "CLI",
+        "IDE extensions",
+        "Enterprise",
+        "Pro"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "5월 13일부터 8월 31일까지 Claude Code 주간 사용량 제한이 50% 증가",
+          "timestamp": null
+        },
+        {
+          "point": "Pro, Max, Team 및 레거시 시트 기반 Enterprise 플랜에 자동 적용, Free와 소비 기반 Enterprise 제외",
+          "timestamp": null
+        },
+        {
+          "point": "5시간 사용 제한은 변동 없으며 다른 Claude 제품의 제한도 동일함",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "주간 한도 증가를 활용해 대규모 데이터 전처리 스크립트를 주당 최대치에 맞춰 실행해 모델 개발 속도 향상",
+        "팀 내에서 Claude Code를 활용한 코드 자동 생성 작업을 늘려 프로토타입 개발 기간 단축"
+      ],
+      "quiz": [
+        {
+          "question": "Claude Code 사용량 프로모션이 종료되는 날짜는 언제인가?",
+          "options": [
+            "2026년 8월 31일",
+            "2026년 9월 30일",
+            "2026년 12월 31일",
+            "2027년 1월 31일"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 프로모션은 2026년 8월 31일까지 진행된다고 명시되어 있다."
+        },
+        {
+          "question": "다음 중 프로모션에 포함되지 않는 플랜은?",
+          "options": [
+            "Pro 플랜",
+            "Max 플랜",
+            "Free 플랜",
+            "Team 플랜"
+          ],
+          "answer_index": 2,
+          "explanation": "Free 플랜은 프로모션 대상에서 제외된다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "974337a65147",
+      "title": "(광고)🥤지금 인재들은 왜 G마켓에 베팅할까요?",
+      "url": "https://trendlite.stibee.com/p/476",
+      "source": {
+        "type": "newsletter",
+        "name": "트렌드라이트"
+      },
+      "published_at": "2026-08-18T00:00:00",
+      "summary": "G마켓 AI·데이터 전환이 DS 인재 성장 기회",
+      "tags": [
+        "G마켓",
+        "알리바바그룹",
+        "AI",
+        "STARS 모델",
+        "Incrementality"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "G마켓은 고객 기반·로컬 이해·글로벌 AI 기술을 활용해 턴어라운드 전략을 추진한다.",
+          "timestamp": null
+        },
+        {
+          "point": "외부 인재들은 G마켓을 저평가 우량주로 보고 큰 임팩트를 만들 수 있는 기회라 판단한다.",
+          "timestamp": null
+        },
+        {
+          "point": "성공적인 전환을 위해 AI와 로컬 콘텍스트를 결합해 구매자 수·재방문을 지속적으로 늘려야 한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Incrementality 테스트 프레임워크를 도입해 신규 기능·프로모션의 순증분 효과를 정량화한다.",
+        "Alibaba 기반 AI 추천 엔진을 한국 시장에 맞게 로컬 데이터로 재학습·튜닝하여 전환율 향상에 적용한다."
+      ],
+      "quiz": [
+        {
+          "question": "최창석 리더가 G마켓 상황을 평가할 때 사용한 프레임워크는?",
+          "options": [
+            "STARS 모델",
+            "SWOT 분석",
+            "PESTLE",
+            "Porter's Five Forces"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 최창석 리더는 STARS 모델을 언급하며 G마켓을 '턴어라운드' 상황으로 평가했다."
+        },
+        {
+          "question": "G마켓이 현재 집중하고 있는 전략 카테고리는?",
+          "options": [
+            "뷰티",
+            "패션",
+            "가전",
+            "식품"
+          ],
+          "answer_index": 0,
+          "explanation": "전략의 핵심은 쿠팡·네이버와 정면 승부하기보다 뷰티 같은 승산 있는 카테고리부터 공략하는 것이다."
+        }
+      ]
+    }
+  ]
+}

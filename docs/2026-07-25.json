@@ -1,0 +1,291 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-25",
+  "generated_at": "2026-07-25T23:22:07.113830",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-25.html",
+  "items": [
+    {
+      "id": "d9e53474c66a",
+      "title": "DeepSeek's Absolutely Insane AI Speed Hack",
+      "url": "https://youtu.be/1yBU41auQhw",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-07-07T16:33:29",
+      "summary": "다중 토큰 추론으로 AI 응답 속도 60~85% 향상",
+      "tags": [
+        "DeepSeek",
+        "DSpark",
+        "speculative decoding",
+        "Flash",
+        "MTP-1"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Speculative decoding lets a cheap draft model generate multiple tokens while a large model verifies them",
+          "timestamp": null
+        },
+        {
+          "point": "DSpark adds short‑term memory, rejects low‑probability drafts, and decides when verification is worth GPU time",
+          "timestamp": null
+        },
+        {
+          "point": "Reported 60‑85% speedup (up to 661% in corner cases) versus the MTP‑1 baseline",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "자사 AI 어시스턴트에 스펙터티브 디코딩 파이프라인을 구축해 초안 모델과 검증 모델을 연동, 토큰당 지연시간을 60% 이상 감소시킨다",
+        "DSpark에서 제안한 짧은 메모리와 토큰 폐기 예측 로직을 적용해 초안 모델의 일관성을 높이고 검증 비용을 절감한다"
+      ],
+      "quiz": [
+        {
+          "question": "이 기술에서 저렴한 초안 모델이 생성한 토큰을 큰 모델이 검증하는 방식을 무엇이라고 하는가?",
+          "options": [
+            "Beam search",
+            "Speculative decoding",
+            "Reinforcement learning",
+            "Knowledge distillation"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 'speculative decoding'이라는 용어로 설명되고 있다."
+        },
+        {
+          "question": "DSpark이 기존 MTP‑1 대비 일반적인 경우 달성한 속도 향상 범위는?",
+          "options": [
+            "20-30%",
+            "40-55%",
+            "60-85%",
+            "90-120%"
+          ],
+          "answer_index": 2,
+          "explanation": "영상에서는 '60 to 85% speedup'이라고 명시했다."
+        }
+      ]
+    },
+    {
+      "id": "a2d63c7bed76",
+      "title": "The Thermodynamic AI Chip · Thomas Ahle",
+      "url": "https://youtu.be/5pieVHmlbyk",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-06-28T23:38:07",
+      "summary": "열역학 AI 칩으로 추론 비용 절감 가능",
+      "tags": [
+        "Thomas Ahle",
+        "Normal Computing",
+        "Verilog",
+        "CN101",
+        "thermodynamic computing"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI 에이전트가 43일 동안 50만 라인의 Verilog 코드를 생성했다.",
+          "timestamp": null
+        },
+        {
+          "point": "열역학 컴퓨팅은 칩 자체의 노이즈를 확률 미분 방정식으로 활용한다.",
+          "timestamp": null
+        },
+        {
+          "point": "칩 설계 후 물리 실리콘으로 제작되기 전, 형식 검증이 필수이다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 에이전트를 활용해 확률 모델에 맞는 Verilog 모듈을 자동 생성하고 검증 파이프라인에 통합한다.",
+        "열역학 컴퓨팅 원리를 시뮬레이션으로 구현해 기존 베이지안 추론 워크로드와 성능·에너지 효율을 비교한다."
+      ],
+      "quiz": [
+        {
+          "question": "AI 에이전트가 생성한 Verilog 코드 라인 수는 얼마인가?",
+          "options": [
+            "100k",
+            "250k",
+            "500k",
+            "1M"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 따르면 AI 에이전트가 43일 동안 50만 라인의 코드를 생성했다고 언급된다."
+        },
+        {
+          "question": "열역학 컴퓨팅을 구현한 최초 칩의 이름은?",
+          "options": [
+            "CN101",
+            "CN202",
+            "TN101",
+            "ThermoChip"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 해당 기술을 적용한 첫 번째 칩을 CN101이라고 소개한다."
+        }
+      ]
+    },
+    {
+      "id": "145cca998f6c",
+      "title": "He won a Nobel here for AlphaFold. Then he left. - John Jumper",
+      "url": "https://youtu.be/e3gBwLWAerw",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-06-22T22:43:36",
+      "summary": "AlphaFold가 DS에 제공하는 대규모 단백질 구조",
+      "tags": [
+        "AlphaFold",
+        "DeepMind",
+        "CASP",
+        "John Jumper",
+        "David Baker"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AlphaFold 2가 단백질 구조 예측을 거의 완벽에 가깝게 해결했다",
+          "timestamp": null
+        },
+        {
+          "point": "DeepMind가 2억 개 이상의 예측 구조를 공개해 전 세계 190개국에서 활용되고 있다",
+          "timestamp": null
+        },
+        {
+          "point": "2024년 노벨 화학상 절반이 단백질 구조 예측에 공로를 인정받은 John Jumper와 Demis Hassabis에게 돌아갔다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AlphaFold 예측 구조를 기존 약물 스크리닝 파이프라인에 연계해 후보 물질 탐색 속도를 높인다",
+        "CASP 대회 평가 방식을 내부 모델 검증 기준으로 도입해 단백질 구조 예측 모델의 성능을 정량적으로 측정한다"
+      ],
+      "quiz": [
+        {
+          "question": "2024년 노벨 화학상에서 단백질 구조 예측으로 반을 차지한 인물은 누구인가?",
+          "options": [
+            "Demis Hassabis와 John Jumper",
+            "David Baker와 Demis Hassabis",
+            "David Baker와 John Jumper",
+            "세 사람 모두"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 2024년 노벨 화학상 절반은 Demis Hassabis와 John Jumper가 단백질 구조 예측으로 받았다."
+        },
+        {
+          "question": "AlphaFold 데이터베이스에 공개된 예측 단백질 구조 수는 대략 얼마인가?",
+          "options": [
+            "2천만",
+            "2억",
+            "20억",
+            "2만"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 200 million(2억)개의 예측 구조가 공개되었다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "08a180ce8f79",
+      "title": "Brazilian farmers tokenized dairy cows to get loans, bypassing bank limits",
+      "url": "https://www.coindesk.com/markets/2026/07/24/brazilian-farmers-tokenized-dairy-cows-to-get-loans-bypassing-bank-lending-limits",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "실물 자산 토큰화로 농가 대출 데이터와 모델링 기회 제공",
+      "tags": [
+        "Cowmed",
+        "B3",
+        "AI-powered tracking collars",
+        "dairy cows",
+        "real-world asset tokenization"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "10마리 낙농소를 B3에 토큰화해 약 2만 달러 규모 대출 확보",
+          "timestamp": null
+        },
+        {
+          "point": "AI 기반 목걸이로 개별 소의 디지털 아이덴티티 생성, 이중 담보 방지",
+          "timestamp": null
+        },
+        {
+          "point": "Cowmed이 100,000마리 모니터링, 20% 채택 시 7천760만 달러 신규 신용 창출 예상",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 목걸이 데이터 활용한 소 건강 및 신용 점수 모델 구축",
+        "블록체인 기반 실물 자산 토큰화 파이프라인 설계 및 B3 연계 파일럿 진행"
+      ],
+      "quiz": [
+        {
+          "question": "이번 프로젝트에서 토큰화된 낙농소의 수는 얼마인가?",
+          "options": [
+            "5마리",
+            "10마리",
+            "15마리",
+            "20마리"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 10마리 낙농소가 토큰화되었다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "85101f04a4c0",
+      "title": "👀 소지섭은 없었다, 시청자는 소지섭을 봤다",
+      "url": "https://dflick.stibee.com/p/102",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-07-21T00:00:00",
+      "summary": "AI 영상 생성으로 콘텐츠 제작 비용·시간 절감 가능",
+      "tags": [
+        "SBS",
+        "AI",
+        "김부장",
+        "플로피디스크",
+        "EU"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "SBS 드라마 ‘김부장’에서 배우·카메라 없이 AI가 전체 장면을 제작",
+          "timestamp": null
+        },
+        {
+          "point": "시청자는 AI 사용을 눈치채지 못할 정도로 자연스럽게 삽입됨",
+          "timestamp": null
+        },
+        {
+          "point": "AI가 얼굴 보정 수준을 넘어 분 단위 전체 영상 제작으로 전환 중",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI를 활용해 전체 장면을 생성함으로써 영상 제작 비용과 소요 시간을 절감할 수 있음"
+      ],
+      "quiz": [
+        {
+          "question": "SBS 드라마 ‘김부장’에서 AI가 만든 장면의 특징은?",
+          "options": [
+            "배우와 카메라가 실제로 촬영했다",
+            "AI가 전체 장면을 생성했다",
+            "기존 영상에 색보정만 적용했다",
+            "관객에게 AI 사용을 알리지 않았다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 해당 장면은 배우·촬영 카메라 없이 AI가 전체 시퀀스를 제작한 것으로 설명된다."
+        }
+      ]
+    }
+  ]
+}

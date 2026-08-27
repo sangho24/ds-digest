@@ -1,0 +1,302 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-19",
+  "generated_at": "2026-08-19T22:40:13.813985",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-19.html",
+  "items": [
+    {
+      "id": "065ac29c5c06",
+      "title": "DeepSeek Just Made Closed AI Look Ridiculous",
+      "url": "https://youtu.be/kyYepbhe1g8",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-08-19T18:02:46",
+      "summary": "오픈 가중치 DeepSeek 4 Pro로 고성능 LLM 저비용 활용",
+      "tags": [
+        "DeepSeek",
+        "Flash",
+        "DSpark",
+        "Lambda",
+        "Mixture of Experts"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "DeepSeek 4 Pro는 사후 학습에서 수학·코딩·에이전트 전용 전문가 모델을 만들고 10여 개 교사 모델을 증류해 성능을 크게 향상시킨다.",
+          "timestamp": null
+        },
+        {
+          "point": "DSpark 토큰 초안 기법으로 기존 대비 최대 78% 빠른 텍스트 생성이 가능하다.",
+          "timestamp": null
+        },
+        {
+          "point": "모델 가중치는 MIT 라이선스로 공개돼 자유롭게 사용·호스팅 가능하지만, Lambda 등 외부 서비스 비용이 상승했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Lambda 혹은 DeepSeek 자체 호스팅 서비스를 이용해 DeepSeek 4 Pro를 사내 검색·요약 시스템에 바로 적용한다.",
+        "기존 추론 파이프라인에 DSpark 토큰 초안 방식을 도입해 응답 latency를 70% 이상 감소시킨다."
+      ],
+      "quiz": [
+        {
+          "question": "DeepSeek 4 Pro가 텍스트 생성 속도를 크게 높인 기술은 무엇인가?",
+          "options": [
+            "Beam search",
+            "DSpark 토큰 초안",
+            "Reinforcement Learning from Human Feedback",
+            "Retrieval‑augmented Generation"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 DSpark을 도입해 기존 대비 최대 78% 빠른 생성이 가능하다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "944f4819ff5c",
+      "title": "토스는 어떻게 광고 속에 게임을 넣었을까",
+      "url": "https://toss.tech/article/games-in-ads",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-08-18T01:00:00",
+      "summary": "광고 SDK 직접 구현으로 게임 광고 효율 향상",
+      "tags": [
+        "Toss",
+        "Moloco",
+        "Playable Ads",
+        "SDK",
+        "IPM"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "기존 광고 SDK 부재로 플레이어블 광고가 안돼 게임 광고가 적었다",
+          "timestamp": null
+        },
+        {
+          "point": "토스는 자체 광고 서버와 SDK를 구축해 플레이어블 광고를 구현했다",
+          "timestamp": null
+        },
+        {
+          "point": "Moloco 사례에 따르면 플레이어블 소재는 IPM 49%·ROAS 25% 상승 효과가 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "자사 광고 플랫폼에 플레이어블 지원을 위해 자체 SDK 개발을 검토한다",
+        "Moloco 자료를 활용해 플레이어블 소재 도입 시 IPM·ROAS 상승을 예측하는 모델을 구축한다"
+      ],
+      "quiz": [
+        {
+          "question": "Moloco가 보고한 플레이어블 소재의 효과는?",
+          "options": [
+            "IPM 49% 상승·ROAS 25% 상승",
+            "IPM 25% 상승·ROAS 49% 상승",
+            "IPM 10% 상승·ROAS 5% 상승",
+            "효과 없음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 Moloco는 플레이어블 소재가 IPM을 49%, ROAS를 25% 끌어올렸다고 소개한다."
+        },
+        {
+          "question": "토스가 플레이어블 광고를 직접 구현한 주요 이유는?",
+          "options": [
+            "서드파티 SDK와 통합·통제 문제",
+            "비용 절감",
+            "사용자 피드백 요구",
+            "법적 요구"
+          ],
+          "answer_index": 0,
+          "explanation": "토스는 자체 광고 시스템을 직접 만들었기 때문에 서드파티 SDK를 얹으면 통합·통제가 어긋난다고 판단했다."
+        }
+      ]
+    },
+    {
+      "id": "69d14ad49295",
+      "title": "How we knew COVID was over (and what our models had to unlearn)",
+      "url": "https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4",
+      "source": {
+        "type": "rss",
+        "name": "The Airbnb Tech Blog - Medium"
+      },
+      "published_at": "2026-08-19T17:01:03",
+      "summary": "예측 편향 관리와 재학습 선택 기준을 제시",
+      "tags": [
+        "Airbnb",
+        "COVID-19",
+        "forecasting",
+        "refit",
+        "respecify"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "예측 편향이 지속되면 단순 재학습보다 원인 파악이 필요함",
+          "timestamp": null
+        },
+        {
+          "point": "재학습 선택은 재적합, 재설계, 유지 세 옵션으로 구분하고 비용·위험을 평가해야 함",
+          "timestamp": null
+        },
+        {
+          "point": "재적합은 가장 저렴하지만 데이터 변동성에 따라 모델이 악화될 위험이 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "편향 모니터링 지표와 비용-위험 모델을 도입해 재적합·재설계·유지 중 최적 선택을 자동화한다",
+        "예측 드리프트 발생 시 기존 모델 구조를 유지하면서 최신 데이터만으로 빠르게 재적합하는 파이프라인을 구축한다"
+      ],
+      "quiz": [
+        {
+          "question": "재학습 옵션 중 가장 비용이 낮은 것은?",
+          "options": [
+            "재적합",
+            "재설계",
+            "유지"
+          ],
+          "answer_index": 0,
+          "explanation": "재적합은 같은 모델 구조에 최신 데이터만 적용하므로 가장 저렴한 옵션이다"
+        },
+        {
+          "question": "본문에서 언급된 지속적인 편향의 원인은?",
+          "options": [
+            "데이터 누수",
+            "예측 편향 드리프트",
+            "과적합",
+            "하이퍼파라미터 오류"
+          ],
+          "answer_index": 1,
+          "explanation": "예측이 실제와 지속적으로 다른 방향으로 편향되어 몇 분기 동안 유지된 것이 문제였다"
+        }
+      ]
+    },
+    {
+      "id": "7cb24afa7d5a",
+      "title": "Extensible Software in the age of LLMs",
+      "url": "https://jeremymorrell.dev/blog/extensible-software-in-the-age-of-llms/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM으로 웹 앱을 확장해 데이터 작업 효율↑",
+      "tags": [
+        "LLM",
+        "Pi",
+        "Dynamic Workers",
+        "Cloudflare",
+        "Y Combinator"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "LLM은 개인 맞춤형 ‘Software for One’을 손쉽게 만들 수 있게 해준다",
+          "timestamp": null
+        },
+        {
+          "point": "‘Small Software’와 같은 개념이 웹 기반 확장성을 위한 새로운 기회를 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "Cloudflare Dynamic Workers 등 서버리스 환경이 안전하고 저비용으로 확장 기능을 배포할 수 있게 한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Cloudflare Dynamic Workers를 활용해 사용자 정의 플러그인 실행 환경을 구축한다",
+        "Pi와 같은 LLM‑native 플랫폼을 이용해 데이터 분석 파이프라인을 LLM에게 코드 생성·실행을 맡겨 자동화한다"
+      ],
+      "quiz": [
+        {
+          "question": "‘Small Software’를 언급한 조직은 어디인가?",
+          "options": [
+            "Y Combinator",
+            "Google",
+            "Microsoft",
+            "OpenAI"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Pete Koomen이 Y Combinator에서 ‘Small Software’ 개념을 제시했다고 언급한다."
+        },
+        {
+          "question": "LLM‑native 소프트웨어의 예시로 언급된 서비스는?",
+          "options": [
+            "Pi",
+            "GitHub Copilot",
+            "ChatGPT",
+            "Bard"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Pi가 LLM‑native 소프트웨어의 예시로 소개된다."
+        }
+      ]
+    },
+    {
+      "id": "eef7e5b2c81b",
+      "title": "AI를 계속 공부해야 할까?",
+      "url": "https://deepdaiv.stibee.com/p/159",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-08-18T00:00:00",
+      "summary": "AI 지속 학습이 DS 현업의 경쟁력 핵심",
+      "tags": [
+        "Weekly deep daiv.",
+        "KAIST",
+        "AI for Science",
+        "LLM",
+        "ChatGPT"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "AI를 지속적으로 공부해야 하는 이유는 기술 이해가 사회·인간과의 상호작용을 설계하는 데 필수이다.",
+          "timestamp": null
+        },
+        {
+          "point": "AI for Science 분야가 급부상하지만 고비용 GPU 연산·검증 비용이 진입 장벽이다.",
+          "timestamp": null
+        },
+        {
+          "point": "편집자들은 개인 호기심과 학습 공유를 원동력으로 삼아 콘텐츠 생산과 성장에 기여한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM을 활용한 가설 생성 파이프라인을 도입할 때 GPU·API 비용을 사전 시뮬레이션하여 ROI를 평가한다.",
+        "팀 차원에서 AI‑LOVI(외로움 지표)와 유사한 정성·정량 지표를 만들고 AI 의존도와 만족도를 정기적으로 모니터링한다."
+      ],
+      "quiz": [
+        {
+          "question": "AI for Science 분야의 주요 진입 장벽은 무엇인가?",
+          "options": [
+            "데이터 부족",
+            "고비용 GPU 연산 및 검증 비용",
+            "인력 부족",
+            "법적 규제"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 AI for Science는 대규모 모델 실행 비용과 가설 검증에 드는 시간·비용이 큰 장벽이라고 언급한다."
+        },
+        {
+          "question": "뉴스레터 편집자들이 AI 학습을 지속하는 주요 동기는?",
+          "options": [
+            "급여 인상",
+            "강제성",
+            "공부를 나누는 즐거움",
+            "외부 압력"
+          ],
+          "answer_index": 2,
+          "explanation": "편집자는 공부를 나누는 즐거움이 지속적인 AI 학습의 원동력이라고 밝히고 있다."
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from app.config import get_settings
+from app.contract import publish as publish_contract, today_kst
 from app.collectors import collect_all
 from app.analyzer import filter_and_analyze, resolve_youtube_transcripts
 from app.newsletter import send_digest, render_digest_email
@@ -210,7 +211,9 @@ async def run_daily_digest() -> dict:
     # 7. HTML 저장 — data/archive (로컬 디버깅) + docs/ (GitHub Pages 공개)
     root = Path(__file__).parent.parent.parent
     html = render_digest_email(digest_items)
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    # 날짜는 KST 고정 — 러너가 UTC라 `datetime.now()`를 쓰면 한국 시각 07:10
+    # 발행분이 전날 날짜로 저장된다(아카이브가 실제로 하루씩 밀려 있었다).
+    today_str = today_kst()
 
     archive_dir = root / "data" / "archive"
     archive_dir.mkdir(parents=True, exist_ok=True)
@@ -220,6 +223,11 @@ async def run_daily_digest() -> dict:
     docs_dir.mkdir(parents=True, exist_ok=True)
     (docs_dir / f"{today_str}.html").write_text(html, encoding="utf-8")
     _update_docs_index(docs_dir)
+
+    # 7.1. 공개 JSON 계약 발행 — docs/latest.json · {date}.json · index.json
+    # HTML은 사람이 읽는 표면이라 디자인이 바뀐다. 기계 소비자(Edith brief 등)가
+    # HTML을 파싱하면 디자인 변경이 곧 파손이므로, 버전 박힌 JSON을 따로 낸다.
+    publish_contract(digest_items, today_str, docs_dir)
 
     # 7.5. 구조화 정본 저장 — 로컬 JSON(정본) + Supabase 미러(best-effort)
     # 발송 성공 여부와 무관하게 분석 결과가 남도록 HTML 저장과 같은 지점에 둔다.

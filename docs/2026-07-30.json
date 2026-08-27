@@ -1,0 +1,292 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T23:36:22.883178",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-30.html",
+  "items": [
+    {
+      "id": "7901f9cbdd8d",
+      "title": "GenRec: Towards LLM-Native Recommendation at Netflix",
+      "url": "https://netflixtechblog.com/genrec-towards-llm-native-recommendation-at-netflix-f20be6f643e3?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-07-30T20:10:15",
+      "summary": "텍스트 프롬프트 기반 LLM 랭커로 추천 성능·개발 효율 향상",
+      "tags": [
+        "GenRec",
+        "LLM",
+        "vLLM",
+        "PLUM",
+        "OneRec-Think"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "GenRec은 사용자 이력·아이템 메타데이터를 자연어 프롬프트로 변환해 LLM에 입력한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Netflix 전용 데이터와 목표로 LLM을 사후 학습하고, 카탈로그 인식 스코어링 헤드를 추가한다.",
+          "timestamp": null
+        },
+        {
+          "point": "대규모 A/B 테스트에서 기존 랭커보다 적은 라벨 데이터로 통계적으로 유의한 개선을 달성했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "사용자 로그와 아이템 메타데이터를 자연어 형태로 변환해 LLM 기반 랭커에 입력하는 컨텍스트 엔지니어링 파이프라인을 구축한다.",
+        "vLLM의 prefill‑only 모드로 전체 카탈로그 아이템에 대한 점수를 효율적으로 계산하도록 서빙 스택을 설계한다."
+      ],
+      "quiz": [
+        {
+          "question": "GenRec이 Netflix 타이틀을 다루기 위해 LLM에 추가한 구성 요소는 무엇인가?",
+          "options": [
+            "User embedding layer",
+            "Catalog-aware scoring head",
+            "Collaborative filtering matrix",
+            "Reinforcement learning policy"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'Adds a catalog‑aware scoring head over Netflix titles' 라고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "e2d6d660314c",
+      "title": "Go LLM SDK for streaming, tool-calling AI backends (plus frontend React lib)",
+      "url": "https://github.com/grafana/ai-sdk",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "Go로 LLM 호출·스트리밍·툴 연동, AI 서비스 구축",
+      "tags": [
+        "Go",
+        "Grafana",
+        "Anthropic",
+        "React",
+        "OpenAI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "통합 Go API로 모델 호출, 스트리밍, 툴 실행, 구조화 출력 제공",
+          "timestamp": null
+        },
+        {
+          "point": "Vercel AI SDK와 동일 프로토콜로 React useChat 등과 SSE 연동",
+          "timestamp": null
+        },
+        {
+          "point": "Anthropic·Bedrock·OpenAI 등 다중 제공자 지원 및 프로덕션 제어 기능 포함",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Go AI SDK를 이용해 내부 마이크로서비스에 LLM 기반 데이터 검증 엔드포인트를 구축하고, 구조화 출력으로 스키마 검증을 자동화한다.",
+        "Prometheus 메트릭과 fallback 설정을 포함한 Grafana AI SDK를 Anthropic 모델과 연동해 실시간 추천 시스템을 배포하고, 관측성을 확보한다."
+      ],
+      "quiz": [
+        {
+          "question": "Go SDK에서 SSE를 통해 React 프론트엔드에 텍스트를 스트리밍하는 함수는?",
+          "options": [
+            "aisdk.StreamText",
+            "aisdk.GenerateText",
+            "aisdk.WriteUIMessageStream",
+            "aisdk.CallModel"
+          ],
+          "answer_index": 0,
+          "explanation": "aisdk.StreamText 함수가 모델 응답을 SSE 형태로 스트리밍해 React의 useChat 등과 연결한다."
+        },
+        {
+          "question": "Grafana AI SDK가 wire‑compatible하도록 설계된 기존 SDK는?",
+          "options": [
+            "OpenAI SDK",
+            "Vercel's AI SDK",
+            "TensorFlow",
+            "Hugging Face"
+          ],
+          "answer_index": 1,
+          "explanation": "문서에 Vercel's AI SDK와 호환성을 유지한다는 언급이 있다."
+        }
+      ]
+    },
+    {
+      "id": "945ecdf346e3",
+      "title": "Show HN: Distilling DeepSeek into GPT-OSS doesn't transfer censorship. Try it",
+      "url": "https://www.ctgt.ai/research/distillation-censorship-transfer",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "증류 시 검열 안 전이, 금융 추론 성능↑",
+      "tags": [
+        "DeepSeek V4 Flash",
+        "GPT-OSS-120B",
+        "FinanceReasoning",
+        "LineageEval",
+        "HINT-SD"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Self‑distilled 120B 모델이 FinanceReasoning에서 83.61% 점수로 Kimi K3·Inkling을 앞섰음",
+          "timestamp": null
+        },
+        {
+          "point": "교사 모델의 검열 특성이 증류 모델에 전달되지 않아 베이스 모델과 동일한 행동을 유지함",
+          "timestamp": null
+        },
+        {
+          "point": "20B 오픈 가중치와 LineageEval 평가 프레임워크를 공개해 정치·민감도 측정 가능하게 함",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "HINT‑SD 방식의 힌트 주입을 활용해 오류 지점에서 교정 학습을 진행, 도메인 특화 성능 향상",
+        "LineageEval 프레임워크를 도입해 모델의 국가·정치 민감도 평가 및 규제 대응 프로세스 구축"
+      ],
+      "quiz": [
+        {
+          "question": "FinanceReasoning 테스트에서 가장 높은 점수를 기록한 모델은?",
+          "options": [
+            "Kimi K3",
+            "Inkling",
+            "Self‑distilled GPT‑OSS‑120B",
+            "DeepSeek V4 Flash"
+          ],
+          "answer_index": 2,
+          "explanation": "텍스트에 따르면 Self‑distilled 120B가 83.61%로 Kimi K3(81.93%)와 Inkling(65.13%)보다 높았다."
+        },
+        {
+          "question": "교사 모델과 베이스 모델 사이의 정치 민감도 점수 차이는?",
+          "options": [
+            "~2점",
+            "~15점",
+            "+45.45점 (~7표준편차)",
+            "차이 없음"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 교사의 핵심 정치 쌍 점수 차이가 +45.45점, 약 7표준편차라고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "132d324ebc30",
+      "title": "LLM은 똑똑한데, 왜 우리 회사 일은 모를까",
+      "url": "https://toss.tech/article/llm_context_topic",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-07-30T05:24:00",
+      "summary": "사내 지식 통합·검증으로 LLM 활용 신뢰성 확보",
+      "tags": [
+        "LLM",
+        "Topic",
+        "Toss",
+        "idempotency key",
+        "검색"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "LLM만으로는 사내 정책·코드·미팅 로그 등 분산된 정보를 종합해 답변할 수 없다",
+          "timestamp": null
+        },
+        {
+          "point": "일반 검색은 최신성·권위·일관성을 판단하지 못해 신뢰 가능한 컨텍스트 제공에 한계가 있다",
+          "timestamp": null
+        },
+        {
+          "point": "‘Topic’ 시스템은 문서·코드·메신저 데이터를 추출·연결·신뢰 관리하여 LLM과 인간이 함께 사용할 수 있게 만든다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "문서·코드·미팅 로그를 자동 추출해 메타데이터와 함께 지식 그래프에 저장하고 LLM 질의 시 최신·권위 있는 정보를 우선 반환하도록 파이프라인 구축",
+        "답변 생성 전 문서와 실제 코드 구현을 교차 검증하는 검증 레이어를 도입해 일관성 없는 정책 정보를 걸러내는 시스템 설계"
+      ],
+      "quiz": [
+        {
+          "question": "왜 단순 검색만으로는 사내 정책 질문에 답하기 어려운가?",
+          "options": [
+            "검색 속도가 느리기 때문",
+            "검색 결과의 최신성·권위·일관성을 판단할 수 없기 때문",
+            "LLM이 문서를 읽을 수 없기 때문",
+            "회사 정책상 검색이 금지돼 있기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 검색만으로는 문서가 최신인지, 메신저 논의가 최종 결정인지, 문서와 코드가 일치하는지 판단하기 어렵다고 언급한다."
+        },
+        {
+          "question": "주문 타임아웃 재시도 정책 예시에서 언급된 서로 다른 정보 출처는?",
+          "options": [
+            "운영 문서, 미팅 논의, 현재 코드 구현",
+            "사용자 매뉴얼, FAQ, 블로그 글",
+            "마케팅 자료, 고객 피드백, 설문 조사",
+            "없음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문의 리스트에서 운영 문서, 미팅에서 논의된 내용, 현재 코드 구현이 각각 다른 정보를 제공한다."
+        }
+      ]
+    },
+    {
+      "id": "d7f33d816780",
+      "title": "토스의 디바이스 팜 만들기",
+      "url": "https://toss.tech/article/device-farm-nebula",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-07-30T02:24:00",
+      "summary": "실기기 API 한 번으로 대규모 테스트 자동화 가능",
+      "tags": [
+        "Nebula",
+        "Device Farm",
+        "Appium",
+        "Node.js",
+        "Toss"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "초기에는 팀별로 기기를 직접 관리해 진입 장벽이 높았다",
+          "timestamp": null
+        },
+        {
+          "point": "Nebula는 API 호출 하나로 여러 실기기를 공유하도록 설계",
+          "timestamp": null
+        },
+        {
+          "point": "현재 수백 대 규모로 지속적으로 증설 중이다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "API 기반 디바이스 할당 서비스 구축",
+        "24시간 전원 및 연결 관리 시스템 도입"
+      ],
+      "quiz": [
+        {
+          "question": "디바이스 팜 초기 도입 시 가장 큰 문제는 무엇이었나요?",
+          "options": [
+            "진입 장벽이 높다",
+            "보안·컴플라이언스 문제",
+            "UI 복잡성",
+            "데이터 파이프라인 부재"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 '애초에 진입 장벽이 높다' 라고 명시되어 있다."
+        }
+      ]
+    }
+  ]
+}

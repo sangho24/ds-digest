@@ -1,0 +1,167 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-17",
+  "generated_at": "2026-08-17T22:38:26.008232",
+  "count": 3,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-17.html",
+  "items": [
+    {
+      "id": "f1f7a62026fe",
+      "title": "Launch HN: Speko (YC S26) – OpenRouter for Voice AI",
+      "url": "https://speko.ai/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "음성 AI 모델을 자동 최적화해 비용·성능 관리 효율화",
+      "tags": [
+        "Speko",
+        "OpenRouter",
+        "LiveKit",
+        "STT",
+        "TTS"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Speko는 정확도·지연·비용 등 제약조건에 맞춰 최적의 STT·LLM·TTS 조합을 API로 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "모델을 지역·언어별로 벤치마크하고 점수를 공개해 빠른 전환과 투명성을 지원한다",
+          "timestamp": null
+        },
+        {
+          "point": "고객 사례로 부동산 관리 AI·의료팀 등이 모델 교체로 오류 감소와 비용 절감 효과를 얻었다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Speko와 유사한 내부 라우터를 구축해 주기적으로 STT·LLM·TTS 모델을 벤치마크하고 비용·성능 기준에 따라 자동 전환한다",
+        "Speko API를 활용해 현재 음성 파이프라인의 모델 스택을 평가·교체하여 정확도와 비용을 최적화한다"
+      ],
+      "quiz": [
+        {
+          "question": "Speko가 연결 설정 단계에서 실패 시 어떤 방식으로 대체 모델을 선택하나요?",
+          "options": [
+            "재시도 없이 즉시 오류 반환",
+            "연결 거부 시 러너업 모델로 연결 시도",
+            "전체 모델을 재벤치마크",
+            "사용자에게 수동 선택 요청"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 'Failover happens only during connection setup stage: if the provider refuses the connection attempt, we start connecting to the runners-up.' 라고 명시되어 있다"
+        }
+      ]
+    },
+    {
+      "id": "b8f1cac32888",
+      "title": "GIMP Development Update",
+      "url": "https://www.gimp.org/news/2026/08/16/dev-update-august-2026/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "새 파일 포맷과 비파괴 편집으로 대규모 이미지 데이터 처리 효율 향상",
+      "tags": [
+        "GIMP",
+        "XCF",
+        "MyPaint Brush",
+        "Spectral Blending",
+        "PSD"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "새로운 zip‑XML 기반 프로젝트 파일 포맷이 도입돼 저장 속도와 자동 저장이 개선될 예정",
+          "timestamp": null
+        },
+        {
+          "point": "MyPaint Brush에 Spectral Blending 옵션이 추가돼 색 혼합이 물감처럼 동작",
+          "timestamp": null
+        },
+        {
+          "point": "PSD 지원 및 네이티브 파일 선택 대화창 등 UX 개선이 포함돼 작업 흐름이 원활해짐",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "GIMP의 새로운 zip‑XML 프로젝트 파일 포맷을 이미지 전처리 파이프라인의 중간 결과 저장 형식으로 채택해 부분 저장 및 자동 저장 기능 활용",
+        "비파괴 편집 기능을 활용해 원본 이미지 데이터를 보존하면서 실험 파라미터를 기록, 재현 가능한 이미지 분석 워크플로우 구축"
+      ],
+      "quiz": [
+        {
+          "question": "XCF 포맷이 가진 주요 제한점으로 언급된 내용은?",
+          "options": [
+            "텍스트 기반이라 용량이 크다",
+            "바이너리 구조라 대형·복합 프로젝트에 부적합",
+            "오픈소스가 아니다",
+            "윈도우에서만 지원된다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 XCF가 바이너리 형식이며 대형·복합 프로젝트(예: 다중 페이지·애니메이션) 지원에 제한이 있다고 언급한다"
+        }
+      ]
+    },
+    {
+      "id": "4dd162690186",
+      "title": "The subset sum puzzle",
+      "url": "https://youtu.be/4h5BEALuh44",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-03-25T20:59:04",
+      "summary": "동일 합을 갖는 부분집합 찾기로 조합 탐색 직관 이해",
+      "tags": [
+        "3Blue1Brown",
+        "MoMath",
+        "subset sum"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "게임은 1부터 100까지 중 10개의 숫자를 선택하고, 같은 합을 갖는 두 개의 서로 다른 부분집합을 찾는 것이다.",
+          "timestamp": null
+        },
+        {
+          "point": "예시로 두 쌍의 숫자가 각각 102의 합을 만든다.",
+          "timestamp": null
+        },
+        {
+          "point": "어떤 플레이어가 항상 이길 수 있는 전략이 있는지가 퍼즐의 핵심 질문이다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "동일 합을 갖는 부분집합 탐색 알고리즘을 구현해 특성 조합 중 중복된 합을 찾아 데이터 전처리 단계에서 불필요한 변수 조합을 제거한다."
+      ],
+      "quiz": [
+        {
+          "question": "제시자는 1부터 100까지 중 몇 개의 숫자를 선택하나요?",
+          "options": [
+            "5",
+            "10",
+            "15",
+            "20"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 \"I choose 10 of them\"이라고 명시되어 있다."
+        },
+        {
+          "question": "예시에서 두 쌍의 숫자가 만든 합은 얼마인가요?",
+          "options": [
+            "100",
+            "101",
+            "102",
+            "103"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 \"each add up to 102\"라고 적혀 있다."
+        }
+      ]
+    }
+  ]
+}

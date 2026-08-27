@@ -1,0 +1,302 @@
+{
+  "contract_version": 1,
+  "date": "2026-07-27",
+  "generated_at": "2026-07-27T23:29:37.266783",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-07-27.html",
+  "items": [
+    {
+      "id": "bf6d55127ab1",
+      "title": "AI Just Entered A New Era",
+      "url": "https://youtu.be/qks6dGQFd_c",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-07-01T05:23:54",
+      "summary": "오픈 프론티어 AI 모델 등장으로 규제와 경쟁 구도 재편",
+      "tags": [
+        "Fable",
+        "Anthropic",
+        "GLM 5.2",
+        "Claude",
+        "PPO"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "미국 정부가 Anthropic의 Fable을 금지하면서 프론티어 AI 규제 위험이 부각됨",
+          "timestamp": null
+        },
+        {
+          "point": "GLM 5.2가 오픈 가중치 모델로 프론티어 수준 성능을 보여주며 멀티‑토큰 예측과 안티‑해킹 메커니즘을 적용",
+          "timestamp": null
+        },
+        {
+          "point": "훈련 방식으로 PPO, GRPO, 그리고 장기 코딩 작업을 위한 Slime 팩토리가 소개됨",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "GLM 5.2를 사내 프로토타입에 도입해 오픈‑소스 대형 모델의 성능·비용 트레이드오프를 직접 평가한다",
+        "멀티‑토큰 예측과 GRPO 보상 설계를 참고해 장기 코드 자동화 파이프라인을 구축하고, Slime과 유사한 병렬 학습 환경을 구현한다"
+      ],
+      "quiz": [
+        {
+          "question": "미국 정부가 금지한 Anthropic의 AI 시스템 이름은?",
+          "options": [
+            "Claude",
+            "Fable",
+            "GLM 5.2",
+            "Slime"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 미국 정부가 금지한 시스템은 Anthropic의 Fable이다."
+        },
+        {
+          "question": "GLM 5.2가 사용하는 훈련 기법 중 'GRPO'와 가장 유사한 설명은?",
+          "options": [
+            "전체 학생을 한 번에 채점한다",
+            "각 학생의 개별 답변을 단계별로 평가한다",
+            "다중 토큰을 동시에 생성한다",
+            "학습 데이터를 슬라임 팩토리에서 병렬 처리한다"
+          ],
+          "answer_index": 1,
+          "explanation": "GRPO는 개별 학생(답변 단계)을 각각 평가한다는 설명과 일치한다."
+        }
+      ]
+    },
+    {
+      "id": "4e78dec40c1c",
+      "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
+      "url": "https://d2.naver.com/helloworld/4821538",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "AI 활용 재무 데이터 검증 프로세스 설계",
+      "tags": [
+        "Claude Code",
+        "LLM",
+        "MCP",
+        "NStake",
+        "네이버"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "엑셀 기반 출자 현황 관리 문제를 AI 기반 검증·추적 시스템으로 재정의",
+          "timestamp": null
+        },
+        {
+          "point": "AI를 평가자·검증자로 활용해 설계·구현·검증 단계에 적용",
+          "timestamp": null
+        },
+        {
+          "point": "‘페어 프롬프팅’ 협업 방식으로 6시간 내 프로토타입 제작",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM(Claude Code)을 활용해 거래 이력 기반 재무 데이터 자동 검증 파이프라인 구축",
+        "‘페어 프롬프팅’ 워크플로를 도입해 팀 내 LLM 프롬프트 품질을 실시간 검증 및 개선"
+      ],
+      "quiz": [
+        {
+          "question": "해커톤에서 팀이 사용한 프롬프트 작성 방식은 무엇인가?",
+          "options": [
+            "단일 프롬프트",
+            "페어 프롬프팅",
+            "자동 생성",
+            "배치 처리"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 ‘페어 프롬프팅’ 방식으로 여러 명이 함께 프롬프트를 작성하고 결과를 검토했다고 명시되어 있다."
+        },
+        {
+          "question": "프로젝트가 처음 정의한 목표와 최종 목표 사이의 핵심 변화는 무엇인가?",
+          "options": [
+            "입력 화면 개발 → 데이터베이스 구축",
+            "엑셀 대체 → 숫자 생성 과정과 검증 관리 시스템",
+            "AI 자동 보고서 생성 → 실시간 대시보드",
+            "팀 규모 확대 → 외부 파트너 연계"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 목표가 ‘엑셀을 대체하는 입력 화면’에서 ‘숫자가 만들어진 과정과 검증 결과를 함께 관리하는 기준 시스템’으로 바뀌었다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "ae736d3c24f1",
+      "title": "Indexing the Data Lake for Online Point Queries",
+      "url": "https://engineering.atspotify.com/2026/7/indexing-the-data-lake-for-online-point-queries/",
+      "source": {
+        "type": "rss",
+        "name": "Spotify Engineering"
+      },
+      "published_at": "2026-07-27T20:34:28",
+      "summary": "데이터 레이크에서 빠른 키 조회를 위한 외부 인덱스 기법",
+      "tags": [
+        "Spotify",
+        "Bigtable",
+        "Parquet",
+        "Bloom filter",
+        "RAP"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "데이터 레이크에서 대규모 파케트 파일에 대한 포인트 조회는 저장소 레이턴시보다 엔진의 의존적 라운드트립이 병목이다",
+          "timestamp": null
+        },
+        {
+          "point": "RAP는 키를 파일 위치에 매핑하는 외부 인덱스를 사용해 필요한 바이트만 정확히 읽어 지연을 크게 감소시킨다",
+          "timestamp": null
+        },
+        {
+          "point": "키 파티셔닝과 Bloom filter를 활용해 후보 파일 수를 크게 줄일 수 있지만, 파일 내부 탐색 문제는 RAP가 해결한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "RAP 외부 인덱스를 구축해 Parquet 파일에 대한 키‑파일 위치 매핑을 저장하고, 이를 통해 온라인 포인트 쿼리 지연을 밀리초 수준으로 감소시킨다",
+        "키 기반 파티셔닝과 Bloom filter 메타데이터를 메타스토어에 저장해 후보 파일을 사전 필터링하고, RAP와 결합해 최소 파일 읽기로 사용자 데이터 조회를 구현한다"
+      ],
+      "quiz": [
+        {
+          "question": "RAP가 해결하려는 주요 병목 현상은 무엇인가?",
+          "options": [
+            "스토리지 용량 부족",
+            "엔진의 라운드트립 의존적 읽기",
+            "데이터 정합성",
+            "네트워크 보안"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 RAP가 파일 위치 매핑을 통해 연속적인 라운드트립 의존적 읽기를 없애 지연을 줄인다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "5c6b8415cb2c",
+      "title": "They Said This Will Never Run In Real Time",
+      "url": "https://youtu.be/uO5cvkzh3P0",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-07-03T17:19:59",
+      "summary": "실시간 변형 시뮬레이션 속도 혁신",
+      "tags": [
+        "Vertex Block Descent",
+        "VBD",
+        "GPU",
+        "Two Minute Papers"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "새 방법은 공동 회전 로컬 섭동 서브스페이스를 사전 계산해 전체 변형에 미치는 영향을 예측한다",
+          "timestamp": null
+        },
+        {
+          "point": "Vertex Block Descent 대비 30~170배 빠르게 100k~2500k 요소를 실시간으로 시뮬레이션한다",
+          "timestamp": null
+        },
+        {
+          "point": "기존 기법의 오버슈트와 수렴 실패 문제를 해결한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "사전 계산된 공동 회전 로컬 섭동 서브스페이스를 활용해 물리 엔진에 실시간 변형 시뮬레이션 모듈을 구현한다",
+        "VBD와 새로운 방법을 동일한 데이터셋으로 벤치마크하여 30~170배 속도 향상을 정량화한다"
+      ],
+      "quiz": [
+        {
+          "question": "새 방법이 Vertex Block Descent에 비해 제공하는 주요 이점은?",
+          "options": [
+            "시각적 품질 향상",
+            "30~170배 속도 향상",
+            "메모리 사용 감소",
+            "CPU 전용 실행"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 새 방법이 VBD보다 30~170배 빠르다고 명시돼 있다."
+        },
+        {
+          "question": "이전 기법이 겪는 문제 중 새 방법이 해결한 것은?",
+          "options": [
+            "GPU 지원 부족",
+            "오버슈트로 인한 불안정",
+            "해상도 부족",
+            "실시간 실행 불가"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에서 기존 기법이 오버슈트 문제로 전체 시뮬레이션이 불안정해진다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "e81dc94310af",
+      "title": "DeepSeek Just Solved AI's Billion Dollar Problem",
+      "url": "https://youtu.be/mG4SmhWyeFA",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-06-22T15:53:06",
+      "summary": "GPU 활용도 2배 향상 기법, AI 추론 효율 개선",
+      "tags": [
+        "Deepseek",
+        "prefill machines",
+        "decoding machines",
+        "GPU",
+        "traffic control"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "현재 AI 추론은 프리필 단계에서 메모리 병목으로 GPU 활용도가 약 40%에 머문다",
+          "timestamp": null
+        },
+        {
+          "point": "Deepseek는 디코딩 GPU의 유휴 자원을 활용해 두 번째 경로를 만들고, 트래픽 제어로 계산 트래픽에 우선순위를 둔다",
+          "timestamp": null
+        },
+        {
+          "point": "이 방법으로 활용도가 40%에서 약 80%로 상승해 장기 대화·다중 턴 워크로드에서 거의 2배 작업량을 처리한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "기존 GPU 클러스터에 트래픽 제어 레이어를 추가해 디코딩 작업에 우선순위를 부여하고, 메모리(프리필) 트래픽을 저우선순위로 전환하여 활용도 상승을 구현한다",
+        "프리필이 적게 사용되는 디코딩 GPU를 식별해 장기 컨텍스트 추론 시 프리필 작업을 해당 GPU에 할당함으로써 기존 하드웨어로 두 배에 가까운 처리량을 달성한다"
+      ],
+      "quiz": [
+        {
+          "question": "Deepseek 기법이 달성한 GPU 활용도 증가는 어느 정도인가?",
+          "options": [
+            "40%→60%",
+            "40%→70%",
+            "40%→80%",
+            "40%→90%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 '40% utilization'에서 'about 80% utilization'으로 상승했다고 명시돼 있다."
+        },
+        {
+          "question": "현재 시스템에서 '빨대'에 비유된 구성 요소는 무엇인가?",
+          "options": [
+            "decoding machines",
+            "prefill machines",
+            "traffic control",
+            "memory cache"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에서 프리필 머신을 '빨대'에 비유하며, 현재는 완전히 막혀 있다고 설명한다."
+        }
+      ]
+    }
+  ]
+}

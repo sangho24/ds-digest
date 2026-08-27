@@ -1,0 +1,292 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-27",
+  "generated_at": "2026-08-27T03:09:17.350162",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-27.html",
+  "items": [
+    {
+      "id": "163e994b5515",
+      "title": "GLM-5.3-Flash Intelligence, Performance and Price Analysis",
+      "url": "https://artificialanalysis.ai/models/glm-5-3-flash",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "고성능·저비용 모델로 AI 비용 효율 개선",
+      "tags": [
+        "GLM-5.3-Flash",
+        "Z AI",
+        "Hugging Face",
+        "Artificial Analysis Intelligence Index",
+        "MIT"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Intelligence Index 점수 57로 동급 모델 중 상위",
+          "timestamp": null
+        },
+        {
+          "point": "작업당 비용 $0.09로 비용 효율 높음",
+          "timestamp": null
+        },
+        {
+          "point": "출력 속도 50 token/s로 평균보다 느림",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "대규모 텍스트 요약 파이프라인에 1M 토큰 컨텍스트 창 활용",
+        "비용 민감한 배치 인텔리전스 평가 작업에 GLM-5.3-Flash 적용하여 $0.09/작업 비용 절감"
+      ],
+      "quiz": [
+        {
+          "question": "GLM-5.3-Flash의 Intelligence Index 점수는?",
+          "options": [
+            "27",
+            "57",
+            "44",
+            "16"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 57점이라고 명시되어 있음."
+        },
+        {
+          "question": "GLM-5.3-Flash의 출력 속도는?",
+          "options": [
+            "67 token/s",
+            "50 token/s",
+            "80 token/s",
+            "30 token/s"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 50 tokens per second라고 기록됨."
+        }
+      ]
+    },
+    {
+      "id": "b6c615f9cf0c",
+      "title": "토스증권 추천과 검색은 어떻게 진화하고 있을까?",
+      "url": "https://toss.tech/article/tech_talk_talk_3",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-08-26T01:00:00",
+      "summary": "실시간 개인화·RAG 기반 추천·검색 인프라 설계",
+      "tags": [
+        "RAG",
+        "Feature Store",
+        "Knowledge Graph",
+        "Toss Securities",
+        "AI Data Platform"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 서비스 전반에 공통 데이터 생태계 제공을 목표로 원천 데이터 파이프라인·피처 스토어·RAG·지식 그래프를 구축한다.",
+          "timestamp": null
+        },
+        {
+          "point": "추천 시스템이 배치·클러스터 방식에서 실시간 개인화 방식으로 전환하고 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "검색 기능이 키워드·필터를 넘어 RAG와 그래프 RAG로 확장되고 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "실시간·배치 피처를 제공하는 피처 스토어를 도입해 추천 모델의 개인화 수준을 높인다.",
+        "금융 도메인에 특화된 RAG 파이프라인을 구축해 자연어 기반 검색 정확도를 개선한다."
+      ],
+      "quiz": [
+        {
+          "question": "토스증권 AI 데이터 플랫폼 팀의 미션은 무엇인가?",
+          "options": [
+            "데이터 시각화 제공",
+            "탄탄한 데이터 생태계 제공",
+            "클라우드 비용 절감",
+            "사용자 인터페이스 개선"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 \"토스증권의 모든 AI 서비스가 공통적으로 접근할 수 있는 탄탄한 데이터 생태계를 제공하자\" 라고 명시되어 있다."
+        },
+        {
+          "question": "과거 토스증권 추천 시스템이 주로 사용한 방식은?",
+          "options": [
+            "실시간 개인화",
+            "배치와 클러스터",
+            "RAG",
+            "그래프 검색"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 \"예전에는 배치와 클러스터로 충분했어요\" 라고 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "9bcc2dbf4cfb",
+      "title": "해킹이 아닌, 설득으로 퍼집니다",
+      "url": "https://deepdaiv.stibee.com/p/160",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-08-25T00:00:00",
+      "summary": "멀티 에이전트 LLM에서 아이디어 전파 위험을 이해해 모델 안전성을 확보",
+      "tags": [
+        "Anthropic",
+        "RAG",
+        "Claude",
+        "Gemini 3 Flash",
+        "GPT-5.4"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "마인드 바이러스는 멀티 에이전트 LLM에서 자기 전파되는 아이디어·목표로 시스템 전체 목표를 바꿀 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "실험에서 이념형(고래 보호)과 행동형(파일 삭제) 바이러스가 전파됐으며 모델별 전파 성공도가 다르게 나타났다",
+          "timestamp": null
+        },
+        {
+          "point": "전파성 높은 프롬프트를 찾기 위해 진화 알고리즘을 사용했으며 사전 경고를 받은 에이전트는 감염을 차단했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "에이전트의 MEMORY.md 파일을 정기적으로 스캔해 마인드 바이러스 징후(예: 고래 보호 언급 등)를 점수화하고 위험 에이전트를 자동 차단한다",
+        "멀티 에이전트 파이프라인에 진화 알고리즘 기반 프롬프트 테스트를 도입해 전파 가능성이 높은 프롬프트를 사전에 식별하고 수정한다"
+      ],
+      "quiz": [
+        {
+          "question": "실험에서 빠르게 여러 에이전트에 퍼진 마인드 바이러스 유형은 무엇인가?",
+          "options": [
+            "이념형(고래 보호)",
+            "행동형(파일 삭제)",
+            "두 유형 모두 동일하게",
+            "전파되지 않음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 고래 보호와 같은 이념형 바이러스가 여러 에이전트에 빠르게 퍼졌으며, 위험한 이념은 덜 퍼졌다"
+        }
+      ]
+    },
+    {
+      "id": "a7162621d92b",
+      "title": "🗺️17개 시도 스타트업 체급 비교! 기업 수는 부산, 투자 체급은 대전과 경북. 같은 상위권도 체질이 다릅니다",
+      "url": "https://innoforest.stibee.com/p/649",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-08-23T00:00:00",
+      "summary": "지역별 스타트업 투자·상장 차이 데이터로 전략 수립",
+      "tags": [
+        "대전",
+        "경북",
+        "서울",
+        "디지털·콘텐츠",
+        "금융·투자·지주"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "17개 시도별 상장기업 2,663개와 100억 이상 투자받은 스타트업 1,366개를 비교",
+          "timestamp": null
+        },
+        {
+          "point": "대전은 상장기업 9위이지만 스타트업 3위이며, 1개당 투자금 268억 원으로 서울보다 높음",
+          "timestamp": null
+        },
+        {
+          "point": "11개 시도에서 기업 수 최다 산업과 시가총액 최다 산업이 달라, 서울은 디지털·콘텐츠가 1위지만 금융·투자·지주가 시가총액 1위",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "지역별 스타트업 1개당 평균 투자금 데이터를 활용해 투자 우선순위와 파트너십 대상 지역을 선정한다",
+        "기업 수와 시가총액이 다른 산업을 비교해 해당 지역의 성장 잠재력이 높은 저평가 산업을 발굴한다"
+      ],
+      "quiz": [
+        {
+          "question": "상장기업 순위는 9위이지만 스타트업 순위는 3위인 도시는?",
+          "options": [
+            "대전",
+            "부산",
+            "경북",
+            "서울"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 대전이 상장기업 9위, 스타트업 3위라고 명시되어 있다."
+        },
+        {
+          "question": "서울에서 시가총액이 가장 큰 산업은?",
+          "options": [
+            "디지털·콘텐츠",
+            "금융·투자·지주",
+            "제조업",
+            "헬스케어"
+          ],
+          "answer_index": 1,
+          "explanation": "서울은 기업 수는 디지털·콘텐츠가 1위지만, 시가총액은 금융·투자·지주가 1위라고 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "065f77894266",
+      "title": "Show HN: How much of Hacker News is about AI?",
+      "url": "https://hnstats.com",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "News AI 언급 급증, 트렌드 파악 필요",
+      "tags": [
+        "AI",
+        "OpenAI",
+        "LLM",
+        "GPT",
+        "Hacker News"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "2026년 2월 HN AI 언급 15.9% 최고",
+          "timestamp": null
+        },
+        {
+          "point": "2025년 올해 AI 제목 14.4% (표준) 21.9% (확장)",
+          "timestamp": null
+        },
+        {
+          "point": "주중 AI 언급 13.6% vs 주말 12.4%",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 언급 비중을 실시간 모니터링하는 내부 대시보드 구축",
+        "AI 트렌드 상승에 맞춰 데이터 제품 로드맵에 AI 기능 우선순위 반영"
+      ],
+      "quiz": [
+        {
+          "question": "2026년 2월 HN에서 AI 언급 비중은 얼마인가?",
+          "options": [
+            "15.9%",
+            "14.4%",
+            "21.9%",
+            "12.4%"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'The peak was Feb 2026 at 15.9%.' 라고 명시되어 있다."
+        }
+      ]
+    }
+  ]
+}

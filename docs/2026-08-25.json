@@ -1,0 +1,314 @@
+{
+  "contract_version": 1,
+  "date": "2026-08-25",
+  "generated_at": "2026-08-25T22:45:00.159612",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-25.html",
+  "items": [
+    {
+      "id": "2b18129bd2ce",
+      "title": "Project Lighthouse — Part 3: Introducing project-lighthouse-anonymize",
+      "url": "https://medium.com/airbnb-engineering/project-lighthouse-part-3-introducing-project-lighthouse-anonymize-74f8b26653fb?source=rss----53c7c27702d5---4",
+      "source": {
+        "type": "rss",
+        "name": "The Airbnb Tech Blog - Medium"
+      },
+      "published_at": "2026-08-25T17:01:02",
+      "summary": "대규모 데이터 익명화로 편향 측정·분석을 안전하게 수행",
+      "tags": [
+        "project-lighthouse-anonymize",
+        "Core Mondrian",
+        "k-anonymity",
+        "Strategy Pattern",
+        "Python"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "project-lighthouse-anonymize 라이브러리는 파이썬 기반으로 k‑anonymity 익명화를 대규모에 적용",
+          "timestamp": null
+        },
+        {
+          "point": "Core Mondrian은 전략 패턴, 하이브리드 재귀‑큐 병렬 처리, NaN‑패턴 사전 분할, 동적 억제 예산 관리 등으로 기존 Mondrian을 확장",
+          "timestamp": null
+        },
+        {
+          "point": "2025년 arXiv 논문 두 편이 알고리즘 구현과 데이터 품질 검증 프레임워크를 상세히 제시, 2020년 논문과 연계해 전체 스토리 제공",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "project-lighthouse-anonymize를 데이터 파이프라인에 삽입해 사용자 인구통계 데이터를 익명화 후 편향 분석에 활용",
+        "Core Mondrian의 하이브리드 재귀‑큐 병렬 처리 방식을 파이썬 래퍼와 Spark 연계로 구현해 대규모 테이블 익명화 속도 향상"
+      ],
+      "quiz": [
+        {
+          "question": "Core Mondrian에서 확장성을 지원하기 위해 사용된 디자인 패턴은?",
+          "options": [
+            "Factory",
+            "Strategy",
+            "Observer",
+            "Decorator"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 ‘Strategy Pattern을 사용해 k‑anonymity와 향후 프라이버시 모델 확장을 지원’한다고 명시되어 있음."
+        },
+        {
+          "question": "누락값 처리와 관련해 Core Mondrian이 제공하는 기능은?",
+          "options": [
+            "값 평균 대체",
+            "NaN‑패턴 사전 분할",
+            "행 삭제",
+            "중위수 대체"
+          ],
+          "answer_index": 1,
+          "explanation": "알고리즘 설명에 ‘NaN‑pattern pre-partitioning (accommodating missing values)’이 포함되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "1b33edbf7cad",
+      "title": "🤫 AI가 결과물에 몰래 남기는 것",
+      "url": "https://dflick.stibee.com/p/108",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-08-25T00:00:00",
+      "summary": "AI 생성물 워터마크 파악으로 데이터 신뢰성 확보",
+      "tags": [
+        "Claude",
+        "Google SynthID",
+        "OpenAI C2PA",
+        "AI watermark",
+        "AI-generated content"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI가 만든 텍스트·이미지는 숨은 워터마크를 포함해 배포된다",
+          "timestamp": null
+        },
+        {
+          "point": "Claude 텍스트 워터마크, Google SynthID, OpenAI C2PA 등 다양한 표시 기술이 등장",
+          "timestamp": null
+        },
+        {
+          "point": "머신이 읽는 표시를 인간이 이해할 수 있는 설명으로 연결하는 것이 필요",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "데이터 파이프라인에 워터마크 탐지 모듈을 추가해 AI 생성 텍스트를 자동 라벨링",
+        "디자인 툴에 SynthID 시각화 플러그인을 개발해 이미지 출처를 즉시 확인"
+      ],
+      "quiz": [
+        {
+          "question": "SynthID를 개발한 기업은?",
+          "options": [
+            "Google",
+            "OpenAI",
+            "Anthropic",
+            "Microsoft"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 Google SynthID 라고 명시돼 있다."
+        },
+        {
+          "question": "OpenAI C2PA의 주된 목적은?",
+          "options": [
+            "데이터 암호화",
+            "콘텐츠 출처 메타데이터 제공",
+            "추론 가속",
+            "토큰 비용 절감"
+          ],
+          "answer_index": 1,
+          "explanation": "C2PA는 AI 생성물의 출처와 변조 이력을 기록하는 메타데이터 표준이다."
+        }
+      ]
+    },
+    {
+      "id": "ea8a579af0ee",
+      "title": "👋 ‘모두의 AI’ 지금 어디까지 왔나",
+      "url": "https://hai-hancom.stibee.com/p/170",
+      "source": {
+        "type": "newsletter",
+        "name": "한컴 AI"
+      },
+      "published_at": "2026-08-24T00:00:00",
+      "summary": "정부 AI 보편화 정책이 국내 모델 개발·배포에 미치는 영향",
+      "tags": [
+        "ChatGPT",
+        "네이버클라우드",
+        "SK텔레콤",
+        "LG AI연구원",
+        "업스테이지"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "‘모두의 AI’는 국산 AI 파운데이션 모델(독파모) 개발과 무료 서비스 제공을 연계한 국가 전략이다",
+          "timestamp": null
+        },
+        {
+          "point": "선정된 5개 기업·컨소시엄에 GPU·데이터·인재 등 핵심 자원을 지원해 국산 모델을 2025년까지 상용화 목표",
+          "timestamp": null
+        },
+        {
+          "point": "모델 규모 확대(예: LG AI 750B)와 효율 중심 설계(예: 업스테이지 솔라 오픈 2) 등 다양한 접근법이 공존한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "파라미터 업사이클링 기법을 도입해 기존 모델의 활성 파라미터를 확대, 성능 향상과 학습 비용 절감 효과를 기대한다",
+        "SGA(Sparse Gated Attention) 기반 긴 문서 처리 파이프라인을 구축해 12만 토큰 규모 입력 시 처리 속도를 60% 이상 개선한다"
+      ],
+      "quiz": [
+        {
+          "question": "‘독자 AI 파운데이션 모델’(독파모) 사업에 최종 선정된 기업은 몇 개이며, 그 중 2025년 8월에 선정된 기업은?",
+          "options": [
+            "3개, 네이버클라우드",
+            "4개, SK텔레콤",
+            "5개, 네이버클라우드·업스테이지·SK텔레콤·NC AI·LG AI연구원",
+            "5개, 모티프테크놀로지스 포함"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 따르면 2025년 8월에 네이버클라우드, 업스테이지, SK텔레콤, NC AI, LG AI연구원 5개 팀이 최종 선정되었다."
+        },
+        {
+          "question": "SK텔레콤이 개발한 ‘에이닷엑스(A.X) K2’ 모델의 전체 파라미터 수와 실제 사용 파라미터 수는 각각 얼마인가?",
+          "options": [
+            "6,880억 전체, 330억 사용",
+            "7,500억 전체, 23억 사용",
+            "2,500억 전체, 130억 사용",
+            "3,140억 전체, 130억 사용"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 SK텔레콤 모델은 전체 6,880억 파라미터이지만 실제 사용은 330억이라고 명시돼 있다."
+        }
+      ]
+    },
+    {
+      "id": "9c9c81442bc1",
+      "title": "🥤K팝 팬덤은 왜 올리브영 고객이 되는 걸까?",
+      "url": "https://trendlite.stibee.com/p/478",
+      "source": {
+        "type": "newsletter",
+        "name": "트렌드라이트"
+      },
+      "published_at": "2026-08-25T00:00:00",
+      "summary": "K팝 팬의 다중 구매 행동을 데이터로 분석해 마케팅 활용",
+      "tags": [
+        "KCON",
+        "Olive Young",
+        "CJ",
+        "K-pop",
+        "Toyota"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "KCON은 음악을 넘어 K‑뷰티·K‑푸드까지 아우르는 K‑컬처 쇼케이스로 진화했다",
+          "timestamp": null
+        },
+        {
+          "point": "팬 75%가 두 개 이상 카테고리를 동시에 소비해 브랜드에 다중 접점 제공",
+          "timestamp": null
+        },
+        {
+          "point": "CJ는 KCON을 통해 팬 관심을 Olive Young 구매로 연결, 북미 시장에서 성장 기회 확보",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "KCON 참석자 데이터와 Olive Young 구매 기록을 결합해 교차 카테고리 구매 예측 모델 구축",
+        "KCON 행사 전후 매출 변화를 이벤트 기반 어트리뷰션으로 분석해 마케팅 ROI 최적화"
+      ],
+      "quiz": [
+        {
+          "question": "KCON LA 2026에 참석한 인원은 얼마인가?",
+          "options": [
+            "약 5만 명",
+            "약 10만 명",
+            "약 14만 2천 명",
+            "약 20만 명"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 3일간 약 14만 2,000명이 찾았다고 언급됨"
+        },
+        {
+          "question": "CJ 조사에 따르면 두 개 이상 카테고리를 경험한 사람 비율은?",
+          "options": [
+            "55%",
+            "65%",
+            "75%",
+            "85%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 75%가 두 개 이상 카테고리를 함께 소비한다고 답했다"
+        }
+      ]
+    },
+    {
+      "id": "22b21fdfaf66",
+      "title": "OpenAI restores 5-hour Codex and Work limits for ChatGPT Plus users",
+      "url": "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "ChatGPT Plus 사용 제한 복구, DS 작업 흐름에 영향",
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "ChatGPT Plus",
+        "Apple",
+        "Mac mini"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "OpenAI가 ChatGPT Plus 사용자에게 5시간 Codex 및 Work 사용 제한을 복구했다",
+          "timestamp": null
+        },
+        {
+          "point": "제한 복구로 코드 생성 도구 활용 시 작업 일정 조정 필요",
+          "timestamp": null
+        },
+        {
+          "point": "관련 소식은 HackerNews RSS와 9to5mac 기사에서 확인 가능",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "5시간 제한 내에서 배치형 코드 생성 작업을 스케줄링하여 Codex 활용 효율을 극대화한다",
+        "제한 초과 시 대체 코드 생성 도구(Azure OpenAI, GitHub Copilot 등)를 검토하고 워크플로에 통합한다"
+      ],
+      "quiz": [
+        {
+          "question": "OpenAI가 복구한 제한은 무엇인가?",
+          "options": [
+            "5시간 Codex 및 Work 제한",
+            "10시간 제한",
+            "무제한 사용",
+            "시간 제한 없음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 OpenAI가 5시간 Codex와 Work 제한을 복구했다고 명시되어 있다."
+        },
+        {
+          "question": "링크된 기사에서 발표된 Apple 제품은?",
+          "options": [
+            "Mac mini",
+            "iPhone 15",
+            "Apple Watch",
+            "MacBook Pro"
+          ],
+          "answer_index": 0,
+          "explanation": "기사 제목과 내용에 Apple이 업데이트된 Mac mini를 발표했다고 적혀 있다."
+        }
+      ]
+    }
+  ]
+}
