@@ -149,13 +149,19 @@ def determine_evidence_level(item: RawContent) -> EvidenceLevel:
     return EvidenceLevel.TITLE_ONLY
 
 
-async def _call_llm_with_fallback(prompt: str, title: str, groq_model: str | None = None) -> dict:
+async def _call_llm_with_fallback(
+    prompt: str,
+    title: str,
+    groq_model: str | None = None,
+    json_schema: dict | None = None,
+) -> dict:
     """
     Groq를 우선 시도하고 실패하면 Gemini로 넘어간다.
 
     groq_model=None이면 분석용 기본 모델(settings.groq_model)을 쓴다. 메타데이터
-    랭킹은 정수 인덱스 배열 출력이 안정적인 모델(settings.groq_ranking_model)을
-    넘겨 오버라이드한다. Gemini 폴백 경로는 groq_model의 영향을 받지 않는다.
+    랭킹은 settings.groq_ranking_model을 넘겨 오버라이드하고, json_schema로
+    strict 구조화 출력을 요청한다. Gemini 폴백 경로는 groq_model·json_schema
+    어느 쪽의 영향도 받지 않는다(프롬프트에 적힌 형식으로만 응답한다).
 
     이전 구현은 `if groq_api_key: Groq else: Gemini` 라서 폴백이
     "키가 없을 때"만 동작하고 "호출이 실패했을 때"는 동작하지 않았다.
@@ -175,8 +181,8 @@ async def _call_llm_with_fallback(prompt: str, title: str, groq_model: str | Non
             # 기본(분석) 경로는 기존 호출 형태를 그대로 유지한다. 랭킹처럼 모델을
             # 오버라이드해야 할 때만 model을 넘긴다(_call_groq가 model or groq_model 처리).
             if groq_model is not None:
-                return await _call_groq(prompt, model=groq_model)
-            return await _call_groq(prompt)
+                return await _call_groq(prompt, model=groq_model, json_schema=json_schema)
+            return await _call_groq(prompt, json_schema=json_schema)
         except Exception as e:
             last_error = e
             logger.warning(
@@ -217,6 +223,30 @@ _METADATA_RANKING_PROMPT = """\
 - 가장 가치 있는 순서로 최대 {budget}개까지 넣으세요.
 {{"top_indices": [가치 큰 순서의 index 최대 {budget}개]}}
 """
+
+# 랭킹 응답 강제용 JSON Schema (Groq strict 구조화 출력).
+#
+# json_object 모드에서는 gpt-oss 계열이 이 스키마를 뭉갠다(범위 밖 인덱스·숫자
+# 이어붙임). strict=true는 constrained decoding이라 문법적으로 정수 배열 외의
+# 토큰이 나올 수 없다. 지원 모델은 openai/gpt-oss-20b·120b뿐이다.
+#
+# minItems/maximum 같은 키워드는 strict 모드 지원이 제공자마다 들쭉날쭉하므로
+# 넣지 않는다. 개수 절삭과 범위 검사는 _parse_top_indices가 이미 한다.
+_RANKING_JSON_SCHEMA: dict = {
+    "name": "youtube_metadata_ranking",
+    "strict": True,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "top_indices": {
+                "type": "array",
+                "items": {"type": "integer"},
+            }
+        },
+        "required": ["top_indices"],
+        "additionalProperties": False,
+    },
+}
 
 
 def _recover_youtube_video_id(url: str) -> str | None:
@@ -297,12 +327,16 @@ async def _select_top_youtube_items(
         listing="\n".join(listing_lines),
     )
 
-    # 랭킹은 정수 인덱스 배열 출력이 안정적인 llama 계열을 쓴다. gpt-oss 계열
-    # (분석용 groq_model)은 이 스키마에서 범위 밖 인덱스·숫자 이어붙임을 낸다.
+    # 랭킹 출력은 모델이 아니라 스키마로 강제한다. json_object 모드에서 gpt-oss
+    # 계열이 내던 범위 밖 인덱스·숫자 이어붙임은 strict constrained decoding으로
+    # 사라진다. (예전엔 그 회피책으로 llama를 썼는데 2026-08-16 셧다운됐다.)
     settings = get_settings()
     try:
         data = await _call_llm_with_fallback(
-            prompt, "youtube-metadata-ranking", groq_model=settings.groq_ranking_model
+            prompt,
+            "youtube-metadata-ranking",
+            groq_model=settings.groq_ranking_model,
+            json_schema=_RANKING_JSON_SCHEMA,
         )
         indices = _parse_top_indices(data, len(items), budget)
         if not indices:
@@ -494,22 +528,40 @@ async def _call_gemini(prompt: str, _retry: int = 3) -> dict:
     return json.loads(text)
 
 
-async def _call_groq(prompt: str, _retry: int = 3, model: str | None = None) -> dict:
+async def _call_groq(
+    prompt: str,
+    _retry: int = 3,
+    model: str | None = None,
+    json_schema: dict | None = None,
+) -> dict:
     """Groq OpenAI-compatible API 호출 → 파싱된 JSON dict 반환.
     429 응답 시 Retry-After 헤더 기준 대기 후 최대 _retry회 재시도.
 
     model=None이면 settings.groq_model(분석용 gpt-oss-120b)을 쓴다. 메타데이터
     랭킹처럼 다른 모델이 필요한 호출은 model을 명시해 오버라이드한다.
+
+    json_schema를 주면 strict 구조화 출력(constrained decoding)을 요청한다.
+    지원 모델이 아니거나 스키마를 거부하면 Groq가 400을 내는데, 그때는 조용히
+    json_object로 한 번 내려간다 — 랭킹이 구조화 출력 하나 때문에 파이프라인을
+    멈추면 안 되고, 파싱은 _parse_top_indices가 이미 방어적으로 한다.
     """
     settings = get_settings()
     request_model = model or settings.groq_model
 
-    payload = {
-        "model": request_model,
-        "messages": [{"role": "user", "content": prompt}],
-        "response_format": {"type": "json_object"},
-        "temperature": 0.3,
-    }
+    def _payload(schema: dict | None) -> dict:
+        response_format = (
+            {"type": "json_schema", "json_schema": schema}
+            if schema is not None
+            else {"type": "json_object"}
+        )
+        return {
+            "model": request_model,
+            "messages": [{"role": "user", "content": prompt}],
+            "response_format": response_format,
+            "temperature": 0.3,
+        }
+
+    payload = _payload(json_schema)
     headers = {"Authorization": f"Bearer {settings.groq_api_key}"}
 
     for attempt in range(_retry + 1):
@@ -524,6 +576,18 @@ async def _call_groq(prompt: str, _retry: int = 3, model: str | None = None) -> 
                 continue
             else:
                 resp.raise_for_status()
+
+        # 400 = 스키마/구조화 출력 거부. 같은 시도 안에서 json_object로 강등한다.
+        if resp.status_code == 400 and payload["response_format"]["type"] == "json_schema":
+            logger.warning(
+                "groq_json_schema_rejected",
+                model=request_model,
+                error=resp.text[:200],
+                fallback="json_object",
+            )
+            payload = _payload(None)
+            async with httpx.AsyncClient(timeout=60) as client:
+                resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
 
         resp.raise_for_status()
         result = resp.json()

@@ -364,7 +364,12 @@ def patch_resolve(monkeypatch):
     """
 
     def _apply(*, api_key="k", dry_run=False, enabled=True, ranking_result=None, ranking_error=None):
-        state = {"gemini_urls": [], "ranking_called": False, "ranking_groq_model": None}
+        state = {
+            "gemini_urls": [],
+            "ranking_called": False,
+            "ranking_groq_model": None,
+            "ranking_json_schema": None,
+        }
 
         settings = Settings(
             gemini_api_key=api_key,
@@ -380,9 +385,10 @@ def patch_resolve(monkeypatch):
 
         monkeypatch.setattr(analyzer, "fetch_transcript_via_gemini", _fake_transcript)
 
-        async def _fake_ranking(prompt, title, groq_model=None):
+        async def _fake_ranking(prompt, title, groq_model=None, json_schema=None):
             state["ranking_called"] = True
             state["ranking_groq_model"] = groq_model
+            state["ranking_json_schema"] = json_schema
             if ranking_error is not None:
                 raise ranking_error
             return ranking_result
@@ -470,11 +476,12 @@ def test_resolve_over_budget_ranks_and_transcribes_selected(patch_resolve):
     ]
 
 
-def test_resolve_ranking_uses_llama_model(patch_resolve):
-    """랭킹 호출은 gpt-oss가 아니라 groq_ranking_model(llama)로 나가야 한다.
+def test_resolve_ranking_uses_ranking_model_with_strict_schema(patch_resolve):
+    """랭킹 호출은 groq_ranking_model + strict JSON Schema로 나가야 한다.
 
-    gpt-oss 계열은 정수 인덱스 배열 스키마에서 범위 밖 인덱스·숫자 이어붙임을
-    내므로(실측), 랭킹만 llama로 오버라이드한다. 분석은 groq_model 그대로다.
+    예전엔 gpt-oss가 정수 인덱스 배열을 뭉개서 llama로 오버라이드했는데, 그
+    모델이 2026-08-16 셧다운됐다. 이제는 모델을 바꾸는 대신 constrained
+    decoding으로 출력을 강제한다 — 스키마가 빠지면 그 회귀를 여기서 잡는다.
     """
     state = patch_resolve(ranking_result={"top_indices": [1, 3]})
     items = [_yt_item(i) for i in range(5)]
@@ -482,7 +489,11 @@ def test_resolve_ranking_uses_llama_model(patch_resolve):
     _resolve_yt(items, budget=2)
 
     assert state["ranking_called"] is True
-    assert state["ranking_groq_model"] == "llama-3.3-70b-versatile"
+    assert state["ranking_groq_model"] == analyzer.get_settings().groq_ranking_model
+    schema = state["ranking_json_schema"]
+    assert schema is not None, "랭킹은 strict 구조화 출력으로 나가야 한다"
+    assert schema["strict"] is True
+    assert schema["schema"]["properties"]["top_indices"]["items"]["type"] == "integer"
 
 
 def test_resolve_ranking_indices_sanitized(patch_resolve):

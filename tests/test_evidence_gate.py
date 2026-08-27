@@ -200,7 +200,7 @@ def test_analyzer_ignores_llm_relevance_and_uses_gated_axes(monkeypatch):
         body="가" * FULL_BODY_MIN_CHARS,
     )
 
-    async def fake_call(_prompt: str) -> dict:
+    async def fake_call(_prompt: str, **_kwargs) -> dict:
         return {
             "relevance_score": 10,
             "one_line_summary": "축 기반 요약",

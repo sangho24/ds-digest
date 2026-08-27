@@ -52,6 +52,12 @@ jobs:
           # 2026-07-17 qwen/qwen3-32b 셧다운으로 교체. Groq 공식 마이그레이션 대상.
           # ⚠️ GROQ_MODEL 시크릿이 설정돼 있으면 그쪽이 우선하므로, 시크릿도 함께 갱신할 것.
           GROQ_MODEL: ${{ secrets.GROQ_MODEL || 'openai/gpt-oss-120b' }}
+          # 2026-08-16 llama-3.3-70b-versatile 셧다운으로 교체(2026-06-17 공지).
+          # 같은 공지에서 llama-3.1-8b-instant도 폐기돼 llama 계열엔 대안이 없다.
+          # 랭킹 출력은 strict JSON Schema로 강제하므로 분석과 같은 모델을 쓴다.
+          # ⚠️ 이 env가 없으면 시크릿으로 모델을 덮을 수 없어, 폐기 사고 때
+          #    코드 배포 없이는 복구가 불가능했다. 그래서 명시적으로 노출한다.
+          GROQ_RANKING_MODEL: ${{ secrets.GROQ_RANKING_MODEL || 'openai/gpt-oss-120b' }}
           # Database
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}

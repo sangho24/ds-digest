@@ -17,11 +17,18 @@ class Settings(BaseSettings):
     # Qwen 계열은 qwen-2.5-32b -> qwen-qwq-32b -> qwen3-32b 로 세 번 연속 폐기됐다.
     groq_model: str = "openai/gpt-oss-120b"
 
-    # 메타데이터 랭킹 전용 모델. gpt-oss 계열은 정수 인덱스 배열 출력을 뭉개므로
-    # (실측: 범위 밖 인덱스·숫자 이어붙임) 구조화 출력이 안정적인 llama를 쓴다.
-    # 분석은 groq_model(gpt-oss-120b) 그대로. 더 가볍게 가려면
-    # llama-3.1-8b-instant도 동일하게 유효.
-    groq_ranking_model: str = "llama-3.3-70b-versatile"
+    # 메타데이터 랭킹 전용 모델.
+    # 이력: gpt-oss 계열이 json_object 모드에서 정수 인덱스 배열을 뭉개서
+    # (실측: 범위 밖 인덱스·숫자 이어붙임) llama-3.3-70b-versatile을 썼다.
+    # 그런데 그 모델이 2026-08-16 셧다운됐다(2026-06-17 공지). 같은 공지에서
+    # llama-3.1-8b-instant도 함께 폐기됐으므로 llama 계열엔 탈출구가 없다.
+    #
+    # 해법은 모델 교체가 아니라 출력 강제다. Groq의 strict 구조화 출력
+    # (response_format=json_schema, constrained decoding)은 지원 모델이 정확히
+    # gpt-oss 20b/120b 둘뿐이다 — 즉 문제가 있던 그 모델에만 있는 기능이
+    # 그 문제를 없앤다. 그래서 분석용과 같은 120b로 합친다. 추적해야 할
+    # 폐기 대상도 하나로 준다. (analyzer._RANKING_JSON_SCHEMA 참조)
+    groq_ranking_model: str = "openai/gpt-oss-120b"
 
     # Database
     supabase_url: str = ""
