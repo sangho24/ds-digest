@@ -27,6 +27,7 @@ try:  # 패키지 import와 직접 스크립트 실행을 모두 지원한다.
         tag_entropy,
     )
     from .thresholds import BASELINE_COMPARISONS, THRESHOLDS
+    from .build_items import build_items
 except ImportError:
     from metrics import (  # type: ignore[no-redef]
         duplicate_rate,
@@ -39,6 +40,7 @@ except ImportError:
         tag_entropy,
     )
     from thresholds import BASELINE_COMPARISONS, THRESHOLDS  # type: ignore[no-redef]
+    from build_items import build_items  # type: ignore[no-redef]
 
 
 EVALS_DIR = Path(__file__).resolve().parent
@@ -208,6 +210,38 @@ def _print_report(report: dict[str, Any]) -> None:
     )
 
 
+def resolve_items() -> tuple[list[dict[str, Any]], str]:
+    """계측 입력과 그 출처를 결정한다.
+
+    정적 스냅샷(evals/data/archive_items.json)이 있으면 그것을 쓴다 — baseline이
+    계측된 것과 같은 창이라 회귀 비교가 사과 대 사과가 된다.
+
+    없으면 커밋된 구조화 정본(data/records/)에서 만든다. `evals/data/`는
+    .gitignore 대상이라 CI에는 절대 존재하지 않는다. 이 폴백이 없던 탓에 Weekly
+    Evals가 만들어진 이래 매주 exit 2로 실패했고, 품질 게이트가 한 번도 동작한
+    적이 없었다. 입력이 없으면 실패하는 게 아니라, 있는 데이터로 재는 게 맞다.
+
+    어느 쪽을 썼는지는 리포트 input.path에 그대로 실어 보낸다 — 계측 창이 다르면
+    숫자의 의미도 다르므로 읽는 쪽이 알아야 한다.
+    """
+    if DATA_PATH.exists():
+        root = EVALS_DIR.parent
+        # 리포 밖 경로(테스트의 tmp_path 등)에서도 죽지 않게 방어적으로 줄인다.
+        try:
+            label = str(DATA_PATH.relative_to(root))
+        except ValueError:
+            label = str(DATA_PATH)
+        return _load_items(DATA_PATH), label
+
+    items = build_items()
+    if not items:
+        raise ValueError(
+            "계측할 입력이 없습니다: "
+            f"{DATA_PATH} 도 없고 data/records/ 에도 레코드가 없습니다"
+        )
+    return items, "data/records/ (파생)"
+
+
 def _load_items(path: Path) -> list[dict[str, Any]]:
     with path.open("r", encoding="utf-8") as file:
         data = json.load(file)
@@ -261,7 +295,8 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
     try:
-        items = _filter_since(_load_items(DATA_PATH), args.since)
+        source_items, input_path = resolve_items()
+        items = _filter_since(source_items, args.since)
         metrics = calculate_metrics(items)
         threshold_rows, violations = evaluate_thresholds(metrics)
         regressions: list[dict[str, Any]] = []
@@ -278,7 +313,7 @@ def main() -> int:
     exit_code = 1 if violations or regressions else 0
     report = {
         "input": {
-            "path": "evals/data/archive_items.json",
+            "path": input_path,
             "item_count": len(items),
             "start_date": start_date,
             "end_date": end_date,

@@ -105,14 +105,65 @@ GitHub Actions (07:30 KST)
 - `SUPABASE_URL`, `SUPABASE_KEY` GitHub Secrets 등록
 - 실 동작 확인: `dedup_bulk_check already_seen=0 total=5` → 정상 수집 및 발송 확인
 
+### 12. 공개 JSON 계약 (`contract.py`, `scripts/backfill_contract.py`)
+- **문제**: 소비자가 읽을 안정적 표면이 없었다. `data/records/`는 내부 정본이라
+  모델이 바뀌면 같이 바뀌고, HTML 아카이브는 디자인을 바꾸면 파서가 깨진다.
+- **수정**: 버전 박힌 얇은 계약을 `docs/`에 발행 — `latest.json` · `{date}.json` ·
+  `index.json`. 정본 35일치를 소급 발행하는 백필 스크립트 포함.
+- **부수**: 발행 날짜를 KST로 고정(`today_kst`). 러너가 UTC라 한국 시각 07:10
+  발행분이 전날 날짜로 저장돼 아카이브가 하루씩 밀려 있었다.
+
+### 13. Groq llama 셧다운 대응 — 모델 교체가 아니라 출력 강제
+- **문제**: 랭킹 전용 모델 `llama-3.3-70b-versatile`이 2026-08-16 셧다운됐다
+  (2026-06-17 공지). 같은 공지에서 `llama-3.1-8b-instant`도 폐기돼 llama 계열엔
+  대안이 없다. 폴백이 404를 흡수해 **알림 없이** Gemini → first_n으로 강등됐고,
+  8/16 이후 YouTube Stage 1 선택이 사실상 랭킹 없이 돌았다.
+- **수정**: `groq_ranking_model`을 분석용과 같은 `openai/gpt-oss-120b`로 합치고,
+  랭킹 호출에 strict JSON Schema(constrained decoding)를 적용. llama를 쓰던 유일한
+  이유(gpt-oss가 정수 인덱스 배열을 뭉갬)가 strict 모드로 사라진다 — 지원 모델이
+  정확히 gpt-oss 20b/120b뿐이다. 스키마 거부(400) 시 json_object로 강등.
+- **부수**: 워크플로 env에 `GROQ_RANKING_MODEL` 노출. 이게 없어서 폐기 사고 때
+  시크릿으로 모델을 덮을 수 없었고, 코드 배포 없이는 복구가 불가능했다.
+
+### 14. Telegram 아이템 발송 유실 (callback_data 64바이트 한도)
+- **문제**: 버튼이 `like|{item_url}`을 실었는데 Telegram callback_data 한도는
+  64바이트다. **실측 153건 중 39건(25.5%)이 초과**. 초과 시 Telegram이
+  BUTTON_DATA_INVALID를 반환하고 `_send_message`가 False가 되는데, 키보드는 아이템
+  메시지에 붙어 있어 **그 아이템 메시지가 통째로 발송되지 않았다**. 긴 URL을 가진
+  아이템은 사용자에게 도달조차 못 했다.
+- **수정**: callback_data에 12자 `item_id`(공개 계약과 동일한 식별자)를 싣고,
+  수신측이 정본으로 URL을 역참조. 과거 URL 콜백도 그대로 통과한다.
+
+### 15. 피드백 루프의 마지막 한 칸 (`preferences.py`)
+- **문제**: `liked_item_ids` / `disliked_item_ids`가 **쓰기 전용**이었다. 저장까지는
+  갔지만 읽는 쪽이 없어 버튼을 눌러도 다음 큐레이션이 바뀌지 않았다. 반영되던 건
+  `/keyword`뿐이다.
+- **수정**: 피드백 URL을 정본으로 역참조해 **출처·태그 취향**으로 일반화한 뒤
+  - 상대 랭킹의 **동점 타이브레이크**로 사용 (점수는 덮어쓰지 않음)
+  - Stage 1 메타 랭킹 프롬프트에 태그 힌트로 주입
+- **경계**: 분석(`analyze_content`)에는 넣지 않는다. actionability·depth에 취향이
+  섞이면 근거 게이트가 무의미해진다. `tests/test_evidence_gate.py`가 이를 지킨다.
+
+### 16. Weekly Evals 복구 (`evals/build_items.py`)
+- **문제**: 워크플로가 만들어진 이래 **5번 실행해 5번 전부 실패**(2026-07-27 ~
+  08-24). `run.py`가 `evals/data/archive_items.json`을 읽는데 `evals/data/`는
+  .gitignore 대상이고 그 파일을 만드는 스크립트도 리포에 없었다 → 매주 exit 2.
+  품질 게이트가 한 번도 작동한 적이 없다.
+- **수정**: 스냅샷이 없으면 커밋되는 `data/records/`에서 계측 입력을 파생.
+  리포트 `input.path`에 어느 쪽을 썼는지 남긴다.
+- **첫 실측(153건, 07-22~08-27)**: 태그 엔트로피 0.849→0.958, 최빈 태그 집중도
+  0.887→0.170, 중복 URL 0.198→0.0, 관련도 고유값 3→5로 개선. 남은 위반은
+  **YouTube 타임스탬프 0/49(0%)** 와 관련도 IQR=1.
+
 ---
 
 ## 다음 스텝 아이디에이션
 
 ### 🔴 버그/안정성 (즉시 가치)
 
-**A. 피드백 루프 실제 작동 검증**
-현재 Telegram 👍/👎 버튼이 `user_profile`에 반영되는 경로가 polling 기반(하루 1회)이라 실제로 반영되고 있는지 불명확. liked/disliked 아이템이 다음날 분석에 영향을 주는지 end-to-end 테스트 필요.
+~~**A. 피드백 루프 실제 작동 검증**~~ ✅ — 검증했더니 **반영되지 않고 있었다**.
+저장 경로는 멀쩡했지만 읽는 쪽이 없었고(§15), 그 위에 25%의 아이템이 발송조차
+되지 않고 있었다(§14). 둘 다 수정 완료.
 
 **B. seen_urls 만료 정책 부재**
 현재 seen_urls는 영구 보존. 같은 영상이 6개월 뒤 다시 올라와도 차단됨. `seen_at` 기준 N일 이후 만료 처리 필요 (Supabase scheduled function 또는 pipeline 시작 시 cleanup).

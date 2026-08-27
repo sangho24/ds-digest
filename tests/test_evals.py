@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from evals.metrics import (
@@ -181,3 +183,126 @@ def test_empty_list_and_single_item_boundaries():
     assert single_score["iqr"] == 0.0
     assert duplicate_rate([_item(url="https://example.com/only")])["duplicate_occurrences"] == 0
 
+
+
+# ──────────────────────────────────────────────
+# 정본 → 계측 입력 파생 (Weekly Evals 5/5 실패 회귀)
+# ──────────────────────────────────────────────
+#
+# Weekly Evals는 만들어진 이래(2026-07-27~08-24) 5번 실행해 5번 전부 exit 2로
+# 실패했다. run.py가 evals/data/archive_items.json을 읽는데 evals/data/ 는
+# .gitignore 대상이라 CI엔 절대 없었기 때문이다. 커밋되는 data/records/에서
+# 입력을 만들 수 있어야 게이트가 실제로 동작한다.
+
+from evals.build_items import build_items, flatten_record  # noqa: E402
+from evals import run as evals_run  # noqa: E402
+
+
+def _record(date="2026-08-01", **overrides):
+    analysis = {
+        "relevance_score": 7,
+        "one_line_summary": "요약 문장",
+        "tags": ["MLOps", "LLM"],
+        "key_points": [{"point": "핵심", "timestamp": "01:23"}],
+        "production_ideas": ["아이디어1", "아이디어2"],
+        "quiz": [{"question": "q"}],
+    }
+    analysis.update(overrides.pop("analysis", {}))
+    return {
+        "date": date,
+        "generated_at": f"{date}T07:10:00",
+        "schema_version": 2,
+        "items": [
+            {
+                "raw": {
+                    "url": "https://youtu.be/VID1",
+                    "source_key": "yt_channel",
+                    "source_name": "채널",
+                },
+                "analysis": analysis,
+            }
+        ],
+    }
+
+
+def test_flatten_record_maps_metric_fields():
+    """metrics.py가 읽는 키가 전부 채워져야 한다."""
+    items = flatten_record(_record())
+
+    assert len(items) == 1
+    item = items[0]
+    assert item["date"] == "2026-08-01"
+    assert item["url"] == "https://youtu.be/VID1"
+    assert item["source_key"] == "yt_channel"
+    assert item["tags"] == ["MLOps", "LLM"]
+    assert item["relevance"] == 7
+    assert item["has_timestamp"] is True
+    assert item["quiz_count"] == 1
+    assert item["one_line_summary"] == "요약 문장"
+
+
+def test_flatten_record_timestamp_absent_is_false():
+    """자막이 없으면 timestamp는 null이 정상 — has_timestamp가 False여야 한다."""
+    record = _record(analysis={"key_points": [{"point": "핵심", "timestamp": None}]})
+
+    assert flatten_record(record)[0]["has_timestamp"] is False
+
+
+def test_build_items_reads_records_dir(tmp_path):
+    """날짜순으로 모든 레코드를 편다."""
+    for date in ("2026-08-02", "2026-08-01"):
+        (tmp_path / f"digest_{date}.json").write_text(
+            json.dumps(_record(date), ensure_ascii=False), encoding="utf-8"
+        )
+
+    items = build_items(tmp_path)
+
+    assert [i["date"] for i in items] == ["2026-08-01", "2026-08-02"]
+
+
+def test_build_items_skips_broken_file(tmp_path):
+    """깨진 파일 하나가 계측 전체를 막으면 안 된다."""
+    (tmp_path / "digest_2026-08-01.json").write_text(
+        json.dumps(_record("2026-08-01"), ensure_ascii=False), encoding="utf-8"
+    )
+    (tmp_path / "digest_2026-08-02.json").write_text("{ 깨짐", encoding="utf-8")
+
+    items = build_items(tmp_path)
+
+    assert [i["date"] for i in items] == ["2026-08-01"]
+
+
+def test_build_items_missing_dir_returns_empty(tmp_path):
+    assert build_items(tmp_path / "없음") == []
+
+
+def test_resolve_items_prefers_snapshot(monkeypatch, tmp_path):
+    """스냅샷이 있으면 그것을 쓴다 — baseline과 같은 계측 창을 유지해야 한다."""
+    snapshot = tmp_path / "archive_items.json"
+    snapshot.write_text(json.dumps([_item(date="2026-05-01")]), encoding="utf-8")
+    monkeypatch.setattr(evals_run, "DATA_PATH", snapshot)
+
+    items, path = evals_run.resolve_items()
+
+    assert items[0]["date"] == "2026-05-01"
+    assert "archive_items.json" in path
+
+
+def test_resolve_items_falls_back_to_records(monkeypatch, tmp_path):
+    """스냅샷이 없으면 커밋된 정본에서 만든다 — 이게 CI에서 매주 죽던 지점이다."""
+    monkeypatch.setattr(evals_run, "DATA_PATH", tmp_path / "없음.json")
+    monkeypatch.setattr(evals_run, "build_items", lambda: [_item(date="2026-08-01")])
+
+    items, path = evals_run.resolve_items()
+
+    assert items[0]["date"] == "2026-08-01"
+    assert "data/records/" in path
+
+
+def test_resolve_items_raises_when_nothing_available(monkeypatch, tmp_path):
+    """입력이 정말 하나도 없으면 조용히 0건으로 통과시키지 말고 오류를 낸다."""
+    monkeypatch.setattr(evals_run, "DATA_PATH", tmp_path / "없음.json")
+    monkeypatch.setattr(evals_run, "build_items", lambda: [])
+
+    with pytest.raises(ValueError):
+        evals_run.resolve_items()
