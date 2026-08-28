@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 28일 · 3건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/experientiallabs/experiential" target="_blank">Show HN: We built open OpenRouter that turns usage into a better model</a>
+    </h2>
+
+    <p class="item-summary">모델 라우팅으로 비용·품질 최적화, DS 파이프라인 효율↑</p>
+
+    
+    <div class="tags">
+      <span class="tag">OpenRouter</span><span class="tag">Rust</span><span class="tag">OTel</span><span class="tag">LLM judge</span><span class="tag">nearest neighbor classifier</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/experientiallabs/experiential" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Rust 기반 고성능 게이트웨이로 자체·프론티어·오픈소스 모델을 단일 엔드포인트에서 관리</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OTel 트레이스를 활용해 실제 작업을 시뮬레이션·LLM 판정 후 임베딩 기반 최근접 이웃 분류기로 최적 모델 라우팅</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>1 ms 이하 지연, 0 마크업 제공 등 비용·품질 파레토 개선과 캐시·모델 제안 기능 포함</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 OTel 트레이스 데이터를 수집해 프롬프트 임베딩과 최근접 이웃 모델을 학습, 비용·품질 기준에 맞는 LLM 자동 선택 파이프라인 구축</div>
+    
+    <div class="idea">💡 OpenRouter 오픈소스 게이트웨이를 자체 인프라에 배포해 로컬 모델과 외부 제공자를 혼합 사용, 마크업 없이 비용 절감 및 캐시 히트 최적화 적용</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 게이트웨이가 제공하는 평균 지연 시간은 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 1 ms 이하 (BYOK)</div>
+      
+      <div class="quiz-opt">B) 2 ms 이하 (Experiential)</div>
+      
+      <div class="quiz-opt">C) 5 ms 이하</div>
+      
+      <div class="quiz-opt">D) 10 ms 이하</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 1 ms 이하 (BYOK)</div>
+          <div class="quiz-explanation">본문에 'The gateway adds under 1 ms for BYOK requests and under 2 ms when Experiential supplies the provider key' 라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 최적 모델 선택을 위해 사용된 머신러닝 기법은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 랜덤 포레스트</div>
+      
+      <div class="quiz-opt">B) 최근접 이웃 분류기</div>
+      
+      <div class="quiz-opt">C) SVM</div>
+      
+      <div class="quiz-opt">D) 신경망</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 최근접 이웃 분류기</div>
+          <div class="quiz-explanation">본문에 'fit a nearest neighbor classifier on top of an embedding of a prompt to decide the optimal model' 라고 기술되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://sourcehut.org/blog/2026-08-27-tos-changes-and-llms/" target="_blank">Changes to Sourcehut's terms of service regarding LLMs</a>
+    </h2>
+
+    <p class="item-summary">AI 사용 제한으로 인프라 비용·리소스 관리가 중요해짐</p>
+
+    
+    <div class="tags">
+      <span class="tag">SourceHut</span><span class="tag">Codeberg</span><span class="tag">LLM</span><span class="tag">AI</span><span class="tag">CI</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://sourcehut.org/blog/2026-08-27-tos-changes-and-llms/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>SourceHut은 LLM·생성 AI 사용을 제한하는 새로운 서비스 약관을 도입한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>제한 이유는 과도한 리소스 사용·비용 상승·시스템 장애와 윤리·정치적 고려다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>커뮤니티는 대체로 찬성했으며, 변경 일정과 영향을 받는 프로젝트의 이전 옵션을 제시한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 CI 파이프라인에서 LLM 기반 자동 코딩 단계가 있는지 점검하고 제거한다</div>
+    
+    <div class="idea">💡 AI 생성 코드를 의존하는 프로젝트를 다른 호스팅 서비스나 자체 인프라로 이전 계획을 수립한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. LLM 사용 제한을 먼저 발표한 조직은?</div>
+      
+      <div class="quiz-opt">A) Codeberg</div>
+      
+      <div class="quiz-opt">B) GitHub</div>
+      
+      <div class="quiz-opt">C) GitLab</div>
+      
+      <div class="quiz-opt">D) Bitbucket</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Codeberg</div>
+          <div class="quiz-explanation">본문에 Codeberg가 LLM 사용 제한을 발표했다고 언급된다</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. SourceHut이 AI 제한을 제시한 주요 이유는?</div>
+      
+      <div class="quiz-opt">A) 리소스 사용·비용·시스템 장애</div>
+      
+      <div class="quiz-opt">B) 정치적 입장 표명</div>
+      
+      <div class="quiz-opt">C) 사용자 요구 조사</div>
+      
+      <div class="quiz-opt">D) 오픈소스 라이선스 문제</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 리소스 사용·비용·시스템 장애</div>
+          <div class="quiz-explanation">본문에서 과도한 리소스 사용·비용·시스템 장애와 윤리·정치적 고려가 이유로 제시된다</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      혁신의 숲 · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://innoforest.stibee.com/p/650" target="_blank">🥇 2026 혁신의숲 어워즈 2차 투표: 보이스피싱 예방 스타트업과 키즈 플랫폼의 1위 2위 맞대결!</a>
+    </h2>
+
+    <p class="item-summary">투표 데이터로 스타트업 성장 트렌드와 순위 변동을 파악 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">보이스피싱</span><span class="tag">키즈 플랫폼</span><span class="tag">혁신의숲</span><span class="tag">AI</span><span class="tag">유니콘 브릿지</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://innoforest.stibee.com/p/650" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>2차 투표 결과 발표와 30개 후보 중 2위 기업이 5위에서 시작해 급상승한 과정</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>14일간의 투표 데이터를 통해 성장 스타트업의 트렌드와 사용자 참여 패턴을 분석 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>관련 리포트 링크를 통해 AI 기업, 유니콘 기업, 투자 결산 등 다양한 인사이트 제공</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 투표 일별 데이터를 활용해 시계열 모델을 구축, 최종 순위 예측 및 급등 기업 조기 탐지</div>
+    
+    <div class="idea">💡 카테고리별(보이스피싱, 키즈 플랫폼 등) 투표 참여율을 비교 분석해 마케팅·제품 전략에 활용</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 2차 투표는 총 몇 일 동안 진행되었나요?</div>
+      
+      <div class="quiz-opt">A) 10일</div>
+      
+      <div class="quiz-opt">B) 12일</div>
+      
+      <div class="quiz-opt">C) 14일</div>
+      
+      <div class="quiz-opt">D) 16일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 14일</div>
+          <div class="quiz-explanation">본문에 '14일 동안 많은 회원분들이...' 라고 명시되어 있음</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 2위 기업은 투표 시작일에 몇 위였나요?</div>
+      
+      <div class="quiz-opt">A) 1위</div>
+      
+      <div class="quiz-opt">B) 3위</div>
+      
+      <div class="quiz-opt">C) 5위</div>
+      
+      <div class="quiz-opt">D) 7위</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 5위</div>
+          <div class="quiz-explanation">본문에 '2위 기업은 첫날 5위에서 출발해...' 라고 언급됨</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
