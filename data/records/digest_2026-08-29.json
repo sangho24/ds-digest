@@ -1,0 +1,155 @@
+{
+  "date": "2026-08-29",
+  "generated_at": "2026-08-29T03:40:08.167293",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "MAPS: Netflix’s Multimodal Asset Personalization at Scale",
+        "url": "https://netflixtechblog.com/maps-netflixs-multimodal-asset-personalization-at-scale-32f96320785e?source=rss----2615bd06b42e---4",
+        "published_at": "2026-08-28T16:01:02",
+        "transcript": null,
+        "body": "<p><em>By </em><a href=\"https://www.linkedin.com/in/emma-yanyang-kong-6904b457/\"><em>Emma Yanyang Kong</em></a><em>, </em><a href=\"https://www.linkedin.com/in/aditya-deshpande8/\"><em>Aditya Deshpande</em></a><em>, </em><a href=\"https://www.linkedin.com/in/asad-abbasi-364a37158/\"><em>Asad Abbasi</em></a><em>, </em><a href=\"https://www.linkedin.com/in/bowei-yan-0080a326/\"><em>Bowei Yan</em></a><em>, </em><a href=\"https://www.linkedin.com/in/dfagnan/\"><em>David Fagnan</em></a><em>, </em><a href=\"https://www.linkedin.com/in/ashish-rastogi-11362a/\"><em>Ashish Rastogi</em></a><em>, </em><a href=\"https://www.linkedin.com/in/dhaval-patel-1a23aa8/\"><em>Dhaval Patel</em></a><em>, </em><a href=\"https://www.linkedin.com/in/ray-zhang-a7168a32/\"><em>Ray Zhang</em></a></p><h3><strong>Introduction</strong></h3><p>The Netflix experience is a journey of discovery. Every visual cue, from the artwork on a title to the video previews that autoplay while you browse, is there to connect you with a story you will love. We call these visual cues <em>assets</em>, and choosing the right one for each member is a personalization problem of its own. But which image or video preview of <em>Squid Game</em> should we show you? And what do we do right after a title launches, when there’s far too little interaction data to know which asset we should recommend to each member?</p><p>For years, our models answered the first question well and the second poorly. They learned which assets members interacted with, but treated every asset as an opaque ID, blind to what was actually <em>in</em> the artwork or video preview. Right after a title launched, its assets had no history, so we dialed up exploration on its assets to gather interaction data, and otherwise fell back to popularity heuristics that ignore your taste. Only once enough interactions had piled up could personalization take over. This is the classic <strong>cold-start</strong> problem.</p><p>This post shares how <strong>multimodal embeddings</strong> let our models see and hear the assets they recommend, so personalization can kick in far sooner, close to a title’s launch. Because a new asset arrives with its embedding the model already understands, that embedding carries member taste signals from related assets immediately. Consequently, the model needs far less interaction history before it can personalize. We cover three production systems, artwork personalization, query-aware artwork ranking, and video preview personalization, plus a cheap trick for choosing new embeddings before committing to full end-to-end integration and A/B testing.</p><h3><strong>Artwork Personalization</strong></h3><p>A single image is often a member’s first touchpoint with a title, so we create a diverse set of artworks for each title to appeal to different member tastes. We already use <a href=\"https://netflixtechblog.com/artwork-personalization-c589f074ad76\">personalized artwork</a> based on members’ interaction histories, but this approach breaks down for newer titles and their assets, where there is little or no behavioral data to learn from.</p><p><strong>Making the Model See the Artwork</strong></p><p>Our solution is to let the model “look” at the picture. We encode each artwork with <a href=\"https://arxiv.org/abs/2103.00020\"><strong>CLIP</strong></a>, a pretrained image-text embedding model, and fold the result into how the model represents that asset, concatenating the per-asset CLIP image embedding, a 768-dimensional vector, with the asset’s learned ID embedding to give an asset representation:</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/332/1*Tm2AJHCkMfTwtedhfmIAwA.png\" /><figcaption><em>e_id(a) is the asset’s learned ID embedding, and e_a is its CLIP image embedding. The two are concatenated and passed through an MLP layer to give h_a, the representation the model scores against a member.</em></figcaption></figure><p>This single change transforms how the model handles a brand-new artwork. Instead of treating it as an unseen ID, the model now receives a CLIP embedding the moment the asset is created. That allows a member’s preferences over visual themes, talent, and color palettes to be applied immediately, long before the asset accumulates any interactions of its own. Because those preferences are expressed in image-embedding space rather than tied to specific asset IDs, they <strong>transfer seamlessly across titles</strong>. If you consistently engage with artwork featuring a particular comedian, the model can carry that signal to their new title and prioritize the asset that places them front and center, even if it has never shown you that exact image before, as in the figure below. In this way, cold-start shifts from being a blind spot to something the embedding space already has an informed opinion about.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*0fIbem23tXHGovlfOeJrEQ.jpeg\" /><figcaption>Knowledge transfer through CLIP embeddings. A member wh",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "멀티모달 임베딩으로 신규 자산 개인화 가속",
+        "tags": [
+          "CLIP",
+          "multimodal embeddings",
+          "artwork personalization",
+          "video preview personalization",
+          "A/B testing"
+        ],
+        "key_points": [
+          {
+            "point": "CLIP 이미지 임베딩을 자산 ID와 결합해 멀티모달 표현을 만든다",
+            "timestamp": null
+          },
+          {
+            "point": "멀티모달 임베딩으로 콜드스타트 시에도 개인화 점수를 즉시 계산한다",
+            "timestamp": null
+          },
+          {
+            "point": "세 가지 프로덕션 파이프라인(아트워크, 쿼리‑aware 랭킹, 비디오 프리뷰)에서 적용 사례를 제시한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "신규 타이틀의 아트워크에 CLIP 임베딩을 적용해 기존 ID 기반 모델에 바로 통합한다",
+          "전체 파이프라인에 도입하기 전, 오프라인 유사도 평가로 후보 임베딩을 사전 선택하는 저비용 검증 절차를 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "아트워크 이미지를 인코딩하는 데 사용된 모델은?",
+            "options": [
+              "BERT",
+              "CLIP",
+              "ResNet",
+              "GPT-3"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 CLIP을 사전 학습된 이미지‑텍스트 임베딩 모델로 사용한다고 명시했다."
+          },
+          {
+            "question": "멀티모달 임베딩이 해결하려는 주요 문제는?",
+            "options": [
+              "콜드스타트",
+              "스케일링",
+              "레텐시",
+              "보안"
+            ],
+            "answer_index": 0,
+            "explanation": "새로운 자산이 출시될 때 상호작용 데이터가 부족한 콜드스타트 문제를 멀티모달 임베딩으로 완화한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "1%가 겪은 버그 고쳐야할까요?",
+        "url": "https://toss.tech/article/qa_hotfix",
+        "published_at": "2026-08-28T08:46:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-808c-8ba7-ef303fbdd599\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스 QA Platform 팀 문성준 입니다. </span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80cb-a588-c4440eaecf3a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">지난 글에서 저희만의 플랫폼 토션(Tossion)을 소개했는데요. 오늘은 그 위에 올린 이야기, 핫픽스를 다뤄 보려고 합니다. 기준을 세우고, 뒤집고, 다시 세운과정까지요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80d4-8de7-ddd36e834ec3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">새 버전을 배포한 지 얼마 안 돼 알림이 울립니다. 확인해 보니 특정 조건에서만, 그것도 이제 막 배포가 시작돼 1%의 사용자에게서만 나타나는 문제입니다. 지금 바로 핫픽스를 해야 할까요, 아니면 다음 정기 배포까지 기다려도 될까요?</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80ad-91c3-dd005c19ef5c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">QA라면 한 번쯤 이 갈림길 앞에 서봤을 겁니다. 빨리 고치는 게 정답 같지만, 급하게 낸 핫픽스가 또 다른 버그를 부르기도 하니까요. 그래서 저희에게 핫픽스는 &#x27;빨리 고치는 일&#x27;이 아니라, &#x27;고칠지 말지부터 판단하는 일&#x27;입니다. 오늘은 핫픽스를 어떻게 막고, 또 어떻게 관리하는지 이야기합니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80f7-9d2d-f068dca13828\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3c7a360d-33e3-80a1-9d96-d1021d20614c\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">심각도 한 줄로 나눌 수 없었습니다</span></span></span></h2><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-8031-a419-f3f5232eeef8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">원래 핫픽스에도 기준은 있었습니다. Critical, Major, Minor 같은 흔한 심각도 규칙이었죠. 작은 앱이라면 이 정도로 충분합니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3c7a360d-33e3-807a-9bb3-fd3176963bcc\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/10fb0530-5525-4306-8bb5-c99689183b92/hotfix-1-old.png\" /></figure><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-8044-9438-ee04db0a356a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 토스에서는 이 규칙이 자꾸 어긋났습니다. 사용자가 많다 보니, 아주 낮은 배포율에서 생긴 문제도 실제로는 수많은 사람이 겪습니다. 게다가 화면 하나에 여러 비즈니스 로직이 얽혀 있어서, 같은 &#x27;Major&#x27;라도 어떤 건 당장 고쳐야 하고 어떤 건 기다려도 됐습니다. 심각도 한 줄로는 나눌 수 없었습니다. 매번 들어오는 핫픽스 요청이 다 달랐으니까요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-8037-8113-cabc768f7eec\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 규칙 자체를 다시 짰습니다. 심각도로 줄 세우는 대신, 핫픽스를 할지 말지로 판단하는 구조로 바꿨습니다. 어떻게 판단하는지는 바로 뒤에서 풀어보겠습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3c7a360d-33e3-8004-8d60-f5398391776e\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/ba5d4159-d289-44ba-87c1-c275817a89cc/hotfix-2-new.png\" /></figure><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-800d-8434-f9157d225b0c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그리고 이 규칙은 한 번 정하고 끝이 아닙니다. 매달 지난 핫픽스를 다시 꺼냅니다. 잘 판단한 건 왜 잘됐고, 애매했던 건 무엇 때문에 애매했는지를요. 그러다 보면 기준이 계속 손질됩니다. 어떤 건 더하고, 어떤 건 덜어냅니다. 지금 이 글에서 소개하는 것도 완성된 규칙이 아니라, 그렇게 다듬어 온 현재의 모습입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-8010-b87d-ce42dbb6518e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3c7a360d-33e3-80c9-a930-d1d0bead5566\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">점진 배포라는 모순</span></span></span></h2><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-8078-bf5e-df0d274c464d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">여기에 더 근본적인 모순이 있었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80ff-baed-c1e0d08fb37f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스는 새 버전을 한 번에 100% 내보내지 않습니다. 일부 사용자에게 먼저 배포하고, 문제가 없으면 점점 넓혀갑니다. 사용자의 불편을 빠르게 잡아내려는 안전장치죠.</span></span></span></p><figure class=\"css-of5acw\" id=\"3c7a360d-33e3-8044-99c5-c6ec86633277\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/2f8d9229-5c81-4a20-a079-465e50712219/hotfix-3a-iceberg.png\" /></figure><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-807d-b928-ce6706c8ffbb\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 이 점진 배포가 핫픽스 판단과 정면으로 부딪힙니다. &quot;1%에서만 발생했으니 심각하지 않다&quot;는 판단은, 사실 아직 이 버전을 받지 못한 나머지 99%의 잠재 위험을 보지 않은 것입니다. 지금 1%인 이유가 문제가 작아서가 아니라, 배포가 거기까지 밖에 안갔기 때문일 수 있으니까요. 반대로, 정말 특정 조건에서 그 1%에게만 생기는 문제라면, 이번엔 핫픽스가 부담이 됩니다. 잘 쓰고 있는 99%에게까지 새 빌드를 내보내는 일이라, 문제 하나를 잡으려다 멀쩡한 다수를 새로운 위험에 밀어 넣을 수 있으니까요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80a6-bc5f-c0463d7d1f1a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">같은 &#x27;1%&#x27;가 이렇게 정반대로 읽힙니다. 그래서 저희에게 필요했던 건 더 촘촘한 심각도 표가 아니라, 이 숫자를 맥락에 맞게 해석하고 빠르게 &#x27;할지 말지&#x27;를 결정할 수 있는 판단 구조였습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3c7a360d-33e3-80ea-b79a-e36208961295\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span><",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "핫픽스 판단 체계로 배포 위험 최소화",
+        "tags": [
+          "Toss",
+          "Tossion",
+          "QA Platform",
+          "Hotfix",
+          "점진 배포"
+        ],
+        "key_points": [
+          {
+            "point": "기존 Critical/Major/Minor 심각도만으로는 1% 사용자에게 발생하는 문제를 판단하기 부족했다",
+            "timestamp": null
+          },
+          {
+            "point": "핫픽스 여부를 판단하는 새로운 규칙을 만들고 매월 과거 핫픽스를 리뷰해 기준을 지속적으로 다듬는다",
+            "timestamp": null
+          },
+          {
+            "point": "점진 배포 환경에서 노출 비율과 비즈니스 영향 등을 고려해 즉시 핫픽스 여부를 결정한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "핫픽스 판단을 위한 ‘고칠지 말지’ 체크리스트를 도입하고, 매월 리뷰 회의를 통해 기준을 업데이트한다",
+          "점진 배포 파이프라인에 핫픽스 위험도와 사용자 노출 비율을 자동 수집·시각화하는 대시보드를 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "Toss가 기존에 사용하던 핫픽스 심각도 기준은 무엇이며, 왜 변경했는가?",
+            "options": [
+              "Critical, Major, Minor; 1% 사용자 문제를 정확히 판단하기 위해",
+              "Low, Medium, High; 팀 인력 부족 때문에",
+              "Urgent, Normal, Low; 배포 속도를 높이기 위해",
+              "Critical, Major, Minor; 이미지 파일 크기 때문에"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 기존에는 Critical, Major, Minor 같은 전통적인 심각도 규칙을 사용했지만, 낮은 배포율에서도 많은 사용자가 겪는 문제와 비즈니스 로직 복합성 때문에 한 줄로는 판단이 어려워 규칙을 재정비했다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "product"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
