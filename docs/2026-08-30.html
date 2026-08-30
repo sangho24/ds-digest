@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 08월 30일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      우아한테크 · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/w8MU4vluEtk" target="_blank">[10분 테코톡] 우디의 데이터에도 유효기간이 있다 - 데이터 생명주기 관리</a>
+    </h2>
+
+    <p class="item-summary">데이터 보관·폐기 정책 설계로 비용·법적 리스크 최소화</p>
+
+    
+    <div class="tags">
+      <span class="tag">soft delete</span><span class="tag">TTL</span><span class="tag">batch</span><span class="tag">partitioning</span><span class="tag">법령</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/w8MU4vluEtk" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>데이터 생명주기는 생성·가공·활용·보관·폐기의 단계로 구성된다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>소프트 딜리트는 화면에서 사라지지만 스토리지를 차지해 유령 데이터가 된다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>배치, TTL, 파티셔닝을 활용해 정해진 기간 후 데이터를 실제 삭제한다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 밤 02시 등 저부하 시간에 소프트 딜리트된 데이터를 30일 이상된 경우 청크 단위(예: 1,000건)로 배치 삭제하는 파이프라인 구축</div>
+    
+    <div class="idea">💡 TTL 컬럼을 활용해 세션 토큰·인증 코드를 자동 만료시키고 별도 삭제 로직을 제거하여 인프라 비용 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 어떤 삭제 방식은 별도 삭제 로직 없이 데이터가 지정된 기간이 지나면 자동으로 제거되는가?</div>
+      
+      <div class="quiz-opt">A) Batch</div>
+      
+      <div class="quiz-opt">B) TTL</div>
+      
+      <div class="quiz-opt">C) Partitioning</div>
+      
+      <div class="quiz-opt">D) Soft Delete</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) TTL</div>
+          <div class="quiz-explanation">TTL은 데이터에 만료 시간을 설정해 두면 DB가 자동으로 삭제한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 자주 사용하는 데이터의 복구 요청이 급격히 감소하는 시점은 대략 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 1일</div>
+      
+      <div class="quiz-opt">B) 7일</div>
+      
+      <div class="quiz-opt">C) 30일</div>
+      
+      <div class="quiz-opt">D) 90일</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 7일</div>
+          <div class="quiz-explanation">텍스트에 따르면 일주일(7일) 이후 복구 요청 확률이 거의 0에 수렴한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/LBiNcdGNgrg" target="_blank">The Billion Dollar AI Gap Is Collapsing</a>
+    </h2>
+
+    <p class="item-summary">오픈 LLM의 효율적 토큰 처리로 비용·자원 절감 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">Qwen 3.8 Flash Next</span><span class="tag">QSA</span><span class="tag">gated residual</span><span class="tag">engram embedding</span><span class="tag">Weights & Biases</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/LBiNcdGNgrg" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Qwen 3.8 Flash Next introduces QSA, gated residual, and engram embedding to lower attention cost</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Mixture-of-experts model processes only a subset of parameters per token, enabling faster inference on modest hardware</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Weights & Biases Weave provides tracing and evaluation tools for LLM application development</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Deploy Qwen 3.8 Flash Next on existing GPU workstations to replace paid closed‑source LLM APIs, leveraging its sparse attention for longer context at lower cost</div>
+    
+    <div class="idea">💡 Use W&B Weave to instrument LLM pipelines, capture token‑level traces, and benchmark different prompting strategies</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Qwen 모델이 컨텍스트 비용을 낮추기 위해 도입한 기술은?</div>
+      
+      <div class="quiz-opt">A) Full attention</div>
+      
+      <div class="quiz-opt">B) Deepseek DSA</div>
+      
+      <div class="quiz-opt">C) QSA (Qwen Sparse Attention)</div>
+      
+      <div class="quiz-opt">D) Recurrent memory</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) QSA (Qwen Sparse Attention)</div>
+          <div class="quiz-explanation">텍스트에 따르면 Qwen은 토큰을 블록으로 묶어 검색하는 QSA를 도입해 컨텍스트 비용을 감소시킨다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/L9mMfAFwbl4" target="_blank">DeepSeek’s New AI System Shouldn’t Be Possible</a>
+    </h2>
+
+    <p class="item-summary">자체 수정 AI로 데이터 과학 파이프라인 자동화 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">DeepSeek</span><span class="tag">Lambda</span><span class="tag">Nvidia</span><span class="tag">Pi</span><span class="tag">OpenCode</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/L9mMfAFwbl4" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>UI와 에이전트를 완전히 재작성할 수 있어 코드 리뷰 등 맞춤형 기능을 추가 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>프로그램이 스스로 새로운 기능을 생성·수정해 요구에 맞는 모드 제공</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>원본 액션을 변경하지 않는 티켓 기반 언두 메커니즘으로 안전한 수정·삭제 보장</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 DeepSeek 하네스를 활용해 데이터 파이프라인 코드 리뷰 에이전트를 구축해 자동으로 성능·버그 이슈를 탐지하고 심각도별로 정렬한다.</div>
+    
+    <div class="idea">💡 연구 모드 에이전트를 만들어 논문 주장과 로컬 저장된 연구 논문을 교차 검증함으로써 문헌 조사 효율성을 높인다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. DeepSeek 시스템에서 원본 코드를 변경하지 않고도 작업을 되돌릴 수 있게 하는 메커니즘은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) Undo machinery</div>
+      
+      <div class="quiz-opt">B) Token speed monitor</div>
+      
+      <div class="quiz-opt">C) GPU memory allocator</div>
+      
+      <div class="quiz-opt">D) Plugin marketplace</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) Undo machinery</div>
+          <div class="quiz-explanation">본문에서 언급된 'undo machinery'가 원본 액션을 변경하지 않고도 되돌릴 수 있게 하는 티켓 기반 시스템이다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 스피커가 DeepSeek AI를 로컬에서 실행하기 위해 언급한 클라우드 서비스는?</div>
+      
+      <div class="quiz-opt">A) AWS</div>
+      
+      <div class="quiz-opt">B) Google Cloud</div>
+      
+      <div class="quiz-opt">C) Lambda</div>
+      
+      <div class="quiz-opt">D) Azure</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) Lambda</div>
+          <div class="quiz-explanation">영상에서 Lambda를 사용해 로컬 혹은 클라우드 GPU 환경에서 DeepSeek을 실행한다는 내용이 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/vllm-project/vllm/releases/tag/v0.28.0" target="_blank">vLLM v0.28.0</a>
+    </h2>
+
+    <p class="item-summary">대규모 LLM 추론 최적화로 비용·속도 크게 개선</p>
+
+    
+    <div class="tags">
+      <span class="tag">Kimi-K3</span><span class="tag">DeepSeek V4</span><span class="tag">Speculative decoding</span><span class="tag">Model Runner V2</span><span class="tag">ROCm</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/vllm-project/vllm/releases/tag/v0.28.0" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Kimi‑K3 성능 향상: DCP, 플래시 커널 융합, 공유‑전문가 샤딩 등으로 1.5‑3배 가속 및 17 GiB 메모리 절감</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>DeepSeek V4 업데이트: sparse MLA, AMD Quark NVFP4, 희소 top‑k 커널 최적화 등</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Speculative decoding 진보: DFlash2, DSpark 신뢰도 기반 검증, 초안 모델 자동 비동기 스케줄링</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 vLLM을 v0.28.0으로 업그레이드하고 Kimi‑K3 모델에 공유‑전문가 샤딩을 활성화해 GPU당 약 17 GiB 메모리 절감</div>
+    
+    <div class="idea">💡 Speculative decoding 기능(DFlash2 등)을 활용해 토큰당 응답 지연을 약 60% 감소시켜 서비스 비용 절감</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. v0.28.0 릴리즈에서 GPU당 약 17 GiB 메모리 절감을 제공하는 최적화는?</div>
+      
+      <div class="quiz-opt">A) Decode Context Parallel (DCP)</div>
+      
+      <div class="quiz-opt">B) shared‑expert sharding</div>
+      
+      <div class="quiz-opt">C) GEMM‑RS</div>
+      
+      <div class="quiz-opt">D) async scheduling</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) shared‑expert sharding</div>
+          <div class="quiz-explanation">릴리즈 노트에 shared‑expert sharding이 GPU당 ~17 GiB 메모리 절감을 제공한다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 이번 릴리즈에서 주요 성능 향상을 받은 모델 패밀리는?</div>
+      
+      <div class="quiz-opt">A) DeepSeek V4</div>
+      
+      <div class="quiz-opt">B) Kimi‑K3</div>
+      
+      <div class="quiz-opt">C) LLaMA</div>
+      
+      <div class="quiz-opt">D) GPT‑3</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Kimi‑K3</div>
+          <div class="quiz-explanation">릴리즈 하이라이트에서 Kimi‑K3에 대한 대규모 최적화가 강조된다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://pgaleone.eu/ai/2026/08/29/losing-savviness/" target="_blank">LLMs are making me lose my savviness</a>
+    </h2>
+
+    <p class="item-summary">LLM 사용이 실무 역량·학습 동기를 약화시킬 위험</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">Linux</span><span class="tag">ML</span><span class="tag">technical debt</span><span class="tag">local inference</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://pgaleone.eu/ai/2026/08/29/losing-savviness/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>LLM이 직접 코딩 과정을 대체해 실무 역량과 학습 동기를 약화시킨다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>빠른 프로토타이핑이 장점이지만, 장기적으로 기술 부채와 유지보수 비용을 증가시킬 수 있다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>도구 사용과 동시에 손‑잡고 배우는 과정을 유지하기 위한 가이드라인이 필요하다</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 핵심 모듈은 직접 코딩하고 LLM은 보조 역할로 제한하는 내부 정책 수립</div>
+    
+    <div class="idea">💡 LLM‑생성 코드의 기술 부채를 정량화하고 리뷰 프로세스에 포함하는 평가 프레임워크 구축</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 저자가 LLM 사용에 대해 가장 우려하는 점은?</div>
+      
+      <div class="quiz-opt">A) 생산성 향상</div>
+      
+      <div class="quiz-opt">B) 기술 부채 증가</div>
+      
+      <div class="quiz-opt">C) 비용 절감</div>
+      
+      <div class="quiz-opt">D) 팀 협업 강화</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 기술 부채 증가</div>
+          <div class="quiz-explanation">본문에서 저자는 LLM이 빠른 프로토타이핑을 가능하게 하지만 장기적으로 기술 부채를 늘릴 위험을 강조한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
