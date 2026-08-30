@@ -159,6 +159,8 @@ def test_keyword_appears_in_analysis_prompt():
     prompt = ANALYSIS_PROMPT.format(
         topics=", ".join(profile.preferred_topics) or "data science",
         keywords=", ".join(profile.keyword_requests[-5:]),
+        concept_vocabulary="(아직 없음)",
+        standing_note="없음",
         title="Test Article",
         source_name="Test",
         source_type="rss",

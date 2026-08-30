@@ -11,6 +11,20 @@ import httpx
 from urllib.parse import urlparse, parse_qs
 
 from app.config import get_settings
+from app.concepts import (
+    load_vocabulary,
+    novelty_rate,
+    register as register_concepts,
+    save_vocabulary,
+    vocabulary_for_prompt,
+)
+from app.directives import (
+    Directive,
+    directive_score,
+    filter_sources,
+    interpret as interpret_directives,
+)
+from app.quiz_results import weak_concepts
 from app.preferences import (
     build_signal,
     describe_for_prompt,
@@ -50,6 +64,7 @@ ANALYSIS_PROMPT = """\
 
 ## 사용자가 명시적으로 요청한 키워드
 - 최근 요청 키워드: {keywords}
+- 사용자가 직접 남긴 지시: {standing_note}
 
 ## 콘텐츠
 - 제목: {title}
@@ -72,6 +87,16 @@ ANALYSIS_PROMPT = """\
 
 3. tags: 분류 라벨이 아니라 본문/자막에 실제로 등장한 고유명사·기술명만 최대 5개.
    콘텐츠에 나오지 않은 관심 분야나 일반 분류명을 추측해 추가하지 마세요.
+
+3-1. concepts: 이 콘텐츠가 다루는 **재사용 가능한 개념** 최대 3개.
+   - tags보다 한 층 위입니다. tags가 `glm-5.3-flash`라면 concepts는 `모델 벤치마킹`
+     처럼 다른 콘텐츠에도 다시 등장할 층위여야 합니다.
+   - 제품명·버전·회사명 같은 고유명사는 concepts에 넣지 마세요. 그건 tags입니다.
+   - **아래 기존 개념 목록에 해당하는 것이 있으면 표기를 바꾸지 말고 그대로
+     재사용하세요.** 같은 뜻을 다르게 적으면 별개 개념이 되어 축적이 깨집니다.
+   - 목록에 정말 없을 때만 새로 만드세요.
+
+   기존 개념: {concept_vocabulary}
 
 4. key_points: 핵심 포인트 최대 3개.
 {timestamp_instruction}
@@ -96,6 +121,7 @@ ANALYSIS_PROMPT = """\
   "content_type": "tutorial",
   "half_life": "durable",
   "tags": ["LightGBM", "Kubernetes"],
+  "concepts": ["모델 서빙"],
   "key_points": [{{"point": "...", "timestamp": "12:34"}}],
   "actionability": 7,
   "depth": 6,
@@ -206,6 +232,21 @@ async def _call_llm_with_fallback(
     raise RuntimeError("사용 가능한 LLM 제공자가 없습니다 (GROQ_API_KEY / GEMINI_API_KEY 미설정)")
 
 
+async def resolve_directives(items: list[RawContent]) -> Directive:
+    """축적된 자연어 지시를 구조화한다. 런당 한 번만 부르고 결과를 내려 쓴다.
+
+    directives 모듈이 analyzer를 import하면 순환이 되므로, LLM 호출자를 여기서
+    주입한다. 아는 출처 식별자도 같이 넘겨 drop_sources가 실재하는 값에만
+    대응되게 한다 — 하드 필터라 모델이 지어낸 이름이 통하면 안 된다.
+    """
+    known_sources = {i.source_key for i in items if i.source_key}
+    return await interpret_directives(
+        _call_llm_with_fallback,
+        vocabulary_for_prompt(load_vocabulary()),
+        known_sources,
+    )
+
+
 # ──────────────────────────────────────────────
 # Stage 1 메타 랭킹 → Stage 2 Gemini 전사 (v2 §5)
 # ──────────────────────────────────────────────
@@ -224,6 +265,9 @@ _METADATA_RANKING_PROMPT = """\
 
 ## 사용자가 👎한 콘텐츠의 태그
 {disliked_tags}
+
+## 사용자가 직접 남긴 지시
+{standing_note}
 
 ## 영상 목록
 {listing}
@@ -319,6 +363,7 @@ async def _select_top_youtube_items(
     items: list[RawContent],
     profile: UserProfile,
     budget: int,
+    directive: Directive | None = None,
 ) -> list[RawContent]:
     """Stage 1: 값싼 메타데이터(제목·출처·설명글)만으로 상위 budget건을 고른다.
 
@@ -344,6 +389,7 @@ async def _select_top_youtube_items(
         keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
         liked_tags=liked_tags,
         disliked_tags=disliked_tags,
+        standing_note=(directive.standing_note if directive else "") or "없음",
         listing="\n".join(listing_lines),
     )
 
@@ -376,6 +422,7 @@ async def resolve_youtube_transcripts(
     items: list[RawContent],
     profile: UserProfile,
     budget: int,
+    directive: Directive | None = None,
 ) -> list[RawContent]:
     """dedup·채널 캡 이후 상위 N건만 Gemini로 전사한다(v2 §5 Stage 1→2).
 
@@ -413,7 +460,7 @@ async def resolve_youtube_transcripts(
     if len(items) <= budget:
         selected = items
     else:
-        selected = await _select_top_youtube_items(items, profile, budget)
+        selected = await _select_top_youtube_items(items, profile, budget, directive)
 
     # Stage 2: 선택된 아이템만 Gemini 전사. 무료 티어 TPM 보호를 위해 호출 사이에만
     # 대기하고(첫 호출 앞에는 두지 않음), transcript_source를 로그로 남겨 평가
@@ -478,10 +525,14 @@ def _build_analysis_prompt(
     content_text: str,
     timestamp_instruction: str,
     evidence_level: EvidenceLevel,
+    concept_vocabulary: str = "(아직 없음 — 자유롭게 만드세요)",
+    standing_note: str = "",
 ) -> str:
     """공통 분석 프롬프트에 근거 수준상 허용된 출력만 추가한다."""
     prompt = ANALYSIS_PROMPT.format(
         keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
+        standing_note=standing_note or "없음",
+        concept_vocabulary=concept_vocabulary,
         title=item.title,
         source_name=item.source_name,
         source_type=item.source_type.value,
@@ -627,6 +678,7 @@ def _mock_analysis(item: RawContent) -> ContentAnalysis:
         relevance_score=derive_relevance_score(8, depth),
         one_line_summary=f"[DRY RUN] {item.title[:40]}",
         tags=["DRY RUN", "테스트"],
+        concepts=["드라이런 개념"],
         evidence_level=evidence_level,
         domain=["tools"],
         content_type="tutorial",
@@ -653,8 +705,15 @@ def _mock_analysis(item: RawContent) -> ContentAnalysis:
 async def analyze_content(
     item: RawContent,
     profile: UserProfile,
+    concept_vocabulary: str | None = None,
+    standing_note: str = "",
 ) -> ContentAnalysis:
-    """단일 콘텐츠를 Gemini로 분석"""
+    """단일 콘텐츠를 Gemini로 분석.
+
+    concept_vocabulary는 기존 개념 목록 문자열이다. 프롬프트에 넣어 재사용을
+    유도하는 것이 엔티티 해소의 예방책이다(app/concepts.py). 호출부가 런당 한 번
+    읽어 넘긴다 — 아이템마다 파일을 읽을 이유가 없다.
+    """
     settings = get_settings()
 
     if settings.dry_run:
@@ -685,6 +744,8 @@ async def analyze_content(
         content_text=content_text,
         timestamp_instruction=timestamp_instruction,
         evidence_level=evidence_level,
+        concept_vocabulary=concept_vocabulary or "(아직 없음 — 자유롭게 만드세요)",
+        standing_note=standing_note,
     )
 
     try:
@@ -700,6 +761,7 @@ async def analyze_content(
             relevance_score=derive_relevance_score(actionability, depth),
             one_line_summary=data.get("one_line_summary") or item.title,
             tags=data.get("tags", []),
+            concepts=data.get("concepts", []),
             key_points=[KeyPoint(**kp) for kp in data.get("key_points", [])],
             production_ideas=data.get("production_ideas", []),
             quiz=[QuizItem(**q) for q in data.get("quiz", [])],
@@ -728,6 +790,7 @@ async def analyze_content(
 async def filter_and_analyze(
     items: list[RawContent],
     profile: UserProfile,
+    directive: Directive | None = None,
 ) -> list[DigestItem]:
     """수집된 콘텐츠를 분석 후 상대 랭킹으로 다이제스트 아이템을 선정한다.
 
@@ -741,6 +804,16 @@ async def filter_and_analyze(
     """
     settings = get_settings()
 
+    # 지시의 하드 필터를 분석 **전에** 적용한다. 어차피 뺄 아이템을 분석하면
+    # LLM 호출만 낭비된다. filter_sources는 제외 후 0건이 되면 제외를 포기한다.
+    if directive is not None:
+        items = filter_sources(items, directive)
+
+    # 개념 어휘는 런당 한 번만 읽는다. 프롬프트에 넣어 기존 개념 재사용을
+    # 유도하는 것이 엔티티 해소의 1차 방어선이다(app/concepts.py).
+    vocabulary = load_vocabulary()
+    vocabulary_text = vocabulary_for_prompt(vocabulary)
+
     # 1) 모든 아이템을 먼저 분석한다(선정은 전체 점수를 본 뒤 상대적으로 결정).
     analyzed: list[DigestItem] = []
     for i, item in enumerate(items):
@@ -749,7 +822,12 @@ async def filter_and_analyze(
             delay = _GROQ_RATE_LIMIT_DELAY if settings.groq_api_key else _RATE_LIMIT_DELAY
             await asyncio.sleep(delay)
 
-        analysis = await analyze_content(item, profile)
+        analysis = await analyze_content(
+            item,
+            profile,
+            concept_vocabulary=vocabulary_text,
+            standing_note=directive.standing_note if directive else "",
+        )
         analyzed.append(DigestItem(raw=item, analysis=analysis))
 
     # 2) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
@@ -760,12 +838,26 @@ async def filter_and_analyze(
     #    선정을 바꾼다. 피드백이 없으면 signal이 비어 모든 보정이 0이 되고
     #    정렬은 기존과 동일해진다.
     floor = settings.relevance_floor
-    signal = build_signal(profile.liked_item_ids, profile.disliked_item_ids)
+    # 퀴즈에서 반복해서 틀린 개념을 선정에 되먹인다 — 여기가 §4.2 ⑥→⑦이
+    # 닫히는 지점이다. 응답이 없거나 표본이 부족하면 빈 집합이라 무해하다.
+    review = weak_concepts()
+    signal = build_signal(
+        profile.liked_item_ids, profile.disliked_item_ids, review=review
+    )
     candidates = [d for d in analyzed if d.analysis.relevance_score >= floor]
     candidates.sort(
         key=lambda d: (
             d.analysis.relevance_score,
-            preference_score(signal, d.raw.source_key, d.analysis.tags),
+            # 명시적 지시(±3)가 추론된 취향(±2)보다 무겁다. 사용자가 직접
+            # 말한 것이 내가 눈치로 알아낸 것보다 우선해야 한다.
+            preference_score(
+                signal, d.raw.source_key, d.analysis.tags, d.analysis.concepts
+            )
+            + (
+                directive_score(directive, d.analysis.tags, d.analysis.concepts)
+                if directive
+                else 0
+            ),
         ),
         reverse=True,
     )
@@ -788,6 +880,32 @@ async def filter_and_analyze(
         else:
             logger.info("item_below_floor", title=d.raw.title, score=score, reason=d.analysis.skip_reason)
 
+    # 4) 발송이 확정된 것만 어휘에 등록한다. 후보 전체를 넣으면 읽히지도 않은
+    #    콘텐츠의 개념이 어휘를 채워, 재사용 유도 목록이 노이즈로 희석된다.
+    #    등록은 표준명으로 되돌려 레코드에도 표준명이 남게 한다.
+    all_resolved: list[str] = []
+    all_created: list[str] = []
+    for d in selected:
+        resolved, created = register_concepts(d.analysis.concepts, vocabulary)
+        d.analysis.concepts = resolved
+        all_resolved.extend(resolved)
+        all_created.extend(created)
+
+    # 드라이런은 상태를 바꾸지 않는다 — mock 개념이 어휘에 섞이면 재사용 유도
+    # 목록이 오염되고, 그게 실제 발송 프롬프트에 들어간다.
+    if all_resolved and not settings.dry_run:
+        save_vocabulary(vocabulary)
+        rate = novelty_rate(all_resolved, all_created)
+        # §3.6 메타 루브릭 "개념 신규율". §8.2 기준 0.8 초과면 해소 실패(어휘
+        # 예방이 새는 중), 0.1 미만이면 정체다. 초기엔 당연히 1.0에 가깝다.
+        logger.info(
+            "concepts_registered",
+            resolved=len(all_resolved),
+            created=len(all_created),
+            novelty_rate=rate,
+            vocabulary_size=len(vocabulary.get("concepts") or {}),
+        )
+
     logger.info(
         "relative_ranking_done",
         analyzed=len(analyzed),
@@ -795,5 +913,6 @@ async def filter_and_analyze(
         selected=len(selected),
         floor=floor,
         preference_applied=not signal.is_empty(),
+        review_concepts=sorted(review),
     )
     return selected

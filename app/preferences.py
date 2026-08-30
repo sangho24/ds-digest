@@ -76,6 +76,7 @@ class ItemFacts:
     source_key: str | None
     tags: tuple[str, ...]
     quiz_answers: tuple[int, ...] = ()
+    concepts: tuple[str, ...] = ()
 
 
 @dataclass
@@ -86,6 +87,14 @@ class PreferenceSignal:
     disliked_sources: set[str] = field(default_factory=set)
     liked_tags: set[str] = field(default_factory=set)
     disliked_tags: set[str] = field(default_factory=set)
+    # 개념은 태그와 달리 재사용되므로 다음 콘텐츠에 실제로 걸린다(app/concepts.py).
+    # 태그 신호는 남겨둔다 — 개념 어휘가 얇은 초기엔 태그라도 있는 편이 낫다.
+    liked_concepts: set[str] = field(default_factory=set)
+    disliked_concepts: set[str] = field(default_factory=set)
+    # 퀴즈를 반복해서 틀린 개념(§4.2 ⑦). 좋아한 것이 아니라 **모르는 것**이라
+    # 의미가 다르므로 liked와 섞지 않는다. 가산도 더 작다 — 사용자가 요청한
+    # 적 없는 나의 판단이므로 취향보다 약하게 민다.
+    review_concepts: set[str] = field(default_factory=set)
 
     def is_empty(self) -> bool:
         return not (
@@ -93,6 +102,9 @@ class PreferenceSignal:
             or self.disliked_sources
             or self.liked_tags
             or self.disliked_tags
+            or self.liked_concepts
+            or self.disliked_concepts
+            or self.review_concepts
         )
 
 
@@ -132,6 +144,9 @@ def build_item_index(records_dir: Path | None = None) -> dict[str, ItemFacts]:
                 tags=tuple(
                     _normalize_tag(t) for t in (analysis.get("tags") or []) if str(t).strip()
                 ),
+                concepts=tuple(
+                    str(c).strip() for c in (analysis.get("concepts") or []) if str(c).strip()
+                ),
                 quiz_answers=tuple(
                     int(q.get("answer_index"))
                     for q in (analysis.get("quiz") or [])
@@ -160,6 +175,7 @@ def build_signal(
     liked: Iterable[str],
     disliked: Iterable[str],
     index: dict[str, ItemFacts] | None = None,
+    review: Iterable[str] | None = None,
 ) -> PreferenceSignal:
     """피드백 목록을 출처·태그 취향으로 일반화한다.
 
@@ -168,6 +184,10 @@ def build_signal(
     """
     liked_list, disliked_list = list(liked), list(disliked)
     signal = PreferenceSignal()
+    # 복습 개념은 이미 개념명이라 역참조가 필요 없다. 퀴즈 응답에서 오므로
+    # 👍/👎가 하나도 없어도 독립적으로 들어올 수 있다.
+    signal.review_concepts = {_normalize_tag(c) for c in (review or []) if str(c).strip()}
+
     # 피드백이 하나도 없으면 정본 35개 파일을 훑을 이유가 없다. 매 런 두 번
     # 호출되는 경로라 빈 프로필에서 디스크를 건드리지 않는 편이 낫다.
     if not liked_list and not disliked_list:
@@ -175,7 +195,12 @@ def build_signal(
 
     lookup = index if index is not None else build_item_index()
 
-    def collect(tokens: Iterable[str], sources: set[str], tags: set[str]) -> None:
+    def collect(
+        tokens: Iterable[str],
+        sources: set[str],
+        tags: set[str],
+        concepts: set[str],
+    ) -> None:
         for token in list(tokens)[-RECENT_FEEDBACK_WINDOW:]:
             facts = lookup.get(str(token).strip())
             if facts is None:
@@ -183,9 +208,17 @@ def build_signal(
             if facts.source_key:
                 sources.add(str(facts.source_key))
             tags.update(facts.tags)
+            concepts.update(_normalize_tag(c) for c in facts.concepts)
 
-    collect(liked_list, signal.liked_sources, signal.liked_tags)
-    collect(disliked_list, signal.disliked_sources, signal.disliked_tags)
+    collect(
+        liked_list, signal.liked_sources, signal.liked_tags, signal.liked_concepts
+    )
+    collect(
+        disliked_list,
+        signal.disliked_sources,
+        signal.disliked_tags,
+        signal.disliked_concepts,
+    )
 
     contested_sources = signal.liked_sources & signal.disliked_sources
     signal.liked_sources -= contested_sources
@@ -195,6 +228,10 @@ def build_signal(
     signal.liked_tags -= contested_tags
     signal.disliked_tags -= contested_tags
 
+    contested_concepts = signal.liked_concepts & signal.disliked_concepts
+    signal.liked_concepts -= contested_concepts
+    signal.disliked_concepts -= contested_concepts
+
     return signal
 
 
@@ -202,11 +239,16 @@ def preference_score(
     signal: PreferenceSignal,
     source_key: str | None,
     tags: Iterable[str],
+    concepts: Iterable[str] = (),
 ) -> int:
-    """동점 타이브레이크용 점수. 출처 일치 ±2, 태그 일치 건당 ±1, 합계는 ±3로 묶는다.
+    """동점 타이브레이크용 점수. 합계는 ±3로 묶는다.
 
-    출처를 태그보다 무겁게 두는 이유: 태그는 아이템마다 최대 5개라 우연 일치가
-    잦지만, 출처는 사용자가 실제로 반복 소비하는 채널이라 신호가 더 진하다.
+    가중치: 개념 ±2, 출처 ±2, 태그 ±1, 복습 개념 +1.
+
+    개념과 출처를 태그보다 무겁게 두는 이유가 다르다. 개념은 어휘로 해소돼
+    **재사용되는 단위**라 일치가 우연이 아니다. 출처는 사용자가 반복 소비하는
+    채널이라 신호가 진하다. 반면 태그는 아이템당 5개까지 붙는 1회성 고유명사라
+    일치해도 정보가 적다.
     """
     score = 0
     key = str(source_key) if source_key else None
@@ -214,6 +256,14 @@ def preference_score(
         score += 2
     if key and key in signal.disliked_sources:
         score -= 2
+
+    normalized_concepts = {_normalize_tag(c) for c in concepts}
+    score += 2 * len(normalized_concepts & signal.liked_concepts)
+    score -= 2 * len(normalized_concepts & signal.disliked_concepts)
+    # 복습 가산(+1)은 선호 가산(+2)과 **겹쳐 쌓인다**. 그래서 §4.2 ⑦의
+    # "습득도 낮고 선호 높은 개념"이 자동으로 +3을 받아 가장 앞선다 —
+    # 조건을 따로 코딩하지 않아도 두 신호의 합에서 그 우선순위가 나온다.
+    score += len(normalized_concepts & signal.review_concepts)
 
     normalized = {_normalize_tag(t) for t in tags}
     score += len(normalized & signal.liked_tags)
@@ -225,10 +275,16 @@ def preference_score(
 def describe_for_prompt(signal: PreferenceSignal, limit: int = 5) -> tuple[str, str]:
     """Stage 1 랭킹 프롬프트에 넣을 (선호, 비선호) 문자열.
 
-    프롬프트에는 태그만 넣는다. 출처 이름을 넣으면 모델이 내용과 무관하게 그
-    채널을 통째로 밀어올려 다양성이 죽는다 — 출처 신호는 결정적 타이브레이크로만
-    쓰는 편이 안전하다.
+    개념을 앞에 두고 태그로 채운다. 출처 이름은 넣지 않는다 — 모델이 내용과
+    무관하게 그 채널을 통째로 밀어올려 다양성이 죽는다. 출처 신호는 결정적
+    타이브레이크로만 쓰는 편이 안전하다.
     """
-    liked = ", ".join(sorted(signal.liked_tags)[:limit]) or "없음"
-    disliked = ", ".join(sorted(signal.disliked_tags)[:limit]) or "없음"
-    return liked, disliked
+
+    def render(concepts: set[str], tags: set[str]) -> str:
+        merged = sorted(concepts) + [t for t in sorted(tags) if t not in concepts]
+        return ", ".join(merged[:limit]) or "없음"
+
+    return (
+        render(signal.liked_concepts, signal.liked_tags),
+        render(signal.disliked_concepts, signal.disliked_tags),
+    )

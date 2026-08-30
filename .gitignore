@@ -10,6 +10,10 @@ data/*
 # 퀴즈 정답 라벨. 러너가 ephemeral이라 커밋하지 않으면 매 런 사라지고,
 # Supabase에만 두면 크레덴셜이 끊길 때 통째로 증발한다. 정본은 리포에 둔다.
 !data/quiz_results.jsonl
+# 자연어 지시 원문과 개념 어휘. 같은 이유로 커밋한다 — 어휘가 매 런 초기화되면
+# 모든 개념이 영원히 "신규"가 되어 재사용 유도가 아예 동작하지 않는다.
+!data/directives.jsonl
+!data/concepts.json
 # data/* 는 리포 루트에만 앵커되므로, 하위 경로의 data/(예: evals/data/의 대용량
 # 픽스처)는 기존 무앵커 data/ 패턴처럼 계속 무시되도록 명시한다(회귀 방지).
 evals/data/

@@ -42,7 +42,7 @@ def _run_filter(monkeypatch, scores, *, floor=4, max_items=5):
     items = [_item(i) for i in range(len(scores))]
     score_by_url = {item.url: score for item, score in zip(items, scores)}
 
-    async def _fake_analyze(item, profile):
+    async def _fake_analyze(item, profile, **_kwargs):
         return ContentAnalysis(
             relevance_score=score_by_url[item.url],
             one_line_summary="요약",

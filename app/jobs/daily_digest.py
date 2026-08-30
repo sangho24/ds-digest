@@ -12,7 +12,11 @@ from typing import Any
 from app.config import get_settings
 from app.contract import publish as publish_contract, today_kst
 from app.collectors import collect_all
-from app.analyzer import filter_and_analyze, resolve_youtube_transcripts
+from app.analyzer import (
+    filter_and_analyze,
+    resolve_directives,
+    resolve_youtube_transcripts,
+)
 from app.newsletter import send_digest, render_digest_email
 from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
@@ -77,6 +81,8 @@ async def _send_feedback_summary(summary: dict) -> None:
         parts.append(f"👎 {summary['dislikes']}건")
     if summary.get("keywords"):
         parts.append(f"📝 키워드 등록: {', '.join(summary['keywords'])}")
+    if summary.get("directives"):
+        parts.append(f"🗒 지시 {len(summary['directives'])}건 접수")
     if answered := summary.get("quiz_answers"):
         # 채점은 여기서 처음 사용자에게 보인다. 배치 폴링이라 버튼을 누른 시점엔
         # 콜백이 이미 만료돼 토스트를 띄울 수 없기 때문이다.
@@ -95,6 +101,27 @@ async def _send_feedback_summary(summary: dict) -> None:
             )
     except Exception as e:
         logger.warning("feedback_summary_failed", error=str(e))
+
+
+async def _send_directive_status(directive) -> None:
+    """현재 적용 중인 지시를 Telegram으로 알린다."""
+    settings = get_settings()
+    if not settings.telegram_bot_token or not settings.telegram_chat_id or settings.dry_run:
+        return
+
+    text = (
+        "🗒 <b>적용 중인 지시</b>\n"
+        f"{directive.describe()}\n"
+        "<i>취소하려면 반대로 말씀하시면 됩니다 (지시는 14일 후 자동 만료)</i>"
+    )
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                json={"chat_id": settings.telegram_chat_id, "text": text, "parse_mode": "HTML"},
+            )
+    except Exception as e:
+        logger.warning("directive_status_failed", error=str(e))
 
 
 async def run_daily_digest() -> dict:
@@ -164,8 +191,23 @@ async def run_daily_digest() -> dict:
     yt_items = _deduplicate(yt_items)
     yt_items = _cap_per_channel(yt_items, settings.yt_new_per_channel)
 
+    # 3.4. 자연어 지시 해석 — 런당 한 번만 하고 두 소비처(Stage 1 랭킹·최종 선정)에
+    # 같은 값을 내려보낸다. 두 번 해석하면 LLM 호출도 두 배고, 두 결과가 갈리면
+    # 같은 런 안에서 서로 다른 지시가 적용된다.
+    # 아는 출처 목록을 넘겨야 drop_sources가 실재하는 값에만 걸리므로, dedup을
+    # 마친 전체 후보를 넘긴다.
+    directive = await resolve_directives(yt_items + rss_items)
+    if not directive.is_empty():
+        logger.info("directive_active", summary=directive.describe())
+        # 적용 중인 지시를 매일 노출한다. 안 보이는 상태값이 조용히 큐레이션을
+        # 끌고 가는 것이 이런 시스템에서 가장 위험하다 — 왜 arxiv가 안 오는지
+        # 아무도 모르게 되면 지시가 아니라 버그처럼 보인다.
+        await _send_directive_status(directive)
+
     # 3.5. Stage 1 메타 랭킹 → Stage 2 상위 N건만 Gemini 전사 (rate-limit 보호)
-    yt_items = await resolve_youtube_transcripts(yt_items, profile, settings.yt_transcript_budget)
+    yt_items = await resolve_youtube_transcripts(
+        yt_items, profile, settings.yt_transcript_budget, directive
+    )
 
     raw_items = yt_items + rss_items
     logger.info("after_dedup", yt=len(yt_items), rss=len(rss_items), remaining=len(raw_items))
@@ -175,7 +217,7 @@ async def run_daily_digest() -> dict:
         return {"status": "all_seen", "collected": 0}
 
     # 4. 필터링 + 분석
-    digest_items = await filter_and_analyze(raw_items, profile)
+    digest_items = await filter_and_analyze(raw_items, profile, directive)
 
     if not digest_items:
         # 상대 랭킹 전환 후 이 분기는 "모든 아이템이 바닥값 미만"인 드문 경우에만 걸린다.

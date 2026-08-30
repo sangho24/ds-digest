@@ -8,6 +8,7 @@ GitHub Actions 파이프라인 시작 시 poll_once() 1회 호출 (배치 모드
 - like / dislike 콜백 → feedback 저장
 - quiz 콜백 → 채점 후 data/quiz_results.jsonl 기록
 - /keyword <텍스트> 명령어 → keyword_request 저장
+- 그 외 자유 텍스트 → 자연어 지시로 data/directives.jsonl 축적
 """
 import asyncio
 import httpx
@@ -15,6 +16,7 @@ import structlog
 
 from app.models import FeedbackPayload
 from app.feedback import process_feedback
+from app.directives import capture as capture_directive
 from app.preferences import resolve_feedback_target
 from app.quiz_results import parse_callback as parse_quiz_callback, record_answer
 
@@ -96,7 +98,7 @@ async def _handle_update(
                 "telegram_feedback", action=action, target=target, url=item_url[:60]
             )
 
-    # ── 일반 텍스트 메시지 — /keyword 명령어 ───────────────────────────────
+    # ── 일반 텍스트 메시지 — /keyword 명령어 + 자연어 지시 ─────────────────
     elif msg := update.get("message"):
         text: str = msg.get("text", "").strip()
 
@@ -112,6 +114,16 @@ async def _handle_update(
                 ))
                 summary["keywords"].append(keyword)
                 logger.info("telegram_keyword_saved", keyword=keyword)
+            return
+
+        # 그 외 자유 텍스트는 자연어 지시로 쌓는다.
+        # 예전엔 여기서 그냥 버렸고, 업데이트를 acknowledge까지 해서 텔레그램
+        # 서버에서도 지워졌다 — "논문 말고 실무 사례 위주로" 같은 말이 흔적 없이
+        # 증발했다. 해석은 다음 런 시작 시 한 번에 한다(app/directives.py).
+        if text.startswith("/"):
+            return  # 알 수 없는 명령어는 지시가 아니다
+        if capture_directive(text):
+            summary["directives"].append(text[:60])
 
 
 async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
@@ -119,7 +131,7 @@ async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
     getUpdates 1회 호출 후 업데이트 처리.
     처리 결과 summary 반환:
         {"likes": N, "dislikes": N, "keywords": [...],
-         "quiz_answers": N, "quiz_correct": N}
+         "quiz_answers": N, "quiz_correct": N, "directives": [...]}
 
     처리 후 acknowledge 호출로 동일 업데이트 재처리 방지.
     """
@@ -130,6 +142,7 @@ async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
         "keywords": [],
         "quiz_answers": 0,
         "quiz_correct": 0,
+        "directives": [],
     }
     try:
         resp = await client.get(

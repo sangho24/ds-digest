@@ -164,6 +164,10 @@ class ContentAnalysis(BaseModel):
     relevance_score: int = Field(ge=0, le=10, description="DS 현업 관련도 1-10")
     one_line_summary: str
     tags: list[str] = Field(default_factory=list, max_length=5, description="관련 기술/분야 태그 (예: MLOps, A/B testing, Kubernetes)")
+    # 태그(Layer 1 자유 고유명사)보다 한 층 위의 재사용 단위(v2 §3.5 Layer 2).
+    # 태그는 `glm-5.3-flash`처럼 1회성이라 정답률 집계·취향 일반화가 표본 1에
+    # 머문다. 개념은 어휘로 해소돼 다음 콘텐츠에도 걸린다. app/concepts.py 참조.
+    concepts: list[str] = Field(default_factory=list, max_length=3)
     key_points: list[KeyPoint] = Field(default_factory=list, max_length=5)
     production_ideas: list[str] = Field(default_factory=list, max_length=3)
     quiz: list[QuizItem] = Field(default_factory=list, max_length=3)

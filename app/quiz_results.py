@@ -112,8 +112,9 @@ def record_answer(
         "choice_index": choice_index,
         "answer_index": answer_index,
         "correct": choice_index == answer_index,
-        # 개념별 습득도(§4.2 ⑥)를 계산하려면 문항이 어떤 개념에 속하는지가
-        # 필요하다. 개념 추출이 아직 없으므로 태그를 그 대리로 남긴다.
+        # 습득도(§4.2 ⑥)의 집계 키. 개념이 본체이고 태그는 보조다 — 태그는
+        # 1회성 고유명사라 같은 값으로 두 번 틀릴 일이 거의 없어 표본이 안 쌓인다.
+        "concepts": list(facts.concepts),
         "tags": list(facts.tags),
         "answered_at": datetime.now(KST).isoformat(),
     }
@@ -160,22 +161,59 @@ def load_results(path: Path | None = None) -> list[dict[str, Any]]:
     return list(latest.values())
 
 
-def accuracy_by_tag(path: Path | None = None) -> dict[str, dict[str, int | float]]:
-    """태그별 정답률. 개념 추출이 들어오면 이 함수의 키만 개념으로 바꾸면 된다.
-
-    습득도(§4.2 ⑥→⑦)의 첫 근사다: 정답률이 낮은 태그가 곧 복습이 필요한 영역이다.
-    """
+def _accuracy(field: str, path: Path | None = None) -> dict[str, dict[str, int | float]]:
     buckets: dict[str, list[bool]] = {}
     for row in load_results(path):
-        for tag in row.get("tags") or []:
-            buckets.setdefault(str(tag), []).append(bool(row.get("correct")))
-
+        for key in row.get(field) or []:
+            buckets.setdefault(str(key).strip().lower(), []).append(
+                bool(row.get("correct"))
+            )
     return {
-        tag: {
+        key: {
             "answered": len(marks),
             "correct": sum(marks),
             "accuracy": round(sum(marks) / len(marks), 4),
         }
-        for tag, marks in sorted(buckets.items())
+        for key, marks in sorted(buckets.items())
         if marks
+    }
+
+
+def accuracy_by_concept(path: Path | None = None) -> dict[str, dict[str, int | float]]:
+    """개념별 정답률 = 습득도(§4.2 ⑥).
+
+    개념은 어휘로 해소돼 재사용되므로 같은 키에 표본이 누적된다. 태그로는
+    이게 안 됐다 — `glm-5.3-flash`로 두 번 틀릴 일이 없기 때문이다.
+    """
+    return _accuracy("concepts", path)
+
+
+def accuracy_by_tag(path: Path | None = None) -> dict[str, dict[str, int | float]]:
+    """태그별 정답률. 개념 어휘가 얇은 초기의 보조 지표."""
+    return _accuracy("tags", path)
+
+
+# 습득도가 낮다고 판단하기 위한 최소 응답 수. 1~2건으로 "약한 개념"을 정하면
+# 우연한 오답 하나가 다음 며칠의 큐레이션을 끌고 간다.
+MIN_ANSWERS_FOR_MASTERY = 3
+
+# 이 정답률 미만이면 복습이 필요한 개념으로 본다.
+WEAK_CONCEPT_ACCURACY = 0.6
+
+
+def weak_concepts(
+    path: Path | None = None,
+    min_answers: int = MIN_ANSWERS_FOR_MASTERY,
+    threshold: float = WEAK_CONCEPT_ACCURACY,
+) -> set[str]:
+    """복습이 필요한 개념 = 표본이 충분한데 정답률이 낮은 것 (§4.2 ⑦).
+
+    이 집합이 선정 단계로 되먹여지면서 루프가 닫힌다: 퀴즈를 틀린 개념의
+    후속 콘텐츠가 다음 다이제스트에서 우선순위를 얻는다.
+    """
+    return {
+        concept
+        for concept, stat in accuracy_by_concept(path).items()
+        if int(stat["answered"]) >= min_answers
+        and float(stat["accuracy"]) < threshold
     }
