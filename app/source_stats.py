@@ -61,12 +61,22 @@ def build_funnel(
     collected: Iterable[Any],
     candidates: Iterable[Any],
     delivered: Iterable[Any],
+    expected: Iterable[str] | None = None,
 ) -> dict[str, dict[str, int]]:
-    """소스별 3단 퍼널을 만든다. 어느 단계에서든 등장한 소스는 전부 포함한다."""
+    """소스별 3단 퍼널을 만든다.
+
+    expected는 **설정상 존재해야 하는** 소스 키 목록이다. 이게 없으면 수집이
+    0건인 소스가 퍼널에 아예 나타나지 않아, 또 한 번 투명인간이 된다.
+
+    실제로 그 일이 있었다: arXiv는 URL이 http라 301 리다이렉트에서 본문이 비어
+    **40일간 한 건도 수집되지 않았는데**, 퍼널만으로는 그걸 볼 수 없었다.
+    수집 0건은 "굶는 소스"보다 나쁜 상태이므로 반드시 보여야 한다.
+    """
     c, n, d = _count(collected), _count(candidates), _count(delivered)
+    keys = set(c) | set(n) | set(d) | {str(e) for e in (expected or []) if str(e).strip()}
     return {
         key: {"collected": c.get(key, 0), "candidates": n.get(key, 0), "delivered": d.get(key, 0)}
-        for key in sorted(set(c) | set(n) | set(d))
+        for key in sorted(keys)
     }
 
 
@@ -76,9 +86,10 @@ def record(
     delivered: Iterable[Any],
     date: str | None = None,
     path: Path | None = None,
+    expected: Iterable[str] | None = None,
 ) -> dict[str, dict[str, int]]:
     """이번 런의 퍼널을 한 줄로 덧붙인다."""
-    funnel = build_funnel(collected, candidates, delivered)
+    funnel = build_funnel(collected, candidates, delivered, expected)
     entry = {
         "date": date or datetime.now(KST).strftime("%Y-%m-%d"),
         "recorded_at": datetime.now(KST).isoformat(),
@@ -91,12 +102,15 @@ def record(
         file.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     starved = [k for k, v in funnel.items() if v["collected"] and not v["delivered"]]
+    silent = [k for k, v in funnel.items() if not v["collected"]]
     logger.info(
         "source_funnel_recorded",
         sources=len(funnel),
         collected=sum(v["collected"] for v in funnel.values()),
         delivered=sum(v["delivered"] for v in funnel.values()),
         starved_today=starved,
+        # 수집이 0건인 소스. 설정돼 있는데 아무것도 안 오면 수집기가 깨진 것이다.
+        silent_today=silent,
     )
     return funnel
 
@@ -156,11 +170,16 @@ def aggregate(path: Path | None = None, since: str | None = None) -> dict[str, A
     starved = sorted(
         k for k, v in sources.items() if v["collected"] > 0 and v["delivered"] == 0
     )
+    # 기간 내내 수집이 0건인 소스 = 수집기가 깨졌거나 설정이 잘못된 것.
+    # "굶는 소스"보다 나쁜 상태라 따로 센다.
+    silent = sorted(k for k, v in sources.items() if v["collected"] == 0)
 
     return {
         "days": len(days),
         "source_count": len(sources),
         "starved_sources": starved,
         "starved_count": len(starved),
+        "silent_sources": silent,
+        "silent_count": len(silent),
         "sources": sources,
     }

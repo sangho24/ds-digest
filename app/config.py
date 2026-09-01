@@ -52,8 +52,22 @@ class Settings(BaseSettings):
     # 추가로 가져온다. 테스트/네트워크 절약이 필요하면 False로 끈다.
     fetch_link_body: bool = True
 
-    # ArXiv
-    arxiv_categories: str = "cs.LG,stat.ML"
+    # ArXiv — DS 현업자에게 닿는 범위로 확장.
+    # cs.LG/stat.ML만 보면 모델링 논문에 갇힌다. 실무에서 실제로 쓰이는 건
+    # NLP·검색/추천·데이터 시스템·실험설계 쪽이 더 많다.
+    #   cs.LG   머신러닝            stat.ML  통계적 머신러닝
+    #   cs.CL   자연어처리          cs.AI    인공지능 일반
+    #   cs.IR   정보검색·추천       cs.DB    데이터베이스
+    #   cs.DC   분산·병렬 처리      cs.SE    소프트웨어 공학
+    #   stat.ME 통계 방법론(인과추론·실험설계)
+    #   econ.EM 계량경제(인과추론)
+    arxiv_categories: str = (
+        "cs.LG,stat.ML,cs.CL,cs.AI,cs.IR,cs.DB,cs.DC,cs.SE,stat.ME,econ.EM"
+    )
+    # 런당 arXiv 후보 상한. 카테고리를 10개로 늘리면 카테고리당 10건 = 100건이
+    # 후보 풀에 들어와, 방금 HN에서 고친 편중을 그대로 재현한다.
+    # 카테고리 수와 무관하게 총량을 묶는다.
+    arxiv_max_items: int = 12
 
     # HackerNews
     hackernews_keywords: str = "machine learning,MLOps,data science,LLM"
@@ -114,8 +128,16 @@ class Settings(BaseSettings):
     telegram_bot_token: str = ""
     telegram_chat_id: str = ""
 
-    # 배송 채널: "telegram" | "email" | "telegram,email"
-    delivery_channels: str = "telegram"
+    # Discord (hermes 봇 재사용)
+    # 게이트웨이 없이 REST만으로 발송·수거가 된다 — 상시 프로세스가 필요 없어
+    # GitHub Actions 배치 모델에 그대로 맞는다.
+    discord_bot_token: str = ""
+    discord_channel_id: str = ""
+
+    # 배송 채널: "discord" | "telegram" | "email" (쉼표 구분)
+    # 피드백 수거는 Discord로 한정한다 — 두 채널에서 동시에 받으면 같은 아이템에
+    # 대한 신호가 갈리고, 어느 쪽이 정본인지 판정할 근거가 없다.
+    delivery_channels: str = "discord"
 
     # Dry-run: 외부 API 호출 없이 파이프라인 전체 흐름 검증
     dry_run: bool = False

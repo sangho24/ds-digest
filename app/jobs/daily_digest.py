@@ -20,45 +20,32 @@ from app.analyzer import (
 from app.newsletter import send_digest, render_digest_email
 from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
+from app.deliverers.discord import send_discord_digest, send_discord_text
 
 logger = structlog.get_logger()
 
 
 async def _send_error_alert(message: str) -> None:
-    """파이프라인 오류를 Telegram으로 알림. 실패해도 파이프라인에 영향 없음."""
-    settings = get_settings()
-    if not settings.telegram_bot_token or not settings.telegram_chat_id:
-        return
-    if settings.dry_run:
-        return
-    try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            await client.post(
-                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
-                json={
-                    "chat_id": settings.telegram_chat_id,
-                    "text": f"⚠️ <b>DS Digest 오류</b>\n{message}",
-                    "parse_mode": "HTML",
-                },
-            )
+    """파이프라인 오류 알림. 실패해도 파이프라인에 영향 없음."""
+    if await send_discord_text(f"⚠️ **DS Digest 오류**\n{message}"):
         logger.info("error_alert_sent", message=message[:80])
-    except Exception as e:
-        logger.error("error_alert_failed", error=str(e))
 
 
 async def _process_pending_feedback() -> dict:
-    """
-    파이프라인 시작 전 Telegram 미처리 콜백을 일괄 처리 (배치 모드).
-    별도 서버 없이 하루 1회 피드백을 수집해 프로필에 반영.
-    처리 결과 summary 반환: {"likes": N, "dislikes": N, "keywords": [...]}
+    """파이프라인 시작 전 미처리 피드백을 일괄 수거한다(배치 모드).
+
+    **피드백 경로는 Discord로 한정한다.** 두 채널에서 동시에 받으면 같은 아이템에
+    대한 신호가 갈리고 어느 쪽이 정본인지 판정할 근거가 없다. Telegram은 발송만
+    남겨둘 수 있고(설정으로), 수거는 하지 않는다.
     """
     settings = get_settings()
-    if not settings.telegram_bot_token:
+    if not settings.discord_bot_token or not settings.discord_channel_id:
+        logger.info("feedback_polling_skipped", reason="Discord 미설정")
         return {}
     try:
-        from app.deliverers.polling import poll_once
-        async with httpx.AsyncClient() as client:
-            summary = await poll_once(client, settings.telegram_bot_token)
+        from app.deliverers.discord_polling import poll_once
+        async with httpx.AsyncClient(timeout=20) as client:
+            summary = await poll_once(client)
         logger.info("pending_feedback_processed", **summary)
         return summary
     except Exception as e:
@@ -67,9 +54,9 @@ async def _process_pending_feedback() -> dict:
 
 
 async def _send_feedback_summary(summary: dict) -> None:
-    """전날 피드백 처리 결과를 Telegram으로 알림."""
+    """전날 피드백 처리 결과를 알린다(피드백 경로와 같은 채널로)."""
     settings = get_settings()
-    if not settings.telegram_bot_token or not settings.telegram_chat_id:
+    if not settings.discord_bot_token or not settings.discord_channel_id:
         return
     if settings.dry_run:
         return
@@ -95,64 +82,47 @@ async def _send_feedback_summary(summary: dict) -> None:
     if not parts:
         return
 
-    text = "📊 <b>어제 피드백 처리 완료</b>\n" + " · ".join(parts)
-    try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            await client.post(
-                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
-                json={"chat_id": settings.telegram_chat_id, "text": text, "parse_mode": "HTML"},
-            )
-    except Exception as e:
-        logger.warning("feedback_summary_failed", error=str(e))
+    await send_discord_text("📊 **어제 피드백 처리 완료**\n" + " · ".join(parts))
 
 
 HELP_TEXT = """\
-🧭 <b>DS Digest 사용법</b>
+🧭 **DS Digest 사용법**
 
-<b>큐레이션 바꾸기 — 그냥 한국말로 보내세요</b>
-아무 말이나 보내면 지시로 접수되고 다음 날 아침 발송부터 반영됩니다.
-  · "논문보다 실무 사례 위주로"
-  · "쿠버네티스 얘기는 줄여줘"
-  · "arxiv 그만"
-  · "인과추론 더 보고 싶어"
+**큐레이션 바꾸기 — 그냥 한국말로 보내세요**
+이 채널에 아무 말이나 보내면 지시로 접수되고 다음 날 아침 발송부터 반영됩니다.
+· "논문보다 실무 사례 위주로"
+· "쿠버네티스 얘기는 줄여줘"
+· "arxiv 그만"
+· "인과추론 더 보고 싶어"
 되돌리려면 반대로 말하면 됩니다. 지시는 14일 후 자동 만료되고,
 적용 중인 목록은 매일 아침 따로 알려드립니다.
 
-<b>아이템 피드백</b>
-각 아이템 아래 👍 / 👎 — 다음 큐레이션의 동점 순서를 가릅니다.
+**아이템 피드백**
+각 아이템에 달린 👍 / 👎 를 누르세요 — 다음 큐레이션의 동점 순서를 가릅니다.
 
-<b>퀴즈</b>
-선지 버튼으로 답을 고르면 기록되고, 정답은 가려진 부분을 탭해서 확인합니다.
-반복해서 틀린 개념은 관련 콘텐츠가 우선 서빙됩니다.
+**퀴즈**
+투표로 답을 고르면 기록됩니다. 반복해서 틀린 개념은 관련 콘텐츠가 우선 서빙됩니다.
 
-<b>명령어</b>
-  /keyword &lt;주제&gt; — 특정 키워드를 분석 프롬프트에 직접 넣습니다
-  /help — 이 안내
+**명령어**
+`/keyword <주제>` — 특정 키워드를 분석 프롬프트에 직접 넣습니다
+`/help` — 이 안내
 
-반영은 하루 1회 배치로 처리됩니다. 지금 보낸 것은 내일 아침 발송에 반영됩니다.
+-# 반영은 하루 1회 배치로 처리됩니다. 지금 보낸 것은 내일 아침 발송에 반영됩니다.
 """
 
 
 async def _send_help() -> None:
     """사용법 안내. 자유 텍스트 지시 경로가 안내되지 않아 사실상 없는 기능이었다."""
     settings = get_settings()
-    if not settings.telegram_bot_token or not settings.telegram_chat_id or settings.dry_run:
+    if not settings.discord_bot_token or not settings.discord_channel_id or settings.dry_run:
         return
-    try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            await client.post(
-                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
-                json={"chat_id": settings.telegram_chat_id, "text": HELP_TEXT,
-                      "parse_mode": "HTML", "disable_web_page_preview": True},
-            )
-    except Exception as e:
-        logger.warning("help_send_failed", error=str(e))
+    await send_discord_text(HELP_TEXT)
 
 
 async def _send_directive_status(directive) -> None:
     """현재 적용 중인 지시를 Telegram으로 알린다."""
     settings = get_settings()
-    if not settings.telegram_bot_token or not settings.telegram_chat_id or settings.dry_run:
+    if not settings.discord_bot_token or not settings.discord_channel_id or settings.dry_run:
         return
 
     text = (
@@ -160,14 +130,28 @@ async def _send_directive_status(directive) -> None:
         f"{directive.describe()}\n"
         "<i>취소하려면 반대로 말씀하시면 됩니다 (지시는 14일 후 자동 만료)</i>"
     )
-    try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            await client.post(
-                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
-                json={"chat_id": settings.telegram_chat_id, "text": text, "parse_mode": "HTML"},
-            )
-    except Exception as e:
-        logger.warning("directive_status_failed", error=str(e))
+    await send_discord_text(text)
+
+
+def _expected_source_keys(settings) -> list[str]:
+    """설정상 존재해야 하는 소스 키. 수집기가 실제로 만드는 키와 형식을 맞춘다.
+
+    형식이 어긋나면 같은 소스가 두 줄로 갈려 퍼널이 거짓말을 한다.
+    (예: 수집기는 `arxiv:cs.LG`를 쓰는데 여기서 `cs.LG`를 넘기면 안 된다)
+    """
+    from urllib.parse import urlparse
+
+    from app.collectors_newsletter import DEFAULT_NEWSLETTERS
+
+    keys = [f"arxiv:{c}" for c in settings.arxiv_category_list]
+    keys.append("hackernews")
+    keys.extend(settings.youtube_channel_list)
+    keys.extend(settings.rss_feed_list)
+    for url in settings.newsletter_list or DEFAULT_NEWSLETTERS:
+        host = urlparse(url if "://" in url else f"https://{url}").netloc
+        if host:
+            keys.append(host)
+    return keys
 
 
 def digest_items_raw(digest_items: list) -> list:
@@ -209,7 +193,9 @@ async def run_daily_digest() -> dict:
     )
     from app.collectors import fetch_arxiv_recent, fetch_hackernews_recent
     from app.collectors_newsletter import fetch_newsletters_recent, DEFAULT_NEWSLETTERS
-    arxiv_items = await fetch_arxiv_recent(settings.arxiv_category_list)
+    arxiv_items = await fetch_arxiv_recent(
+        settings.arxiv_category_list, max_items=settings.arxiv_max_items
+    )
     hn_items = await fetch_hackernews_recent(
         settings.hackernews_keyword_list,
         min_score=settings.hackernews_min_score,
@@ -292,6 +278,9 @@ async def run_daily_digest() -> dict:
     if "telegram" in channels:
         sent_results["telegram"] = await send_telegram_digest(digest_items)
 
+    if "discord" in channels:
+        sent_results["discord"] = await send_discord_digest(digest_items)
+
     if "email" in channels:
         sent_results["email"] = await send_digest(digest_items)
 
@@ -358,8 +347,13 @@ async def run_daily_digest() -> dict:
     # 드라이런은 기록하지 않는다 — mock 결과가 도달률 통계를 오염시킨다.
     if not settings.dry_run:
         from app.source_stats import record as record_source_funnel
-        record_source_funnel(collected_snapshot, raw_items, digest_items_raw(digest_items),
-                             date=today_str)
+        record_source_funnel(
+            collected_snapshot, raw_items, digest_items_raw(digest_items),
+            date=today_str,
+            # 설정상 있어야 할 소스를 함께 넘긴다. 이게 없으면 수집이 0건인 소스가
+            # 퍼널에 아예 안 나타나 또 투명인간이 된다 — arXiv가 40일간 그랬다.
+            expected=_expected_source_keys(settings),
+        )
 
     from app.records import save_digest_records
     from app.db import save_digest_records_to_db

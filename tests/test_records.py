@@ -164,9 +164,19 @@ def test_dry_run_leaves_real_output_paths_untouched(monkeypatch):
         )
         return [], [item]
 
+    async def _none(*a, **kw):
+        return []
+
     monkeypatch.setenv("DRY_RUN", "true")
     get_settings.cache_clear()
     monkeypatch.setattr(job, "collect_all", _fake_collect)
+    # 나머지 수집기도 전부 막는다. 안 막으면 arXiv 카테고리 10개 × HTTP 호출이
+    # 테스트마다 실제로 나가서 스위트가 수십 초씩 느려진다(실측 20초 → 5분).
+    import app.collectors as collectors
+    import app.collectors_newsletter as newsletter
+    monkeypatch.setattr(collectors, "fetch_arxiv_recent", _none)
+    monkeypatch.setattr(collectors, "fetch_hackernews_recent", _none)
+    monkeypatch.setattr(newsletter, "fetch_newsletters_recent", _none)
 
     asyncio.run(job.run_daily_digest())
     get_settings.cache_clear()

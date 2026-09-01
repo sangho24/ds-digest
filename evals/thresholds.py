@@ -32,6 +32,10 @@ THRESHOLDS: list[dict[str, Any]] = [
     # 실측: arXiv가 40일간 발송 0건인데 아무 경보도 없었다.
     # 기록이 없으면(퍼널 도입 전 구간) 0이 되어 통과한다.
     {"path": "source_funnel.starved_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집되나 미발송인 소스"},
+    # 설정돼 있는데 수집이 0건인 소스 = 수집기가 깨진 것. 실측으로 arXiv가
+    # http→https 301 때문에 40일간 0건이었는데 아무 경보도 없었다.
+    # 굶는 소스보다 나쁜 상태라 FAIL로 둔다.
+    {"path": "source_funnel.silent_count", "operator": ">", "value": 0, "severity": "FAIL", "label": "수집이 0건인 소스"},
 ]
 
 

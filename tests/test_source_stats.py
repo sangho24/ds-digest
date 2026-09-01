@@ -140,3 +140,51 @@ def test_aggregate_source_delivered_once_is_not_starved(tmp_path):
     record([_item("a")], [_item("a")], [], date="2026-09-02", path=out)
 
     assert aggregate(out)["starved_sources"] == []
+
+
+# ──────────────────────────────────────────────
+# 수집 0건 소스 — 굶는 소스보다 나쁜 상태
+# ──────────────────────────────────────────────
+#
+# arXiv는 URL이 http라 301 리다이렉트에서 본문이 비어 40일간 한 건도 수집되지
+# 않았다. 그런데 퍼널을 발송 아이템에서만 만들면 그 소스는 목록에 아예 없어
+# "굶는 소스"로도 안 잡힌다 — 또 한 번 투명인간이다.
+
+def test_expected_source_with_zero_collection_appears(tmp_path):
+    funnel = build_funnel([_item("hn")], [_item("hn")], [_item("hn")],
+                          expected=["arxiv:cs.LG", "hn"])
+
+    assert funnel["arxiv:cs.LG"] == {"collected": 0, "candidates": 0, "delivered": 0}
+
+
+def test_aggregate_reports_silent_sources(tmp_path):
+    out = tmp_path / "s.jsonl"
+    record([_item("hn")], [_item("hn")], [_item("hn")],
+           date="2026-09-01", path=out, expected=["arxiv:cs.LG", "hn"])
+
+    agg = aggregate(out)
+
+    assert agg["silent_sources"] == ["arxiv:cs.LG"]
+    assert agg["silent_count"] == 1
+    # 수집이 0이면 "굶는" 것과는 다른 상태다 — 섞이면 처방을 틀린다.
+    assert agg["starved_sources"] == []
+
+
+def test_silent_is_separate_from_starved(tmp_path):
+    """수집 0건(수집기 고장)과 수집되나 미발송(채점에서 밀림)은 처방이 다르다."""
+    out = tmp_path / "s.jsonl"
+    record(
+        collected=[_item("arxiv:cs.LG")], candidates=[_item("arxiv:cs.LG")], delivered=[],
+        date="2026-09-01", path=out, expected=["arxiv:cs.LG", "arxiv:cs.DB"],
+    )
+
+    agg = aggregate(out)
+
+    assert agg["starved_sources"] == ["arxiv:cs.LG"]   # 수집됐는데 안 나감
+    assert agg["silent_sources"] == ["arxiv:cs.DB"]    # 아예 안 수집됨
+
+
+def test_expected_ignores_blank_keys():
+    funnel = build_funnel([], [], [], expected=["", "  ", "hn"])
+
+    assert set(funnel) == {"hn"}

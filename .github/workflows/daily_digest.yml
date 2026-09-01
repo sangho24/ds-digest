@@ -65,9 +65,13 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          # Telegram
+          # Telegram (발송 폴백용 — 피드백 수거는 Discord로 한정)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Discord (hermes 봇 재사용) — 발송·피드백 수거의 정본 채널.
+          # 게이트웨이 없이 REST만 쓰므로 상시 프로세스가 필요 없다.
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
           # App
           BASE_URL: ${{ secrets.BASE_URL }}
           DELIVERY_CHANNELS: ${{ secrets.DELIVERY_CHANNELS }}
@@ -100,7 +104,8 @@ jobs:
           # `|| true` 필수: Actions 기본 셸이 `bash -e`라, 조건이 거짓이면
           # 이 줄이 exit 1을 내고 스텝 전체가 죽는다.
           for f in data/quiz_results.jsonl data/directives.jsonl data/concepts.json \
-                   data/source_stats.jsonl; do
+                   data/source_stats.jsonl data/discord_messages.jsonl \
+                   data/discord_cursor.json; do
             [ -f "$f" ] && git add "$f"
           done || true
           git diff --cached --quiet && exit 0

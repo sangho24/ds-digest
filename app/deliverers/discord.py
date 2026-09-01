@@ -1,0 +1,263 @@
+"""Discord 발송 — 게이트웨이 없이 REST만으로 도는 배치 모델.
+
+왜 게이트웨이가 필요 없나:
+    "리액션을 읽으려면 게이트웨이가 필요하다"는 말은 **실시간 이벤트** 얘기다.
+    현재 상태 조회는 전부 REST로 된다.
+
+        GET /channels/{id}/messages          메시지 객체에 reactions 배열(카운트 포함)
+        GET /channels/{id}/polls/{msg}/answers/{aid}   답변별 투표자 목록
+
+    파이프라인이 GitHub Actions에서 하루 한 번 도는 배치이므로, Telegram의
+    getUpdates와 정확히 같은 모델로 맞아떨어진다. 상시 프로세스가 필요 없다.
+
+메시지 ↔ 아이템 연결:
+    어느 메시지가 어느 아이템·문항인지 알아야 피드백을 귀속시킬 수 있다.
+    본문에 id를 박으면 사용자 눈에 지저분하게 보이므로, 발송 시점에 매핑을
+    `data/discord_messages.jsonl`에 남긴다. 이 리포의 다른 상태(퀴즈 라벨·지시·
+    개념 어휘)와 같은 방식이고, 러너가 ephemeral이라 커밋돼야 살아남는다.
+
+퀴즈는 왜 네이티브 Poll인가:
+    Discord Poll은 투표 UI가 붙고 결과가 그 자리에서 보인다. 리액션보다 오답
+    선택을 정확히 잡을 수 있고, `Get Answer Voters`로 누가 무엇을 골랐는지
+    REST로 되읽을 수 있다.
+
+    제약: 선지 최대 55자, 질문 최대 300자, 답변 최대 10개. 초과분은 잘라서 보낸다.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+from zoneinfo import ZoneInfo
+
+import httpx
+import structlog
+
+from app.config import get_settings
+from app.models import DigestItem
+from app.preferences import item_id
+
+logger = structlog.get_logger()
+
+API = "https://discord.com/api/v10"
+ROOT = Path(__file__).resolve().parent.parent.parent
+MESSAGE_MAP_PATH = ROOT / "data" / "discord_messages.jsonl"
+KST = ZoneInfo("Asia/Seoul")
+
+# Discord 제약. 넘기면 400이 나므로 보내기 전에 자른다.
+MAX_CONTENT = 2000
+MAX_POLL_QUESTION = 300
+MAX_POLL_ANSWER = 55
+MAX_POLL_ANSWERS = 10
+
+LIKE_EMOJI = "👍"
+DISLIKE_EMOJI = "👎"
+
+
+def _headers() -> dict[str, str]:
+    return {
+        "Authorization": f"Bot {get_settings().discord_bot_token}",
+        "Content-Type": "application/json",
+    }
+
+
+def _truncate(text: str, limit: int) -> str:
+    text = str(text or "").strip()
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def record_message(kind: str, message_id: str, **fields: Any) -> None:
+    """메시지 ↔ 아이템 매핑을 남긴다. 피드백 귀속의 유일한 근거다."""
+    entry = {
+        "kind": kind,
+        "message_id": str(message_id),
+        "recorded_at": datetime.now(KST).isoformat(),
+        **fields,
+    }
+    MESSAGE_MAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with MESSAGE_MAP_PATH.open("a", encoding="utf-8") as file:
+        file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
+def load_message_map(path: Path | None = None) -> dict[str, dict[str, Any]]:
+    """{message_id: 매핑}. 같은 id가 여러 번 나오면 마지막 것을 쓴다."""
+    target = path or MESSAGE_MAP_PATH
+    if not target.exists():
+        return {}
+
+    mapping: dict[str, dict[str, Any]] = {}
+    with target.open("r", encoding="utf-8") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(row, dict) and row.get("message_id"):
+                mapping[str(row["message_id"])] = row
+    return mapping
+
+
+async def _post(client: httpx.AsyncClient, payload: dict) -> dict | None:
+    """채널에 메시지를 보내고 생성된 메시지 객체를 돌려준다. 실패는 None."""
+    settings = get_settings()
+    try:
+        resp = await client.post(
+            f"{API}/channels/{settings.discord_channel_id}/messages",
+            headers=_headers(),
+            json=payload,
+        )
+        if resp.status_code >= 400:
+            logger.error("discord_send_failed", status=resp.status_code, body=resp.text[:300])
+            return None
+        return resp.json()
+    except Exception as e:
+        logger.error("discord_request_failed", error=str(e))
+        return None
+
+
+async def _react(client: httpx.AsyncClient, message_id: str, emoji: str) -> None:
+    """봇이 먼저 리액션을 달아둔다 — 사용자가 한 번만 누르면 되도록.
+
+    카운트가 2 이상이면 사용자가 눌렀다는 뜻이다(봇 자신의 1을 뺀다).
+    """
+    settings = get_settings()
+    from urllib.parse import quote
+
+    try:
+        await client.put(
+            f"{API}/channels/{settings.discord_channel_id}/messages/"
+            f"{message_id}/reactions/{quote(emoji)}/@me",
+            headers=_headers(),
+        )
+    except Exception as e:
+        logger.warning("discord_react_failed", error=str(e), emoji=emoji)
+
+
+def _format_header(items: list[DigestItem]) -> str:
+    today = datetime.now(KST)
+    yt = sum(1 for i in items if i.raw.source_type.value == "youtube")
+    rss = len(items) - yt
+    parts = []
+    if yt:
+        parts.append(f"📹 {yt}")
+    if rss:
+        parts.append(f"📰 {rss}")
+    breakdown = "  " + " · ".join(parts) if parts else ""
+    return (
+        f"## 📬 DS Digest — {today.month}월 {today.day}일\n"
+        f"오늘의 큐레이션 {len(items)}건{breakdown}\n"
+        f"-# 💡 이 채널에 그냥 한국말로 말해주세요 — "
+        f"\"논문보다 실무 사례 위주로\" 같은 지시가 다음 날 반영됩니다. `/help`"
+    )
+
+
+def _format_item(item: DigestItem, index: int) -> str:
+    a, r = item.analysis, item.raw
+    lines = [f"**{index}. {r.title}**", f"> {a.one_line_summary}", ""]
+
+    if a.key_points:
+        for kp in a.key_points[:3]:
+            stamp = f"`{kp.timestamp}` " if kp.timestamp else ""
+            lines.append(f"· {stamp}{kp.point}")
+        lines.append("")
+
+    if a.production_ideas:
+        lines.append("**적용 아이디어**")
+        for idea in a.production_ideas[:2]:
+            lines.append(f"· {idea}")
+        lines.append("")
+
+    meta = [r.source_label or r.source_name, f"관련도 {a.relevance_score}"]
+    if a.concepts:
+        meta.append(" / ".join(a.concepts))
+    lines.append(f"-# {' · '.join(meta)}")
+    lines.append(f"<{r.url}>")
+    return _truncate("\n".join(lines), MAX_CONTENT)
+
+
+def _build_poll(item: DigestItem, q_index: int) -> dict | None:
+    """문항 하나를 Discord 네이티브 Poll로 만든다. 선지가 부족하면 None."""
+    quiz = item.analysis.quiz
+    if q_index >= len(quiz):
+        return None
+    q = quiz[q_index]
+    options = [o for o in q.options if str(o).strip()][:MAX_POLL_ANSWERS]
+    if len(options) < 2:
+        return None
+
+    return {
+        "question": {"text": _truncate(q.question, MAX_POLL_QUESTION)},
+        "answers": [
+            {"poll_media": {"text": _truncate(opt, MAX_POLL_ANSWER)}} for opt in options
+        ],
+        # 24시간이면 다음 배치 폴링 전에 아직 열려 있고, 결과도 계속 읽힌다.
+        "duration": 24,
+        "allow_multiselect": False,
+    }
+
+
+async def send_discord_digest(items: list[DigestItem]) -> bool:
+    """다이제스트를 Discord로 발송하고 메시지 매핑을 남긴다."""
+    settings = get_settings()
+    if not settings.discord_bot_token or not settings.discord_channel_id:
+        logger.warning(
+            "discord_not_configured",
+            hint="DISCORD_BOT_TOKEN / DISCORD_CHANNEL_ID 설정 필요",
+        )
+        return False
+
+    if settings.dry_run:
+        logger.info("dry_run_skip_discord", items=len(items))
+        return True
+
+    async with httpx.AsyncClient(timeout=20) as client:
+        if not await _post(client, {"content": _format_header(items)}):
+            return False
+
+        for index, item in enumerate(items, 1):
+            msg = await _post(client, {"content": _format_item(item, index)})
+            if not msg:
+                continue
+            record_message("item", msg["id"], item_id=item_id(item.raw.url), url=item.raw.url)
+            # 👍/👎를 미리 달아둔다. 사용자는 한 번만 누르면 된다.
+            await _react(client, msg["id"], LIKE_EMOJI)
+            await _react(client, msg["id"], DISLIKE_EMOJI)
+
+        # 퀴즈 — 문항마다 네이티브 Poll 하나.
+        number = 0
+        for item in items:
+            for q_index in range(len(item.analysis.quiz)):
+                poll = _build_poll(item, q_index)
+                if poll is None:
+                    continue
+                number += 1
+                msg = await _post(
+                    client,
+                    {"content": f"🧠 **퀴즈 {number}**", "poll": poll},
+                )
+                if not msg:
+                    continue
+                record_message(
+                    "quiz",
+                    msg["id"],
+                    item_id=item_id(item.raw.url),
+                    question_index=q_index,
+                    answer_index=item.analysis.quiz[q_index].answer_index,
+                )
+
+    logger.info("discord_digest_sent", items=len(items), channel=settings.discord_channel_id)
+    return True
+
+
+async def send_discord_text(text: str) -> bool:
+    """알림·요약용 단문 발송."""
+    settings = get_settings()
+    if not settings.discord_bot_token or not settings.discord_channel_id or settings.dry_run:
+        return False
+    async with httpx.AsyncClient(timeout=15) as client:
+        return await _post(client, {"content": _truncate(text, MAX_CONTENT)}) is not None

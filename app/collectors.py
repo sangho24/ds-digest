@@ -296,15 +296,31 @@ async def fetch_rss_recent(
 # ArXiv
 # ──────────────────────────────────────────────
 
-async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[RawContent]:
-    """ArXiv Atom API에서 카테고리별 최신 논문 수집"""
-    items: list[RawContent] = []
+async def fetch_arxiv_recent(
+    categories: list[str],
+    hours: int = 48,
+    max_items: int = 12,
+) -> list[RawContent]:
+    """ArXiv Atom API에서 카테고리별 최신 논문 수집.
+
+    max_items로 런당 총량을 묶는다. 카테고리를 10개로 늘리면 카테고리당 10건 =
+    100건이 후보 풀에 들어와, HN에서 고친 편중을 그대로 재현하기 때문이다.
+
+    상한은 **카테고리를 번갈아 가며(round-robin)** 적용한다. 앞에서부터 자르면
+    목록 첫 카테고리(cs.LG)가 상한을 다 먹고 나머지는 한 건도 못 들어온다 —
+    카테고리를 넓힌 의미가 사라진다.
+    """
+    per_category: dict[str, list[RawContent]] = {}
 
     async with httpx.AsyncClient(timeout=15) as client:
         for category in categories:
             try:
+                # https 필수. http는 301로 리다이렉트되는데 httpx는 기본적으로
+                # 따라가지 않아 본문이 비고 feedparser가 0건을 낸다.
+                # 이 한 글자 때문에 arXiv는 **한 건도 수집된 적이 없었다**
+                # (40일 발송 0건의 진짜 원인 — 채점 문제가 아니었다).
                 url = (
-                    f"http://export.arxiv.org/api/query"
+                    f"https://export.arxiv.org/api/query"
                     f"?search_query=cat:{category}"
                     f"&sortBy=submittedDate&sortOrder=descending&max_results=10"
                 )
@@ -322,7 +338,7 @@ async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[Raw
                     if not link:
                         continue
 
-                    items.append(RawContent(
+                    per_category.setdefault(category, []).append(RawContent(
                         source_type=SourceType.RSS,
                         source_name=f"arXiv:{category}",
                         source_key=f"arxiv:{category}",
@@ -335,8 +351,34 @@ async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[Raw
                     logger.info("arxiv_collected", category=category, title=entry.title)
 
             except Exception as e:
-                logger.error("arxiv_fetch_failed", category=category, error=str(e))
+                # 예외 타입을 같이 남긴다. ReadTimeout처럼 str(e)가 빈 예외가 있어
+                # error= 만 찍히면 무엇이 실패했는지 알 수 없다.
+                logger.error(
+                    "arxiv_fetch_failed",
+                    category=category,
+                    error=f"{type(e).__name__}: {e}",
+                )
 
+    # 카테고리를 번갈아 한 건씩 뽑아 상한까지 채운다.
+    items: list[RawContent] = []
+    total = sum(len(v) for v in per_category.values())
+    depth = 0
+    while len(items) < max_items:
+        added = False
+        for category in categories:
+            bucket = per_category.get(category) or []
+            if depth < len(bucket):
+                items.append(bucket[depth])
+                added = True
+                if len(items) >= max_items:
+                    break
+        if not added:
+            break
+        depth += 1
+
+    if total > len(items):
+        logger.info("arxiv_capped", kept=len(items), dropped=total - len(items),
+                    categories=len(per_category))
     return items
 
 

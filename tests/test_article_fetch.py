@@ -137,6 +137,7 @@ class _Resp:
     def __init__(self, code, payload, text=""):
         self.status_code, self._p, self.text = code, payload, text
         self.headers = {"content-type": "text/html"}
+        self.content = text.encode()
 
     def json(self):
         return self._p
@@ -170,3 +171,57 @@ def test_hackernews_does_not_fetch_bodies_for_dropped_items(monkeypatch):
     asyncio.run(fetch_hackernews_recent(["a"], max_items=3, fetch_link_body=True))
 
     assert len(_HNClient.body_fetches) == 3, f"버린 아이템까지 fetch했다: {_HNClient.body_fetches}"
+
+
+def test_arxiv_uses_https(monkeypatch):
+    """http는 301로 리다이렉트되고 httpx는 기본적으로 따라가지 않는다.
+
+    이 한 글자 때문에 arXiv는 40일간 한 건도 수집되지 않았다 — 발송 0건의
+    원인은 채점이 아니라 수집이었다.
+    """
+    from app.collectors import fetch_arxiv_recent
+
+    requested: list[str] = []
+
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw):
+            requested.append(url)
+            return _Resp(200, {})
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    asyncio.run(fetch_arxiv_recent(["cs.LG"]))
+
+    assert requested, "요청이 나가지 않았다"
+    assert requested[0].startswith("https://"), f"http로 나갔다: {requested[0]}"
+
+
+def test_arxiv_round_robin_across_categories(monkeypatch):
+    """앞에서부터 자르면 첫 카테고리가 상한을 다 먹어 확장한 의미가 사라진다."""
+    from app.collectors import fetch_arxiv_recent
+
+    entry_tpl = (
+        '<entry><title>{t}</title><id>https://arxiv.org/abs/{t}</id>'
+        '<summary>초록 내용</summary></entry>'
+    )
+
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw):
+            cat = url.split("cat:")[1].split("&")[0]
+            entries = "".join(entry_tpl.format(t=f"{cat}-{i}") for i in range(10))
+            xml = f'<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom">{entries}</feed>'
+            return _Resp(200, {}, text=xml)
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    items = asyncio.run(fetch_arxiv_recent(["cs.LG", "cs.CL", "cs.IR"], max_items=6))
+
+    keys = [i.source_key for i in items]
+    assert len(items) == 6
+    assert keys.count("arxiv:cs.LG") == 2
+    assert keys.count("arxiv:cs.CL") == 2
+    assert keys.count("arxiv:cs.IR") == 2
