@@ -105,6 +105,10 @@ async def _handle_update(
         if not text:
             return
 
+        if text.lower().startswith(("/help", "/start")):
+            summary["help_requested"] = True
+            return
+
         if text.lower().startswith("/keyword"):
             keyword = text[len("/keyword"):].strip()
             if keyword:
@@ -143,6 +147,7 @@ async def poll_once(client: httpx.AsyncClient, token: str) -> dict:
         "quiz_answers": 0,
         "quiz_correct": 0,
         "directives": [],
+        "help_requested": False,
     }
     try:
         resp = await client.get(

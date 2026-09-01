@@ -250,6 +250,7 @@ def test_low_relative_rating_does_not_drop_item(monkeypatch):
     monkeypatch.setattr(analyzer, "weak_concepts", lambda *a, **k: set())
     monkeypatch.setattr(analyzer, "get_settings", lambda: SimpleNamespace(
         dry_run=False, groq_api_key="k", relevance_floor=4, max_items_per_digest=5,
+        max_items_per_source=5,
     ))
     _patch_llm(monkeypatch, {"ratings": [
         {"index": 0, "rating": 10}, {"index": 1, "rating": 5}, {"index": 2, "rating": 1},
@@ -282,6 +283,7 @@ def test_absolute_low_quality_is_still_dropped(monkeypatch):
     monkeypatch.setattr(analyzer, "weak_concepts", lambda *a, **k: set())
     monkeypatch.setattr(analyzer, "get_settings", lambda: SimpleNamespace(
         dry_run=False, groq_api_key="k", relevance_floor=4, max_items_per_digest=5,
+        max_items_per_source=5,
     ))
     _patch_llm(monkeypatch, {"ratings": [{"index": 0, "rating": 10}]})
 

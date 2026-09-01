@@ -81,8 +81,11 @@ async def _send_feedback_summary(summary: dict) -> None:
         parts.append(f"👎 {summary['dislikes']}건")
     if summary.get("keywords"):
         parts.append(f"📝 키워드 등록: {', '.join(summary['keywords'])}")
-    if summary.get("directives"):
-        parts.append(f"🗒 지시 {len(summary['directives'])}건 접수")
+    if received := summary.get("directives"):
+        # 무엇을 지시로 받아들였는지 원문 그대로 되돌려준다. 배치 폴링이라
+        # 보낸 즉시 확인해줄 수 없으므로, 여기가 유일한 접수 확인 지점이다.
+        quoted = " / ".join(f"\u201c{t}\u201d" for t in received[:3])
+        parts.append(f"🗒 지시 {len(received)}건 접수 — {quoted}")
     if answered := summary.get("quiz_answers"):
         # 채점은 여기서 처음 사용자에게 보인다. 배치 폴링이라 버튼을 누른 시점엔
         # 콜백이 이미 만료돼 토스트를 띄울 수 없기 때문이다.
@@ -101,6 +104,49 @@ async def _send_feedback_summary(summary: dict) -> None:
             )
     except Exception as e:
         logger.warning("feedback_summary_failed", error=str(e))
+
+
+HELP_TEXT = """\
+🧭 <b>DS Digest 사용법</b>
+
+<b>큐레이션 바꾸기 — 그냥 한국말로 보내세요</b>
+아무 말이나 보내면 지시로 접수되고 다음 날 아침 발송부터 반영됩니다.
+  · "논문보다 실무 사례 위주로"
+  · "쿠버네티스 얘기는 줄여줘"
+  · "arxiv 그만"
+  · "인과추론 더 보고 싶어"
+되돌리려면 반대로 말하면 됩니다. 지시는 14일 후 자동 만료되고,
+적용 중인 목록은 매일 아침 따로 알려드립니다.
+
+<b>아이템 피드백</b>
+각 아이템 아래 👍 / 👎 — 다음 큐레이션의 동점 순서를 가릅니다.
+
+<b>퀴즈</b>
+선지 버튼으로 답을 고르면 기록되고, 정답은 가려진 부분을 탭해서 확인합니다.
+반복해서 틀린 개념은 관련 콘텐츠가 우선 서빙됩니다.
+
+<b>명령어</b>
+  /keyword &lt;주제&gt; — 특정 키워드를 분석 프롬프트에 직접 넣습니다
+  /help — 이 안내
+
+반영은 하루 1회 배치로 처리됩니다. 지금 보낸 것은 내일 아침 발송에 반영됩니다.
+"""
+
+
+async def _send_help() -> None:
+    """사용법 안내. 자유 텍스트 지시 경로가 안내되지 않아 사실상 없는 기능이었다."""
+    settings = get_settings()
+    if not settings.telegram_bot_token or not settings.telegram_chat_id or settings.dry_run:
+        return
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                json={"chat_id": settings.telegram_chat_id, "text": HELP_TEXT,
+                      "parse_mode": "HTML", "disable_web_page_preview": True},
+            )
+    except Exception as e:
+        logger.warning("help_send_failed", error=str(e))
 
 
 async def _send_directive_status(directive) -> None:
@@ -146,6 +192,8 @@ async def run_daily_digest() -> dict:
     # 0-b. 어제 들어온 Telegram 피드백 먼저 처리 → 프로필 반영 → 요약 알림
     feedback_summary = await _process_pending_feedback()
     await _send_feedback_summary(feedback_summary)
+    if feedback_summary.get("help_requested"):
+        await _send_help()
 
     # 1. 사용자 프로필 로드
     profile = load_profile()
@@ -166,6 +214,7 @@ async def run_daily_digest() -> dict:
         settings.hackernews_keyword_list,
         min_score=settings.hackernews_min_score,
         fetch_link_body=settings.fetch_link_body,
+        max_items=settings.hackernews_max_items,
     )
     # 뉴스레터: 주간 발행이 많아 168시간(7일) lookback으로 수집한다.
     # (RSS/arXiv는 48h, HN은 기본 24h — 뉴스레터는 발행 주기가 길어 창을 넓힌다.)

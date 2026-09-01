@@ -58,9 +58,23 @@ class Settings(BaseSettings):
     # HackerNews
     hackernews_keywords: str = "machine learning,MLOps,data science,LLM"
     hackernews_min_score: int = 50
+    # 런당 HN 후보 상한.
+    # 없을 때는 키워드 4개 × Algolia 기본 20건 = 최대 80건이 후보 풀에 들어왔다.
+    # RSS 블로그 하나가 48시간에 1~3건, YouTube 채널이 3건으로 캡되는 것과 자릿수가
+    # 다르다. 그래서 HN이 상위 점수대에 압도적으로 많이 걸렸고, 실측 40일 165건에서
+    # 32.3%를 차지했다. 그건 HN이 더 좋아서가 아니라 후보를 훨씬 많이 냈기 때문이다.
+    # 점수(points) 상위 N건만 남겨 다른 소스와 같은 급으로 맞춘다.
+    hackernews_max_items: int = 10
 
     # Settings
     max_items_per_digest: int = 5
+    # 한 다이제스트에서 같은 출처가 차지할 수 있는 최대 슬롯.
+    # 점수순으로만 뽑으면 다작 소스가 다이제스트를 잠식한다 — 실측 40일 165건에서
+    # HackerNews 한 소스가 32.3%, 상위 3개가 52%를 차지했다. 그런데 그 편중이
+    # "HN이 압도적으로 좋은 소스"라는 근거는 없다. 후보를 많이 내는 소스가 상위
+    # 점수대에 더 많이 걸릴 뿐이고, 지금 채점의 변별력(IQR 1)으로는 그 차이가
+    # 실질적이라고 볼 수 없다. 다양성을 점수에 맡기지 않고 구조로 보장한다.
+    max_items_per_source: int = 2
     # 필터링용으로는 폐기됨(상대 랭킹으로 대체됨). RELEVANCE_THRESHOLD GitHub
     # secret이 이 값을 설정하므로 필드는 표시/호환용으로만 유지한다.
     relevance_threshold: int = 7

@@ -37,7 +37,7 @@ def _item(idx: int) -> RawContent:
     )
 
 
-def _run_filter(monkeypatch, scores, *, floor=4, max_items=5):
+def _run_filter(monkeypatch, scores, *, floor=4, max_items=5, per_source=5):
     """scores 순서대로 relevance_score를 부여한 아이템을 filter_and_analyze에 통과시킨다."""
     items = [_item(i) for i in range(len(scores))]
     score_by_url = {item.url: score for item, score in zip(items, scores)}
@@ -59,6 +59,7 @@ def _run_filter(monkeypatch, scores, *, floor=4, max_items=5):
             groq_api_key="k",
             relevance_floor=floor,
             max_items_per_digest=max_items,
+            max_items_per_source=per_source,
         ),
     )
     monkeypatch.setattr(analyzer.asyncio, "sleep", _noop_sleep)
@@ -100,3 +101,87 @@ def test_all_below_floor_returns_empty(monkeypatch):
     scores = _run_filter(monkeypatch, [1, 2, 3], floor=4, max_items=5)
 
     assert scores == []
+
+
+# ──────────────────────────────────────────────
+# 출처 상한 — 다양성을 채점에 맡기지 않는다
+# ──────────────────────────────────────────────
+#
+# 점수순으로만 자르면 후보를 많이 내는 소스가 다이제스트를 잠식한다. 실측 40일
+# 165건에서 HackerNews 한 소스가 32.3%, 상위 3개가 52%였다. 그런데 그게 "HN이
+# 다른 소스보다 좋다"는 근거는 아니다 — 후보를 많이 내는 소스가 상위 점수대에
+# 더 많이 걸릴 뿐이고, 지금 채점의 변별력(관련도 IQR 1)으로는 그 차이가
+# 실질적이라고 볼 수 없다.
+
+from app.analyzer import _select_with_source_cap  # noqa: E402
+from app.models import ContentAnalysis as _CA, DigestItem as _DI  # noqa: E402
+
+
+def _cand(source: str, score: int, n: int = 0) -> _DI:
+    return _DI(
+        raw=RawContent(
+            source_type=SourceType.RSS, source_name=source, source_key=source,
+            title=f"{source}{n}", url=f"https://e.com/{source}/{n}",
+        ),
+        analysis=_CA(
+            relevance_score=score, one_line_summary="요약",
+            evidence_level=EvidenceLevel.FULL, skip_reason=None,
+        ),
+    )
+
+
+def test_source_cap_limits_one_source():
+    """한 소스가 다이제스트를 잠식하지 못한다.
+
+    상한을 지키고도 정원을 채울 수 있을 만큼 소스가 있을 때의 동작이다
+    (완화가 걸리는 경우는 아래 별도 테스트).
+    """
+    candidates = (
+        [_cand("hn", 9, i) for i in range(5)]
+        + [_cand("toss", 5, 0), _cand("toss", 4, 1), _cand("naver", 3, 0)]
+    )
+
+    picked = _select_with_source_cap(candidates, limit=5, per_source=2)
+
+    keys = [d.raw.source_key for d in picked]
+    assert keys.count("hn") == 2, f"HN이 상한을 넘겼다: {keys}"
+    assert set(keys) == {"hn", "toss", "naver"}
+
+
+def test_source_cap_prefers_higher_scores_within_source():
+    """같은 소스 안에서는 여전히 점수순으로 뽑는다."""
+    candidates = [_cand("hn", 9, 0), _cand("hn", 8, 1), _cand("hn", 3, 2), _cand("toss", 5)]
+
+    picked = _select_with_source_cap(candidates, limit=3, per_source=2)
+
+    assert [d.analysis.relevance_score for d in picked] == [9, 8, 5]
+
+
+def test_source_cap_relaxes_rather_than_shrinking_digest():
+    """상한을 지키면 다이제스트가 짧아지는 경우, 상한보다 분량을 택한다.
+
+    약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다 —
+    §3.4가 상대 랭킹으로 해결한 바로 그 문제다.
+    """
+    candidates = [_cand("hn", 9 - i, i) for i in range(5)]
+
+    picked = _select_with_source_cap(candidates, limit=5, per_source=2)
+
+    assert len(picked) == 5
+    assert [d.analysis.relevance_score for d in picked] == [9, 8, 7, 6, 5]
+
+
+def test_source_cap_disabled_when_zero():
+    candidates = [_cand("hn", 9, i) for i in range(5)]
+
+    assert len(_select_with_source_cap(candidates, limit=3, per_source=0)) == 3
+
+
+def test_source_cap_end_to_end(monkeypatch):
+    """filter_and_analyze 전체를 통과해도 상한이 적용된다."""
+    result = _run_filter(
+        monkeypatch, [9, 9, 9, 9, 9], max_items=5, per_source=2,
+    )
+    # _run_filter의 아이템은 전부 source_name="src" 하나다 → 상한에 걸리지만
+    # 분량을 위해 완화돼 5건이 유지돼야 한다.
+    assert len(result) == 5

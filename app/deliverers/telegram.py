@@ -36,7 +36,10 @@ def _format_header(items: list[DigestItem]) -> str:
     return (
         f"📬 <b>DS Digest  {today.month}월 {today.day}일</b>\n"
         f"오늘의 큐레이션 {len(items)}건{breakdown_str}\n"
-        f"<i>💡 특정 주제를 원하면 /keyword 주제명 으로 알려주세요</i>"
+        # 자유 텍스트 지시 경로가 어디에도 안내돼 있지 않아 사실상 없는 기능이었다.
+        # /keyword보다 표현력이 넓으므로 이쪽을 앞에 둔다.
+        f"<i>💡 그냥 한국말로 말해주세요 — \"논문보다 실무 사례 위주로\", "
+        f"\"쿠버네티스는 줄여줘\" 같은 지시가 다음 날 반영됩니다. /help</i>"
     )
 
 

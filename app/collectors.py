@@ -345,19 +345,30 @@ async def fetch_arxiv_recent(categories: list[str], hours: int = 48) -> list[Raw
 # ──────────────────────────────────────────────
 
 async def fetch_hackernews_recent(
-    keywords: list[str], hours: int = 24, min_score: int = 50, fetch_link_body: bool = True
+    keywords: list[str],
+    hours: int = 24,
+    min_score: int = 50,
+    fetch_link_body: bool = True,
+    max_items: int = 10,
 ) -> list[RawContent]:
-    """Algolia HN API에서 키워드별 최신 스토리 수집.
+    """HackerNews Algolia 검색으로 키워드별 스토리를 수집한다.
 
     fetch_link_body=True면 story_text가 빈 외부 링크 스토리에 한해 원문 본문을
     가져온다(HN 스토리 대부분은 외부 링크라 story_text가 비어 있다).
+
+    max_items로 런당 후보 수를 제한한다. 없을 때는 키워드 4개 × Algolia 기본
+    20건 = 최대 80건이 후보 풀에 들어왔다. RSS 블로그 하나가 48시간에 1~3건,
+    YouTube 채널이 3건으로 캡되는 것과 자릿수가 다르다. 그래서 HN이 상위
+    점수대에 압도적으로 많이 걸렸고 실측 40일 165건에서 32.3%를 차지했다 —
+    HN이 더 좋아서가 아니라 후보를 훨씬 많이 냈기 때문이다.
     """
     import time as _time
 
-    items: list[RawContent] = []
-    seen_urls: set[str] = set()
     timestamp = int(_time.time()) - hours * 3600
+    seen_urls: set[str] = set()
+    collected: list[tuple[int, dict, str]] = []
 
+    # 1단계: 메타데이터만 모은다. 본문 fetch는 상한을 적용한 뒤에 한다.
     async with httpx.AsyncClient(timeout=15) as client:
         for keyword in keywords:
             try:
@@ -371,37 +382,53 @@ async def fetch_hackernews_recent(
 
                 for hit in data.get("hits", []):
                     item_url = hit.get("url") or f"https://news.ycombinator.com/item?id={hit['objectID']}"
-
                     if item_url in seen_urls:
                         continue
                     seen_urls.add(item_url)
-
-                    body = (hit.get("story_text") or "")[:3000]
-                    # story_text가 빈 외부 링크 스토리만 원문 본문을 보강한다.
-                    # (HN 자체 스레드로 폴백된 URL은 hit["url"]이 None이라 건너뛴다)
-                    external_url = hit.get("url")
-                    if (
-                        fetch_link_body
-                        and not body
-                        and external_url
-                        and str(external_url).lower().startswith(("http://", "https://"))
-                    ):
-                        body = await _fetch_article_body(client, external_url)
-
-                    items.append(RawContent(
-                        source_type=SourceType.RSS,
-                        source_name="HackerNews",
-                        source_key="hackernews",     # 도메인 분리 없이 단일 버킷 유지
-                        source_label="HackerNews",
-                        title=hit["title"],
-                        url=item_url,
-                        published_at=None,
-                        body=body,
-                    ))
-                    logger.info("hn_collected", keyword=keyword, title=hit["title"])
+                    collected.append((int(hit.get("points") or 0), hit, item_url))
 
             except Exception as e:
                 logger.error("hn_fetch_failed", keyword=keyword, error=str(e))
+
+    # 2단계: 점수 상위 max_items건만 남긴다.
+    # 상한을 본문 fetch **전에** 적용하는 이유: 버릴 아이템의 원문을 가져오는 것은
+    # 순수한 낭비이고, 링크 fetch가 이 수집기에서 가장 비싼 작업이다.
+    collected.sort(key=lambda t: t[0], reverse=True)
+    if len(collected) > max_items:
+        logger.info("hn_capped", kept=max_items, dropped=len(collected) - max_items)
+    collected = collected[:max_items]
+
+    # 3단계: 남은 것만 본문을 채워 RawContent로 만든다.
+    items: list[RawContent] = []
+    async with httpx.AsyncClient(timeout=15) as client:
+        for points, hit, item_url in collected:
+            try:
+                body = (hit.get("story_text") or "")[:3000]
+                # story_text가 빈 외부 링크 스토리만 원문 본문을 보강한다.
+                # (HN 자체 스레드로 폴백된 URL은 hit["url"]이 None이라 건너뛴다)
+                external_url = hit.get("url")
+                if (
+                    fetch_link_body
+                    and not body
+                    and external_url
+                    and str(external_url).lower().startswith(("http://", "https://"))
+                ):
+                    body = await _fetch_article_body(client, external_url)
+
+                items.append(RawContent(
+                    source_type=SourceType.RSS,
+                    source_name="HackerNews",
+                    source_key="hackernews",     # 도메인 분리 없이 단일 버킷 유지
+                    source_label="HackerNews",
+                    title=hit["title"],
+                    url=item_url,
+                    published_at=None,
+                    body=body,
+                ))
+                logger.info("hn_collected", points=points, title=hit["title"][:60])
+
+            except Exception as e:
+                logger.error("hn_item_failed", url=item_url, error=str(e))
 
     return items
 

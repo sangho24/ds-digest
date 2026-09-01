@@ -967,6 +967,59 @@ async def analyze_content(
         )
 
 
+def _select_with_source_cap(
+    candidates: list[DigestItem],
+    limit: int,
+    per_source: int,
+) -> list[DigestItem]:
+    """점수순 후보에서 출처당 상한을 지키며 limit건을 고른다.
+
+    왜 필요한가:
+        점수순으로만 자르면 후보를 많이 내는 소스가 다이제스트를 잠식한다.
+        실측 40일 165건에서 HackerNews 한 소스가 32.3%, 상위 3개가 52%였다.
+        그런데 그게 "HN이 다른 소스보다 좋다"는 근거는 아니다 — 후보를 많이
+        내는 소스가 상위 점수대에 더 많이 걸릴 뿐이고, 지금 채점의 변별력
+        (관련도 IQR 1)으로는 그 차이가 실질적이라고 볼 수 없다.
+
+        다양성을 채점에 맡기지 않고 구조로 보장한다.
+
+    빈 슬롯을 남기지 않는다:
+        상한 때문에 limit을 못 채우면 남은 자리는 상한을 넘겨서라도 점수순으로
+        채운다. 약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다
+        (§3.4가 상대 랭킹으로 해결한 바로 그 문제다).
+    """
+    if per_source <= 0:
+        return candidates[:limit]
+
+    picked: list[DigestItem] = []
+    counts: dict[str, int] = {}
+    overflow: list[DigestItem] = []
+
+    for item in candidates:
+        if len(picked) >= limit:
+            break
+        key = item.raw.source_key or item.raw.source_name
+        if counts.get(key, 0) >= per_source:
+            overflow.append(item)
+            continue
+        counts[key] = counts.get(key, 0) + 1
+        picked.append(item)
+
+    if len(picked) < limit:
+        filled = overflow[: limit - len(picked)]
+        if filled:
+            logger.info(
+                "source_cap_relaxed",
+                reason="상한을 지키면 다이제스트가 짧아진다",
+                added=len(filled),
+            )
+        picked.extend(filled)
+        # 상한을 넘겨 채운 뒤에도 전체는 점수순을 유지해야 한다.
+        picked.sort(key=lambda d: d.analysis.relevance_score, reverse=True)
+
+    return picked
+
+
 async def filter_and_analyze(
     items: list[RawContent],
     profile: UserProfile,
@@ -1062,7 +1115,11 @@ async def filter_and_analyze(
         ),
         reverse=True,
     )
-    selected = candidates[:settings.max_items_per_digest]
+    selected = _select_with_source_cap(
+        candidates,
+        limit=settings.max_items_per_digest,
+        per_source=settings.max_items_per_source,
+    )
 
     # 4) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
     #    모델이라 값 기반 `in`은 O(n²)에다 오탐 위험이 있으므로 id()로 판별한다.
@@ -1112,6 +1169,7 @@ async def filter_and_analyze(
         analyzed=len(analyzed),
         above_floor=len(candidates),
         selected=len(selected),
+        sources=len({d.raw.source_key for d in selected}),
         floor=floor,
         preference_applied=not signal.is_empty(),
         review_concepts=sorted(review),
