@@ -8,6 +8,7 @@
 """
 import asyncio
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import app.db as db
@@ -122,3 +123,64 @@ def test_save_to_db_empty_items_noop(monkeypatch):
     asyncio.run(db.save_digest_records_to_db([], "2026-07-21"))
 
     assert called["supabase"] is False, "빈 리스트에서 Supabase를 호출하면 안 된다"
+
+
+# ──────────────────────────────────────────────
+# 드라이런 출력 격리 (실제 사고 회귀)
+# ──────────────────────────────────────────────
+#
+# 드라이런이 data/records/digest_{오늘}.json과 docs/{오늘}.html을 mock 데이터로
+# 만들었는데, 그날 산출물이 아직 커밋 전이라 두 파일이 untracked였다.
+# `git checkout -- data/ docs/`는 tracked 파일만 되돌리므로 mock이 살아남았고,
+# 이어진 `git add -A`가 그걸 커밋해 GitHub Pages에 "[DRY RUN]" 다이제스트가
+# 공개됐다. 되돌리는 절차를 조심하는 것으로는 부족하다 — 애초에 안 써야 한다.
+
+import asyncio  # noqa: E402
+
+import app.jobs.daily_digest as job  # noqa: E402
+from app.config import get_settings  # noqa: E402
+from app.models import RawContent, SourceType  # noqa: E402
+
+
+def test_dry_run_leaves_real_output_paths_untouched(monkeypatch):
+    """드라이런은 data/records/ 와 docs/ 를 건드리면 안 된다.
+
+    경로 결정 로직을 재구현하지 않고 실제 run_daily_digest를 태운다 — 사고가
+    난 곳이 바로 그 실제 경로 결정이었기 때문이다.
+    """
+    root = Path(job.__file__).parent.parent.parent
+    records_dir, docs_dir = root / "data" / "records", root / "docs"
+
+    def snapshot(d):
+        return {p.name: p.stat().st_mtime_ns for p in d.iterdir() if p.is_file()}
+
+    before_records, before_docs = snapshot(records_dir), snapshot(docs_dir)
+
+    async def _fake_collect(*a, **kw):
+        item = RawContent(
+            source_type=SourceType.RSS, source_name="src", source_key="src",
+            title="드라이런 테스트", url="https://example.com/dryrun-test",
+            body="본문 " * 300,
+        )
+        return [], [item]
+
+    monkeypatch.setenv("DRY_RUN", "true")
+    get_settings.cache_clear()
+    monkeypatch.setattr(job, "collect_all", _fake_collect)
+
+    asyncio.run(job.run_daily_digest())
+    get_settings.cache_clear()
+
+    assert snapshot(records_dir) == before_records, "드라이런이 data/records/를 변경했다"
+    assert snapshot(docs_dir) == before_docs, "드라이런이 docs/를 변경했다"
+    assert (root / "data" / "dryrun").exists()
+
+
+def test_save_digest_records_honors_base_dir(tmp_path):
+    """base_dir override가 실제로 그 아래에 쓴다 — 드라이런 격리가 여기에 기댄다."""
+    from app.records import save_digest_records
+
+    path = save_digest_records([], "2026-09-01", base_dir=tmp_path)
+
+    assert tmp_path in path.parents
+    assert path.name == "digest_2026-09-01.json"

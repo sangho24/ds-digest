@@ -262,11 +262,27 @@ async def run_daily_digest() -> dict:
     # 발행분이 전날 날짜로 저장된다(아카이브가 실제로 하루씩 밀려 있었다).
     today_str = today_kst()
 
-    archive_dir = root / "data" / "archive"
+    # 드라이런은 실제 산출물 경로를 건드리지 않는다.
+    #
+    # 실제로 사고가 났다: 드라이런이 `data/records/digest_{오늘}.json`과
+    # `docs/{오늘}.html`을 mock 데이터로 만들었는데, 그날 산출물이 아직
+    # 커밋되기 전이라 두 파일이 **untracked**였다. `git checkout -- data/ docs/`는
+    # tracked 파일만 되돌리므로 mock이 살아남았고, 이어진 `git add -A`가 그걸
+    # 그대로 커밋해 GitHub Pages에 "[DRY RUN]" 다이제스트가 공개됐다.
+    #
+    # 되돌리는 절차를 조심하는 것으로는 부족하다 — 애초에 안 쓰면 된다.
+    dryrun_root = root / "data" / "dryrun"
+    if settings.dry_run:
+        archive_dir = dryrun_root / "archive"
+        docs_dir = dryrun_root / "docs"
+        logger.info("dry_run_output_redirected", path=str(dryrun_root))
+    else:
+        archive_dir = root / "data" / "archive"
+        docs_dir = root / "docs"
+
     archive_dir.mkdir(parents=True, exist_ok=True)
     (archive_dir / f"digest_{today_str}.html").write_text(html, encoding="utf-8")
 
-    docs_dir = root / "docs"
     docs_dir.mkdir(parents=True, exist_ok=True)
     (docs_dir / f"{today_str}.html").write_text(html, encoding="utf-8")
     _update_docs_index(docs_dir)
@@ -281,7 +297,11 @@ async def run_daily_digest() -> dict:
     # (기존엔 HTML만 저장되고 구조화 분석 결과는 발송 후 폐기됐다.)
     from app.records import save_digest_records
     from app.db import save_digest_records_to_db
-    record_path = save_digest_records(digest_items, today_str)
+    # base_dir를 넘기면 그 아래 data/records/ 에 쓴다(기존 테스트 override 경로).
+    record_path = save_digest_records(
+        digest_items, today_str,
+        base_dir=dryrun_root if settings.dry_run else None,
+    )
     logger.info("records_saved", path=str(record_path), count=len(digest_items))
     await save_digest_records_to_db(digest_items, today_str)  # best-effort 미러
 

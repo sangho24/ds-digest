@@ -321,6 +321,22 @@ GitHub Actions (07:30 KST)
   13개 항목을 점검한다.
 - **성과**: 첫 실행에서 바닥값 회귀(항목 23)를 잡았다.
 
+### 25. 드라이런이 공개 산출물을 오염시킨 사고 — 출력 경로 격리
+- **일어난 일**: `DRY_RUN=true` 실행이 `data/records/digest_{오늘}.json`과
+  `docs/{오늘}.html` · `docs/{오늘}.json`을 mock 데이터로 만들었다. 그날치
+  산출물이 아직 커밋 전이라 세 파일 모두 **untracked**였다.
+  `git checkout -- data/ docs/`는 tracked 파일만 되돌리므로 mock이 살아남았고,
+  이어진 `git add -A`가 그대로 커밋·푸시해 **GitHub Pages에 "[DRY RUN]"
+  다이제스트가 약 11분간 공개**됐다.
+- **왜 절차로 못 막나**: "드라이런 후 되돌리기"를 조심하는 것으로는 부족하다.
+  되돌리기 명령이 untracked 파일을 다루지 않는다는 사실 자체가 함정이고,
+  같은 실수가 언제든 재발한다. 애초에 실제 경로에 안 쓰면 된다.
+- **수정**: 드라이런 출력을 `data/dryrun/` 아래로 전부 돌린다
+  (archive · docs · records). `data/*`가 gitignore 대상이라 커밋될 수 없다.
+- **회귀 테스트**: 경로 로직을 재구현하지 않고 **실제 `run_daily_digest`를**
+  드라이런으로 태운 뒤 `data/records/` · `docs/`의 mtime이 그대로인지 본다.
+  사고가 난 곳이 그 실제 경로 결정이었기 때문이다.
+
 ---
 
 ## 다음 스텝 아이디에이션
