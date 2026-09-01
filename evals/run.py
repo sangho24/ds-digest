@@ -88,7 +88,13 @@ def _violates(actual: Any, operator: str, expected: Any) -> bool:
 
 
 def evaluate_thresholds(metrics: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """모든 임계값의 판정 행과 위반 목록을 반환한다."""
+    """모든 임계값의 판정 행과 위반 목록을 반환한다.
+
+    반환되는 violations에는 WARN과 FAIL이 모두 담긴다. **게이트를 떨어뜨리는 것은
+    FAIL뿐이다** — 판정은 main()의 blocking_violations가 한다. 둘을 구분하지 않으면
+    severity 필드가 라벨 장식으로만 남고, WARN 하나가 영구히 잡 전체를 빨간불로
+    묶어 "실패"가 신호가 아니라 소음이 된다.
+    """
     rows: list[dict[str, Any]] = []
     violations: list[dict[str, Any]] = []
     for rule in THRESHOLDS:
@@ -204,9 +210,11 @@ def _print_report(report: dict[str, Any]) -> None:
         print("baseline 대비 나빠진 핵심 지표가 없습니다.")
 
     print()
+    warn_count = len(report["violations"]) - len(report["blocking_violations"])
     print(
         f"판정: {'위반 있음 (exit 1)' if report['exit_code'] else '통과 (exit 0)'} "
-        f"- 임계값 위반 {len(report['violations'])}개, 회귀 {len(report['regressions'])}개"
+        f"- FAIL {len(report['blocking_violations'])}개, "
+        f"WARN {warn_count}개(게이트 무관), 회귀 {len(report['regressions'])}개"
     )
 
 
@@ -310,7 +318,10 @@ def main() -> int:
         return 2
 
     start_date, end_date = _date_range(items)
-    exit_code = 1 if violations or regressions else 0
+    # WARN은 보고하되 게이트를 떨어뜨리지 않는다. 예: "30일 이상 미등장 소스"는
+    # 소스 구성을 손볼 신호이지 그날의 산출물이 나쁘다는 뜻이 아니다.
+    blocking = [row for row in violations if row["status"] == "FAIL"]
+    exit_code = 1 if blocking or regressions else 0
     report = {
         "input": {
             "path": input_path,
@@ -322,6 +333,7 @@ def main() -> int:
         "metrics": metrics,
         "threshold_results": threshold_rows,
         "violations": violations,
+        "blocking_violations": blocking,
         "baseline_compared": bool(args.baseline),
         "regressions": regressions,
         "exit_code": exit_code,

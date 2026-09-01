@@ -306,3 +306,85 @@ def test_resolve_items_raises_when_nothing_available(monkeypatch, tmp_path):
 
     with pytest.raises(ValueError):
         evals_run.resolve_items()
+
+
+# ──────────────────────────────────────────────
+# 게이트 판정 — WARN은 실패시키지 않는다
+# ──────────────────────────────────────────────
+#
+# severity 필드가 있는데 exit_code가 violations 전체를 보고 있어서, WARN 하나가
+# 잡을 영구히 빨간불로 묶었다. 그러면 "실패"가 신호가 아니라 소음이 되고
+# 아무도 로그를 열지 않게 된다.
+
+from evals.notify import format_report  # noqa: E402
+
+
+def _threshold_rows(monkeypatch, rules):
+    monkeypatch.setattr(evals_run, "THRESHOLDS", rules)
+
+
+def test_warn_violation_does_not_block(monkeypatch):
+    _threshold_rows(monkeypatch, [
+        {"path": "a.b", "operator": ">", "value": 0, "severity": "WARN", "label": "경고지표"},
+    ])
+
+    rows, violations = evals_run.evaluate_thresholds({"a": {"b": 1}})
+
+    assert violations[0]["status"] == "WARN"
+    assert [r for r in violations if r["status"] == "FAIL"] == []
+
+
+def test_fail_violation_blocks(monkeypatch):
+    _threshold_rows(monkeypatch, [
+        {"path": "a.b", "operator": ">", "value": 0, "severity": "FAIL", "label": "치명지표"},
+    ])
+
+    _, violations = evals_run.evaluate_thresholds({"a": {"b": 1}})
+
+    assert [r["status"] for r in violations] == ["FAIL"]
+
+
+# ──────────────────────────────────────────────
+# 알림 문구
+# ──────────────────────────────────────────────
+
+def _report(**over):
+    base = {
+        "input": {"path": "data/records/ (파생)", "item_count": 163,
+                  "start_date": "2026-07-22", "end_date": "2026-08-30"},
+        "blocking_violations": [],
+        "regressions": [],
+        "violations": [],
+    }
+    base.update(over)
+    return base
+
+
+def test_format_report_lists_each_category():
+    text = format_report(_report(
+        blocking_violations=[{"label": "타임스탬프", "actual": 0.0,
+                              "operator": "<", "threshold": 0.7}],
+        regressions=[{"label": "요약 길이", "current": 28.1, "baseline": 32.4}],
+        violations=[{"label": "미등장 소스", "actual": 1, "status": "WARN"}],
+    ))
+
+    assert "❌ 타임스탬프" in text
+    assert "📉 요약 길이" in text
+    assert "⚠️ 미등장 소스" in text
+    assert "163건" in text
+
+
+def test_format_report_says_so_when_nothing_found():
+    """위반이 없는데 실패했다면 실행 자체가 깨진 것이다 — 빈 메시지를 보내면 안 된다."""
+    text = format_report(_report())
+
+    assert "실행 자체가 실패" in text
+
+
+def test_format_report_omits_pass_rows():
+    """PASS 행은 WARN 목록에 섞이면 안 된다."""
+    text = format_report(_report(
+        violations=[{"label": "통과지표", "actual": 1, "status": "PASS"}],
+    ))
+
+    assert "통과지표" not in text

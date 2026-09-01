@@ -238,6 +238,36 @@ GitHub Actions (07:30 KST)
   (`HACKERNEWS_KEYWORDS` 등)을 건드려야 하고, 그건 잘못되면 수집이 마르므로
   이번 범위에서 뺐다.
 
+### 21. YouTube 타임스탬프 0% — 품질 저하가 아니라 능력의 소실이었다
+- **증상**: `evidence_proxy.timestamp_rate` 0/52(0%). evals FAIL 항목이자
+  baseline(0.86%) 대비 회귀.
+- **진단**: YouTube 52건 중 43건이 transcript를 **보유**하고 있었다
+  (evidence_level=full 42건). 그런데 그 전사 43건 중 42건에 `[MM:SS]` 표기가
+  **0개**였다. 분석 프롬프트는 "자막에 실제 등장한 시간만 쓰고 없으면 null"을
+  정확히 지키고 있었다 — 없는 정보를 만들지 않은 것이다.
+- **원인**: 구버전 youtube-transcript-api는 시간이 찍힌 세그먼트를 준다.
+  datacenter IP 차단으로 Gemini 전사로 갈아타면서 그 정보가 **입력에서** 사라졌다.
+  분석 단계를 아무리 조여도 없는 걸 만들 수는 없다.
+- **수정**: `TRANSCRIPT_PROMPT`에 화제 전환 지점마다 `[MM:SS]`를 붙이도록 지시.
+  복구는 입력 쪽에서 해야 한다.
+- **미검증**: 로컬에 GEMINI_API_KEY가 없어 실제 응답으로 확인하지 못했다.
+  다음 런의 `evidence_proxy.timestamp_rate`가 답을 준다.
+
+### 22. 품질 게이트가 소음이 되지 않게
+- **WARN이 잡을 떨어뜨리고 있었다**: `evaluate_thresholds`가 severity를 라벨로만
+  쓰고 `exit_code = 1 if violations or regressions`가 WARN까지 셌다. "30일 이상
+  미등장 소스" WARN 하나가 FAIL 두 개를 다 고쳐도 잡을 영구히 빨간불로 묶는다.
+  → FAIL과 회귀만 게이트를 떨어뜨린다.
+- **`| tee`가 게이트를 통째로 무력화하고 있었다**: Actions 기본 셸은 `bash -e`이고
+  **pipefail이 꺼져 있다.** `run.py | tee`의 종료 코드가 tee의 0으로 덮여, exit 1을
+  내도 스텝이 성공으로 잡힌다. → `set -o pipefail` 명시.
+  (실측: pipefail 없음 → exit 0, 있음 → exit 1)
+- **실패가 무엇을 뜻하는지 같이 보낸다**: GitHub 기본 실패 메일은 "워크플로가
+  실패했다"만 알려주므로 매주 오면 곧 소음이 된다. `evals/notify.py`가 위반
+  항목을 문장으로 만들어 Telegram으로 보낸다.
+  본문 조립을 YAML 안 heredoc으로 인라인하려다 블록 스칼라 들여쓰기가 깨져
+  워크플로가 파싱 불가가 됐다 — 스크립트로 뺐고, 그래서 테스트도 붙는다.
+
 ---
 
 ## 다음 스텝 아이디에이션

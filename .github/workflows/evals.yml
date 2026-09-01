@@ -32,5 +32,34 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run evals
-        # 임계값 위반·baseline 회귀 시 exit 1로 잡이 실패하며, 그것이 품질 게이트다.
-        run: python evals/run.py --json --baseline
+        # FAIL 위반·baseline 회귀 시 exit 1로 잡이 실패하며, 그것이 품질 게이트다.
+        # WARN은 보고만 하고 게이트를 떨어뜨리지 않는다 — WARN 하나가 잡을 영구히
+        # 빨간불로 묶으면 "실패"가 신호가 아니라 소음이 된다.
+        # 리포트를 파일로 남겨 아래 알림 스텝이 읽게 한다.
+        #
+        # ⚠️ `set -o pipefail` 필수. Actions의 기본 셸은 `bash -e`이고 pipefail이
+        #    **꺼져 있어서**, 파이프라인의 종료 코드가 마지막 명령(tee)의 0으로
+        #    덮인다. 이게 없으면 run.py가 exit 1을 내도 스텝이 성공으로 잡히고
+        #    품질 게이트가 통째로 무력화된다.
+        run: |
+          set -o pipefail
+          python evals/run.py --json --baseline | tee evals_report.json
+
+      # 게이트가 빨간불이면 **무엇이** 문제인지까지 보낸다. GitHub 기본 실패
+      # 메일은 "워크플로가 실패했다"만 알려주므로 매주 오면 곧 소음이 된다.
+      # 본문 조립은 evals/notify.py가 한다 — YAML 블록 안에 heredoc으로 파이썬을
+      # 인라인하면 들여쓰기가 깨져 워크플로 자체가 파싱 불가가 되고, 무엇보다
+      # 인라인 스크립트는 테스트할 수 없다.
+      - name: Notify quality gate
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          [ -z "$TELEGRAM_BOT_TOKEN" ] && exit 0
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY=$(python -m evals.notify evals_report.json)
+          TEXT=$(printf '%s\n\n%s\n\n%s' "📉 주간 품질 게이트" "$BODY" "$RUN_URL")
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode chat_id="${TELEGRAM_CHAT_ID}" \
+            --data-urlencode text="$TEXT" >/dev/null || true
