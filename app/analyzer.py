@@ -4,6 +4,7 @@ httpx로 Gemini REST API 직접 호출 — google-generativeai SDK 불필요
 (Python 3.14에서 SDK의 protobuf C extension 충돌 회피)
 """
 import asyncio
+from collections import Counter
 import json
 import re
 import structlog
@@ -967,56 +968,66 @@ async def analyze_content(
         )
 
 
-def _select_with_source_cap(
+def _select_diverse(
     candidates: list[DigestItem],
     limit: int,
     per_source: int,
+    strength: float,
 ) -> list[DigestItem]:
-    """점수순 후보에서 출처당 상한을 지키며 limit건을 고른다.
+    """점수순 후보에서 출처 편중을 **물량 기준으로 정규화**하며 limit건을 고른다.
 
-    왜 필요한가:
-        점수순으로만 자르면 후보를 많이 내는 소스가 다이제스트를 잠식한다.
-        실측 40일 165건에서 HackerNews 한 소스가 32.3%, 상위 3개가 52%였다.
-        그런데 그게 "HN이 다른 소스보다 좋다"는 근거는 아니다 — 후보를 많이
-        내는 소스가 상위 점수대에 더 많이 걸릴 뿐이고, 지금 채점의 변별력
-        (관련도 IQR 1)으로는 그 차이가 실질적이라고 볼 수 없다.
+    왜 하드 상한이 아니라 정규화인가:
+        편중의 원인은 품질이 아니라 물량이다. 후보를 많이 내는 소스가 상위
+        점수대에 더 많이 걸릴 뿐이다 — 실측에서 HackerNews 한 소스가 40일
+        165건의 32.3%를 가져갔는데, 그건 수집기에 상한이 없어 키워드 4개 ×
+        20건이 후보 풀에 들어왔기 때문이다.
 
-        다양성을 채점에 맡기지 않고 구조로 보장한다.
+        "출처당 2건까지" 같은 하드 상한은 딱 떨어지지만 거칠다. 물량 이점 없이
+        정말 좋은 소스도 똑같이 잘린다. 대신 **후보 풀에서의 물량에 비례해
+        반복 선택을 감점**한다.
 
-    빈 슬롯을 남기지 않는다:
-        상한 때문에 limit을 못 채우면 남은 자리는 상한을 넘겨서라도 점수순으로
-        채운다. 약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다
-        (§3.4가 상대 랭킹으로 해결한 바로 그 문제다).
+            조정점수 = 점수 - strength × (이미 뽑은 수) × (물량 ÷ 평균 물량)
+
+        물량이 평균인 소스는 배수 1, 평균의 5배를 낸 소스는 5배로 감점된다.
+        첫 한 건은 감점이 없으므로(이미 뽑은 수 = 0) 어느 소스든 한 번은
+        공정하게 경쟁한다.
+
+    per_source는 안전판이다. 정규화가 예상 밖으로 약할 때 한 소스가 다이제스트를
+    통째로 먹는 것만 막는다. 상한 때문에 정원을 못 채우면 상한을 완화한다 —
+    약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다(§3.4가 해결한 문제다).
     """
-    if per_source <= 0:
-        return candidates[:limit]
+    if not candidates or limit <= 0:
+        return []
+
+    def key_of(item: DigestItem) -> str:
+        return item.raw.source_key or item.raw.source_name
+
+    volume = Counter(key_of(d) for d in candidates)
+    mean_volume = len(candidates) / len(volume)
 
     picked: list[DigestItem] = []
-    counts: dict[str, int] = {}
-    overflow: list[DigestItem] = []
+    taken: Counter = Counter()
+    remaining = list(candidates)
 
-    for item in candidates:
-        if len(picked) >= limit:
-            break
-        key = item.raw.source_key or item.raw.source_name
-        if counts.get(key, 0) >= per_source:
-            overflow.append(item)
-            continue
-        counts[key] = counts.get(key, 0) + 1
-        picked.append(item)
+    while remaining and len(picked) < limit:
+        def adjusted(item: DigestItem) -> float:
+            source = key_of(item)
+            over = volume[source] / mean_volume if mean_volume else 1.0
+            return item.analysis.relevance_score - strength * taken[source] * over
+
+        # 하드 상한에 걸리지 않은 것 중에서 조정점수 최대를 고른다.
+        eligible = [d for d in remaining if taken[key_of(d)] < per_source] or remaining
+        # max는 첫 최대값을 돌려주고 remaining이 점수순이므로 동점은 원래 순서를 따른다.
+        best = max(eligible, key=adjusted)
+        picked.append(best)
+        taken[key_of(best)] += 1
+        remaining.remove(best)
 
     if len(picked) < limit:
-        filled = overflow[: limit - len(picked)]
-        if filled:
-            logger.info(
-                "source_cap_relaxed",
-                reason="상한을 지키면 다이제스트가 짧아진다",
-                added=len(filled),
-            )
-        picked.extend(filled)
-        # 상한을 넘겨 채운 뒤에도 전체는 점수순을 유지해야 한다.
-        picked.sort(key=lambda d: d.analysis.relevance_score, reverse=True)
+        logger.info("diversity_selection_short", picked=len(picked), limit=limit)
 
+    # 발송 순서는 사람이 읽는 순서이므로 조정점수가 아니라 원래 점수순으로 되돌린다.
+    picked.sort(key=lambda d: d.analysis.relevance_score, reverse=True)
     return picked
 
 
@@ -1115,10 +1126,11 @@ async def filter_and_analyze(
         ),
         reverse=True,
     )
-    selected = _select_with_source_cap(
+    selected = _select_diverse(
         candidates,
         limit=settings.max_items_per_digest,
         per_source=settings.max_items_per_source,
+        strength=settings.source_diversity_strength,
     )
 
     # 4) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic

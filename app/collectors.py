@@ -324,6 +324,12 @@ async def fetch_arxiv_recent(
         2026-03-30 도입 이후 5개월간 한 건도 수집되지 않았다.
     """
     per_category: dict[str, list[RawContent]] = {}
+    # 논문은 여러 카테고리에 교차 등록된다(실측: 한 논문이 cs.LG·cs.AI·cs.SE에
+    # 동시 등장). 같은 논문을 카테고리마다 따로 담으면 라운드로빈 상한을 낭비하고,
+    # 소스 퍼널에도 한 논문이 여러 소스로 잡혀 물량 통계가 부풀려진다.
+    # **먼저 만난 카테고리가 그 논문의 소스**가 된다.
+    seen_links: set[str] = set()
+    cross_listed = 0   # 이미 다른 카테고리에서 담은 논문을 건너뛴 횟수
 
     # 단일 연결로 순차 요청한다(약관 요구사항). 클라이언트를 재사용해 커넥션도
     # 하나로 유지한다.
@@ -353,6 +359,10 @@ async def fetch_arxiv_recent(
                         link = getattr(entry, "link", None) or getattr(entry, "id", None)
                         if not link:
                             continue
+                        if link in seen_links:
+                            cross_listed += 1
+                            continue
+                        seen_links.add(link)
 
                         per_category.setdefault(category, []).append(RawContent(
                             source_type=SourceType.RSS,
@@ -412,6 +422,7 @@ async def fetch_arxiv_recent(
         collected=total,
         categories=len(per_category),
         requested_categories=len(categories),
+        cross_listed_removed=cross_listed,
     )
     return items
 

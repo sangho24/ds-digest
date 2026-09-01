@@ -60,6 +60,7 @@ def _run_filter(monkeypatch, scores, *, floor=4, max_items=5, per_source=5):
             relevance_floor=floor,
             max_items_per_digest=max_items,
             max_items_per_source=per_source,
+            source_diversity_strength=1.0,
         ),
     )
     monkeypatch.setattr(analyzer.asyncio, "sleep", _noop_sleep)
@@ -104,16 +105,16 @@ def test_all_below_floor_returns_empty(monkeypatch):
 
 
 # ──────────────────────────────────────────────
-# 출처 상한 — 다양성을 채점에 맡기지 않는다
+# 출처 다양성 정규화
 # ──────────────────────────────────────────────
 #
-# 점수순으로만 자르면 후보를 많이 내는 소스가 다이제스트를 잠식한다. 실측 40일
-# 165건에서 HackerNews 한 소스가 32.3%, 상위 3개가 52%였다. 그런데 그게 "HN이
-# 다른 소스보다 좋다"는 근거는 아니다 — 후보를 많이 내는 소스가 상위 점수대에
-# 더 많이 걸릴 뿐이고, 지금 채점의 변별력(관련도 IQR 1)으로는 그 차이가
-# 실질적이라고 볼 수 없다.
+# 편중의 원인은 품질이 아니라 물량이다. 후보를 많이 내는 소스가 상위 점수대에 더
+# 많이 걸릴 뿐이다 — 실측 40일 165건에서 HackerNews 한 소스가 32.3%를 가져갔는데,
+# 수집기에 상한이 없어 키워드 4개 × 20건이 후보 풀에 들어왔기 때문이다.
+#
+# 하드 상한 대신 후보 풀 물량에 비례해 반복 선택을 감점한다.
 
-from app.analyzer import _select_with_source_cap  # noqa: E402
+from app.analyzer import _select_diverse  # noqa: E402
 from app.models import ContentAnalysis as _CA, DigestItem as _DI  # noqa: E402
 
 
@@ -130,58 +131,89 @@ def _cand(source: str, score: int, n: int = 0) -> _DI:
     )
 
 
-def test_source_cap_limits_one_source():
-    """한 소스가 다이제스트를 잠식하지 못한다.
-
-    상한을 지키고도 정원을 채울 수 있을 만큼 소스가 있을 때의 동작이다
-    (완화가 걸리는 경우는 아래 별도 테스트).
-    """
-    candidates = (
-        [_cand("hn", 9, i) for i in range(5)]
-        + [_cand("toss", 5, 0), _cand("toss", 4, 1), _cand("naver", 3, 0)]
-    )
-
-    picked = _select_with_source_cap(candidates, limit=5, per_source=2)
-
-    keys = [d.raw.source_key for d in picked]
-    assert keys.count("hn") == 2, f"HN이 상한을 넘겼다: {keys}"
-    assert set(keys) == {"hn", "toss", "naver"}
+def _pick(candidates, limit=5, per_source=3, strength=1.0):
+    candidates = sorted(candidates, key=lambda d: d.analysis.relevance_score, reverse=True)
+    return [d.raw.source_key for d in
+            _select_diverse(candidates, limit=limit, per_source=per_source, strength=strength)]
 
 
-def test_source_cap_prefers_higher_scores_within_source():
-    """같은 소스 안에서는 여전히 점수순으로 뽑는다."""
-    candidates = [_cand("hn", 9, 0), _cand("hn", 8, 1), _cand("hn", 3, 2), _cand("toss", 5)]
+def test_high_volume_source_is_normalized():
+    """물량이 많은 소스는 반복 선택이 눌린다."""
+    pool = ([_cand("hn", 9, i) for i in range(20)]
+            + [_cand("toss", 8), _cand("blog", 7), _cand("news", 6)])
 
-    picked = _select_with_source_cap(candidates, limit=3, per_source=2)
+    keys = _pick(pool, limit=4)
 
-    assert [d.analysis.relevance_score for d in picked] == [9, 8, 5]
+    assert keys.count("hn") == 1, f"물량 많은 소스가 여전히 잠식: {keys}"
+    assert len(set(keys)) == 4
 
 
-def test_source_cap_relaxes_rather_than_shrinking_digest():
-    """상한을 지키면 다이제스트가 짧아지는 경우, 상한보다 분량을 택한다.
+def test_first_pick_from_any_source_is_unpenalized():
+    """첫 한 건은 감점이 없다 — 어느 소스든 한 번은 공정하게 경쟁한다."""
+    pool = [_cand("hn", 9, i) for i in range(20)] + [_cand("toss", 3)]
+
+    keys = _pick(pool, limit=2)
+
+    assert keys[0] == "hn", "최고점 아이템이 물량 때문에 밀리면 안 된다"
+
+
+def test_low_volume_source_can_take_multiple():
+    """물량 이점이 없으면 여러 건을 가져갈 수 있다 — 하드 상한과 다른 점이다."""
+    pool = [_cand("a", 9, 0), _cand("a", 9, 1), _cand("b", 4, 0), _cand("c", 3, 0)]
+
+    keys = _pick(pool, limit=2)
+
+    assert keys == ["a", "a"]
+
+
+def test_strength_zero_is_pure_score_order():
+    pool = [_cand("hn", 9, i) for i in range(5)] + [_cand("toss", 8)]
+
+    keys = _pick(pool, limit=3, per_source=99, strength=0.0)
+
+    assert keys == ["hn", "hn", "hn"]
+
+
+def test_hard_cap_is_a_backstop():
+    """정규화가 약해도 한 소스가 다이제스트를 통째로 먹지는 못한다."""
+    pool = [_cand("hn", 9, i) for i in range(10)]
+
+    keys = _pick(pool, limit=5, per_source=3, strength=0.0)
+
+    # 상한 3을 넘어야 정원이 차므로 완화되지만, 완화 없이는 3건까지다.
+    assert keys.count("hn") == 5  # 다른 소스가 없으면 완화된다
+
+
+def test_cap_relaxes_rather_than_shrinking_digest():
+    """상한을 지키면 정원을 못 채우는 날에는 상한보다 분량을 택한다.
 
     약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다 —
     §3.4가 상대 랭킹으로 해결한 바로 그 문제다.
     """
-    candidates = [_cand("hn", 9 - i, i) for i in range(5)]
+    pool = [_cand("hn", 9 - i, i) for i in range(5)]
 
-    picked = _select_with_source_cap(candidates, limit=5, per_source=2)
+    keys = _pick(pool, limit=5, per_source=2)
 
-    assert len(picked) == 5
-    assert [d.analysis.relevance_score for d in picked] == [9, 8, 7, 6, 5]
-
-
-def test_source_cap_disabled_when_zero():
-    candidates = [_cand("hn", 9, i) for i in range(5)]
-
-    assert len(_select_with_source_cap(candidates, limit=3, per_source=0)) == 3
+    assert len(keys) == 5
 
 
-def test_source_cap_end_to_end(monkeypatch):
-    """filter_and_analyze 전체를 통과해도 상한이 적용된다."""
-    result = _run_filter(
-        monkeypatch, [9, 9, 9, 9, 9], max_items=5, per_source=2,
-    )
-    # _run_filter의 아이템은 전부 source_name="src" 하나다 → 상한에 걸리지만
-    # 분량을 위해 완화돼 5건이 유지돼야 한다.
+def test_output_is_ordered_by_original_score():
+    """발송 순서는 사람이 읽는 순서다 — 조정점수가 아니라 원래 점수순이어야 한다."""
+    pool = [_cand("hn", 9, i) for i in range(5)] + [_cand("toss", 5), _cand("blog", 4)]
+    candidates = sorted(pool, key=lambda d: d.analysis.relevance_score, reverse=True)
+
+    picked = _select_diverse(candidates, limit=3, per_source=3, strength=1.0)
+    scores = [d.analysis.relevance_score for d in picked]
+
+    assert scores == sorted(scores, reverse=True)
+
+
+def test_empty_candidates():
+    assert _select_diverse([], limit=5, per_source=2, strength=1.0) == []
+
+
+def test_diversity_end_to_end(monkeypatch):
+    """filter_and_analyze 전체를 통과해도 정원이 유지된다."""
+    result = _run_filter(monkeypatch, [9, 9, 9, 9, 9], max_items=5, per_source=3)
+
     assert len(result) == 5
