@@ -1,0 +1,199 @@
+{
+  "date": "2026-09-01",
+  "generated_at": "2026-09-01T13:12:31.457410",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Launch HN: Almanac (YC S26) – AI that knows your company",
+        "url": "https://usealmanac.com/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN, I&#x27;m Kushagra, one of three founders of Almanac, a Hermes with a brain that knows everything about your company.<p>We started our journey with setting up Hermes for our company, thinking it must be easy. We wanted an agent that would know every context about our company, so we could ask questions and get context-appropriate responses to.<p>This started a very annoying and difficult journey. Setting up Hermes, getting it to talk right, building OAuth apps for every connector myself, then feeding it context myself, and ultimately struggling with Hermes&#x27;s default memory. At the same time, we saw our YC batchmates struggling with the same problem, and we saw an opportunity.<p>So we built Almanac. This is how it works. You sign up, you get a Hermes agent straight out of the box. You have a one-click connect to any account (Gmail, Calendar, Granola, PostHog, etc). You have personal accounts (only accessible by you) and also shared accounts (accessible by everyone in the company). The consequence being I can never see my cofounders&#x27; accounts.<p>The “brain” of this agent is wikis. We pull in information from your connected sources, and start organizing this information in two wikis. A personal one, for you, which understands who you are, what your preferences are, the people in your life, and the things going on in your life. The second wiki is a company wiki, which includes what the company is, what you’re working on, what the roadmap is, and what the blockers of the company are. Your agent ultimately has access to these two wikis and the original accounts, which invoke the feeling of “it just knows you.”<p>Here’s a demo: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ajXP5PHuK18\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ajXP5PHuK18</a><p>We&#x27;re three cofounders, Rohan, Kushagra, and Divit, and we&#x27;ve been friends for 11 years, since studying for the IIT-JEE. We all did Electrical Engineering (Rohan at IIT Delhi, me at IIT Kharagpur, Divit at BITS Pilani, Hyderabad), and Rohan and I later went to Harvard, where this pre-compilation layer became our capstone thesis. We have built multiple products around the idea of a pre-compiled knowledge layer.<p>Our main differentiating point is the way we approach memory and context in general. Most AI assistant tools treat memory as an afterthought. We have worked on wikis for AI for more than a year now, building products for Harvard and NASA. The one thing we have learnt is that one needs to spend a lot more compute upfront, in the pre-compilation of this knowledge base, to get it right.<p>Having this pre-compiled knowledge base enables a lot of interesting ideas. First is a proactive agent. Since I have compiled what’s going on in both my company and my current life, Almanac can start completing tasks on its own. Concretely, we run a background worker which takes a look at tasks that could be completed, pings the main agent, who then pings me, suggesting",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "[DRY RUN] Launch HN: Almanac (YC S26) – AI that kn",
+        "tags": [
+          "DRY RUN",
+          "테스트"
+        ],
+        "concepts": [
+          "드라이런 개념"
+        ],
+        "key_points": [
+          {
+            "point": "[DRY RUN] 핵심 포인트 1",
+            "timestamp": null
+          },
+          {
+            "point": "[DRY RUN] 핵심 포인트 2",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "[DRY RUN] 현업 적용 아이디어 1",
+          "[DRY RUN] 현업 적용 아이디어 2"
+        ],
+        "quiz": [
+          {
+            "question": "[DRY RUN] 테스트 퀴즈 문항",
+            "options": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "answer_index": 0,
+            "explanation": "[DRY RUN] 정답 해설"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "seasonal",
+        "actionability": 8,
+        "depth": 8,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "💸 1인당 매출 42,000% 폭증, 2025년 진짜로 성장한 스타트업 20곳",
+        "url": "https://innoforest.stibee.com/p/651",
+        "published_at": "2026-08-30T00:00:00",
+        "transcript": null,
+        "body": "\"AI 없이도 매출이 터졌다, 2025년 1인당 매출 급증 스타트업 총정리\"    모든 기업의 목표는 결국 하나로 모입니다. 인건비 지출은 최소화하고, 매출은 최대화하는 것. 한마디로 '1인당 생산성'을 높이는 일입니다. 인공지능(AI)이 그 해법으로 떠오른 지금, 많은 기업이 AX 전환에 몰두하고 있는데요. 그런데 사실 AI가 지금처럼 보편화되기 훨씬 전부터, 어려운 경제 상황 속에서도 1인당 매출을 폭발적으로 끌어올린 스타트업은 늘 존재해왔습니다.    이번엔 스타트업 성장 플랫폼 혁신의숲 데이터를 통해, 2024년 대비 2025년 직원 1인당 매출액이 크게 늘어난 기업 20곳을 추려봤습니다. 증가율 42,135%를 기록한 환전 플랫폼부터, 매출의 80%를 단 한 명의 아티스트에게서 만들어낸 엔터테크 기업까지 면면이 다양한데요. 전통시장, 1차산업, IP, 그리고 메가 트렌드까지 포화된 것처럼 보이는 시장에서 이들은 어떻게 틈을 파고들었을까요? 숫자 뒤에 숨은 성장의 비결, 지금 콘텐츠에서 확인해보세요.\n\n[🌍 8월 Pathfinder 업데이트 | 글로벌 투자 흐름을 한눈에 읽는 두 가지 기능](https://www.innoforest.co.kr/report/565)  [🎖️혁신의숲 어워즈 후보 2차 투표 최종 순위 공개: 0.06%p득표율 차이로 승부가 갈리다!](https://www.innoforest.co.kr/report/563)\n\n[✨[업데이트] 더 깊어진 혁신의숲 AI 기업 종합분석!](https://www.innoforest.co.kr/report/562)  [🗺️우리 지역은 상장기업이 잘나갈까? 스타트업이 잘나갈까? : 17개 시도 전부 비교해 봤습니다](https://www.innoforest.co.kr/report/560)\n\n[“우리는 이런 스타트업을 찾습니다” YC가 공개한 13가지 창업 기회](https://www.innoforest.co.kr/report/561)  [🦄 대한민국 정부의 '유니콘 기업 육성' - 유니콘 브릿지 50개사 리포트 - 3부 플랫폼 경제](https://www.innoforest.co.kr/report/548)\n\n[✈️ 로밍을 넘어 국경 없는 연결로: 가제트코리아가 만드는 여행·생활 통신의 새 표준](https://www.innoforest.co.kr/report/558)  [🦎 1인이 두 달 만에 만든 게임이 한 달 만에 1,500만 장 : '멧챠 카멜레온'이 남긴 데이터](https://www.innoforest.co.kr/report/556)\n\n[👛 웹툰 회사들이 지금 지갑을 여는 곳은 어디일까? 주목 받는 스타트업 5곳](https://www.innoforest.co.kr/report/555)  [🦄 2026년 7월 스타트업 투자결산: 로보틱스가 판을 바꿨다…제조/하드웨어 투자금액 1위](https://www.innoforest.co.kr/report/559)\n\n[2026 혁신의숲 어워즈 후보 2차 기업 공개](https://www.innoforest.co.kr/report/554)  [🤖 카타고를 이긴 신진서, 바둑 다음은 게임, 지금 주목할 기업 6곳](https://www.innoforest.co.kr/report/547)\n\n[📱 검색 광고요? AI가 24시간 알아서 관리하죠: 마케팅 PT #94. 헬로맥스의 성장 스토리](https://www.innoforest.co.kr/report/553)  [🏗️ “평범한 퇴근길을 지키는 기술” 산업 현장의 사각지대를 없애는 웨어비](https://www.innoforest.co.kr/report/550)\n\n[🫶🏻 아홉 개의 무대, 아홉 개의 여정. 제5회 MARK&COMPANY PRIVATE DEMODAY](https://www.innoforest.co.kr/report/549)  [🏢 국내 B2B SaaS 스타트업 582개사 성장 데이터 분석: 승부는 1년 안에 난다?!](https://www.innoforest.co.kr/report/551)\n\n[↗️ 지금 거래액이 우상향 중인 유망 스타트업 55곳](https://www.innoforest.co.kr/report/546)\n\n[🦄 대한민국 정부의 '유니콘 기업 육성'- 유니콘 브릿지 50개사 2부. 바이오헬스/하드웨어](https://www.innoforest.co.kr/report/545)\n\n[📽️ '김부장' 그 액션신이 3분 통째로 AI라고?](https://www.innoforest.co.kr/report/542)\n\n[🦄 대한민국 정부의 '유니콘 기업 육성'- 유니콘 브릿지 50개사 1부. AI/딥테크](https://www.innoforest.co.kr/report/540)\n\n[🌳 혁신의숲 인사이트 출시! 혁신 생태계의 인사이트 새롭게 열립니다!](https://www.innoforest.co.kr/report/538/혁신의숲-인사이트-출시-혁신-생태계의-인사이트-새롭게-열립니다)\n\n[🧭 미래 시장을 지배할 트렌드는 어디일까? 글로벌 Top-tier 투자자 초기 투자에 담긴 신호](https://www.innoforest.co.kr/report/533/미래-시장을-지배할-트렌드는-어디일까-글로벌-Toptier-투자자들의-초기-투자에-담긴-신호-5분만에-읽는-법)\n\n[📙[실무 활용 가이드] 혁신의숲 데이터로 실무에서 한 발 앞서가는 법](https://www.innoforest.co.kr/report/NS00000465/실무-활용-가이드-혁신의숲-데이터로-실무에서-한-발-앞서가는-법)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge)[8](https://www.innoforest.co.kr/growth-bridge)월 31일 기준, 모집중인 공고 수: 총 19건\n\n(~09/09) [서울경제진흥원x마크앤컴퍼니｜2026 서울 오픈이노베이션 인사이트 데이](https://www.innoforest.co.kr/growth-bridge/OI00000779/2026-서울-오픈이노베이션-인사이트-데이)\n\n(~09/11) [삼일PwC｜Open Innovation 2026](https://www.innoforest.co.kr/growth-bridge/OI00000756/삼일PwC-Open-Innovation-2026)\n\n(~09/11) [서울경제진흥원｜2026년 서울창업허브M+ 글로벌 오픈 이노베이션](https://www.innoforest.co.kr/growth-bridge/OI00000781/2026년-서울창업허브M-글로벌-오픈-이노베이션)\n\n2025년 오픈이노베이션 결산 리포트:[숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/NS00000455/Growth-Bridge-2025년-오픈이노베이션-결산-리포트-숫자로-읽는-오픈이노베이션-트렌드)\n\nGrowth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면?[소개서 보러가기👆](https://www.innoforest.co.kr/report/NS00000455/Growth-Bridge-2025년-오픈이노베이션-결산-리포트-숫자로-읽는-오픈이노베이션-트렌드)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 전설의 연쇄 창업자 노정석 비팩토리 대표는 지금 도망자의 삶을 살고 있습니다](https://outstanding.kr/bfactory20251201)\n\n[🗯️ \"무엇보다 왜를 봅니다\".. 커버링이 50배 성장하며 바꾼 일하는 방식](https://outstanding.kr/newcovering20260820)\n\n[🔎 협업→갈등→M＆A 실사→다시 갈등… 티오더와 KT 사이에 무슨 일이 있었나](https://outstanding.kr/torder20260824)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "[DRY RUN] 💸 1인당 매출 42,000% 폭증, 2025년 진짜로 성장한 스타트업 ",
+        "tags": [
+          "DRY RUN",
+          "테스트"
+        ],
+        "concepts": [
+          "드라이런 개념"
+        ],
+        "key_points": [
+          {
+            "point": "[DRY RUN] 핵심 포인트 1",
+            "timestamp": null
+          },
+          {
+            "point": "[DRY RUN] 핵심 포인트 2",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "[DRY RUN] 현업 적용 아이디어 1",
+          "[DRY RUN] 현업 적용 아이디어 2"
+        ],
+        "quiz": [
+          {
+            "question": "[DRY RUN] 테스트 퀴즈 문항",
+            "options": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "answer_index": 0,
+            "explanation": "[DRY RUN] 정답 해설"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "seasonal",
+        "actionability": 8,
+        "depth": 8,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Claude Code reduces it's weekly limit by 17% – compared to today",
+        "url": "https://twitter.com/ClaudeDevs/status/2093742322525810912",
+        "published_at": null,
+        "transcript": null,
+        "body": "[![@ClaudeDevs](https://pbs.twimg.com/profile_images/2044472418815893504/xf14RxM8_normal.png)](/ClaudeDevs)\n\n[ClaudeDevs](https://x.com/ClaudeDevs)\n\n[![Anthropic](https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg)](https://twitter.com/AnthropicAI)\n\n[@ClaudeDevs](https://x.com/ClaudeDevs)\n\nCompared to today, this works out to a 17% reduction in weekly limits on Claude Code. We’re working on exciting changes that will make it feel like you’re getting more from Claude, while having more visibility and control of your usage. Can’t wait to share them.\n\n[4:47 PM · Aug 29, 2026](/ClaudeDevs/status/2093742322525810912)[1.2MViews](/ClaudeDevs/status/2093742322525810912)\n\n[361](/i/status/2093742322525810912)\n\n89\n\n2.5K\n\n142",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "[DRY RUN] Claude Code reduces it's weekly limit by",
+        "tags": [
+          "DRY RUN",
+          "테스트"
+        ],
+        "concepts": [
+          "드라이런 개념"
+        ],
+        "key_points": [
+          {
+            "point": "[DRY RUN] 핵심 포인트 1",
+            "timestamp": null
+          },
+          {
+            "point": "[DRY RUN] 핵심 포인트 2",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "[DRY RUN] 현업 적용 아이디어 1",
+          "[DRY RUN] 현업 적용 아이디어 2"
+        ],
+        "quiz": [
+          {
+            "question": "[DRY RUN] 테스트 퀴즈 문항",
+            "options": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "answer_index": 0,
+            "explanation": "[DRY RUN] 정답 해설"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "seasonal",
+        "actionability": 8,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -507,6 +507,186 @@ def _coerce_score(data: dict, key: str, title: str) -> int:
         return 0
 
 
+_RELATIVE_RATING_PROMPT = """\
+당신은 Data Science 현업자를 위한 콘텐츠 큐레이터입니다.
+오늘 수집된 후보 {count}건을 **서로 비교해서** 각각 1~10점으로 평가하세요.
+
+개별 콘텐츠를 절대 기준으로 채점하지 마세요. 이 목록 안에서의 상대 위치를 매기는
+것이 목표입니다.
+
+## 점수 분포 규칙 (반드시 지킬 것)
+- 최고점과 최저점의 차이가 **4점 이상**이어야 합니다.
+- 전체의 절반 이상에 같은 점수를 주지 마세요.
+- 가장 나은 1~2건과 가장 못한 1~2건을 먼저 정하고, 나머지를 그 사이에 배치하세요.
+
+## 판단 기준
+- 이 목록의 다른 후보 대신 이걸 읽어야 할 이유가 있는가
+- 구체적인 기법·수치·사례가 있는가, 아니면 일반론인가
+- 제목만 그럴듯하고 내용이 얇지는 않은가
+
+## 후보 목록
+{listing}
+
+반드시 아래 JSON 구조로만 응답하세요. 모든 index에 대해 하나씩 넣으세요.
+{{"ratings": [{{"index": 0, "rating": 8}}]}}
+"""
+
+# 상대 평가 응답 강제용 스키마. 랭킹과 같은 이유로 strict를 쓴다 —
+# json_object 모드에서 gpt-oss는 정수 배열·객체 배열을 뭉갠다.
+_RELATIVE_RATING_SCHEMA: dict = {
+    "name": "relative_rating",
+    "strict": True,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "ratings": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "index": {"type": "integer"},
+                        "rating": {"type": "integer"},
+                    },
+                    "required": ["index", "rating"],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["ratings"],
+        "additionalProperties": False,
+    },
+}
+
+# 절대 축과 상대 평가의 혼합 비율.
+# 상대를 더 무겁게 두는 이유는 실측이다 — 절대 축(actionability·depth)은 73%가
+# 5~6점에 몰려 변별력이 거의 없다. 그렇다고 절대를 0으로 두면 후보가 전부 약한
+# 날에도 1등이 9점을 받아, "오늘은 건질 게 없었다"는 정보가 사라진다.
+# 절대가 천장을 잡고 상대가 순서를 만든다.
+RELATIVE_WEIGHT = 0.6
+ABSOLUTE_WEIGHT = 0.4
+
+
+def evidence_ceiling(level: EvidenceLevel) -> int:
+    """해당 근거 수준에서 나올 수 있는 최대 relevance_score.
+
+    근거 게이트(§3.3)는 depth를 근거 수준별로 clamp한다. 상대 평가가 그 위로
+    점수를 밀어올릴 수 있으면 게이트가 무의미해진다 — 제목만 있는 아이템이
+    전사를 확보한 아이템을 이길 수 있게 된다. 그래서 혼합 결과에 같은 천장을
+    다시 씌운다.
+    """
+    return derive_relevance_score(10, EVIDENCE_DEPTH_CAPS[level])
+
+
+def blend_relevance(
+    absolute: int,
+    relative: int | None,
+    level: EvidenceLevel | None = None,
+) -> int:
+    """절대 점수와 상대 평가를 섞는다. 상대가 없으면 절대를 그대로 쓴다.
+
+    level을 주면 근거 게이트의 천장을 넘지 못하게 막는다.
+    """
+    if relative is None:
+        return absolute
+    bounded = min(10, max(0, relative))
+    blended = absolute * ABSOLUTE_WEIGHT + bounded * RELATIVE_WEIGHT
+    score = min(10, max(0, int(blended + 0.5)))
+    if level is not None:
+        score = min(score, evidence_ceiling(level))
+    return score
+
+
+def _parse_ratings(data: dict, item_count: int) -> dict[int, int]:
+    """상대 평가 응답을 {index: rating}으로 방어적으로 판다.
+
+    범위 밖 index·bool·중복은 버린다. 유효한 것만 남기므로 일부만 와도
+    그만큼은 쓸 수 있다(빠진 아이템은 절대 점수로 폴백된다).
+    """
+    rows = (data or {}).get("ratings")
+    if not isinstance(rows, list):
+        return {}
+
+    ratings: dict[int, int] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        idx, rating = row.get("index"), row.get("rating")
+        if isinstance(idx, bool) or isinstance(rating, bool):
+            continue
+        try:
+            idx, rating = int(idx), int(rating)
+        except (TypeError, ValueError):
+            continue
+        if 0 <= idx < item_count and idx not in ratings:
+            ratings[idx] = min(10, max(0, rating))
+    return ratings
+
+
+async def apply_relative_rating(analyzed: list[DigestItem]) -> int:
+    """후보 전체를 한 번에 비교시켜 relevance_score를 다시 매긴다.
+
+    왜 필요한가 (PROGRESS 항목 D):
+        아이템을 하나씩 절대 채점하면 LLM이 중앙으로 몰린다. 실측 164건에서
+        actionability의 73%, depth의 74%가 5~6점이었고 relevance IQR이 1이었다.
+        점수가 뭉치면 상위 5건을 고르는 일이 사실상 동전 던지기가 된다.
+        프롬프트로 점수 정의를 조이는 시도는 이미 한 번 실패했다(§1.1).
+
+        LLM은 절대 평가보다 상대 비교에서 훨씬 안정적이다. 그래서 후보를 한
+        목록에 놓고 서로 비교시킨다.
+
+    실패해도 파이프라인은 멈추지 않는다. 호출·파싱이 깨지면 절대 점수가 그대로
+    남고, 일부 index만 오면 온 것만 반영된다.
+
+    반환: 상대 평가가 반영된 건수(로깅용).
+    """
+    # 후보가 2건 이하면 비교의 의미가 없다.
+    if len(analyzed) < 3:
+        return 0
+
+    listing = "\n".join(
+        f"[{i}] 제목: {d.raw.title}\n"
+        f"     출처: {d.raw.source_name} / 근거수준: {d.analysis.evidence_level.value}\n"
+        f"     요약: {d.analysis.one_line_summary}\n"
+        f"     핵심: {' | '.join(kp.point for kp in d.analysis.key_points[:2]) or '없음'}"
+        for i, d in enumerate(analyzed)
+    )
+    prompt = _RELATIVE_RATING_PROMPT.format(count=len(analyzed), listing=listing)
+
+    try:
+        data = await _call_llm_with_fallback(
+            prompt, "relative-rating", json_schema=_RELATIVE_RATING_SCHEMA
+        )
+        ratings = _parse_ratings(data, len(analyzed))
+    except Exception as e:
+        logger.warning("relative_rating_failed", error=str(e)[:200], fallback="absolute")
+        return 0
+
+    if not ratings:
+        logger.warning("relative_rating_empty", fallback="absolute")
+        return 0
+
+    for i, d in enumerate(analyzed):
+        d.analysis.relevance_score = blend_relevance(
+            d.analysis.relevance_score, ratings.get(i), d.analysis.evidence_level
+        )
+
+    # 모델이 분포 규칙(최고-최저 4점 이상)을 실제로 지켰는지 남긴다.
+    # 이 단계의 효과 전체가 "모델이 시킨 대로 벌려주는가"에 걸려 있고, 그건
+    # 프롬프트 지시라 보장이 아니다 — 실측으로만 확인된다. 이 로그가 그 증거다.
+    values = sorted(ratings.values())
+    logger.info(
+        "relative_rating_spread",
+        rated=len(ratings),
+        low=values[0],
+        high=values[-1],
+        spread=values[-1] - values[0],
+        obeyed=values[-1] - values[0] >= 4,
+        distinct=len(set(values)),
+    )
+
+    return len(ratings)
+
+
 def derive_relevance_score(actionability: int, depth: int) -> int:
     """A(60%)와 D(40%)를 기존 0~10 관련도 점수로 투영한다."""
     bounded_actionability = min(10, max(0, actionability))
@@ -830,13 +1010,20 @@ async def filter_and_analyze(
         )
         analyzed.append(DigestItem(raw=item, analysis=analysis))
 
-    # 2) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
+    # 2) 후보끼리 비교시켜 점수를 다시 매긴다(PROGRESS D).
+    #    개별 절대 채점은 중앙으로 몰린다 — 실측 164건에서 actionability 73%,
+    #    depth 74%가 5~6점이었고 relevance IQR이 1이었다. 그 상태로 상위 5건을
+    #    고르면 사실상 동전 던지기다. 드라이런은 mock 점수라 비교할 게 없다.
+    if not settings.dry_run:
+        rated = await apply_relative_rating(analyzed)
+        if rated:
+            logger.info("relative_rating_applied", rated=rated, total=len(analyzed))
+
+    # 3) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
     #
     #    동점은 👍/👎로 가른다. 점수 자체는 건드리지 않는다 — 근거가 같은 급일
-    #    때만 취향이 순서를 정하므로 근거 게이트가 유지된다. 실측상 153건이 5개
-    #    점수값에 몰려 있어(IQR=1) 동점이 흔하고, 그래서 타이브레이크가 실제로
-    #    선정을 바꾼다. 피드백이 없으면 signal이 비어 모든 보정이 0이 되고
-    #    정렬은 기존과 동일해진다.
+    #    때만 취향이 순서를 정하므로 근거 게이트가 유지된다. 상대 평가로 점수가
+    #    벌어져도 동점은 여전히 생기고, 그때 취향이 순서를 정한다.
     floor = settings.relevance_floor
     # 퀴즈에서 반복해서 틀린 개념을 선정에 되먹인다 — 여기가 §4.2 ⑥→⑦이
     # 닫히는 지점이다. 응답이 없거나 표본이 부족하면 빈 집합이라 무해하다.
@@ -863,7 +1050,7 @@ async def filter_and_analyze(
     )
     selected = candidates[:settings.max_items_per_digest]
 
-    # 3) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
+    # 4) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
     #    모델이라 값 기반 `in`은 O(n²)에다 오탐 위험이 있으므로 id()로 판별한다.
     selected_ids = {id(d) for d in selected}
     for d in analyzed:
@@ -880,7 +1067,7 @@ async def filter_and_analyze(
         else:
             logger.info("item_below_floor", title=d.raw.title, score=score, reason=d.analysis.skip_reason)
 
-    # 4) 발송이 확정된 것만 어휘에 등록한다. 후보 전체를 넣으면 읽히지도 않은
+    # 5) 발송이 확정된 것만 어휘에 등록한다. 후보 전체를 넣으면 읽히지도 않은
     #    콘텐츠의 개념이 어휘를 채워, 재사용 유도 목록이 노이즈로 희석된다.
     #    등록은 표준명으로 되돌려 레코드에도 표준명이 남게 한다.
     all_resolved: list[str] = []
