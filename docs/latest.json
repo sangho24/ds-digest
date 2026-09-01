@@ -1,57 +1,68 @@
 {
   "contract_version": 1,
-  "date": "2026-08-31",
-  "generated_at": "2026-08-31T09:28:01.428411+09:00",
+  "date": "2026-09-01",
+  "generated_at": "2026-09-01T13:27:47.950704+09:00",
   "count": 1,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-08-31.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-09-01.html",
   "items": [
     {
-      "id": "66d211f064f1",
-      "title": "💸 1인당 매출 42,000% 폭증, 2025년 진짜로 성장한 스타트업 20곳",
-      "url": "https://innoforest.stibee.com/p/651",
+      "id": "f0f522995d7e",
+      "title": "Launch HN: Almanac (YC S26) – AI that knows your company",
+      "url": "https://usealmanac.com/",
       "source": {
-        "type": "newsletter",
-        "name": "혁신의 숲"
+        "type": "rss",
+        "name": "HackerNews"
       },
-      "published_at": "2026-08-30T00:00:00",
-      "summary": "1인당 매출 급증 스타트업 데이터가 DS에 인사이트 제공",
+      "published_at": null,
+      "summary": "기업 내부 데이터를 사전 컴파일해 AI 에이전트가 실시간 컨텍스트를 제공하는 방식은 DS가 데이터 파이프라인과 메모리 설계에 새로운 인사이트를 줍니다.",
       "tags": [
-        "혁신의숲",
-        "YC",
-        "가제트코리아",
-        "멧챠 카멜레온",
-        "헬로맥스"
+        "Almanac",
+        "Hermes",
+        "PostHog",
+        "Gmail",
+        "Harvard"
       ],
-      "relevance": 4,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "2024‑2025년 사이 일부 스타트업이 42,000% 이상 1인당 매출 증가를 기록했다",
+          "point": "Almanac는 Hermes 기반 AI 에이전트를 즉시 제공하고 Gmail·Calendar·PostHog 등과 원클릭 연결해 개인·회사 위키에 데이터를 자동 수집합니다.",
           "timestamp": null
         },
         {
-          "point": "성장 분야는 환전 플랫폼, 엔터테크 등 다양하며 전통시장부터 메가 트렌드까지 포괄한다",
+          "point": "두 개의 위키(개인 위키와 회사 위키)를 사전 컴파일해 메모리를 미리 구축함으로써 에이전트가 상황에 맞는 답변과 사전 작업 제안을 할 수 있다.",
           "timestamp": null
         },
         {
-          "point": "혁신의숲 데이터베이스를 통해 고성장 스타트업을 식별·분석할 수 있다",
+          "point": "창업자들은 Harvard와 NASA 프로젝트 경험을 바탕으로 메모리·컨텍스트를 핵심 차별점으로 삼아, 초기 컴퓨팅 비용을 많이 투자하는 전략을 채택했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "혁신의숲 데이터를 활용해 1인당 매출 성장 모델을 구축하고 고성장 스타트업을 예측한다",
-        "다양한 산업군별 1인당 매출 변화를 시각화한 대시보드를 만들어 투자·파트너십 의사결정에 활용한다"
+        "사내 데이터 소스(Gmail, Calendar, PostHog 등)를 연결해 개인·회사 위키를 구축하고, 이를 기반으로 AI 챗봇에 사전 컴파일된 지식 베이스를 제공한다.",
+        "백그라운드 워커를 도입해 위키에 축적된 업무 정보를 분석하고, AI 에이전트가 자동으로 작업 완료 가능성을 제안하도록 설계한다."
       ],
       "quiz": [
         {
-          "question": "2025년 1인당 매출 증가율이 가장 높았던 스타트업 분야는?",
+          "question": "Almanac가 기본으로 제공하는 AI 에이전트의 이름은 무엇인가?",
           "options": [
-            "환전 플랫폼",
-            "엔터테크",
-            "로보틱스",
-            "웹툰"
+            "Hermes",
+            "Athena",
+            "Apollo",
+            "Zeus"
           ],
           "answer_index": 0,
-          "explanation": "본문에 '증가율 42,135%를 기록한 환전 플랫폼'이라고 명시돼 있다"
+          "explanation": "본문에서 'You get a Hermes agent straight out of the box' 라고 명시되어 있다."
+        },
+        {
+          "question": "창업자 중 두 명이 추가로 진학한 대학은 어디인가?",
+          "options": [
+            "IIT Delhi",
+            "Harvard",
+            "Stanford",
+            "MIT"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 'Rohan and I later went to Harvard' 라는 문장이 있어 Harvard가 정답이다."
         }
       ]
     }

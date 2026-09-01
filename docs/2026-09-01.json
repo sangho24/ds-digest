@@ -1,8 +1,8 @@
 {
   "contract_version": 1,
   "date": "2026-09-01",
-  "generated_at": "2026-09-01T13:12:31.385719+09:00",
-  "count": 3,
+  "generated_at": "2026-09-01T13:27:47.950704+09:00",
+  "count": 1,
   "archive_url": "https://sangho24.github.io/ds-digest/2026-09-01.html",
   "items": [
     {
@@ -14,123 +14,55 @@
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "[DRY RUN] Launch HN: Almanac (YC S26) – AI that kn",
+      "summary": "기업 내부 데이터를 사전 컴파일해 AI 에이전트가 실시간 컨텍스트를 제공하는 방식은 DS가 데이터 파이프라인과 메모리 설계에 새로운 인사이트를 줍니다.",
       "tags": [
-        "DRY RUN",
-        "테스트"
+        "Almanac",
+        "Hermes",
+        "PostHog",
+        "Gmail",
+        "Harvard"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "[DRY RUN] 핵심 포인트 1",
+          "point": "Almanac는 Hermes 기반 AI 에이전트를 즉시 제공하고 Gmail·Calendar·PostHog 등과 원클릭 연결해 개인·회사 위키에 데이터를 자동 수집합니다.",
           "timestamp": null
         },
         {
-          "point": "[DRY RUN] 핵심 포인트 2",
+          "point": "두 개의 위키(개인 위키와 회사 위키)를 사전 컴파일해 메모리를 미리 구축함으로써 에이전트가 상황에 맞는 답변과 사전 작업 제안을 할 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "창업자들은 Harvard와 NASA 프로젝트 경험을 바탕으로 메모리·컨텍스트를 핵심 차별점으로 삼아, 초기 컴퓨팅 비용을 많이 투자하는 전략을 채택했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "[DRY RUN] 현업 적용 아이디어 1",
-        "[DRY RUN] 현업 적용 아이디어 2"
+        "사내 데이터 소스(Gmail, Calendar, PostHog 등)를 연결해 개인·회사 위키를 구축하고, 이를 기반으로 AI 챗봇에 사전 컴파일된 지식 베이스를 제공한다.",
+        "백그라운드 워커를 도입해 위키에 축적된 업무 정보를 분석하고, AI 에이전트가 자동으로 작업 완료 가능성을 제안하도록 설계한다."
       ],
       "quiz": [
         {
-          "question": "[DRY RUN] 테스트 퀴즈 문항",
+          "question": "Almanac가 기본으로 제공하는 AI 에이전트의 이름은 무엇인가?",
           "options": [
-            "A",
-            "B",
-            "C",
-            "D"
+            "Hermes",
+            "Athena",
+            "Apollo",
+            "Zeus"
           ],
           "answer_index": 0,
-          "explanation": "[DRY RUN] 정답 해설"
-        }
-      ]
-    },
-    {
-      "id": "66d211f064f1",
-      "title": "💸 1인당 매출 42,000% 폭증, 2025년 진짜로 성장한 스타트업 20곳",
-      "url": "https://innoforest.stibee.com/p/651",
-      "source": {
-        "type": "newsletter",
-        "name": "혁신의 숲"
-      },
-      "published_at": "2026-08-30T00:00:00",
-      "summary": "[DRY RUN] 💸 1인당 매출 42,000% 폭증, 2025년 진짜로 성장한 스타트업 ",
-      "tags": [
-        "DRY RUN",
-        "테스트"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "[DRY RUN] 핵심 포인트 1",
-          "timestamp": null
+          "explanation": "본문에서 'You get a Hermes agent straight out of the box' 라고 명시되어 있다."
         },
         {
-          "point": "[DRY RUN] 핵심 포인트 2",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "[DRY RUN] 현업 적용 아이디어 1",
-        "[DRY RUN] 현업 적용 아이디어 2"
-      ],
-      "quiz": [
-        {
-          "question": "[DRY RUN] 테스트 퀴즈 문항",
+          "question": "창업자 중 두 명이 추가로 진학한 대학은 어디인가?",
           "options": [
-            "A",
-            "B",
-            "C",
-            "D"
+            "IIT Delhi",
+            "Harvard",
+            "Stanford",
+            "MIT"
           ],
-          "answer_index": 0,
-          "explanation": "[DRY RUN] 정답 해설"
-        }
-      ]
-    },
-    {
-      "id": "e054d9aed415",
-      "title": "Claude Code reduces it's weekly limit by 17% – compared to today",
-      "url": "https://twitter.com/ClaudeDevs/status/2093742322525810912",
-      "source": {
-        "type": "rss",
-        "name": "HackerNews"
-      },
-      "published_at": null,
-      "summary": "[DRY RUN] Claude Code reduces it's weekly limit by",
-      "tags": [
-        "DRY RUN",
-        "테스트"
-      ],
-      "relevance": 7,
-      "key_points": [
-        {
-          "point": "[DRY RUN] 핵심 포인트 1",
-          "timestamp": null
-        },
-        {
-          "point": "[DRY RUN] 핵심 포인트 2",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "[DRY RUN] 현업 적용 아이디어 1",
-        "[DRY RUN] 현업 적용 아이디어 2"
-      ],
-      "quiz": [
-        {
-          "question": "[DRY RUN] 테스트 퀴즈 문항",
-          "options": [
-            "A",
-            "B",
-            "C",
-            "D"
-          ],
-          "answer_index": 0,
-          "explanation": "[DRY RUN] 정답 해설"
+          "answer_index": 1,
+          "explanation": "본문에 'Rohan and I later went to Harvard' 라는 문장이 있어 Harvard가 정답이다."
         }
       ]
     }
