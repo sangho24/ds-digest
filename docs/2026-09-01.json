@@ -1,70 +1,277 @@
 {
   "contract_version": 1,
   "date": "2026-09-01",
-  "generated_at": "2026-09-01T13:27:47.950704+09:00",
-  "count": 1,
+  "generated_at": "2026-09-01T18:11:05.553744+09:00",
+  "count": 5,
   "archive_url": "https://sangho24.github.io/ds-digest/2026-09-01.html",
   "items": [
     {
-      "id": "f0f522995d7e",
-      "title": "Launch HN: Almanac (YC S26) – AI that knows your company",
-      "url": "https://usealmanac.com/",
+      "id": "6a71b49a657c",
+      "title": "SUN: Persistent Programs For Language-Grounded Control-to-Learning-to-Real Policies",
+      "url": "https://arxiv.org/abs/2608.31167v1",
       "source": {
         "type": "rss",
-        "name": "HackerNews"
+        "name": "arXiv:cs.AI"
       },
-      "published_at": null,
-      "summary": "기업 내부 데이터를 사전 컴파일해 AI 에이전트가 실시간 컨텍스트를 제공하는 방식은 DS가 데이터 파이프라인과 메모리 설계에 새로운 인사이트를 줍니다.",
+      "published_at": "2026-08-31T17:59:16",
+      "summary": "제어와 학습을 통합해 로봇 정책 효율화",
       "tags": [
-        "Almanac",
-        "Hermes",
-        "PostHog",
-        "Gmail",
-        "Harvard"
+        "SUN Programs",
+        "Kuafu",
+        "MPC",
+        "DP3",
+        "Franka"
       ],
-      "relevance": 8,
+      "relevance": 9,
       "key_points": [
         {
-          "point": "Almanac는 Hermes 기반 AI 에이전트를 즉시 제공하고 Gmail·Calendar·PostHog 등과 원클릭 연결해 개인·회사 위키에 데이터를 자동 수집합니다.",
+          "point": "SUN Programs는 기하·접촉 관계를 한 번 정의해 MPC 비용, RL 보상, 전이 가드 등으로 컴파일한다.",
           "timestamp": null
         },
         {
-          "point": "두 개의 위키(개인 위키와 회사 위키)를 사전 컴파일해 메모리를 미리 구축함으로써 에이전트가 상황에 맞는 답변과 사전 작업 제안을 할 수 있다.",
+          "point": "Kuafu는 대형 비전‑언어 모델로부터 언어와 장면 의미를 추출해 SUN Programs를 자동 생성하고 MPC로 실행 가능성을 검증한다.",
           "timestamp": null
         },
         {
-          "point": "창업자들은 Harvard와 NASA 프로젝트 경험을 바탕으로 메모리·컨텍스트를 핵심 차별점으로 삼아, 초기 컴퓨팅 비용을 많이 투자하는 전략을 채택했다.",
+          "point": "9개 작업에서 Kuafu는 82.03% 매크로 성공률을 달성하고, 인간 원격조작 대비 10.57배의 성공 궤적 시간을 제공한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "사내 데이터 소스(Gmail, Calendar, PostHog 등)를 연결해 개인·회사 위키를 구축하고, 이를 기반으로 AI 챗봇에 사전 컴파일된 지식 베이스를 제공한다.",
-        "백그라운드 워커를 도입해 위키에 축적된 업무 정보를 분석하고, AI 에이전트가 자동으로 작업 완료 가능성을 제안하도록 설계한다."
+        "SUN Programs 개념을 활용해 로봇 작업의 기하·접촉 제약을 MPC 비용과 RL 보상으로 일관되게 정의해 밀집 보상 설계 비용을 절감한다.",
+        "Kuafu와 유사한 파이프라인을 구축해 대형 비전‑언어 모델로부터 언어 명령을 SUN Programs로 변환하고, 시뮬레이션 기반 MPC 검증 후 강화학습 정책을 학습함으로써 데모 없이 로봇 정책을 빠르게 확보한다."
       ],
       "quiz": [
         {
-          "question": "Almanac가 기본으로 제공하는 AI 에이전트의 이름은 무엇인가?",
+          "question": "Kuafu가 9개 작업에서 달성한 매크로 성공률은?",
           "options": [
-            "Hermes",
-            "Athena",
-            "Apollo",
-            "Zeus"
+            "82.03%",
+            "35.67%",
+            "24.75%",
+            "46.0%"
           ],
           "answer_index": 0,
-          "explanation": "본문에서 'You get a Hermes agent straight out of the box' 라고 명시되어 있다."
+          "explanation": "본문에 \"Kuafu achieves 82.03% macro-success\" 라고 명시되어 있다."
         },
         {
-          "question": "창업자 중 두 명이 추가로 진학한 대학은 어디인가?",
+          "question": "실물 로봇 평가에 사용된 플랫폼은?",
           "options": [
-            "IIT Delhi",
-            "Harvard",
-            "Stanford",
-            "MIT"
+            "Franka와 Kinova",
+            "UR5",
+            "Baxter",
+            "Kuka"
           ],
-          "answer_index": 1,
-          "explanation": "본문에 'Rohan and I later went to Harvard' 라는 문장이 있어 Harvard가 정답이다."
+          "answer_index": 0,
+          "explanation": "본문에 \"34.7% on physical Franka and Kinova robots\" 라고 언급된다."
         }
       ]
+    },
+    {
+      "id": "41ede6969a68",
+      "title": "Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편",
+      "url": "https://d2.naver.com/helloworld/4452165",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "Airflow 멀티프로세싱 선택과 한계 파악",
+      "tags": [
+        "Airflow",
+        "fork",
+        "spawn",
+        "GIL",
+        "Git-Sync"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Airflow는 병렬성과 격리성을 만족하기 위해 task당 별도 프로세스를 생성한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Python 멀티프로세싱에는 fork와 spawn 방식이 있으며, fork는 COW를 이용해 메모리를 공유하고 spawn은 새 인터프리터를 시작한다.",
+          "timestamp": null
+        },
+        {
+          "point": "fork 방식은 메모리 사용량과 모듈 캐시 측면에서 한계가 있어 Airflow에서의 적용에 주의가 필요하다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "fork 대신 spawn을 사용해 Airflow task의 메모리 사용량을 최적화한다",
+        "task 종료 후 프로세스 폐기를 확인하는 자동화 스크립트를 도입해 모듈 캐시 오염을 방지한다"
+      ],
+      "quiz": [
+        {
+          "question": "Python 멀티프로세싱에서 fork 방식이 메모리를 공유하는 방식을 무엇이라고 하는가?",
+          "options": [
+            "Copy-on-Write",
+            "Lazy Loading",
+            "Thread Pool",
+            "Shared Memory"
+          ],
+          "answer_index": 0,
+          "explanation": "fork는 페이지 테이블만 복사하고 실제 메모리는 쓰기 시 복사되는 Copy-on-Write 방식을 사용한다."
+        },
+        {
+          "question": "Airflow가 task 실행 시 만족해야 하는 두 핵심 요구 사항은?",
+          "options": [
+            "병렬성, 격리성",
+            "속도, 확장성",
+            "보안, 가용성",
+            "신뢰성, 유지보수"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Airflow는 병렬성과 격리성을 핵심 요구 사항으로 명시한다."
+        }
+      ]
+    },
+    {
+      "id": "dbf9a1352060",
+      "title": "🧑‍💻 에디터가 저장공간 정리를 위해 선택한 '이 행동'",
+      "url": "https://dflick.stibee.com/p/109",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-09-01T00:00:00",
+      "summary": "AI 인프라·비용·생산성 최신 동향 파악",
+      "tags": [
+        "OpenAI",
+        "Nvidia",
+        "Google AI Mode",
+        "Instagram",
+        "Adobe Photoshop"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "OpenAI가 ChatGPT 광고 매출 10억 달러를 달성하며 광고 플랫폼을 확대했다",
+          "timestamp": null
+        },
+        {
+          "point": "Nvidia가 129억 달러 규모로 Hugging Face 인수 협상을 진행 중이다",
+          "timestamp": null
+        },
+        {
+          "point": "AI 이미지·영상 생성은 텍스트보다 수백 배 이상의 에너지를 소비한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "ChatGPT 광고 플랫폼을 활용해 자체 AI 마케팅 캠페인 ROI를 측정한다",
+        "AI 이미지·영상 생성 작업에 대한 에너지 사용량을 모니터링하고, 텍스트 기반 대안으로 전환하는 정책을 수립한다"
+      ],
+      "quiz": [
+        {
+          "question": "Hugging Face 인수 협상을 진행 중인 기업은?",
+          "options": [
+            "OpenAI",
+            "Nvidia",
+            "Google",
+            "Meta"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 Nvidia가 129억 달러 규모로 Hugging Face 인수 협상을 마무리 단계에 있다고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "4e78dec40c1c",
+      "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
+      "url": "https://d2.naver.com/helloworld/4821538",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "AI 활용 시 검증·프로세스 설계가 업무 신뢰성을 좌우한다",
+      "tags": [
+        "Claude Code",
+        "LLM",
+        "MCP",
+        "NStake",
+        "네이버"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 활용 시 업무 흐름과 검증 기준을 먼저 설계해야 함",
+          "timestamp": null
+        },
+        {
+          "point": "해커톤에서 ‘페어 프롬프팅’ 방식으로 프롬프트를 공동 검토함",
+          "timestamp": null
+        },
+        {
+          "point": "재무 엑셀 데이터를 단순 전환이 아니라 거래 이력과 검증을 포함한 기준 시스템으로 재정의함",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "팀 내에서 페어 프롬프팅 워크플로우를 도입해 재무 데이터 처리 프롬프트를 공동 작성·검토한다",
+        "거래 이력 로그와 외부 공시 데이터를 LLM으로 교차 검증하는 파이프라인을 구축한다"
+      ],
+      "quiz": [
+        {
+          "question": "해커톤에서 팀이 사용한 프롬프트 작성 방식은?",
+          "options": [
+            "개인별 독립 작성",
+            "페어 프롬프팅",
+            "자동 생성",
+            "외부 컨설팅"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 ‘페어 프롬프팅’ 방식으로 여러 명이 함께 프롬프트를 작성하고 결과를 검토했다고 명시돼 있다."
+        },
+        {
+          "question": "팀이 처음 정의한 문제와 최종 정의한 문제의 차이는?",
+          "options": [
+            "엑셀 대체 vs 거래 이력 검증",
+            "데이터 시각화 vs 자동 보고",
+            "모델 학습 vs 배포",
+            "사용자 인터페이스 개선 vs 보안 강화"
+          ],
+          "answer_index": 0,
+          "explanation": "초기에는 엑셀을 대체하는 입력 화면을 목표로 했지만, 최종에는 숫자가 어떻게 만들어졌는지와 검증 과정을 관리하는 시스템으로 문제를 재정의했다."
+        }
+      ]
+    },
+    {
+      "id": "4a735d1e8afe",
+      "title": "But what is cross-entropy? | Compression is Intelligence Part 2",
+      "url": "https://youtu.be/GlYgs6v2YfU",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-07-16T11:56:04",
+      "summary": "교차 엔트로피가 LLM 손실 함수인 이유",
+      "tags": [
+        "cross-entropy",
+        "LLM",
+        "Manim",
+        "NanoGPT",
+        "KL Divergence"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "교차 엔트로피의 정의와 수식적 형태를 설명한다.",
+          "timestamp": null
+        },
+        {
+          "point": "직관적 예시를 통해 엔트로피와 교차 엔트로피 차이를 보여준다.",
+          "timestamp": null
+        },
+        {
+          "point": "언어 트리와 사전학습 LLM에 교차 엔트로피 손실이 어떻게 적용되는지 논의한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
     }
   ]
 }

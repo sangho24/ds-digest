@@ -1,88 +1,388 @@
 {
   "date": "2026-09-01",
-  "generated_at": "2026-09-01T04:27:47.952708",
+  "generated_at": "2026-09-01T09:11:05.558075",
   "schema_version": 2,
   "items": [
     {
       "raw": {
         "source_type": "rss",
-        "source_name": "HackerNews",
-        "source_key": "hackernews",
-        "source_label": "HackerNews",
-        "title": "Launch HN: Almanac (YC S26) – AI that knows your company",
-        "url": "https://usealmanac.com/",
-        "published_at": null,
+        "source_name": "arXiv:cs.AI",
+        "source_key": "arxiv:cs.AI",
+        "source_label": "arXiv:cs.AI",
+        "title": "SUN: Persistent Programs For Language-Grounded Control-to-Learning-to-Real Policies",
+        "url": "https://arxiv.org/abs/2608.31167v1",
+        "published_at": "2026-08-31T17:59:16",
         "transcript": null,
-        "body": "Hi HN, I&#x27;m Kushagra, one of three founders of Almanac, a Hermes with a brain that knows everything about your company.<p>We started our journey with setting up Hermes for our company, thinking it must be easy. We wanted an agent that would know every context about our company, so we could ask questions and get context-appropriate responses to.<p>This started a very annoying and difficult journey. Setting up Hermes, getting it to talk right, building OAuth apps for every connector myself, then feeding it context myself, and ultimately struggling with Hermes&#x27;s default memory. At the same time, we saw our YC batchmates struggling with the same problem, and we saw an opportunity.<p>So we built Almanac. This is how it works. You sign up, you get a Hermes agent straight out of the box. You have a one-click connect to any account (Gmail, Calendar, Granola, PostHog, etc). You have personal accounts (only accessible by you) and also shared accounts (accessible by everyone in the company). The consequence being I can never see my cofounders&#x27; accounts.<p>The “brain” of this agent is wikis. We pull in information from your connected sources, and start organizing this information in two wikis. A personal one, for you, which understands who you are, what your preferences are, the people in your life, and the things going on in your life. The second wiki is a company wiki, which includes what the company is, what you’re working on, what the roadmap is, and what the blockers of the company are. Your agent ultimately has access to these two wikis and the original accounts, which invoke the feeling of “it just knows you.”<p>Here’s a demo: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ajXP5PHuK18\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ajXP5PHuK18</a><p>We&#x27;re three cofounders, Rohan, Kushagra, and Divit, and we&#x27;ve been friends for 11 years, since studying for the IIT-JEE. We all did Electrical Engineering (Rohan at IIT Delhi, me at IIT Kharagpur, Divit at BITS Pilani, Hyderabad), and Rohan and I later went to Harvard, where this pre-compilation layer became our capstone thesis. We have built multiple products around the idea of a pre-compiled knowledge layer.<p>Our main differentiating point is the way we approach memory and context in general. Most AI assistant tools treat memory as an afterthought. We have worked on wikis for AI for more than a year now, building products for Harvard and NASA. The one thing we have learnt is that one needs to spend a lot more compute upfront, in the pre-compilation of this knowledge base, to get it right.<p>Having this pre-compiled knowledge base enables a lot of interesting ideas. First is a proactive agent. Since I have compiled what’s going on in both my company and my current life, Almanac can start completing tasks on its own. Concretely, we run a background worker which takes a look at tasks that could be completed, pings the main agent, who then pings me, suggesting",
+        "body": "Bridging model-based control and learned policies in long-horizon manipulation has harbored a silent disagreement: control executes specified objectives, learning amortizes that behavior into a reactive policy, yet existing protocols discard task semantics, leaving rewards hand-crafted and behavior drifting from what control verified.We introduce Semantically UNified (SUN) Programs, typed executables where geometric and contact relations are defined once and compiled into aligned Model Predictive Control (MPC) costs, satisfaction predicates, RL rewards, transition guards, and diagnostics. Our system, Kuafu, driven by large vision language systems, automatically synthesizes SUN Programs from language and scene semantics, screens feasibility via MPC, and retains semantics while training stage-conditioned policies. Across nine tasks, Kuafu achieves 82.03% macro-success, outperforming sparse-reward (35.67%) and Stage-BC (24.75%) baselines. At 8192-way scale, it generates 10.57x the successful trajectory time per hour of human teleoperation. With 500 trajectories per task, Kuafu data trains DP3 policies to 46.0% simulation success (vs. 22.4% for alternatives) and 34.7% on physical Franka and Kinova robots. These results establish that simulation-screened task semantics can effectively amortize control into robust policies, without demonstrations or manual dense rewards, unifying symbolic planning and data-driven execution.",
         "duration_seconds": null
       },
       "analysis": {
-        "relevance_score": 8,
-        "one_line_summary": "기업 내부 데이터를 사전 컴파일해 AI 에이전트가 실시간 컨텍스트를 제공하는 방식은 DS가 데이터 파이프라인과 메모리 설계에 새로운 인사이트를 줍니다.",
+        "relevance_score": 9,
+        "one_line_summary": "제어와 학습을 통합해 로봇 정책 효율화",
         "tags": [
-          "Almanac",
-          "Hermes",
-          "PostHog",
-          "Gmail",
-          "Harvard"
+          "SUN Programs",
+          "Kuafu",
+          "MPC",
+          "DP3",
+          "Franka"
         ],
         "concepts": [
-          "프리컴파일 지식 베이스",
-          "AI 에이전트 메모리 관리",
-          "기업용 AI 어시스턴트"
+          "모델 기반 제어와 강화학습 통합",
+          "언어 기반 로봇 프로그램 합성"
         ],
         "key_points": [
           {
-            "point": "Almanac는 Hermes 기반 AI 에이전트를 즉시 제공하고 Gmail·Calendar·PostHog 등과 원클릭 연결해 개인·회사 위키에 데이터를 자동 수집합니다.",
+            "point": "SUN Programs는 기하·접촉 관계를 한 번 정의해 MPC 비용, RL 보상, 전이 가드 등으로 컴파일한다.",
             "timestamp": null
           },
           {
-            "point": "두 개의 위키(개인 위키와 회사 위키)를 사전 컴파일해 메모리를 미리 구축함으로써 에이전트가 상황에 맞는 답변과 사전 작업 제안을 할 수 있다.",
+            "point": "Kuafu는 대형 비전‑언어 모델로부터 언어와 장면 의미를 추출해 SUN Programs를 자동 생성하고 MPC로 실행 가능성을 검증한다.",
             "timestamp": null
           },
           {
-            "point": "창업자들은 Harvard와 NASA 프로젝트 경험을 바탕으로 메모리·컨텍스트를 핵심 차별점으로 삼아, 초기 컴퓨팅 비용을 많이 투자하는 전략을 채택했다.",
+            "point": "9개 작업에서 Kuafu는 82.03% 매크로 성공률을 달성하고, 인간 원격조작 대비 10.57배의 성공 궤적 시간을 제공한다.",
             "timestamp": null
           }
         ],
         "production_ideas": [
-          "사내 데이터 소스(Gmail, Calendar, PostHog 등)를 연결해 개인·회사 위키를 구축하고, 이를 기반으로 AI 챗봇에 사전 컴파일된 지식 베이스를 제공한다.",
-          "백그라운드 워커를 도입해 위키에 축적된 업무 정보를 분석하고, AI 에이전트가 자동으로 작업 완료 가능성을 제안하도록 설계한다."
+          "SUN Programs 개념을 활용해 로봇 작업의 기하·접촉 제약을 MPC 비용과 RL 보상으로 일관되게 정의해 밀집 보상 설계 비용을 절감한다.",
+          "Kuafu와 유사한 파이프라인을 구축해 대형 비전‑언어 모델로부터 언어 명령을 SUN Programs로 변환하고, 시뮬레이션 기반 MPC 검증 후 강화학습 정책을 학습함으로써 데모 없이 로봇 정책을 빠르게 확보한다."
         ],
         "quiz": [
           {
-            "question": "Almanac가 기본으로 제공하는 AI 에이전트의 이름은 무엇인가?",
+            "question": "Kuafu가 9개 작업에서 달성한 매크로 성공률은?",
             "options": [
-              "Hermes",
-              "Athena",
-              "Apollo",
-              "Zeus"
+              "82.03%",
+              "35.67%",
+              "24.75%",
+              "46.0%"
             ],
             "answer_index": 0,
-            "explanation": "본문에서 'You get a Hermes agent straight out of the box' 라고 명시되어 있다."
+            "explanation": "본문에 \"Kuafu achieves 82.03% macro-success\" 라고 명시되어 있다."
           },
           {
-            "question": "창업자 중 두 명이 추가로 진학한 대학은 어디인가?",
+            "question": "실물 로봇 평가에 사용된 플랫폼은?",
             "options": [
-              "IIT Delhi",
-              "Harvard",
-              "Stanford",
-              "MIT"
+              "Franka와 Kinova",
+              "UR5",
+              "Baxter",
+              "Kuka"
             ],
-            "answer_index": 1,
-            "explanation": "본문에 'Rohan and I later went to Harvard' 라는 문장이 있어 Harvard가 정답이다."
+            "answer_index": 0,
+            "explanation": "본문에 \"34.7% on physical Franka and Kinova robots\" 라고 언급된다."
           }
         ],
         "skip_reason": null,
         "evidence_level": "full",
         "domain": [
           "ai-ml",
-          "product"
+          "systems"
         ],
-        "content_type": "release",
+        "content_type": "paper",
         "half_life": "durable",
-        "actionability": 5,
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편",
+        "url": "https://d2.naver.com/helloworld/4452165",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p dir=\"auto\">저희 팀은 데이터 입수 플랫폼의 배치 워크플로를 Airflow 2.10.2로 운영하고 있습니다. 2025년 4월 Airflow 3.0이 릴리스되었고, UI 개선과 다양한 신규 기능이 포함되었습니다. 이 변화가 저희 운영 환경에 필요하다고 판단했고 도입을 위한 PoC(Proof of Concept)를 진행했습니다.</p>\n<p dir=\"auto\">이 글은 그 PoC 과정에서 Python의 멀티프로세싱 방식 중 하나인 fork로 인해 발생한 문제를 발견해 해결하고 기여한 과정을 다루는 시리즈의 1편입니다. 1편에서는 이 문제를 이해하는 데 필요한 배경지식을 다룹니다. Airflow가 task를 실행할 때 요구되는 조건을 살펴보고, 이를 만족하는 Python 멀티프로세싱 방식을 비교한 뒤, Airflow가 실제로 채택한 방식과 그 한계를 설명합니다.</p>\n<p dir=\"auto\">2편에서는 이 한계가 Airflow에 실제로 어떤 문제를 일으켰는지, 원인과 해결 과정을 다룹니다.</p>\n<h2 dir=\"auto\">Airflow의 task 실행 요구 사항</h2>\n<p dir=\"auto\"><a href=\"https://airflow.apache.org/\" rel=\"nofollow\">Apache Airflow</a>는 Python으로 작성된 워크플로 오케스트레이션 도구입니다. 사용자는 task들 사이의 의존 관계를 <a href=\"https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html\" rel=\"nofollow\">Dag</a>로 정의하고, Airflow는 정해진 스케줄에 따라 그 task들을 실행합니다. Dag는 task 집합과 그 사이의 의존 관계, 실행 순서를 정의하는 Airflow의 기본 단위입니다.</p>\n<p dir=\"auto\">task 실행에는 병렬성과 격리성이라는 두 가지 핵심적인 요구 사항이 있으며, Airflow는 이를 모두 만족해야 합니다.</p>\n<h3 dir=\"auto\">병렬성</h3>\n<p dir=\"auto\">병렬성은 여러 task를 동시에 수행할 수 있는 능력입니다. Airflow는 정해진 스케줄에 따라 다수의 task를 실행해야 하므로 병렬성이 필요합니다.</p>\n<p dir=\"auto\">그런데 Airflow는 Python으로 작성된 도구입니다. Python의 표준 구현체인 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-CPython\" rel=\"nofollow\">CPython</a>에는 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-global-interpreter-lock\" rel=\"nofollow\">GIL(Global Interpreter Lock)</a>이 있습니다. 이 때문에 하나의 인터프리터 안에서는 스레드가 아무리 많아도 Python 바이트코드는 한 순간에 하나만 실행됩니다. 즉, 멀티코어 CPU에서도 Python 코드는 동시에 코어 하나에서만 실행됩니다. CPU 집약적인(CPU-bound) 작업에서 멀티코어의 병렬 처리 이점을 얻지 못합니다. Airflow는 이 제약을 극복해야 합니다.</p>\n<h3 dir=\"auto\">격리성</h3>\n<p dir=\"auto\">각 task의 수행이 부모 프로세스와 다른 task에 영향을 주지 않아야 합니다. 여기서 부모 프로세스는 task를 실행하는 프로세스를 생성한 상위 프로세스를 뜻합니다.</p>\n<p dir=\"auto\">Airflow는 사용자가 작성한 코드가 task로 실행되는 구조입니다. 심한 경우 해당 task가 부모 프로세스 전체를 종료시킬 수도 있으며, 이는 전체 task의 장애로 이어질 수 있습니다.</p>\n<p dir=\"auto\">Airflow가 격리성을 필요로 하는 이유는 하나 더 있습니다. Python은 모듈을 전역(<code class=\"notranslate\">sys.modules</code>)으로 관리하며, 한 번 등록된 모듈을 전역에서 삭제하거나 갱신하기가 어렵습니다. 런타임에 import된 모듈은 코드가 바뀌어도 이를 다시 등록하기가 매우 어렵다는 뜻입니다.</p>\n<p dir=\"auto\">가령 사용자는 task에서 <code class=\"notranslate\">import mypackage.plugins</code>와 같이 본인이 작성한 모듈을 불러옵니다. 격리성이 보장되지 않는다면, 해당 모듈은 <a href=\"https://airflow.apache.org/docs/helm-chart/stable/manage-dag-files.html#using-git-sync\" rel=\"nofollow\">Git-Sync</a>를 통해 변경이 일어나도 반영되지 않음을 의미합니다. task가 등록한 모듈은 task 완료와 함께 폐기되어야 합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch1-3\"></a></p>\n<h3 dir=\"auto\">Airflow의 멀티프로세싱 도입</h3>\n<p dir=\"auto\">Airflow는 앞서 살펴본 두 요구 사항을 만족하기 위해 멀티프로세싱을 사용했습니다. 즉, task 하나당 프로세스를 하나씩 생성해 그 안에서 실행하고, 종료 시 폐기하는 것입니다.</p>\n<p dir=\"auto\">이를 통해 진정한 CPU 병렬성을 얻을 수 있습니다. 또한 task의 비정상 종료가 부모 프로세스에 영향을 주지 않게 하고, 부모 프로세스의 전역 모듈이 오염되는 것을 막습니다. task 종료 시 프로세스를 폐기함으로써 격리성을 보장할 수 있습니다.</p>\n<h2 dir=\"auto\">Python의 멀티프로세싱 방식</h2>\n<p dir=\"auto\">Airflow가 멀티프로세싱을 택했다면, 다음 질문은 프로세스를 어떻게 만드느냐입니다. Python에서 <a href=\"https://docs.python.org/ko/3.11/library/multiprocessing.html#contexts-and-start-methods\" rel=\"nofollow\">멀티프로세싱을 지원하는 방식</a>은 fork와 spawn 두 가지입니다(forkserver 방식도 있지만 이 글에서는 다루지 않습니다). 두 방식이 각각 어떻게 동작하는지 살펴본 뒤, 같은 조건에서 실행해 생성 시간과 메모리 사용량을 비교하겠습니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-1\"></a></p>\n<h3 dir=\"auto\">fork와 spawn</h3>\n<p dir=\"auto\">fork는 Unix의 <code class=\"notranslate\">fork(2)</code> 시스템 콜을 그대로 사용합니다. 호출 순간 커널이 프로세스의 복제본을 만들고, 자식은 부모의 모든 것(로드된 모듈, 생성된 객체, 열린 파일 디스크립터)을 승계한 채 fork 지점부터 실행을 이어갑니다.</p>\n<p dir=\"auto\">하지만 커널은 메모리를 실제로 복사하지 않습니다. 부모의 페이지 테이블만 복사하고, 물리 메모리 페이지는 부모와 자식이 공유합니다. 어느 한쪽이 페이지에 쓰기를 시도하는 순간에야 해당 페이지가 복사되는데, 이러한 방식을 Copy-on-Write(COW)라고 합니다.</p>\n<p dir=\"auto\">spawn은 새 Python 인터프리터를 처음부터 실행하고(fresh interpreter), 자식에게는 실행에 필요한 최소한의 인자만 pickle로 직렬화해 넘깁니다. 자식은 부모의 메모리를 전혀 공유하지 않고, 필요한 모듈을 스스로 다시 import합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-2\"></a></p>\n<h3 dir=\"auto\">실행 결과 비교</h3>\n<p dir=\"auto\">앞의 설명만으로는 차이를 직관적으로 이해하기 쉽지 않기 때문에, 장단점을 비교하기 위해 스크립트를 실행해 보았습니다.</p>\n<p dir=\"auto\">측정에 사용한 코드는 다음과 같습니다.</p>\n<div class=\"highlight highlight-source-python\" dir=\"auto\"><pre class=\"notranslate\"><span class=\"pl-k\">from</span> __future__ <span class=\"pl-k\">import</span> <span class=\"pl-s1\">annotations</span>\n\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">multiprocessing</span> <span class=\"pl-k\">as</span> <span class=\"pl-s1\">mp</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">sys</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">time</span>\n\n<span class=\"pl-c1\">K</span> <span class=\"pl-c1\">=</span> <span class=\"pl-c1\">10</span>  <span class=\"pl-c\"># 자식 프로세스 수</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">import_heavy_modules</span>():\n    <span class=\"pl-k\">import</span> <span class=\"pl-s1\">airflow</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">read_mem_mb</span>(<span class=\"pl-s1\">pid</span>: <span class=\"pl-s1\">int</span> <span class=\"pl-c1\">|</span> <span class=\"pl-s1\">str</span>) <span class=\"pl-c1\">-&gt;</span> <span class=\"pl-s1\">tuple</span>[<span class=\"pl-smi\">float</span>, ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "Airflow 멀티프로세싱 선택과 한계 파악",
+        "tags": [
+          "Airflow",
+          "fork",
+          "spawn",
+          "GIL",
+          "Git-Sync"
+        ],
+        "concepts": [
+          "멀티프로세싱",
+          "작업 격리",
+          "병렬 처리"
+        ],
+        "key_points": [
+          {
+            "point": "Airflow는 병렬성과 격리성을 만족하기 위해 task당 별도 프로세스를 생성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Python 멀티프로세싱에는 fork와 spawn 방식이 있으며, fork는 COW를 이용해 메모리를 공유하고 spawn은 새 인터프리터를 시작한다.",
+            "timestamp": null
+          },
+          {
+            "point": "fork 방식은 메모리 사용량과 모듈 캐시 측면에서 한계가 있어 Airflow에서의 적용에 주의가 필요하다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "fork 대신 spawn을 사용해 Airflow task의 메모리 사용량을 최적화한다",
+          "task 종료 후 프로세스 폐기를 확인하는 자동화 스크립트를 도입해 모듈 캐시 오염을 방지한다"
+        ],
+        "quiz": [
+          {
+            "question": "Python 멀티프로세싱에서 fork 방식이 메모리를 공유하는 방식을 무엇이라고 하는가?",
+            "options": [
+              "Copy-on-Write",
+              "Lazy Loading",
+              "Thread Pool",
+              "Shared Memory"
+            ],
+            "answer_index": 0,
+            "explanation": "fork는 페이지 테이블만 복사하고 실제 메모리는 쓰기 시 복사되는 Copy-on-Write 방식을 사용한다."
+          },
+          {
+            "question": "Airflow가 task 실행 시 만족해야 하는 두 핵심 요구 사항은?",
+            "options": [
+              "병렬성, 격리성",
+              "속도, 확장성",
+              "보안, 가용성",
+              "신뢰성, 유지보수"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Airflow는 병렬성과 격리성을 핵심 요구 사항으로 명시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "🧑‍💻 에디터가 저장공간 정리를 위해 선택한 '이 행동'",
+        "url": "https://dflick.stibee.com/p/109",
+        "published_at": "2026-09-01T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/KaBO)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](http://wacky.kr)가 만들고 발행합니다.\n\nVol.106 ・ 2026.09.01\n\n요즘은 어떻게 지내고 계신가요? 어느새 9월이 시작됐네요 🍂 ChatGPT는 광고로, Google AI Mode는 예약으로 영역을 넓히고 있고,  OpenAI와 Nvidia는 인프라 주도권 경쟁에 더 깊이 들어갔어요. Instagram·Photoshop·Meta의 변화까지, 이번 주 꼭 알아둘 AI·IT·UX 소식만 가볍게 모아봤어요 ✨\n\n💡오늘 디플릭 요약💡    [News] OpenAI, ChatGPT 광고 매출 10억 달러 시대 열었다  [In;D] 🧊 지진인 줄 알았는데 빙하가 무너졌다, AI는 책임이 없을까  [TMI] 💻 AI야, 내 하드디스크 좀 정리해줘\n\n📰  이번 주 AI · UX · IT 뉴스 3분 핵심 정리  📰  #AI플랫폼확장 #AI인프라경쟁 #서비스UX변화\n\n🧬 AI\n\n[OpenAI, ChatGPT 광고 매출 10억 달러 시대 열었다](https://dflick.kr/contents/news/1756)  OpenAI의 ChatGPT 광고 사업이 출시 6개월 만에 연환산 매출 10억 달러 속도에 도달했어요. 유럽 31개 시장에서는 Ads Manager 셀프서브 베타가 열려 광고주가 에이전시 없이 직접 캠페인을 만들고 관리할 수 있게 됐어요. 광고 플랫폼으로서의 확장이 본격화되며 새로운 수익 모델 경쟁도 커지고 있어요.    [Nvidia, Hugging Face 인수 협상 마무리 단계](https://dflick.kr/contents/news/1757)  Nvidia가 오픈소스 AI 허브 Hugging Face 인수를 129억 달러 규모로 추진 중이에요. 거래가 성사되면 모델 공유·배포 생태계와 클라우드 연산 수요를 함께 확보하게 돼요. 자체 칩을 개발하는 빅테크가 늘어나는 상황에서 Nvidia가 오픈소스와 인프라 영향력을 동시에 더욱더 강화하려는 전략으로 읽혀요.    [Google AI Mode, 항공권 가격 추적과 호텔 예약까지 지원](https://dflick.kr/contents/news/1758)  Google AI Mode가 항공권 가격 추적, 호텔 검색·예약, 포인트·마일 기준 가격 확인까지 지원해요. 300곳이 넘는 항공사와 여행 사이트의 최신 가격을 반영하고, 가격 변동 시 이메일 알림도 제공해요. 대화형 검색이 정보 탐색을 넘어 실제 여행 계획과 예약 실행 단계까지 맡는 서비스로 더 확장되고 있어요.    [OpenAI, 첫 AI 추론칩 할라피뇨 공개…전력 효율·응답 속도 엔비디아보다 앞서](https://dflick.kr/contents/news/1759)  OpenAI가 첫 자체 AI 추론 프로세서 ‘할라피뇨’의 테스트 결과를 공개했어요. GPT-OSS 120B, 딥시크 R1, 키미 K2.5 비교에서 엔비디아 GB200·GB300 기반 시스템보다 전력당 처리량과 응답 지연에서 우위를 보였어요. 올해 말 자체 인프라에 배치하고 차세대 2·3세대 개발도 이어갈 계획이에요.    [독자 AI 모델용 학습 데이터 3544만 건, AI허브서 무료 공개](https://dflick.kr/contents/news/1760)  과기정통부와 NIA가 독자 AI 파운데이션 모델 정예팀이 구축한 29종, 3,544만 건의 학습 데이터를 AI허브에 무료 공개했어요. 사전학습, 멀티모달, 사후학습, 레드티밍 데이터까지 포함되며 약 1조 5,600억 토큰 규모예요. 국내 기업·연구자·학생 누구나 내려받아 자체 모델 개발과 연구에 활용할 수 있어요.\n\n🧑‍💻 UX · IT\n\n[Insatagram, AI 생성 인물 계정에 새 라벨 적용](https://dflick.kr/contents/news/1761)  인스타그램이 AI 생성 인물을 내세운 프로필에 ‘AI-generated profile’ 라벨을 적용해 투명성을 강화했어요. 라벨이 없는 계정은 Reels·Explore 추천 노출이 제한될 수 있고, 기존 AI creator 라벨 사용자는 새 기준에 맞춰 유지 여부를 확인하게 돼요. AI 도구 일부 활용 계정은 대상이 아니에요    [Adobe Photoshop, AI 보조 편집과 마스크 지시 편집 추가](https://dflick.kr/contents/news/1762)  어도비가 포토샵에 AI Assisted Editor, Markup, 마스크 기반 Instruct Edit를 추가했어요. 자연어 프롬프트와 이미지 위 직접 표시를 함께 활용해 수정 의도를 더 정확히 전달할 수 있고, 결과는 생성형 레이어로 남아 비파괴 편집 흐름을 유지해요. 정밀 편집과 생성형 AI 작업이 한 화면에서 연결돼요.    [삼성, 14인치 Galaxy Book6 보급형 모델 공개](https://dflick.kr/contents/news/1763)  삼성이 14인치 Galaxy Book6 신모델을 공개했어요. 시작가는 799달러이며 최대 25시간 배터리, Intel Core Series 3·5, Galaxy AI 기능을 지원해요. AI Select, Note Assist, Quick Share 등 기기 연동도 강화해 일상용 AI 노트북 경험을 더 낮은 가격대로 확장했어요.    [Meta, 미국 청소년 대상 인스타그램·페이스북 이용 제한 강화](https://dflick.kr/contents/news/1764)  메타가 미국 청소년을 대상으로 인스타그램·페이스북 보호 기능을 대폭 강화해요. 두 앱 합산 하루 2시간 제한, 자정부터 오전 6시까지 접근 차단, 15분 간격 스크롤 알림, 학교 시간대 푸시 제한이 적용돼요. 비개인화 피드 옵션과 연령 확인도 강화되며, 대부분의 보호 조치는 최소 10년 동안 유지될 예정이에요. 이에요.    [포니닷AI, 한국에 로보택시 200대 투입 추진](https://dflick.kr/contents/news/1765)  중국 자율주행 기업 포니닷AI가 7세대 로보택시 200대를 한국에 투입하는 계획을 공개했어요. 다음 달 10대를 먼저 들여와 인증을 거친 뒤 내년 6월 서울 시범운행을 시작하고, 2028년까지 전국 주요 도시로 확대할 예정이에요. 신형 로보택시는 직전 세대보다 자율주행 키트 원가를 70% 낮춰 상용화 경쟁력을 높였어요.\n\n디자이너의 시선을 넓혀주는 시간  작은 인사이트가 인생의 전환점이 될지도..👀\n\n🧊 지진인 줄 알았는데 빙하가 무너졌다, AI는 책임이 없을까\n\n©AI Image\n\n🧊 8월 26일 네팔에서 규모 5.2 지진 신호가 잡혔습니다. 하지만 실제로 흔들린 것은 지하 단층이 아니라 산과 빙하였습니다. 빙하가 포함된 사면이 무너지며 생긴 토석류와 홍수는 약 100km를 이동했습니다.    🌡️ 이번 붕괴가 기후변화 때문에 발생했다고 단정할 수는 없습니다. 다만 온난화가 고산지대를 불안정하게 만들 수 있다는 경고를 읽고 나니, 우리가 매일 사용하는 AI가 기후에 남기는 비용도 궁금해졌습니다.    🤖 텍스트 한 번과 영상 한 번은 같은 ‘AI 사용’이 아닙니다. 연구에서는 이미지 생성이 텍스트 생성보다 평균 60배 이상 많은 전력을 썼고, 국제에너지기구는 영상 생성 등의 작업이 단순 텍스트보다 수백~수천 배 많은 에너지를 사용할 수 있다고 분석했습니다. 모델과 하드웨어에 따라 차이는 달라집니다.    💡 AI를 쓰지 않는 것보다 필요한 결과만 만드는 선택이 먼저입니다. 텍스트로 충분하면 이미지를 만들지 않고, 이미지로 충분하면 영상을 만들지 않는 기준부터 살펴봤습니다.\n\n[🌍 AI의 화면 밖 비용 확인하기 👉](https://dflick.kr/contents/ind/1755)\n\n🍯 TMI: Tips Made Interesting 🍯 재밌고, 흥미롭게 · 디자이너의 TIP, 그리고 TMI 📚\n\n💻 AI야, 내 하드디스크 좀 정리해줘\n\n오늘은 필자 에디터 C가 직접 사용해보고 유용했던 AI경험을 공유하려해요.😉    처리할 일은 쌓여 있는데, 맥북의 남은 저장 공간은 어느새 25GB. “디스크가 거의 가득 찼습니다”라는 알림까지 자꾸 작업을 가로막기 시작했어요. 최근에 큰 파일을 저장한 기억도 없고, 다운로드 폴더를 둘러봐도 무엇이 용량을 차지하는지 보이지 않았습니다. 여러분도 이런 상황, 한 번쯤 있지 않나요?    그래서 이번에는 로컬 파일과 터미널에 접근할 수 있는 AI 에이전트에게 '이 행동'을 지시했어요.\n\n[🧑‍💻 에디터 C가 AI에게 내린 지시는?! 👉](https://dflick.kr/contents/tmi/1754)\n\n✨ 현장에서 먼저 읽는 변화 ✨ 이번 달, D.Flick이 고른 AX·디자인 이벤트\n\n📰 기사는 결과를 전하지만, 현장은 그 결과가 만들어지는 분위기와 질문을 보여줘요.  제품을 직접 만져보며 발견하는 사용성, 발표 뒤에 이어지는 대화, 사람들의 발길이 모이는 부스까지요. 👀    📅 D.Day는 매달 한 번, 전시·컨퍼런스·웨비나 가운데 D.Flick 독자에게 필요한 일정을 골라 소개해요.  직접 갈 수 있는 국내 행사는 참여 방법을, 해외 행사는 공식 자료와 다시보기로 따라갈 방법을 함께 담을게요. ✈️\n\n📍 9월의 AX·디자인 현장\n\nIFA Berlin 2026  🗓️ 9월 4–8일 · 📍독일 베를린    AI·스마트홈·로보틱스 신제품이 모이는 유럽 대표 테크 전시예요. 공식 사이트의 Exhibitors, Product Highlights, Press Releases만 살펴봐도 브랜드가 AI를 어떤 경험으로 설명하는지 읽을 수 있어요.    [IFA 공식안내](https://www.ifa-berlin.com/en/)  MUSINSA PATTERN ’26  🗓️ 9월 18일 · 📍서울 본다빈치뮤지엄  AI가 아이디어를 제품으로 만드는 과정에서, 맥락과 신뢰를 어떻게 다루는지 공유해요. 디플릭팀도 각자 신청을 했는데, 과연 참석할 수 있을지 두근두근하네요. 행사가 끝난 이후 발표 유투브 공유 예정이라니 참석을 못하더라도 너무 실망하지 말자구요!  [MUSINSA PATTERN 공식 프로그램](https://pattern.musinsa.com/)\n\nFuture Product Days 2026  🗓️ 9월 22–24일 · 📍덴마크 코펜하겐    제품 디자인·UX·엔지니어링·AI가 제품의 다음 경험을 이야기해요. AI 에이전트와 사용자 사이의 관계를 설계하는 Agentic Experiences 세션을 눈여겨보세요.  [Future Product Days 공식 프로그램](https://www.futureproductdays.com/program)  Humanoids Summit Seoul 2026  🗓️ 9월 22–23일 · 📍서울 코엑스    사람과 같은 형태의 로봇이 실제 현장에서 어떻게 움직이는지 볼 수 있어요. 글로벌 로봇 기업·연구자·스타트업의 발표와 라이브 데모도 살펴보세요.  [Humanoids Summit 공식 안내](https://humanoidssummit.com/)\n\n🗓️ 소개한 행사 외에도, 9월에는 더 많은 현장이 기다리고 있어요. 아래 D.Day 캘린더에서 전체 일정을 한눈에 확인해 보세요.\n\n[🗓️  9월 AX·디자인 이벤트 캘린더 👉](https://wackyuxteam.notion.site/3cd5fca37b348050b654ed6b783af162?v=b095fca37b3483879cfa08e5d62d9e5b&source=copy_link)\n\n오늘 레터는 어떠셨나요?  디플릭은 다음 주에도 꼭 알아야 할 소식들을 모아 돌아올게요.  다음 레터에서 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 인프라·비용·생산성 최신 동향 파악",
+        "tags": [
+          "OpenAI",
+          "Nvidia",
+          "Google AI Mode",
+          "Instagram",
+          "Adobe Photoshop"
+        ],
+        "concepts": [
+          "AI 인프라 경쟁",
+          "AI 비용 효율성",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "OpenAI가 ChatGPT 광고 매출 10억 달러를 달성하며 광고 플랫폼을 확대했다",
+            "timestamp": null
+          },
+          {
+            "point": "Nvidia가 129억 달러 규모로 Hugging Face 인수 협상을 진행 중이다",
+            "timestamp": null
+          },
+          {
+            "point": "AI 이미지·영상 생성은 텍스트보다 수백 배 이상의 에너지를 소비한다",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "ChatGPT 광고 플랫폼을 활용해 자체 AI 마케팅 캠페인 ROI를 측정한다",
+          "AI 이미지·영상 생성 작업에 대한 에너지 사용량을 모니터링하고, 텍스트 기반 대안으로 전환하는 정책을 수립한다"
+        ],
+        "quiz": [
+          {
+            "question": "Hugging Face 인수 협상을 진행 중인 기업은?",
+            "options": [
+              "OpenAI",
+              "Nvidia",
+              "Google",
+              "Meta"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 Nvidia가 129억 달러 규모로 Hugging Face 인수 협상을 마무리 단계에 있다고 명시되어 있다."
+          }
+        ],
+        "skip_reason": "핵심 실행 방안이 부족",
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "ephemeral",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
+        "url": "https://d2.naver.com/helloworld/4821538",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p>기업의 업무에 AI를 도입하면 무엇이 달라질까요? 반복 업무를 자동화하고, 매달 작성하던 보고서를 대신 만들고, 업무 시스템과 연결해 사용자가 요청한 작업까지 처리할 수 있을까요?</p>\n\n<p>네이버 사내에서 열린 ‘모두의 Engineering Day AI 해커톤’에 참여하면서 저희도 비슷한 의문을 품었습니다. 낯선 재무 업무를 이해하고 Claude Code를 활용해 실제로 동작하는 결과물을 만들어야 하는 상황에서, 처음에는 자연스럽게 ‘AI가 무엇을 해줄 수 있을까?’부터 생각했습니다.</p>\n\n<p>하지만 프로젝트가 진행될수록 질문은 달라졌습니다. AI가 할 수 있는 일보다 어떤 일을 맡겨도 되는지, 결과가 그럴듯한지보다 틀렸을 때 발견하고 설명할 수 있는지, 자동화할 수 있는지보다 AI가 멈춰도 업무가 계속될 수 있는지가 더 중요해졌습니다.</p>\n\n<p>이 글은 하나의 재무 업무를 AI로 바꿔 보려다 문제를 어떻게 다시 정의했고, 어떤 방식으로 접근했으며, AI를 쓰며 어떤 한계를 마주했는지를 정리한 기록입니다.</p>\n\n<h2 id=\"\">실제 사내 문제를 함께 해결하는 해커톤</h2>\n\n<p>‘모두의 Engineering Day AI 해커톤’은 참가자가 각자 준비한 아이디어로 경쟁하는 일반적인 해커톤과 조금 달랐습니다. 출발점은 사내 구성원이 실제 업무에서 겪고 있는 문제였습니다.</p>\n\n<p>현업에서 해결하고 싶은 문제를 겪고 있는 구성원은 출제자(problem holder)로, AI를 활용해 그 문제를 함께 풀고 싶은 참가자는 문제를 푸는 사람(solver)으로 참여했습니다. 참가자는 개발, 기획, 디자인, 재무, 운영 등 여러 직군이 섞여 네 명이 한 팀을 이루었고, 출제자가 업무의 배경과 예외를 설명하면 참가자는 문제를 구조화하고 실제 동작하는 프로토타입을 만들었습니다.</p>\n\n<p>문제를 푸는 과정은 팀당 두 대의 개발 환경을 두고 여러 명이 함께 프롬프트를 작성하고 결과를 검토하는 ‘페어 프롬프팅’ 방식으로 진행되었습니다. 한 사람이 AI에 지시한 결과를 그대로 받아들이는 대신, 서로 화면을 보며 질문을 고치고 결과를 함께 확인했습니다. 행사 당일 오전 10시부터 오후 4시까지, 문제를 구체화하고 설계해 동작하는 결과물로 만드는 데 주어진 시간은 약 6시간이었습니다. 완성된 서비스를 만드는 시간이 아니라 실제 업무 문제를 여러 직군의 시선으로 다시 보고, AI로 어디까지 바꿀 수 있는지 실험하는 시간이었습니다.</p>\n\n<h2 id=\"\">가장 낯선 문제를 선택</h2>\n\n<p>저희 팀이 선택한 문제는 다음과 같았습니다.</p>\n\n<blockquote>\n  <p><strong>수기 Microsoft Excel(이하 엑셀) 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다.</strong></p>\n</blockquote>\n\n<p>저희는 서비스 개발에는 익숙했지만 발행 주식 수, 보유 주식 수, 지분율, 유상증자, 구주 양수도, RCPS, 감자 같은 재무·투자 용어에는 익숙하지 않았습니다. 더 빠르게 이해하고 결과물을 만들기 쉬워 보이는 과제도 있었지만, 네 명 모두 이 문제를 1순위로 선택했습니다.</p>\n\n<p>당시 네이버와 계열사가 투자한 법인의 변동 사항은 17명의 담당자가 각자의 엑셀 파일로 관리하고 있었습니다. 매월 담당자에게 직접 연락해 변동 사항을 받은 뒤 여러 파일을 다시 모아 전체 출자 현황을 정리해야 했습니다. 투자 대상이 늘고 다국가, 다통화, 다단계 지분 구조가 복잡해질수록 거래 이력을 관리하기 어려워졌고, 경영진이 원하는 기준으로 데이터를 다시 추출하는 데도 시간이 들었습니다.</p>\n\n<p>사용자가 아주 많은 업무는 아니었지만, 이 숫자들은 사업보고서 같은 외부 공시의 기초 자료로 쓰일 수 있었습니다. 숫자 한 건이 잘못되었을 때의 영향은 작지 않았습니다. 익숙해서 빠르게 풀 수 있는 문제보다 제대로 바뀌었을 때 효과가 분명한 문제를 선택하자고 판단했고, 그렇게 NStake 프로젝트가 시작되었습니다.</p>\n\n<h2 id=\"\">문제는 엑셀이 아니라 설명하기 어려운 숫자</h2>\n\n<p>처음 떠올린 해결책은 비교적 명확했습니다. 담당자가 엑셀 대신 웹 화면에서 투자 내역을 입력하고, 여러 파일의 데이터를 하나의 데이터베이스에 모읍니다. 대시보드에서 현재 투자 현황을 보여주고, 자연어 질문에 답하며, AI가 월말 변동 보고서를 만들면 된다고 생각했습니다.</p>\n\n<p>그러나 자세히 들여다보자 문제가 다르게 보였습니다.</p>\n\n<p>파일을 데이터베이스로 옮기면 취합은 쉬워집니다. 하지만 한곳에 값을 모으기만 해서는 신뢰할 수 있는 기준 데이터로 사용할 수 없었습니다. 현재 지분율이 30%라고 적혀 있어도 그 숫자만으로는 왜 30%가 되었는지 알 수 없습니다. 이를 알기 위해서는 신규 투자, 구주 매도, 유상증자, 감자가 어떤 순서로 발생했고 각 거래가 발행 주식 수와 보유 주식 수에 어떤 영향을 주었는지를 함께 봐야 합니다.</p>\n\n<p>사내 재무 원장이나 외부 공시 자료와 값이 다를 때는 문제가 더 복잡했습니다. 기준일이 다르거나 최근 거래가 한쪽에 아직 반영되지 않았을 수 있고, 데이터의 정의 자체가 다를 수도 있었습니다. 단순히 값이 다르다는 이유만으로 어느 쪽이 틀렸다고 결론 내리거나 자동으로 수정할 수 없었습니다.</p>\n\n<p>결국 저희가 다시 정의한 문제는 이것이었습니다.</p>\n\n<blockquote>\n  <p><strong>현재 숫자가 어떤 거래를 거쳐 만들어졌고, 무엇을 근거로 신뢰할 수 있는지 설명하기 어렵다.</strong></p>\n</blockquote>\n\n<p>프로젝트의 목표도 ‘엑셀을 대체하는 입력 화면’에서 ‘숫자가 만들어진 과정과 검증 결과를 함께 관리하는 기준 시스템’으로 바뀌었습니다.</p>\n\n<pre><code>[기존 방식]\n담당자별 엑셀 작성\n→ 변동 사항 요청\n→ 여러 파일 취합\n→ 사람이 직접 비교·확인\n→ 보고 및 공시\n\n[NStake]\n담당자가 거래 내역 입력\n→ 거래 이력으로 현재 상태 계산\n→ 내부 규칙과 외부 자료로 검증\n→ 불일치 확인 및 처리\n→ 출자 현황과 보고서 생성\n</code></pre>\n\n<h2 id=\"ai\">AI에게 무엇을 어떻게 맡길지 설계하기</h2>\n\n<p>문제를 다시 정의한 뒤에는 어떤 기능을 더 만들지보다 업무를 끝까지 움직이게 하는 기준을 먼저 세웠습니다. 저희 팀은 업무 흐름, 검증 기준, 보고서 규칙, 안전 장치를 함께 보며 문제에 접근했습니다.</p>\n\n<h3 id=\"\">업무가 끝나는 지점</h3>\n\n<p>해커톤에서는 자연어 질의, 대시보드, 자동 보고서처럼 눈에 잘 띄는 기능부터 만들고 싶어집니다. 하지만 입력 화면 하나가 동작한다고 담당자의 업무가 끝나는 것은 아니었습니다.</p>\n\n<p>저희는 먼저 전체 업무 흐름을 정리했습니다.</p>\n\n<pre><code>입력\n→ 값 검증\n→ 불일치 발견\n→ 담당자 확인 및 처리\n→ 현재 상태 반영\n→ 보고\n</code></pre>\n\n<p>저장한 값이 맞는지 확인할 수 없다면 담당자는 다시 엑셀과 다른 자료를 열어야 합니다. 불일치를 찾아주더라도 수정하거나 ‘이슈 없음’으로 처리할 수 없다면 확인할 목록만 하나 더 생깁니다. 보고서의 숫자가 어떤 거래에서 합산되었는지 추적할 수 없다면 공식 자료로 쓰기 어렵습니다.</p>\n\n<p>이 흐름을 정리하자 시연에서 눈에 띄는 기능과 사용자의 일을 실제로 끝내기 위해 필요한 기능을 구분할 수 있었습니다. 저희가 보는 기준도 기능의 개수에서 업무 흐름의 완결성으로 옮겨갔습니다.</p>\n\n<h3 id=\"ai\">AI를 평가자와 검증자로 사용</h3>\n\n<p>저희는 AI를 ‘코드를 빨리 만들어 주는 도구’로만 사용하지 않았습니다. 문제와 평가 기준을 구조화하는 평가자, 여러 설계안을 비교하는 설계 파트너, 실제 결과물을 만드는 구현 보조자, 문서와 코드의 불일치를 찾는 검증자로 역할을 나눠 사용했습니다.</p>\n\n<p>큰 기능을 만들 때는 다음 순환을 반복했습니다.</p>\n\n<pre><code>짧은 설계 문서 작성\n→ 구현\n→ 스크린샷·로그 등 테스트 증거 수집\n→ 발표 자료와 README 반영\n→ 문서와 실제 실행 흐름의 일치 여부 재검증\n</code></pre>\n\n<p>“발표에서 설명한 기능이 코드에도 있는가”, “보안상 위험한 동작은 없는가”, “부분 구현을 완성된 기능처럼 설명하지 않았는가”처럼 반복해서 물어야 하는 질문은 체크리스트로 만들었습니다. 이를 통해 하고 싶은 기능을 늘리는 대신, 성공 기준에 직접 연결되는 작업부터 처리할 수 있었습니다.</p>\n\n<p>중요한 차이는 AI에게 무엇을 만들어 달라고 요청하는 데 그치지 않았다는 점입니다. 저희는 무엇이 성공인지 먼저 정의하고, 그 기준으로 결과를 계속 검증하는 데 AI를 사용했습니다.</p>\n\n<h3 id=\"\">현재 값이 아니라 거래 이력을 중심으로</h3>\n\n<p>기존 방식에서는 현재 발행 주식 수, 보유 주식 수, 지분율을 직접 수정했습니다. NStake에서는 현재 값만 저장하는 대신 그 숫자를 만든 거래를 시간순으로 기록했습니다. 자본금 납입과 신규 투자, 유·무상증자, 구주 양수도와 지분 매도, 감자와 액면분할, 청산 같은 거래를 바탕으로 현재 보유 주식 수와 지분율을 계산했습니다.</p>\n\n<p>현재 지분율이 30%라는 결과만 있으면 문제의 원인을 찾기 어렵습니다. 하지만 어떤 투자와 증자, 매도를 거쳐 30%가 되었는지가 남아 있다면 계산 과정을 되짚을 수 있습니다. 거래 내역으로 계산한 값과 저장된 현재 상태가 다르다면 그 차이 자체를 확인 항목으로 만들 수도 있습니다.</p>\n\n<p><img alt=\"image\" src=\"/content/images/2026/07/77dd1bb5-1092-4cad-a229-bc88bfe6cf3d.png\" /></p>\n\n<p><img alt=\"image\" src=\"/content/images/2026/07/f4ebc984-be31-4dbd-89fa-0ef1671dc61d.png\" /></p>\n\n<p>이 기준에 따라 검증을 Rule, Statistical, eXternal 세 가지로 나눴습니다.</p>\n\n<ul>\n<li><stro",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 활용 시 검증·프로세스 설계가 업무 신뢰성을 좌우한다",
+        "tags": [
+          "Claude Code",
+          "LLM",
+          "MCP",
+          "NStake",
+          "네이버"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "프롬프트 협업",
+          "재무 데이터 추적"
+        ],
+        "key_points": [
+          {
+            "point": "AI 활용 시 업무 흐름과 검증 기준을 먼저 설계해야 함",
+            "timestamp": null
+          },
+          {
+            "point": "해커톤에서 ‘페어 프롬프팅’ 방식으로 프롬프트를 공동 검토함",
+            "timestamp": null
+          },
+          {
+            "point": "재무 엑셀 데이터를 단순 전환이 아니라 거래 이력과 검증을 포함한 기준 시스템으로 재정의함",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "팀 내에서 페어 프롬프팅 워크플로우를 도입해 재무 데이터 처리 프롬프트를 공동 작성·검토한다",
+          "거래 이력 로그와 외부 공시 데이터를 LLM으로 교차 검증하는 파이프라인을 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "해커톤에서 팀이 사용한 프롬프트 작성 방식은?",
+            "options": [
+              "개인별 독립 작성",
+              "페어 프롬프팅",
+              "자동 생성",
+              "외부 컨설팅"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 ‘페어 프롬프팅’ 방식으로 여러 명이 함께 프롬프트를 작성하고 결과를 검토했다고 명시돼 있다."
+          },
+          {
+            "question": "팀이 처음 정의한 문제와 최종 정의한 문제의 차이는?",
+            "options": [
+              "엑셀 대체 vs 거래 이력 검증",
+              "데이터 시각화 vs 자동 보고",
+              "모델 학습 vs 배포",
+              "사용자 인터페이스 개선 vs 보안 강화"
+            ],
+            "answer_index": 0,
+            "explanation": "초기에는 엑셀을 대체하는 입력 화면을 목표로 했지만, 최종에는 숫자가 어떻게 만들어졌는지와 검증 과정을 관리하는 시스템으로 문제를 재정의했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
         "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "But what is cross-entropy? | Compression is Intelligence Part 2",
+        "url": "https://youtu.be/GlYgs6v2YfU",
+        "published_at": "2026-07-16T11:56:04",
+        "transcript": null,
+        "body": "Where the loss function for training LLMs comes from.\nJob opportunities aligned to this audience: https://3b1b.co/talent\nEarly views and other perks for supporters: https://3b1b.co/support\nHome page: https://www.3blue1brown.com\n\nPart 1: https://youtu.be/l6DKRf-fAAM\n\nIf you want to learn more about Lagrange Multipliers, I made multiple videos and articles for the topic back in my Khan Academy days: https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/constrained-optimization-introduction\n\nManim animations by Aaron Gostein and Grant Sanderson\nNanoGPT animation by Clayton Rabideau\n3d black-box model by Paul Dancstep\nChess game and Lagrange Multiplier scenes by Nishad Deulkar\nMusic by Vince Rubinetti\n\nTimestamps\n\n0:00 - Language trees and zipping\n3:02 - Recap optimal codes\n5:20 - Defining cross-entropy\n8:26 - Intuition and examples\n12:59 - Application to language trees\n14:55 - Pre-training LLMs\n20:38 - What makes this loss function best?\n26:13 - Distillation\n30:12 - 3b1b Talent\n31:35 - KL Divergence\n\n------------------\n\nThese animations are largely made using a custom Python library, manim.  See the FAQ comments here:\nhttps://3b1b.co/faq#manim\n\nMusic by Vincent Rubinetti.\nhttps://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown\nhttps://open.spotify.com/album/1dVyjwS8FBqXhRunaG5W5u\n\n------------------\n\n3blue1brown is a channel about animating math, in all senses of the word animate. If you're reading the bottom of a video description, I'm guessing you're more interested than the average viewer in lessons here. It would mean a lot to me if you chose to stay up to date on new ones, either by subscribing here on YouTube or otherwise following on whichever platform below you check most regularly.\n\nMailing list: https://3blue1brown.substack.com\nTwitter: https://twitter.com/3blue1brown\nBluesky: https://bsky.app/profile/3blue1brown.com\nInstagram: https://www.instagram.com/3blue1brown\nReddit: https://www.reddit.com/r/3blue1brown\nFacebook: https://www.facebook.com/3blue1brown\nPatreon: https://patreon.com/3blue1brown\nWebsite: https://www.3blue1brown.com",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "교차 엔트로피가 LLM 손실 함수인 이유",
+        "tags": [
+          "cross-entropy",
+          "LLM",
+          "Manim",
+          "NanoGPT",
+          "KL Divergence"
+        ],
+        "concepts": [
+          "정보 이론",
+          "손실 함수",
+          "언어 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "교차 엔트로피의 정의와 수식적 형태를 설명한다.",
+            "timestamp": null
+          },
+          {
+            "point": "직관적 예시를 통해 엔트로피와 교차 엔트로피 차이를 보여준다.",
+            "timestamp": null
+          },
+          {
+            "point": "언어 트리와 사전학습 LLM에 교차 엔트로피 손실이 어떻게 적용되는지 논의한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
         "scores": null,
         "notes": [],
         "triplets": []
