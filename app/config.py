@@ -68,6 +68,12 @@ class Settings(BaseSettings):
     # 후보 풀에 들어와, 방금 HN에서 고친 편중을 그대로 재현한다.
     # 카테고리 수와 무관하게 총량을 묶는다.
     arxiv_max_items: int = 12
+    # 카테고리 요청 사이 대기(초). arXiv 이용약관은 **3초에 1회, 단일 연결**이다.
+    # 지키지 않아도 당장은 200이 오지만, arXiv가 "접근을 제한하거나 차단할 수
+    # 있다"고 명시하고 있다. 카테고리 10개를 4초 만에 몰아치면 7배 초과다.
+    # 하루 1회 배치라 30초 늘어나는 건 아무 문제가 아니고, 조용히 차단당해
+    # 또 5개월을 0건으로 보내는 쪽이 비교할 수 없이 나쁘다.
+    arxiv_request_delay: float = 3.0
 
     # HackerNews
     hackernews_keywords: str = "machine learning,MLOps,data science,LLM"

@@ -225,3 +225,86 @@ def test_arxiv_round_robin_across_categories(monkeypatch):
     assert keys.count("arxiv:cs.LG") == 2
     assert keys.count("arxiv:cs.CL") == 2
     assert keys.count("arxiv:cs.IR") == 2
+
+
+def test_arxiv_respects_rate_limit(monkeypatch):
+    """arXiv 약관은 3초에 1회다. 어기면 접근이 제한·차단될 수 있다.
+
+    카테고리 10개를 몰아치면 7배 초과였고, 실측에서 한 카테고리가 타임아웃으로
+    실패했다(스로틀링 정황).
+    """
+    from app.collectors import fetch_arxiv_recent
+
+    slept: list[float] = []
+
+    async def _sleep(sec):
+        slept.append(sec)
+
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw): return _Resp(200, {}, text="<feed/>")
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    monkeypatch.setattr(collectors.asyncio, "sleep", _sleep)
+
+    asyncio.run(fetch_arxiv_recent(["a", "b", "c"], request_delay=3.0))
+
+    # 카테고리 3개 → 간격 2번. 첫 요청 앞에는 대기하지 않는다.
+    assert slept == [3.0, 3.0]
+
+
+def test_arxiv_retries_transient_failure(monkeypatch):
+    """일시적 실패로 그날 그 카테고리가 통째로 0건이 되면 안 된다."""
+    from app.collectors import fetch_arxiv_recent
+
+    calls = {"n": 0}
+    entry = ('<entry><title>T</title><id>https://arxiv.org/abs/1</id>'
+             '<summary>초록</summary></entry>')
+
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise TimeoutError()
+            return _Resp(200, {}, text=f'<feed xmlns="http://www.w3.org/2005/Atom">{entry}</feed>')
+
+    async def _sleep(_s): return None
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    monkeypatch.setattr(collectors.asyncio, "sleep", _sleep)
+
+    items = asyncio.run(fetch_arxiv_recent(["cs.LG"], retries=1))
+
+    assert calls["n"] == 2
+    assert len(items) == 1
+
+
+def test_arxiv_one_bad_category_does_not_kill_others(monkeypatch):
+    """카테고리 하나가 죽어도 나머지는 수집돼야 한다."""
+    from app.collectors import fetch_arxiv_recent
+
+    entry = ('<entry><title>T</title><id>https://arxiv.org/abs/1</id>'
+             '<summary>초록</summary></entry>')
+
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw):
+            if "cat:bad" in url:
+                raise TimeoutError()
+            return _Resp(200, {}, text=f'<feed xmlns="http://www.w3.org/2005/Atom">{entry}</feed>')
+
+    async def _sleep(_s): return None
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    monkeypatch.setattr(collectors.asyncio, "sleep", _sleep)
+
+    items = asyncio.run(fetch_arxiv_recent(["bad", "good"], retries=0))
+
+    assert [i.source_key for i in items] == ["arxiv:good"]

@@ -2,6 +2,7 @@
 콘텐츠 수집 모듈
 YouTube 채널 최신 영상 + RSS 피드에서 새 아티클을 가져온다.
 """
+import asyncio
 import base64
 import os
 import re
@@ -300,64 +301,93 @@ async def fetch_arxiv_recent(
     categories: list[str],
     hours: int = 48,
     max_items: int = 12,
+    request_delay: float = 3.0,
+    retries: int = 1,
 ) -> list[RawContent]:
     """ArXiv Atom API에서 카테고리별 최신 논문 수집.
 
-    max_items로 런당 총량을 묶는다. 카테고리를 10개로 늘리면 카테고리당 10건 =
-    100건이 후보 풀에 들어와, HN에서 고친 편중을 그대로 재현하기 때문이다.
+    요청 간격(request_delay):
+        arXiv 이용약관은 **3초에 1회, 단일 연결**을 요구한다. 지키지 않아도
+        당장은 200이 오지만, arXiv가 "접근을 제한하거나 차단할 수 있다"고
+        명시한다. 카테고리 10개를 몰아치면 7배 초과다. 하루 1회 배치라 30초
+        늘어나는 건 문제가 아니고, 조용히 차단당하는 쪽이 비교할 수 없이 나쁘다.
 
-    상한은 **카테고리를 번갈아 가며(round-robin)** 적용한다. 앞에서부터 자르면
-    목록 첫 카테고리(cs.LG)가 상한을 다 먹고 나머지는 한 건도 못 들어온다 —
-    카테고리를 넓힌 의미가 사라진다.
+    max_items:
+        카테고리 10개 × 10건 = 100건이 후보 풀에 들어오면 HN에서 고친 편중을
+        그대로 재현한다. 상한은 **카테고리를 번갈아**(round-robin) 적용한다 —
+        앞에서부터 자르면 목록 첫 카테고리가 다 먹고 확장한 의미가 사라진다.
+
+    주의:
+        URL은 반드시 https다. http는 301로 리다이렉트되는데 httpx가 기본적으로
+        따라가지 않아 본문이 비고 feedparser가 0건을 낸다. 예외도 안 나므로
+        "오늘 새 논문이 없었다"와 구분되지 않는다. 이 한 글자 때문에 arXiv는
+        2026-03-30 도입 이후 5개월간 한 건도 수집되지 않았다.
     """
     per_category: dict[str, list[RawContent]] = {}
 
+    # 단일 연결로 순차 요청한다(약관 요구사항). 클라이언트를 재사용해 커넥션도
+    # 하나로 유지한다.
     async with httpx.AsyncClient(timeout=15) as client:
-        for category in categories:
-            try:
-                # https 필수. http는 301로 리다이렉트되는데 httpx는 기본적으로
-                # 따라가지 않아 본문이 비고 feedparser가 0건을 낸다.
-                # 이 한 글자 때문에 arXiv는 **한 건도 수집된 적이 없었다**
-                # (40일 발송 0건의 진짜 원인 — 채점 문제가 아니었다).
-                url = (
-                    f"https://export.arxiv.org/api/query"
-                    f"?search_query=cat:{category}"
-                    f"&sortBy=submittedDate&sortOrder=descending&max_results=10"
-                )
-                resp = await client.get(url)
-                feed = feedparser.parse(resp.content)
+        for index, category in enumerate(categories):
+            # 첫 요청 앞에는 대기하지 않는다.
+            if index > 0 and request_delay > 0:
+                await asyncio.sleep(request_delay)
 
-                for entry in feed.entries:
-                    published = None
-                    if hasattr(entry, "published_parsed") and entry.published_parsed:
-                        published = datetime(*entry.published_parsed[:6])
-                        if datetime.now() - published > timedelta(hours=hours):
+            for attempt in range(retries + 1):
+                try:
+                    url = (
+                        f"https://export.arxiv.org/api/query"
+                        f"?search_query=cat:{category}"
+                        f"&sortBy=submittedDate&sortOrder=descending&max_results=10"
+                    )
+                    resp = await client.get(url)
+                    feed = feedparser.parse(resp.content)
+
+                    for entry in feed.entries:
+                        published = None
+                        if hasattr(entry, "published_parsed") and entry.published_parsed:
+                            published = datetime(*entry.published_parsed[:6])
+                            if datetime.now() - published > timedelta(hours=hours):
+                                continue
+
+                        link = getattr(entry, "link", None) or getattr(entry, "id", None)
+                        if not link:
                             continue
 
-                    link = getattr(entry, "link", None) or getattr(entry, "id", None)
-                    if not link:
-                        continue
+                        per_category.setdefault(category, []).append(RawContent(
+                            source_type=SourceType.RSS,
+                            source_name=f"arXiv:{category}",
+                            source_key=f"arxiv:{category}",
+                            source_label=f"arXiv:{category}",
+                            title=entry.title,
+                            url=link,
+                            published_at=published,
+                            body=entry.summary[:3000] if hasattr(entry, "summary") else "",
+                        ))
 
-                    per_category.setdefault(category, []).append(RawContent(
-                        source_type=SourceType.RSS,
-                        source_name=f"arXiv:{category}",
-                        source_key=f"arxiv:{category}",
-                        source_label=f"arXiv:{category}",
-                        title=entry.title,
-                        url=link,
-                        published_at=published,
-                        body=entry.summary[:3000] if hasattr(entry, "summary") else "",
-                    ))
-                    logger.info("arxiv_collected", category=category, title=entry.title)
+                    logger.info(
+                        "arxiv_category_done",
+                        category=category,
+                        collected=len(per_category.get(category) or []),
+                    )
+                    break
 
-            except Exception as e:
-                # 예외 타입을 같이 남긴다. ReadTimeout처럼 str(e)가 빈 예외가 있어
-                # error= 만 찍히면 무엇이 실패했는지 알 수 없다.
-                logger.error(
-                    "arxiv_fetch_failed",
-                    category=category,
-                    error=f"{type(e).__name__}: {e}",
-                )
+                except Exception as e:
+                    # 예외 타입을 같이 남긴다. ReadTimeout처럼 str(e)가 빈 예외가
+                    # 있어 error= 만 찍히면 무엇이 실패했는지 알 수 없다.
+                    last = attempt >= retries
+                    logger.warning(
+                        "arxiv_fetch_failed",
+                        category=category,
+                        attempt=attempt + 1,
+                        error=f"{type(e).__name__}: {e}",
+                        giving_up=last,
+                    )
+                    if last:
+                        break
+                    # 재시도 전에도 간격을 지킨다.
+                    if request_delay > 0:
+                        await asyncio.sleep(request_delay)
 
     # 카테고리를 번갈아 한 건씩 뽑아 상한까지 채운다.
     items: list[RawContent] = []
@@ -376,9 +406,13 @@ async def fetch_arxiv_recent(
             break
         depth += 1
 
-    if total > len(items):
-        logger.info("arxiv_capped", kept=len(items), dropped=total - len(items),
-                    categories=len(per_category))
+    logger.info(
+        "arxiv_collected",
+        kept=len(items),
+        collected=total,
+        categories=len(per_category),
+        requested_categories=len(categories),
+    )
     return items
 
 

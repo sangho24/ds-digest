@@ -194,7 +194,9 @@ async def run_daily_digest() -> dict:
     from app.collectors import fetch_arxiv_recent, fetch_hackernews_recent
     from app.collectors_newsletter import fetch_newsletters_recent, DEFAULT_NEWSLETTERS
     arxiv_items = await fetch_arxiv_recent(
-        settings.arxiv_category_list, max_items=settings.arxiv_max_items
+        settings.arxiv_category_list,
+        max_items=settings.arxiv_max_items,
+        request_delay=settings.arxiv_request_delay,
     )
     hn_items = await fetch_hackernews_recent(
         settings.hackernews_keyword_list,
