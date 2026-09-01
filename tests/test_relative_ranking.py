@@ -217,3 +217,63 @@ def test_diversity_end_to_end(monkeypatch):
     result = _run_filter(monkeypatch, [9, 9, 9, 9, 9], max_items=5, per_source=3)
 
     assert len(result) == 5
+
+
+# ── 계열 정규화 ────────────────────────────────────────────────────────────
+# arXiv를 14개 카테고리로 늘리자 source_key가 `arxiv:cs.LG`처럼 갈라졌다.
+# 퍼널에는 그게 맞지만, 정규화까지 그 키로 세면 arXiv 16건이 13개의 작은
+# 소스로 보여 감점도 안전판도 걸리지 않는다. 실측 시뮬레이션에서 논문이
+# 계통적으로 2점 높게 채점되자 다이제스트 5칸이 전부 arXiv로 찼다.
+
+from app.analyzer import source_family  # noqa: E402
+
+
+def test_source_family_folds_only_prefixed_keys():
+    assert source_family("arxiv:cs.LG") == "arxiv"
+    assert source_family("arxiv:stat.ML") == "arxiv"
+    assert source_family("hackernews") == "hackernews"
+    # 피드 URL을 콜론으로 자르면 전부 https 한 덩어리가 된다 — 정반대 버그다.
+    assert source_family("https://toss.tech/rss.xml") == "https://toss.tech/rss.xml"
+    assert source_family("http://a.com/feed") == "http://a.com/feed"
+    assert source_family("innoforest.stibee.com") == "innoforest.stibee.com"
+    assert source_family("") == ""
+
+
+def test_arxiv_categories_are_normalized_as_one_family():
+    """카테고리로 쪼개도 arXiv 계열 전체가 다이제스트를 먹지 못한다."""
+    cats = ["cs.LG", "stat.ML", "cs.CL", "cs.AI", "cs.IR", "cs.DB",
+            "cs.DC", "cs.SE", "stat.ME", "econ.EM", "stat.AP", "cs.HC", "cs.CV"]
+    # 논문이 계통적으로 높게 채점되는 상황(depth가 높아 실제로 그럴 만하다).
+    pool = [_cand(f"arxiv:{c}", 9, i) for i, c in enumerate(cats)]
+    pool += [_cand("hn", 7, i) for i in range(10)]
+    pool += [_cand("toss", 7), _cand("netflix", 7), _cand("yt", 7)]
+
+    keys = _pick(pool, limit=5)
+    arxiv = [k for k in keys if k.startswith("arxiv:")]
+    assert len(arxiv) <= 2, keys           # 계열로 세지 않으면 5/5가 된다
+    assert len(set(keys)) >= 4, keys       # 나머지 칸은 다른 계열이 채운다
+    # 그래도 가장 좋은 논문 한 편은 들어간다 — 억제가 아니라 반복만 막는 것이다.
+    assert arxiv, keys
+
+
+def test_family_cap_applies_across_categories():
+    """안전판(per_source)도 계열 단위로 센다 — 카테고리마다 따로 세지 않는다."""
+    pool = [_cand(f"arxiv:c{i}", 9, i) for i in range(10)]
+    pool += [_cand("hn", 4, i) for i in range(10)]
+    # 정원 4 = 계열 2개 × 상한 2. 완화 없이 채울 수 있는 크기다.
+    keys = _pick(pool, limit=4, per_source=2, strength=0.0)
+    assert len([k for k in keys if k.startswith("arxiv:")]) == 2, keys
+
+
+def test_family_cap_relaxes_rather_than_shorten_digest():
+    """모든 계열이 상한에 닿으면 상한을 풀어 정원을 채운다.
+
+    빈 자리를 남기는 것이 편중보다 나쁘다(§3.4). 다만 완화된 뒤에도 물량
+    정규화는 계속 걸리므로, 상한만 풀릴 뿐 편중으로 되돌아가지는 않는다.
+    """
+    pool = [_cand(f"arxiv:c{i}", 9, i) for i in range(10)]
+    pool += [_cand("hn", 8, i) for i in range(10)]
+    keys = _pick(pool, limit=6, per_source=2, strength=1.0)
+    assert len(keys) == 6, keys                       # 짧아지지 않는다
+    arxiv = len([k for k in keys if k.startswith("arxiv:")])
+    assert 2 <= arxiv <= 4, keys                      # 한 계열이 독식하지 않는다

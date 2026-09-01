@@ -968,6 +968,33 @@ async def analyze_content(
         )
 
 
+def source_family(source_key: str) -> str:
+    """정규화의 단위를 정하는 함수 — 소스 키가 아니라 **계열**로 묶는다.
+
+    arXiv를 14개 카테고리로 늘리면서 source_key가 `arxiv:cs.LG`처럼 카테고리별로
+    갈라졌다. 퍼널 기록에는 그게 맞다(어느 카테고리가 굶는지 보여야 한다).
+    그런데 물량 정규화까지 그 키로 세면 **arXiv 16건이 13개의 작은 소스로 보인다.**
+    각 키의 물량이 평균 아래라 감점이 아예 걸리지 않고, 안전판(per_source)도
+    키마다 따로 세므로 걸리지 않는다.
+
+    실측 시뮬레이션 — 논문이 계통적으로 2점 높게 채점될 때(depth가 높으니 그럴
+    만하다) 다이제스트 5칸이 전부 arXiv로 찼다. 강도를 2.0으로 올려도 5/5였다.
+    HackerNews에서 방금 고친 편중이 다른 문을 통해 그대로 돌아온 것이다.
+
+        arxiv:cs.CL, arxiv:cs.IR, arxiv:cs.DC, arxiv:stat.ML, arxiv:stat.AP
+
+    그래서 정규화·안전판은 계열로 센다. 같은 실험을 계열 기준으로 돌리면 1/5다.
+
+    `prefix:suffix` 형태만 접는다. RSS·뉴스레터의 source_key는 피드 URL이라
+    `https://...`인데, 콜론만 보고 자르면 전부 `https` 한 덩어리가 된다 —
+    다양성을 지키려다 진짜 다양성을 지워버리는 정반대 버그가 된다.
+    """
+    key = str(source_key or "")
+    if "://" in key or ":" not in key:
+        return key
+    return key.split(":", 1)[0]
+
+
 def _select_diverse(
     candidates: list[DigestItem],
     limit: int,
@@ -1000,7 +1027,7 @@ def _select_diverse(
         return []
 
     def key_of(item: DigestItem) -> str:
-        return item.raw.source_key or item.raw.source_name
+        return source_family(item.raw.source_key or item.raw.source_name)
 
     volume = Counter(key_of(d) for d in candidates)
     mean_volume = len(candidates) / len(volume)
