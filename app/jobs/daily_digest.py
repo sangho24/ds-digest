@@ -346,16 +346,19 @@ async def run_daily_digest() -> dict:
     # 7.4. 소스별 수집→후보→발송 퍼널 기록.
     # 이게 없으면 "수집은 되는데 한 번도 발송 안 되는 소스"가 지표에 안 보인다
     # (실측: arXiv가 40일간 발송 0건인데 source_reach는 그 존재조차 몰랐다).
-    # 드라이런은 기록하지 않는다 — mock 결과가 도달률 통계를 오염시킨다.
-    if not settings.dry_run:
-        from app.source_stats import record as record_source_funnel
-        record_source_funnel(
-            collected_snapshot, raw_items, digest_items_raw(digest_items),
-            date=today_str,
-            # 설정상 있어야 할 소스를 함께 넘긴다. 이게 없으면 수집이 0건인 소스가
-            # 퍼널에 아예 안 나타나 또 투명인간이 된다 — arXiv가 40일간 그랬다.
-            expected=_expected_source_keys(settings),
-        )
+    # 드라이런은 정본 파일에 쓰지 않는다 — mock 결과가 도달률 통계를 오염시킨다.
+    # 그렇다고 건너뛰면 **발송 전에 퍼널을 검증할 방법이 없어진다**(수집 단계는
+    # 드라이런에서도 실제 네트워크를 타므로 여기서 볼 수 있는 게 가장 많다).
+    # 그래서 격리된 dryrun 경로에 남긴다.
+    from app.source_stats import record as record_source_funnel, STATS_PATH
+    record_source_funnel(
+        collected_snapshot, raw_items, digest_items_raw(digest_items),
+        date=today_str,
+        # 설정상 있어야 할 소스를 함께 넘긴다. 이게 없으면 수집이 0건인 소스가
+        # 퍼널에 아예 안 나타나 또 투명인간이 된다 — arXiv가 40일간 그랬다.
+        expected=_expected_source_keys(settings),
+        path=(dryrun_root / "data" / "source_stats.jsonl") if settings.dry_run else STATS_PATH,
+    )
 
     from app.records import save_digest_records
     from app.db import save_digest_records_to_db

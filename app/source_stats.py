@@ -42,6 +42,8 @@ from zoneinfo import ZoneInfo
 
 import structlog
 
+from app.analyzer import source_family  # 정규화와 같은 계열 규칙을 쓴다
+
 logger = structlog.get_logger()
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -170,16 +172,36 @@ def aggregate(path: Path | None = None, since: str | None = None) -> dict[str, A
     starved = sorted(
         k for k, v in sources.items() if v["collected"] > 0 and v["delivered"] == 0
     )
+    # 계열 단위 집계. arXiv를 14개 카테고리로 늘리면서 소스 키가 카테고리별로
+    # 갈라졌는데, 하루 정원이 5칸이라 **대부분의 카테고리는 매일 굶는다**.
+    # 키 기준으로 세면 starved가 상시 11건 이상이 되어 경보가 늘 켜져 있고,
+    # 늘 켜져 있는 경보는 읽히지 않는다. 우리가 실제로 알고 싶은 건
+    # "cs.SI가 이번 주에 안 나갔다"가 아니라 "arXiv 계열이 통째로 안 나간다"다.
+    families: dict[str, dict[str, int]] = {}
+    for key, bucket in sources.items():
+        fam = families.setdefault(
+            source_family(key), {"collected": 0, "candidates": 0, "delivered": 0}
+        )
+        for stage in fam:
+            fam[stage] += bucket[stage]
+    starved_families = sorted(
+        k for k, v in families.items() if v["collected"] > 0 and v["delivered"] == 0
+    )
     # 기간 내내 수집이 0건인 소스 = 수집기가 깨졌거나 설정이 잘못된 것.
     # "굶는 소스"보다 나쁜 상태라 따로 센다.
     silent = sorted(k for k, v in sources.items() if v["collected"] == 0)
+    silent_families = sorted(k for k, v in families.items() if v["collected"] == 0)
 
     return {
         "days": len(days),
         "source_count": len(sources),
         "starved_sources": starved,
         "starved_count": len(starved),
+        "starved_families": starved_families,
+        "starved_family_count": len(starved_families),
         "silent_sources": silent,
         "silent_count": len(silent),
+        "silent_families": silent_families,
+        "silent_family_count": len(silent_families),
         "sources": sources,
     }

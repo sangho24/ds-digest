@@ -5,6 +5,11 @@ on:
     # UTC 22:10 = KST 07:10
     - cron: '10 22 * * *'
   workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+    inputs:
+      dry_run:
+        description: '드라이런 — 발송·커밋 없이 수집·분석·선정만 검증'
+        type: boolean
+        default: true
 
 # 동시 실행 방지: 수동 실행과 스케줄이 겹치면 git push가 경합해
 # 그날치 산출물이 조용히 유실된다 (실측 109일 중 11일 결번).
@@ -80,7 +85,11 @@ jobs:
           # Content Sources
           YOUTUBE_CHANNELS: ${{ secrets.YOUTUBE_CHANNELS }}
           RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
-          ARXIV_CATEGORIES: ${{ secrets.ARXIV_CATEGORIES || 'cs.LG,stat.ML' }}
+          # 폴백 문자열을 두지 않는다. 여기 있던 'cs.LG,stat.ML'이 코드에서
+          # 14개로 늘린 목록을 조용히 덮고 있었다 — GROQ_MODEL 때와 같은 이중화
+          # 사고다. 시크릿이 없으면 빈 값이 내려가고 config가 코드 기본값으로
+          # 되돌린다(Settings.arxiv_category_list).
+          ARXIV_CATEGORIES: ${{ secrets.ARXIV_CATEGORIES }}
           HACKERNEWS_KEYWORDS: ${{ secrets.HACKERNEWS_KEYWORDS || 'machine learning,MLOps,data science,LLM' }}
           HACKERNEWS_MIN_SCORE: ${{ secrets.HACKERNEWS_MIN_SCORE || '50' }}
           # Settings
@@ -88,10 +97,15 @@ jobs:
           RELEVANCE_THRESHOLD: ${{ secrets.RELEVANCE_THRESHOLD }}
           YT_FETCH_PER_CHANNEL: ${{ secrets.YT_FETCH_PER_CHANNEL }}
           YT_NEW_PER_CHANNEL: ${{ secrets.YT_NEW_PER_CHANNEL }}
-          DRY_RUN: "false"
+          # 수동 실행에서만 드라이런을 켤 수 있다. 스케줄 실행은 항상 실전이다.
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
         run: python -m app.jobs.daily_digest
 
       - name: Publish docs to GitHub Pages
+        # 드라이런은 산출물을 data/dryrun/으로 격리하지만, 커밋 단계까지 도는 건
+        # 별개 위험이다 — 실제로 드라이런 목업이 공개 페이지에 11분간 올라간 적이
+        # 있다. 그래서 커밋 자체를 건너뛴다.
+        if: ${{ inputs.dry_run != true }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

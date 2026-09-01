@@ -1,6 +1,14 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+# arXiv 기본 카테고리. 워크플로가 ARXIV_CATEGORIES를 **빈 값으로라도 항상**
+# 내려보내므로(시크릿 미설정 시 빈 문자열), 이 기본값이 그냥 필드 기본값이면
+# 조용히 덮여 사라진다. 빈 값이 오면 여기로 되돌린다 — 아래 property 참조.
+DEFAULT_ARXIV_CATEGORIES = (
+    "cs.LG,stat.ML,cs.CL,cs.AI,cs.IR,cs.DB,cs.DC,cs.SE,stat.ME,econ.EM,"
+    "stat.AP,cs.HC,cs.SI,cs.CV"
+)
+
 
 class Settings(BaseSettings):
     # AI (Gemini)
@@ -63,10 +71,7 @@ class Settings(BaseSettings):
     #   econ.EM 계량경제(인과추론)
     #   stat.AP 통계 적용 사례      cs.HC    HCI(AI 제품·인터페이스)
     #   cs.SI   네트워크·그래프 분석   cs.CV    컴퓨터 비전(멀티모달)
-    arxiv_categories: str = (
-        "cs.LG,stat.ML,cs.CL,cs.AI,cs.IR,cs.DB,cs.DC,cs.SE,stat.ME,econ.EM,"
-        "stat.AP,cs.HC,cs.SI,cs.CV"
-    )
+    arxiv_categories: str = DEFAULT_ARXIV_CATEGORIES
     # 런당 arXiv 후보 상한.
     # 라운드로빈이 목록 순서대로 채우므로 **상한이 카테고리 수보다 작으면 뒤쪽
     # 카테고리는 영영 한 건도 못 나온다**. 카테고리 14개면 상한도 그 이상이어야
@@ -175,7 +180,19 @@ class Settings(BaseSettings):
 
     @property
     def arxiv_category_list(self) -> list[str]:
-        return [c.strip() for c in self.arxiv_categories.split(",") if c.strip()]
+        """빈 값이면 코드 기본값으로 되돌린다.
+
+        워크플로가 `ARXIV_CATEGORIES: ${{ secrets.ARXIV_CATEGORIES }}`로 항상
+        내려보내는데, 시크릿이 없으면 **빈 문자열**이 env에 들어온다. 그러면
+        pydantic이 필드 기본값 대신 ""를 쓰고 카테고리가 0개가 된다 — arXiv가
+        통째로 사라지는데 예외는 나지 않는다(이미 5개월을 그렇게 잃었다).
+
+        되돌리는 쪽을 택한 이유: 워크플로에 목록을 하드코딩해두면 config와
+        두 벌이 되고, 실제로 그 이중화 때문에 코드에서 14개로 늘린 카테고리가
+        워크플로의 낡은 `cs.LG,stat.ML` 문자열에 덮여 있었다.
+        """
+        parsed = [c.strip() for c in self.arxiv_categories.split(",") if c.strip()]
+        return parsed or [c.strip() for c in DEFAULT_ARXIV_CATEGORIES.split(",")]
 
     @property
     def hackernews_keyword_list(self) -> list[str]:

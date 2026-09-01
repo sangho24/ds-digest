@@ -31,11 +31,18 @@ THRESHOLDS: list[dict[str, Any]] = [
     # 없던 사각지대다(그 지표의 소스 목록이 발송 아이템에서 만들어지기 때문).
     # 실측: arXiv가 40일간 발송 0건인데 아무 경보도 없었다.
     # 기록이 없으면(퍼널 도입 전 구간) 0이 되어 통과한다.
-    {"path": "source_funnel.starved_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집되나 미발송인 소스"},
+    # 계열 기준으로 센다. arXiv 14개 카테고리 × 하루 5칸이라 키 기준으로는
+    # 대부분의 카테고리가 매일 굶고, 상시 켜진 경보는 읽히지 않는다.
+    # 알고 싶은 건 "cs.SI가 이번 주 미발송"이 아니라 "arXiv 계열이 통째로 미발송"이다.
+    {"path": "source_funnel.starved_family_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집되나 미발송인 소스 계열"},
     # 설정돼 있는데 수집이 0건인 소스 = 수집기가 깨진 것. 실측으로 arXiv가
     # http→https 301 때문에 40일간 0건이었는데 아무 경보도 없었다.
     # 굶는 소스보다 나쁜 상태라 FAIL로 둔다.
-    {"path": "source_funnel.silent_count", "operator": ">", "value": 0, "severity": "FAIL", "label": "수집이 0건인 소스"},
+    # 게이트를 막는 FAIL은 계열 기준으로만 건다. 논문 수가 적은 카테고리 하나가
+    # 한 주 조용한 것과, 수집기가 깨져 arXiv 전체가 0건인 것은 전혀 다른 사건이다.
+    # (후자가 실제로 5개월간 조용히 지속됐다 — http→https 리다이렉트.)
+    {"path": "source_funnel.silent_family_count", "operator": ">", "value": 0, "severity": "FAIL", "label": "수집이 0건인 소스 계열"},
+    {"path": "source_funnel.silent_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집이 0건인 소스"},
 ]
 
 
