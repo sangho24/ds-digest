@@ -27,6 +27,11 @@ THRESHOLDS: list[dict[str, Any]] = [
     {"path": "schema_rigidity.quiz_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "퀴즈 개수 고정률"},
     # current: 32.380567자
     {"path": "summary_stats.one_line_summary.mean", "operator": "<", "value": 20, "severity": "WARN", "label": "한 줄 요약 평균 길이"},
+    # 수집은 되는데 한 번도 발송되지 않는 소스. source_reach로는 구조적으로 볼 수
+    # 없던 사각지대다(그 지표의 소스 목록이 발송 아이템에서 만들어지기 때문).
+    # 실측: arXiv가 40일간 발송 0건인데 아무 경보도 없었다.
+    # 기록이 없으면(퍼널 도입 전 구간) 0이 되어 통과한다.
+    {"path": "source_funnel.starved_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집되나 미발송인 소스"},
 ]
 
 

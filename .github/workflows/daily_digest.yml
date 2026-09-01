@@ -99,7 +99,8 @@ jobs:
           # 없는 경로에 git add를 하면 exit 128로 스텝이 죽으므로 조건부로 담는다.
           # `|| true` 필수: Actions 기본 셸이 `bash -e`라, 조건이 거짓이면
           # 이 줄이 exit 1을 내고 스텝 전체가 죽는다.
-          for f in data/quiz_results.jsonl data/directives.jsonl data/concepts.json; do
+          for f in data/quiz_results.jsonl data/directives.jsonl data/concepts.json \
+                   data/source_stats.jsonl; do
             [ -f "$f" ] && git add "$f"
           done || true
           git diff --cached --quiet && exit 0

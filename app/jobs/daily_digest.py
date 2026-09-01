@@ -124,6 +124,11 @@ async def _send_directive_status(directive) -> None:
         logger.warning("directive_status_failed", error=str(e))
 
 
+def digest_items_raw(digest_items: list) -> list:
+    """DigestItem 목록에서 RawContent만 꺼낸다(퍼널 기록은 소스 식별자만 본다)."""
+    return [d.raw for d in digest_items]
+
+
 async def run_daily_digest() -> dict:
     """메인 파이프라인 실행"""
     settings = get_settings()
@@ -178,6 +183,9 @@ async def run_daily_digest() -> dict:
         hn=len(hn_items),
         newsletter=len(newsletter_items),
     )
+
+    # 퍼널 기록용 원본 스냅샷. 아래 dedup이 리스트를 갈아치우므로 여기서 잡는다.
+    collected_snapshot = yt_items + rss_items + arxiv_items + hn_items + newsletter_items
 
     if not yt_items and not rss_items and not arxiv_items and not hn_items and not newsletter_items:
         logger.warning("no_items_collected")
@@ -295,6 +303,15 @@ async def run_daily_digest() -> dict:
     # 7.5. 구조화 정본 저장 — 로컬 JSON(정본) + Supabase 미러(best-effort)
     # 발송 성공 여부와 무관하게 분석 결과가 남도록 HTML 저장과 같은 지점에 둔다.
     # (기존엔 HTML만 저장되고 구조화 분석 결과는 발송 후 폐기됐다.)
+    # 7.4. 소스별 수집→후보→발송 퍼널 기록.
+    # 이게 없으면 "수집은 되는데 한 번도 발송 안 되는 소스"가 지표에 안 보인다
+    # (실측: arXiv가 40일간 발송 0건인데 source_reach는 그 존재조차 몰랐다).
+    # 드라이런은 기록하지 않는다 — mock 결과가 도달률 통계를 오염시킨다.
+    if not settings.dry_run:
+        from app.source_stats import record as record_source_funnel
+        record_source_funnel(collected_snapshot, raw_items, digest_items_raw(digest_items),
+                             date=today_str)
+
     from app.records import save_digest_records
     from app.db import save_digest_records_to_db
     # base_dir를 넘기면 그 아래 data/records/ 에 쓴다(기존 테스트 override 경로).

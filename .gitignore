@@ -14,6 +14,7 @@ data/*
 # 모든 개념이 영원히 "신규"가 되어 재사용 유도가 아예 동작하지 않는다.
 !data/directives.jsonl
 !data/concepts.json
+!data/source_stats.jsonl
 # data/* 는 리포 루트에만 앵커되므로, 하위 경로의 data/(예: evals/data/의 대용량
 # 픽스처)는 기존 무앵커 data/ 패턴처럼 계속 무시되도록 명시한다(회귀 방지).
 evals/data/

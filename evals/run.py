@@ -28,6 +28,7 @@ try:  # 패키지 import와 직접 스크립트 실행을 모두 지원한다.
     )
     from .thresholds import BASELINE_COMPARISONS, THRESHOLDS
     from .build_items import build_items
+    from .source_funnel import source_funnel
 except ImportError:
     from metrics import (  # type: ignore[no-redef]
         duplicate_rate,
@@ -41,6 +42,7 @@ except ImportError:
     )
     from thresholds import BASELINE_COMPARISONS, THRESHOLDS  # type: ignore[no-redef]
     from build_items import build_items  # type: ignore[no-redef]
+    from source_funnel import source_funnel  # type: ignore[no-redef]
 
 
 EVALS_DIR = Path(__file__).resolve().parent
@@ -59,6 +61,9 @@ def calculate_metrics(items: list[dict[str, Any]]) -> dict[str, Any]:
         "evidence_proxy": evidence_proxy(items),
         "schema_rigidity": schema_rigidity(items),
         "summary_stats": summary_stats(items),
+        # 발송 아이템만으로는 알 수 없는 것 — 수집은 되는데 한 번도
+        # 발송되지 않는 소스. 별도 기록(data/source_stats.jsonl)에서 온다.
+        "source_funnel": source_funnel(),
     }
 
 
