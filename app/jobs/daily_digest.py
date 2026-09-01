@@ -26,9 +26,33 @@ logger = structlog.get_logger()
 
 
 async def _send_error_alert(message: str) -> None:
-    """파이프라인 오류 알림. 실패해도 파이프라인에 영향 없음."""
-    if await send_discord_text(f"⚠️ **DS Digest 오류**\n{message}"):
-        logger.info("error_alert_sent", message=message[:80])
+    """파이프라인 오류 알림. 실패해도 파이프라인에 영향 없음.
+
+    Discord가 안 되면 Telegram으로 넘어간다. 이게 없으면 **가장 중요한 알림이
+    가장 조용히 사라진다** — "모든 발송 채널 실패"를 그 실패한 채널로 보내려
+    하기 때문이다. Discord 시크릿이 비어 있으면 다이제스트도 경보도 둘 다
+    아무 데도 안 가고, 로그에만 남는다.
+    """
+    text = f"⚠️ **DS Digest 오류**\n{message}"
+    if await send_discord_text(text):
+        logger.info("error_alert_sent", channel="discord", message=message[:80])
+        return
+
+    settings = get_settings()
+    if not settings.telegram_bot_token or not settings.telegram_chat_id or settings.dry_run:
+        logger.warning("error_alert_undeliverable", message=message[:120])
+        return
+    try:
+        from app.deliverers.telegram import _send_message
+        async with httpx.AsyncClient(timeout=15) as client:
+            ok = await _send_message(
+                client, settings.telegram_bot_token, settings.telegram_chat_id,
+                f"⚠️ DS Digest 오류\n{message}",
+            )
+        logger.info("error_alert_sent" if ok else "error_alert_undeliverable",
+                    channel="telegram", message=message[:80])
+    except Exception as e:
+        logger.warning("error_alert_failed", error=str(e), message=message[:120])
 
 
 async def _process_pending_feedback() -> dict:

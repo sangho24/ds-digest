@@ -58,13 +58,20 @@ def fetch_seen_urls(urls: list[str]) -> set[str]:
         return set()
     normalized = [_normalize_url(u) for u in urls]
     try:
-        result = (
+        query = (
             get_supabase()
             .table("seen_urls")
             .select("url")
             .in_("url", normalized)
-            .execute()
         )
+        # SEEN_RECENT_DAYS > 0이면 최근 N일 안에 발송된 것만 중복으로 친다.
+        # 행을 지우지 않고 조회 범위만 좁히므로 되돌릴 것이 없다.
+        recent_days = get_settings().seen_recent_days
+        if recent_days > 0:
+            cutoff = (datetime.now(timezone.utc) - timedelta(days=recent_days)).isoformat()
+            query = query.gte("seen_at", cutoff)
+            logger.info("seen_urls_window_narrowed", recent_days=recent_days)
+        result = query.execute()
         return {row["url"] for row in result.data}
     except Exception as e:
         logger.warning("seen_urls_bulk_fetch_failed", count=len(urls), error=str(e))

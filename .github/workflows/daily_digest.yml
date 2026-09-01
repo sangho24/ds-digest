@@ -10,6 +10,10 @@ on:
         description: '드라이런 — 발송·커밋 없이 수집·분석·선정만 검증'
         type: boolean
         default: true
+      seen_recent_days:
+        description: 'seen 완화(일). 0=기존대로 영구 제외, N=최근 N일 것만 중복 처리'
+        type: string
+        default: '0'
 
 # 동시 실행 방지: 수동 실행과 스케줄이 겹치면 git push가 경합해
 # 그날치 산출물이 조용히 유실된다 (실측 109일 중 11일 결번).
@@ -99,6 +103,9 @@ jobs:
           YT_NEW_PER_CHANNEL: ${{ secrets.YT_NEW_PER_CHANNEL }}
           # 수동 실행에서만 드라이런을 켤 수 있다. 스케줄 실행은 항상 실전이다.
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+          # seen 완화도 수동 실행 전용이다. 스케줄은 항상 0(기존 동작)이어야
+          # 한다 — 아니면 지난 다이제스트가 조용히 다시 나가기 시작한다.
+          SEEN_RECENT_DAYS: ${{ inputs.seen_recent_days || '0' }}
         run: python -m app.jobs.daily_digest
 
       - name: Publish docs to GitHub Pages
