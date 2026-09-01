@@ -12,6 +12,7 @@ from __future__ import annotations
 import asyncio
 
 import pytest
+from types import SimpleNamespace
 
 import app.analyzer as analyzer
 from app.analyzer import (
@@ -219,3 +220,71 @@ def test_prompt_lists_every_candidate(monkeypatch):
     for i in range(4):
         assert f"[{i}]" in calls["prompt"]
         assert f"영상{i}" in calls["prompt"]
+
+
+# ──────────────────────────────────────────────
+# 바닥값은 절대 점수에 걸려야 한다
+# ──────────────────────────────────────────────
+#
+# 예비 점검에서 잡힌 회귀: 상대 평가가 섞인 relevance_score에 바닥값을 걸면,
+# 상대 비교가 순서를 정하는 게 아니라 아이템을 탈락시킨다. 후보가 전부 약한
+# 날엔 모델이 시킨 대로 낮은 점수를 뿌리므로 대량 탈락이 일어나 다이제스트가
+# 짧아진다 — §3.4가 상대 랭킹을 도입한 목적과 정면으로 충돌한다.
+
+from app.analyzer import filter_and_analyze  # noqa: E402
+from app.models import UserProfile  # noqa: E402
+
+
+def test_low_relative_rating_does_not_drop_item(monkeypatch):
+    """상대 평가에서 최하점을 받아도 절대 품질이 바닥값 이상이면 후보로 남는다."""
+    items = [_item(6, title=f"글{i}") for i in range(3)]
+    raws = [d.raw for d in items]
+    analyses = {d.raw.url: d.analysis for d in items}
+
+    async def _analyze(item, profile, **_kw):
+        return analyses[item.url]
+
+    monkeypatch.setattr(analyzer, "analyze_content", _analyze)
+    monkeypatch.setattr(analyzer, "load_vocabulary", lambda *a, **k: {"concepts": {}})
+    monkeypatch.setattr(analyzer, "save_vocabulary", lambda *a, **k: None)
+    monkeypatch.setattr(analyzer, "weak_concepts", lambda *a, **k: set())
+    monkeypatch.setattr(analyzer, "get_settings", lambda: SimpleNamespace(
+        dry_run=False, groq_api_key="k", relevance_floor=4, max_items_per_digest=5,
+    ))
+    _patch_llm(monkeypatch, {"ratings": [
+        {"index": 0, "rating": 10}, {"index": 1, "rating": 5}, {"index": 2, "rating": 1},
+    ]})
+
+    result = asyncio.run(filter_and_analyze(raws, UserProfile()))
+
+    # 최하점(1)을 받은 아이템도 절대 점수 6 >= floor 4 이므로 살아남아야 한다.
+    assert len(result) == 3
+    scores = [d.analysis.relevance_score for d in result]
+    assert scores == sorted(scores, reverse=True)
+    assert max(scores) - min(scores) >= 4
+
+
+def test_absolute_low_quality_is_still_dropped(monkeypatch):
+    """반대로 절대 품질이 바닥값 미만이면 상대 만점을 받아도 탈락한다."""
+    weak = _item(0, title="약한글")
+    weak.analysis.actionability = 1
+    weak.analysis.depth = 1
+    strong = _item(6, title="센글")
+    raws = [weak.raw, strong.raw]
+    analyses = {weak.raw.url: weak.analysis, strong.raw.url: strong.analysis}
+
+    async def _analyze(item, profile, **_kw):
+        return analyses[item.url]
+
+    monkeypatch.setattr(analyzer, "analyze_content", _analyze)
+    monkeypatch.setattr(analyzer, "load_vocabulary", lambda *a, **k: {"concepts": {}})
+    monkeypatch.setattr(analyzer, "save_vocabulary", lambda *a, **k: None)
+    monkeypatch.setattr(analyzer, "weak_concepts", lambda *a, **k: set())
+    monkeypatch.setattr(analyzer, "get_settings", lambda: SimpleNamespace(
+        dry_run=False, groq_api_key="k", relevance_floor=4, max_items_per_digest=5,
+    ))
+    _patch_llm(monkeypatch, {"ratings": [{"index": 0, "rating": 10}]})
+
+    result = asyncio.run(filter_and_analyze(raws, UserProfile()))
+
+    assert [d.raw.url for d in result] == [strong.raw.url]

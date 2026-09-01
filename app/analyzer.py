@@ -1014,6 +1014,12 @@ async def filter_and_analyze(
     #    개별 절대 채점은 중앙으로 몰린다 — 실측 164건에서 actionability 73%,
     #    depth 74%가 5~6점이었고 relevance IQR이 1이었다. 그 상태로 상위 5건을
     #    고르면 사실상 동전 던지기다. 드라이런은 mock 점수라 비교할 게 없다.
+    # 혼합 전 절대 점수를 붙잡아 둔다. 바닥값 판정에 쓴다(아래 참조).
+    # actionability·depth로 되계산하지 않는 이유: relevance_score가 늘 그 둘에서
+    # 파생된다는 불변식은 어디서도 강제되지 않는다. 지금 값을 그대로 스냅샷하는
+    # 편이 어떤 경로로 만들어진 점수든 정확하다.
+    absolute_score = {id(d): d.analysis.relevance_score for d in analyzed}
+
     if not settings.dry_run:
         rated = await apply_relative_rating(analyzed)
         if rated:
@@ -1031,7 +1037,15 @@ async def filter_and_analyze(
     signal = build_signal(
         profile.liked_item_ids, profile.disliked_item_ids, review=review
     )
-    candidates = [d for d in analyzed if d.analysis.relevance_score >= floor]
+    # 바닥값은 **혼합 전 절대 점수**에 건다. 상대 비교가 섞인 값에 문턱을 걸면
+    # 상대 평가가 순서를 정하는 게 아니라 **탈락**을 시킨다. 후보가 전부 약한
+    # 날엔 모델이 시킨 대로 낮은 점수를 뿌리므로 대량 탈락이 일어나 다이제스트가
+    # 짧아지거나 비어버린다 — §3.4가 상대 랭킹을 도입한 목적(빈 다이제스트
+    # 구조적 해소)과 정면으로 충돌한다.
+    #
+    # 바닥값의 역할은 "명백한 저품질 제외"이고, 그건 근거 기반의 절대 판단이다.
+    # 정렬만 혼합 점수로 한다.
+    candidates = [d for d in analyzed if absolute_score[id(d)] >= floor]
     candidates.sort(
         key=lambda d: (
             d.analysis.relevance_score,
