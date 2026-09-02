@@ -1,275 +1,290 @@
 {
   "contract_version": 1,
   "date": "2026-09-02",
-  "generated_at": "2026-09-02T09:15:33.666079+09:00",
+  "generated_at": "2026-09-02T13:03:14.963729+09:00",
   "count": 5,
   "archive_url": "https://sangho24.github.io/ds-digest/2026-09-02.html",
   "items": [
     {
-      "id": "22c1d0dbd7df",
-      "title": "Overcoming critical slowing down in frustrated spin systems by learned multiscale sampling",
-      "url": "https://arxiv.org/abs/2608.31114v1",
+      "id": "b8c4677c2171",
+      "title": "Pointwise Majorization for sub-Weibull and Mixed Tail Processes with Applications in Quadratic Chaos and Ergodic Diffusions",
+      "url": "https://arxiv.org/abs/2609.01576v1",
       "source": {
         "type": "rss",
         "name": "arXiv:stat.ML"
       },
-      "published_at": "2026-08-31T17:21:54",
-      "summary": "학습 기반 다중스케일 샘플링으로 복잡계 MCMC 효율 향상",
+      "published_at": "2026-09-01T17:42:38",
+      "summary": "점별 복잡도 기반 확률 경계로 모델 신뢰성 강화",
       "tags": [
-        "Swendsen--Wang",
-        "Wolff",
-        "WCRG",
-        "wavelet conditional renormalization group",
-        "soft-spin model"
+        "sub-Weibull",
+        "mixed tail",
+        "Banach-valued",
+        "quadratic chaos",
+        "ergodic diffusions"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "전통 클러스터 알고리즘은 약한 좌절에서도 실패한다",
+          "point": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)} 로 전체 과정이 아닌 각 인덱스별 상한을 제공한다.",
           "timestamp": null
         },
         {
-          "point": "WCRG는 파동렛 조건부 RG를 학습해 다중 스케일에서 샘플링한다",
+          "point": "혼합 꼬리 과정에서도 두 메트릭·측도·지수별로 독립적인 복잡도 항을 합산해 동일한 확률 보장을 얻는다.",
           "timestamp": null
         },
         {
-          "point": "각 스케일에서 O(1) 스윕으로 전체 O(log₂L) 복잡도 달성",
+          "point": "이론을 이용해 연산자·Frobenius 노름 기반의 이차 혼돈 및 확산 경험 과정에 구체적 유한시간 경계가 도출된다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "WCRG를 이용해 좌절 스핀 글라스 시뮬레이션의 MCMC 샘플링 속도를 높인다",
-        "학습된 파동렛 조건부 분포를 고차원 베이지안 모델의 추론에 적용해 샘플링 효율을 개선한다"
+        "점별 복잡도 함수를 활용해 고차원 회귀 모델의 신뢰 구간을 개별 피처 수준에서 계산한다.",
+        "혼합 꼬리 경계 결과를 이용해 확산 기반 시계열 모델의 단기 예측 오차 상한을 실시간 모니터링한다."
       ],
       "quiz": [
         {
-          "question": "WCRG가 사용하여 학습하는 확률 분포는 무엇에 대한 것인가?",
+          "question": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)}(t)의 정의는 무엇인가?",
           "options": [
-            "집합적 변동",
-            "개별 스핀",
-            "외부 자기장",
-            "온도"
+            "∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr",
+            "∫_0^{v(t)}(log(μ(B_d(t,r))))^{α}dr",
+            "∫_0^{4v(t)}(log(μ(B_d(t,r))))^{1/α}dr",
+            "∫_0^{v(t)}(log(1/μ(B_d(t,r))))^{α}dr"
           ],
           "answer_index": 0,
-          "explanation": "본문은 WCRG가 좌절 2D 소프트-스핀 모델의 집합적 변동 확률 분포를 학습한다고 언급한다."
-        },
-        {
-          "question": "WCRG가 달성한 전체 샘플링 복잡도는?",
-          "options": [
-            "O(L)",
-            "O(log₂L)",
-            "O(1)",
-            "O(L²)"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 전체 샘플링 복잡도가 O(log₂L)라고 명시되어 있다."
+          "explanation": "본문에 Φ_{μ,d}^{(α)}(t)=∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr 로 정의되어 있다."
         }
       ]
     },
     {
-      "id": "44526c1223b0",
-      "title": "I trained a small transformer in 1.5hrs and it beats many LLMs",
-      "url": "https://mvakde.github.io/blog/44-on-arc-1/",
+      "id": "26cec8c5b30c",
+      "title": "The efficient frontier of LLM inference",
+      "url": "https://www.baseten.co/blog/the-efficient-frontier-of-llm-inference/",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "샘플 효율성 높은 트랜스포머로 ARC 비용 절감",
+      "summary": "LLM 추론 비용·성능 최적화 기법 파악",
       "tags": [
-        "ARC-AGI-1",
-        "ARC-2",
-        "flash attention",
-        "Normuon",
-        "SwiGlu"
+        "GLM-5.3",
+        "Kimi K3",
+        "KV cache",
+        "quantization",
+        "distillation"
       ],
-      "relevance": 6,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "1.5시간에 5090 GPU로 작은 트랜스포머를 학습해 ARC‑1에서 44% 정확도 달성",
+          "point": "효율적 프론티어는 LLM 추론에서 지연시간·처리량·비용 간 트레이드오프를 시각화한다.",
           "timestamp": null
         },
         {
-          "point": "SwiGlu·RMSnorm 등 최신 아키텍처와 flash attention 적용으로 비용을 67¢ 이하로 감소",
+          "point": "배치 크기를 조정하면 지연시간이 늘어나지만 처리량과 토큰당 비용이 개선돼 프론티어를 따라 이동한다.",
           "timestamp": null
         },
         {
-          "point": "입력 토큰을 제외하고 출력 토큰만 학습해 샘플 효율성을 40%→44% 향상",
+          "point": "양자화·지식 증류·프루닝 같은 기법은 전체 프론티어를 확장해 동일 비용·지연에서 더 높은 성능을 얻는다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "flash attention과 Normuon 옵티마이저를 기존 메타러닝 벤치마크 학습 파이프라인에 적용해 GPU 비용을 50% 이상 절감한다",
-        "색·다이헤드럴 증강과 3D RoPE 임베딩을 유사 메타러닝 데이터셋에 적용해 학습 샘플 수를 절반 이하로 줄인다"
+        "배치 크기 자동 조절 로직을 도입해 실시간 트래픽에 따라 지연시간과 처리량 목표를 최적화한다.",
+        "양자화 또는 프루닝 파이프라인을 구축해 기존 LLM 모델을 비용 효율적으로 경량화하고, 비용·성능 프론티어를 전체적으로 끌어올린다."
       ],
       "quiz": [
         {
-          "question": "이 모델이 ARC‑1에서 달성한 정확도는?",
+          "question": "배치 크기 조정은 효율적 프론티어에서 어떤 역할을 하나요?",
           "options": [
-            "40%",
-            "44%",
-            "50%",
-            "60%"
+            "프론티어 전체를 확장한다",
+            "프론티어를 따라 이동한다",
+            "모델 정확도를 높인다",
+            "새로운 모델을 만든다"
           ],
           "answer_index": 1,
-          "explanation": "본문에 \"44% on ARC-AGI-1\"이라고 명시되어 있다."
-        },
-        {
-          "question": "비용을 크게 낮춘 주요 기술이 아닌 것은?",
-          "options": [
-            "SwiGlu",
-            "RMSnorm",
-            "Normuon",
-            "AdamW"
-          ],
-          "answer_index": 3,
-          "explanation": "AdamW는 이전에 사용했지만 본 모델에서는 Normuon으로 교체했다."
+          "explanation": "배치 크기를 늘리면 지연시간이 증가하지만 처리량과 비용 효율성이 개선돼 프론티어 상에서 다른 점으로 이동한다."
         }
       ]
     },
     {
-      "id": "48bba60aac72",
-      "title": "Reasoning 모델을 더 효율적으로 가르치는 방법",
-      "url": "https://deepdaiv.stibee.com/p/161",
+      "id": "baeea598611a",
+      "title": "Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data",
+      "url": "https://arxiv.org/abs/2609.01525v1",
       "source": {
-        "type": "newsletter",
-        "name": "Weekly deep daiv."
+        "type": "rss",
+        "name": "arXiv:cs.DB"
       },
-      "published_at": "2026-09-01T00:00:00",
-      "summary": "대형 모델 지식 전달로 추론 비용 절감",
+      "published_at": "2026-09-01T16:55:11",
+      "summary": "컬럼형 DB로 그래프 분석 시 성능·확장성 크게 향상",
       "tags": [
-        "Knowledge Distillation",
-        "On-Policy Distillation",
-        "Dense Feedback",
-        "Sparse Feedback",
-        "Exposure Bias"
+        "ClickGraph",
+        "DeltaGraph",
+        "ClickHouse",
+        "Databricks",
+        "Neo4j"
       ],
-      "relevance": 6,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "교사 모델의 토큰 확률 분포를 학생 모델에 맞추는 Knowledge Distillation은 Dense Feedback을 제공한다.",
+          "point": "컬럼형 관계형 엔진에 그래프 쿼리 언어를 결합하면 네이티브 그래프 엔진을 능가하거나 동등한 성능을 제공한다.",
           "timestamp": null
         },
         {
-          "point": "On-Policy Distillation은 학생이 생성한 답을 교사가 평가해 토큰‑레벨 피드백을 주어 Exposure Bias를 완화한다.",
+          "point": "노드/엣지 프로퍼티 그래프는 관계형 테이블에 이미 존재하는 관계를 재인코딩한 것으로, 쿼리 시 재구성은 오버헤드이다.",
           "timestamp": null
         },
         {
-          "point": "Sparse Feedback(최종 보상)과 Dense Feedback(토큰별 확률) 사이의 차이를 이해하고, OPD와 최신 연구(Agarwal et al., 2023)를 활용해 학습 파이프라인을 설계한다.",
+          "point": "LDBC 소셜 네트워크 벤치마크에서 컬럼형 엔진이 Neo4j보다 2~4 자릿수 빠르게 수행되었다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "학생 모델이 자체 생성한 응답을 교사 모델에 전달해 토큰‑레벨 확률을 loss에 활용하는 On‑Policy Distillation 파이프라인을 구축한다.",
-        "정적 데이터셋 대신 학생 모델의 Rollout을 이용해 동적 학습 데이터를 생성함으로써 Exposure Bias를 감소시키고, Dense Feedback을 활용한 미세 조정을 수행한다."
+        "ClickHouse 혹은 Databricks 환경에 ClickGraph/DeltaGraph를 도입해 Cypher 쿼리를 직접 SQL로 변환·실행함으로써 별도 그래프 클러스터 없이 그래프 분석 파이프라인을 구축한다.",
+        "기존 관계형 스키마(테이블·컬럼·외래키)를 그대로 활용해 그래프 쿼리를 수행함으로써 데이터 중복·ETL 비용을 절감하고, SQL 옵티마이저를 통한 추가 최적화 여지를 확보한다."
       ],
       "quiz": [
         {
-          "question": "다음 중 Dense Feedback의 특징이 아닌 것은?",
+          "question": "벤치마크에서 Neo4j보다 2~4 자릿수 빠른 성능을 보인 엔진은?",
           "options": [
-            "교사 모델이 각 토큰의 확률 분포를 제공한다",
-            "학생 모델에 최종 정답 여부만 보상한다",
-            "피드백이 토큰 수준에서 세밀하게 제공된다",
-            "학습 신호가 토큰별 선호도를 반영한다"
+            "ClickHouse",
+            "Databricks",
+            "Neo4j",
+            "LDBC"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 컬럼형 엔진(예: ClickHouse)이 Neo4j보다 2~4 자릿수 빠른 성능을 보였다고 명시한다."
+        },
+        {
+          "question": "노드/엣지 프로퍼티 그래프 모델에 대한 저자의 주장은?",
+          "options": [
+            "더 정확한 데이터 모델을 제공한다",
+            "성능 세금이며 불필요한 재인코딩이다",
+            "외래키를 제거한다",
+            "SQL 쿼리를 단순화한다"
           ],
           "answer_index": 1,
-          "explanation": "Sparse Feedback는 최종 정답 여부만 보상하는 반면, Dense Feedback은 각 토큰의 확률 분포와 선호도를 제공한다."
+          "explanation": "본문에서 노드/엣지 모델을 ‘성능 세금’이라고 표현하며, 관계형 테이블에 이미 존재하는 관계를 재인코딩한다고 설명한다."
         }
       ]
     },
     {
-      "id": "c79c2112fb53",
-      "title": "GLM 5.3: Powerful AI Is Becoming Almost Free",
-      "url": "https://youtu.be/w9RDunJACkc",
-      "source": {
-        "type": "youtube",
-        "name": "Two Minute Papers"
-      },
-      "published_at": "2026-09-01T09:04:56",
-      "summary": "고성능 AI 모델 비용 급감, 실험 비용 절감",
-      "tags": [
-        "GLM 5.3",
-        "Lambda",
-        "GPU Cloud",
-        "Two Minute Papers",
-        "GLM 5.3 Flash"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "GLM 5.3가 높은 성능을 유지하면서 비용이 크게 낮아졌음",
-          "timestamp": null
-        },
-        {
-          "point": "Lambda GPU 클라우드에서 저렴하게 모델을 활용 가능",
-          "timestamp": null
-        },
-        {
-          "point": "자세한 내용은 GLM 5.3 Flash 블로그와 소셜 미디어에서 확인 가능",
-          "timestamp": null
-        }
-      ],
-      "ideas": [],
-      "quiz": []
-    },
-    {
-      "id": "41ede6969a68",
-      "title": "Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편",
-      "url": "https://d2.naver.com/helloworld/4452165",
+      "id": "4e78dec40c1c",
+      "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
+      "url": "https://d2.naver.com/helloworld/4821538",
       "source": {
         "type": "rss",
         "name": "D2 Blog"
       },
       "published_at": null,
-      "summary": "Airflow 멀티프로세싱으로 병렬·격리 확보",
+      "summary": "AI 해커톤에서 재무 데이터 검증·워크플로우 설계 방법을 제시",
       "tags": [
-        "Airflow",
-        "Python",
-        "fork",
-        "spawn",
-        "GIL"
+        "Claude Code",
+        "LLM",
+        "MCP",
+        "NStake",
+        "Excel"
       ],
-      "relevance": 4,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "Airflow는 task의 병렬 실행과 격리 두 가지 요구를 만족해야 한다.",
+          "point": "문제를 엑셀 대체가 아닌 숫자 생성 과정과 검증 시스템으로 재정의함",
           "timestamp": null
         },
         {
-          "point": "Python GIL 때문에 Airflow는 멀티프로세싱을 선택해 CPU 병렬성을 확보한다.",
+          "point": "AI를 평가자·검증자·설계 파트너·구현 보조자 등 다중 역할로 활용하고 페어 프롬프팅을 적용함",
           "timestamp": null
         },
         {
-          "point": "fork는 COW로 메모리를 공유하고, spawn은 새 인터프리터를 시작해 모듈 오염을 방지한다.",
+          "point": "업무 흐름을 ‘입력→검증→불일치 발견→담당자 처리→보고’ 로 설계해 AI 중단 시에도 업무 지속 가능하게 함",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Unix 환경에서 Airflow task 실행 시 fork start method를 사용해 메모리 사용량을 최소화하고 CPU 코어를 효율적으로 활용한다.",
-        "모듈 오염이나 코드 변경 반영이 중요한 경우 Airflow task를 spawn start method로 실행하도록 설정해 격리성을 강화한다."
+        "LLM 기반 자동 검증 로직을 재무 데이터 입력 파이프라인에 도입해 거래 이력과 외부 자료를 교차 검증한다",
+        "팀 내 프로토타입 개발 시 페어 프롬프팅 방식을 적용해 프롬프트 품질을 향상시키고 AI 결과에 대한 즉시 피드백 루프를 구축한다"
       ],
       "quiz": [
         {
-          "question": "Python 멀티프로세싱에서 메모리를 부모와 공유하는 방식은?",
+          "question": "팀이 선택한 원래 문제는 무엇이었나요?",
           "options": [
-            "spawn",
-            "fork",
-            "forkserver",
-            "thread"
+            "자동 보고서 생성",
+            "엑셀 기반 출자 현황을 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환",
+            "AI 모델 성능 개선",
+            "데이터 시각화 대시보드 구축"
           ],
           "answer_index": 1,
-          "explanation": "fork는 Unix의 fork 시스템 콜을 사용해 페이지 테이블만 복사하고 물리 메모리를 공유하는 Copy-on-Write 방식을 적용한다."
+          "explanation": "본문에 ‘수기 Microsoft Excel 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다’는 문제를 선택했다고 명시돼 있다."
         },
         {
-          "question": "Airflow task가 반드시 만족해야 하는 두 핵심 요구 사항은?",
+          "question": "해커톤에서 팀이 AI에게 부여한 주요 역할은 무엇인가요?",
           "options": [
-            "Scalability와 Security",
-            "Parallelism와 Isolation",
-            "Latency와 Throughput",
-            "Fault Tolerance와 Monitoring"
+            "코드만 빠르게 생성하는 도구",
+            "평가자·설계 파트너·구현 보조자·검증자 등 다중 역할",
+            "데이터 저장소 역할",
+            "사용자 인터페이스 디자인 전담"
           ],
           "answer_index": 1,
-          "explanation": "본문에서 Airflow는 병렬성(parallelism)과 격리성(isolation)을 핵심 요구 사항으로 제시한다."
+          "explanation": "본문에 AI를 ‘평가자, 설계 파트너, 구현 보조자, 검증자’ 등으로 나눠 사용했다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "106b5aea0312",
+      "title": "🥤무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다",
+      "url": "https://trendlite.stibee.com/p/480",
+      "source": {
+        "type": "newsletter",
+        "name": "트렌드라이트"
+      },
+      "published_at": "2026-09-01T00:00:00",
+      "summary": "오프라인 데이터를 온라인 큐레이션에 활용해 전환 최적화",
+      "tags": [
+        "무신사",
+        "하라주쿠",
+        "QR코드",
+        "스피드 배송",
+        "조조타운"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "피팅룸을 없애고 쇼룸형으로 전환, QR 주문·스피드 배송으로 온라인 구매 연결",
+          "timestamp": null
+        },
+        {
+          "point": "오프라인 방문 데이터를 온라인 큐레이션에 활용해 브랜드·상품 노출 최적화",
+          "timestamp": null
+        },
+        {
+          "point": "F&B·인플루언서 콜라보 등 콘텐츠 결합으로 체류 시간·참여도 상승",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "QR코드를 활용해 매장 내 실시간 재고와 주문 시스템을 연동, 현장 체험을 바로 온라인 구매로 전환",
+        "오프라인 방문 로그와 구매 데이터를 분석해 개인화된 온라인 추천 모델을 구축, 재방문율 향상"
+      ],
+      "quiz": [
+        {
+          "question": "무신사 하라주쿠 팝업에서 도입한 주요 변화는 무엇인가?",
+          "options": [
+            "피팅룸 확대",
+            "QR 주문 도입",
+            "현장 현금 결제",
+            "무료 배송"
+          ],
+          "answer_index": 1,
+          "explanation": "기사에 따르면 피팅룸을 없애고 QR 코드를 통한 주문 시스템을 도입했다."
+        },
+        {
+          "question": "팝업에서 고객에게 제공된 특별한 오프라인-온라인 연계 서비스는?",
+          "options": [
+            "현장 할인 쿠폰",
+            "QR코드 스캔 시 2일 내 스피드 배송",
+            "무료 시착 서비스",
+            "현장 포인트 적립"
+          ],
+          "answer_index": 1,
+          "explanation": "QR코드로 주문하면 2~3일 내 스피드 배송 서비스를 강조했다."
         }
       ]
     }

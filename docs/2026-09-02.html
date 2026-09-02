@@ -88,18 +88,18 @@
     </div>
 
     <h2 class="item-title">
-      <a href="https://arxiv.org/abs/2608.31114v1" target="_blank">Overcoming critical slowing down in frustrated spin systems by learned multiscale sampling</a>
+      <a href="https://arxiv.org/abs/2609.01576v1" target="_blank">Pointwise Majorization for sub-Weibull and Mixed Tail Processes with Applications in Quadratic Chaos and Ergodic Diffusions</a>
     </h2>
 
-    <p class="item-summary">학습 기반 다중스케일 샘플링으로 복잡계 MCMC 효율 향상</p>
+    <p class="item-summary">점별 복잡도 기반 확률 경계로 모델 신뢰성 강화</p>
 
     
     <div class="tags">
-      <span class="tag">Swendsen--Wang</span><span class="tag">Wolff</span><span class="tag">WCRG</span><span class="tag">wavelet conditional renormalization group</span><span class="tag">soft-spin model</span>
+      <span class="tag">sub-Weibull</span><span class="tag">mixed tail</span><span class="tag">Banach-valued</span><span class="tag">quadratic chaos</span><span class="tag">ergodic diffusions</span>
     </div>
     
 
-    <a class="orig-link" href="https://arxiv.org/abs/2608.31114v1" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://arxiv.org/abs/2609.01576v1" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -108,21 +108,21 @@
       
         <span class="bullet">·</span>
       
-      <span>전통 클러스터 알고리즘은 약한 좌절에서도 실패한다</span>
+      <span>점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)} 로 전체 과정이 아닌 각 인덱스별 상한을 제공한다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>WCRG는 파동렛 조건부 RG를 학습해 다중 스케일에서 샘플링한다</span>
+      <span>혼합 꼬리 과정에서도 두 메트릭·측도·지수별로 독립적인 복잡도 항을 합산해 동일한 확률 보장을 얻는다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>각 스케일에서 O(1) 스윕으로 전체 O(log₂L) 복잡도 달성</span>
+      <span>이론을 이용해 연산자·Frobenius 노름 기반의 이차 혼돈 및 확산 경험 과정에 구체적 유한시간 경계가 도출된다.</span>
     </div>
     
     
@@ -130,9 +130,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 WCRG를 이용해 좌절 스핀 글라스 시뮬레이션의 MCMC 샘플링 속도를 높인다</div>
+    <div class="idea">💡 점별 복잡도 함수를 활용해 고차원 회귀 모델의 신뢰 구간을 개별 피처 수준에서 계산한다.</div>
     
-    <div class="idea">💡 학습된 파동렛 조건부 분포를 고차원 베이지안 모델의 추론에 적용해 샘플링 효율을 개선한다</div>
+    <div class="idea">💡 혼합 꼬리 경계 결과를 이용해 확산 기반 시계열 모델의 단기 예측 오차 상한을 실시간 모니터링한다.</div>
     
     
 
@@ -141,41 +141,21 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. WCRG가 사용하여 학습하는 확률 분포는 무엇에 대한 것인가?</div>
+      <div class="quiz-q">Q1. 점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)}(t)의 정의는 무엇인가?</div>
       
-      <div class="quiz-opt">A) 집합적 변동</div>
+      <div class="quiz-opt">A) ∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr</div>
       
-      <div class="quiz-opt">B) 개별 스핀</div>
+      <div class="quiz-opt">B) ∫_0^{v(t)}(log(μ(B_d(t,r))))^{α}dr</div>
       
-      <div class="quiz-opt">C) 외부 자기장</div>
+      <div class="quiz-opt">C) ∫_0^{4v(t)}(log(μ(B_d(t,r))))^{1/α}dr</div>
       
-      <div class="quiz-opt">D) 온도</div>
-      
-      <details class="quiz-answer">
-        <summary>정답 보기</summary>
-        <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ A) 집합적 변동</div>
-          <div class="quiz-explanation">본문은 WCRG가 좌절 2D 소프트-스핀 모델의 집합적 변동 확률 분포를 학습한다고 언급한다.</div>
-        </div>
-      </details>
-    </div>
-    
-    <div class="quiz-box">
-      <div class="quiz-q">Q2. WCRG가 달성한 전체 샘플링 복잡도는?</div>
-      
-      <div class="quiz-opt">A) O(L)</div>
-      
-      <div class="quiz-opt">B) O(log₂L)</div>
-      
-      <div class="quiz-opt">C) O(1)</div>
-      
-      <div class="quiz-opt">D) O(L²)</div>
+      <div class="quiz-opt">D) ∫_0^{v(t)}(log(1/μ(B_d(t,r))))^{α}dr</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) O(log₂L)</div>
-          <div class="quiz-explanation">본문에 전체 샘플링 복잡도가 O(log₂L)라고 명시되어 있다.</div>
+          <div class="quiz-correct-opt">✓ A) ∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr</div>
+          <div class="quiz-explanation">본문에 Φ_{μ,d}^{(α)}(t)=∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr 로 정의되어 있다.</div>
         </div>
       </details>
     </div>
@@ -192,22 +172,22 @@
   <div class="item">
 
     <div class="item-meta">
-      HackerNews · 관련도 <span class="score">6</span>
+      HackerNews · 관련도 <span class="score">8</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://mvakde.github.io/blog/44-on-arc-1/" target="_blank">I trained a small transformer in 1.5hrs and it beats many LLMs</a>
+      <a href="https://www.baseten.co/blog/the-efficient-frontier-of-llm-inference/" target="_blank">The efficient frontier of LLM inference</a>
     </h2>
 
-    <p class="item-summary">샘플 효율성 높은 트랜스포머로 ARC 비용 절감</p>
+    <p class="item-summary">LLM 추론 비용·성능 최적화 기법 파악</p>
 
     
     <div class="tags">
-      <span class="tag">ARC-AGI-1</span><span class="tag">ARC-2</span><span class="tag">flash attention</span><span class="tag">Normuon</span><span class="tag">SwiGlu</span>
+      <span class="tag">GLM-5.3</span><span class="tag">Kimi K3</span><span class="tag">KV cache</span><span class="tag">quantization</span><span class="tag">distillation</span>
     </div>
     
 
-    <a class="orig-link" href="https://mvakde.github.io/blog/44-on-arc-1/" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://www.baseten.co/blog/the-efficient-frontier-of-llm-inference/" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -216,21 +196,21 @@
       
         <span class="bullet">·</span>
       
-      <span>1.5시간에 5090 GPU로 작은 트랜스포머를 학습해 ARC‑1에서 44% 정확도 달성</span>
+      <span>효율적 프론티어는 LLM 추론에서 지연시간·처리량·비용 간 트레이드오프를 시각화한다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>SwiGlu·RMSnorm 등 최신 아키텍처와 flash attention 적용으로 비용을 67¢ 이하로 감소</span>
+      <span>배치 크기를 조정하면 지연시간이 늘어나지만 처리량과 토큰당 비용이 개선돼 프론티어를 따라 이동한다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>입력 토큰을 제외하고 출력 토큰만 학습해 샘플 효율성을 40%→44% 향상</span>
+      <span>양자화·지식 증류·프루닝 같은 기법은 전체 프론티어를 확장해 동일 비용·지연에서 더 높은 성능을 얻는다.</span>
     </div>
     
     
@@ -238,9 +218,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 flash attention과 Normuon 옵티마이저를 기존 메타러닝 벤치마크 학습 파이프라인에 적용해 GPU 비용을 50% 이상 절감한다</div>
+    <div class="idea">💡 배치 크기 자동 조절 로직을 도입해 실시간 트래픽에 따라 지연시간과 처리량 목표를 최적화한다.</div>
     
-    <div class="idea">💡 색·다이헤드럴 증강과 3D RoPE 임베딩을 유사 메타러닝 데이터셋에 적용해 학습 샘플 수를 절반 이하로 줄인다</div>
+    <div class="idea">💡 양자화 또는 프루닝 파이프라인을 구축해 기존 LLM 모델을 비용 효율적으로 경량화하고, 비용·성능 프론티어를 전체적으로 끌어올린다.</div>
     
     
 
@@ -249,41 +229,21 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. 이 모델이 ARC‑1에서 달성한 정확도는?</div>
+      <div class="quiz-q">Q1. 배치 크기 조정은 효율적 프론티어에서 어떤 역할을 하나요?</div>
       
-      <div class="quiz-opt">A) 40%</div>
+      <div class="quiz-opt">A) 프론티어 전체를 확장한다</div>
       
-      <div class="quiz-opt">B) 44%</div>
+      <div class="quiz-opt">B) 프론티어를 따라 이동한다</div>
       
-      <div class="quiz-opt">C) 50%</div>
+      <div class="quiz-opt">C) 모델 정확도를 높인다</div>
       
-      <div class="quiz-opt">D) 60%</div>
-      
-      <details class="quiz-answer">
-        <summary>정답 보기</summary>
-        <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) 44%</div>
-          <div class="quiz-explanation">본문에 "44% on ARC-AGI-1"이라고 명시되어 있다.</div>
-        </div>
-      </details>
-    </div>
-    
-    <div class="quiz-box">
-      <div class="quiz-q">Q2. 비용을 크게 낮춘 주요 기술이 아닌 것은?</div>
-      
-      <div class="quiz-opt">A) SwiGlu</div>
-      
-      <div class="quiz-opt">B) RMSnorm</div>
-      
-      <div class="quiz-opt">C) Normuon</div>
-      
-      <div class="quiz-opt">D) AdamW</div>
+      <div class="quiz-opt">D) 새로운 모델을 만든다</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ D) AdamW</div>
-          <div class="quiz-explanation">AdamW는 이전에 사용했지만 본 모델에서는 Normuon으로 교체했다.</div>
+          <div class="quiz-correct-opt">✓ B) 프론티어를 따라 이동한다</div>
+          <div class="quiz-explanation">배치 크기를 늘리면 지연시간이 증가하지만 처리량과 비용 효율성이 개선돼 프론티어 상에서 다른 점으로 이동한다.</div>
         </div>
       </details>
     </div>
@@ -300,22 +260,22 @@
   <div class="item">
 
     <div class="item-meta">
-      Weekly deep daiv. · 관련도 <span class="score">6</span>
+      arXiv:cs.DB · 관련도 <span class="score">8</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://deepdaiv.stibee.com/p/161" target="_blank">Reasoning 모델을 더 효율적으로 가르치는 방법</a>
+      <a href="https://arxiv.org/abs/2609.01525v1" target="_blank">Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data</a>
     </h2>
 
-    <p class="item-summary">대형 모델 지식 전달로 추론 비용 절감</p>
+    <p class="item-summary">컬럼형 DB로 그래프 분석 시 성능·확장성 크게 향상</p>
 
     
     <div class="tags">
-      <span class="tag">Knowledge Distillation</span><span class="tag">On-Policy Distillation</span><span class="tag">Dense Feedback</span><span class="tag">Sparse Feedback</span><span class="tag">Exposure Bias</span>
+      <span class="tag">ClickGraph</span><span class="tag">DeltaGraph</span><span class="tag">ClickHouse</span><span class="tag">Databricks</span><span class="tag">Neo4j</span>
     </div>
     
 
-    <a class="orig-link" href="https://deepdaiv.stibee.com/p/161" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://arxiv.org/abs/2609.01525v1" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -324,21 +284,21 @@
       
         <span class="bullet">·</span>
       
-      <span>교사 모델의 토큰 확률 분포를 학생 모델에 맞추는 Knowledge Distillation은 Dense Feedback을 제공한다.</span>
+      <span>컬럼형 관계형 엔진에 그래프 쿼리 언어를 결합하면 네이티브 그래프 엔진을 능가하거나 동등한 성능을 제공한다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>On-Policy Distillation은 학생이 생성한 답을 교사가 평가해 토큰‑레벨 피드백을 주어 Exposure Bias를 완화한다.</span>
+      <span>노드/엣지 프로퍼티 그래프는 관계형 테이블에 이미 존재하는 관계를 재인코딩한 것으로, 쿼리 시 재구성은 오버헤드이다.</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Sparse Feedback(최종 보상)과 Dense Feedback(토큰별 확률) 사이의 차이를 이해하고, OPD와 최신 연구(Agarwal et al., 2023)를 활용해 학습 파이프라인을 설계한다.</span>
+      <span>LDBC 소셜 네트워크 벤치마크에서 컬럼형 엔진이 Neo4j보다 2~4 자릿수 빠르게 수행되었다.</span>
     </div>
     
     
@@ -346,9 +306,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 학생 모델이 자체 생성한 응답을 교사 모델에 전달해 토큰‑레벨 확률을 loss에 활용하는 On‑Policy Distillation 파이프라인을 구축한다.</div>
+    <div class="idea">💡 ClickHouse 혹은 Databricks 환경에 ClickGraph/DeltaGraph를 도입해 Cypher 쿼리를 직접 SQL로 변환·실행함으로써 별도 그래프 클러스터 없이 그래프 분석 파이프라인을 구축한다.</div>
     
-    <div class="idea">💡 정적 데이터셋 대신 학생 모델의 Rollout을 이용해 동적 학습 데이터를 생성함으로써 Exposure Bias를 감소시키고, Dense Feedback을 활용한 미세 조정을 수행한다.</div>
+    <div class="idea">💡 기존 관계형 스키마(테이블·컬럼·외래키)를 그대로 활용해 그래프 쿼리를 수행함으로써 데이터 중복·ETL 비용을 절감하고, SQL 옵티마이저를 통한 추가 최적화 여지를 확보한다.</div>
     
     
 
@@ -357,21 +317,41 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. 다음 중 Dense Feedback의 특징이 아닌 것은?</div>
+      <div class="quiz-q">Q1. 벤치마크에서 Neo4j보다 2~4 자릿수 빠른 성능을 보인 엔진은?</div>
       
-      <div class="quiz-opt">A) 교사 모델이 각 토큰의 확률 분포를 제공한다</div>
+      <div class="quiz-opt">A) ClickHouse</div>
       
-      <div class="quiz-opt">B) 학생 모델에 최종 정답 여부만 보상한다</div>
+      <div class="quiz-opt">B) Databricks</div>
       
-      <div class="quiz-opt">C) 피드백이 토큰 수준에서 세밀하게 제공된다</div>
+      <div class="quiz-opt">C) Neo4j</div>
       
-      <div class="quiz-opt">D) 학습 신호가 토큰별 선호도를 반영한다</div>
+      <div class="quiz-opt">D) LDBC</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) 학생 모델에 최종 정답 여부만 보상한다</div>
-          <div class="quiz-explanation">Sparse Feedback는 최종 정답 여부만 보상하는 반면, Dense Feedback은 각 토큰의 확률 분포와 선호도를 제공한다.</div>
+          <div class="quiz-correct-opt">✓ A) ClickHouse</div>
+          <div class="quiz-explanation">본문은 컬럼형 엔진(예: ClickHouse)이 Neo4j보다 2~4 자릿수 빠른 성능을 보였다고 명시한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 노드/엣지 프로퍼티 그래프 모델에 대한 저자의 주장은?</div>
+      
+      <div class="quiz-opt">A) 더 정확한 데이터 모델을 제공한다</div>
+      
+      <div class="quiz-opt">B) 성능 세금이며 불필요한 재인코딩이다</div>
+      
+      <div class="quiz-opt">C) 외래키를 제거한다</div>
+      
+      <div class="quiz-opt">D) SQL 쿼리를 단순화한다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 성능 세금이며 불필요한 재인코딩이다</div>
+          <div class="quiz-explanation">본문에서 노드/엣지 모델을 ‘성능 세금’이라고 표현하며, 관계형 테이블에 이미 존재하는 관계를 재인코딩한다고 설명한다.</div>
         </div>
       </details>
     </div>
@@ -388,22 +368,22 @@
   <div class="item">
 
     <div class="item-meta">
-      Two Minute Papers · 관련도 <span class="score">5</span>
+      D2 Blog · 관련도 <span class="score">5</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://youtu.be/w9RDunJACkc" target="_blank">GLM 5.3: Powerful AI Is Becoming Almost Free</a>
+      <a href="https://d2.naver.com/helloworld/4821538" target="_blank">[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것</a>
     </h2>
 
-    <p class="item-summary">고성능 AI 모델 비용 급감, 실험 비용 절감</p>
+    <p class="item-summary">AI 해커톤에서 재무 데이터 검증·워크플로우 설계 방법을 제시</p>
 
     
     <div class="tags">
-      <span class="tag">GLM 5.3</span><span class="tag">Lambda</span><span class="tag">GPU Cloud</span><span class="tag">Two Minute Papers</span><span class="tag">GLM 5.3 Flash</span>
+      <span class="tag">Claude Code</span><span class="tag">LLM</span><span class="tag">MCP</span><span class="tag">NStake</span><span class="tag">Excel</span>
     </div>
     
 
-    <a class="orig-link" href="https://youtu.be/w9RDunJACkc" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://d2.naver.com/helloworld/4821538" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -412,27 +392,78 @@
       
         <span class="bullet">·</span>
       
-      <span>GLM 5.3가 높은 성능을 유지하면서 비용이 크게 낮아졌음</span>
+      <span>문제를 엑셀 대체가 아닌 숫자 생성 과정과 검증 시스템으로 재정의함</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Lambda GPU 클라우드에서 저렴하게 모델을 활용 가능</span>
+      <span>AI를 평가자·검증자·설계 파트너·구현 보조자 등 다중 역할로 활용하고 페어 프롬프팅을 적용함</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>자세한 내용은 GLM 5.3 Flash 블로그와 소셜 미디어에서 확인 가능</span>
+      <span>업무 흐름을 ‘입력→검증→불일치 발견→담당자 처리→보고’ 로 설계해 AI 중단 시에도 업무 지속 가능하게 함</span>
     </div>
     
     
 
     
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 LLM 기반 자동 검증 로직을 재무 데이터 입력 파이프라인에 도입해 거래 이력과 외부 자료를 교차 검증한다</div>
+    
+    <div class="idea">💡 팀 내 프로토타입 개발 시 페어 프롬프팅 방식을 적용해 프롬프트 품질을 향상시키고 AI 결과에 대한 즉시 피드백 루프를 구축한다</div>
+    
+    
 
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 팀이 선택한 원래 문제는 무엇이었나요?</div>
+      
+      <div class="quiz-opt">A) 자동 보고서 생성</div>
+      
+      <div class="quiz-opt">B) 엑셀 기반 출자 현황을 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환</div>
+      
+      <div class="quiz-opt">C) AI 모델 성능 개선</div>
+      
+      <div class="quiz-opt">D) 데이터 시각화 대시보드 구축</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 엑셀 기반 출자 현황을 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환</div>
+          <div class="quiz-explanation">본문에 ‘수기 Microsoft Excel 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다’는 문제를 선택했다고 명시돼 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 해커톤에서 팀이 AI에게 부여한 주요 역할은 무엇인가요?</div>
+      
+      <div class="quiz-opt">A) 코드만 빠르게 생성하는 도구</div>
+      
+      <div class="quiz-opt">B) 평가자·설계 파트너·구현 보조자·검증자 등 다중 역할</div>
+      
+      <div class="quiz-opt">C) 데이터 저장소 역할</div>
+      
+      <div class="quiz-opt">D) 사용자 인터페이스 디자인 전담</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 평가자·설계 파트너·구현 보조자·검증자 등 다중 역할</div>
+          <div class="quiz-explanation">본문에 AI를 ‘평가자, 설계 파트너, 구현 보조자, 검증자’ 등으로 나눠 사용했다고 설명한다.</div>
+        </div>
+      </details>
+    </div>
+    
     
 
     <div class="feedback">
@@ -445,22 +476,22 @@
   <div class="item">
 
     <div class="item-meta">
-      D2 Blog · 관련도 <span class="score">4</span>
+      트렌드라이트 · 관련도 <span class="score">5</span>
     </div>
 
     <h2 class="item-title">
-      <a href="https://d2.naver.com/helloworld/4452165" target="_blank">Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편</a>
+      <a href="https://trendlite.stibee.com/p/480" target="_blank">🥤무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다</a>
     </h2>
 
-    <p class="item-summary">Airflow 멀티프로세싱으로 병렬·격리 확보</p>
+    <p class="item-summary">오프라인 데이터를 온라인 큐레이션에 활용해 전환 최적화</p>
 
     
     <div class="tags">
-      <span class="tag">Airflow</span><span class="tag">Python</span><span class="tag">fork</span><span class="tag">spawn</span><span class="tag">GIL</span>
+      <span class="tag">무신사</span><span class="tag">하라주쿠</span><span class="tag">QR코드</span><span class="tag">스피드 배송</span><span class="tag">조조타운</span>
     </div>
     
 
-    <a class="orig-link" href="https://d2.naver.com/helloworld/4452165" target="_blank">원본 보기 →</a>
+    <a class="orig-link" href="https://trendlite.stibee.com/p/480" target="_blank">원본 보기 →</a>
 
     
     <div class="section-divider">핵심 포인트</div>
@@ -469,21 +500,21 @@
       
         <span class="bullet">·</span>
       
-      <span>Airflow는 task의 병렬 실행과 격리 두 가지 요구를 만족해야 한다.</span>
+      <span>피팅룸을 없애고 쇼룸형으로 전환, QR 주문·스피드 배송으로 온라인 구매 연결</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>Python GIL 때문에 Airflow는 멀티프로세싱을 선택해 CPU 병렬성을 확보한다.</span>
+      <span>오프라인 방문 데이터를 온라인 큐레이션에 활용해 브랜드·상품 노출 최적화</span>
     </div>
     
     <div class="key-point">
       
         <span class="bullet">·</span>
       
-      <span>fork는 COW로 메모리를 공유하고, spawn은 새 인터프리터를 시작해 모듈 오염을 방지한다.</span>
+      <span>F&B·인플루언서 콜라보 등 콘텐츠 결합으로 체류 시간·참여도 상승</span>
     </div>
     
     
@@ -491,9 +522,9 @@
     
     <div class="section-divider">적용 아이디어</div>
     
-    <div class="idea">💡 Unix 환경에서 Airflow task 실행 시 fork start method를 사용해 메모리 사용량을 최소화하고 CPU 코어를 효율적으로 활용한다.</div>
+    <div class="idea">💡 QR코드를 활용해 매장 내 실시간 재고와 주문 시스템을 연동, 현장 체험을 바로 온라인 구매로 전환</div>
     
-    <div class="idea">💡 모듈 오염이나 코드 변경 반영이 중요한 경우 Airflow task를 spawn start method로 실행하도록 설정해 격리성을 강화한다.</div>
+    <div class="idea">💡 오프라인 방문 로그와 구매 데이터를 분석해 개인화된 온라인 추천 모델을 구축, 재방문율 향상</div>
     
     
 
@@ -502,41 +533,41 @@
     
     
     <div class="quiz-box">
-      <div class="quiz-q">Q1. Python 멀티프로세싱에서 메모리를 부모와 공유하는 방식은?</div>
+      <div class="quiz-q">Q1. 무신사 하라주쿠 팝업에서 도입한 주요 변화는 무엇인가?</div>
       
-      <div class="quiz-opt">A) spawn</div>
+      <div class="quiz-opt">A) 피팅룸 확대</div>
       
-      <div class="quiz-opt">B) fork</div>
+      <div class="quiz-opt">B) QR 주문 도입</div>
       
-      <div class="quiz-opt">C) forkserver</div>
+      <div class="quiz-opt">C) 현장 현금 결제</div>
       
-      <div class="quiz-opt">D) thread</div>
+      <div class="quiz-opt">D) 무료 배송</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) fork</div>
-          <div class="quiz-explanation">fork는 Unix의 fork 시스템 콜을 사용해 페이지 테이블만 복사하고 물리 메모리를 공유하는 Copy-on-Write 방식을 적용한다.</div>
+          <div class="quiz-correct-opt">✓ B) QR 주문 도입</div>
+          <div class="quiz-explanation">기사에 따르면 피팅룸을 없애고 QR 코드를 통한 주문 시스템을 도입했다.</div>
         </div>
       </details>
     </div>
     
     <div class="quiz-box">
-      <div class="quiz-q">Q2. Airflow task가 반드시 만족해야 하는 두 핵심 요구 사항은?</div>
+      <div class="quiz-q">Q2. 팝업에서 고객에게 제공된 특별한 오프라인-온라인 연계 서비스는?</div>
       
-      <div class="quiz-opt">A) Scalability와 Security</div>
+      <div class="quiz-opt">A) 현장 할인 쿠폰</div>
       
-      <div class="quiz-opt">B) Parallelism와 Isolation</div>
+      <div class="quiz-opt">B) QR코드 스캔 시 2일 내 스피드 배송</div>
       
-      <div class="quiz-opt">C) Latency와 Throughput</div>
+      <div class="quiz-opt">C) 무료 시착 서비스</div>
       
-      <div class="quiz-opt">D) Fault Tolerance와 Monitoring</div>
+      <div class="quiz-opt">D) 현장 포인트 적립</div>
       
       <details class="quiz-answer">
         <summary>정답 보기</summary>
         <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ B) Parallelism와 Isolation</div>
-          <div class="quiz-explanation">본문에서 Airflow는 병렬성(parallelism)과 격리성(isolation)을 핵심 요구 사항으로 제시한다.</div>
+          <div class="quiz-correct-opt">✓ B) QR코드 스캔 시 2일 내 스피드 배송</div>
+          <div class="quiz-explanation">QR코드로 주문하면 2~3일 내 스피드 배송 서비스를 강조했다.</div>
         </div>
       </details>
     </div>

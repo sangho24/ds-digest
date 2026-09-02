@@ -1,6 +1,6 @@
 {
   "date": "2026-09-02",
-  "generated_at": "2026-09-02T00:15:33.671197",
+  "generated_at": "2026-09-02T04:03:14.968868",
   "schema_version": 2,
   "items": [
     {
@@ -9,79 +9,69 @@
         "source_name": "arXiv:stat.ML",
         "source_key": "arxiv:stat.ML",
         "source_label": "arXiv:stat.ML",
-        "title": "Overcoming critical slowing down in frustrated spin systems by learned multiscale sampling",
-        "url": "https://arxiv.org/abs/2608.31114v1",
-        "published_at": "2026-08-31T17:21:54",
+        "title": "Pointwise Majorization for sub-Weibull and Mixed Tail Processes with Applications in Quadratic Chaos and Ergodic Diffusions",
+        "url": "https://arxiv.org/abs/2609.01576v1",
+        "published_at": "2026-09-01T17:42:38",
         "transcript": null,
-        "body": "Cluster algorithms, such as the Swendsen--Wang and Wolff methods, are among the most successful MCMC methods for mitigating critical slowing down in statistical systems. These constructive cluster algorithms, however, fail in the presence of even extremely weak frustration. Here, we sidestep this fundamental limitation by learning rather than constructing the relevant clusters. Specifically, we use the wavelet conditional renormalization group (WCRG) sampling method to learn the probability distribution of collective fluctuations of a frustrated two-dimensional soft-spin model. Configurations are then generated recursively from coarse to fine scales by sampling conditional wavelet distributions. The WCRG method reproduces the main statistical properties of the system across different phases, including the local-field distribution and the structure factor. At an Ising-like critical point, the conditional dynamics remains decorrelated within $\\mathcal{O}(1)$ sweeps at each scale, yielding an overall sampling complexity of $\\mathcal{O}(\\log_2 L)$, thus making WCRG much more efficient than standard local MCMC methods. These results show that learned multiscale sampling can overcome critical slowing down in frustrated systems for which conventional cluster algorithms fail. By assessing the sampling accuracy of different observables, we also clarify the main tradeoff of the WCRG method: the accuracy of the fast sampling scheme depends on the expressiveness of the energy-based model used to estimate the wavelet conditional distributions.",
+        "body": "Classical chaining controls an indexed stochastic process through a single worst-case bound, which can obscure substantial variation across the index set. We establish the first simultaneous pointwise majorization theory for Banach-valued processes with sub-Weibull or two-metric mixed-tail increments. For an anchored sub-Weibull process on a separable index space, write $v(t):=d(t,t_0)$. Given a reference measure $μ$, the envelope at $t$ is governed by the pointwise Fernique-Talagrand functional of order $α$, $Φ_{μ,d}^{(α)}(t):=\\int_0^{4v(t)}(\\log\\frac{1}{μ(B_d(t,r))})^{1/α}dr$. $\\forall δ\\in(0,1)$, we obtain that $$ \\mathbb{P}(\\|Z_t\\|\\lesssim\\{Φ_{μ,d}^{(α)}(t)+v(t)(\\log(e/δ))^{1/α}\\},\\forall t)\\ge 1-δ. $$ Our bound is determined by the pointwise complexity $Φ_{μ,d}^{(α)}$ rather than a global quantity. The result holds for every $α>0$ and does not involve dyadic logarithmic terms from peeling. For mixed tail processes, with fixed measures $μ_1,μ_2$ and $v_j(t):=d_j(t,t_0)$, $Φ_j(t):=\\int_0^{4v_j(t)}(\\log\\frac{1}{μ_j(B_{d_j}(t,r))})^{1/α_j}dr, j=1,2$, for any $δ\\in(0,1)$, we show that $$\\mathbb{P}(\\|Z_t\\|\\lesssim\\sum_{j=1}^2\\{Φ_j(t)+v_j(t)(\\log\\frac{e}δ)^{1/α_j}\\},\\forall t)\\ge 1-δ.$$ Although the two regimes are coupled in the mixed tail condition, each retains its own pseudo-metric, reference measure, pointwise Fernique-Talagrand functional, and tail exponent. The proof tracks the index-wise costs of measure-generated admissible chains and synchronizes them through a nested common refinement. For applications, we derive matrix-specific bounds for centered quadratic chaos under pseudo-metrics induced by the operator and Frobenius norms, and observable-specific finite-time bounds for diffusion empirical processes.",
         "duration_seconds": null
       },
       "analysis": {
         "relevance_score": 8,
-        "one_line_summary": "학습 기반 다중스케일 샘플링으로 복잡계 MCMC 효율 향상",
+        "one_line_summary": "점별 복잡도 기반 확률 경계로 모델 신뢰성 강화",
         "tags": [
-          "Swendsen--Wang",
-          "Wolff",
-          "WCRG",
-          "wavelet conditional renormalization group",
-          "soft-spin model"
+          "sub-Weibull",
+          "mixed tail",
+          "Banach-valued",
+          "quadratic chaos",
+          "ergodic diffusions"
         ],
         "concepts": [
-          "멀티스케일 샘플링",
-          "조건부 확률 모델링",
-          "임계 감쇠 완화"
+          "점별 복잡도 측정",
+          "서브위블 분포",
+          "확률 과정 체인 기법"
         ],
         "key_points": [
           {
-            "point": "전통 클러스터 알고리즘은 약한 좌절에서도 실패한다",
+            "point": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)} 로 전체 과정이 아닌 각 인덱스별 상한을 제공한다.",
             "timestamp": null
           },
           {
-            "point": "WCRG는 파동렛 조건부 RG를 학습해 다중 스케일에서 샘플링한다",
+            "point": "혼합 꼬리 과정에서도 두 메트릭·측도·지수별로 독립적인 복잡도 항을 합산해 동일한 확률 보장을 얻는다.",
             "timestamp": null
           },
           {
-            "point": "각 스케일에서 O(1) 스윕으로 전체 O(log₂L) 복잡도 달성",
+            "point": "이론을 이용해 연산자·Frobenius 노름 기반의 이차 혼돈 및 확산 경험 과정에 구체적 유한시간 경계가 도출된다.",
             "timestamp": null
           }
         ],
         "production_ideas": [
-          "WCRG를 이용해 좌절 스핀 글라스 시뮬레이션의 MCMC 샘플링 속도를 높인다",
-          "학습된 파동렛 조건부 분포를 고차원 베이지안 모델의 추론에 적용해 샘플링 효율을 개선한다"
+          "점별 복잡도 함수를 활용해 고차원 회귀 모델의 신뢰 구간을 개별 피처 수준에서 계산한다.",
+          "혼합 꼬리 경계 결과를 이용해 확산 기반 시계열 모델의 단기 예측 오차 상한을 실시간 모니터링한다."
         ],
         "quiz": [
           {
-            "question": "WCRG가 사용하여 학습하는 확률 분포는 무엇에 대한 것인가?",
+            "question": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)}(t)의 정의는 무엇인가?",
             "options": [
-              "집합적 변동",
-              "개별 스핀",
-              "외부 자기장",
-              "온도"
+              "∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr",
+              "∫_0^{v(t)}(log(μ(B_d(t,r))))^{α}dr",
+              "∫_0^{4v(t)}(log(μ(B_d(t,r))))^{1/α}dr",
+              "∫_0^{v(t)}(log(1/μ(B_d(t,r))))^{α}dr"
             ],
             "answer_index": 0,
-            "explanation": "본문은 WCRG가 좌절 2D 소프트-스핀 모델의 집합적 변동 확률 분포를 학습한다고 언급한다."
-          },
-          {
-            "question": "WCRG가 달성한 전체 샘플링 복잡도는?",
-            "options": [
-              "O(L)",
-              "O(log₂L)",
-              "O(1)",
-              "O(L²)"
-            ],
-            "answer_index": 1,
-            "explanation": "본문에 전체 샘플링 복잡도가 O(log₂L)라고 명시되어 있다."
+            "explanation": "본문에 Φ_{μ,d}^{(α)}(t)=∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr 로 정의되어 있다."
           }
         ],
         "skip_reason": null,
         "evidence_level": "full",
         "domain": [
-          "ai-ml"
+          "ai-ml",
+          "research-method"
         ],
         "content_type": "paper",
         "half_life": "durable",
-        "actionability": 6,
-        "depth": 7,
+        "actionability": 5,
+        "depth": 6,
         "scores": null,
         "notes": [],
         "triplets": []
@@ -93,76 +83,65 @@
         "source_name": "HackerNews",
         "source_key": "hackernews",
         "source_label": "HackerNews",
-        "title": "I trained a small transformer in 1.5hrs and it beats many LLMs",
-        "url": "https://mvakde.github.io/blog/44-on-arc-1/",
+        "title": "The efficient frontier of LLM inference",
+        "url": "https://www.baseten.co/blog/the-efficient-frontier-of-llm-inference/",
         "published_at": null,
         "transcript": null,
-        "body": "# 44% on ARC-AGI-1 in 67 cents\n\nI trained a small transformer from scratch in 1.5hrs on a 5090  \n Beats many LLMs, and scores the same as TRM/HRM\n\nThis is an upgrade to my [previous model](https://x.com/evilmathkid/status/2001689479476879448)   \n Faster, better, cheaper and still open source.\n\nAlso gets 7% on ARC-2\n\n[Discussion on Twitter](https://x.com/evilmathkid/status/2029519274835148829), [Code on github](https://github.com/mvakde/mdlARC/)\n\n ![ARC-1 Public Eval](../hero-img.png) \n\nPerformance on ARC-1 public eval. I only compare against models that do similar test time training\n\n \n\nThis is the 3rd blog in a series of works on ARC-AGI. Prev: [Blog 2]((https://mvakde.github.io/blog/new-pareto-frontier-arc-agi/#implementation-details)), [Blog 1](https://mvakde.github.io/blog/why-all-ARC-solvers-fail-today/).\n\nMany ppl thought the prev result was impossible. It got attention from top researchers and went viral on X. Eg: Discussions by [Lucas Beyer](https://x.com/giffmana/status/2002111246225621296), [Jeremy Howard](https://x.com/jeremyphoward/status/2002136723573387537), [Rohan Anil](https://x.com/_arohan_/status/2001939028606947505), and comments by many others.\n\n## Why work on this?\n\nI think sample efficiency is the most important problem in AI today and I want to solve it.\n\nThe intention behind this work is to (1) find the limits of sample efficiency when restricted to transformers / today’s deep learning methods and (2) reduce costs so iteration is much faster and cheaper.\n\nARC is a great benchmark to test this:\n\n- Very few samples (only a 1000 puzzles) in a high dimensional space\n- Its a metalearning benchmark, so each puzzle uses a different rule, with some common concepts\n- Very few priors needed: every concept needed in the eval set is present in the train set\n- It is incredibly easy for humans to solve, and accessible to even poor AI researchers\n- Benchmark is still unsaturated (for data efficiency, ignore LLMs and approaches that use tons of synthetic data or human inductive biases)\n\nNext, I’ll work on new research ideas to break these limits. I’ll try to keep costs low so that anyone in the world can work on this.\n\n# Tech details\n\n## How does it work?\n\nThe overall approach is similar to last time ([full technical details here](https://mvakde.github.io/blog/new-pareto-frontier-arc-agi/#implementation-details)), but I added a bunch of upgrades. Here’s a quick summary of the approach:\n\n- Each input-output pair is converted to a sequence of tokens. These sequences are autoregressively trained on by a small transformer. This is done from scratch at test time on both the train set and eval set puzzles (test labels hidden).\n- To enable cross-task learning, each puzzle is given a separate additive embedding (learnt). Since each sequence has two 2D grids, positional are learnt using 3D RoPE embeddings.\n- The sequences are augmented with color and dihedral permutations. During inference, the test inputs are augmented, and the inverse aug is applied on the outputs produced. The 2 most common outputs are submitted (AAIVR).\n\n### Changes since last time\n\nThe main goal was to find improvements to the architecture / algorithm that improve the sample efficiency of the model.\n\nThe biggest increases in scores were due to\n\n- Modern architecture (SwiGlu instead of GELU, RMSnorm not layernorm, etc.)\n- More data diversity, better shuffling of data\n- scaling up: 8 layers instead of 4,\n\nBiggest decreases in cost were due to:\n\n- Way fewer augmentations (more sample efficient!)\n- AdamW -> Normuon\n- flash attention with varlen training + flex attention kernels for inference\n\nA major change is that I don’t train on input tokens anymore. This means the loss function only includes output tokens (which makes the approach supervised). This. performs slightly better 40% $\\to$ 44% but I don’t understand why. Perhaps finite model capacity\n\nI also increased the training data by adding the non-overlapping tasks from ARC-2. I did this very carefully to ensure no leakage. You can remove the extra data if you don’t like it and it will still score ~40%, but it will need ~double the compute.\n\n> Context: ARC-2 contains 773 ARC-1 puzzles and 347 new puzzles. Most eval puzzles of ARC-1 are repeated, so if you naively train on ARC-2, then its a dataleak and you will score 100%. I avoid this by carefully filtering out the 773 repeated puzzles (so no leak!)\n\nThere are many other changes that gave incremental improvements in performance or speed. Find the [full list of changes here](#full-list-of-changes).\n\n## Interesting behaviour\n\nSince I am no longer training on inputs, this approach is now supervised. What’s weird is that the test loss is now worse, yet it scores better! Also it is more stable and there’s less variance in scores.\n\n  \n\nMany ppl today are working on sample efficiency by aiming for the lowest val loss on a small dataset. I think that’s great, but this points out [a failure mode](https://arxiv.org/pdf/2601.22950) in such an app",
+        "body": "![The efficient frontier of LLM inference](/_next/image/?url=https%3A%2F%2Fwww.datocms-assets.com%2F104802%2F1788306398-efficientfrontierblogheader.png%3Fauto%3Dformat%26fit%3Dcrop%26h%3D630%26w%3D1200&w=3840&q=100)\n\nIn the AI industry, we borrowed the term “efficient frontier” from economists. We use it to talk about managing tradeoffs, most often the tradeoff between cost and capabilities for models. A model is a “frontier model” if it offers the highest degree of intelligence at a given cost or size.\n\n✕\n\n![An efficient frontier shows the range of optimal combinations when trading off between two valuable outcomes in a resource-constrained environment.](/_next/image/?url=https%3A%2F%2Fwww.datocms-assets.com%2F104802%2F1788302077-efficient-frontier-image4.png%3Fauto%3Dformat%26w%3D1200&w=3840&q=75)An efficient frontier shows the range of optimal combinations when trading off between two valuable outcomes in a resource-constrained environment.\n\nWe also have efficient frontiers in inference engineering. Most often, this is expressed as a tradeoff between latency and throughput (which determines cost), though we can also exchange quality for throughput (via quantization, distillation, and pruning) or intelligence for speed (in the form of reasoning level).\n\nThere are two types of techniques available to inference engineers:\n\n1. Techniques which make a tradeoff between two factors to move a deployment along an efficient frontier.\n2. Techniques which push out the entire frontier for a given deployment, creating more overall efficiency which can be allocated to whatever outcome is most beneficial.\n\nBoth types of techniques are valuable.\n\nIt’s useful to be able to target any point along an efficient frontier by making tradeoffs. Giving up per-user speed makes it possible to build high-throughput, low-cost pipelines for batch workloads. Sacrificing throughput to improve speed makes sense when latency-sensitive users have a high willingness to pay.\n\nAnd of course, it’s incredibly useful to push out the entire frontier. Unlocking more efficiency creates gains that can be allocated to lower latency, higher throughput, or a combination of the two.\n\nThis article details which inference engineering techniques let you target a point on the frontier, and which techniques push the entire frontier out. For this article, we’ll assume we’re running an LLM like [GLM-5.3](/library/glm-53/) or [Kimi K3](/library/kimi-k3/) for agentic coding with KV cache reuse enabled and optimal KV-aware routing.\n\n## Techniques that manage tradeoffs\n\nHitting a certain target in production is often less about discovering some novel approach and more about finding the right set of configurations given the nature of the traffic.\n\n✕\n\n![Techniques for managing tradeoffs let you target an outcome along an efficient frontier.](/_next/image/?url=https%3A%2F%2Fwww.datocms-assets.com%2F104802%2F1788302085-efficient-frontier-image5.png%3Fauto%3Dformat%26w%3D1200&w=3840&q=75)Techniques for managing tradeoffs let you target an outcome along an efficient frontier.\n\nIn practice, the efficient frontier is very jagged. Rather than a smooth, continuous line between outcomes, small changes can have big impacts. These cutoff points are often unintuitive and must be discovered empirically through sweeps.\n\n### Batch sizing\n\nThe most obvious tradeoff between latency and throughput comes from batch sizing. A batch is the number of requests that are processed concurrently. While token-level continuous batching means that there isn’t any latency from waiting for batches to start, the configured batch size determines the per-user latency and the overall throughput.\n\nWith small batch sizes, per-user latency is excellent, but few total tokens are generated per GPU. This means the cost per token is quite high. Increasing batch size has the opposite effect: worse per-user latencies, better overall throughput for lower cost.\n\n### Parallelism strategy\n\nToday’s LLMs measure in the hundreds of billions or trillions of parameters and must be spread across multiple GPUs. The way in which they are shared, or parallelized, across GPUs can boost either latency or throughput.\n\n✕\n\n![Parallelism splits large models across multiple GPUs.](/_next/image/?url=https%3A%2F%2Fwww.datocms-assets.com%2F104802%2F1788302093-efficient-frontier-image6.png%3Fauto%3Dformat%26w%3D1200&w=3840&q=75)Parallelism splits large models across multiple GPUs.\n\nFor latency-sensitive deployments, focus on increasing Tensor Parallelism (TP). While TP has expensive all-to-all communication, it is effective for lowering latencies as these operations are fast over high-bandwidth NVLink interconnects.\n\nExpert Parallelism (EP) can help with both latency and throughput. A lower degree of EP is often associated with better latencies, while wide EP, including EP across a full rack of GPUs, generally supports higher throughput.\n\nAnother parallelism technique for improving throughput is Attention Data Parallelism (ADP). This",
         "duration_seconds": null
       },
       "analysis": {
-        "relevance_score": 6,
-        "one_line_summary": "샘플 효율성 높은 트랜스포머로 ARC 비용 절감",
+        "relevance_score": 8,
+        "one_line_summary": "LLM 추론 비용·성능 최적화 기법 파악",
         "tags": [
-          "ARC-AGI-1",
-          "ARC-2",
-          "flash attention",
-          "Normuon",
-          "SwiGlu"
+          "GLM-5.3",
+          "Kimi K3",
+          "KV cache",
+          "quantization",
+          "distillation"
         ],
         "concepts": [
           "AI 비용 효율성",
-          "데이터 기반 벤치마킹",
-          "손실 함수"
+          "멀티프로세싱, 병렬 처리"
         ],
         "key_points": [
           {
-            "point": "1.5시간에 5090 GPU로 작은 트랜스포머를 학습해 ARC‑1에서 44% 정확도 달성",
+            "point": "효율적 프론티어는 LLM 추론에서 지연시간·처리량·비용 간 트레이드오프를 시각화한다.",
             "timestamp": null
           },
           {
-            "point": "SwiGlu·RMSnorm 등 최신 아키텍처와 flash attention 적용으로 비용을 67¢ 이하로 감소",
+            "point": "배치 크기를 조정하면 지연시간이 늘어나지만 처리량과 토큰당 비용이 개선돼 프론티어를 따라 이동한다.",
             "timestamp": null
           },
           {
-            "point": "입력 토큰을 제외하고 출력 토큰만 학습해 샘플 효율성을 40%→44% 향상",
+            "point": "양자화·지식 증류·프루닝 같은 기법은 전체 프론티어를 확장해 동일 비용·지연에서 더 높은 성능을 얻는다.",
             "timestamp": null
           }
         ],
         "production_ideas": [
-          "flash attention과 Normuon 옵티마이저를 기존 메타러닝 벤치마크 학습 파이프라인에 적용해 GPU 비용을 50% 이상 절감한다",
-          "색·다이헤드럴 증강과 3D RoPE 임베딩을 유사 메타러닝 데이터셋에 적용해 학습 샘플 수를 절반 이하로 줄인다"
+          "배치 크기 자동 조절 로직을 도입해 실시간 트래픽에 따라 지연시간과 처리량 목표를 최적화한다.",
+          "양자화 또는 프루닝 파이프라인을 구축해 기존 LLM 모델을 비용 효율적으로 경량화하고, 비용·성능 프론티어를 전체적으로 끌어올린다."
         ],
         "quiz": [
           {
-            "question": "이 모델이 ARC‑1에서 달성한 정확도는?",
+            "question": "배치 크기 조정은 효율적 프론티어에서 어떤 역할을 하나요?",
             "options": [
-              "40%",
-              "44%",
-              "50%",
-              "60%"
+              "프론티어 전체를 확장한다",
+              "프론티어를 따라 이동한다",
+              "모델 정확도를 높인다",
+              "새로운 모델을 만든다"
             ],
             "answer_index": 1,
-            "explanation": "본문에 \"44% on ARC-AGI-1\"이라고 명시되어 있다."
-          },
-          {
-            "question": "비용을 크게 낮춘 주요 기술이 아닌 것은?",
-            "options": [
-              "SwiGlu",
-              "RMSnorm",
-              "Normuon",
-              "AdamW"
-            ],
-            "answer_index": 3,
-            "explanation": "AdamW는 이전에 사용했지만 본 모델에서는 Normuon으로 교체했다."
+            "explanation": "배치 크기를 늘리면 지연시간이 증가하지만 처리량과 비용 효율성이 개선돼 프론티어 상에서 다른 점으로 이동한다."
           }
         ],
         "skip_reason": null,
         "evidence_level": "full",
         "domain": [
-          "ai-ml"
+          "ai-ml",
+          "systems"
         ],
-        "content_type": "release",
+        "content_type": "tutorial",
         "half_life": "durable",
         "actionability": 7,
         "depth": 6,
@@ -173,130 +152,84 @@
     },
     {
       "raw": {
-        "source_type": "newsletter",
-        "source_name": "Weekly deep daiv.",
-        "source_key": "deepdaiv.stibee.com",
-        "source_label": "Weekly deep daiv.",
-        "title": "Reasoning 모델을 더 효율적으로 가르치는 방법",
-        "url": "https://deepdaiv.stibee.com/p/161",
-        "published_at": "2026-09-01T00:00:00",
+        "source_type": "rss",
+        "source_name": "arXiv:cs.DB",
+        "source_key": "arxiv:cs.DB",
+        "source_label": "arXiv:cs.DB",
+        "title": "Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data",
+        "url": "https://arxiv.org/abs/2609.01525v1",
+        "published_at": "2026-09-01T16:55:11",
         "transcript": null,
-        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/fVCO)\n\n#159 위클리 딥 다이브 | 2026년 9월 2일 에디터 잭잭\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 큰 모델의 능력을 작은 모델에 전달하는 Knowledge Distillation과 기존 방식의 한계를 살펴봅니다.\n- 학생 모델이 직접 만들어낸 응답에서 배우는 On-Policy Distillation(OPD)의 원리를 소개합니다.\n- 학생 모델의 응답이 좋지 않을 때 생기는 OPD의 한계와, 이를 보완하기 위한 최근 연구를 살펴봅니다.\n\n큰 모델의 추론 능력을 작은 모델에게 옮길 수 있을까?\n\n안녕하세요, 에디터 잭잭입니다.  최근 AI 연구에서는 모델을 더 크게 만드는 것만큼이나, 이미 만들어진 모델을 어떻게 더 잘 학습시킬지가 중요해지고 있습니다. 방대한 데이터로 기본적인 언어와 지식을 익히는 사전 학습(Pre-training) 이후, 모델이 사람의 지시를 잘 따르고 수학이나 코딩처럼 복잡한 문제를 해결하도록 만드는 사후 학습(Post-training)의 역할도 함께 커지고 있죠.    특히 최근에는 모델이 바로 답을 내놓는 데 그치지 않고, 여러 단계의 추론(Reasoning)을 거쳐 문제를 해결하는 능력이 중요해졌습니다. 이를 학습하는 대표적인 방법 중 하나가 강화학습(Reinforcement Learning, RL)입니다. 모델이 직접 문제를 풀고 그 결과에 따라 보상을 받으면서 더 좋은 전략을 찾아가도록 하는 방식입니다.  하지만 모델이 좋은 전략을 직접 찾아가게 하는 것만이 방법은 아닙니다. 이미 문제를 잘 푸는 강한 모델이 있다면, 그 모델이 가진 능력을 더 작은 모델에게 전달할 수도 있습니다. 큰 모델의 지식을 작은 모델에 옮기는 지식 증류(Knowledge Distillation, KD)가 대표적인 방법입니다.    기존 지식 증류에서는 주로 큰 모델이 미리 생성한 좋은 응답이나 풀이를 작은 모델이 따라 배우도록 합니다. 최근에는 여기서 조금 다른 접근이 주목받고 있습니다.    큰 모델이 만들어둔 좋은 답만 학습하는 대신, 작은 모델이 실제로 생성한 응답을 다시 학습에 활용하는 On-Policy Distillation(OPD)입니다. 작은 모델이 현재 자신의 능력으로 만들어낸 응답을 큰 모델도 함께 보고, 그 상태에서 얻은 학습 신호를 다시 작은 모델에 전달하는 방식입니다.    이번 뉴스레터에서는 기존 지식 증류가 작은 모델을 어떻게 가르쳐왔는지부터 시작해, OPD가 무엇을 다르게 하는지, 그리고 작은 모델이 직접 만든 답을 이용하는 방식에서 새롭게 나타나는 문제까지 살펴보겠습니다. 그 출발점은 가장 익숙한 방식, 잘하는 AI가 만든 답을 작은 AI에게 그대로 보여주는 것입니다.\n\n잘하는 AI의 답을 그대로 따라 배우면 되지 않을까?\n\n지식 증류에서는 일반적으로 더 강한 모델을 교사 모델(Teacher), 그 능력을 전달받는 모델을 학생 모델(Student)이라고 부릅니다. 지식 증류를 구현하는 대표적인 방식 중 하나는 교사 모델이 만든 좋은 답이나 풀이를 미리 준비하고, 이를 바탕으로 학생 모델을 학습하는 것입니다.    예를 들어, 다음과 같은 간단한 수학 문제가 있다고 해봅시다. 미리 준비된 학습 데이터에는 문제와 정답이 하나의 쌍으로 들어 있습니다.  (\"What is 5 + (2 × 3)?\", “11”)    여기서 중요한 것은 학생 모델이 단순히 정답 11만 외우는 것이 아니라는 점입니다. 교사 모델은 다음 토큰(토큰)으로 무엇이 적절한지에 대한 확률 분포를 만들 수 있습니다. 예를 들어 정답을 생성해야 하는 위치에서 교사 모델은 '11 '을 90% 확률로 예측하고, '7 '과 '8 '은 각각 7%, 3% 확률로 예측할 수 있습니다. 따라서 학생 모델의 확률 분포가 교사 모델의 분포와 비슷해지도록 학습시킬 수 있습니다.    즉 교사 모델은 단순히 “정답은 11이야”라고 알려주는 것보다 더 많은 정보를 전달할 수 있습니다. 어떤 토큰을 얼마나 선호하는지까지 학습 신호로 사용할 수 있기 때문입니다. 이처럼 모든 응답 토큰에서 세밀하게 제공되는 신호를 Dense Feedback([Kevin Lu et al., 2025](https://thinkingmachines.ai/blog/on-policy-distillation/))이라고 합니다.\n\n💡 Sparse Feedback vs. Dense Feedback  강화학습에서는 학생 모델이 직접 답을 생성한 뒤, **최종 정답 여부에 따라 보상**을 받을 수 있습니다. 예를 들어 정답이면 reward = 1, 오답이면 reward = 0을 받습니다. 하지만 이러한 최종 보상만으로는 **풀이 전체가 잘못된 것인지, 중간의 일부 추론에서만 오류가 발생한 것인지 알기 어렵습니다.** 이처럼 제한적인 정보만 제공하는 피드백을 **Sparse Feedback**이라고 합니다.    반면 지식 증류에서는 풀이의 여러 토큰 위치에서 학습 신호를 얻을 수 있습니다. 아래 그림의 숫자는 교사 모델이 만든 풀이의 각 토큰을 학생 모델이 얼마나 높은 확률로 예측했는지를 보여줍니다. 학생 모델은 각 위치에서 교사의 출력을 더 잘 예측하도록 학습되기 때문에, **최종 정답 하나보다 풀이 과정 전반에 걸쳐 더 세밀한 피드백(Dense Feedback)**을 받을 수 있습니다.\n\n출처: [<On-Policy Distillation> (Kevin Lu et al., 2025)](https://thinkingmachines.ai/blog/on-policy-distillation/)\n\n그런데 여기에는 한 가지 문제가 있습니다. 학습 과정에서는 미리 준비된 좋은 응답을 바탕으로 학습하지만, 실제 추론에서는 자신이 직접 생성한 응답을 이어가야 한다는 점입니다.    따라서 학습할 때 보지 못한 방향으로 한번 잘못 들어가면, 이후의 추론 역시 그 오류의 영향을 받을 수 있습니다. 이처럼 학습할 때 접하는 응답과 실제 추론에서 모델 자신이 만들어내는 응답 사이에 차이가 생기는 현상을 Exposure Bias라고 부릅니다.    이러한 문제를 해결하기 위해 [<On-Policy Distillation of Language Models: Learning from Self-Generated Mistakes> (Agarwal et al., 2023)](https://arxiv.org/abs/2306.13649) 연구진은 고정된 응답에만 의존하지 않고, **학생 모델이 실제로 생성한 응답을 바탕으로 교사 모델의 피드백을 받으며 학습하는 방식**을 제안했습니다. 이는 오늘날 OPD의 핵심 아이디어이기도 합니다.\n\n학생이 실제로 푼 문제로 배운다\n\n그렇다면 OPD는 기존 지식 증류와 무엇이 다를까요? 가장 큰 차이는 학습에 사용할 답을 미리 준비해두는지, 아니면 학생 모델이 현재 직접 만들어내는지에 있습니다.\n\n왼쪽은 Fixed Dataset 기반 지식 증류, 오른쪽은 On-Policy Distillation  출처: [<DistiLLM: Towards Streamlined Distillation for Large Language Models> (Ko et al., 2024)](https://arxiv.org/abs/2402.03898)  왼쪽의 기존 지식 증류 방법은 미리 준비된 문제와 답을 교사 모델과 학생 모델이 함께 봅니다. 반면 오른쪽의 OPD에서는 데이터셋에서 문제만 가져온 뒤, 학생 모델이 그 문제에 대한 답을 직접 생성합니다. 이렇게 학생 모델이 한 번 생성한 응답을 Rollout이라고 부릅니다.    예를 들어 학생 모델이 5 + (2 × 3)이라는 문제에 다음과 같이 답했다고 해봅시다. “5 + 2 is 7, and 7 × 3 is 21.\" 계산 순서를 잘못 적용한 틀린 풀이입니다. OPD에서는 이 응답을 버리지 않고, 학생 모델이 실제로 생성한 그대로 교사 모델에게 보여줍니다.\n\n학생 모델의 잘못된 출력과, 각 위치의 토큰에 대하여 교사 모델이 부여한 조건부 확률  출처: [<On-Policy Distillation> (Kevin Lu et al., 2025)](https://thinkingmachines.ai/blog/on-policy-distillation/)  그림 아래의 숫자는 학생 모델이 생성한 각 토큰에 대해 교사 모델이 부여한 조건부 확률입니다. 즉, 앞에서 생성된 내용을 바탕으로 교사 모델이 해당 토큰을 다음 토큰으로 선택할 확률을 나타냅니다.    예를 들어 '2 '에는 5%, 'is '에는 15%처럼 낮은 확률이 부여되어 있는데, 이는 해당 토큰들이 앞선 내용을 고려했을 때 교사 모델이라면 상대적으로 덜 선택했을 토큰이라는 뜻입니다.    학습할 때는 이러한 교사 모델의 확률 분포와 학생 모델의 확률 분포 사이의 차이가 줄어들도록 학생 모델을 업데이트합니다. 즉 정답 풀이만 따라 배우는 것이 아니라, 학생 모델이 실제로 문제를 풀면서 만들어낸 응답 위에서 교사 모델의 Dense Feedback을 토큰 단위로 받는 것이 OPD의 핵심입니다.\n\nReasoning 모델에서 OPD가 주목받는 이유\n\n이런 특성은 긴 추론 과정을 생성하는 최근 Reasoning 모델에서 더욱 중요해졌습니다. 어려운 수학이나 코딩 문제를 해결하면서 수백에서 수천 토큰에 달하는 긴 추론 과정을 생성하기도 하기 때문입니다.    추론이 길어질수록 초반 오류의 영향도 커집니다. 짧은 답변에서 한 번 잘못된 방향으로 가는 것과, 수천 토큰에 이르는 추론의 초반부터 잘못된 가정을 세우는 것은 이후 과정에 미치는 영향의 범위가 다릅니다. 앞에서 발생한 오류가 이후 생성 과정에 계속 남고, 그 상태에서 다시 다음 토큰을 생성하면서 오류가 누적될 수 있습니다. 이처럼 앞선 오류의 영향이 이후 생성 과정에 누적되는 현상을 오류 누적(Compounding Error)이라고 합니다.    동시에 이미 강한 추론 모델이 갖고 있는 능력을 더 작은 모델에 효율적으로 전달하려는 필요도 커졌습니다. [Qwen3 Technical Report](https://arxiv.org/abs/2505.09388)에서는 동일한 동일한 Off-Policy Distillation을 거친 Qwen3-8B Checkpoint에서 시작해, 이후 강화학습과 On-Policy Distillation을 각각 적용한 결과를 비교했습니다.\n\nOff-policy Distillation에 강화학습(RL)과 On-policy Distillation을 적용했을 때의 성능 비교  출처: [<Qwen3 Technical Report> (Yang et al., 2025)](https://arxiv.org/abs/2505.09388)  표에서 눈에 띄는 점은 OPD가 특정 benchmark 하나에서만 좋아진 것이 아니라, 수학·코딩·지식 추론을 포함한 여러 평가에서 강화학습보다 전반적으로 높은 성능을 보였다는 점입니다. 동시에 보고된 학습 비용(GPU Hours)도 강화학습의 약 1/10 수준이었습니다.    물론 하나의 실험 결과만으로 OPD가 항상 강화학습보다 효율적이라고 일반화할 수는 없습니다. 다만 Qwen3의 결과는 강한 교사 모델이 이미 존재하는 상황에서 OPD가 효율적인 사후 학습 방법이 될 수 있음을 보여줍니다.    여기까지만 보면 OPD는 꽤 이상적인 방법처럼 보입니다. 학생 모델이 실제로 만들어낸 응답을 학습에 활용하면서도, 교사 모델의 세밀한 학습 신호를 받을 수 있기 때문입니다.\n\nOPD의 가장 큰 장점이 약점이 되는 순간\n\n지금까지 OPD의 장점은 학생 모델이 실제로 만들어낸 응답에서 학습한다는 점이었습니다. 그런데 학생 모델이 초반부터 잘못된 방향으로 추론하기 시작한다면 어떨까요?    자기회귀 모델(Autoregressive Model)에서는 이미 생성된 내용(Prefix)이 이후 토큰을 생성할 때 계속 조건으로 사용합니다. 학생 모델이 초반에 잘못된 가정이나 공식을 선택한 경우, 이후의 추론도 그 잘못된 Prefix를 바탕으로 계속 이어질 수 있습니다.\n\n💡 자기회귀 모델(Autoregressive Model)이란?  이전에 생성한 내용을 바탕으로 다음 토큰을 하나씩 순서대로 예측하는 모델입니다. 예를 들어 한 문장을 생성할 때 앞에서 만든 단어들을 참고해 다음 단어를 선택하고, 이 과정을 반복해 전체 응답을 완성합니다.\n\n출처: ⓒ deep daiv.\n\n[<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (Xu et al., 2026)](https://arxiv.org/abs/2607.26057)에서는 이를 Prefix Failure라고 설명합니다. 학생 모델이 초반에 잘못된 추론 방향을 선택하면 이후 생성 전체가 그 방향 위에서 쌓이면서, 길게 잘못된 생성이 길게 이어질 수 있다는 것입니다.    기본적인 OPD(Standard OPD)에서는 이렇게 생성된 Trajectory도 그대로 학습에 사용되기 때문에, 논문은 이 구간에서 교사 모델의 학습 신호가 점차 신뢰하기 어려워지고 불필요한 계산도 발생할 수 있다고 지적합니다.\n\n실패한 Prefix에서 학생 모델과 교사 모델이 서로 다른 생성 방향을 보이는 예시  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  위 예시를 보면, 학생 모델은 사과 15개를 산 뒤 남은 5 RM으로 망고와 파파야를 각각 하나씩 살 수 있다고 잘못 판단합니다. 그 상태에서 다음 토큰을 생성하려 할 때 학생 모델은 'So '를 가장 높은 확률로 선택하며 기존 풀이를 그대로 이어가려 합니다.    반면 같은 Prefix를 본 교사 모델은 'But '을 74.4%의 높은 확률로 선택해 앞선 추론을 다시 검토하려 합니다.    즉 같은 Prefix를 보더라도 학생 모델은 현재 방향을 계속 이어가려 하고, 교사 모델은 방향을 전환하려는 차이가 나타납니다. 논문은 이를 Teacher–Student Continuation Asymmetry라고 부릅니다. 연구진은 이 차이를 이용하면 정답 정보나 별도의 검증 모델 없이도, 교사 모델이 개입할 만한 지점을 찾을 수 있다고 보았습니다.    이를 바탕으로 제안한 방법이 Relay-OPD입니다.\n\nRelay-OPD의 방법론  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  위 그림의 위쪽 Standard OPD를 보면 학생 모델이 한번 잘못된 방향으로 들어간 뒤에도 Trajectory를 끝까지 직접 생성합니다. 반면 가운데 Relay-OPD에서는 학생 모델이 생성하는 도중 Handoff Trigger가 발견되면 잠시 교사 모델에게 생성을 넘깁니다.    논문의 Handoff Trigger는 단순히 교사 모델과 학생 모델의 확률 분포가 다르다는 이유로 발생하지 않습니다.  쉽게 말하면 교사 모델은 'Wait ', 'But ', 'However '처럼 기존 추론을 되돌아보는 토큰을 선호하지만, 학생 모델은 그런 방향 전환 없이 그대로 생성을 이어가려는 지점을 개입 시점으로 활용합니다.    Trigger가 발생하면 교사 모델이 짧은 Teacher Leg를 생성해 추론 방향을 돌리고, 이후에는 다시 학생 모델이 이어서 생성합니다. 중요한 점은 교사 모델이 전체 풀이를 대신 생성하지 않는다는 것입니다. Relay-OPD는 필요한 순간에만 짧게 교사 모델을 개입시키고, 다시 학생 모델에게 생성을 돌려줍니다. 이를 통해 학생 모델 자신의 응답에서 학습한다는 OPD의 특성을 최대한 유지하면서 Prefix Failure가 길게 이어지는 것을 줄이고자 합니다.    논문의 사전 실험에서도 교사 모델의 개입을 길게 늘릴수록 성능이 계속 증가하지는 않았으며, 이러한 관찰을 바탕으로 Relay-OPD는 Teacher가 초기에, 짧게 개입하도록 설계되었습니다.\n\nRelay-OPD와 다른 방법들의 성능 비교  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  실험 결과에서도 Relay-OPD는 Standard OPD보다 높은 성능을 보였습니다. Qwen3-4B-Instruct-2507을 교사 모델로, Qwen3-1.7B Non-Thinking을 학생 모델로 사용한 실험에서 8개 수학 추론 benchmark 평균에서 Standard OPD보다 5.73%p 높은 성능을 기록했고, 학습 Trajectory의 평균 길이도 50% 이상 감소했습니다.    결국 Relay-OPD가 던지는 질문은 단순합니다. OPD에서는 학생 모델이 실제로 방문하는 Trajectory에서 학습하는 것이 중요하지만, 그 Trajectory를 언제까지 학생 모델에게 그대로 맡길 것인가도 함께 고려해야 한다는 것입니다.\n\n잘 가르친다는 것은 무엇일까?\n\n기존 지식 증류가 “무엇을 가르칠 것인가”에 가까웠다면, OPD는 학생 모델이 실제로 어떤 상태에 있는지를 학습에 반영하기 시작했습니다. 그리고 Relay-OPD는 여기서 더 나아가 언제 교사 모델이 개입할 것인지까지 고민합니다.  좋은 교사 모델이 있다는 것만큼이나, 학생 모델이 지금 어떤 상태에 있는지를 파악하고 필요한 순간에 적절한 학습 신호를 주는 것이 중요해지고 있는 셈입니다.\n\n[여러분이라면 AI를 어떻게 가르치고 싶나요? 🧑‍🏫](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/fVCO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/fVCO \"게시하기\")[웹에서 보기](https://stib.ee/fVCO \"웹에서 보기\")",
+        "body": "A durable assumption holds that graph analytics requires a purpose-built graph engine, and that relational systems are ill-suited to connected data. We argue the opposite for the workloads enterprises actually run. A columnar relational engine fronted by a graph query language matches or exceeds native graph engines on analytical graph queries, and - decisively - scales past the point where in-memory graph engines fail. We further argue that the node/edge property graph is not a more faithful model of connected data but a re-encoding of relationships that already exist explicitly in relational tables; reconstructing them at query time is pure overhead. We present ClickGraph and its Databricks-dialect sibling DeltaGraph, systems that translate Cypher directly onto the native relational schema - the tables, columns, and foreign keys as they already exist - and execute in place on ClickHouse, Databricks, or in-process on lakehouse files, with no import and no separate cluster. Because the output is ordinary SQL, an underperforming query is an open optimization surface: it can be rewritten, and the engine itself extended. We support the argument with a peer system's own published benchmark, in which a columnar engine outruns Neo4j by two-to-four orders of magnitude, and with reproducible measurements across the LDBC Social Network Benchmark suite.",
         "duration_seconds": null
       },
       "analysis": {
-        "relevance_score": 6,
-        "one_line_summary": "대형 모델 지식 전달로 추론 비용 절감",
+        "relevance_score": 8,
+        "one_line_summary": "컬럼형 DB로 그래프 분석 시 성능·확장성 크게 향상",
         "tags": [
-          "Knowledge Distillation",
-          "On-Policy Distillation",
-          "Dense Feedback",
-          "Sparse Feedback",
-          "Exposure Bias"
+          "ClickGraph",
+          "DeltaGraph",
+          "ClickHouse",
+          "Databricks",
+          "Neo4j"
         ],
         "concepts": [
-          "지식 증류",
-          "온-폴리시 학습",
-          "피드백 종류"
+          "그래프 분석",
+          "컬럼형 데이터베이스",
+          "SQL 기반 그래프 쿼리"
         ],
         "key_points": [
           {
-            "point": "교사 모델의 토큰 확률 분포를 학생 모델에 맞추는 Knowledge Distillation은 Dense Feedback을 제공한다.",
+            "point": "컬럼형 관계형 엔진에 그래프 쿼리 언어를 결합하면 네이티브 그래프 엔진을 능가하거나 동등한 성능을 제공한다.",
             "timestamp": null
           },
           {
-            "point": "On-Policy Distillation은 학생이 생성한 답을 교사가 평가해 토큰‑레벨 피드백을 주어 Exposure Bias를 완화한다.",
+            "point": "노드/엣지 프로퍼티 그래프는 관계형 테이블에 이미 존재하는 관계를 재인코딩한 것으로, 쿼리 시 재구성은 오버헤드이다.",
             "timestamp": null
           },
           {
-            "point": "Sparse Feedback(최종 보상)과 Dense Feedback(토큰별 확률) 사이의 차이를 이해하고, OPD와 최신 연구(Agarwal et al., 2023)를 활용해 학습 파이프라인을 설계한다.",
+            "point": "LDBC 소셜 네트워크 벤치마크에서 컬럼형 엔진이 Neo4j보다 2~4 자릿수 빠르게 수행되었다.",
             "timestamp": null
           }
         ],
         "production_ideas": [
-          "학생 모델이 자체 생성한 응답을 교사 모델에 전달해 토큰‑레벨 확률을 loss에 활용하는 On‑Policy Distillation 파이프라인을 구축한다.",
-          "정적 데이터셋 대신 학생 모델의 Rollout을 이용해 동적 학습 데이터를 생성함으로써 Exposure Bias를 감소시키고, Dense Feedback을 활용한 미세 조정을 수행한다."
+          "ClickHouse 혹은 Databricks 환경에 ClickGraph/DeltaGraph를 도입해 Cypher 쿼리를 직접 SQL로 변환·실행함으로써 별도 그래프 클러스터 없이 그래프 분석 파이프라인을 구축한다.",
+          "기존 관계형 스키마(테이블·컬럼·외래키)를 그대로 활용해 그래프 쿼리를 수행함으로써 데이터 중복·ETL 비용을 절감하고, SQL 옵티마이저를 통한 추가 최적화 여지를 확보한다."
         ],
         "quiz": [
           {
-            "question": "다음 중 Dense Feedback의 특징이 아닌 것은?",
+            "question": "벤치마크에서 Neo4j보다 2~4 자릿수 빠른 성능을 보인 엔진은?",
             "options": [
-              "교사 모델이 각 토큰의 확률 분포를 제공한다",
-              "학생 모델에 최종 정답 여부만 보상한다",
-              "피드백이 토큰 수준에서 세밀하게 제공된다",
-              "학습 신호가 토큰별 선호도를 반영한다"
+              "ClickHouse",
+              "Databricks",
+              "Neo4j",
+              "LDBC"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 컬럼형 엔진(예: ClickHouse)이 Neo4j보다 2~4 자릿수 빠른 성능을 보였다고 명시한다."
+          },
+          {
+            "question": "노드/엣지 프로퍼티 그래프 모델에 대한 저자의 주장은?",
+            "options": [
+              "더 정확한 데이터 모델을 제공한다",
+              "성능 세금이며 불필요한 재인코딩이다",
+              "외래키를 제거한다",
+              "SQL 쿼리를 단순화한다"
             ],
             "answer_index": 1,
-            "explanation": "Sparse Feedback는 최종 정답 여부만 보상하는 반면, Dense Feedback은 각 토큰의 확률 분포와 선호도를 제공한다."
+            "explanation": "본문에서 노드/엣지 모델을 ‘성능 세금’이라고 표현하며, 관계형 테이블에 이미 존재하는 관계를 재인코딩한다고 설명한다."
           }
         ],
         "skip_reason": null,
         "evidence_level": "full",
         "domain": [
-          "ai-ml"
+          "systems",
+          "data-eng"
         ],
-        "content_type": "tutorial",
+        "content_type": "paper",
         "half_life": "durable",
-        "actionability": 6,
+        "actionability": 7,
         "depth": 6,
-        "scores": null,
-        "notes": [],
-        "triplets": []
-      }
-    },
-    {
-      "raw": {
-        "source_type": "youtube",
-        "source_name": "Two Minute Papers",
-        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
-        "source_label": "Two Minute Papers",
-        "title": "GLM 5.3: Powerful AI Is Becoming Almost Free",
-        "url": "https://youtu.be/w9RDunJACkc",
-        "published_at": "2026-09-01T09:04:56",
-        "transcript": null,
-        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 GLM 5.3 Flash:\nhttps://z.ai/blog/glm-5.3-flash\n\nSources:\nhttps://x.com/louszbd/status/2092694163104113016\nhttps://x.com/semianalysis_/status/2092623833630998556\nhttps://x.com/skalskip92/status/2092748209802154201\nhttps://x.com/louszbd/status/2093047548550525165\nhttps://x.com/atomic_chat_hq/status/2093433913238552712\nhttps://x.com/holytrinity/status/2094093933584257334\nhttps://x.com/KinasRemek/status/2090081611832295581/video/1\nhttps://x.com/AiXsatoshi/status/2093679264013181119/video/1\nhttps://x.com/AiXsatoshi/status/2093353322921263389/video/1\nhttps://x.com/stevibe/status/2092655031040565252\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
-        "duration_seconds": null
-      },
-      "analysis": {
-        "relevance_score": 5,
-        "one_line_summary": "고성능 AI 모델 비용 급감, 실험 비용 절감",
-        "tags": [
-          "GLM 5.3",
-          "Lambda",
-          "GPU Cloud",
-          "Two Minute Papers",
-          "GLM 5.3 Flash"
-        ],
-        "concepts": [
-          "AI 비용 효율성",
-          "AI 인프라 경쟁",
-          "AI 생산성 도구"
-        ],
-        "key_points": [
-          {
-            "point": "GLM 5.3가 높은 성능을 유지하면서 비용이 크게 낮아졌음",
-            "timestamp": null
-          },
-          {
-            "point": "Lambda GPU 클라우드에서 저렴하게 모델을 활용 가능",
-            "timestamp": null
-          },
-          {
-            "point": "자세한 내용은 GLM 5.3 Flash 블로그와 소셜 미디어에서 확인 가능",
-            "timestamp": null
-          }
-        ],
-        "production_ideas": [],
-        "quiz": [],
-        "skip_reason": null,
-        "evidence_level": "description",
-        "domain": [
-          "ai-ml"
-        ],
-        "content_type": "release",
-        "half_life": "durable",
-        "actionability": 5,
-        "depth": 2,
         "scores": null,
         "notes": [],
         "triplets": []
@@ -308,80 +241,165 @@
         "source_name": "D2 Blog",
         "source_key": "https://d2.naver.com/d2.atom",
         "source_label": "D2 Blog",
-        "title": "Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편",
-        "url": "https://d2.naver.com/helloworld/4452165",
+        "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
+        "url": "https://d2.naver.com/helloworld/4821538",
         "published_at": null,
         "transcript": null,
-        "body": "<p dir=\"auto\">저희 팀은 데이터 입수 플랫폼의 배치 워크플로를 Airflow 2.10.2로 운영하고 있습니다. 2025년 4월 Airflow 3.0이 릴리스되었고, UI 개선과 다양한 신규 기능이 포함되었습니다. 이 변화가 저희 운영 환경에 필요하다고 판단했고 도입을 위한 PoC(Proof of Concept)를 진행했습니다.</p>\n<p dir=\"auto\">이 글은 그 PoC 과정에서 Python의 멀티프로세싱 방식 중 하나인 fork로 인해 발생한 문제를 발견해 해결하고 기여한 과정을 다루는 시리즈의 1편입니다. 1편에서는 이 문제를 이해하는 데 필요한 배경지식을 다룹니다. Airflow가 task를 실행할 때 요구되는 조건을 살펴보고, 이를 만족하는 Python 멀티프로세싱 방식을 비교한 뒤, Airflow가 실제로 채택한 방식과 그 한계를 설명합니다.</p>\n<p dir=\"auto\">2편에서는 이 한계가 Airflow에 실제로 어떤 문제를 일으켰는지, 원인과 해결 과정을 다룹니다.</p>\n<h2 dir=\"auto\">Airflow의 task 실행 요구 사항</h2>\n<p dir=\"auto\"><a href=\"https://airflow.apache.org/\" rel=\"nofollow\">Apache Airflow</a>는 Python으로 작성된 워크플로 오케스트레이션 도구입니다. 사용자는 task들 사이의 의존 관계를 <a href=\"https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html\" rel=\"nofollow\">Dag</a>로 정의하고, Airflow는 정해진 스케줄에 따라 그 task들을 실행합니다. Dag는 task 집합과 그 사이의 의존 관계, 실행 순서를 정의하는 Airflow의 기본 단위입니다.</p>\n<p dir=\"auto\">task 실행에는 병렬성과 격리성이라는 두 가지 핵심적인 요구 사항이 있으며, Airflow는 이를 모두 만족해야 합니다.</p>\n<h3 dir=\"auto\">병렬성</h3>\n<p dir=\"auto\">병렬성은 여러 task를 동시에 수행할 수 있는 능력입니다. Airflow는 정해진 스케줄에 따라 다수의 task를 실행해야 하므로 병렬성이 필요합니다.</p>\n<p dir=\"auto\">그런데 Airflow는 Python으로 작성된 도구입니다. Python의 표준 구현체인 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-CPython\" rel=\"nofollow\">CPython</a>에는 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-global-interpreter-lock\" rel=\"nofollow\">GIL(Global Interpreter Lock)</a>이 있습니다. 이 때문에 하나의 인터프리터 안에서는 스레드가 아무리 많아도 Python 바이트코드는 한 순간에 하나만 실행됩니다. 즉, 멀티코어 CPU에서도 Python 코드는 동시에 코어 하나에서만 실행됩니다. CPU 집약적인(CPU-bound) 작업에서 멀티코어의 병렬 처리 이점을 얻지 못합니다. Airflow는 이 제약을 극복해야 합니다.</p>\n<h3 dir=\"auto\">격리성</h3>\n<p dir=\"auto\">각 task의 수행이 부모 프로세스와 다른 task에 영향을 주지 않아야 합니다. 여기서 부모 프로세스는 task를 실행하는 프로세스를 생성한 상위 프로세스를 뜻합니다.</p>\n<p dir=\"auto\">Airflow는 사용자가 작성한 코드가 task로 실행되는 구조입니다. 심한 경우 해당 task가 부모 프로세스 전체를 종료시킬 수도 있으며, 이는 전체 task의 장애로 이어질 수 있습니다.</p>\n<p dir=\"auto\">Airflow가 격리성을 필요로 하는 이유는 하나 더 있습니다. Python은 모듈을 전역(<code class=\"notranslate\">sys.modules</code>)으로 관리하며, 한 번 등록된 모듈을 전역에서 삭제하거나 갱신하기가 어렵습니다. 런타임에 import된 모듈은 코드가 바뀌어도 이를 다시 등록하기가 매우 어렵다는 뜻입니다.</p>\n<p dir=\"auto\">가령 사용자는 task에서 <code class=\"notranslate\">import mypackage.plugins</code>와 같이 본인이 작성한 모듈을 불러옵니다. 격리성이 보장되지 않는다면, 해당 모듈은 <a href=\"https://airflow.apache.org/docs/helm-chart/stable/manage-dag-files.html#using-git-sync\" rel=\"nofollow\">Git-Sync</a>를 통해 변경이 일어나도 반영되지 않음을 의미합니다. task가 등록한 모듈은 task 완료와 함께 폐기되어야 합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch1-3\"></a></p>\n<h3 dir=\"auto\">Airflow의 멀티프로세싱 도입</h3>\n<p dir=\"auto\">Airflow는 앞서 살펴본 두 요구 사항을 만족하기 위해 멀티프로세싱을 사용했습니다. 즉, task 하나당 프로세스를 하나씩 생성해 그 안에서 실행하고, 종료 시 폐기하는 것입니다.</p>\n<p dir=\"auto\">이를 통해 진정한 CPU 병렬성을 얻을 수 있습니다. 또한 task의 비정상 종료가 부모 프로세스에 영향을 주지 않게 하고, 부모 프로세스의 전역 모듈이 오염되는 것을 막습니다. task 종료 시 프로세스를 폐기함으로써 격리성을 보장할 수 있습니다.</p>\n<h2 dir=\"auto\">Python의 멀티프로세싱 방식</h2>\n<p dir=\"auto\">Airflow가 멀티프로세싱을 택했다면, 다음 질문은 프로세스를 어떻게 만드느냐입니다. Python에서 <a href=\"https://docs.python.org/ko/3.11/library/multiprocessing.html#contexts-and-start-methods\" rel=\"nofollow\">멀티프로세싱을 지원하는 방식</a>은 fork와 spawn 두 가지입니다(forkserver 방식도 있지만 이 글에서는 다루지 않습니다). 두 방식이 각각 어떻게 동작하는지 살펴본 뒤, 같은 조건에서 실행해 생성 시간과 메모리 사용량을 비교하겠습니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-1\"></a></p>\n<h3 dir=\"auto\">fork와 spawn</h3>\n<p dir=\"auto\">fork는 Unix의 <code class=\"notranslate\">fork(2)</code> 시스템 콜을 그대로 사용합니다. 호출 순간 커널이 프로세스의 복제본을 만들고, 자식은 부모의 모든 것(로드된 모듈, 생성된 객체, 열린 파일 디스크립터)을 승계한 채 fork 지점부터 실행을 이어갑니다.</p>\n<p dir=\"auto\">하지만 커널은 메모리를 실제로 복사하지 않습니다. 부모의 페이지 테이블만 복사하고, 물리 메모리 페이지는 부모와 자식이 공유합니다. 어느 한쪽이 페이지에 쓰기를 시도하는 순간에야 해당 페이지가 복사되는데, 이러한 방식을 Copy-on-Write(COW)라고 합니다.</p>\n<p dir=\"auto\">spawn은 새 Python 인터프리터를 처음부터 실행하고(fresh interpreter), 자식에게는 실행에 필요한 최소한의 인자만 pickle로 직렬화해 넘깁니다. 자식은 부모의 메모리를 전혀 공유하지 않고, 필요한 모듈을 스스로 다시 import합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-2\"></a></p>\n<h3 dir=\"auto\">실행 결과 비교</h3>\n<p dir=\"auto\">앞의 설명만으로는 차이를 직관적으로 이해하기 쉽지 않기 때문에, 장단점을 비교하기 위해 스크립트를 실행해 보았습니다.</p>\n<p dir=\"auto\">측정에 사용한 코드는 다음과 같습니다.</p>\n<div class=\"highlight highlight-source-python\" dir=\"auto\"><pre class=\"notranslate\"><span class=\"pl-k\">from</span> __future__ <span class=\"pl-k\">import</span> <span class=\"pl-s1\">annotations</span>\n\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">multiprocessing</span> <span class=\"pl-k\">as</span> <span class=\"pl-s1\">mp</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">sys</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">time</span>\n\n<span class=\"pl-c1\">K</span> <span class=\"pl-c1\">=</span> <span class=\"pl-c1\">10</span>  <span class=\"pl-c\"># 자식 프로세스 수</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">import_heavy_modules</span>():\n    <span class=\"pl-k\">import</span> <span class=\"pl-s1\">airflow</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">read_mem_mb</span>(<span class=\"pl-s1\">pid</span>: <span class=\"pl-s1\">int</span> <span class=\"pl-c1\">|</span> <span class=\"pl-s1\">str</span>) <span class=\"pl-c1\">-&gt;</span> <span class=\"pl-s1\">tuple</span>[<span class=\"pl-smi\">float</span>, ",
+        "body": "<p>기업의 업무에 AI를 도입하면 무엇이 달라질까요? 반복 업무를 자동화하고, 매달 작성하던 보고서를 대신 만들고, 업무 시스템과 연결해 사용자가 요청한 작업까지 처리할 수 있을까요?</p>\n\n<p>네이버 사내에서 열린 ‘모두의 Engineering Day AI 해커톤’에 참여하면서 저희도 비슷한 의문을 품었습니다. 낯선 재무 업무를 이해하고 Claude Code를 활용해 실제로 동작하는 결과물을 만들어야 하는 상황에서, 처음에는 자연스럽게 ‘AI가 무엇을 해줄 수 있을까?’부터 생각했습니다.</p>\n\n<p>하지만 프로젝트가 진행될수록 질문은 달라졌습니다. AI가 할 수 있는 일보다 어떤 일을 맡겨도 되는지, 결과가 그럴듯한지보다 틀렸을 때 발견하고 설명할 수 있는지, 자동화할 수 있는지보다 AI가 멈춰도 업무가 계속될 수 있는지가 더 중요해졌습니다.</p>\n\n<p>이 글은 하나의 재무 업무를 AI로 바꿔 보려다 문제를 어떻게 다시 정의했고, 어떤 방식으로 접근했으며, AI를 쓰며 어떤 한계를 마주했는지를 정리한 기록입니다.</p>\n\n<h2 id=\"\">실제 사내 문제를 함께 해결하는 해커톤</h2>\n\n<p>‘모두의 Engineering Day AI 해커톤’은 참가자가 각자 준비한 아이디어로 경쟁하는 일반적인 해커톤과 조금 달랐습니다. 출발점은 사내 구성원이 실제 업무에서 겪고 있는 문제였습니다.</p>\n\n<p>현업에서 해결하고 싶은 문제를 겪고 있는 구성원은 출제자(problem holder)로, AI를 활용해 그 문제를 함께 풀고 싶은 참가자는 문제를 푸는 사람(solver)으로 참여했습니다. 참가자는 개발, 기획, 디자인, 재무, 운영 등 여러 직군이 섞여 네 명이 한 팀을 이루었고, 출제자가 업무의 배경과 예외를 설명하면 참가자는 문제를 구조화하고 실제 동작하는 프로토타입을 만들었습니다.</p>\n\n<p>문제를 푸는 과정은 팀당 두 대의 개발 환경을 두고 여러 명이 함께 프롬프트를 작성하고 결과를 검토하는 ‘페어 프롬프팅’ 방식으로 진행되었습니다. 한 사람이 AI에 지시한 결과를 그대로 받아들이는 대신, 서로 화면을 보며 질문을 고치고 결과를 함께 확인했습니다. 행사 당일 오전 10시부터 오후 4시까지, 문제를 구체화하고 설계해 동작하는 결과물로 만드는 데 주어진 시간은 약 6시간이었습니다. 완성된 서비스를 만드는 시간이 아니라 실제 업무 문제를 여러 직군의 시선으로 다시 보고, AI로 어디까지 바꿀 수 있는지 실험하는 시간이었습니다.</p>\n\n<h2 id=\"\">가장 낯선 문제를 선택</h2>\n\n<p>저희 팀이 선택한 문제는 다음과 같았습니다.</p>\n\n<blockquote>\n  <p><strong>수기 Microsoft Excel(이하 엑셀) 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다.</strong></p>\n</blockquote>\n\n<p>저희는 서비스 개발에는 익숙했지만 발행 주식 수, 보유 주식 수, 지분율, 유상증자, 구주 양수도, RCPS, 감자 같은 재무·투자 용어에는 익숙하지 않았습니다. 더 빠르게 이해하고 결과물을 만들기 쉬워 보이는 과제도 있었지만, 네 명 모두 이 문제를 1순위로 선택했습니다.</p>\n\n<p>당시 네이버와 계열사가 투자한 법인의 변동 사항은 17명의 담당자가 각자의 엑셀 파일로 관리하고 있었습니다. 매월 담당자에게 직접 연락해 변동 사항을 받은 뒤 여러 파일을 다시 모아 전체 출자 현황을 정리해야 했습니다. 투자 대상이 늘고 다국가, 다통화, 다단계 지분 구조가 복잡해질수록 거래 이력을 관리하기 어려워졌고, 경영진이 원하는 기준으로 데이터를 다시 추출하는 데도 시간이 들었습니다.</p>\n\n<p>사용자가 아주 많은 업무는 아니었지만, 이 숫자들은 사업보고서 같은 외부 공시의 기초 자료로 쓰일 수 있었습니다. 숫자 한 건이 잘못되었을 때의 영향은 작지 않았습니다. 익숙해서 빠르게 풀 수 있는 문제보다 제대로 바뀌었을 때 효과가 분명한 문제를 선택하자고 판단했고, 그렇게 NStake 프로젝트가 시작되었습니다.</p>\n\n<h2 id=\"\">문제는 엑셀이 아니라 설명하기 어려운 숫자</h2>\n\n<p>처음 떠올린 해결책은 비교적 명확했습니다. 담당자가 엑셀 대신 웹 화면에서 투자 내역을 입력하고, 여러 파일의 데이터를 하나의 데이터베이스에 모읍니다. 대시보드에서 현재 투자 현황을 보여주고, 자연어 질문에 답하며, AI가 월말 변동 보고서를 만들면 된다고 생각했습니다.</p>\n\n<p>그러나 자세히 들여다보자 문제가 다르게 보였습니다.</p>\n\n<p>파일을 데이터베이스로 옮기면 취합은 쉬워집니다. 하지만 한곳에 값을 모으기만 해서는 신뢰할 수 있는 기준 데이터로 사용할 수 없었습니다. 현재 지분율이 30%라고 적혀 있어도 그 숫자만으로는 왜 30%가 되었는지 알 수 없습니다. 이를 알기 위해서는 신규 투자, 구주 매도, 유상증자, 감자가 어떤 순서로 발생했고 각 거래가 발행 주식 수와 보유 주식 수에 어떤 영향을 주었는지를 함께 봐야 합니다.</p>\n\n<p>사내 재무 원장이나 외부 공시 자료와 값이 다를 때는 문제가 더 복잡했습니다. 기준일이 다르거나 최근 거래가 한쪽에 아직 반영되지 않았을 수 있고, 데이터의 정의 자체가 다를 수도 있었습니다. 단순히 값이 다르다는 이유만으로 어느 쪽이 틀렸다고 결론 내리거나 자동으로 수정할 수 없었습니다.</p>\n\n<p>결국 저희가 다시 정의한 문제는 이것이었습니다.</p>\n\n<blockquote>\n  <p><strong>현재 숫자가 어떤 거래를 거쳐 만들어졌고, 무엇을 근거로 신뢰할 수 있는지 설명하기 어렵다.</strong></p>\n</blockquote>\n\n<p>프로젝트의 목표도 ‘엑셀을 대체하는 입력 화면’에서 ‘숫자가 만들어진 과정과 검증 결과를 함께 관리하는 기준 시스템’으로 바뀌었습니다.</p>\n\n<pre><code>[기존 방식]\n담당자별 엑셀 작성\n→ 변동 사항 요청\n→ 여러 파일 취합\n→ 사람이 직접 비교·확인\n→ 보고 및 공시\n\n[NStake]\n담당자가 거래 내역 입력\n→ 거래 이력으로 현재 상태 계산\n→ 내부 규칙과 외부 자료로 검증\n→ 불일치 확인 및 처리\n→ 출자 현황과 보고서 생성\n</code></pre>\n\n<h2 id=\"ai\">AI에게 무엇을 어떻게 맡길지 설계하기</h2>\n\n<p>문제를 다시 정의한 뒤에는 어떤 기능을 더 만들지보다 업무를 끝까지 움직이게 하는 기준을 먼저 세웠습니다. 저희 팀은 업무 흐름, 검증 기준, 보고서 규칙, 안전 장치를 함께 보며 문제에 접근했습니다.</p>\n\n<h3 id=\"\">업무가 끝나는 지점</h3>\n\n<p>해커톤에서는 자연어 질의, 대시보드, 자동 보고서처럼 눈에 잘 띄는 기능부터 만들고 싶어집니다. 하지만 입력 화면 하나가 동작한다고 담당자의 업무가 끝나는 것은 아니었습니다.</p>\n\n<p>저희는 먼저 전체 업무 흐름을 정리했습니다.</p>\n\n<pre><code>입력\n→ 값 검증\n→ 불일치 발견\n→ 담당자 확인 및 처리\n→ 현재 상태 반영\n→ 보고\n</code></pre>\n\n<p>저장한 값이 맞는지 확인할 수 없다면 담당자는 다시 엑셀과 다른 자료를 열어야 합니다. 불일치를 찾아주더라도 수정하거나 ‘이슈 없음’으로 처리할 수 없다면 확인할 목록만 하나 더 생깁니다. 보고서의 숫자가 어떤 거래에서 합산되었는지 추적할 수 없다면 공식 자료로 쓰기 어렵습니다.</p>\n\n<p>이 흐름을 정리하자 시연에서 눈에 띄는 기능과 사용자의 일을 실제로 끝내기 위해 필요한 기능을 구분할 수 있었습니다. 저희가 보는 기준도 기능의 개수에서 업무 흐름의 완결성으로 옮겨갔습니다.</p>\n\n<h3 id=\"ai\">AI를 평가자와 검증자로 사용</h3>\n\n<p>저희는 AI를 ‘코드를 빨리 만들어 주는 도구’로만 사용하지 않았습니다. 문제와 평가 기준을 구조화하는 평가자, 여러 설계안을 비교하는 설계 파트너, 실제 결과물을 만드는 구현 보조자, 문서와 코드의 불일치를 찾는 검증자로 역할을 나눠 사용했습니다.</p>\n\n<p>큰 기능을 만들 때는 다음 순환을 반복했습니다.</p>\n\n<pre><code>짧은 설계 문서 작성\n→ 구현\n→ 스크린샷·로그 등 테스트 증거 수집\n→ 발표 자료와 README 반영\n→ 문서와 실제 실행 흐름의 일치 여부 재검증\n</code></pre>\n\n<p>“발표에서 설명한 기능이 코드에도 있는가”, “보안상 위험한 동작은 없는가”, “부분 구현을 완성된 기능처럼 설명하지 않았는가”처럼 반복해서 물어야 하는 질문은 체크리스트로 만들었습니다. 이를 통해 하고 싶은 기능을 늘리는 대신, 성공 기준에 직접 연결되는 작업부터 처리할 수 있었습니다.</p>\n\n<p>중요한 차이는 AI에게 무엇을 만들어 달라고 요청하는 데 그치지 않았다는 점입니다. 저희는 무엇이 성공인지 먼저 정의하고, 그 기준으로 결과를 계속 검증하는 데 AI를 사용했습니다.</p>\n\n<h3 id=\"\">현재 값이 아니라 거래 이력을 중심으로</h3>\n\n<p>기존 방식에서는 현재 발행 주식 수, 보유 주식 수, 지분율을 직접 수정했습니다. NStake에서는 현재 값만 저장하는 대신 그 숫자를 만든 거래를 시간순으로 기록했습니다. 자본금 납입과 신규 투자, 유·무상증자, 구주 양수도와 지분 매도, 감자와 액면분할, 청산 같은 거래를 바탕으로 현재 보유 주식 수와 지분율을 계산했습니다.</p>\n\n<p>현재 지분율이 30%라는 결과만 있으면 문제의 원인을 찾기 어렵습니다. 하지만 어떤 투자와 증자, 매도를 거쳐 30%가 되었는지가 남아 있다면 계산 과정을 되짚을 수 있습니다. 거래 내역으로 계산한 값과 저장된 현재 상태가 다르다면 그 차이 자체를 확인 항목으로 만들 수도 있습니다.</p>\n\n<p><img alt=\"image\" src=\"/content/images/2026/07/77dd1bb5-1092-4cad-a229-bc88bfe6cf3d.png\" /></p>\n\n<p><img alt=\"image\" src=\"/content/images/2026/07/f4ebc984-be31-4dbd-89fa-0ef1671dc61d.png\" /></p>\n\n<p>이 기준에 따라 검증을 Rule, Statistical, eXternal 세 가지로 나눴습니다.</p>\n\n<ul>\n<li><stro",
         "duration_seconds": null
       },
       "analysis": {
-        "relevance_score": 4,
-        "one_line_summary": "Airflow 멀티프로세싱으로 병렬·격리 확보",
+        "relevance_score": 5,
+        "one_line_summary": "AI 해커톤에서 재무 데이터 검증·워크플로우 설계 방법을 제시",
         "tags": [
-          "Airflow",
-          "Python",
-          "fork",
-          "spawn",
-          "GIL"
+          "Claude Code",
+          "LLM",
+          "MCP",
+          "NStake",
+          "Excel"
         ],
         "concepts": [
-          "멀티프로세싱",
-          "병렬 처리",
-          "작업 격리"
+          "AI 기반 업무 검증",
+          "재무 데이터 추적",
+          "프롬프트 협업"
         ],
         "key_points": [
           {
-            "point": "Airflow는 task의 병렬 실행과 격리 두 가지 요구를 만족해야 한다.",
+            "point": "문제를 엑셀 대체가 아닌 숫자 생성 과정과 검증 시스템으로 재정의함",
             "timestamp": null
           },
           {
-            "point": "Python GIL 때문에 Airflow는 멀티프로세싱을 선택해 CPU 병렬성을 확보한다.",
+            "point": "AI를 평가자·검증자·설계 파트너·구현 보조자 등 다중 역할로 활용하고 페어 프롬프팅을 적용함",
             "timestamp": null
           },
           {
-            "point": "fork는 COW로 메모리를 공유하고, spawn은 새 인터프리터를 시작해 모듈 오염을 방지한다.",
+            "point": "업무 흐름을 ‘입력→검증→불일치 발견→담당자 처리→보고’ 로 설계해 AI 중단 시에도 업무 지속 가능하게 함",
             "timestamp": null
           }
         ],
         "production_ideas": [
-          "Unix 환경에서 Airflow task 실행 시 fork start method를 사용해 메모리 사용량을 최소화하고 CPU 코어를 효율적으로 활용한다.",
-          "모듈 오염이나 코드 변경 반영이 중요한 경우 Airflow task를 spawn start method로 실행하도록 설정해 격리성을 강화한다."
+          "LLM 기반 자동 검증 로직을 재무 데이터 입력 파이프라인에 도입해 거래 이력과 외부 자료를 교차 검증한다",
+          "팀 내 프로토타입 개발 시 페어 프롬프팅 방식을 적용해 프롬프트 품질을 향상시키고 AI 결과에 대한 즉시 피드백 루프를 구축한다"
         ],
         "quiz": [
           {
-            "question": "Python 멀티프로세싱에서 메모리를 부모와 공유하는 방식은?",
+            "question": "팀이 선택한 원래 문제는 무엇이었나요?",
             "options": [
-              "spawn",
-              "fork",
-              "forkserver",
-              "thread"
+              "자동 보고서 생성",
+              "엑셀 기반 출자 현황을 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환",
+              "AI 모델 성능 개선",
+              "데이터 시각화 대시보드 구축"
             ],
             "answer_index": 1,
-            "explanation": "fork는 Unix의 fork 시스템 콜을 사용해 페이지 테이블만 복사하고 물리 메모리를 공유하는 Copy-on-Write 방식을 적용한다."
+            "explanation": "본문에 ‘수기 Microsoft Excel 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다’는 문제를 선택했다고 명시돼 있다."
           },
           {
-            "question": "Airflow task가 반드시 만족해야 하는 두 핵심 요구 사항은?",
+            "question": "해커톤에서 팀이 AI에게 부여한 주요 역할은 무엇인가요?",
             "options": [
-              "Scalability와 Security",
-              "Parallelism와 Isolation",
-              "Latency와 Throughput",
-              "Fault Tolerance와 Monitoring"
+              "코드만 빠르게 생성하는 도구",
+              "평가자·설계 파트너·구현 보조자·검증자 등 다중 역할",
+              "데이터 저장소 역할",
+              "사용자 인터페이스 디자인 전담"
             ],
             "answer_index": 1,
-            "explanation": "본문에서 Airflow는 병렬성(parallelism)과 격리성(isolation)을 핵심 요구 사항으로 제시한다."
+            "explanation": "본문에 AI를 ‘평가자, 설계 파트너, 구현 보조자, 검증자’ 등으로 나눠 사용했다고 설명한다."
           }
         ],
         "skip_reason": null,
         "evidence_level": "full",
         "domain": [
-          "data-eng",
-          "systems"
+          "ai-ml",
+          "business"
         ],
-        "content_type": "tutorial",
+        "content_type": "case-study",
         "half_life": "durable",
         "actionability": 6,
         "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다",
+        "url": "https://trendlite.stibee.com/p/480",
+        "published_at": "2026-09-01T00:00:00",
+        "transcript": null,
+        "body": "2026.09.02 26-035호   |   [잘림 없이 보기](https://stib.ee/PXCO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다\n2. 신세계, SSG닷컴, 스타필드 중 남을 이름은?\n3. Picked\\_ '이랜드, '뉴발란스 매직'이 호카에도?' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 무신사는 하라주쿠 팝업에서 피팅룸과 현장 판매를 과감히 없애고, 더 많은 브랜드와 상품을 보여주는 쇼룸형 공간으로 전환했습니다.\n2. 대신 QR 주문과 스피드 배송, F&B와 다양한 협업 콘텐츠를 결합해 오프라인에서 만든 관심을 온라인 구매와 장기 고객으로 이어지도록 설계했고요.\n3. 나아가 온라인 판매 데이터를 다시 오프라인 큐레이션에 활용하면서, 일본에서도 온·오프라인을 서로 성장시키는 구조를 본격적으로 만들어가고 있습니다.\n\n그날 가장 뜨거웠던 장소였습니다  매장이나 팝업스토어가 오픈했을 때, 이를 기사나 소셜미디어로 접하는 것과 직접 현장에서 느끼는 건 당연히 다를 수밖에 없습니다. 그래서 웬만하면 직접 방문해보려 하지만, 서울이 아닌 다른 도시, 더 나아가 해외라면 결코 쉽지 않죠. 도쿄 여행 중 때마침 무신사 팝업스토어가 하라주쿠에서 열린다는 소식을 듣고 시간을 낸 것도, 이처럼 놓치기 아까운 기회였기 때문입니다.    무신사의 글로벌 진출은 이제 낯선 일이 아닙니다. 이미 지난해 말 상하이를 시작으로 중국 각지에 매장을 열고 있고, 올해 들어서는 필리핀과 인도네시아, 베트남, 말레이시아 등 동남아로도 영역을 확장하고 있습니다. 그런데 사실 이러한 해외 진출의 시작은 일본이었습니다. 아직 상설 매장은 없지만, 도쿄 팝업스토어만 이번이 네 번째라고 하고요. [마뗑킴 같은 브랜드의 일본 시장 진출을 지원](https://brunch.co.kr/@trendlite/593)하며 오프라인 매장을 열기도 했었죠.    그래서인지 이번 팝업스토어 현장은 기대 이상이었습니다. 우선 길게 늘어선 줄부터 일본 현지 고객들의 관심이 얼마나 뜨거운지 보여줬습니다. 행사 마지막 날이기도 했고, 인근 오모테산도에서 마츠리가 열리는 주말이라 특히 붐볐다고는 하지만요. 그날 함께 들른 근처의 여러 매장과 비교해도, 이렇게 많은 사람이 몰린 곳은 무신사 하라주쿠 팝업뿐이었습니다.    하지만 그 열기만큼이나 눈길을 끈 건 고객 경험을 설계한 무신사의 영리한 방식이었습니다. 온라인에서 출발해 오프라인으로 존재감을 넓혀온 무신사답게, 이번에는 오프라인에서 만들어낸 관심을 다시 온라인으로 연결하는 장면들이 특히 인상 깊었습니다.  '피팅룸'을 과감하게 없앴습니다  무신사의 오프라인 매장을 초창기부터 지켜봤을 때, 가장 핵심적인 공간을 하나만 꼽으라면 역시 피팅룸이었습니다. 시착이야말로 온라인이 제공하지 못하는 오프라인만의 가치였기 때문이죠. 그래서 무신사 스탠다드 초기 매장들을 보면 피팅룸에 상당히 공을 들였고, 지금도 그 앞에는 늘 긴 줄이 생기곤 합니다.    무신사의 과거 도쿄 팝업스토어들 역시 이 점을 가장 강력한 무기로 여겼을 겁니다. 쉽게 접하기 어려운 한국 패션 브랜드의 제품을 직접 만지고 입어볼 수 있다는 것 자체가 큰 매력이었으니까요. 더욱이 무신사 관계자에 따르면, 일본은 한국과 달리 오프라인에서의 첫인상과 신뢰 형성이 온라인 구매 전환으로 이어지는 경향이 강한 시장이라 합니다. 그래서 무신사는 팝업을 정기적으로 열고 있으며, 10월 오사카를 포함해 연내에만 2회 더 진행할 예정이라고 하고요.    그런데 이번 팝업부터 바뀐 게 하나 있습니다. 바로 피팅룸을 완전히 없애고, 매장을 온전히 쇼룸으로만 구성한 겁니다. 직접 만져보고 몸에 대볼 수는 있었지만, 입어볼 수는 없었습니다. 현장 구매도 불가능했고요. 대신 옷에 부착된 QR코드를 찍어 무신사 글로벌 스토어에서 주문해야 했습니다.    내부적으로는 우려도 많았을 겁니다. 하지만 적어도 현장에서 보기에는 전혀 문제가 없어 보였고, 오히려 운영과 고객 동선 측면에서는 더 나아진 부분도 분명해 보였습니다. 사실 그동안 QR코드 등을 활용해 온·오프라인을 연결하려는 매장은 많았습니다. 하지만 고객들이 이렇게 적극적으로 QR코드를 찍고, 휴대폰으로 상품을 살펴보는 모습은 저도 처음 봤습니다. 많은 일본 고객들이 실제로 매장에서 QR코드를 찍고 상품 정보를 확인하고 있었고요. 제약을 준 것이 오히려 경험의 확장을 불러온 셈입니다.    더욱이 공간과 인력의 활용도가 높아지면서 얻은 이점도 적지 않았습니다. 물론 시착을 못하는 건 아쉬운 일입니다. 대신 더 많은 브랜드와 상품을 경험할 수 있었고요. 피팅 대기로 인한 병목이 사라지면서 방문객들도 더 자유로운 동선으로 매장을 둘러볼 수 있었다고 합니다. 현장 인력 역시 재고 관리나 피팅 대응보다 고객 응대에 더 집중할 수 있었다고 하고요.      동시에 제대로 경험시켰습니다  그렇다고 오프라인만의 경험을 놓친 것도 아니었습니다. 팝업 매장 한편에 자리 잡은 요아정이 대표적이었는데요. 최근 패션이나 뷰티 행사에 F&B를 접목하는 건 거의 기본이 되어가고 있습니다. 바로 근처에 있던 더현대 오모테산도 매장에 카멜커피가 들어간 것도 대표적인 사례였고요.    사실 요아정은 이미 일본에서 매장을 운영하고 있지만, 이번 기회를 통해 인지도를 한 번 더 높이려 했던 것으로 보입니다. 그래서 전용 메뉴까지 별도로 선보일 정도로 공을 들였고요. 아예 팝업 현장에서 QR을 통해 25,000엔 이상 구매한 고객에게는 이를 증정하기도 했죠. 무신사의 브랜드 경험을 단순한 패션 쇼핑이 아니라, 한국 문화 전반으로 확장하려는 의도가 잘 녹아 있었습니다.    이뿐 아니라 조조타운이나 쿠팡이츠의 일본 서비스 로켓나우와 협업해 이벤트를 열기도 했고, 일본의 인기 크리에이터, 배우, 모델과 함께한 한정 인플루언서 콜라보 에디션 판매까지 더하며 현장의 콘텐츠를 꽤 알차게 채워두었습니다. 그래서인지 무신사라는 이름만으로 찾는 고객들도 점차 많아지고 있다고 하는데요. 이번에도 [열흘간 32,619명이나 방문](https://corp.musinsa.com/newsroom/press/detail/1692)했다고 합니다.    현장에서 지켜보니, 입구에 줄 선 인원은 계속 많은데 정작 빠지는 사람은 많지 않아 대기 시간이 길어지더라고요. 그만큼 방문객들이 수많은 상품은 물론, 여러 콘텐츠까지 함께 즐기며 꽤 오래 머무르는 것처럼 보였습니다. 결국 멀리서도 찾아올 만한 팝업을 만드는 건, 얼마나 오래 머무를 만한 매장을 구성하느냐에 달려 있다는 걸 잘 보여준 셈이죠.      온오프가 연결되면 더 강해집니다  이처럼 이번 무신사 팝업스토어는 단순히 브랜드를 보여주는 데서 그치지 않았습니다. 고객이 굳이 현장을 찾아올 이유를 만들고, 그 경험을 다시 온라인 구매로 연결해 장기적인 고객으로 전환하는 과정까지 꽤 치밀하게 설계돼 있었습니다.    방문한 고객은 앱을 설치하고 신규 가입을 해야 상품을 구매할 수 있었고요. 눈으로 직접 보고 만져본 상품들은 무신사라는 플랫폼과 입점 브랜드에 대한 신뢰를 더해줬습니다.    동시에 무신사는 현장 구매가 불가능하다는 점을, 최근 집중적으로 투자하고 있는 배송 경험을 알릴 기회로 삼기도 했습니다. 올해 8월 무신사 스탠다드의 일부 상품을 현지 물류창고에 배치해, [주문 후 2~3일 내 배송하는 ‘스피드 배송’ 서비스를 공식 개시](https://www.etnews.com/20260811000177)했는데요. 지난해부터 마뗑킴 등 일부 브랜드를 중심으로 운영해 오던 서비스를 무신사 스탠다드까지 확대하며 본격적으로 키우겠다는 의지를 드러낸 셈입니다. 이번 팝업에서도 이를 적극적으로 알리고 있었고요. 오프라인에서 시작된 경험을 온라인 구매와 배송까지 자연스럽게 이어가겠다는 거죠.    또한 이렇게 쌓인 온라인 데이터는 다시 오프라인으로 연결됩니다. 이번 팝업만 해도 글로벌 스토어의 판매 추이 데이터를 기반으로, 현지에서 반응이 좋을 것으로 예상되는 상품과 브랜드를 큐레이션했다고 하니까요. 이러한 성과를 보고 일본 진출을 꿈꾸는 브랜드들도 적극적으로 참여했다고 합니다.    그리고 이를 바탕으로 내년에는 드디어 무신사가 일본에서도 상설 매장을 열 계획이라고 합니다. 이때부터 무신사의 일본 진출은 정말 본격화될 텐데요. 앞으로는 오프라인 매장을 통해 온라인을 어떻게 성장시키고, 반대로 온라인의 경험과 데이터를 바탕으로 오프라인에서 어떤 차별화를 만들어낼지 궁금해지네요.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n신세계, SSG닷컴, 스타필드 중 남을 이름은?\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. SSG닷컴은 신세계와 이마트를 합친 통합몰로 큰 기대를 받았지만, 두 브랜드의 정체성을 끝내 하나로 묶지 못했고 결국 신세계몰 분리를 통해 통합 실험은 사실상 실패로 마무리되고 있습니다.\n2. 특히 계열 분리 이후 ‘신세계’라는 이름은 백화점 계열이 중심적으로 활용할 가능성이 커진 반면, 이마트 계열은 SSG닷컴과 이마트만으로 그 빈자리를 메우기 어려운 상황에 놓였습니다.\n3. 그래서 앞으로 이마트 계열은 스타필드를 새로운 대표 브랜드로 키우려 하겠지만, 이 이름이 오프라인을 넘어 온라인에서도 통할 수 있을지는 아직 미지수이며, 결국 어떤 브랜드 체계를 새로 만들지가 중요한 과제가 될 겁니다.\n\n어차피 예견된 이별이었습니다    SSG닷컴은 등장할 때부터 엄청난 화제성을 몰고 다녔습니다. 대형마트와 백화점을 합친 국내 최초의 통합몰이었기 때문이었죠. 특히 2016년 공개된 광고는 ‘쓱’이라는 별칭을 밀어주며 크게 흥행했는데요. 신세계의 프리미엄 이미지, 당시 1등 유통기업이던 이마트의 전문성, 여기에 세련된 광고까지 더해지면서 온라인에서도 신세계그룹이 잘할 수 있을 거라는 기대감을 심어주었습니다.    하지만 이들의 도전은 결국 아쉬운 결말로 향하고 있습니다. [SSG닷컴이 인적분할을 통해 라이프스타일 부문을 신세계몰로 독립](https://news.bizwatch.co.kr/article/consumer/2026/08/27/0025)시키기로 한 겁니다. 이는 사실상 2014년 통합 이전으로 되돌아가는 것이나 마찬가지인데요. 적어도 통합의 실험만큼은 성공하지 못했던 셈이죠.    물론 이들의 화학적 결합이 쉽지 않을 거라는 건 처음부터 어느 정도 예상 가능한 일이었습니다. 이마트몰과 신세계몰을 하나로 묶었지만, 각각의 서비스명과 별도 앱은 유지했고요. 화면에서도 탭을 이동하며 두 몰을 오갈 수 있게 해 뒀습니다. 두 사업 중 어느 것도 완전히 놓을 수 없었기 때문으로 보이는데요. 더욱이 신세계그룹 자체가 신세계와 이마트 계열로 나뉘게 된 상황에서, 온라인만 계속 함께 가는 것도 어색한 그림이었을 겁니다.    무엇보다 기술이나 서비스뿐 아니라 브랜드 관점에서도 이들은 완전히 결합되지 못했습니다. 신세계와 이마트는 각각 백화점과 대형마트의 정체성을 그대로 가지고 있었고요. SSG닷컴 역시 이 둘을 하나로 융합시키기에는 뚜렷한 색깔이 약했습니다. 대부분의 자산을 신세계와 이마트에서 빌려온 브랜드였기 때문입니다. 그 결과 통합몰만의 독자적인 브랜드 가치 역시 끝내 충분히 만들어내지 못했고요.    결국 남은 건 다시 이름입니다. 신세계라는 거대한 유산에서 어쩌면 가장 가치 있는 자산은 ‘신세계’라는 이름 하나일지도 모르거든요. 심지어 ‘SSG’라는 이름도 결국 신세계에서 따온 것이기도 합니다. 따라서 앞으로 이마트 계열에서는 신세계라는 브랜드가 사라졌을 때, 무엇으로 이를 대체할 것인지에 대한 고민을 피할 수 없을 겁니다.  신세계 빠진 SSG닷컴, 위기입니다  현재 흐름만 보면 그룹의 모태인 백화점 계열이 ‘신세계’라는 이름을 중심적으로 활용할 가능성이 커 보입니다. 이미 [백화점에서는 강남점 식품관을 리뉴얼](https://brunch.co.kr/@trendlite/568)하며 ‘신세계 마켓’이라는 이름을 붙이는 등 이를 적극적으로 활용하고 있기도 합니다. 그로서리뿐 아니라 여행 분야에서도 ‘비아 신세계’를 론칭한 만큼, 앞으로도 프리미엄과 결합한 ‘신세계’ 브랜드를 여러 영역에서 활용할 가능성이 커 보입니다.    반면 이마트 계열의 고민은 복잡할 수밖에 없습니다. 오랜 부진으로 이마트라는 브랜드 자체가 가진 힘은 이전보다 약해졌고요. 그렇다고 노브랜드 같은 서브 브랜드를 전면에 내세우기도 애매합니다. 더욱이 대중적인 포지션을 G마켓이 가져간다면, 독립된 채널로서 SSG닷컴이 맡아야 할 역할 역시 더 모호해질 수밖에 없습니다. 그간 SSG닷컴이 가진 프리미엄 이미지는 상당 부분 신세계에서 빌려온 것이었으니까요.    사실 이마트가 그동안 SSG라는 브랜드를 키우려 하지 않았던 건 아닙니다. 새로 인수한 야구단의 이름을 이마트가 아닌 SSG로 붙인 것이 대표적이었죠. 분명 인지도 자체는 흥행한 광고부터 스포츠 구단까지 다양한 접점을 통해 많이 높아졌습니다. 문제는 본업에서의 존재감입니다. 이커머스 시장에서 실적이 지지부진하다 보니, 브랜드의 영향력을 실질적인 구매 이유로까지 키워내지는 못했던 겁니다.    많은 투자를 한 만큼 SSG닷컴이라는 이름을 쉽게 놓지는 못할 겁니다. 다만 동시에 당분간 신세계의 빈자리를 이 이름만으로 메우기도 어려워 보입니다. 그리고 다행히 이마트에는 아직 하나의 카드가 더 남아 있습니다.  스타필드가 구세주가 될 수 있을까요?  이럴 때 우리가 주목할 만한 이름이 바로 ‘스타필드’입니다. 이마트는 복합쇼핑몰 스타필드의 성공에 힘입어 이를 여러 포맷으로 확대하고 있습니다. 특히 이마트의 차세대 점포 포맷에 ‘스타필드마켓’이라는 이름을 붙인 건 꽤 상징적이죠.    가장 최근 생긴 스타필드마켓은 월계점입니다. 서울 내 첫 매장이기도 한데요. 사실 월계점은 면적이 넓고 트레이더스와의 연계도 가능한 만큼, 여러 차례 리뉴얼이 이뤄진 곳입니다. 2020년에는 ‘이마트타운 월계점’이라 불렸지만, 이제는 아예 이마트라는 이름이 빠지고 스타필드가 전면에 나선 겁니다.    스타필드라는 이름이 가진 장점은 여러 가지입니다. 우선 대형마트와 달리 여전히 성장하고 있는 복합쇼핑몰 브랜드라는 점이 있고요. 동시에 신세계가 가져온 프리미엄 이미지도 어느 정도 공유하고 있습니다. 덕분에 스타필드마켓뿐 아니라 스타필드시티, 스타필드빌리지 등으로 포맷을 다양하게 확장하고 있는 상황이고요. 다만 여전히 이 이름을 온라인까지 활용할 수 있을지는 미지수입니다. 스타필드가 가진 오프라인 경험의 강점이 온라인에서 고객이 원하는 것과는 다를 수 있기 때문입니다.    이를 보면 이마트 계열은 당분간 스타필드의 활용 범위를 넓히면서도, SSG닷컴과 이마트 같은 여러 빅네임을 함께 운영해 나갈 가능성이 커 보입니다. 아직 확실한 답이 정해지지 않은 만큼, 당분간은 여러 브랜드가 내부 경쟁을 이어가게 될 텐데요.    그렇다면 앞으로 SSG닷컴은 계속 ‘쓱’이라고 불릴 수 있을까요? 우리가 ‘쓱’을 떠올릴 때 함께 떠올리는 이미지는 무엇이 될까요? 스타필드는 오프라인을 넘어 온라인에서도 통하는 브랜드가 될 수 있을까요? 신세계 계열과 분리된 이후, 이마트 계열이 온라인은 물론 오프라인까지 아우르는 어떤 브랜드 체계를 갖추게 될지 지켜보는 건 꽤 흥미로운 일이 될 것 같습니다.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대해 의견 주실 것이 있으시거나, 광고/기고/기타 협업 관련해서는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 이랜드 ‘뉴발 매직’ 호카에도 불까요?](https://www.joongang.co.kr/article/25457282) 또 다른 메가 브랜드가 탄생할지 모릅니다    [2. 글로벌 표준이 된, K뷰티 트렌드](https://retailtalk.co.kr/Trend/?idx=173443001&bmode=view)  감성적 브랜딩에서 성능과 효과, 리뷰로    [3. '아시아 1호', 치폴레 강남점에 가보니](https://www.mk.co.kr/news/economy/12141216) 브랜드 철학 구현에 우선순위를 두었습니다    [4. 베트남은 더 이상 봉제공장이 아닙니다](https://oncuration.com/베트남은-더-이상-봉제-공장이-아니다/)  점차 브랜드가 되어가는 베트남 패션의 역전    [5. 잘 나가는 버거 업계, 다시 새 판 짜는 이유](https://biz.chosun.com/distribution/food/2026/08/31/JVHX3WJLFFESTIBQUY2JSVDK7M/)  잘 쌓아온 브랜드 자산을 어떻게 확장할 것인가\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/PXCO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/PXCO \"게시하기\")[웹에서 보기](https://stib.ee/PXCO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "오프라인 데이터를 온라인 큐레이션에 활용해 전환 최적화",
+        "tags": [
+          "무신사",
+          "하라주쿠",
+          "QR코드",
+          "스피드 배송",
+          "조조타운"
+        ],
+        "concepts": [
+          "오프라인-온라인 연계 전략",
+          "QR 기반 구매 흐름",
+          "고객 데이터 활용"
+        ],
+        "key_points": [
+          {
+            "point": "피팅룸을 없애고 쇼룸형으로 전환, QR 주문·스피드 배송으로 온라인 구매 연결",
+            "timestamp": null
+          },
+          {
+            "point": "오프라인 방문 데이터를 온라인 큐레이션에 활용해 브랜드·상품 노출 최적화",
+            "timestamp": null
+          },
+          {
+            "point": "F&B·인플루언서 콜라보 등 콘텐츠 결합으로 체류 시간·참여도 상승",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "QR코드를 활용해 매장 내 실시간 재고와 주문 시스템을 연동, 현장 체험을 바로 온라인 구매로 전환",
+          "오프라인 방문 로그와 구매 데이터를 분석해 개인화된 온라인 추천 모델을 구축, 재방문율 향상"
+        ],
+        "quiz": [
+          {
+            "question": "무신사 하라주쿠 팝업에서 도입한 주요 변화는 무엇인가?",
+            "options": [
+              "피팅룸 확대",
+              "QR 주문 도입",
+              "현장 현금 결제",
+              "무료 배송"
+            ],
+            "answer_index": 1,
+            "explanation": "기사에 따르면 피팅룸을 없애고 QR 코드를 통한 주문 시스템을 도입했다."
+          },
+          {
+            "question": "팝업에서 고객에게 제공된 특별한 오프라인-온라인 연계 서비스는?",
+            "options": [
+              "현장 할인 쿠폰",
+              "QR코드 스캔 시 2일 내 스피드 배송",
+              "무료 시착 서비스",
+              "현장 포인트 적립"
+            ],
+            "answer_index": 1,
+            "explanation": "QR코드로 주문하면 2~3일 내 스피드 배송 서비스를 강조했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business",
+          "data-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
         "scores": null,
         "notes": [],
         "triplets": []

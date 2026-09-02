@@ -8,13 +8,13 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-02"
     },
@@ -34,6 +34,30 @@
       "aliases": [],
       "count": 2,
       "first_seen": "2026-09-01",
+      "last_seen": "2026-09-02"
+    },
+    "QR 기반 구매 흐름": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "SQL 기반 그래프 쿼리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "고객 데이터 활용": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "그래프 분석": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
     },
     "기업용 AI 어시스턴트": {
@@ -60,6 +84,12 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-02"
     },
+    "멀티프로세싱, 병렬 처리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
     "모델 기반 제어와 강화학습 통합": {
       "aliases": [],
       "count": 1,
@@ -70,6 +100,12 @@
       "aliases": [],
       "count": 2,
       "first_seen": "2026-09-01",
+      "last_seen": "2026-09-02"
+    },
+    "서브위블 분포": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
     },
     "손실 함수": {
@@ -96,6 +132,12 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
     },
+    "오프라인-온라인 연계 전략": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
     "온-폴리시 학습": {
       "aliases": [],
       "count": 1,
@@ -116,9 +158,15 @@
     },
     "재무 데이터 추적": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
+    },
+    "점별 복잡도 측정": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
     },
     "정보 이론": {
       "aliases": [],
@@ -138,11 +186,17 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
     },
-    "프롬프트 협업": {
+    "컬럼형 데이터베이스": {
       "aliases": [],
       "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "프롬프트 협업": {
+      "aliases": [],
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "프리컴파일 지식 베이스": {
       "aliases": [],
@@ -155,8 +209,14 @@
       "count": 1,
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
+    },
+    "확률 과정 체인 기법": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-02T09:15:32.816451+09:00",
+  "updated_at": "2026-09-02T13:03:03.381320+09:00",
   "version": 1
 }
