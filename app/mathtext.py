@@ -21,8 +21,9 @@ import re
 SUP = str.maketrans("0123456789+-=()aeioruvxyn", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵃᵉⁱᵒʳᵘᵛˣʸⁿ")
 SUB = str.maketrans("0123456789+-=()aeioruvx", "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₐₑᵢₒᵣᵤᵥₓ")
 
-# 자주 나오는 LaTeX 명령만 다룬다. 목록에 없으면 백슬래시만 떼고 이름을 남긴다 —
-# 뜻을 지어내는 것보다 낫다.
+# 자주 나오는 LaTeX 명령만 다룬다. 목록에 없으면 **그대로 둔다.** 백슬래시만
+# 떼면 `\d+`(정규식)가 `d+`로, `\n`이 `n`으로 바뀌어 코드 설명이 틀린 문장이
+# 된다 — 다이제스트엔 수식보다 코드가 훨씬 자주 나온다.
 COMMANDS = {
     "int": "∫", "sum": "Σ", "prod": "∏", "sqrt": "√", "infty": "∞",
     "alpha": "α", "beta": "β", "gamma": "γ", "delta": "δ", "epsilon": "ε",
@@ -43,7 +44,11 @@ _SCRIPT = re.compile(r"([_^])\{([^{}]{1,12})\}")
 _BARE_DIGIT = re.compile(r"([_^])([0-9])(?![0-9A-Za-z{(/\\^_.])")
 _FRAC = re.compile(r"\\frac\s*\{([^{}]{1,40})\}\s*\{([^{}]{1,40})\}")
 _CMD = re.compile(r"\\([A-Za-z]+)")
+# `$...$`는 안쪽이 LaTeX처럼 생겼을 때만 수식으로 본다. 가격 표기가 훨씬 흔하다 —
+# 실측 정본 44일치에서 `$99`, `$500 million and $2 billion` 같은 달러 표기가
+# 6일치 65곳에 나왔고, 무조건 벗기면 `500 million and 2 billion`이 된다.
 _INLINE_MATH = re.compile(r"\$([^$]{1,200})\$")
+_MATH_MARKERS = ("\\", "^", "_{", "{")
 
 
 SUB_SRC = set("0123456789+-=()aeioruvx")
@@ -70,9 +75,12 @@ def to_readable(text: str) -> str:
     if not text or not any(ch in text for ch in ("\\", "{", "$", "^")):
         return text
 
-    out = _INLINE_MATH.sub(r"\1", text)
+    out = _INLINE_MATH.sub(
+        lambda m: m.group(1) if any(k in m.group(1) for k in _MATH_MARKERS) else m.group(0),
+        text,
+    )
     out = _FRAC.sub(r"(\1)/(\2)", out)
-    out = _CMD.sub(lambda m: COMMANDS.get(m.group(1), m.group(1)), out)
+    out = _CMD.sub(lambda m: COMMANDS.get(m.group(1), m.group(0)), out)
     # 중첩 첨자가 있을 수 있어 몇 번 돌린다.
     for _ in range(3):
         new = _SCRIPT.sub(lambda m: _script(m.group(1), m.group(2)), out)

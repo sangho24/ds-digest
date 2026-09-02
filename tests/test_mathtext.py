@@ -48,3 +48,19 @@ def test_discord_formatting_applies_normalization():
     """발송 경로에서 실제로 걸리는지 — 모듈만 고치고 안 붙이면 의미가 없다."""
     import app.deliverers.discord as d
     assert d._truncate(r"x^{2} 의 \alpha", 100) == "x² 의 α"
+
+
+def test_keeps_prices_and_regex_intact():
+    """가격 표기와 정규식은 수식이 아니다.
+
+    실측 정본 44일치에서 `$99`, `$500 million and $2 billion` 같은 달러 표기가
+    6일치 65곳에 나왔다. `$...$`를 무조건 벗기면 `500 million and 2 billion`이
+    되고, `\\d+`의 백슬래시를 떼면 정규식 설명이 틀린 문장이 된다.
+    """
+    assert to_readable("$500 million and $2 billion") == "$500 million and $2 billion"
+    assert to_readable("GPT-5 costs $1.25/M input and $10/M output") == (
+        "GPT-5 costs $1.25/M input and $10/M output"
+    )
+    assert to_readable(r"regex \d+ and \w") == r"regex \d+ and \w"
+    # 안쪽이 LaTeX처럼 생겼을 때만 수식으로 본다.
+    assert to_readable(r"$x^{2}$ 와 $\alpha$") == "x² 와 α"

@@ -248,7 +248,11 @@ def _quiz_caption(item: DigestItem, q_index: int, number: int) -> str:
         body += f" — {q.explanation}"
     # 스포일러 안에 || 가 들어가면 태그가 깨진다.
     body = body.replace("||", "│")
-    return _truncate(f"🧠 **퀴즈 {number}**\n||정답: {body}||", MAX_CONTENT)
+    head = f"🧠 **퀴즈 {number}**\n||정답: "
+    # 본문만 자른다. 전체를 자르면 닫는 || 가 잘려 스포일러가 열리고 정답이
+    # 그대로 보인다 — 숨기려던 것이 노출되는 쪽이 최악이다.
+    body = _truncate(body, MAX_CONTENT - len(head) - 2)
+    return f"{head}{body}||"
 
 
 def _select_quiz(items: list[DigestItem], limit: int) -> list[tuple[DigestItem, int]]:

@@ -429,3 +429,13 @@ def test_quiz_selection_respects_short_pools():
     items = [_item(title="a", url="https://e.com/a", quiz_count=1)]
     assert len(d._select_quiz(items, limit=5)) == 1
     assert d._select_quiz(items, limit=0) == []
+
+
+def test_quiz_caption_truncation_keeps_spoiler_closed():
+    """해설이 길어 잘려도 닫는 || 는 살아야 한다 — 열리면 정답이 그대로 보인다."""
+    import app.deliverers.discord as d
+    item = _item(quiz_count=1)
+    item.analysis.quiz[0].explanation = "해설 " * 2000
+    caption = d._quiz_caption(item, 0, 1)
+    assert len(caption) <= d.MAX_CONTENT
+    assert caption.endswith("||") and caption.count("||") == 2
