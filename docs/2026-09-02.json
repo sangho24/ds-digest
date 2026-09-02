@@ -1,290 +1,287 @@
 {
   "contract_version": 1,
   "date": "2026-09-02",
-  "generated_at": "2026-09-02T13:03:14.963729+09:00",
+  "generated_at": "2026-09-02T16:16:25.050423+09:00",
   "count": 5,
   "archive_url": "https://sangho24.github.io/ds-digest/2026-09-02.html",
   "items": [
     {
-      "id": "b8c4677c2171",
-      "title": "Pointwise Majorization for sub-Weibull and Mixed Tail Processes with Applications in Quadratic Chaos and Ergodic Diffusions",
-      "url": "https://arxiv.org/abs/2609.01576v1",
+      "id": "a31cfe6a1141",
+      "title": "Efficient SWE Agent Benchmarking via Trajectory-Aware Evaluation",
+      "url": "https://arxiv.org/abs/2609.01603v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:stat.ML"
+        "name": "arXiv:cs.CL"
       },
-      "published_at": "2026-09-01T17:42:38",
-      "summary": "점별 복잡도 기반 확률 경계로 모델 신뢰성 강화",
+      "published_at": "2026-09-01T17:59:46",
+      "summary": "SWE 에이전트 성능을 과정까지 평가해 비용 절감",
       "tags": [
-        "sub-Weibull",
-        "mixed tail",
-        "Banach-valued",
-        "quadratic chaos",
-        "ergodic diffusions"
+        "PTA-IRT",
+        "Item Response Theory",
+        "SWE",
+        "GitHub"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)} 로 전체 과정이 아닌 각 인덱스별 상한을 제공한다.",
+          "point": "기존 평가 방법은 결과만 사용해 에이전트 해결 과정을 무시한다",
           "timestamp": null
         },
         {
-          "point": "혼합 꼬리 과정에서도 두 메트릭·측도·지수별로 독립적인 복잡도 항을 합산해 동일한 확률 보장을 얻는다.",
+          "point": "PTA-IRT는 실행 궤적 정보를 활용해 능력 추정과 보정 집합 선택을 개선한다",
           "timestamp": null
         },
         {
-          "point": "이론을 이용해 연산자·Frobenius 노름 기반의 이차 혼돈 및 확산 경험 과정에 구체적 유한시간 경계가 도출된다.",
+          "point": "제한된 보정 예산에서도 PTA-IRT가 기존 IRT 베이스라인보다 점수와 순위 복구에서 일관적으로 우수했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "점별 복잡도 함수를 활용해 고차원 회귀 모델의 신뢰 구간을 개별 피처 수준에서 계산한다.",
-        "혼합 꼬리 경계 결과를 이용해 확산 기반 시계열 모델의 단기 예측 오차 상한을 실시간 모니터링한다."
+        "실행 궤적 수집 파이프라인을 구축해 PTA-IRT 보정 집합 선택에 활용함으로써 SWE 에이전트 평가 비용을 절감한다",
+        "PTA-IRT 기반 능력 추정치를 CI 파이프라인에 적용해 제한된 테스트 예산 하에서 높은 성능을 보이는 에이전트만 선별한다"
       ],
       "quiz": [
         {
-          "question": "점별 Fernique‑Talagrand 함수 Φ_{μ,d}^{(α)}(t)의 정의는 무엇인가?",
+          "question": "기존 효율적 평가 방법이 가지고 있던 주요 한계는 무엇인가?",
           "options": [
-            "∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr",
-            "∫_0^{v(t)}(log(μ(B_d(t,r))))^{α}dr",
-            "∫_0^{4v(t)}(log(μ(B_d(t,r))))^{1/α}dr",
-            "∫_0^{v(t)}(log(1/μ(B_d(t,r))))^{α}dr"
+            "전체 벤치마크 실행이 필요했다",
+            "결과만 사용해 과정 정보를 무시했다",
+            "다단계 코드 수정 처리가 불가능했다",
+            "공개 저장소가 없었다"
           ],
-          "answer_index": 0,
-          "explanation": "본문에 Φ_{μ,d}^{(α)}(t)=∫_0^{4v(t)}(log(1/μ(B_d(t,r))))^{1/α}dr 로 정의되어 있다."
+          "answer_index": 1,
+          "explanation": "본문에서는 기존 방법이 과거의 pass/fail 행렬이나 정적 작업 의미만 사용해 에이전트가 문제를 푸는 과정을 버린다고 설명한다."
+        },
+        {
+          "question": "PTA-IRT가 기존 IRT 베이스라인보다 우수한 상황은 언제인가?",
+          "options": [
+            "무제한 보정 예산일 때",
+            "보정 예산이 낮을 때",
+            "정적 작업 의미만 사용할 때",
+            "비소프트웨어 에이전트를 평가할 때"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 PTA-IRT는 낮은 보정 예산 하에서도 점수와 순위 복구에서 일관적으로 기존 IRT보다 뛰어나다."
         }
       ]
     },
     {
-      "id": "26cec8c5b30c",
-      "title": "The efficient frontier of LLM inference",
-      "url": "https://www.baseten.co/blog/the-efficient-frontier-of-llm-inference/",
+      "id": "76ec1db6d313",
+      "title": "AutoConcept: Training-Free Concept-Guided Reranking for Metadata-Available Composed Image Retrieval",
+      "url": "https://arxiv.org/abs/2609.01456v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.IR"
+      },
+      "published_at": "2026-09-01T16:00:25",
+      "summary": "메타데이터 활용 CIR 재랭킹으로 검색 정확도 향상",
+      "tags": [
+        "AutoConcept",
+        "WeiMoCIR",
+        "FashionIQ",
+        "LinCIR",
+        "CIR"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "AutoConcept는 훈련 없이 개념 증거를 메모리로 변환해 재랭킹에 활용한다.",
+          "timestamp": null
+        },
+        {
+          "point": "노이즈 개념을 필터링하고 보조 부정 페널티로 긍정 제약을 활성화한다.",
+          "timestamp": null
+        },
+        {
+          "point": "기본 검색 점수와 메타데이터 기반 개념-후보 정렬을 추론 시 보정한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "메타데이터와 추출된 개념을 결합해 기존 이미지 검색 파이프라인에 추론 시점 보정 레이어를 추가하여 초기 랭크를 개선한다.",
+        "노이즈 개념 필터링과 보조 부정 페널티를 적용한 훈련‑프리 재랭커를 구축해 제품 스타일 데이터베이스에 바로 적용한다"
+      ],
+      "quiz": [
+        {
+          "question": "AutoConcept는 어느 단계에서 사용되는가?",
+          "options": [
+            "초기 후보 생성 단계",
+            "2단계 메타데이터 기반 재랭킹",
+            "모델 학습 단계",
+            "결과 시각화 단계"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 AutoConcept는 고정된 CIR 모델이 후보 풀을 만든 뒤 메타데이터를 이용해 두 번째 단계인 개념‑가이드 점수 산정에 사용된다."
+        }
+      ]
+    },
+    {
+      "id": "72070e74359c",
+      "title": "Facet-0: A Robotic Foundation Model for Contact-Rich Precise Manipulation",
+      "url": "https://arxiv.org/abs/2609.01596v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-09-01T17:58:07",
+      "summary": "접촉 예측 로봇 조작, 정밀도·성공률 대폭 향상",
+      "tags": [
+        "Facet-0",
+        "ManuFacet-1K",
+        "Action-Wrench Critic",
+        "flow matching",
+        "bounded actor"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Facet-0는 흐름 매칭을 통해 행동과 함께 미래 손목‑힘 프로파일을 예측하고, 힘 히스토리를 시각‑언어·운동학과 정렬한다.",
+          "timestamp": null
+        },
+        {
+          "point": "분포형 Action‑Wrench Critic와 단계 인식 보상·접촉 선택 크레딧을 사용해 결정적인 접촉 상호작용에 정책 개선을 집중한다.",
+          "timestamp": null
+        },
+        {
+          "point": "ManuFacet-1K(1000시간) 데이터로 학습한 시스템은 0.5 mm 정확도와 50 ms 지연으로 5개 서브‑mm 조립 작업에서 평균 82% 성공률을 달성한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Action‑Wrench Critic을 기존 로봇 강화학습 파이프라인에 도입해 접촉 결과를 정량화하고 정책 업데이트에 활용한다.",
+        "흐름 매칭을 이용해 행동 시퀀스를 생성하면서 예상 힘 프로파일을 동시에 예측해 정밀 조립 작업의 성공률을 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "Facet-0를 학습시킨 데이터셋의 이름은 무엇인가?",
+          "options": [
+            "ManuFacet-1K",
+            "ImageNet",
+            "COCO",
+            "OpenAI Gym"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'Trained on ManuFacet-1K, a 1,000-hour force-synchronized corpus'라고 명시되어 있다."
+        },
+        {
+          "question": "Facet-0가 다섯 개 서브‑밀리미터 조립 작업에서 달성한 평균 성공률은?",
+          "options": [
+            "15%",
+            "50%",
+            "82%",
+            "95%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 'reaches 82% mean success on five sub-millimeter computer-assembly tasks'라고 기록되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "cfab8ee42169",
+      "title": "The Data Problem in Software Vulnerability Analysis: Artifacts, Quality, and Consumption",
+      "url": "https://arxiv.org/abs/2609.01503v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.SE"
+      },
+      "published_at": "2026-09-01T16:33:30",
+      "summary": "취약점 탐지 모델, 데이터 품질이 신뢰를 좌우",
+      "tags": [
+        "LLM",
+        "CVE",
+        "patch",
+        "metadata",
+        "trace"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "취약점 분석 데이터셋은 아티팩트 종류·품질 차원·사용 목적에 따라 크게 구분되며, 대부분 현실성이 부족하다.",
+          "timestamp": null
+        },
+        {
+          "point": "실행 가능한 아티팩트 데이터셋만이 실세계 라벨과 독립 검증을 동시에 갖춘 소수(15/24)이며, 코드 샘플 데이터셋은 현실성·단위 유지가 특히 낮다.",
+          "timestamp": null
+        },
+        {
+          "point": "데이터 누수와 가용성 정보가 대부분 누락되고, 추론 데이터는 최근에 등장했으며 주로 모델 생성, 트레이스 데이터는 극히 제한적이다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "데이터셋 감사 체크리스트를 도입해 현실성, 라벨 검증, 누수 방지, 가용성 등을 체계적으로 평가한다.",
+        "실제 CVE 패치와 배포 단위 코드를 보존한 전체 컨텍스트 코드 아티팩트를 우선 수집해 라벨을 독립 검증한다"
+      ],
+      "quiz": [
+        {
+          "question": "분석에 따르면 라벨이 독립적으로 검증된 실세계 데이터를 가장 많이 포함한 데이터셋 유형은?",
+          "options": [
+            "실행 가능한 아티팩트 데이터셋",
+            "코드 샘플 데이터셋",
+            "추론 데이터셋",
+            "트레이스 데이터셋"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 실행 가능한 아티팩트 24개 중 15개가 실세계 라벨과 독립 검증을 동시에 갖춘다고 명시한다."
+        }
+      ]
+    },
+    {
+      "id": "c369cd7da173",
+      "title": "Show HN: HN Match Maker – Matching \"Who Wants to Be Hired?\" With \"Who's Hiring?\"",
+      "url": "https://hnmatchmaker.com/",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "LLM 추론 비용·성능 최적화 기법 파악",
+      "summary": "LLM 기반 구인·구직 매칭 자동화로 채용 효율성 향상",
       "tags": [
-        "GLM-5.3",
-        "Kimi K3",
-        "KV cache",
-        "quantization",
-        "distillation"
+        "abacus.ai",
+        "LLM",
+        "hnmatchmaker.com"
       ],
-      "relevance": 8,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "효율적 프론티어는 LLM 추론에서 지연시간·처리량·비용 간 트레이드오프를 시각화한다.",
+          "point": "LLM을 이용해 게시글에서 급여·경험·근무 형태 등을 구조화된 데이터로 추출한다",
           "timestamp": null
         },
         {
-          "point": "배치 크기를 조정하면 지연시간이 늘어나지만 처리량과 토큰당 비용이 개선돼 프론티어를 따라 이동한다.",
+          "point": "추출된 특성을 기반으로 점수를 산정하고 원격·현장 제약을 필터링한다",
           "timestamp": null
         },
         {
-          "point": "양자화·지식 증류·프루닝 같은 기법은 전체 프론티어를 확장해 동일 비용·지연에서 더 높은 성능을 얻는다.",
+          "point": "두 가지 뷰(사용자별 직무, 직무별 사용자)를 제공해 양방향 매칭을 지원한다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "배치 크기 자동 조절 로직을 도입해 실시간 트래픽에 따라 지연시간과 처리량 목표를 최적화한다.",
-        "양자화 또는 프루닝 파이프라인을 구축해 기존 LLM 모델을 비용 효율적으로 경량화하고, 비용·성능 프론티어를 전체적으로 끌어올린다."
+        "LLM 기반 구인·구직 데이터 자동 추출 파이프라인을 구축하여 내부 채용 플랫폼에 적용",
+        "급여·근무 형태 등 다중 속성을 가중치화한 매칭 스코어링 엔진을 구현해 후보자와 포지션의 적합성을 정량화"
       ],
       "quiz": [
         {
-          "question": "배치 크기 조정은 효율적 프론티어에서 어떤 역할을 하나요?",
+          "question": "매칭 점수 산정에 사용되지 않은 요소는?",
           "options": [
-            "프론티어 전체를 확장한다",
-            "프론티어를 따라 이동한다",
-            "모델 정확도를 높인다",
-            "새로운 모델을 만든다"
+            "급여",
+            "도메인 경험",
+            "원격·현장 여부",
+            "회사 규모"
           ],
-          "answer_index": 1,
-          "explanation": "배치 크기를 늘리면 지연시간이 증가하지만 처리량과 비용 효율성이 개선돼 프론티어 상에서 다른 점으로 이동한다."
-        }
-      ]
-    },
-    {
-      "id": "baeea598611a",
-      "title": "Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data",
-      "url": "https://arxiv.org/abs/2609.01525v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.DB"
-      },
-      "published_at": "2026-09-01T16:55:11",
-      "summary": "컬럼형 DB로 그래프 분석 시 성능·확장성 크게 향상",
-      "tags": [
-        "ClickGraph",
-        "DeltaGraph",
-        "ClickHouse",
-        "Databricks",
-        "Neo4j"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "컬럼형 관계형 엔진에 그래프 쿼리 언어를 결합하면 네이티브 그래프 엔진을 능가하거나 동등한 성능을 제공한다.",
-          "timestamp": null
+          "answer_index": 3,
+          "explanation": "본문에서는 급여, 도메인 경험, 원격·현장 여부만 언급되고 회사 규모는 제외된다"
         },
         {
-          "point": "노드/엣지 프로퍼티 그래프는 관계형 테이블에 이미 존재하는 관계를 재인코딩한 것으로, 쿼리 시 재구성은 오버헤드이다.",
-          "timestamp": null
-        },
-        {
-          "point": "LDBC 소셜 네트워크 벤치마크에서 컬럼형 엔진이 Neo4j보다 2~4 자릿수 빠르게 수행되었다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "ClickHouse 혹은 Databricks 환경에 ClickGraph/DeltaGraph를 도입해 Cypher 쿼리를 직접 SQL로 변환·실행함으로써 별도 그래프 클러스터 없이 그래프 분석 파이프라인을 구축한다.",
-        "기존 관계형 스키마(테이블·컬럼·외래키)를 그대로 활용해 그래프 쿼리를 수행함으로써 데이터 중복·ETL 비용을 절감하고, SQL 옵티마이저를 통한 추가 최적화 여지를 확보한다."
-      ],
-      "quiz": [
-        {
-          "question": "벤치마크에서 Neo4j보다 2~4 자릿수 빠른 성능을 보인 엔진은?",
+          "question": "hnmatchmaker.com에서 사용자의 매칭 결과를 확인하는 URL 형식은?",
           "options": [
-            "ClickHouse",
-            "Databricks",
-            "Neo4j",
-            "LDBC"
+            "/user/:user_name",
+            "/jobs/:user_name",
+            "/match/:user_name",
+            "/profile/:user_name"
           ],
           "answer_index": 0,
-          "explanation": "본문은 컬럼형 엔진(예: ClickHouse)이 Neo4j보다 2~4 자릿수 빠른 성능을 보였다고 명시한다."
-        },
-        {
-          "question": "노드/엣지 프로퍼티 그래프 모델에 대한 저자의 주장은?",
-          "options": [
-            "더 정확한 데이터 모델을 제공한다",
-            "성능 세금이며 불필요한 재인코딩이다",
-            "외래키를 제거한다",
-            "SQL 쿼리를 단순화한다"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서 노드/엣지 모델을 ‘성능 세금’이라고 표현하며, 관계형 테이블에 이미 존재하는 관계를 재인코딩한다고 설명한다."
-        }
-      ]
-    },
-    {
-      "id": "4e78dec40c1c",
-      "title": "[AI 해커톤 후기] AI 해커톤 1위 팀이 AI에게 맡기지 않은 것",
-      "url": "https://d2.naver.com/helloworld/4821538",
-      "source": {
-        "type": "rss",
-        "name": "D2 Blog"
-      },
-      "published_at": null,
-      "summary": "AI 해커톤에서 재무 데이터 검증·워크플로우 설계 방법을 제시",
-      "tags": [
-        "Claude Code",
-        "LLM",
-        "MCP",
-        "NStake",
-        "Excel"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "문제를 엑셀 대체가 아닌 숫자 생성 과정과 검증 시스템으로 재정의함",
-          "timestamp": null
-        },
-        {
-          "point": "AI를 평가자·검증자·설계 파트너·구현 보조자 등 다중 역할로 활용하고 페어 프롬프팅을 적용함",
-          "timestamp": null
-        },
-        {
-          "point": "업무 흐름을 ‘입력→검증→불일치 발견→담당자 처리→보고’ 로 설계해 AI 중단 시에도 업무 지속 가능하게 함",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "LLM 기반 자동 검증 로직을 재무 데이터 입력 파이프라인에 도입해 거래 이력과 외부 자료를 교차 검증한다",
-        "팀 내 프로토타입 개발 시 페어 프롬프팅 방식을 적용해 프롬프트 품질을 향상시키고 AI 결과에 대한 즉시 피드백 루프를 구축한다"
-      ],
-      "quiz": [
-        {
-          "question": "팀이 선택한 원래 문제는 무엇이었나요?",
-          "options": [
-            "자동 보고서 생성",
-            "엑셀 기반 출자 현황을 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환",
-            "AI 모델 성능 개선",
-            "데이터 시각화 대시보드 구축"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 ‘수기 Microsoft Excel 기반 출자 현황 관리를 LLM·MCP 기반 투자 포트폴리오 관리 플랫폼으로 전환한다’는 문제를 선택했다고 명시돼 있다."
-        },
-        {
-          "question": "해커톤에서 팀이 AI에게 부여한 주요 역할은 무엇인가요?",
-          "options": [
-            "코드만 빠르게 생성하는 도구",
-            "평가자·설계 파트너·구현 보조자·검증자 등 다중 역할",
-            "데이터 저장소 역할",
-            "사용자 인터페이스 디자인 전담"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 AI를 ‘평가자, 설계 파트너, 구현 보조자, 검증자’ 등으로 나눠 사용했다고 설명한다."
-        }
-      ]
-    },
-    {
-      "id": "106b5aea0312",
-      "title": "🥤무신사 하라주쿠 팝업, 이게 없어서 놀랐습니다",
-      "url": "https://trendlite.stibee.com/p/480",
-      "source": {
-        "type": "newsletter",
-        "name": "트렌드라이트"
-      },
-      "published_at": "2026-09-01T00:00:00",
-      "summary": "오프라인 데이터를 온라인 큐레이션에 활용해 전환 최적화",
-      "tags": [
-        "무신사",
-        "하라주쿠",
-        "QR코드",
-        "스피드 배송",
-        "조조타운"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "피팅룸을 없애고 쇼룸형으로 전환, QR 주문·스피드 배송으로 온라인 구매 연결",
-          "timestamp": null
-        },
-        {
-          "point": "오프라인 방문 데이터를 온라인 큐레이션에 활용해 브랜드·상품 노출 최적화",
-          "timestamp": null
-        },
-        {
-          "point": "F&B·인플루언서 콜라보 등 콘텐츠 결합으로 체류 시간·참여도 상승",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "QR코드를 활용해 매장 내 실시간 재고와 주문 시스템을 연동, 현장 체험을 바로 온라인 구매로 전환",
-        "오프라인 방문 로그와 구매 데이터를 분석해 개인화된 온라인 추천 모델을 구축, 재방문율 향상"
-      ],
-      "quiz": [
-        {
-          "question": "무신사 하라주쿠 팝업에서 도입한 주요 변화는 무엇인가?",
-          "options": [
-            "피팅룸 확대",
-            "QR 주문 도입",
-            "현장 현금 결제",
-            "무료 배송"
-          ],
-          "answer_index": 1,
-          "explanation": "기사에 따르면 피팅룸을 없애고 QR 코드를 통한 주문 시스템을 도입했다."
-        },
-        {
-          "question": "팝업에서 고객에게 제공된 특별한 오프라인-온라인 연계 서비스는?",
-          "options": [
-            "현장 할인 쿠폰",
-            "QR코드 스캔 시 2일 내 스피드 배송",
-            "무료 시착 서비스",
-            "현장 포인트 적립"
-          ],
-          "answer_index": 1,
-          "explanation": "QR코드로 주문하면 2~3일 내 스피드 배송 서비스를 강조했다."
+          "explanation": "본문에 제시된 예시 URL은 https://hnmatchmaker.com/user/:user_name 형태이다"
         }
       ]
     }
