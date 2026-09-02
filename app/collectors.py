@@ -302,7 +302,7 @@ async def fetch_arxiv_recent(
     hours: int = 48,
     max_items: int = 12,
     request_delay: float = 3.0,
-    retries: int = 1,
+    retries: int = 2,
 ) -> list[RawContent]:
     """ArXiv Atom API에서 카테고리별 최신 논문 수집.
 
@@ -330,10 +330,15 @@ async def fetch_arxiv_recent(
     # **먼저 만난 카테고리가 그 논문의 소스**가 된다.
     seen_links: set[str] = set()
     cross_listed = 0   # 이미 다른 카테고리에서 담은 논문을 건너뛴 횟수
+    # arXiv 응답은 느릴 때 15초를 넘긴다. 실측 2026-09-02 스케줄 실행에서
+    # stat.AP·cs.SI가 ReadTimeout으로 재시도를 다 쓰고 통째로 빠졌고, 전날
+    # 로컬에서는 cs.LG가 ConnectTimeout으로 같은 식으로 사라졌다. 카테고리
+    # 하나가 통째로 없어지는 대가에 비하면 대기 시간은 싸다.
+    timeout = 30.0
 
     # 단일 연결로 순차 요청한다(약관 요구사항). 클라이언트를 재사용해 커넥션도
     # 하나로 유지한다.
-    async with httpx.AsyncClient(timeout=15) as client:
+    async with httpx.AsyncClient(timeout=timeout) as client:
         for index, category in enumerate(categories):
             # 첫 요청 앞에는 대기하지 않는다.
             if index > 0 and request_delay > 0:
