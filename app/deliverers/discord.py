@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 from datetime import datetime
 from pathlib import Path
@@ -102,22 +103,50 @@ def load_message_map(path: Path | None = None) -> dict[str, dict[str, Any]]:
     return mapping
 
 
-async def _post(client: httpx.AsyncClient, payload: dict) -> dict | None:
-    """채널에 메시지를 보내고 생성된 메시지 객체를 돌려준다. 실패는 None."""
-    settings = get_settings()
+async def _retry_after(resp: httpx.Response) -> float:
+    """429 응답이 알려주는 대기 시간(초). 없으면 짧은 기본값."""
     try:
-        resp = await client.post(
-            f"{API}/channels/{settings.discord_channel_id}/messages",
-            headers=_headers(),
-            json=payload,
-        )
-        if resp.status_code >= 400:
-            logger.error("discord_send_failed", status=resp.status_code, body=resp.text[:300])
+        value = float((resp.json() or {}).get("retry_after", 0))
+    except Exception:
+        value = 0.0
+    # 헤더가 더 정확할 때가 있어 둘 중 큰 값을 쓴다.
+    try:
+        value = max(value, float(resp.headers.get("retry-after", 0)))
+    except (TypeError, ValueError):
+        pass
+    return min(max(value, 0.5), 10.0)
+
+
+async def _post(client: httpx.AsyncClient, payload: dict) -> dict | None:
+    """채널에 메시지를 보내고 생성된 메시지 객체를 돌려준다. 실패는 None.
+
+    429는 재시도한다. 다이제스트 한 번에 헤더 1 + 아이템 5 + 퀴즈 여러 건을
+    연달아 쏘기 때문에 Discord의 채널당 레이트리밋에 정상적으로 걸린다 —
+    실측 2026-09-02 발송에서 실제로 한 건이 429로 **조용히 사라졌다**.
+    아이템 메시지가 사라지면 매핑도 안 남아서 그 아이템의 피드백은 영영
+    귀속되지 않는다. 응답이 기다릴 시간(retry_after)을 알려주므로 그대로 쉰다.
+    """
+    settings = get_settings()
+    for attempt in range(3):
+        try:
+            resp = await client.post(
+                f"{API}/channels/{settings.discord_channel_id}/messages",
+                headers=_headers(),
+                json=payload,
+            )
+            if resp.status_code == 429 and attempt < 2:
+                wait = await _retry_after(resp)
+                logger.warning("discord_rate_limited", wait=wait, attempt=attempt + 1)
+                await asyncio.sleep(wait)
+                continue
+            if resp.status_code >= 400:
+                logger.error("discord_send_failed", status=resp.status_code, body=resp.text[:300])
+                return None
+            return resp.json()
+        except Exception as e:
+            logger.error("discord_request_failed", error=str(e))
             return None
-        return resp.json()
-    except Exception as e:
-        logger.error("discord_request_failed", error=str(e))
-        return None
+    return None
 
 
 async def _react(client: httpx.AsyncClient, message_id: str, emoji: str) -> None:
@@ -128,14 +157,25 @@ async def _react(client: httpx.AsyncClient, message_id: str, emoji: str) -> None
     settings = get_settings()
     from urllib.parse import quote
 
-    try:
-        await client.put(
-            f"{API}/channels/{settings.discord_channel_id}/messages/"
-            f"{message_id}/reactions/{quote(emoji)}/@me",
-            headers=_headers(),
-        )
-    except Exception as e:
-        logger.warning("discord_react_failed", error=str(e), emoji=emoji)
+    for attempt in range(3):
+        try:
+            resp = await client.put(
+                f"{API}/channels/{settings.discord_channel_id}/messages/"
+                f"{message_id}/reactions/{quote(emoji)}/@me",
+                headers=_headers(),
+            )
+            # 리액션도 같은 레이트리밋을 공유한다. 여기서 조용히 실패하면
+            # 사용자가 직접 이모지를 찾아 눌러야 하고(카운트 1이 없으니),
+            # 수거 쪽은 "카운트 2 이상"을 사용자 입력으로 보므로 신호가 어긋난다.
+            if resp.status_code == 429 and attempt < 2:
+                await asyncio.sleep(await _retry_after(resp))
+                continue
+            if resp.status_code >= 400:
+                logger.warning("discord_react_failed", status=resp.status_code, emoji=emoji)
+            return
+        except Exception as e:
+            logger.warning("discord_react_failed", error=str(e), emoji=emoji)
+            return
 
 
 def _format_header(items: list[DigestItem]) -> str:

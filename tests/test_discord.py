@@ -329,3 +329,68 @@ def test_poll_skips_when_not_configured(monkeypatch):
     summary = asyncio.run(dp.poll_once(None))
 
     assert summary["directives"] == [] and summary["likes"] == 0
+
+
+# ── 레이트리밋 ─────────────────────────────────────────────────────────────
+# 2026-09-02 첫 실전 발송에서 한 건이 429로 조용히 사라졌다. 다이제스트는
+# 헤더 1 + 아이템 5 + 퀴즈 여러 건을 연달아 쏘므로 정상적으로 걸린다.
+# 아이템 메시지가 사라지면 매핑도 안 남아 그 아이템의 피드백은 영영 귀속되지 않는다.
+
+class _RateLimitedThenOK:
+    """첫 호출은 429, 다음은 성공."""
+
+    def __init__(self):
+        self.calls = 0
+
+    async def post(self, url, headers=None, json=None, **kw):
+        self.calls += 1
+        if self.calls == 1:
+            return _Resp(429, {"message": "You are being rate limited.",
+                               "retry_after": 0.686, "global": False})
+        return _Resp(200, {"id": "999"})
+
+
+class _Resp:
+    def __init__(self, code, body):
+        self.status_code, self._b, self.headers = code, body, {}
+        self.text = str(body)
+
+    def json(self):
+        return self._b
+
+
+def test_post_retries_on_rate_limit(monkeypatch):
+    import asyncio as _a
+    import app.deliverers.discord as d
+
+    monkeypatch.setattr(d, "get_settings", lambda: _settings())
+
+    async def _no_sleep(_s):
+        return None
+    monkeypatch.setattr(d.asyncio, "sleep", _no_sleep)
+
+    client = _RateLimitedThenOK()
+    result = _a.run(d._post(client, {"content": "hi"}))
+    assert result == {"id": "999"}
+    assert client.calls == 2, "429를 재시도하지 않으면 메시지가 조용히 사라진다"
+
+
+def test_post_gives_up_after_repeated_rate_limits(monkeypatch):
+    import asyncio as _a
+    import app.deliverers.discord as d
+
+    monkeypatch.setattr(d, "get_settings", lambda: _settings())
+
+    async def _no_sleep(_s):
+        return None
+    monkeypatch.setattr(d.asyncio, "sleep", _no_sleep)
+
+    class _Always429:
+        calls = 0
+
+        async def post(self, *a, **k):
+            _Always429.calls += 1
+            return _Resp(429, {"retry_after": 0.1})
+
+    assert _a.run(d._post(_Always429(), {"content": "hi"})) is None
+    assert _Always429.calls == 3      # 무한 재시도는 하지 않는다
