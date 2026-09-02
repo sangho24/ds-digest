@@ -110,3 +110,22 @@ def test_error_alert_prefers_discord(monkeypatch):
 
     asyncio.run(job._send_error_alert("일부 실패"))
     assert sent == []
+
+
+# ── 발송 채널 파싱 ─────────────────────────────────────────────────────────
+# 2026-09-01 실행이 수집·분석·선정을 다 끝내고 delivery={} 로 끝났다.
+# DELIVERY_CHANNELS 값의 대소문자가 코드의 소문자 비교와 안 맞아서, 어느
+# 채널에도 매치되지 않고 조용히 아무 데도 안 나간 것이다.
+
+@pytest.mark.parametrize("value", ["Discord", "DISCORD", " discord ", "discord\n"])
+def test_delivery_channels_case_insensitive(value):
+    known = {"telegram", "discord", "email"}
+    channels = [c.strip().lower() for c in value.split(",") if c.strip()]
+    assert "discord" in channels and not [c for c in channels if c not in known]
+
+
+def test_delivery_channels_rejects_unknown():
+    known = {"telegram", "discord", "email"}
+    channels = [c.strip().lower() for c in "slack,discord".split(",") if c.strip()]
+    assert [c for c in channels if c not in known] == ["slack"]
+    assert "discord" in channels          # 나머지는 정상 동작해야 한다

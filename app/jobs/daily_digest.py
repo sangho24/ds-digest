@@ -298,7 +298,23 @@ async def run_daily_digest() -> dict:
         return {"status": "all_filtered", "collected": len(raw_items), "passed": 0}
 
     # 5. 발송 — 설정된 채널 모두 시도 (하나 실패해도 다른 쪽 계속)
-    channels = [c.strip() for c in settings.delivery_channels.split(",")]
+    #
+    # 소문자로 맞춘다. 예전엔 대소문자를 그대로 비교해서 DELIVERY_CHANNELS에
+    # "Discord"가 들어 있으면 **어느 채널도 매치되지 않고 조용히 아무 데도
+    # 안 나갔다**. 실측: 2026-09-01 실행이 수집·분석·선정을 다 끝내고
+    # delivery={} 로 끝났다. 사람이 값을 넣는 자리라 대문자는 언제든 들어온다.
+    KNOWN_CHANNELS = {"telegram", "discord", "email"}
+    channels = [c.strip().lower() for c in settings.delivery_channels.split(",") if c.strip()]
+    unknown = [c for c in channels if c not in KNOWN_CHANNELS]
+    if unknown or not channels:
+        # 값 자체는 시크릿이라 로그에서 마스킹된다. 그래서 "몇 개가 인식됐고
+        # 몇 개가 아닌지"를 남겨야 진단이 된다.
+        logger.error(
+            "delivery_channels_unrecognized",
+            recognized=[c for c in channels if c in KNOWN_CHANNELS],
+            unrecognized_count=len(unknown),
+            hint="DELIVERY_CHANNELS는 discord/telegram/email 중에서 쉼표로 구분",
+        )
     sent_results: dict[str, bool] = {}
 
     if "telegram" in channels:
@@ -320,7 +336,10 @@ async def run_daily_digest() -> dict:
     elif not any_sent:
         # 전체 실패
         await _send_error_alert(
-            f"모든 발송 채널 실패: {', '.join(sent_results.keys()) or '채널 미설정'}"
+            f"모든 발송 채널 실패: {', '.join(sent_results.keys())}"
+            if sent_results else
+            "발송 채널이 하나도 인식되지 않았습니다. "
+            "DELIVERY_CHANNELS 값을 확인하세요 (discord/telegram/email)."
         )
 
     # 6. 발송 완료 URL 기록 (적어도 1개 채널 성공 시)
