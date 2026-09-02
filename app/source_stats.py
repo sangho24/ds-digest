@@ -50,6 +50,10 @@ ROOT = Path(__file__).resolve().parent.parent
 STATS_PATH = ROOT / "data" / "source_stats.jsonl"
 KST = ZoneInfo("Asia/Seoul")
 
+# 수집 0건을 "수집기가 깨졌다"로 단정하려면 이 정도 기간은 봐야 한다.
+# 월간 발행 블로그도 30일이면 최소 한 번은 나온다.
+MIN_DAYS_FOR_SILENCE = 30
+
 
 def _source_key(item: Any) -> str:
     return str(getattr(item, "source_key", "") or getattr(item, "source_name", "") or "(소스 없음)")
@@ -191,6 +195,15 @@ def aggregate(path: Path | None = None, since: str | None = None) -> dict[str, A
     # "굶는 소스"보다 나쁜 상태라 따로 센다.
     silent = sorted(k for k, v in sources.items() if v["collected"] == 0)
     silent_families = sorted(k for k, v in families.items() if v["collected"] == 0)
+    # "수집 0건"을 게이트를 막는 FAIL로 쓰려면 **관측 기간이 충분해야 한다.**
+    # 실측: 퍼널 2일치로 판정하니 toss·netflix·airbnb·우아한형제들처럼 주간·월간
+    # 발행하는 블로그 12곳이 전부 "침묵"으로 잡혀 FAIL이 났다. 이건 수집기가
+    # 깨진 게 아니라 그냥 그 주에 글이 안 올라온 것이다.
+    #
+    # 잡으려던 건 다른 상태다 — arXiv가 리다이렉트 때문에 40일간 0건이었던 것.
+    # 그건 기간을 길게 잡으면 확실히 드러나고, 짧게 잡으면 정상 소스와 섞인다.
+    # 기간이 모자라면 "문제 없음"이 아니라 **"판단할 근거가 없음"**이므로 비운다.
+    confirmed = silent_families if len(days) >= MIN_DAYS_FOR_SILENCE else []
 
     return {
         "days": len(days),
@@ -203,5 +216,9 @@ def aggregate(path: Path | None = None, since: str | None = None) -> dict[str, A
         "silent_count": len(silent),
         "silent_families": silent_families,
         "silent_family_count": len(silent_families),
+        # 관측 기간이 MIN_DAYS_FOR_SILENCE일 이상일 때만 채워진다.
+        "confirmed_silent_families": confirmed,
+        "confirmed_silent_count": len(confirmed),
+        "enough_days_for_silence": len(days) >= MIN_DAYS_FOR_SILENCE,
         "sources": sources,
     }

@@ -41,8 +41,11 @@ THRESHOLDS: list[dict[str, Any]] = [
     # 게이트를 막는 FAIL은 계열 기준으로만 건다. 논문 수가 적은 카테고리 하나가
     # 한 주 조용한 것과, 수집기가 깨져 arXiv 전체가 0건인 것은 전혀 다른 사건이다.
     # (후자가 실제로 5개월간 조용히 지속됐다 — http→https 리다이렉트.)
-    {"path": "source_funnel.silent_family_count", "operator": ">", "value": 0, "severity": "FAIL", "label": "수집이 0건인 소스 계열"},
-    {"path": "source_funnel.silent_count", "operator": ">", "value": 0, "severity": "WARN", "label": "수집이 0건인 소스"},
+    # FAIL은 관측 기간이 충분할 때만 건다(app.source_stats.MIN_DAYS_FOR_SILENCE).
+    # 퍼널 2일치로 판정했더니 주간·월간 발행 블로그 12곳이 "침묵"으로 잡혀
+    # 게이트가 막혔다 — 수집기가 깨진 게 아니라 그 주에 글이 안 올라온 것이다.
+    {"path": "source_funnel.confirmed_silent_count", "operator": ">", "value": 0, "severity": "FAIL", "label": "장기간 수집 0건인 소스 계열"},
+    {"path": "source_funnel.silent_family_count", "operator": ">", "value": 0, "severity": "WARN", "label": "이번 기간 수집이 0건인 소스 계열"},
 ]
 
 
