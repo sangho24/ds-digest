@@ -1,0 +1,391 @@
+{
+  "date": "2026-09-02",
+  "generated_at": "2026-09-02T00:15:33.671197",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Overcoming critical slowing down in frustrated spin systems by learned multiscale sampling",
+        "url": "https://arxiv.org/abs/2608.31114v1",
+        "published_at": "2026-08-31T17:21:54",
+        "transcript": null,
+        "body": "Cluster algorithms, such as the Swendsen--Wang and Wolff methods, are among the most successful MCMC methods for mitigating critical slowing down in statistical systems. These constructive cluster algorithms, however, fail in the presence of even extremely weak frustration. Here, we sidestep this fundamental limitation by learning rather than constructing the relevant clusters. Specifically, we use the wavelet conditional renormalization group (WCRG) sampling method to learn the probability distribution of collective fluctuations of a frustrated two-dimensional soft-spin model. Configurations are then generated recursively from coarse to fine scales by sampling conditional wavelet distributions. The WCRG method reproduces the main statistical properties of the system across different phases, including the local-field distribution and the structure factor. At an Ising-like critical point, the conditional dynamics remains decorrelated within $\\mathcal{O}(1)$ sweeps at each scale, yielding an overall sampling complexity of $\\mathcal{O}(\\log_2 L)$, thus making WCRG much more efficient than standard local MCMC methods. These results show that learned multiscale sampling can overcome critical slowing down in frustrated systems for which conventional cluster algorithms fail. By assessing the sampling accuracy of different observables, we also clarify the main tradeoff of the WCRG method: the accuracy of the fast sampling scheme depends on the expressiveness of the energy-based model used to estimate the wavelet conditional distributions.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "학습 기반 다중스케일 샘플링으로 복잡계 MCMC 효율 향상",
+        "tags": [
+          "Swendsen--Wang",
+          "Wolff",
+          "WCRG",
+          "wavelet conditional renormalization group",
+          "soft-spin model"
+        ],
+        "concepts": [
+          "멀티스케일 샘플링",
+          "조건부 확률 모델링",
+          "임계 감쇠 완화"
+        ],
+        "key_points": [
+          {
+            "point": "전통 클러스터 알고리즘은 약한 좌절에서도 실패한다",
+            "timestamp": null
+          },
+          {
+            "point": "WCRG는 파동렛 조건부 RG를 학습해 다중 스케일에서 샘플링한다",
+            "timestamp": null
+          },
+          {
+            "point": "각 스케일에서 O(1) 스윕으로 전체 O(log₂L) 복잡도 달성",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "WCRG를 이용해 좌절 스핀 글라스 시뮬레이션의 MCMC 샘플링 속도를 높인다",
+          "학습된 파동렛 조건부 분포를 고차원 베이지안 모델의 추론에 적용해 샘플링 효율을 개선한다"
+        ],
+        "quiz": [
+          {
+            "question": "WCRG가 사용하여 학습하는 확률 분포는 무엇에 대한 것인가?",
+            "options": [
+              "집합적 변동",
+              "개별 스핀",
+              "외부 자기장",
+              "온도"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 WCRG가 좌절 2D 소프트-스핀 모델의 집합적 변동 확률 분포를 학습한다고 언급한다."
+          },
+          {
+            "question": "WCRG가 달성한 전체 샘플링 복잡도는?",
+            "options": [
+              "O(L)",
+              "O(log₂L)",
+              "O(1)",
+              "O(L²)"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 전체 샘플링 복잡도가 O(log₂L)라고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "I trained a small transformer in 1.5hrs and it beats many LLMs",
+        "url": "https://mvakde.github.io/blog/44-on-arc-1/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# 44% on ARC-AGI-1 in 67 cents\n\nI trained a small transformer from scratch in 1.5hrs on a 5090  \n Beats many LLMs, and scores the same as TRM/HRM\n\nThis is an upgrade to my [previous model](https://x.com/evilmathkid/status/2001689479476879448)   \n Faster, better, cheaper and still open source.\n\nAlso gets 7% on ARC-2\n\n[Discussion on Twitter](https://x.com/evilmathkid/status/2029519274835148829), [Code on github](https://github.com/mvakde/mdlARC/)\n\n ![ARC-1 Public Eval](../hero-img.png) \n\nPerformance on ARC-1 public eval. I only compare against models that do similar test time training\n\n \n\nThis is the 3rd blog in a series of works on ARC-AGI. Prev: [Blog 2]((https://mvakde.github.io/blog/new-pareto-frontier-arc-agi/#implementation-details)), [Blog 1](https://mvakde.github.io/blog/why-all-ARC-solvers-fail-today/).\n\nMany ppl thought the prev result was impossible. It got attention from top researchers and went viral on X. Eg: Discussions by [Lucas Beyer](https://x.com/giffmana/status/2002111246225621296), [Jeremy Howard](https://x.com/jeremyphoward/status/2002136723573387537), [Rohan Anil](https://x.com/_arohan_/status/2001939028606947505), and comments by many others.\n\n## Why work on this?\n\nI think sample efficiency is the most important problem in AI today and I want to solve it.\n\nThe intention behind this work is to (1) find the limits of sample efficiency when restricted to transformers / today’s deep learning methods and (2) reduce costs so iteration is much faster and cheaper.\n\nARC is a great benchmark to test this:\n\n- Very few samples (only a 1000 puzzles) in a high dimensional space\n- Its a metalearning benchmark, so each puzzle uses a different rule, with some common concepts\n- Very few priors needed: every concept needed in the eval set is present in the train set\n- It is incredibly easy for humans to solve, and accessible to even poor AI researchers\n- Benchmark is still unsaturated (for data efficiency, ignore LLMs and approaches that use tons of synthetic data or human inductive biases)\n\nNext, I’ll work on new research ideas to break these limits. I’ll try to keep costs low so that anyone in the world can work on this.\n\n# Tech details\n\n## How does it work?\n\nThe overall approach is similar to last time ([full technical details here](https://mvakde.github.io/blog/new-pareto-frontier-arc-agi/#implementation-details)), but I added a bunch of upgrades. Here’s a quick summary of the approach:\n\n- Each input-output pair is converted to a sequence of tokens. These sequences are autoregressively trained on by a small transformer. This is done from scratch at test time on both the train set and eval set puzzles (test labels hidden).\n- To enable cross-task learning, each puzzle is given a separate additive embedding (learnt). Since each sequence has two 2D grids, positional are learnt using 3D RoPE embeddings.\n- The sequences are augmented with color and dihedral permutations. During inference, the test inputs are augmented, and the inverse aug is applied on the outputs produced. The 2 most common outputs are submitted (AAIVR).\n\n### Changes since last time\n\nThe main goal was to find improvements to the architecture / algorithm that improve the sample efficiency of the model.\n\nThe biggest increases in scores were due to\n\n- Modern architecture (SwiGlu instead of GELU, RMSnorm not layernorm, etc.)\n- More data diversity, better shuffling of data\n- scaling up: 8 layers instead of 4,\n\nBiggest decreases in cost were due to:\n\n- Way fewer augmentations (more sample efficient!)\n- AdamW -> Normuon\n- flash attention with varlen training + flex attention kernels for inference\n\nA major change is that I don’t train on input tokens anymore. This means the loss function only includes output tokens (which makes the approach supervised). This. performs slightly better 40% $\\to$ 44% but I don’t understand why. Perhaps finite model capacity\n\nI also increased the training data by adding the non-overlapping tasks from ARC-2. I did this very carefully to ensure no leakage. You can remove the extra data if you don’t like it and it will still score ~40%, but it will need ~double the compute.\n\n> Context: ARC-2 contains 773 ARC-1 puzzles and 347 new puzzles. Most eval puzzles of ARC-1 are repeated, so if you naively train on ARC-2, then its a dataleak and you will score 100%. I avoid this by carefully filtering out the 773 repeated puzzles (so no leak!)\n\nThere are many other changes that gave incremental improvements in performance or speed. Find the [full list of changes here](#full-list-of-changes).\n\n## Interesting behaviour\n\nSince I am no longer training on inputs, this approach is now supervised. What’s weird is that the test loss is now worse, yet it scores better! Also it is more stable and there’s less variance in scores.\n\n  \n\nMany ppl today are working on sample efficiency by aiming for the lowest val loss on a small dataset. I think that’s great, but this points out [a failure mode](https://arxiv.org/pdf/2601.22950) in such an app",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "샘플 효율성 높은 트랜스포머로 ARC 비용 절감",
+        "tags": [
+          "ARC-AGI-1",
+          "ARC-2",
+          "flash attention",
+          "Normuon",
+          "SwiGlu"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "데이터 기반 벤치마킹",
+          "손실 함수"
+        ],
+        "key_points": [
+          {
+            "point": "1.5시간에 5090 GPU로 작은 트랜스포머를 학습해 ARC‑1에서 44% 정확도 달성",
+            "timestamp": null
+          },
+          {
+            "point": "SwiGlu·RMSnorm 등 최신 아키텍처와 flash attention 적용으로 비용을 67¢ 이하로 감소",
+            "timestamp": null
+          },
+          {
+            "point": "입력 토큰을 제외하고 출력 토큰만 학습해 샘플 효율성을 40%→44% 향상",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "flash attention과 Normuon 옵티마이저를 기존 메타러닝 벤치마크 학습 파이프라인에 적용해 GPU 비용을 50% 이상 절감한다",
+          "색·다이헤드럴 증강과 3D RoPE 임베딩을 유사 메타러닝 데이터셋에 적용해 학습 샘플 수를 절반 이하로 줄인다"
+        ],
+        "quiz": [
+          {
+            "question": "이 모델이 ARC‑1에서 달성한 정확도는?",
+            "options": [
+              "40%",
+              "44%",
+              "50%",
+              "60%"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 \"44% on ARC-AGI-1\"이라고 명시되어 있다."
+          },
+          {
+            "question": "비용을 크게 낮춘 주요 기술이 아닌 것은?",
+            "options": [
+              "SwiGlu",
+              "RMSnorm",
+              "Normuon",
+              "AdamW"
+            ],
+            "answer_index": 3,
+            "explanation": "AdamW는 이전에 사용했지만 본 모델에서는 Normuon으로 교체했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "Reasoning 모델을 더 효율적으로 가르치는 방법",
+        "url": "https://deepdaiv.stibee.com/p/161",
+        "published_at": "2026-09-01T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/fVCO)\n\n#159 위클리 딥 다이브 | 2026년 9월 2일 에디터 잭잭\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 큰 모델의 능력을 작은 모델에 전달하는 Knowledge Distillation과 기존 방식의 한계를 살펴봅니다.\n- 학생 모델이 직접 만들어낸 응답에서 배우는 On-Policy Distillation(OPD)의 원리를 소개합니다.\n- 학생 모델의 응답이 좋지 않을 때 생기는 OPD의 한계와, 이를 보완하기 위한 최근 연구를 살펴봅니다.\n\n큰 모델의 추론 능력을 작은 모델에게 옮길 수 있을까?\n\n안녕하세요, 에디터 잭잭입니다.  최근 AI 연구에서는 모델을 더 크게 만드는 것만큼이나, 이미 만들어진 모델을 어떻게 더 잘 학습시킬지가 중요해지고 있습니다. 방대한 데이터로 기본적인 언어와 지식을 익히는 사전 학습(Pre-training) 이후, 모델이 사람의 지시를 잘 따르고 수학이나 코딩처럼 복잡한 문제를 해결하도록 만드는 사후 학습(Post-training)의 역할도 함께 커지고 있죠.    특히 최근에는 모델이 바로 답을 내놓는 데 그치지 않고, 여러 단계의 추론(Reasoning)을 거쳐 문제를 해결하는 능력이 중요해졌습니다. 이를 학습하는 대표적인 방법 중 하나가 강화학습(Reinforcement Learning, RL)입니다. 모델이 직접 문제를 풀고 그 결과에 따라 보상을 받으면서 더 좋은 전략을 찾아가도록 하는 방식입니다.  하지만 모델이 좋은 전략을 직접 찾아가게 하는 것만이 방법은 아닙니다. 이미 문제를 잘 푸는 강한 모델이 있다면, 그 모델이 가진 능력을 더 작은 모델에게 전달할 수도 있습니다. 큰 모델의 지식을 작은 모델에 옮기는 지식 증류(Knowledge Distillation, KD)가 대표적인 방법입니다.    기존 지식 증류에서는 주로 큰 모델이 미리 생성한 좋은 응답이나 풀이를 작은 모델이 따라 배우도록 합니다. 최근에는 여기서 조금 다른 접근이 주목받고 있습니다.    큰 모델이 만들어둔 좋은 답만 학습하는 대신, 작은 모델이 실제로 생성한 응답을 다시 학습에 활용하는 On-Policy Distillation(OPD)입니다. 작은 모델이 현재 자신의 능력으로 만들어낸 응답을 큰 모델도 함께 보고, 그 상태에서 얻은 학습 신호를 다시 작은 모델에 전달하는 방식입니다.    이번 뉴스레터에서는 기존 지식 증류가 작은 모델을 어떻게 가르쳐왔는지부터 시작해, OPD가 무엇을 다르게 하는지, 그리고 작은 모델이 직접 만든 답을 이용하는 방식에서 새롭게 나타나는 문제까지 살펴보겠습니다. 그 출발점은 가장 익숙한 방식, 잘하는 AI가 만든 답을 작은 AI에게 그대로 보여주는 것입니다.\n\n잘하는 AI의 답을 그대로 따라 배우면 되지 않을까?\n\n지식 증류에서는 일반적으로 더 강한 모델을 교사 모델(Teacher), 그 능력을 전달받는 모델을 학생 모델(Student)이라고 부릅니다. 지식 증류를 구현하는 대표적인 방식 중 하나는 교사 모델이 만든 좋은 답이나 풀이를 미리 준비하고, 이를 바탕으로 학생 모델을 학습하는 것입니다.    예를 들어, 다음과 같은 간단한 수학 문제가 있다고 해봅시다. 미리 준비된 학습 데이터에는 문제와 정답이 하나의 쌍으로 들어 있습니다.  (\"What is 5 + (2 × 3)?\", “11”)    여기서 중요한 것은 학생 모델이 단순히 정답 11만 외우는 것이 아니라는 점입니다. 교사 모델은 다음 토큰(토큰)으로 무엇이 적절한지에 대한 확률 분포를 만들 수 있습니다. 예를 들어 정답을 생성해야 하는 위치에서 교사 모델은 '11 '을 90% 확률로 예측하고, '7 '과 '8 '은 각각 7%, 3% 확률로 예측할 수 있습니다. 따라서 학생 모델의 확률 분포가 교사 모델의 분포와 비슷해지도록 학습시킬 수 있습니다.    즉 교사 모델은 단순히 “정답은 11이야”라고 알려주는 것보다 더 많은 정보를 전달할 수 있습니다. 어떤 토큰을 얼마나 선호하는지까지 학습 신호로 사용할 수 있기 때문입니다. 이처럼 모든 응답 토큰에서 세밀하게 제공되는 신호를 Dense Feedback([Kevin Lu et al., 2025](https://thinkingmachines.ai/blog/on-policy-distillation/))이라고 합니다.\n\n💡 Sparse Feedback vs. Dense Feedback  강화학습에서는 학생 모델이 직접 답을 생성한 뒤, **최종 정답 여부에 따라 보상**을 받을 수 있습니다. 예를 들어 정답이면 reward = 1, 오답이면 reward = 0을 받습니다. 하지만 이러한 최종 보상만으로는 **풀이 전체가 잘못된 것인지, 중간의 일부 추론에서만 오류가 발생한 것인지 알기 어렵습니다.** 이처럼 제한적인 정보만 제공하는 피드백을 **Sparse Feedback**이라고 합니다.    반면 지식 증류에서는 풀이의 여러 토큰 위치에서 학습 신호를 얻을 수 있습니다. 아래 그림의 숫자는 교사 모델이 만든 풀이의 각 토큰을 학생 모델이 얼마나 높은 확률로 예측했는지를 보여줍니다. 학생 모델은 각 위치에서 교사의 출력을 더 잘 예측하도록 학습되기 때문에, **최종 정답 하나보다 풀이 과정 전반에 걸쳐 더 세밀한 피드백(Dense Feedback)**을 받을 수 있습니다.\n\n출처: [<On-Policy Distillation> (Kevin Lu et al., 2025)](https://thinkingmachines.ai/blog/on-policy-distillation/)\n\n그런데 여기에는 한 가지 문제가 있습니다. 학습 과정에서는 미리 준비된 좋은 응답을 바탕으로 학습하지만, 실제 추론에서는 자신이 직접 생성한 응답을 이어가야 한다는 점입니다.    따라서 학습할 때 보지 못한 방향으로 한번 잘못 들어가면, 이후의 추론 역시 그 오류의 영향을 받을 수 있습니다. 이처럼 학습할 때 접하는 응답과 실제 추론에서 모델 자신이 만들어내는 응답 사이에 차이가 생기는 현상을 Exposure Bias라고 부릅니다.    이러한 문제를 해결하기 위해 [<On-Policy Distillation of Language Models: Learning from Self-Generated Mistakes> (Agarwal et al., 2023)](https://arxiv.org/abs/2306.13649) 연구진은 고정된 응답에만 의존하지 않고, **학생 모델이 실제로 생성한 응답을 바탕으로 교사 모델의 피드백을 받으며 학습하는 방식**을 제안했습니다. 이는 오늘날 OPD의 핵심 아이디어이기도 합니다.\n\n학생이 실제로 푼 문제로 배운다\n\n그렇다면 OPD는 기존 지식 증류와 무엇이 다를까요? 가장 큰 차이는 학습에 사용할 답을 미리 준비해두는지, 아니면 학생 모델이 현재 직접 만들어내는지에 있습니다.\n\n왼쪽은 Fixed Dataset 기반 지식 증류, 오른쪽은 On-Policy Distillation  출처: [<DistiLLM: Towards Streamlined Distillation for Large Language Models> (Ko et al., 2024)](https://arxiv.org/abs/2402.03898)  왼쪽의 기존 지식 증류 방법은 미리 준비된 문제와 답을 교사 모델과 학생 모델이 함께 봅니다. 반면 오른쪽의 OPD에서는 데이터셋에서 문제만 가져온 뒤, 학생 모델이 그 문제에 대한 답을 직접 생성합니다. 이렇게 학생 모델이 한 번 생성한 응답을 Rollout이라고 부릅니다.    예를 들어 학생 모델이 5 + (2 × 3)이라는 문제에 다음과 같이 답했다고 해봅시다. “5 + 2 is 7, and 7 × 3 is 21.\" 계산 순서를 잘못 적용한 틀린 풀이입니다. OPD에서는 이 응답을 버리지 않고, 학생 모델이 실제로 생성한 그대로 교사 모델에게 보여줍니다.\n\n학생 모델의 잘못된 출력과, 각 위치의 토큰에 대하여 교사 모델이 부여한 조건부 확률  출처: [<On-Policy Distillation> (Kevin Lu et al., 2025)](https://thinkingmachines.ai/blog/on-policy-distillation/)  그림 아래의 숫자는 학생 모델이 생성한 각 토큰에 대해 교사 모델이 부여한 조건부 확률입니다. 즉, 앞에서 생성된 내용을 바탕으로 교사 모델이 해당 토큰을 다음 토큰으로 선택할 확률을 나타냅니다.    예를 들어 '2 '에는 5%, 'is '에는 15%처럼 낮은 확률이 부여되어 있는데, 이는 해당 토큰들이 앞선 내용을 고려했을 때 교사 모델이라면 상대적으로 덜 선택했을 토큰이라는 뜻입니다.    학습할 때는 이러한 교사 모델의 확률 분포와 학생 모델의 확률 분포 사이의 차이가 줄어들도록 학생 모델을 업데이트합니다. 즉 정답 풀이만 따라 배우는 것이 아니라, 학생 모델이 실제로 문제를 풀면서 만들어낸 응답 위에서 교사 모델의 Dense Feedback을 토큰 단위로 받는 것이 OPD의 핵심입니다.\n\nReasoning 모델에서 OPD가 주목받는 이유\n\n이런 특성은 긴 추론 과정을 생성하는 최근 Reasoning 모델에서 더욱 중요해졌습니다. 어려운 수학이나 코딩 문제를 해결하면서 수백에서 수천 토큰에 달하는 긴 추론 과정을 생성하기도 하기 때문입니다.    추론이 길어질수록 초반 오류의 영향도 커집니다. 짧은 답변에서 한 번 잘못된 방향으로 가는 것과, 수천 토큰에 이르는 추론의 초반부터 잘못된 가정을 세우는 것은 이후 과정에 미치는 영향의 범위가 다릅니다. 앞에서 발생한 오류가 이후 생성 과정에 계속 남고, 그 상태에서 다시 다음 토큰을 생성하면서 오류가 누적될 수 있습니다. 이처럼 앞선 오류의 영향이 이후 생성 과정에 누적되는 현상을 오류 누적(Compounding Error)이라고 합니다.    동시에 이미 강한 추론 모델이 갖고 있는 능력을 더 작은 모델에 효율적으로 전달하려는 필요도 커졌습니다. [Qwen3 Technical Report](https://arxiv.org/abs/2505.09388)에서는 동일한 동일한 Off-Policy Distillation을 거친 Qwen3-8B Checkpoint에서 시작해, 이후 강화학습과 On-Policy Distillation을 각각 적용한 결과를 비교했습니다.\n\nOff-policy Distillation에 강화학습(RL)과 On-policy Distillation을 적용했을 때의 성능 비교  출처: [<Qwen3 Technical Report> (Yang et al., 2025)](https://arxiv.org/abs/2505.09388)  표에서 눈에 띄는 점은 OPD가 특정 benchmark 하나에서만 좋아진 것이 아니라, 수학·코딩·지식 추론을 포함한 여러 평가에서 강화학습보다 전반적으로 높은 성능을 보였다는 점입니다. 동시에 보고된 학습 비용(GPU Hours)도 강화학습의 약 1/10 수준이었습니다.    물론 하나의 실험 결과만으로 OPD가 항상 강화학습보다 효율적이라고 일반화할 수는 없습니다. 다만 Qwen3의 결과는 강한 교사 모델이 이미 존재하는 상황에서 OPD가 효율적인 사후 학습 방법이 될 수 있음을 보여줍니다.    여기까지만 보면 OPD는 꽤 이상적인 방법처럼 보입니다. 학생 모델이 실제로 만들어낸 응답을 학습에 활용하면서도, 교사 모델의 세밀한 학습 신호를 받을 수 있기 때문입니다.\n\nOPD의 가장 큰 장점이 약점이 되는 순간\n\n지금까지 OPD의 장점은 학생 모델이 실제로 만들어낸 응답에서 학습한다는 점이었습니다. 그런데 학생 모델이 초반부터 잘못된 방향으로 추론하기 시작한다면 어떨까요?    자기회귀 모델(Autoregressive Model)에서는 이미 생성된 내용(Prefix)이 이후 토큰을 생성할 때 계속 조건으로 사용합니다. 학생 모델이 초반에 잘못된 가정이나 공식을 선택한 경우, 이후의 추론도 그 잘못된 Prefix를 바탕으로 계속 이어질 수 있습니다.\n\n💡 자기회귀 모델(Autoregressive Model)이란?  이전에 생성한 내용을 바탕으로 다음 토큰을 하나씩 순서대로 예측하는 모델입니다. 예를 들어 한 문장을 생성할 때 앞에서 만든 단어들을 참고해 다음 단어를 선택하고, 이 과정을 반복해 전체 응답을 완성합니다.\n\n출처: ⓒ deep daiv.\n\n[<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (Xu et al., 2026)](https://arxiv.org/abs/2607.26057)에서는 이를 Prefix Failure라고 설명합니다. 학생 모델이 초반에 잘못된 추론 방향을 선택하면 이후 생성 전체가 그 방향 위에서 쌓이면서, 길게 잘못된 생성이 길게 이어질 수 있다는 것입니다.    기본적인 OPD(Standard OPD)에서는 이렇게 생성된 Trajectory도 그대로 학습에 사용되기 때문에, 논문은 이 구간에서 교사 모델의 학습 신호가 점차 신뢰하기 어려워지고 불필요한 계산도 발생할 수 있다고 지적합니다.\n\n실패한 Prefix에서 학생 모델과 교사 모델이 서로 다른 생성 방향을 보이는 예시  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  위 예시를 보면, 학생 모델은 사과 15개를 산 뒤 남은 5 RM으로 망고와 파파야를 각각 하나씩 살 수 있다고 잘못 판단합니다. 그 상태에서 다음 토큰을 생성하려 할 때 학생 모델은 'So '를 가장 높은 확률로 선택하며 기존 풀이를 그대로 이어가려 합니다.    반면 같은 Prefix를 본 교사 모델은 'But '을 74.4%의 높은 확률로 선택해 앞선 추론을 다시 검토하려 합니다.    즉 같은 Prefix를 보더라도 학생 모델은 현재 방향을 계속 이어가려 하고, 교사 모델은 방향을 전환하려는 차이가 나타납니다. 논문은 이를 Teacher–Student Continuation Asymmetry라고 부릅니다. 연구진은 이 차이를 이용하면 정답 정보나 별도의 검증 모델 없이도, 교사 모델이 개입할 만한 지점을 찾을 수 있다고 보았습니다.    이를 바탕으로 제안한 방법이 Relay-OPD입니다.\n\nRelay-OPD의 방법론  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  위 그림의 위쪽 Standard OPD를 보면 학생 모델이 한번 잘못된 방향으로 들어간 뒤에도 Trajectory를 끝까지 직접 생성합니다. 반면 가운데 Relay-OPD에서는 학생 모델이 생성하는 도중 Handoff Trigger가 발견되면 잠시 교사 모델에게 생성을 넘깁니다.    논문의 Handoff Trigger는 단순히 교사 모델과 학생 모델의 확률 분포가 다르다는 이유로 발생하지 않습니다.  쉽게 말하면 교사 모델은 'Wait ', 'But ', 'However '처럼 기존 추론을 되돌아보는 토큰을 선호하지만, 학생 모델은 그런 방향 전환 없이 그대로 생성을 이어가려는 지점을 개입 시점으로 활용합니다.    Trigger가 발생하면 교사 모델이 짧은 Teacher Leg를 생성해 추론 방향을 돌리고, 이후에는 다시 학생 모델이 이어서 생성합니다. 중요한 점은 교사 모델이 전체 풀이를 대신 생성하지 않는다는 것입니다. Relay-OPD는 필요한 순간에만 짧게 교사 모델을 개입시키고, 다시 학생 모델에게 생성을 돌려줍니다. 이를 통해 학생 모델 자신의 응답에서 학습한다는 OPD의 특성을 최대한 유지하면서 Prefix Failure가 길게 이어지는 것을 줄이고자 합니다.    논문의 사전 실험에서도 교사 모델의 개입을 길게 늘릴수록 성능이 계속 증가하지는 않았으며, 이러한 관찰을 바탕으로 Relay-OPD는 Teacher가 초기에, 짧게 개입하도록 설계되었습니다.\n\nRelay-OPD와 다른 방법들의 성능 비교  출처: [<Pass the Baton: Trajectory-Relayed On-Policy Distillation> (](https://arxiv.org/abs/2607.26057)[Xu et al., 2026)](https://arxiv.org/abs/2607.26057)  실험 결과에서도 Relay-OPD는 Standard OPD보다 높은 성능을 보였습니다. Qwen3-4B-Instruct-2507을 교사 모델로, Qwen3-1.7B Non-Thinking을 학생 모델로 사용한 실험에서 8개 수학 추론 benchmark 평균에서 Standard OPD보다 5.73%p 높은 성능을 기록했고, 학습 Trajectory의 평균 길이도 50% 이상 감소했습니다.    결국 Relay-OPD가 던지는 질문은 단순합니다. OPD에서는 학생 모델이 실제로 방문하는 Trajectory에서 학습하는 것이 중요하지만, 그 Trajectory를 언제까지 학생 모델에게 그대로 맡길 것인가도 함께 고려해야 한다는 것입니다.\n\n잘 가르친다는 것은 무엇일까?\n\n기존 지식 증류가 “무엇을 가르칠 것인가”에 가까웠다면, OPD는 학생 모델이 실제로 어떤 상태에 있는지를 학습에 반영하기 시작했습니다. 그리고 Relay-OPD는 여기서 더 나아가 언제 교사 모델이 개입할 것인지까지 고민합니다.  좋은 교사 모델이 있다는 것만큼이나, 학생 모델이 지금 어떤 상태에 있는지를 파악하고 필요한 순간에 적절한 학습 신호를 주는 것이 중요해지고 있는 셈입니다.\n\n[여러분이라면 AI를 어떻게 가르치고 싶나요? 🧑‍🏫](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/fVCO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/fVCO \"게시하기\")[웹에서 보기](https://stib.ee/fVCO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "대형 모델 지식 전달로 추론 비용 절감",
+        "tags": [
+          "Knowledge Distillation",
+          "On-Policy Distillation",
+          "Dense Feedback",
+          "Sparse Feedback",
+          "Exposure Bias"
+        ],
+        "concepts": [
+          "지식 증류",
+          "온-폴리시 학습",
+          "피드백 종류"
+        ],
+        "key_points": [
+          {
+            "point": "교사 모델의 토큰 확률 분포를 학생 모델에 맞추는 Knowledge Distillation은 Dense Feedback을 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "On-Policy Distillation은 학생이 생성한 답을 교사가 평가해 토큰‑레벨 피드백을 주어 Exposure Bias를 완화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Sparse Feedback(최종 보상)과 Dense Feedback(토큰별 확률) 사이의 차이를 이해하고, OPD와 최신 연구(Agarwal et al., 2023)를 활용해 학습 파이프라인을 설계한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "학생 모델이 자체 생성한 응답을 교사 모델에 전달해 토큰‑레벨 확률을 loss에 활용하는 On‑Policy Distillation 파이프라인을 구축한다.",
+          "정적 데이터셋 대신 학생 모델의 Rollout을 이용해 동적 학습 데이터를 생성함으로써 Exposure Bias를 감소시키고, Dense Feedback을 활용한 미세 조정을 수행한다."
+        ],
+        "quiz": [
+          {
+            "question": "다음 중 Dense Feedback의 특징이 아닌 것은?",
+            "options": [
+              "교사 모델이 각 토큰의 확률 분포를 제공한다",
+              "학생 모델에 최종 정답 여부만 보상한다",
+              "피드백이 토큰 수준에서 세밀하게 제공된다",
+              "학습 신호가 토큰별 선호도를 반영한다"
+            ],
+            "answer_index": 1,
+            "explanation": "Sparse Feedback는 최종 정답 여부만 보상하는 반면, Dense Feedback은 각 토큰의 확률 분포와 선호도를 제공한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "GLM 5.3: Powerful AI Is Becoming Almost Free",
+        "url": "https://youtu.be/w9RDunJACkc",
+        "published_at": "2026-09-01T09:04:56",
+        "transcript": null,
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 GLM 5.3 Flash:\nhttps://z.ai/blog/glm-5.3-flash\n\nSources:\nhttps://x.com/louszbd/status/2092694163104113016\nhttps://x.com/semianalysis_/status/2092623833630998556\nhttps://x.com/skalskip92/status/2092748209802154201\nhttps://x.com/louszbd/status/2093047548550525165\nhttps://x.com/atomic_chat_hq/status/2093433913238552712\nhttps://x.com/holytrinity/status/2094093933584257334\nhttps://x.com/KinasRemek/status/2090081611832295581/video/1\nhttps://x.com/AiXsatoshi/status/2093679264013181119/video/1\nhttps://x.com/AiXsatoshi/status/2093353322921263389/video/1\nhttps://x.com/stevibe/status/2092655031040565252\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "고성능 AI 모델 비용 급감, 실험 비용 절감",
+        "tags": [
+          "GLM 5.3",
+          "Lambda",
+          "GPU Cloud",
+          "Two Minute Papers",
+          "GLM 5.3 Flash"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 인프라 경쟁",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "GLM 5.3가 높은 성능을 유지하면서 비용이 크게 낮아졌음",
+            "timestamp": null
+          },
+          {
+            "point": "Lambda GPU 클라우드에서 저렴하게 모델을 활용 가능",
+            "timestamp": null
+          },
+          {
+            "point": "자세한 내용은 GLM 5.3 Flash 블로그와 소셜 미디어에서 확인 가능",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 2,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편",
+        "url": "https://d2.naver.com/helloworld/4452165",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p dir=\"auto\">저희 팀은 데이터 입수 플랫폼의 배치 워크플로를 Airflow 2.10.2로 운영하고 있습니다. 2025년 4월 Airflow 3.0이 릴리스되었고, UI 개선과 다양한 신규 기능이 포함되었습니다. 이 변화가 저희 운영 환경에 필요하다고 판단했고 도입을 위한 PoC(Proof of Concept)를 진행했습니다.</p>\n<p dir=\"auto\">이 글은 그 PoC 과정에서 Python의 멀티프로세싱 방식 중 하나인 fork로 인해 발생한 문제를 발견해 해결하고 기여한 과정을 다루는 시리즈의 1편입니다. 1편에서는 이 문제를 이해하는 데 필요한 배경지식을 다룹니다. Airflow가 task를 실행할 때 요구되는 조건을 살펴보고, 이를 만족하는 Python 멀티프로세싱 방식을 비교한 뒤, Airflow가 실제로 채택한 방식과 그 한계를 설명합니다.</p>\n<p dir=\"auto\">2편에서는 이 한계가 Airflow에 실제로 어떤 문제를 일으켰는지, 원인과 해결 과정을 다룹니다.</p>\n<h2 dir=\"auto\">Airflow의 task 실행 요구 사항</h2>\n<p dir=\"auto\"><a href=\"https://airflow.apache.org/\" rel=\"nofollow\">Apache Airflow</a>는 Python으로 작성된 워크플로 오케스트레이션 도구입니다. 사용자는 task들 사이의 의존 관계를 <a href=\"https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html\" rel=\"nofollow\">Dag</a>로 정의하고, Airflow는 정해진 스케줄에 따라 그 task들을 실행합니다. Dag는 task 집합과 그 사이의 의존 관계, 실행 순서를 정의하는 Airflow의 기본 단위입니다.</p>\n<p dir=\"auto\">task 실행에는 병렬성과 격리성이라는 두 가지 핵심적인 요구 사항이 있으며, Airflow는 이를 모두 만족해야 합니다.</p>\n<h3 dir=\"auto\">병렬성</h3>\n<p dir=\"auto\">병렬성은 여러 task를 동시에 수행할 수 있는 능력입니다. Airflow는 정해진 스케줄에 따라 다수의 task를 실행해야 하므로 병렬성이 필요합니다.</p>\n<p dir=\"auto\">그런데 Airflow는 Python으로 작성된 도구입니다. Python의 표준 구현체인 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-CPython\" rel=\"nofollow\">CPython</a>에는 <a href=\"https://docs.python.org/ko/3.11/glossary.html#term-global-interpreter-lock\" rel=\"nofollow\">GIL(Global Interpreter Lock)</a>이 있습니다. 이 때문에 하나의 인터프리터 안에서는 스레드가 아무리 많아도 Python 바이트코드는 한 순간에 하나만 실행됩니다. 즉, 멀티코어 CPU에서도 Python 코드는 동시에 코어 하나에서만 실행됩니다. CPU 집약적인(CPU-bound) 작업에서 멀티코어의 병렬 처리 이점을 얻지 못합니다. Airflow는 이 제약을 극복해야 합니다.</p>\n<h3 dir=\"auto\">격리성</h3>\n<p dir=\"auto\">각 task의 수행이 부모 프로세스와 다른 task에 영향을 주지 않아야 합니다. 여기서 부모 프로세스는 task를 실행하는 프로세스를 생성한 상위 프로세스를 뜻합니다.</p>\n<p dir=\"auto\">Airflow는 사용자가 작성한 코드가 task로 실행되는 구조입니다. 심한 경우 해당 task가 부모 프로세스 전체를 종료시킬 수도 있으며, 이는 전체 task의 장애로 이어질 수 있습니다.</p>\n<p dir=\"auto\">Airflow가 격리성을 필요로 하는 이유는 하나 더 있습니다. Python은 모듈을 전역(<code class=\"notranslate\">sys.modules</code>)으로 관리하며, 한 번 등록된 모듈을 전역에서 삭제하거나 갱신하기가 어렵습니다. 런타임에 import된 모듈은 코드가 바뀌어도 이를 다시 등록하기가 매우 어렵다는 뜻입니다.</p>\n<p dir=\"auto\">가령 사용자는 task에서 <code class=\"notranslate\">import mypackage.plugins</code>와 같이 본인이 작성한 모듈을 불러옵니다. 격리성이 보장되지 않는다면, 해당 모듈은 <a href=\"https://airflow.apache.org/docs/helm-chart/stable/manage-dag-files.html#using-git-sync\" rel=\"nofollow\">Git-Sync</a>를 통해 변경이 일어나도 반영되지 않음을 의미합니다. task가 등록한 모듈은 task 완료와 함께 폐기되어야 합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch1-3\"></a></p>\n<h3 dir=\"auto\">Airflow의 멀티프로세싱 도입</h3>\n<p dir=\"auto\">Airflow는 앞서 살펴본 두 요구 사항을 만족하기 위해 멀티프로세싱을 사용했습니다. 즉, task 하나당 프로세스를 하나씩 생성해 그 안에서 실행하고, 종료 시 폐기하는 것입니다.</p>\n<p dir=\"auto\">이를 통해 진정한 CPU 병렬성을 얻을 수 있습니다. 또한 task의 비정상 종료가 부모 프로세스에 영향을 주지 않게 하고, 부모 프로세스의 전역 모듈이 오염되는 것을 막습니다. task 종료 시 프로세스를 폐기함으로써 격리성을 보장할 수 있습니다.</p>\n<h2 dir=\"auto\">Python의 멀티프로세싱 방식</h2>\n<p dir=\"auto\">Airflow가 멀티프로세싱을 택했다면, 다음 질문은 프로세스를 어떻게 만드느냐입니다. Python에서 <a href=\"https://docs.python.org/ko/3.11/library/multiprocessing.html#contexts-and-start-methods\" rel=\"nofollow\">멀티프로세싱을 지원하는 방식</a>은 fork와 spawn 두 가지입니다(forkserver 방식도 있지만 이 글에서는 다루지 않습니다). 두 방식이 각각 어떻게 동작하는지 살펴본 뒤, 같은 조건에서 실행해 생성 시간과 메모리 사용량을 비교하겠습니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-1\"></a></p>\n<h3 dir=\"auto\">fork와 spawn</h3>\n<p dir=\"auto\">fork는 Unix의 <code class=\"notranslate\">fork(2)</code> 시스템 콜을 그대로 사용합니다. 호출 순간 커널이 프로세스의 복제본을 만들고, 자식은 부모의 모든 것(로드된 모듈, 생성된 객체, 열린 파일 디스크립터)을 승계한 채 fork 지점부터 실행을 이어갑니다.</p>\n<p dir=\"auto\">하지만 커널은 메모리를 실제로 복사하지 않습니다. 부모의 페이지 테이블만 복사하고, 물리 메모리 페이지는 부모와 자식이 공유합니다. 어느 한쪽이 페이지에 쓰기를 시도하는 순간에야 해당 페이지가 복사되는데, 이러한 방식을 Copy-on-Write(COW)라고 합니다.</p>\n<p dir=\"auto\">spawn은 새 Python 인터프리터를 처음부터 실행하고(fresh interpreter), 자식에게는 실행에 필요한 최소한의 인자만 pickle로 직렬화해 넘깁니다. 자식은 부모의 메모리를 전혀 공유하지 않고, 필요한 모듈을 스스로 다시 import합니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch2-2\"></a></p>\n<h3 dir=\"auto\">실행 결과 비교</h3>\n<p dir=\"auto\">앞의 설명만으로는 차이를 직관적으로 이해하기 쉽지 않기 때문에, 장단점을 비교하기 위해 스크립트를 실행해 보았습니다.</p>\n<p dir=\"auto\">측정에 사용한 코드는 다음과 같습니다.</p>\n<div class=\"highlight highlight-source-python\" dir=\"auto\"><pre class=\"notranslate\"><span class=\"pl-k\">from</span> __future__ <span class=\"pl-k\">import</span> <span class=\"pl-s1\">annotations</span>\n\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">multiprocessing</span> <span class=\"pl-k\">as</span> <span class=\"pl-s1\">mp</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">sys</span>\n<span class=\"pl-k\">import</span> <span class=\"pl-s1\">time</span>\n\n<span class=\"pl-c1\">K</span> <span class=\"pl-c1\">=</span> <span class=\"pl-c1\">10</span>  <span class=\"pl-c\"># 자식 프로세스 수</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">import_heavy_modules</span>():\n    <span class=\"pl-k\">import</span> <span class=\"pl-s1\">airflow</span>\n\n<span class=\"pl-k\">def</span> <span class=\"pl-en\">read_mem_mb</span>(<span class=\"pl-s1\">pid</span>: <span class=\"pl-s1\">int</span> <span class=\"pl-c1\">|</span> <span class=\"pl-s1\">str</span>) <span class=\"pl-c1\">-&gt;</span> <span class=\"pl-s1\">tuple</span>[<span class=\"pl-smi\">float</span>, ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "Airflow 멀티프로세싱으로 병렬·격리 확보",
+        "tags": [
+          "Airflow",
+          "Python",
+          "fork",
+          "spawn",
+          "GIL"
+        ],
+        "concepts": [
+          "멀티프로세싱",
+          "병렬 처리",
+          "작업 격리"
+        ],
+        "key_points": [
+          {
+            "point": "Airflow는 task의 병렬 실행과 격리 두 가지 요구를 만족해야 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Python GIL 때문에 Airflow는 멀티프로세싱을 선택해 CPU 병렬성을 확보한다.",
+            "timestamp": null
+          },
+          {
+            "point": "fork는 COW로 메모리를 공유하고, spawn은 새 인터프리터를 시작해 모듈 오염을 방지한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "Unix 환경에서 Airflow task 실행 시 fork start method를 사용해 메모리 사용량을 최소화하고 CPU 코어를 효율적으로 활용한다.",
+          "모듈 오염이나 코드 변경 반영이 중요한 경우 Airflow task를 spawn start method로 실행하도록 설정해 격리성을 강화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Python 멀티프로세싱에서 메모리를 부모와 공유하는 방식은?",
+            "options": [
+              "spawn",
+              "fork",
+              "forkserver",
+              "thread"
+            ],
+            "answer_index": 1,
+            "explanation": "fork는 Unix의 fork 시스템 콜을 사용해 페이지 테이블만 복사하고 물리 메모리를 공유하는 Copy-on-Write 방식을 적용한다."
+          },
+          {
+            "question": "Airflow task가 반드시 만족해야 하는 두 핵심 요구 사항은?",
+            "options": [
+              "Scalability와 Security",
+              "Parallelism와 Isolation",
+              "Latency와 Throughput",
+              "Fault Tolerance와 Monitoring"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 Airflow는 병렬성(parallelism)과 격리성(isolation)을 핵심 요구 사항으로 제시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

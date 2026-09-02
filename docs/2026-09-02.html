@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 09월 02일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      arXiv:stat.ML · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2608.31114v1" target="_blank">Overcoming critical slowing down in frustrated spin systems by learned multiscale sampling</a>
+    </h2>
+
+    <p class="item-summary">학습 기반 다중스케일 샘플링으로 복잡계 MCMC 효율 향상</p>
+
+    
+    <div class="tags">
+      <span class="tag">Swendsen--Wang</span><span class="tag">Wolff</span><span class="tag">WCRG</span><span class="tag">wavelet conditional renormalization group</span><span class="tag">soft-spin model</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2608.31114v1" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>전통 클러스터 알고리즘은 약한 좌절에서도 실패한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>WCRG는 파동렛 조건부 RG를 학습해 다중 스케일에서 샘플링한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>각 스케일에서 O(1) 스윕으로 전체 O(log₂L) 복잡도 달성</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 WCRG를 이용해 좌절 스핀 글라스 시뮬레이션의 MCMC 샘플링 속도를 높인다</div>
+    
+    <div class="idea">💡 학습된 파동렛 조건부 분포를 고차원 베이지안 모델의 추론에 적용해 샘플링 효율을 개선한다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. WCRG가 사용하여 학습하는 확률 분포는 무엇에 대한 것인가?</div>
+      
+      <div class="quiz-opt">A) 집합적 변동</div>
+      
+      <div class="quiz-opt">B) 개별 스핀</div>
+      
+      <div class="quiz-opt">C) 외부 자기장</div>
+      
+      <div class="quiz-opt">D) 온도</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 집합적 변동</div>
+          <div class="quiz-explanation">본문은 WCRG가 좌절 2D 소프트-스핀 모델의 집합적 변동 확률 분포를 학습한다고 언급한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. WCRG가 달성한 전체 샘플링 복잡도는?</div>
+      
+      <div class="quiz-opt">A) O(L)</div>
+      
+      <div class="quiz-opt">B) O(log₂L)</div>
+      
+      <div class="quiz-opt">C) O(1)</div>
+      
+      <div class="quiz-opt">D) O(L²)</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) O(log₂L)</div>
+          <div class="quiz-explanation">본문에 전체 샘플링 복잡도가 O(log₂L)라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://mvakde.github.io/blog/44-on-arc-1/" target="_blank">I trained a small transformer in 1.5hrs and it beats many LLMs</a>
+    </h2>
+
+    <p class="item-summary">샘플 효율성 높은 트랜스포머로 ARC 비용 절감</p>
+
+    
+    <div class="tags">
+      <span class="tag">ARC-AGI-1</span><span class="tag">ARC-2</span><span class="tag">flash attention</span><span class="tag">Normuon</span><span class="tag">SwiGlu</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://mvakde.github.io/blog/44-on-arc-1/" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>1.5시간에 5090 GPU로 작은 트랜스포머를 학습해 ARC‑1에서 44% 정확도 달성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>SwiGlu·RMSnorm 등 최신 아키텍처와 flash attention 적용으로 비용을 67¢ 이하로 감소</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>입력 토큰을 제외하고 출력 토큰만 학습해 샘플 효율성을 40%→44% 향상</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 flash attention과 Normuon 옵티마이저를 기존 메타러닝 벤치마크 학습 파이프라인에 적용해 GPU 비용을 50% 이상 절감한다</div>
+    
+    <div class="idea">💡 색·다이헤드럴 증강과 3D RoPE 임베딩을 유사 메타러닝 데이터셋에 적용해 학습 샘플 수를 절반 이하로 줄인다</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 이 모델이 ARC‑1에서 달성한 정확도는?</div>
+      
+      <div class="quiz-opt">A) 40%</div>
+      
+      <div class="quiz-opt">B) 44%</div>
+      
+      <div class="quiz-opt">C) 50%</div>
+      
+      <div class="quiz-opt">D) 60%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 44%</div>
+          <div class="quiz-explanation">본문에 "44% on ARC-AGI-1"이라고 명시되어 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. 비용을 크게 낮춘 주요 기술이 아닌 것은?</div>
+      
+      <div class="quiz-opt">A) SwiGlu</div>
+      
+      <div class="quiz-opt">B) RMSnorm</div>
+      
+      <div class="quiz-opt">C) Normuon</div>
+      
+      <div class="quiz-opt">D) AdamW</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ D) AdamW</div>
+          <div class="quiz-explanation">AdamW는 이전에 사용했지만 본 모델에서는 Normuon으로 교체했다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Weekly deep daiv. · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://deepdaiv.stibee.com/p/161" target="_blank">Reasoning 모델을 더 효율적으로 가르치는 방법</a>
+    </h2>
+
+    <p class="item-summary">대형 모델 지식 전달로 추론 비용 절감</p>
+
+    
+    <div class="tags">
+      <span class="tag">Knowledge Distillation</span><span class="tag">On-Policy Distillation</span><span class="tag">Dense Feedback</span><span class="tag">Sparse Feedback</span><span class="tag">Exposure Bias</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://deepdaiv.stibee.com/p/161" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>교사 모델의 토큰 확률 분포를 학생 모델에 맞추는 Knowledge Distillation은 Dense Feedback을 제공한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>On-Policy Distillation은 학생이 생성한 답을 교사가 평가해 토큰‑레벨 피드백을 주어 Exposure Bias를 완화한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Sparse Feedback(최종 보상)과 Dense Feedback(토큰별 확률) 사이의 차이를 이해하고, OPD와 최신 연구(Agarwal et al., 2023)를 활용해 학습 파이프라인을 설계한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 학생 모델이 자체 생성한 응답을 교사 모델에 전달해 토큰‑레벨 확률을 loss에 활용하는 On‑Policy Distillation 파이프라인을 구축한다.</div>
+    
+    <div class="idea">💡 정적 데이터셋 대신 학생 모델의 Rollout을 이용해 동적 학습 데이터를 생성함으로써 Exposure Bias를 감소시키고, Dense Feedback을 활용한 미세 조정을 수행한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 다음 중 Dense Feedback의 특징이 아닌 것은?</div>
+      
+      <div class="quiz-opt">A) 교사 모델이 각 토큰의 확률 분포를 제공한다</div>
+      
+      <div class="quiz-opt">B) 학생 모델에 최종 정답 여부만 보상한다</div>
+      
+      <div class="quiz-opt">C) 피드백이 토큰 수준에서 세밀하게 제공된다</div>
+      
+      <div class="quiz-opt">D) 학습 신호가 토큰별 선호도를 반영한다</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) 학생 모델에 최종 정답 여부만 보상한다</div>
+          <div class="quiz-explanation">Sparse Feedback는 최종 정답 여부만 보상하는 반면, Dense Feedback은 각 토큰의 확률 분포와 선호도를 제공한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">5</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/w9RDunJACkc" target="_blank">GLM 5.3: Powerful AI Is Becoming Almost Free</a>
+    </h2>
+
+    <p class="item-summary">고성능 AI 모델 비용 급감, 실험 비용 절감</p>
+
+    
+    <div class="tags">
+      <span class="tag">GLM 5.3</span><span class="tag">Lambda</span><span class="tag">GPU Cloud</span><span class="tag">Two Minute Papers</span><span class="tag">GLM 5.3 Flash</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/w9RDunJACkc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>GLM 5.3가 높은 성능을 유지하면서 비용이 크게 낮아졌음</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Lambda GPU 클라우드에서 저렴하게 모델을 활용 가능</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>자세한 내용은 GLM 5.3 Flash 블로그와 소셜 미디어에서 확인 가능</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      D2 Blog · 관련도 <span class="score">4</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://d2.naver.com/helloworld/4452165" target="_blank">Python의 멀티프로세싱과 Airflow, 그리고 관련된 문제 해결기 1편</a>
+    </h2>
+
+    <p class="item-summary">Airflow 멀티프로세싱으로 병렬·격리 확보</p>
+
+    
+    <div class="tags">
+      <span class="tag">Airflow</span><span class="tag">Python</span><span class="tag">fork</span><span class="tag">spawn</span><span class="tag">GIL</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://d2.naver.com/helloworld/4452165" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Airflow는 task의 병렬 실행과 격리 두 가지 요구를 만족해야 한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>Python GIL 때문에 Airflow는 멀티프로세싱을 선택해 CPU 병렬성을 확보한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>fork는 COW로 메모리를 공유하고, spawn은 새 인터프리터를 시작해 모듈 오염을 방지한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 Unix 환경에서 Airflow task 실행 시 fork start method를 사용해 메모리 사용량을 최소화하고 CPU 코어를 효율적으로 활용한다.</div>
+    
+    <div class="idea">💡 모듈 오염이나 코드 변경 반영이 중요한 경우 Airflow task를 spawn start method로 실행하도록 설정해 격리성을 강화한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. Python 멀티프로세싱에서 메모리를 부모와 공유하는 방식은?</div>
+      
+      <div class="quiz-opt">A) spawn</div>
+      
+      <div class="quiz-opt">B) fork</div>
+      
+      <div class="quiz-opt">C) forkserver</div>
+      
+      <div class="quiz-opt">D) thread</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) fork</div>
+          <div class="quiz-explanation">fork는 Unix의 fork 시스템 콜을 사용해 페이지 테이블만 복사하고 물리 메모리를 공유하는 Copy-on-Write 방식을 적용한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. Airflow task가 반드시 만족해야 하는 두 핵심 요구 사항은?</div>
+      
+      <div class="quiz-opt">A) Scalability와 Security</div>
+      
+      <div class="quiz-opt">B) Parallelism와 Isolation</div>
+      
+      <div class="quiz-opt">C) Latency와 Throughput</div>
+      
+      <div class="quiz-opt">D) Fault Tolerance와 Monitoring</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Parallelism와 Isolation</div>
+          <div class="quiz-explanation">본문에서 Airflow는 병렬성(parallelism)과 격리성(isolation)을 핵심 요구 사항으로 제시한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>

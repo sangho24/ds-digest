@@ -14,15 +14,15 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 1,
+      "count": 3,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
@@ -32,9 +32,9 @@
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "기업용 AI 어시스턴트": {
       "aliases": [],
@@ -44,15 +44,21 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-08-31"
+      "last_seen": "2026-09-02"
+    },
+    "멀티스케일 샘플링": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
     },
     "멀티프로세싱": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "모델 기반 제어와 강화학습 통합": {
       "aliases": [],
@@ -62,15 +68,15 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "손실 함수": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "스타트업 성장 지표": {
       "aliases": [],
@@ -90,11 +96,23 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
     },
-    "작업 격리": {
+    "온-폴리시 학습": {
       "aliases": [],
       "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "임계 감쇠 완화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "작업 격리": {
+      "aliases": [],
+      "count": 2,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01"
+      "last_seen": "2026-09-02"
     },
     "재무 데이터 추적": {
       "aliases": [],
@@ -108,6 +126,18 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
     },
+    "조건부 확률 모델링": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
+    "지식 증류": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
+    },
     "프롬프트 협업": {
       "aliases": [],
       "count": 1,
@@ -119,8 +149,14 @@
       "count": 1,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
+    },
+    "피드백 종류": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-01T18:11:04.681008+09:00",
+  "updated_at": "2026-09-02T09:15:32.816451+09:00",
   "version": 1
 }
