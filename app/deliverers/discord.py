@@ -37,6 +37,7 @@ import httpx
 import structlog
 
 from app.config import get_settings
+from app.mathtext import to_readable
 from app.models import DigestItem
 from app.preferences import item_id
 
@@ -65,7 +66,10 @@ def _headers() -> dict[str, str]:
 
 
 def _truncate(text: str, limit: int) -> str:
-    text = str(text or "").strip()
+    # LaTeX 흔적을 먼저 정리한다. Discord는 수식을 렌더링하지 않아서
+    # `_{μ,d}^{(α)}` 같은 표기가 그대로 화면에 찍힌다(실측 2026-09-02 퀴즈).
+    # 자르기 전에 해야 변환이 잘린 중괄호에 걸려 깨지지 않는다.
+    text = to_readable(str(text or "")).strip()
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
