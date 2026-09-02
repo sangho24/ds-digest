@@ -40,6 +40,7 @@ CHANNEL = "999"
 def _settings(**over):
     base = dict(
         discord_bot_token="tok", discord_channel_id=CHANNEL, dry_run=False,
+        max_quiz_per_digest=5,
     )
     base.update(over)
     return SimpleNamespace(**base)
@@ -394,3 +395,37 @@ def test_post_gives_up_after_repeated_rate_limits(monkeypatch):
 
     assert _a.run(d._post(_Always429(), {"content": "hi"})) is None
     assert _Always429.calls == 3      # 무한 재시도는 하지 않는다
+
+
+# ── 퀴즈 상한과 정답 노출 ──────────────────────────────────────────────────
+# Discord Poll은 어느 선지가 정답인지 알려주지 않는다. 투표 결과만 보여준다.
+# 정답을 따로 붙이지 않으면 맞았는지 확인할 방법이 없고, 학습용 퀴즈가 설문이 된다.
+
+def test_quiz_caption_hides_answer_behind_spoiler():
+    import app.deliverers.discord as d
+    item = _item(quiz_count=1)
+    caption = d._quiz_caption(item, 0, 3)
+    assert caption.startswith("🧠 **퀴즈 3**")
+    assert "||정답:" in caption and caption.rstrip().endswith("||")
+    # 스포일러 밖에 정답이 새면 안 된다.
+    before = caption.split("||")[0]
+    assert item.analysis.quiz[0].options[item.analysis.quiz[0].answer_index] not in before
+
+
+def test_quiz_selection_round_robins_items():
+    """상한이 걸려도 모든 아이템이 최소 한 문항은 낸다."""
+    import app.deliverers.discord as d
+    items = [_item(title=f"i{i}", url=f"https://e.com/{i}", quiz_count=3) for i in range(4)]
+    picked = d._select_quiz(items, limit=5)
+    assert len(picked) == 5
+    titles = {it.raw.title for it, _ in picked}
+    assert titles == {"i0", "i1", "i2", "i3"}, titles
+    # 앞에서부터 다 채우면 i0가 3문항을 먹고 i3는 0문항이 된다.
+    assert [q for _, q in picked[:4]] == [0, 0, 0, 0]
+
+
+def test_quiz_selection_respects_short_pools():
+    import app.deliverers.discord as d
+    items = [_item(title="a", url="https://e.com/a", quiz_count=1)]
+    assert len(d._select_quiz(items, limit=5)) == 1
+    assert d._select_quiz(items, limit=0) == []

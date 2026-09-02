@@ -220,6 +220,62 @@ def _format_item(item: DigestItem, index: int) -> str:
     return _truncate("\n".join(lines), MAX_CONTENT)
 
 
+CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
+
+
+def _quiz_caption(item: DigestItem, q_index: int, number: int) -> str:
+    """퀴즈 메시지 본문 — 정답과 해설을 스포일러로 붙인다.
+
+    Discord Poll은 **어느 선지가 정답인지 알려주지 않는다.** 투표 결과만
+    보여준다. 그래서 정답을 따로 붙이지 않으면 맞았는지 확인할 방법이 없고,
+    학습용 퀴즈가 그냥 설문이 된다(Telegram판은 tg-spoiler로 같이 보냈다).
+
+    스포일러로 감싸므로 눌러야 보인다 — 투표 전에 눈에 먼저 들어오지 않는다.
+    """
+    q = item.analysis.quiz[q_index]
+    try:
+        marker = CIRCLED[q.answer_index]
+        answer = q.options[q.answer_index]
+    except (IndexError, TypeError):
+        return f"🧠 **퀴즈 {number}**"
+
+    body = f"{marker} {answer}"
+    if q.explanation:
+        body += f" — {q.explanation}"
+    # 스포일러 안에 || 가 들어가면 태그가 깨진다.
+    body = body.replace("||", "│")
+    return _truncate(f"🧠 **퀴즈 {number}**\n||정답: {body}||", MAX_CONTENT)
+
+
+def _select_quiz(items: list[DigestItem], limit: int) -> list[tuple[DigestItem, int]]:
+    """발송할 (아이템, 문항 인덱스) 목록. 아이템을 번갈아 채운다.
+
+    문항을 아이템 순서대로 다 붙이면 앞쪽 아이템만 여러 문항을 갖고 뒤쪽은
+    한 문항도 못 낸다. 번갈아 채우면 상한이 걸려도 모든 아이템이 최소 한
+    문항은 낸다.
+
+    상한이 필요한 이유: 아이템 5건 × 2문항이면 헤더 1 + 아이템 5 + 퀴즈 10 =
+    16개 메시지를 연달아 쏜다. 채널이 퀴즈로 뒤덮이고, Discord 레이트리밋에도
+    걸린다(실측 2026-09-02 발송에서 한 건이 429로 사라졌다).
+    """
+    if limit <= 0:
+        return []
+    picked: list[tuple[DigestItem, int]] = []
+    depth = 0
+    while len(picked) < limit:
+        added = False
+        for item in items:
+            if depth < len(item.analysis.quiz):
+                picked.append((item, depth))
+                added = True
+                if len(picked) >= limit:
+                    break
+        if not added:
+            break
+        depth += 1
+    return picked
+
+
 def _build_poll(item: DigestItem, q_index: int) -> dict | None:
     """문항 하나를 Discord 네이티브 Poll로 만든다. 선지가 부족하면 None."""
     quiz = item.analysis.quiz
@@ -268,27 +324,26 @@ async def send_discord_digest(items: list[DigestItem]) -> bool:
             await _react(client, msg["id"], LIKE_EMOJI)
             await _react(client, msg["id"], DISLIKE_EMOJI)
 
-        # 퀴즈 — 문항마다 네이티브 Poll 하나.
+        # 퀴즈 — 문항마다 네이티브 Poll 하나. 아이템을 번갈아 상한까지만.
         number = 0
-        for item in items:
-            for q_index in range(len(item.analysis.quiz)):
-                poll = _build_poll(item, q_index)
-                if poll is None:
-                    continue
-                number += 1
-                msg = await _post(
-                    client,
-                    {"content": f"🧠 **퀴즈 {number}**", "poll": poll},
-                )
-                if not msg:
-                    continue
-                record_message(
-                    "quiz",
-                    msg["id"],
-                    item_id=item_id(item.raw.url),
-                    question_index=q_index,
-                    answer_index=item.analysis.quiz[q_index].answer_index,
-                )
+        for item, q_index in _select_quiz(items, settings.max_quiz_per_digest):
+            poll = _build_poll(item, q_index)
+            if poll is None:
+                continue
+            number += 1
+            msg = await _post(
+                client,
+                {"content": _quiz_caption(item, q_index, number), "poll": poll},
+            )
+            if not msg:
+                continue
+            record_message(
+                "quiz",
+                msg["id"],
+                item_id=item_id(item.raw.url),
+                question_index=q_index,
+                answer_index=item.analysis.quiz[q_index].answer_index,
+            )
 
     logger.info("discord_digest_sent", items=len(items), channel=settings.discord_channel_id)
     return True
