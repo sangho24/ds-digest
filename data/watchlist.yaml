@@ -15,6 +15,12 @@
 version: 1
 updated_at: "2026-09-03"
 
+# W0 프로브 결과 (2026-09-03, GitHub Actions 러너에서 실측)
+#   HF org 13개 전부 실재 확인, 이름 오류 0건
+#   최근 90일 신규 리포 42건 (수정 포함 135건) -> 계획 6절 W0 판정 [성립]
+#   observed_90d 로 조직별 실측을 기록했고 priority 를 그에 맞춰 조정했다.
+#   로컬 망에서는 huggingface.co 가 SNI 차단이라 이 검증은 Actions 에서만 가능하다.
+
 # ---------------------------------------------------------------------------
 # 가중치 공개형 (weights-open): 4단계 전이가 모두 관측 가능하다. 추적 가치 최상
 # ---------------------------------------------------------------------------
@@ -26,6 +32,7 @@ orgs:
     series: [Qwen]               # prefix 매칭
     blog: "https://qwenlm.github.io/blog/index.xml"   # 실측 2026-09-03: 피드 확인됨
     priority: 1
+    observed_90d: "신규 11 / 수정 11"  # 실측 2026-09-03
 
   - key: deepseek
     label: DeepSeek
@@ -34,6 +41,7 @@ orgs:
     series: [DeepSeek]
     blog: null                   # 공식 피드 확인 필요. GitHub 릴리스로 대체 가능
     priority: 1
+    observed_90d: "신규 5 / 수정 7"  # 실측 2026-09-03
 
   - key: zai
     label: Z.ai / GLM
@@ -41,7 +49,8 @@ orgs:
     hf_org: zai-org              # verify (과거 THUDM 였음. 조직명 이관 확인 필요)
     series: [GLM, ChatGLM]
     blog: null
-    priority: 1                  # 지시서가 "GLM 가중치 2주 후 대기"를 사례로 든 조직
+    priority: 1
+    observed_90d: "신규 6 / 수정 8"  # 실측 2026-09-03                  # 지시서가 "GLM 가중치 2주 후 대기"를 사례로 든 조직
 
   - key: moonshot
     label: Moonshot AI (Kimi)
@@ -50,6 +59,7 @@ orgs:
     series: [Kimi, Moonlight]
     blog: null
     priority: 2
+    observed_90d: "신규 2 / 수정 2"  # 실측 2026-09-03
 
   - key: meta
     label: Meta AI (Llama)
@@ -57,7 +67,8 @@ orgs:
     hf_org: meta-llama           # verify
     series: [Llama, Meta-Llama, Code-Llama]
     blog: null
-    priority: 2
+    priority: 3
+    observed_90d: "신규 0 / 수정 0. 90일간 조용"  # 실측 2026-09-03
 
   - key: mistral
     label: Mistral AI
@@ -66,6 +77,7 @@ orgs:
     series: [Mistral, Mixtral, Codestral, Ministral, Magistral, Devstral]
     blog: null                   # 실측 2026-09-03: /news/rss.xml 은 404. 피드 URL 탐색 필요
     priority: 2
+    observed_90d: "신규 0 / 수정 18. 같은 패턴"  # 실측 2026-09-03
 
   - key: google-open
     label: Google (Gemma)
@@ -74,6 +86,7 @@ orgs:
     series: [gemma, Gemma, paligemma, codegemma, recurrentgemma, shieldgemma, txgemma]
     blog: null
     priority: 2
+    observed_90d: "신규 0 / 수정 38. 기존 리포를 계속 손본다"  # 실측 2026-09-03
 
   - key: openai-open
     label: OpenAI (gpt-oss)
@@ -81,7 +94,8 @@ orgs:
     hf_org: openai               # verify
     series: [gpt-oss, whisper]
     blog: null
-    priority: 2                  # 폐쇄 조직의 개방 릴리스라 전이 패턴 자체가 관측 가치가 있다
+    priority: 3
+    observed_90d: "신규 0 / 수정 0"  # 실측 2026-09-03                  # 폐쇄 조직의 개방 릴리스라 전이 패턴 자체가 관측 가치가 있다
 
   - key: nvidia
     label: NVIDIA (Nemotron)
@@ -89,7 +103,8 @@ orgs:
     hf_org: nvidia               # verify. org 가 크므로 series 필터 필수
     series: [Nemotron, nemotron, Llama-3, Cosmos]
     blog: null
-    priority: 3
+    priority: 1
+    observed_90d: "신규 11 / 수정 21. 감으로 3순위였으나 실측 공동 1위"  # 실측 2026-09-03
 
   - key: allenai
     label: Allen Institute for AI (OLMo)
@@ -97,7 +112,8 @@ orgs:
     hf_org: allenai              # verify
     series: [OLMo, olmo, Molmo, Tulu, tulu]
     blog: null
-    priority: 3
+    priority: 2
+    observed_90d: "신규 6 / 수정 24"  # 실측 2026-09-03
     note: >
       완전 공개(가중치·데이터·학습코드) 관행을 가진 조직이라 대조군으로 가치가 크다.
       "가중치는 열고 리포트는 닫는" 관행의 반대 극단을 보여준다.
@@ -112,6 +128,7 @@ orgs:
     series: [EXAONE]
     blog: null
     priority: 2
+    observed_90d: "신규 0 / 수정 5. 국내 조직이라 전략적으로 유지"  # 실측 2026-09-03
 
   - key: upstage
     label: Upstage (Solar)
@@ -120,6 +137,7 @@ orgs:
     series: [SOLAR, solar, Solar]
     blog: null
     priority: 3
+    observed_90d: "신규 1 / 수정 1"  # 실측 2026-09-03
 
 # ---------------------------------------------------------------------------
 # 폐쇄형 (closed): 가중치 전이가 없다. announced_at / report_at 두 단계만 추적한다.
@@ -158,6 +176,7 @@ orgs:
     series: [Grok, grok]
     blog: null
     priority: 3
+    observed_90d: "신규 0 / 수정 0. 전체 리포 2건뿐"  # 실측 2026-09-03
 
 # ---------------------------------------------------------------------------
 # 추적 대상 상태 전이 (4.2절)
