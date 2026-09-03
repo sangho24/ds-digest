@@ -3935,23 +3935,6 @@
    "first_seen": "2026-09-03T06:06:36.259665Z",
    "last_seen": "2026-09-03T06:06:36.259665Z"
   },
-  "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp": {
-   "org": "deepseek",
-   "repo_id": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
-   "created_at": "2026-08-31T06:16:18Z",
-   "last_modified": "2026-09-01T09:22:10Z",
-   "weights_at": "2026-08-31T06:16:18Z",
-   "has_weights": true,
-   "model_card_at": "2026-08-31T06:16:18Z",
-   "report_at": null,
-   "license": "mit",
-   "gated": "false",
-   "arxiv_ids": [],
-   "derivative": null,
-   "base_models": [],
-   "first_seen": "2026-09-03T06:06:36.259665Z",
-   "last_seen": "2026-09-03T06:06:36.259665Z"
-  },
   "deepseek-ai/DeepSeek-V4-Pro": {
    "org": "deepseek",
    "repo_id": "deepseek-ai/DeepSeek-V4-Pro",
@@ -10722,25 +10705,6 @@
    "first_seen": "2026-09-03T06:06:36.259665Z",
    "last_seen": "2026-09-03T06:06:36.259665Z"
   },
-  "zai-org/GLM-5.3-BF16": {
-   "org": "zai",
-   "repo_id": "zai-org/GLM-5.3-BF16",
-   "created_at": "2026-08-25T06:43:55Z",
-   "last_modified": "2026-08-28T13:46:13Z",
-   "weights_at": "2026-08-25T06:43:55Z",
-   "has_weights": true,
-   "model_card_at": "2026-08-25T06:43:55Z",
-   "report_at": "2026-08-25T06:43:55Z",
-   "license": "other",
-   "gated": "false",
-   "arxiv_ids": [
-    "2602.15763"
-   ],
-   "derivative": null,
-   "base_models": [],
-   "first_seen": "2026-09-03T06:06:36.259665Z",
-   "last_seen": "2026-09-03T06:06:36.259665Z"
-  },
   "zai-org/GLM-5.3-Flash": {
    "org": "zai",
    "repo_id": "zai-org/GLM-5.3-Flash",
@@ -10750,25 +10714,6 @@
    "has_weights": true,
    "model_card_at": "2026-08-25T06:43:14Z",
    "report_at": "2026-08-25T06:43:14Z",
-   "license": "mit",
-   "gated": "false",
-   "arxiv_ids": [
-    "2602.15763"
-   ],
-   "derivative": null,
-   "base_models": [],
-   "first_seen": "2026-09-03T06:06:36.259665Z",
-   "last_seen": "2026-09-03T06:06:36.259665Z"
-  },
-  "zai-org/GLM-5.3-Flash-BF16": {
-   "org": "zai",
-   "repo_id": "zai-org/GLM-5.3-Flash-BF16",
-   "created_at": "2026-08-25T06:45:05Z",
-   "last_modified": "2026-08-31T11:34:44Z",
-   "weights_at": "2026-08-25T06:45:05Z",
-   "has_weights": true,
-   "model_card_at": "2026-08-25T06:45:05Z",
-   "report_at": "2026-08-25T06:45:05Z",
    "license": "mit",
    "gated": "false",
    "arxiv_ids": [
