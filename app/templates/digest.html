@@ -93,10 +93,14 @@
   /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
      다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
   .today { margin-top: 14px; }
-  .today-label {
-    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--faint); margin-bottom: 7px;
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
   }
+  .today-label { margin-bottom: 7px; }
   .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
   .concept {
     font-size: 12.5px; color: var(--accent);
@@ -133,16 +137,7 @@
 
   /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
      "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
-  .placing {
-    border-left: 2px solid var(--rule);
-    padding: 2px 0 2px 14px; margin: 0 0 16px;
-    font-size: 14px; color: var(--muted);
-  }
-  .placing b {
-    display: block; font-size: 11px; letter-spacing: .09em;
-    text-transform: uppercase; color: var(--faint); font-weight: 500;
-    margin-bottom: 3px;
-  }
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
 
   /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
      실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
@@ -172,20 +167,25 @@
   .points .dot { color: var(--faint); }
 
   /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
-     여기가 결과물이다. 나머지는 조용히 둔다. */
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
   .ideas {
-    background: var(--idea-dim);
-    border-left: 3px solid var(--idea);
-    border-radius: 0 5px 5px 0;
-    padding: 13px 16px; margin: 0 0 16px;
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
   }
-  .ideas-label {
-    font-family: 'IBM Plex Mono', ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--idea); font-weight: 500; margin-bottom: 8px;
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
   }
-  .ideas p { margin: 0 0 7px; font-size: 14.5px; line-height: 1.6; }
-  .ideas p:last-child { margin-bottom: 0; }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
 
   .quiz { margin: 0 0 14px; }
   .quiz summary {
@@ -252,7 +252,7 @@
     {% endfor %}{% endfor %}
     {% if today_concepts %}
     <div class="today">
-      <div class="today-label">오늘의 개념</div>
+      <div class="label today-label">오늘의 개념</div>
       <div class="today-list">
         {% for c in today_concepts %}<span class="concept">{{ c }}</span>{% endfor %}
       </div>
@@ -276,8 +276,8 @@
 
         {% if item.analysis.positioning %}
         <div class="placing">
-          <b>배경과 위치</b>
-          {{ item.analysis.positioning }}
+          <span class="label">배경과 위치</span>
+          <div>{{ item.analysis.positioning }}</div>
         </div>
         {% endif %}
 
@@ -308,10 +308,12 @@
 
         {% if item.analysis.production_ideas %}
         <div class="ideas">
-          <div class="ideas-label">To&nbsp;do</div>
-          {% for idea in item.analysis.production_ideas %}
-          <p>{{ idea }}</p>
-          {% endfor %}
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            {% for idea in item.analysis.production_ideas %}
+            <li><span class="box"></span><span>{{ idea }}</span></li>
+            {% endfor %}
+          </ul>
         </div>
         {% endif %}
 
