@@ -36,12 +36,15 @@ jobs:
           python scripts/probe_sources.py \
             --days "${{ inputs.days }}" \
             ${{ inputs.only && format('--only {0}', inputs.only) || '' }} \
-            --out probe_result.json
+            --out probe_result.json \
+            --dump-raw probe_raw
 
       - name: 결과 아티팩트 업로드
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: probe-result
-          path: probe_result.json
+          path: |
+            probe_result.json
+            probe_raw/
           retention-days: 30

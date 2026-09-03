@@ -59,12 +59,29 @@ def fetch(url: str) -> tuple[str, Any, str]:
     return "error", None, f"{type(e).__name__}: {e}"[:120]
 
 
+RAW_DUMP_DIR: Path | None = None
+
+
+def _dump_raw(org_key: str, sort: str, payload: Any) -> None:
+  """조직별 HF 원응답을 저장한다. 로컬 망에서 HF 가 차단돼 있어 이 덤프가
+  곧 개발용 픽스처가 된다."""
+  if RAW_DUMP_DIR is None:
+    return
+  RAW_DUMP_DIR.mkdir(parents=True, exist_ok=True)
+  (RAW_DUMP_DIR / f"{org_key}.{sort}.json").write_text(
+    json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def probe_hf(org: dict, days: int) -> ProbeResult:
   hf_org = org.get("hf_org")
   if not hf_org:
     return ProbeResult(org["key"], "hf", "", "skipped", "폐쇄형이라 HF org 없음")
 
-  base = f"https://huggingface.co/api/models?author={hf_org}&limit=100&direction=-1"
+  # expand 로 카드 유무·게이팅·라이선스·arXiv 태그까지 한 번에 받는다.
+  # 전이 판정(가중치/모델카드/리포트/라이선스)에 전부 필요한 필드다.
+  expand = "&".join(f"expand[]={f}" for f in
+                    ("cardData", "createdAt", "lastModified", "tags", "gated", "private", "siblings"))
+  base = f"https://huggingface.co/api/models?author={hf_org}&limit=100&direction=-1&{expand}"
   series = [x.lower() for x in org.get("series") or []]
   cutoff = datetime.now(timezone.utc) - timedelta(days=days)
 
@@ -86,9 +103,11 @@ def probe_hf(org: dict, days: int) -> ProbeResult:
     if status != "ok":
       return status, None, detail
     try:
-      return "ok", json.loads(body), detail
+      data = json.loads(body)
     except json.JSONDecodeError as e:
       return "error", None, f"JSON 파싱 실패: {e}"
+    _dump_raw(org["key"], sort, data)
+    return "ok", data, detail
 
   # 두 번 조회한다. 한 정렬로는 둘 다 정확히 셀 수 없다.
   #   lastModified 정렬 = 최근 수정된 100건 -> touched 의 근거
@@ -146,7 +165,10 @@ def main() -> int:
   ap.add_argument("--only", choices=["hf", "blog"], help="한쪽만 검사")
   ap.add_argument("--delay", type=float, default=0.5, help="요청 간 간격(초)")
   ap.add_argument("--out", type=Path, help="결과 JSON 저장 경로")
+  ap.add_argument("--dump-raw", type=Path, help="HF 원응답을 조직별로 저장할 디렉토리")
   args = ap.parse_args()
+  global RAW_DUMP_DIR
+  RAW_DUMP_DIR = args.dump_raw
 
   wl = yaml.safe_load(WATCHLIST.read_text(encoding="utf-8"))
   orgs = wl["orgs"]
