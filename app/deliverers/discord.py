@@ -182,31 +182,81 @@ async def _react(client: httpx.AsyncClient, message_id: str, emoji: str) -> None
             return
 
 
+# 머리말에 실을 개념 수 상한. 다 넣으면 아이템 5건 × 3개까지 늘어나 머리말이
+# 본문보다 길어진다.
+MAX_HEADER_CONCEPTS = 8
+
+
+def _today_concepts(items: list[DigestItem], limit: int = MAX_HEADER_CONCEPTS) -> list[str]:
+    """오늘 다룬 개념을 등장 순서대로, 중복 없이."""
+    seen: list[str] = []
+    for item in items:
+        for concept in item.analysis.concepts:
+            if concept and concept not in seen:
+                seen.append(concept)
+    return seen[:limit]
+
+
 def _format_header(items: list[DigestItem]) -> str:
+    """머리말. HTML 지면과 같은 것을 같은 자리에 놓는다.
+
+    Discord에는 색도 폰트도 없으므로 위계를 마크다운 원시 요소로만 만든다.
+    개념은 인라인 코드로 감싼다 — 배경이 옅게 깔려 지면의 개념 칩과 같은
+    자리를 맡는다. 여기 반복해서 뜨는 말이 곧 관심사의 형태다.
+    """
     today = datetime.now(KST)
     yt = sum(1 for i in items if i.raw.source_type.value == "youtube")
     rss = len(items) - yt
-    parts = []
+    counts = [f"{len(items)}건"]
     if yt:
-        parts.append(f"📹 {yt}")
+        counts.append(f"📹 {yt}")
     if rss:
-        parts.append(f"📰 {rss}")
-    breakdown = "  " + " · ".join(parts) if parts else ""
-    return (
-        f"## 📬 DS Digest — {today.month}월 {today.day}일\n"
-        f"오늘의 큐레이션 {len(items)}건{breakdown}\n"
-        f"-# 💡 이 채널에 그냥 한국말로 말해주세요 — "
-        f"\"논문보다 실무 사례 위주로\" 같은 지시가 다음 날 반영됩니다. `/help`"
-    )
+        counts.append(f"📰 {rss}")
+
+    lines = [
+        "## DS Digest",
+        f"-# {today.month}월 {today.day}일 · " + " · ".join(counts),
+    ]
+    if concepts := _today_concepts(items):
+        lines += ["", "**오늘의 개념**", " ".join(f"`{c}`" for c in concepts)]
+    lines += [
+        "",
+        "-# 이 채널에 한국말로 쓰면 지시로 접수됩니다 — "
+        "\"논문보다 실무 사례 위주로\" 같은 말이 다음 날 반영됩니다. `/help`",
+    ]
+    return _truncate("\n".join(lines), MAX_CONTENT)
+
+
+# 두 축 계기의 눈금 수. 인라인 코드 안이라 등폭이므로 자리가 맞는다.
+_GAUGE_TICKS = 10
+
+
+def _gauge(name: str, value: int) -> str:
+    """`실행 ███████░░░ 7` — 지면의 막대를 글자로 옮긴 것.
+
+    블록 문자(█ ░)만 쓴다. 폰트 지원이 가장 넓고, 다른 진행 막대 문자들처럼
+    특정 플랫폼에서 통째로 빠지지 않는다.
+    """
+    filled = max(0, min(_GAUGE_TICKS, round(value / 10 * _GAUGE_TICKS)))
+    return f"`{name} {'█' * filled}{'░' * (_GAUGE_TICKS - filled)} {value}`"
 
 
 def _format_item(item: DigestItem, index: int) -> str:
+    """아이템 한 건. HTML 지면과 같은 순서·같은 이름으로 맞춘다.
+
+    지면에서 관련도 점수를 빼고 두 축(실행가능성·깊이)만 보이기로 했으므로
+    여기서도 뺀다. 순위는 앞의 번호가 이미 말하고, 그 점수가 어떻게 나왔는지는
+    두 축이 말한다.
+    """
     a, r = item.analysis, item.raw
     lines = [f"**{index}. {r.title}**", f"> {a.one_line_summary}"]
     # 논문이면 배경·위치를 요약 바로 아래에. 요약과 핵심만으로는 이 논문이 왜
     # 지금 여기 실렸는지가 안 보인다는 피드백(2026-09-03).
     if a.positioning:
-        lines.append(f"> 📍 {a.positioning}")
+        lines.append(f"-# 배경과 위치 — {a.positioning}")
+    lines.append("")
+
+    lines.append(f"{_gauge('실행', a.actionability)}　{_gauge('깊이', a.depth)}")
     lines.append("")
 
     if a.key_points:
@@ -216,12 +266,13 @@ def _format_item(item: DigestItem, index: int) -> str:
         lines.append("")
 
     if a.production_ideas:
-        lines.append("**적용 아이디어**")
+        lines.append("**To do**")
         for idea in a.production_ideas[:2]:
-            lines.append(f"· {idea}")
+            # □ 는 한글 폰트에도 거의 항상 있다. ☐ 보다 안전하다.
+            lines.append(f"□ {idea}")
         lines.append("")
 
-    meta = [r.source_label or r.source_name, f"관련도 {a.relevance_score}"]
+    meta = [r.source_label or r.source_name]
     if a.concepts:
         meta.append(" / ".join(a.concepts))
     lines.append(f"-# {' · '.join(meta)}")

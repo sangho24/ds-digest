@@ -125,14 +125,15 @@ def test_positioning_rendered_in_discord_and_contract():
     item = _digest_item("paper")
     item.analysis.positioning = "기존 RAG는 파일 단위로 검색했는데, 이 논문은 토큰 단위로 검색 시점을 정한다."
     text = dc._format_item(item, 1)
-    assert "📍 기존 RAG는" in text
-    assert text.index("📍") > text.index("> 요약")          # 요약 바로 아래
+    # Discord는 색도 폰트도 없으므로 구역 표시를 `-#` 작은 글씨 라벨로 한다.
+    assert "-# 배경과 위치 — 기존 RAG는" in text
+    assert text.index("배경과 위치") > text.index("> 요약")   # 요약 바로 아래
 
     payload = build_contract_item(item)
     assert payload["positioning"] == item.analysis.positioning
 
     item.analysis.positioning = None
-    assert "📍" not in dc._format_item(item, 1)
+    assert "배경과 위치" not in dc._format_item(item, 1)
     assert build_contract_item(item)["positioning"] is None
 
 

@@ -439,3 +439,78 @@ def test_quiz_caption_truncation_keeps_spoiler_closed():
     caption = d._quiz_caption(item, 0, 1)
     assert len(caption) <= d.MAX_CONTENT
     assert caption.endswith("||") and caption.count("||") == 2
+
+
+# ── 지면과 Discord를 같은 물건으로 (2026-09-03) ────────────────────────────
+# Discord는 HTML을 렌더링하지 않으므로 렌더러가 두 벌이다. 한쪽만 고치면 매일
+# 읽는 화면과 아카이브가 조용히 갈린다.
+
+def test_gauge_fills_proportionally():
+    import app.deliverers.discord as d
+    assert d._gauge("실행", 10) == "`실행 ██████████ 10`"
+    assert d._gauge("깊이", 0) == "`깊이 ░░░░░░░░░░ 0`"
+    assert d._gauge("실행", 7) == "`실행 ███████░░░ 7`"
+    # 눈금 수는 값과 무관하게 일정해야 자리가 맞는다.
+    for value in range(0, 11):
+        bar = d._gauge("x", value).strip("`").split()[1]
+        assert len(bar) == d._GAUGE_TICKS, (value, bar)
+    # 범위 밖 값이 와도 막대가 깨지지 않는다.
+    assert d._gauge("x", 99).count("█") == d._GAUGE_TICKS
+    assert d._gauge("x", -5).count("░") == d._GAUGE_TICKS
+
+
+def test_header_lists_today_concepts_as_chips():
+    import app.deliverers.discord as d
+    items = [_item(title=f"i{i}", url=f"https://e.com/{i}") for i in range(3)]
+    for i, item in enumerate(items):
+        item.analysis.concepts = [f"개념{i}", "공통개념"]
+
+    header = d._format_header(items)
+    assert "**오늘의 개념**" in header
+    assert "`개념0`" in header and "`공통개념`" in header
+    assert header.count("`공통개념`") == 1, "중복 개념은 한 번만"
+
+
+def test_header_caps_concepts_and_survives_empty():
+    import app.deliverers.discord as d
+    many = [_item(title=f"i{i}", url=f"https://e.com/{i}") for i in range(6)]
+    for i, item in enumerate(many):
+        item.analysis.concepts = [f"개념{i}a", f"개념{i}b", f"개념{i}c"]
+    assert len(d._today_concepts(many)) == d.MAX_HEADER_CONCEPTS
+
+    bare = [_item()]
+    bare[0].analysis.concepts = []
+    header = d._format_header(bare)
+    assert "**오늘의 개념**" not in header, "개념이 없으면 빈 제목을 남기지 않는다"
+    assert "DS Digest" in header
+
+
+def test_item_shows_two_axes_and_todo_not_relevance():
+    """지면에서 관련도 점수를 빼고 두 축만 보이기로 했으므로 여기서도 뺀다."""
+    import app.deliverers.discord as d
+    item = _item()
+    item.analysis.actionability = 8
+    item.analysis.depth = 3
+    item.analysis.production_ideas = ["카프카 컨슈머 배치 크기를 조정해본다"]
+    item.analysis.positioning = "기존 접근은 파일 단위였고 이 논문은 토큰 단위다."
+
+    text = d._format_item(item, 1)
+    assert "`실행 ████████░░ 8`" in text and "`깊이 ███░░░░░░░ 3`" in text
+    assert "관련도" not in text
+    assert "**To do**" in text and "□ 카프카 컨슈머" in text
+    assert "적용 아이디어" not in text
+    assert "-# 배경과 위치 — 기존 접근은" in text
+    # 순서: 요약 → 배경과 위치 → 계기 → 핵심 → To do
+    assert text.index("배경과 위치") < text.index("`실행") < text.index("**To do**")
+
+
+def test_item_without_optional_blocks_stays_clean():
+    import app.deliverers.discord as d
+    item = _item()
+    item.analysis.production_ideas = []
+    item.analysis.key_points = []
+    item.analysis.positioning = None
+    text = d._format_item(item, 2)
+    assert "**To do**" not in text and "배경과 위치" not in text
+    assert "`실행" in text, "계기는 항상 있다 — 두 축은 모든 아이템이 갖는다"
+    assert "\n\n\n" not in text, "빈 블록이 빈 줄만 남기면 안 된다"
