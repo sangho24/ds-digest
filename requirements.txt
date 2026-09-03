@@ -13,6 +13,9 @@ feedparser>=6.0.0
 httpx>=0.27.0
 markdownify>=0.13.1
 beautifulsoup4>=4.12
+# 릴리스 추적 워치리스트(data/watchlist.yaml). 사람이 주석과 함께 편집하는
+# 파일이라 JSON 대신 YAML 을 쓴다.
+pyyaml>=6.0
 
 # Database
 # 2.19+ 부터 pyiceberg 의존성 추가됨 → Python 3.14에서 MSVC 없이 빌드 불가

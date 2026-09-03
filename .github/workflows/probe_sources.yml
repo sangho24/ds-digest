@@ -1,0 +1,47 @@
+# 릴리스 추적 소스 프로브 (수동 실행 전용)
+#
+# 로컬 망에서 huggingface.co / mistral.ai 가 SNI 기반으로 차단돼 있어
+# (2026-09-03 실측: TLS ClientHello 전송 시점에 RST) 워치리스트를 로컬에서
+# 검증할 수 없다. Actions 러너는 다른 망이므로 여기서 돌린다.
+# 실운영 워커와 같은 경로에서 재는 것이라 우회가 아니라 더 정확한 검증이다.
+name: probe-release-sources
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: '최근 며칠을 셀지 (W0 판정 기준은 90)'
+        required: false
+        default: '90'
+      only:
+        description: 'hf | blog | (비우면 둘 다)'
+        required: false
+        default: ''
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 의존성 설치
+        run: pip install pyyaml
+
+      - name: 프로브 실행
+        run: |
+          python scripts/probe_sources.py \
+            --days "${{ inputs.days }}" \
+            ${{ inputs.only && format('--only {0}', inputs.only) || '' }} \
+            --out probe_result.json
+
+      - name: 결과 아티팩트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-result
+          path: probe_result.json
+          retention-days: 30
