@@ -1,167 +1,355 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — {{ date_str }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
 <style>
-  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
-  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #F7F0E4;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #2B2318;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #2B2318;
+    --shadow:     none;
+  }
 
-  /* 헤더 */
-  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
-  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
-  .header p { font-size:13px; color:#787774; margin:0; }
+  * { box-sizing: border-box; }
 
-  /* 카드 */
-  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  /* 소스 + 점수 */
-  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
-  .item-meta .score { color:#2EAADC; font-weight:600; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
 
-  /* 제목 */
-  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
-  .item-title a { color:#37352F; text-decoration:none; }
-  .item-title a:hover { text-decoration:underline; }
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
 
-  /* 요약 */
-  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  .today-label {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--faint); margin-bottom: 7px;
+  }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
 
-  /* 원본 링크 */
-  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
-  .orig-link:hover { text-decoration:underline; }
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
 
-  /* 섹션 구분선 */
-  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
 
-  /* 핵심 포인트 */
-  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
-  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
-  .key-point .bullet { color:#787774; }
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
 
-  /* 현업 적용 아이디어 */
-  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  /* 태그 */
-  .tags { margin-bottom:14px; }
-  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+  .summary { margin: 0 0 14px; color: var(--ink); }
 
-  /* 퀴즈 */
-  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
-  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
-  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
-  details.quiz-answer { margin-top:8px; }
-  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
-  details.quiz-answer summary::-webkit-details-marker { display:none; }
-  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
-  details.quiz-answer[open] summary::before { content:"▼ "; }
-  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
-  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
-  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing {
+    border-left: 2px solid var(--rule);
+    padding: 2px 0 2px 14px; margin: 0 0 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  .placing b {
+    display: block; font-size: 11px; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--faint); font-weight: 500;
+    margin-bottom: 3px;
+  }
 
-  /* 피드백 버튼 */
-  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
-  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  .gauge { display: flex; gap: 20px; margin: 0 0 16px; flex-wrap: wrap; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
 
-  /* 키워드 CTA */
-  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
-  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
-  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
 
-  /* 푸터 */
-  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다. */
+  .ideas {
+    background: var(--idea-dim);
+    border-left: 3px solid var(--idea);
+    border-radius: 0 5px 5px 0;
+    padding: 13px 16px; margin: 0 0 16px;
+  }
+  .ideas-label {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--idea); font-weight: 600; margin-bottom: 7px;
+  }
+  .ideas p { margin: 0 0 7px; font-size: 14.5px; line-height: 1.6; }
+  .ideas p:last-child { margin-bottom: 0; }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="header">
-    <h1>DS Digest</h1>
-    <p>{{ date_str }} · {{ items|length }}건</p>
-  </div>
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">{{ date_str }} · {{ items|length }}건</span>
+    </div>
+    {% set today_concepts = [] %}
+    {% for item in items %}{% for c in item.analysis.concepts %}
+      {% if c not in today_concepts %}{% set _ = today_concepts.append(c) %}{% endif %}
+    {% endfor %}{% endfor %}
+    {% if today_concepts %}
+    <div class="today">
+      <div class="today-label">오늘의 개념</div>
+      <div class="today-list">
+        {% for c in today_concepts %}<span class="concept">{{ c }}</span>{% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </header>
 
   {% for item in items %}
-  <div class="item">
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">{{ '%02d' % loop.index }}</div>
+      <div class="item-body">
 
-    <div class="item-meta">
-      {{ item.raw.source_name }} · 관련도 <span class="score">{{ item.analysis.relevance_score }}</span>
-    </div>
+        <div class="source">{{ item.raw.source_label or item.raw.source_name }}</div>
 
-    <h2 class="item-title">
-      <a href="{{ item.raw.url }}" target="_blank">{{ item.raw.title }}</a>
-    </h2>
+        <h2 class="title">
+          <a href="{{ item.raw.url }}" target="_blank" rel="noopener">{{ item.raw.title }}</a>
+        </h2>
 
-    <p class="item-summary">{{ item.analysis.one_line_summary }}</p>
+        <p class="summary">{{ item.analysis.one_line_summary }}</p>
 
-    {% if item.analysis.tags %}
-    <div class="tags">
-      {% for tag in item.analysis.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-    </div>
-    {% endif %}
-
-    <a class="orig-link" href="{{ item.raw.url }}" target="_blank">원본 보기 →</a>
-
-    {% if item.analysis.positioning %}
-    <div class="positioning" style="margin:10px 0;padding:8px 12px;border-left:3px solid #bbb;color:#555;font-size:14px;line-height:1.5">📍 {{ item.analysis.positioning }}</div>
-    {% endif %}
-
-    {% if item.analysis.key_points %}
-    <div class="section-divider">핵심 포인트</div>
-    {% for kp in item.analysis.key_points %}
-    <div class="key-point">
-      {% if kp.timestamp %}
-        <span class="ts">{{ kp.timestamp }}</span>
-      {% else %}
-        <span class="bullet">·</span>
-      {% endif %}
-      <span>{{ kp.point }}</span>
-    </div>
-    {% endfor %}
-    {% endif %}
-
-    {% if item.analysis.production_ideas %}
-    <div class="section-divider">적용 아이디어</div>
-    {% for idea in item.analysis.production_ideas %}
-    <div class="idea">💡 {{ idea }}</div>
-    {% endfor %}
-    {% endif %}
-
-    {% if item.analysis.quiz %}
-    <div class="section-divider">퀴즈</div>
-    {% set alpha = ['A', 'B', 'C', 'D'] %}
-    {% for q in item.analysis.quiz %}
-    <div class="quiz-box">
-      <div class="quiz-q">Q{{ loop.index }}. {{ q.question }}</div>
-      {% for opt in q.options %}
-      <div class="quiz-opt">{{ alpha[loop.index0] }}) {{ opt }}</div>
-      {% endfor %}
-      <details class="quiz-answer">
-        <summary>정답 보기</summary>
-        <div class="quiz-answer-content">
-          <div class="quiz-correct-opt">✓ {{ alpha[q.answer_index] }}) {{ q.options[q.answer_index] }}</div>
-          <div class="quiz-explanation">{{ q.explanation }}</div>
+        {% if item.analysis.positioning %}
+        <div class="placing">
+          <b>배경과 위치</b>
+          {{ item.analysis.positioning }}
         </div>
-      </details>
-    </div>
-    {% endfor %}
-    {% endif %}
+        {% endif %}
 
-    <div class="feedback">
-      <span class="fb-btn">👍 도움됐어</span>
-      <span class="fb-btn">👎 별로야</span>
-    </div>
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:{{ item.analysis.actionability * 10 }}%"></span></span>
+            <span class="axis-num">{{ item.analysis.actionability }}</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:{{ item.analysis.depth * 10 }}%"></span></span>
+            <span class="axis-num">{{ item.analysis.depth }}</span>
+          </div>
+        </div>
 
-  </div>
+        {% if item.analysis.key_points %}
+        <ul class="points">
+          {% for kp in item.analysis.key_points %}
+          <li>
+            {% if kp.timestamp %}<span class="ts">{{ kp.timestamp }}</span>
+            {% else %}<span class="dot">·</span>{% endif %}
+            <span>{{ kp.point }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if item.analysis.production_ideas %}
+        <div class="ideas">
+          <div class="ideas-label">해볼 것</div>
+          {% for idea in item.analysis.production_ideas %}
+          <p>{{ idea }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if item.analysis.quiz %}
+        {% set alpha = ['①', '②', '③', '④'] %}
+        <details class="quiz">
+          <summary>퀴즈 {{ item.analysis.quiz|length }}문항</summary>
+          {% for q in item.analysis.quiz %}
+          <div class="q">
+            <div class="q-text">{{ q.question }}</div>
+            {% for opt in q.options %}
+            <div class="q-opt">{{ alpha[loop.index0] }} {{ opt }}</div>
+            {% endfor %}
+            <div class="q-answer">
+              <div class="correct">{{ alpha[q.answer_index] }} {{ q.options[q.answer_index] }}</div>
+              {% if q.explanation %}<div class="why">{{ q.explanation }}</div>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </details>
+        {% endif %}
+
+        {% if item.analysis.tags %}
+        <div class="tags">
+          {% for tag in item.analysis.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </article>
   {% endfor %}
 
-  <div class="keyword-cta">
-    <p>다음에 받고 싶은 주제가 있나요?</p>
-    <a href="{{ feedback_base_url }}?action=keyword_request&keyword=">키워드 요청하기 →</a>
-  </div>
-
-  <div class="footer">
-    DS Digest · 피드백은 Telegram에서도 가능합니다
-  </div>
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
 
 </div>
 </body>

@@ -5,8 +5,10 @@
 import asyncio
 import httpx
 import structlog
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader
 from typing import Any
 
 from app.config import get_settings
@@ -17,7 +19,7 @@ from app.analyzer import (
     resolve_directives,
     resolve_youtube_transcripts,
 )
-from app.newsletter import send_digest, render_digest_email
+from app.newsletter import TEMPLATE_DIR, send_digest, render_digest_email
 from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
 from app.deliverers.discord import send_discord_digest, send_discord_text
@@ -497,45 +499,29 @@ def _mark_sent(digest_items) -> None:
 
 
 def _update_docs_index(docs_dir: Path) -> None:
-    """docs/index.html — 날짜 목록 페이지 생성 (GitHub Pages 진입점)"""
+    """docs/index.html — 날짜 목록 페이지 생성 (GitHub Pages 진입점).
+
+    지면(digest.html)과 같은 토큰·활자를 쓰는 별도 템플릿을 쓴다. 예전에는 CSS를
+    f-string 안에 넣었는데, 그러면 중괄호를 전부 이스케이프해야 해서 손대기가
+    번거롭고 두 화면의 디자인이 조용히 갈린다.
+    """
     files = sorted(docs_dir.glob("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].html"), reverse=True)
     dates = [f.stem for f in files]
 
     if not dates:
         return
 
-    items_html = "\n".join(
-        f'<li><a href="{d}.html">📄 {d}</a></li>'
-        for d in dates
-    )
+    # 요일은 목록을 훑을 때 리듬을 준다 — 결번이 눈에 띈다.
+    names = ["월", "화", "수", "목", "금", "토", "일"]
+    weekdays = {}
+    for value in dates:
+        try:
+            weekdays[value] = names[date.fromisoformat(value).weekday()]
+        except ValueError:
+            weekdays[value] = ""
 
-    html = f"""<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DS Digest — 아카이브</title>
-<style>
-  body{{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;}}
-  .wrap{{max-width:640px;margin:48px auto;padding:0 20px;}}
-  h1{{font-size:22px;font-weight:700;margin-bottom:6px;}}
-  .sub{{color:#888;font-size:13px;margin-bottom:28px;}}
-  ul{{list-style:none;padding:0;margin:0;}}
-  li{{margin-bottom:8px;}}
-  a{{display:block;padding:14px 20px;background:#fff;border-radius:10px;
-     text-decoration:none;color:#1a1a1a;font-size:15px;
-     border:1px solid #e8e8e0;}}
-  a:hover{{box-shadow:0 2px 8px rgba(0,0,0,.1);}}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>📚 DS Digest 아카이브</h1>
-  <p class="sub">총 {len(dates)}개 다이제스트</p>
-  <ul>{items_html}</ul>
-</div>
-</body>
-</html>"""
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR), autoescape=True)
+    html = env.get_template("archive_index.html").render(dates=dates, weekdays=weekdays)
 
     (docs_dir / "index.html").write_text(html, encoding="utf-8")
     logger.info("docs_index_updated", count=len(dates))

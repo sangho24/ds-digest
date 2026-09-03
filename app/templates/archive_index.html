@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest 아카이브</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* 다이제스트 지면과 같은 토큰을 쓴다 — 두 화면이 한 물건으로 읽히게. */
+  :root {
+    color-scheme: light dark;
+    --paper: #F2F4F6; --surface: #FFFFFF; --ink: #131A22;
+    --muted: #59636F; --faint: #8B96A2;
+    --rule: #DFE4E9; --accent: #0F6E78; --accent-dim: #E2EFF0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1317; --surface: #171D23; --ink: #E7EBEF;
+      --muted: #97A3AF; --faint: #6D7986;
+      --rule: #28313A; --accent: #52BEC8; --accent-dim: #10333A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1317; --surface: #171D23; --ink: #E7EBEF;
+    --muted: #97A3AF; --faint: #6D7986;
+    --rule: #28313A; --accent: #52BEC8; --accent-dim: #10333A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #F2F4F6; background: var(--paper, #F2F4F6);
+    color: #131A22; color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 40px 20px 56px; }
+
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 4px;
+  }
+  .masthead p {
+    margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 최신호는 목록의 한 줄이 아니라 들어가는 문이다. */
+  .latest {
+    display: block; margin: 22px 0 30px; padding: 18px 20px;
+    background: var(--accent-dim); border-radius: 6px;
+    text-decoration: none; color: inherit;
+  }
+  .latest .eyebrow {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 4px;
+  }
+  .latest .date {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 20px; font-weight: 600;
+  }
+  .latest:hover .date { text-decoration: underline; text-underline-offset: 3px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--faint); margin-bottom: 10px;
+  }
+
+  /* 날짜만 있는 목록이라 카드로 감싸지 않는다. 규칙선 하나면 충분하다. */
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { border-top: 1px solid var(--rule); }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+  li a {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 14px; padding: 11px 4px; text-decoration: none; color: var(--ink);
+  }
+  li a:hover { color: var(--accent); }
+  li .d {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 14px; font-variant-numeric: tabular-nums;
+  }
+  li .weekday { font-size: 12.5px; color: var(--faint); }
+
+  .colophon {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon code {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 520px) { .wrap { padding: 28px 16px 40px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>DS Digest 아카이브</h1>
+    <p>{{ dates|length }}호 · {{ dates[-1] }} ~ {{ dates[0] }}</p>
+  </header>
+
+  <a class="latest" href="{{ dates[0] }}.html">
+    <div class="eyebrow">최신호</div>
+    <div class="date">{{ dates[0] }}</div>
+  </a>
+
+  <div class="section-label">지난 호</div>
+  <ul>
+    {% for d in dates[1:] %}
+    <li><a href="{{ d }}.html"><span class="d">{{ d }}</span><span class="weekday">{{ weekdays[d] }}</span></a></li>
+    {% endfor %}
+  </ul>
+
+  <footer class="colophon">
+    매일 아침 7시 10분에 발행됩니다.
+    기계가 읽을 형식은 <code>latest.json</code> · <code>{날짜}.json</code> ·
+    <code>index.json</code> 으로 같은 경로에 있습니다.
+  </footer>
+
+</div>
+</body>
+</html>
