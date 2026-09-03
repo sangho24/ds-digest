@@ -1,0 +1,390 @@
+{
+  "date": "2026-09-03",
+  "generated_at": "2026-09-03T00:21:38.378011",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.AI",
+        "source_key": "arxiv:cs.AI",
+        "source_label": "arXiv:cs.AI",
+        "title": "Adaptive Critical Token-Aware Retrieval for Repository-Level Code Generation",
+        "url": "https://arxiv.org/abs/2609.01601v1",
+        "published_at": "2026-09-01T17:59:39",
+        "transcript": null,
+        "body": "The repository-level code generation task requires synthesizing code that satisfies task requirements while remaining consistent with the target repository context. Since real-world repositories often exceed the input length limits of LLMs, existing approaches commonly adopt retrieval-augmented generation (RAG) to provide repository-specific context. Despite improving repository-context retrieval, existing methods typically provide context as task-level support, without explicitly identifying the critical tokens that require fine-grained repository context during generation. During the autoregressive generation process of LLMs, errors often concentrate at a small number of decisive positions: once such tokens are generated incorrectly, subsequent code may follow an incorrect semantic path and eventually lead to functional failure. We refer to these positions as \"critical tokens\". In this paper, we propose ACToR, an adaptive critical token-aware retrieval framework for repository-level code generation. ACToR identifies critical tokens during generation and triggers targeted retrieval on demand to provide repository context at these decisive positions. In addition, we design a position-aware weighting method for dense retrievers to prioritize context that is more informative for generation. We evaluate ACToR on two representative repository-level benchmarks, RepoExec and CoderEval. Experimental results show that ACToR consistently outperforms state-of-the-art methods, achieving relative improvements of 8.4% on RepoExec and 15.4% on CoderEval. Beyond performance gains, we systematically quantify the impact of critical tokens, revealing their central role in major generation failures and highlighting the necessity of targeted retrieval strategies. We provide the code and data at https://github.com/DeepSoftwareAnalytics/ACToR.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "핵심 토큰 기반 동적 검색으로 코드 생성 정확도 상승",
+        "tags": [
+          "ACToR",
+          "RepoExec",
+          "CoderEval",
+          "RAG",
+          "LLM"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "메타데이터 활용 검색"
+        ],
+        "key_points": [
+          {
+            "point": "ACToR는 생성 과정에서 중요한 토큰을 실시간으로 식별하고 해당 위치에서만 레포지토리 컨텍스트를 검색한다.",
+            "timestamp": null
+          },
+          {
+            "point": "밀집 검색기에 위치 인식 가중치를 적용해 생성에 가장 도움이 되는 컨텍스트를 우선순위화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "RepoExec와 CoderEval 벤치마크에서 각각 8.4%·15.4%의 상대적 성능 향상을 달성했다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "핵심 토큰을 감지하는 모듈을 기존 코드 자동완성 파이프라인에 삽입해 오류 발생 가능성을 사전에 차단한다.",
+          "위치‑인식 가중치를 적용한 밀집 검색기를 도입해 레포지토리 내 가장 관련성 높은 파일·함수를 빠르게 검색한다."
+        ],
+        "quiz": [
+          {
+            "question": "논문에서 생성 오류가 집중되는 위치를 무엇이라고 부르는가?",
+            "options": [
+              "pivotal tokens",
+              "critical tokens",
+              "decisive tokens",
+              "key tokens"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 이러한 위치를 'critical tokens'라고 정의한다."
+          },
+          {
+            "question": "ACToR가 CoderEval 벤치마크에서 달성한 상대적 개선율은?",
+            "options": [
+              "8.4%",
+              "12.0%",
+              "15.4%",
+              "20.0%"
+            ],
+            "answer_index": 2,
+            "explanation": "실험 결과에 따르면 CoderEval에서 15.4%의 상대적 향상을 보였다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.DC",
+        "source_key": "arxiv:cs.DC",
+        "source_label": "arXiv:cs.DC",
+        "title": "Just Talk Once: Communication-Efficient Split Federated LLM Fine-Tuning on Edge Devices",
+        "url": "https://arxiv.org/abs/2609.01457v1",
+        "published_at": "2026-09-01T16:00:29",
+        "transcript": null,
+        "body": "Large language model (LLM) fine-tuning is increasingly shifting toward data generated on edge devices, where memory, computation, bandwidth, and connectivity constraints make conventional federated learning difficult to sustain. Split federated fine-tuning (SFT) improves client-side efficiency by offloading most model parameters and computation to the server but requires step-by-step bidirectional communication loop across the split interface and forces continuous client involvement throughout training. In this paper, we present L-shaped SFT, a split fine-tuning framework that removes this bidirectional bottleneck. Our key insight is that weight tying in modern LLMs enables server-side hidden activations to be directly supervised using target embeddings, allowing the training loss to be computed on the server without returning server outputs to the client. To further eliminate the need for continuous client participation, based on L-shaped SFT, we introduce one-shot SFT, in which clients upload activations once and then go offline while the server continues optimization over cached representations. We implement our design in a real system testbed with heterogeneous edge clients, including commercial smartphones and NVIDIA developer boards. Experiments demonstrate that our schemes significantly reduce communication costs and client online time compared with existing SFT baselines.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "엣지 LLM 파인튜닝, 통신 비용 크게 감소",
+        "tags": [
+          "LLM",
+          "split federated fine-tuning",
+          "L-shaped SFT",
+          "one-shot SFT",
+          "NVIDIA"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "오프라인-온라인 연계 전략"
+        ],
+        "key_points": [
+          {
+            "point": "L-shaped SFT는 가중치 공유를 이용해 서버에서 목표 임베딩으로 직접 손실을 계산해 양방향 통신을 없앱니다.",
+            "timestamp": null
+          },
+          {
+            "point": "one-shot SFT는 클라이언트가 활성화를 한 번만 업로드하고 오프라인 상태에서도 서버가 최적화를 지속하도록 합니다.",
+            "timestamp": null
+          },
+          {
+            "point": "다양한 엣지 디바이스 실험에서 기존 SFT 대비 통신량과 클라이언트 온라인 시간이 크게 감소함을 입증했습니다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "L-shaped SFT를 적용해 엣지 디바이스에서 LLM 파인튜닝 시 통신량을 절감하고 학습 효율을 높인다.",
+          "one-shot SFT 방식을 도입해 모바일 클라이언트가 한 번만 활성화를 전송하고 이후 오프라인 상태에서도 서버가 학습을 진행하도록 설계한다."
+        ],
+        "quiz": [
+          {
+            "question": "L-shaped SFT가 서버에서 손실을 직접 계산할 수 있게 한 핵심 원리는 무엇인가?",
+            "options": [
+              "가중치 공유(weight tying)",
+              "그라디언트 압축",
+              "모델 프루닝",
+              "지식 증류"
+            ],
+            "answer_index": 0,
+            "explanation": "현대 LLM의 가중치 공유 특성을 활용해 서버 측 은닉 활성화를 목표 임베딩과 직접 비교함으로써 클라이언트로부터 출력값을 반환받지 않아도 손실을 계산할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "WebLLM: high-performance in-browser LLM inference engine",
+        "url": "https://github.com/mlc-ai/web-llm",
+        "published_at": null,
+        "transcript": null,
+        "body": "# WebLLM\n\n[![NPM Package](https://camo.githubusercontent.com/ad4b23b00aad5069b697782c3f8b27a5a2180a2c6b098f41789cf730fd40894c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4e504d5f5061636b6167652d5075626c69736865642d636333353334)](https://www.npmjs.com/package/@mlc-ai/web-llm)\n[![\"WebLLM Chat Deployed\"](https://camo.githubusercontent.com/eea807eae29ba8e677a4f93bec0921a5795fd635c4538aff8e2bfea4ab02d471/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5765624c4c4d5f436861742d4465706c6f7965642d253233333261383532)](https://chat.webllm.ai/)\n[![Join Discord](https://camo.githubusercontent.com/2173e49dbe6c5a97355c92d7d0a1c92f0a6ec15f15e157398ad41e18348fc7b6/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4a6f696e2d446973636f72642d3732383944413f6c6f676f3d646973636f7264266c6f676f436f6c6f723d7768697465)](https://discord.gg/9Xpy2HGBuD)\n[![Related Repository: WebLLM Chat](https://camo.githubusercontent.com/cea6d48ff587b6649b68bbef987fa905c1445d05f9419a41a709e8af5dbd6c45/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f52656c617465645f5265706f2d5765624c4c4d5f436861742d6661666266633f6c6f676f3d676974687562)](https://github.com/mlc-ai/web-llm-chat/)\n[![Related Repository: MLC LLM](https://camo.githubusercontent.com/3223b672ae9f5ed2a88cadddbf5caebb50ae83b7f3b1783e99067f6671807e03/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f52656c617465645f5265706f2d4d4c435f4c4c4d2d6661666266633f6c6f676f3d676974687562)](https://github.com/mlc-ai/mlc-llm/)\n\n**High-Performance In-Browser LLM Inference Engine.**\n\n[Documentation](https://webllm.mlc.ai/docs/) | [Blogpost](https://blog.mlc.ai/2024/06/13/webllm-a-high-performance-in-browser-llm-inference-engine) | [Paper](https://arxiv.org/abs/2412.15803) | [Examples](/mlc-ai/web-llm/blob/main/examples)\n\n## Overview\n\nWebLLM is a high-performance in-browser LLM inference engine that brings language model inference directly onto web browsers with hardware acceleration.\nEverything runs inside the browser with no server support and is accelerated with WebGPU.\n\nWebLLM is **fully compatible with [OpenAI API](https://platform.openai.com/docs/api-reference/chat).**\nThat is, you can use the same OpenAI API on **any open source models** locally, with functionalities\nincluding streaming, JSON-mode, function-calling (WIP), etc.\n\nWe can bring a lot of fun opportunities to build AI assistants for everyone and enable privacy while enjoying GPU acceleration.\n\nYou can use WebLLM as a base [npm package](https://www.npmjs.com/package/@mlc-ai/web-llm) and build your own web application on top of it by following the examples below. This project is a companion project of [MLC LLM](https://github.com/mlc-ai/mlc-llm), which enables universal deployment of LLM across hardware environments.\n\n**[Check out WebLLM Chat to try it out!](https://chat.webllm.ai/)**\n\n## Key Features\n\n- **In-Browser Inference**: WebLLM is a high-performance, in-browser language model inference engine that leverages WebGPU for hardware acceleration, enabling powerful LLM operations directly within web browsers without server-side processing.\n- [**Full OpenAI API Compatibility**](#full-openai-compatibility): Seamlessly integrate your app with WebLLM using OpenAI API with functionalities such as streaming, JSON-mode, logit-level control, seeding, and more.\n- **Structured JSON Generation**: WebLLM supports state-of-the-art JSON mode structured generation, implemented in the WebAssembly portion of the model library for optimal performance. Check [WebLLM JSON Playground](https://huggingface.co/spaces/mlc-ai/WebLLM-JSON-Playground) on HuggingFace to try generating JSON output with custom JSON schema.\n- [**Extensive Model Support**](#built-in-models): WebLLM natively supports a range of models including Llama 3, Phi 3, Gemma, Mistral, Qwen(通义千问), and many others, making it versatile for various AI tasks. For the complete supported model list, check [MLC Models](https://mlc.ai/models).\n- [**Custom Model Integration**](#custom-models): Easily integrate and deploy custom models in MLC format, allowing you to adapt WebLLM to specific needs and scenarios, enhancing flexibility in model deployment.\n- **Plug-and-Play Integration**: Easily integrate WebLLM into your projects using package managers like NPM and Yarn, or directly via CDN, complete with comprehensive [examples](/mlc-ai/web-llm/blob/main/examples) and a modular design for connecting with UI components.\n- **Streaming & Real-Time Interactions**: Supports streaming chat completions, allowing real-time output generation which enhances interactive applications like chatbots and virtual assistants.\n- **Web Worker & Service Worker Support**: Optimize UI performance and manage the lifecycle of models efficiently by offloading computations to separate worker threads or service workers.\n- **Chrome Extension Support**: Extend the functionality of web browsers through custom Chrome extensions using WebLLM, with examples available for building both basic and adv",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "GPU 가속 브라우저 LLM 추론, 실시간 프라이버시",
+        "tags": [
+          "WebLLM",
+          "WebGPU",
+          "OpenAI API",
+          "MLC LLM",
+          "Llama 3"
+        ],
+        "concepts": [
+          "AI 인프라 경쟁",
+          "AI 생산성 도구",
+          "병렬 처리"
+        ],
+        "key_points": [
+          {
+            "point": "WebLLM은 WebGPU 기반 하드웨어 가속을 활용해 브라우저 내에서 대규모 언어 모델 추론을 실시간으로 수행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "OpenAI API와 완전 호환되어 오픈소스 모델을 동일한 엔드포인트와 스트리밍, JSON 모드, 함수 호출 인터페이스로 활용 가능하다.",
+            "timestamp": null
+          },
+          {
+            "point": "다양한 사전 학습 모델(Llama 3, Phi 3 등)을 WebAssembly와 WebGPU 조합으로 로드하여 클라이언트 측에서 GPU 메모리와 연산을 효율적으로 관리한다.",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [
+          "클라이언트 측에서 개인정보가 포함된 텍스트 데이터를 WebLLM으로 전처리·분석하여 서버 전송 없이 실시간 인사이트를 도출한다.",
+          "WebLLM의 JSON 모드와 함수 호출 기능을 활용해 웹 기반 데이터 라벨링 인터페이스를 구축하고 라벨링 로직을 브라우저에서 실행한다."
+        ],
+        "quiz": [
+          {
+            "question": "WebLLM이 브라우저 내에서 LLM 추론을 가속화하기 위해 사용하는 핵심 웹 기술은 무엇인가?",
+            "options": [
+              "WebAssembly",
+              "WebGL",
+              "WebGPU",
+              "Service Workers"
+            ],
+            "answer_index": 2,
+            "explanation": "WebLLM은 WebGPU를 이용해 GPU 수준의 하드웨어 가속을 제공한다."
+          },
+          {
+            "question": "WebLLM와 호환되는 API 표준은 무엇인가?",
+            "options": [
+              "RESTful API",
+              "OpenAI API",
+              "GraphQL",
+              "gRPC"
+            ],
+            "answer_index": 1,
+            "explanation": "WebLLM는 OpenAI API와 완전 호환되어 동일한 호출 방식과 기능을 제공한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "GLM 5.3: Powerful AI Is Becoming Almost Free",
+        "url": "https://youtu.be/w9RDunJACkc",
+        "published_at": "2026-09-01T09:04:56",
+        "transcript": "[00:00] I am running this AI at home and it can do light simulations computing a beautiful image like this.\n[00:07] Look at that. Yummy caustics too. Oh my.\n[00:11] It can write up a fan strategy game. It can model a beautiful, full 3D scene in free and open-source software like Blender. It is incredibly good.\n[00:23] And anyone can have all this at the grand total of, let me see, hmm, nothing. Yes.\n[00:30] It's free and open. Wait. This is called GLM 5.3 Flash plus its big brother, GLM 5.3.\n[00:40] Flash was first stealthily released under a different name, and I mean, what?\n[00:46] Look at that. It quickly overtook even DeepSeek in usage. I understand novelty and all, but this is crazy.\n[00:55] And now, hold on to your papers, fellow scholars, because if you let it think for a while, both the bigger and smaller models can get up close to Fable level on some benchmarks.\n[01:08] In my opinion, this does not feel like Fable level in general. But in some experiments, it is not that far away.\n[01:16] I can't believe that I am saying this, but I think within this year, in a few months, Fable might be surpassed by free AI systems.\n[01:26] What a time to be alive. Okay, so how is this black magic possible? How did they do it?\n[01:32] Dear fellow scholars, this is two minute papers with Dr. Károly Zsolnai-Fehér.\n[01:36] Well, GLM 3.5 Flash is about cramming more intelligence into less compute.\n[01:43] 320 billion parameters, about 95% of which is not activated per token.\n[01:51] The number of layers was 92 before. Now it's roughly cut in half.\n[01:59] Instead of comparing every token to every other one, it can summarize nearby context into a small package.\n[02:07] They call this linear attention, and it is dramatically cheaper than sparse attention, which they also use.\n[02:15] Also, ever experienced talking to an AI in a session for a long while, and as you talk longer and longer, it gets worse and worse? Yes.\n[02:25] If you have a bunch of documents, a huge codebase, or a long discussion, searching through that context gets really expensive.\n[02:33] This can compress an index of the stored context before searching it, so the model can look back far further and use less memory and compute.\n[02:44] They call this index pool.\n[02:45] And if you add this all together, you have a system that is built from the ground up to be fast, smart, and inexpensive.\n[02:53] Now, it still needs beefy hardware in the order of thousands of dollars.\n[02:58] But what I love about you, brilliant fellow scholars, is that you are always tirelessly working on making it run on more modest hardware.\n[03:08] This is once again an open-weight system, a project that we should work on together and add to it.\n[03:15] So, thank you so much to all of you who contribute by improving it, anyone who runs experiments with it to share with us, or just by talking about it and spreading the word.\n[03:26] We have some of the most amazing audience on this channel and it is an honor to make these videos for you.\n[03:34] This is paper video number 1,072. And I'm having more fun with you than ever.\n[03:41] This is why I said no to millions of dollars from private equity firms that wanted to buy our channel.\n[03:47] Every single other one they approached, I know and heard about, was sold.\n[03:53] But we didn't sell. Although I would have a great deal better hardware, that's for sure.\n[04:00] Yes, about that. The main limitation for me here is, of course, hardware. You need lots of firepower to run this.\n[04:08] It's not in the billions anymore, which is fantastic. But it's still not cheap.\n[04:13] I also don't have all the hardware to run the big one at home. Lambda helps though.\n[04:17] So, many of us will use smaller, compressed, quantized versions. And these can start looping like crazy, like it did for me here.\n[04:27] So, do not expect perfection, but expect to have a damn good time tinkering. And I am incredibly grateful for this. Thank you so much.\n[04:36] I use Lambda to reproduce AI research papers often in minutes. It's also great to train your own models or fine-tune an existing one.\n[04:46] Run inference or text to image or video, easy peasy.\n[04:50] Running a deep seek chatbot or agent, super fast, super reliable.\n[04:55] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[05:00] I test ideas from the papers I cover, and moments later, results.\n[05:05] Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 GLM 5.3 Flash:\nhttps://z.ai/blog/glm-5.3-flash\n\nSources:\nhttps://x.com/louszbd/status/2092694163104113016\nhttps://x.com/semianalysis_/status/2092623833630998556\nhttps://x.com/skalskip92/status/2092748209802154201\nhttps://x.com/louszbd/status/2093047548550525165\nhttps://x.com/atomic_chat_hq/status/2093433913238552712\nhttps://x.com/holytrinity/status/2094093933584257334\nhttps://x.com/KinasRemek/status/2090081611832295581/video/1\nhttps://x.com/AiXsatoshi/status/2093679264013181119/video/1\nhttps://x.com/AiXsatoshi/status/2093353322921263389/video/1\nhttps://x.com/stevibe/status/2092655031040565252\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "무료 고성능 LLM으로 비용 효율적인 모델 실험 가능",
+        "tags": [
+          "GLM 5.3 Flash",
+          "DeepSeek",
+          "Fable",
+          "Blender",
+          "Lambda"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 인프라 경쟁",
+          "언어 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "GLM 5.3 Flash 빠르게 DeepSeek 사용량을 추월",
+            "timestamp": "00:46"
+          },
+          {
+            "point": "320억 파라미터 중 95%가 토큰당 비활성화",
+            "timestamp": "01:43"
+          },
+          {
+            "point": "선형 어텐션으로 인접 컨텍스트를 압축, 희소 어텐션보다 저렴",
+            "timestamp": "02:07"
+          }
+        ],
+        "production_ideas": [
+          "GLM 5.3 Flash의 선형 어텐션을 활용해 저비용 GPU에서 장기 컨텍스트 텍스트 생성 파이프라인 구축",
+          "Lambda 클라우드에서 양자화된 GLM 5.3 Flash 모델을 배포해 데이터 증강 및 시뮬레이션 작업 자동화"
+        ],
+        "quiz": [
+          {
+            "question": "GLM 5.3 Flash의 320억 파라미터 중 토큰당 비활성화 비율은 얼마인가?",
+            "options": [
+              "5%",
+              "10%",
+              "95%",
+              "50%"
+            ],
+            "answer_index": 2,
+            "explanation": "트랜스크립트에 95%가 활성화되지 않는다라고 명시됨"
+          },
+          {
+            "question": "GLM 5.3 Flash가 토큰 간 비교 비용을 줄이기 위해 사용하는 기술은?",
+            "options": [
+              "Sparse attention",
+              "Linear attention",
+              "Recurrent neural network",
+              "Convolution"
+            ],
+            "answer_index": 1,
+            "explanation": "선형 어텐션을 사용해 인접 컨텍스트를 작은 패키지로 요약한다는 설명이 있음"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "AI Internals Are Weird — Tom McGrath",
+        "url": "https://youtu.be/_egu7OFem-k",
+        "published_at": "2026-09-02T21:15:54",
+        "transcript": null,
+        "body": "Tom McGrath is co-founder and Chief Scientist at Goodfire, and a former Google DeepMind researcher. He joins Tim Scarfe to ask what neural networks actually learn, whether their internal representations converge on structures in the world, and whether interpretability can extract new scientific knowledge rather than merely explain model outputs.\n\nBeginning with AlphaZero and learned modularity, the conversation moves into neural geometry: concept manifolds, reusable computation inside Llama, and why activation steering can fail when it pushes a model off-manifold. McGrath then makes the case for intentional design, using interpretability as part of the training loop. They examine controlled generalisation, features as rewards, predictive data debugging, and the uncomfortable fact that a model may recognise a hallucination or reward hack and still produce it.\n\nThe discussion closes on grader awareness, oversight and collusion between adaptive agents, then returns to sparse autoencoders. SAEs are useful, McGrath argues, but they may fracture the higher-dimensional structures networks actually use. This episode was made with support from Goodfire.\n\n---\nTIMESTAMPS:\n00:00:00 Introduction: Can interpretability speed-run science?\n00:02:03 The invisible grader\n00:06:51 What AlphaZero learned from the world\n00:12:24 Interpretability as a control loop\n00:21:54 The forbidden method and safer interventions\n00:37:36 Why models catch hallucinations too late\n00:46:19 Debug the dataset before training\n00:50:44 Why neural networks become modular\n00:55:57 Finding the geometry inside a network\n01:02:55 Why steering falls off the manifold\n01:12:10 A reusable calculator inside Llama\n01:17:19 From abstractions to goals\n01:25:28 Reward hacking, oversight and collusion\n01:37:23 Are sparse autoencoders dead?\n\n---\nREFERENCES:\npaper:\n[00:05:45] Emergent Misalignment: Narrow finetuning can produce broadly misaligned LLMs\nhttps://arxiv.org/abs/2502.17424v7\n[00:11:05] Acquisition of Chess Knowledge in AlphaZero\nhttps://arxiv.org/abs/2111.09259\n[00:25:30] Steering Out-of-Distribution Generalization with Concept Ablation Fine-Tuning\nhttps://arxiv.org/abs/2507.16795\n[00:29:30] Persona Vectors: Monitoring and Controlling Character Traits in Language Models\nhttps://arxiv.org/abs/2507.21509\n[00:41:14] Features as Rewards: Scalable Supervision for Open-Ended Tasks via Interpretability\nhttps://arxiv.org/abs/2602.10067\n[00:47:03] Anatomy of Post-Training: Using Interpretability to Characterize Data and Shape the Learning Signal\nhttps://arxiv.org/abs/2606.12360\n[01:00:26] Do Sparse Autoencoders Capture Concept Manifolds?\nhttps://arxiv.org/abs/2604.28119\n[01:03:04] Manifold Steering Reveals the Shared Geometry of Neural Network Representation and Behavior\nhttps://arxiv.org/abs/2605.05115\n[01:14:20] Arithmetic in the Wild: Llama uses Base-10 Addition to Reason About Cyclic Concepts\nhttps://arxiv.org/abs/2605.01148\n[01:29:35] Measuring Reward-Seeking via Contrastive Belief Updates\nhttps:/",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "신경망 내부 해석으로 모델 설계·디버깅 혁신",
+        "tags": [
+          "AlphaZero",
+          "Llama",
+          "Sparse Autoencoders",
+          "Goodfire",
+          "Google DeepMind"
+        ],
+        "concepts": [
+          "해석 가능성을 통한 모델 제어",
+          "신경망 기하학 및 개념 매니폴드",
+          "모듈형 신경망 구조"
+        ],
+        "key_points": [
+          {
+            "point": "해석 가능성을 훈련 루프에 통합해 모델 행동을 직접 제어한다",
+            "timestamp": null
+          },
+          {
+            "point": "활성화 스티어링이 오프-매니폴드로 빠질 때 발생하는 한계와 신경망 기하학의 중요성",
+            "timestamp": null
+          },
+          {
+            "point": "희소 자동인코더가 고차원 구조를 파편화할 수 있어 사용 시 주의가 필요함",
+            "timestamp": null
+          }
+        ],
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

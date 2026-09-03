@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F7F6F3; color:#37352F; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+
+  /* 헤더 */
+  .header { padding:20px 0 16px; border-bottom:1px solid #E3E2DE; margin-bottom:20px; }
+  .header h1 { font-size:20px; font-weight:700; margin:0 0 4px; color:#37352F; }
+  .header p { font-size:13px; color:#787774; margin:0; }
+
+  /* 카드 */
+  .item { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:20px; margin-bottom:12px; }
+
+  /* 소스 + 점수 */
+  .item-meta { font-size:13px; color:#787774; margin-bottom:8px; }
+  .item-meta .score { color:#2EAADC; font-weight:600; }
+
+  /* 제목 */
+  .item-title { font-size:16px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .item-title a { color:#37352F; text-decoration:none; }
+  .item-title a:hover { text-decoration:underline; }
+
+  /* 요약 */
+  .item-summary { font-size:14px; color:#37352F; line-height:1.6; margin-bottom:12px; }
+
+  /* 원본 링크 */
+  .orig-link { display:inline-block; font-size:13px; color:#2EAADC; text-decoration:none; margin-bottom:16px; }
+  .orig-link:hover { text-decoration:underline; }
+
+  /* 섹션 구분선 */
+  .section-divider { font-size:12px; color:#787774; border:none; border-top:1px solid #E3E2DE; padding-top:10px; margin:12px 0 8px; }
+
+  /* 핵심 포인트 */
+  .key-point { font-size:14px; color:#37352F; padding:3px 0; line-height:1.5; display:flex; align-items:baseline; gap:8px; }
+  .key-point .ts { font-size:12px; color:#787774; font-family:monospace; white-space:nowrap; }
+  .key-point .bullet { color:#787774; }
+
+  /* 현업 적용 아이디어 */
+  .idea { font-size:14px; color:#37352F; padding:8px 12px; background:#F1F1EF; border-left:2px solid #2EAADC; border-radius:0 4px 4px 0; margin-bottom:6px; line-height:1.5; }
+
+  /* 태그 */
+  .tags { margin-bottom:14px; }
+  .tag { display:inline-block; font-size:12px; color:#787774; background:#F1F1EF; border-radius:4px; padding:2px 8px; margin:2px 3px 2px 0; }
+
+  /* 퀴즈 */
+  .quiz-box { background:#F1F1EF; border-radius:6px; padding:12px 14px; margin-top:4px; margin-bottom:6px; }
+  .quiz-q { font-size:14px; font-weight:600; color:#37352F; margin-bottom:8px; line-height:1.4; }
+  .quiz-opt { font-size:13px; color:#37352F; padding:3px 0; }
+  details.quiz-answer { margin-top:8px; }
+  details.quiz-answer summary { font-size:12px; color:#2EAADC; cursor:pointer; list-style:none; }
+  details.quiz-answer summary::-webkit-details-marker { display:none; }
+  details.quiz-answer summary::before { content:"▶ "; font-size:10px; }
+  details.quiz-answer[open] summary::before { content:"▼ "; }
+  .quiz-answer-content { margin-top:6px; padding:8px 10px; background:#FFFFFF; border-radius:4px; border-left:2px solid #2EAADC; }
+  .quiz-correct-opt { font-size:13px; font-weight:700; color:#37352F; }
+  .quiz-explanation { font-size:12px; color:#787774; margin-top:4px; line-height:1.4; }
+
+  /* 피드백 버튼 */
+  .feedback { text-align:center; padding-top:14px; margin-top:14px; border-top:1px solid #E3E2DE; }
+  .fb-btn { display:inline-block; padding:6px 18px; font-size:13px; border-radius:6px; text-decoration:none; border:1px solid #E3E2DE; color:#37352F; background:#FFFFFF; margin:0 4px; }
+
+  /* 키워드 CTA */
+  .keyword-cta { background:#FFFFFF; border:1px solid #E3E2DE; border-radius:8px; padding:16px 20px; text-align:center; margin-bottom:12px; }
+  .keyword-cta p { font-size:14px; color:#37352F; margin:0 0 10px; }
+  .keyword-cta a { display:inline-block; padding:8px 20px; background:#37352F; color:#FFFFFF; border-radius:6px; text-decoration:none; font-size:13px; }
+
+  /* 푸터 */
+  .footer { text-align:center; padding:16px 0; font-size:12px; color:#787774; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>DS Digest</h1>
+    <p>2026년 09월 03일 · 5건</p>
+  </div>
+
+  
+  <div class="item">
+
+    <div class="item-meta">
+      arXiv:cs.AI · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2609.01601v1" target="_blank">Adaptive Critical Token-Aware Retrieval for Repository-Level Code Generation</a>
+    </h2>
+
+    <p class="item-summary">핵심 토큰 기반 동적 검색으로 코드 생성 정확도 상승</p>
+
+    
+    <div class="tags">
+      <span class="tag">ACToR</span><span class="tag">RepoExec</span><span class="tag">CoderEval</span><span class="tag">RAG</span><span class="tag">LLM</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2609.01601v1" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>ACToR는 생성 과정에서 중요한 토큰을 실시간으로 식별하고 해당 위치에서만 레포지토리 컨텍스트를 검색한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>밀집 검색기에 위치 인식 가중치를 적용해 생성에 가장 도움이 되는 컨텍스트를 우선순위화한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>RepoExec와 CoderEval 벤치마크에서 각각 8.4%·15.4%의 상대적 성능 향상을 달성했다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 핵심 토큰을 감지하는 모듈을 기존 코드 자동완성 파이프라인에 삽입해 오류 발생 가능성을 사전에 차단한다.</div>
+    
+    <div class="idea">💡 위치‑인식 가중치를 적용한 밀집 검색기를 도입해 레포지토리 내 가장 관련성 높은 파일·함수를 빠르게 검색한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. 논문에서 생성 오류가 집중되는 위치를 무엇이라고 부르는가?</div>
+      
+      <div class="quiz-opt">A) pivotal tokens</div>
+      
+      <div class="quiz-opt">B) critical tokens</div>
+      
+      <div class="quiz-opt">C) decisive tokens</div>
+      
+      <div class="quiz-opt">D) key tokens</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) critical tokens</div>
+          <div class="quiz-explanation">본문에서는 이러한 위치를 'critical tokens'라고 정의한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. ACToR가 CoderEval 벤치마크에서 달성한 상대적 개선율은?</div>
+      
+      <div class="quiz-opt">A) 8.4%</div>
+      
+      <div class="quiz-opt">B) 12.0%</div>
+      
+      <div class="quiz-opt">C) 15.4%</div>
+      
+      <div class="quiz-opt">D) 20.0%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 15.4%</div>
+          <div class="quiz-explanation">실험 결과에 따르면 CoderEval에서 15.4%의 상대적 향상을 보였다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      arXiv:cs.DC · 관련도 <span class="score">8</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://arxiv.org/abs/2609.01457v1" target="_blank">Just Talk Once: Communication-Efficient Split Federated LLM Fine-Tuning on Edge Devices</a>
+    </h2>
+
+    <p class="item-summary">엣지 LLM 파인튜닝, 통신 비용 크게 감소</p>
+
+    
+    <div class="tags">
+      <span class="tag">LLM</span><span class="tag">split federated fine-tuning</span><span class="tag">L-shaped SFT</span><span class="tag">one-shot SFT</span><span class="tag">NVIDIA</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://arxiv.org/abs/2609.01457v1" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>L-shaped SFT는 가중치 공유를 이용해 서버에서 목표 임베딩으로 직접 손실을 계산해 양방향 통신을 없앱니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>one-shot SFT는 클라이언트가 활성화를 한 번만 업로드하고 오프라인 상태에서도 서버가 최적화를 지속하도록 합니다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다양한 엣지 디바이스 실험에서 기존 SFT 대비 통신량과 클라이언트 온라인 시간이 크게 감소함을 입증했습니다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 L-shaped SFT를 적용해 엣지 디바이스에서 LLM 파인튜닝 시 통신량을 절감하고 학습 효율을 높인다.</div>
+    
+    <div class="idea">💡 one-shot SFT 방식을 도입해 모바일 클라이언트가 한 번만 활성화를 전송하고 이후 오프라인 상태에서도 서버가 학습을 진행하도록 설계한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. L-shaped SFT가 서버에서 손실을 직접 계산할 수 있게 한 핵심 원리는 무엇인가?</div>
+      
+      <div class="quiz-opt">A) 가중치 공유(weight tying)</div>
+      
+      <div class="quiz-opt">B) 그라디언트 압축</div>
+      
+      <div class="quiz-opt">C) 모델 프루닝</div>
+      
+      <div class="quiz-opt">D) 지식 증류</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ A) 가중치 공유(weight tying)</div>
+          <div class="quiz-explanation">현대 LLM의 가중치 공유 특성을 활용해 서버 측 은닉 활성화를 목표 임베딩과 직접 비교함으로써 클라이언트로부터 출력값을 반환받지 않아도 손실을 계산할 수 있다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      HackerNews · 관련도 <span class="score">7</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://github.com/mlc-ai/web-llm" target="_blank">WebLLM: high-performance in-browser LLM inference engine</a>
+    </h2>
+
+    <p class="item-summary">GPU 가속 브라우저 LLM 추론, 실시간 프라이버시</p>
+
+    
+    <div class="tags">
+      <span class="tag">WebLLM</span><span class="tag">WebGPU</span><span class="tag">OpenAI API</span><span class="tag">MLC LLM</span><span class="tag">Llama 3</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://github.com/mlc-ai/web-llm" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>WebLLM은 WebGPU 기반 하드웨어 가속을 활용해 브라우저 내에서 대규모 언어 모델 추론을 실시간으로 수행한다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>OpenAI API와 완전 호환되어 오픈소스 모델을 동일한 엔드포인트와 스트리밍, JSON 모드, 함수 호출 인터페이스로 활용 가능하다.</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>다양한 사전 학습 모델(Llama 3, Phi 3 등)을 WebAssembly와 WebGPU 조합으로 로드하여 클라이언트 측에서 GPU 메모리와 연산을 효율적으로 관리한다.</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 클라이언트 측에서 개인정보가 포함된 텍스트 데이터를 WebLLM으로 전처리·분석하여 서버 전송 없이 실시간 인사이트를 도출한다.</div>
+    
+    <div class="idea">💡 WebLLM의 JSON 모드와 함수 호출 기능을 활용해 웹 기반 데이터 라벨링 인터페이스를 구축하고 라벨링 로직을 브라우저에서 실행한다.</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. WebLLM이 브라우저 내에서 LLM 추론을 가속화하기 위해 사용하는 핵심 웹 기술은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) WebAssembly</div>
+      
+      <div class="quiz-opt">B) WebGL</div>
+      
+      <div class="quiz-opt">C) WebGPU</div>
+      
+      <div class="quiz-opt">D) Service Workers</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) WebGPU</div>
+          <div class="quiz-explanation">WebLLM은 WebGPU를 이용해 GPU 수준의 하드웨어 가속을 제공한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. WebLLM와 호환되는 API 표준은 무엇인가?</div>
+      
+      <div class="quiz-opt">A) RESTful API</div>
+      
+      <div class="quiz-opt">B) OpenAI API</div>
+      
+      <div class="quiz-opt">C) GraphQL</div>
+      
+      <div class="quiz-opt">D) gRPC</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) OpenAI API</div>
+          <div class="quiz-explanation">WebLLM는 OpenAI API와 완전 호환되어 동일한 호출 방식과 기능을 제공한다.</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Two Minute Papers · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/w9RDunJACkc" target="_blank">GLM 5.3: Powerful AI Is Becoming Almost Free</a>
+    </h2>
+
+    <p class="item-summary">무료 고성능 LLM으로 비용 효율적인 모델 실험 가능</p>
+
+    
+    <div class="tags">
+      <span class="tag">GLM 5.3 Flash</span><span class="tag">DeepSeek</span><span class="tag">Fable</span><span class="tag">Blender</span><span class="tag">Lambda</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/w9RDunJACkc" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="ts">00:46</span>
+      
+      <span>GLM 5.3 Flash 빠르게 DeepSeek 사용량을 추월</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="ts">01:43</span>
+      
+      <span>320억 파라미터 중 95%가 토큰당 비활성화</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="ts">02:07</span>
+      
+      <span>선형 어텐션으로 인접 컨텍스트를 압축, 희소 어텐션보다 저렴</span>
+    </div>
+    
+    
+
+    
+    <div class="section-divider">적용 아이디어</div>
+    
+    <div class="idea">💡 GLM 5.3 Flash의 선형 어텐션을 활용해 저비용 GPU에서 장기 컨텍스트 텍스트 생성 파이프라인 구축</div>
+    
+    <div class="idea">💡 Lambda 클라우드에서 양자화된 GLM 5.3 Flash 모델을 배포해 데이터 증강 및 시뮬레이션 작업 자동화</div>
+    
+    
+
+    
+    <div class="section-divider">퀴즈</div>
+    
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q1. GLM 5.3 Flash의 320억 파라미터 중 토큰당 비활성화 비율은 얼마인가?</div>
+      
+      <div class="quiz-opt">A) 5%</div>
+      
+      <div class="quiz-opt">B) 10%</div>
+      
+      <div class="quiz-opt">C) 95%</div>
+      
+      <div class="quiz-opt">D) 50%</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ C) 95%</div>
+          <div class="quiz-explanation">트랜스크립트에 95%가 활성화되지 않는다라고 명시됨</div>
+        </div>
+      </details>
+    </div>
+    
+    <div class="quiz-box">
+      <div class="quiz-q">Q2. GLM 5.3 Flash가 토큰 간 비교 비용을 줄이기 위해 사용하는 기술은?</div>
+      
+      <div class="quiz-opt">A) Sparse attention</div>
+      
+      <div class="quiz-opt">B) Linear attention</div>
+      
+      <div class="quiz-opt">C) Recurrent neural network</div>
+      
+      <div class="quiz-opt">D) Convolution</div>
+      
+      <details class="quiz-answer">
+        <summary>정답 보기</summary>
+        <div class="quiz-answer-content">
+          <div class="quiz-correct-opt">✓ B) Linear attention</div>
+          <div class="quiz-explanation">선형 어텐션을 사용해 인접 컨텍스트를 작은 패키지로 요약한다는 설명이 있음</div>
+        </div>
+      </details>
+    </div>
+    
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+  <div class="item">
+
+    <div class="item-meta">
+      Machine Learning Street Talk · 관련도 <span class="score">6</span>
+    </div>
+
+    <h2 class="item-title">
+      <a href="https://youtu.be/_egu7OFem-k" target="_blank">AI Internals Are Weird — Tom McGrath</a>
+    </h2>
+
+    <p class="item-summary">신경망 내부 해석으로 모델 설계·디버깅 혁신</p>
+
+    
+    <div class="tags">
+      <span class="tag">AlphaZero</span><span class="tag">Llama</span><span class="tag">Sparse Autoencoders</span><span class="tag">Goodfire</span><span class="tag">Google DeepMind</span>
+    </div>
+    
+
+    <a class="orig-link" href="https://youtu.be/_egu7OFem-k" target="_blank">원본 보기 →</a>
+
+    
+    <div class="section-divider">핵심 포인트</div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>해석 가능성을 훈련 루프에 통합해 모델 행동을 직접 제어한다</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>활성화 스티어링이 오프-매니폴드로 빠질 때 발생하는 한계와 신경망 기하학의 중요성</span>
+    </div>
+    
+    <div class="key-point">
+      
+        <span class="bullet">·</span>
+      
+      <span>희소 자동인코더가 고차원 구조를 파편화할 수 있어 사용 시 주의가 필요함</span>
+    </div>
+    
+    
+
+    
+
+    
+
+    <div class="feedback">
+      <span class="fb-btn">👍 도움됐어</span>
+      <span class="fb-btn">👎 별로야</span>
+    </div>
+
+  </div>
+  
+
+  <div class="keyword-cta">
+    <p>다음에 받고 싶은 주제가 있나요?</p>
+    <a href="http://localhost:8000/api/feedback?action=keyword_request&keyword=">키워드 요청하기 →</a>
+  </div>
+
+  <div class="footer">
+    DS Digest · 피드백은 Telegram에서도 가능합니다
+  </div>
+
+</div>
+</body>
+</html>
