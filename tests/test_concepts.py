@@ -183,3 +183,51 @@ def test_load_wrong_shape_returns_empty(tmp_path):
     path.write_text(json.dumps([1, 2, 3]), encoding="utf-8")
 
     assert load_vocabulary(path)["concepts"] == {}
+
+
+# ── 쉼표로 이어 온 개념 나누기 (실측 2026-09-02) ────────────────────────────
+# 모델이 `"멀티프로세싱, 병렬 처리"`를 한 덩어리로 냈고, 어휘에 **세 번째 표준
+# 개념**으로 등록됐다. 이미 있던 `멀티프로세싱`·`병렬 처리`와 영영 매칭되지
+# 않으므로 그 아이템의 반응은 다시 안 나올 개념으로 귀속되어 사라진다.
+
+def test_split_raw_divides_on_comma_only():
+    from app.concepts import split_raw
+    assert split_raw("멀티프로세싱, 병렬 처리") == ["멀티프로세싱", "병렬 처리"]
+    assert split_raw("A，B") == ["A", "B"]          # 전각 쉼표
+    # 나누면 안 되는 것들 — 과다 분할은 되돌리기 어렵다(§8.2).
+    assert split_raw("A/B 테스트") == ["A/B 테스트"]
+    assert split_raw("신경망 기하학 및 개념 매니폴드") == ["신경망 기하학 및 개념 매니폴드"]
+    assert split_raw("수집·분석") == ["수집·분석"]
+    # 빈 값·None은 조용히 사라진다 (None이 "None" 개념으로 등록되면 안 된다).
+    assert split_raw(" , ") == [] and split_raw(None) == []
+
+
+def test_register_merges_comma_joined_into_existing_concepts():
+    from app.concepts import register
+    vocab = {"version": 1, "concepts": {}}
+    register(["멀티프로세싱", "병렬 처리"], vocab, date="2026-09-01")
+    resolved, created = register(["멀티프로세싱, 병렬 처리"], vocab, date="2026-09-02")
+
+    assert created == [], f"파편이 새 개념으로 등록됐다: {created}"
+    assert resolved == ["멀티프로세싱", "병렬 처리"]
+    assert vocab["concepts"]["멀티프로세싱"]["count"] == 2
+    assert vocab["concepts"]["병렬 처리"]["count"] == 2
+    assert len(vocab["concepts"]) == 2
+
+
+def test_analysis_parsing_splits_and_caps_concepts():
+    """나눈 뒤 상한을 다시 걸지 않으면 pydantic이 거부해 아이템이 통째로 실패한다."""
+    from app.analyzer import _split_concepts
+    from app.concepts import MAX_CONCEPTS_PER_ITEM
+    from app.models import ContentAnalysis, EvidenceLevel
+
+    out = _split_concepts(["A, B", "C, D", "E"])
+    assert out == ["A", "B", "C"][:MAX_CONCEPTS_PER_ITEM]
+    assert len(out) <= MAX_CONCEPTS_PER_ITEM
+    assert _split_concepts(["A, A", "A"]) == ["A"]        # 중복은 접는다
+    assert _split_concepts(None) == [] and _split_concepts([]) == []
+
+    # 상한을 넘겨도 모델 생성이 실패하지 않는다.
+    ContentAnalysis(relevance_score=5, one_line_summary="요약",
+                    concepts=_split_concepts(["가, 나", "다, 라"]),
+                    evidence_level=EvidenceLevel.FULL)

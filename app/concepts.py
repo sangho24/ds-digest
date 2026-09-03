@@ -80,6 +80,26 @@ def normalize(raw: object) -> str:
     return text
 
 
+# 개념 목록 구분자. 모델이 개념 두 개를 한 문자열로 이어 낼 때가 있다 —
+# 실측 2026-09-02: `"멀티프로세싱, 병렬 처리"` 한 덩어리가 어휘에 **세 번째
+# 표준 개념**으로 등록됐다. 이미 있던 `멀티프로세싱`(×2)·`병렬 처리`(×3)와
+# 영영 매칭되지 않으므로, 그 아이템에 달린 반응은 다시 안 나올 개념으로
+# 귀속되어 사라진다.
+#
+# 쉼표만 나눈다. `/`는 `A/B 테스트`를 쪼개고, `·`와 `및`은 한국어에서 한 개념의
+# 정당한 연결어다(`신경망 기하학 및 개념 매니폴드`). §8.2의 원칙이 여기도
+# 적용된다 — 과다 분할은 되돌리기 어렵고, 과소 분할은 나중에 나눌 수 있다.
+_LIST_SEPARATORS = re.compile(r"[,\uff0c]")
+
+
+def split_raw(raw: object) -> list[str]:
+    """개념 문자열 하나를 실제 개념들로 나눈다. 나눌 게 없으면 1개짜리 목록."""
+    if raw is None:
+        return []
+    parts = [p.strip() for p in _LIST_SEPARATORS.split(str(raw))]
+    return [p for p in parts if p and normalize(p)]
+
+
 def _canonical_key(raw: str) -> str:
     """병합 판정용 키. 공백까지 없애 `ml ops`와 `mlops`를 같게 본다."""
     return normalize(raw).replace(" ", "")
@@ -150,9 +170,8 @@ def register(
     resolved: list[str] = []
     created: list[str] = []
 
-    for raw in raws:
-        if raw is None:
-            continue
+    # 쉼표로 이어 온 개념을 먼저 나눈다. 나누지 않으면 어휘에 파편이 남는다.
+    for raw in (part for item in raws for part in split_raw(item)):
         display = unicodedata.normalize("NFC", str(raw)).strip()
         if not display:
             continue

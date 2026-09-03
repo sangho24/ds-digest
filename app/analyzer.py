@@ -946,6 +946,23 @@ def _mock_analysis(item: RawContent) -> ContentAnalysis:
     )
 
 
+def _split_concepts(raw_concepts) -> list[str]:
+    """모델이 쉼표로 이어 낸 개념을 나누고 상한까지만 남긴다.
+
+    상한을 다시 거는 이유: 나누면 개수가 늘어날 수 있는데 ContentAnalysis의
+    concepts는 최대 3개다. 넘기면 pydantic이 거부해 **그 아이템의 분석이 통째로
+    실패**한다 — 읽기 좋게 만들려다 아이템을 잃는 쪽이 훨씬 나쁘다.
+    """
+    from app.concepts import MAX_CONCEPTS_PER_ITEM, split_raw
+
+    out: list[str] = []
+    for item in raw_concepts or []:
+        for part in split_raw(item):
+            if part not in out:
+                out.append(part)
+    return out[:MAX_CONCEPTS_PER_ITEM]
+
+
 def _clean_positioning(value) -> str | None:
     """모델이 null 대신 "null"·"없음"·빈 문자열을 내는 경우를 None으로 접는다."""
     text = str(value or "").strip()
@@ -1014,7 +1031,7 @@ async def analyze_content(
             relevance_score=derive_relevance_score(actionability, depth, depth_weight),
             one_line_summary=data.get("one_line_summary") or item.title,
             tags=data.get("tags", []),
-            concepts=data.get("concepts", []),
+            concepts=_split_concepts(data.get("concepts", [])),
             key_points=[KeyPoint(**kp) for kp in data.get("key_points", [])],
             positioning=_clean_positioning(data.get("positioning")),
             production_ideas=data.get("production_ideas", []),
