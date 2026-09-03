@@ -64,22 +64,8 @@ def probe_hf(org: dict, days: int) -> ProbeResult:
   if not hf_org:
     return ProbeResult(org["key"], "hf", "", "skipped", "폐쇄형이라 HF org 없음")
 
-  url = (f"https://huggingface.co/api/models?author={hf_org}"
-         f"&sort=lastModified&direction=-1&limit=100")
-  status, body, detail = fetch(url)
-  if status != "ok":
-    return ProbeResult(org["key"], "hf", url, status, detail)
-
-  try:
-    models = json.loads(body)
-  except json.JSONDecodeError as e:
-    return ProbeResult(org["key"], "hf", url, "error", f"JSON 파싱 실패: {e}")
-
-  if not models:
-    # 200 인데 0건이면 org 이름이 틀렸을 가능성이 높다
-    return ProbeResult(org["key"], "hf", url, "not_found", "응답 200이나 모델 0건")
-
-  series = [s.lower() for s in org.get("series") or []]
+  base = f"https://huggingface.co/api/models?author={hf_org}&limit=100&direction=-1"
+  series = [x.lower() for x in org.get("series") or []]
   cutoff = datetime.now(timezone.utc) - timedelta(days=days)
 
   def parse(ts: str | None) -> datetime | None:
@@ -90,23 +76,51 @@ def probe_hf(org: dict, days: int) -> ProbeResult:
     except ValueError:
       return None
 
-  created, touched = 0, 0
-  for m in models:
+  def matches(m: dict) -> bool:
     mid = (m.get("modelId") or "").split("/", 1)[-1].lower()
-    if series and not any(mid.startswith(s) for s in series):
-      continue
-    # 신규 리포 생성이 "가중치 공개"에 가장 가까운 신호다.
-    # lastModified 는 README 오타 수정도 잡으므로 상한값으로만 쓴다.
-    c = parse(m.get("createdAt"))
-    if c and c >= cutoff:
-      created += 1
-    t = parse(m.get("lastModified")) or c
-    if t and t >= cutoff:
-      touched += 1
+    return not series or any(mid.startswith(x) for x in series)
+
+  def load(sort: str) -> tuple[str, list | None, str]:
+    url = f"{base}&sort={sort}"
+    status, body, detail = fetch(url)
+    if status != "ok":
+      return status, None, detail
+    try:
+      return "ok", json.loads(body), detail
+    except json.JSONDecodeError as e:
+      return "error", None, f"JSON 파싱 실패: {e}"
+
+  # 두 번 조회한다. 한 정렬로는 둘 다 정확히 셀 수 없다.
+  #   lastModified 정렬 = 최근 수정된 100건 -> touched 의 근거
+  #   createdAt 정렬    = 최근 생성된 100건 -> created 의 근거
+  # 한쪽만 쓰면 리포가 많은 org 에서 반대쪽이 과소 집계된다.
+  st_mod, mods, detail = load("lastModified")
+  if st_mod != "ok":
+    return ProbeResult(org["key"], "hf", base, st_mod, detail)
+  if not mods:
+    return ProbeResult(org["key"], "hf", base, "not_found", "응답 200이나 모델 0건")
+
+  time.sleep(0.3)
+  st_new, news, _ = load("createdAt")
+  created_reliable = st_new == "ok" and news is not None
+
+  touched = sum(1 for m in mods
+                if matches(m) and (t := parse(m.get("lastModified")) or parse(m.get("createdAt")))
+                and t >= cutoff)
+
+  pool = news if created_reliable else mods
+  created = sum(1 for m in pool
+                if matches(m) and (c := parse(m.get("createdAt"))) and c >= cutoff)
+
+  # createdAt 정렬 상위 100건이 전부 창 안이면 100건에서 잘렸을 수 있다
+  saturated = created_reliable and created >= 100
+  note = "" if created_reliable else " [createdAt 정렬 실패, 하한값]"
+  if saturated:
+    note = " [100건 상한에 도달, 하한값]"
 
   return ProbeResult(
-    org["key"], "hf", url, "ok",
-    f"전체 {len(models)}건 | 최근 {days}일 신규 {created}건 (수정 {touched}건)",
+    org["key"], "hf", base, "ok",
+    f"최근 {days}일 신규 {created}건 (수정 {touched}건){note}",
     created, touched)
 
 
