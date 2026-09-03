@@ -77,6 +77,9 @@ class ItemFacts:
     tags: tuple[str, ...]
     quiz_answers: tuple[int, ...] = ()
     concepts: tuple[str, ...] = ()
+    # 다음 날 퀴즈 결과를 되돌려줄 때 문항·선지·해설 원문이 필요하다.
+    title: str = ""
+    quiz: tuple[dict, ...] = ()
 
 
 @dataclass
@@ -152,6 +155,8 @@ def build_item_index(records_dir: Path | None = None) -> dict[str, ItemFacts]:
                     for q in (analysis.get("quiz") or [])
                     if isinstance(q, dict) and isinstance(q.get("answer_index"), int)
                 ),
+                title=str(raw.get("title") or ""),
+                quiz=tuple(q for q in (analysis.get("quiz") or []) if isinstance(q, dict)),
             )
             index[item_id(url)] = facts
             index[url] = facts

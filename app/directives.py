@@ -64,10 +64,19 @@ class Directive:
     suppress: set[str] = field(default_factory=set)
     drop_sources: set[str] = field(default_factory=set)
     standing_note: str = ""
+    # 난이도·깊이 지시를 **선정**에 연결하는 구조화 축. +1 더 깊게/어렵게, -1 더 쉽게.
+    # standing_note는 프롬프트에만 들어가고 정렬 키에는 0이었다 — 실측 2026-09-03:
+    # "더 어려운 내용" 지시가 해석까지는 됐는데 선정은 점수·다양성만으로 돌았다.
+    # 자유 텍스트는 정렬 키가 될 수 없으므로 해석 단계에서 이 축을 따로 뽑는다.
+    depth_bias: int = 0
 
     def is_empty(self) -> bool:
         return not (
-            self.boost or self.suppress or self.drop_sources or self.standing_note
+            self.boost
+            or self.suppress
+            or self.drop_sources
+            or self.standing_note
+            or self.depth_bias
         )
 
     def describe(self) -> str:
@@ -81,6 +90,8 @@ class Directive:
             parts.append(f"🚫 {', '.join(sorted(self.drop_sources))}")
         if self.standing_note:
             parts.append(f"📌 {self.standing_note}")
+        if self.depth_bias:
+            parts.append("🎚 더 깊게" if self.depth_bias > 0 else "🎚 더 쉽게")
         return " · ".join(parts)
 
 
@@ -181,6 +192,9 @@ INTERPRET_PROMPT = """\
   그러면 사용자가 요구한 성향은 사라지고, 오늘 우연히 등장한 주제만 내일 반복됩니다.
 - 사용자가 특정 아이템을 가리키면("1번처럼", "저런 거 말고") 그 아이템의 주제가
   아니라 **어떤 성질을 가리키는지**를 standing_note에 적으세요.
+- 난이도·깊이 지시는 standing_note와 **별도로** difficulty에도 표시하세요.
+  더 어렵게·더 깊게·전문적으로 → "harder", 더 쉽게·입문용·가볍게 → "easier",
+  해당 없음 → "". standing_note는 글쓰기에, difficulty는 선정에 쓰입니다.
 - 나중 메시지가 앞선 메시지를 뒤집으면 **나중 것만** 반영하세요.
   (예: "arxiv 그만" 뒤에 "arxiv 다시 봐도 될 듯" → drop_sources에서 제외)
 - boost / suppress에는 **개념 수준의 말**만 넣으세요. 위 개념 목록에 있는 표현이
@@ -195,7 +209,7 @@ INTERPRET_PROMPT = """\
 - 큐레이션과 무관한 잡담은 전부 무시하고 빈 값으로 두세요.
 
 반드시 아래 JSON 구조로만 응답하세요.
-{{"boost": [], "suppress": [], "drop_sources": [], "standing_note": ""}}
+{{"boost": [], "suppress": [], "drop_sources": [], "standing_note": "", "difficulty": ""}}
 """
 
 _INTERPRET_SCHEMA: dict = {
@@ -208,8 +222,9 @@ _INTERPRET_SCHEMA: dict = {
             "suppress": {"type": "array", "items": {"type": "string"}},
             "drop_sources": {"type": "array", "items": {"type": "string"}},
             "standing_note": {"type": "string"},
+            "difficulty": {"type": "string", "enum": ["harder", "easier", ""]},
         },
-        "required": ["boost", "suppress", "drop_sources", "standing_note"],
+        "required": ["boost", "suppress", "drop_sources", "standing_note", "difficulty"],
         "additionalProperties": False,
     },
 }
@@ -237,12 +252,15 @@ def parse_directive(data: dict, known_sources: Iterable[str] | None = None) -> D
             logger.warning("directive_unknown_source_ignored", source=candidate)
 
     note = str((data or {}).get("standing_note") or "").strip()[:MAX_NOTE_CHARS]
+    difficulty = _normalize((data or {}).get("difficulty") or "")
+    depth_bias = {"harder": 1, "easier": -1}.get(difficulty, 0)
 
     return Directive(
         boost=as_set("boost"),
         suppress=as_set("suppress"),
         drop_sources=drops,
         standing_note=note,
+        depth_bias=depth_bias,
     )
 
 
@@ -286,6 +304,7 @@ async def interpret(
         suppress=sorted(directive.suppress),
         drop_sources=sorted(directive.drop_sources),
         has_note=bool(directive.standing_note),
+        depth_bias=directive.depth_bias,
     )
     return directive
 
@@ -330,30 +349,43 @@ def filter_sources(items: list, directive: Directive) -> list:
 DIRECTIVE_WEIGHT = 3
 
 
+# depth_bias가 타이브레이크로 작용하는 경계. 5~6점이 대다수(실측 74%)라
+# 그 중앙을 건드리면 거의 모든 후보가 가감점을 받아 신호가 사라진다.
+DEEP_DEPTH = 7
+SHALLOW_DEPTH = 3
+
+
 def directive_score(
     directive: Directive,
     tags: Iterable[str],
     concepts: Iterable[str],
+    depth: int | None = None,
 ) -> int:
-    """boost/suppress에 걸리면 타이브레이크 가감점. 걸리는 게 없으면 0.
+    """지시에 걸리면 타이브레이크 가감점. 걸리는 게 없으면 0.
 
-    개념과 태그를 모두 본다 — 사용자가 "쿠버네티스 그만"이라고 할 때 그게 개념일지
-    태그일지 미리 알 수 없다.
+    boost/suppress는 개념과 태그를 모두 본다 — 사용자가 "쿠버네티스 그만"이라고
+    할 때 그게 개념일지 태그일지 미리 알 수 없다.
+
+    depth_bias는 아이템의 depth 점수에 건다. "더 어렵게"면 깊은 것(≥7)에 가산,
+    얕은 것(≤3)에 감산. "더 쉽게"는 반대. 점수 자체는 건드리지 않고 동점 안에서만
+    순서를 정한다 — 근거가 얇은 후보를 지시만으로 올리지 않기 위해서다(점수 축의
+    가중 이동은 analyzer.depth_weight_for가 따로 맡는다).
     """
-    if not directive.boost and not directive.suppress:
-        return 0
-
-    haystack = {_normalize(t) for t in tags} | {_normalize(c) for c in concepts}
-    if not haystack:
-        return 0
-
     score = 0
-    for term in directive.boost:
-        if any(term in straw or straw in term for straw in haystack):
-            score += DIRECTIVE_WEIGHT
-            break
-    for term in directive.suppress:
-        if any(term in straw or straw in term for straw in haystack):
-            score -= DIRECTIVE_WEIGHT
-            break
+    haystack = {_normalize(t) for t in tags} | {_normalize(c) for c in concepts}
+    if haystack:
+        for term in directive.boost:
+            if any(term in straw or straw in term for straw in haystack):
+                score += DIRECTIVE_WEIGHT
+                break
+        for term in directive.suppress:
+            if any(term in straw or straw in term for straw in haystack):
+                score -= DIRECTIVE_WEIGHT
+                break
+
+    if directive.depth_bias and depth is not None:
+        if depth >= DEEP_DEPTH:
+            score += DIRECTIVE_WEIGHT * directive.depth_bias
+        elif depth <= SHALLOW_DEPTH:
+            score -= DIRECTIVE_WEIGHT * directive.depth_bias
     return score

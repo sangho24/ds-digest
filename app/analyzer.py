@@ -58,6 +58,10 @@ FULL_BODY_MIN_CHARS = 1_000
 # 기존 필터 계약을 유지하기 위해 0~10 정수 relevance_score로 반올림한다.
 ACTIONABILITY_WEIGHT = 0.6
 DEPTH_WEIGHT = 0.4
+# 난이도 지시가 있을 때의 depth 가중. "더 어렵게"는 곧 깊이 축을 더 세게 보라는
+# 뜻이므로 새 휴리스틱을 만들지 않고 기존 두 축의 배합만 옮긴다.
+DEPTH_WEIGHT_HARDER = 0.6
+DEPTH_WEIGHT_EASIER = 0.2
 
 ANALYSIS_PROMPT = """\
 당신은 Data Science 현업 팀의 시니어 DS입니다.
@@ -66,6 +70,10 @@ ANALYSIS_PROMPT = """\
 ## 사용자가 명시적으로 요청한 키워드
 - 최근 요청 키워드: {keywords}
 - 사용자가 직접 남긴 지시: {standing_note}
+  지시가 난이도·깊이·형식·관점에 관한 것이면 요약·핵심 포인트·퀴즈의
+  깊이와 관점을 그에 맞추세요 ("더 어렵게"면 메커니즘·트레이드오프·수식의 의미까지,
+  "더 쉽게"면 비유와 결론 위주로). 점수(actionability·depth)는 지시와 무관하게
+  텍스트 근거로만 매기세요 — 지시는 선정 단계에서 따로 반영됩니다.
 
 ## 콘텐츠
 - 제목: {title}
@@ -102,6 +110,13 @@ ANALYSIS_PROMPT = """\
 4. key_points: 핵심 포인트 최대 3개.
 {timestamp_instruction}
 
+4-1. positioning: 논문·연구 콘텐츠(content_type이 "paper"이거나 출처가 arXiv)일 때만,
+   이 논문이 어디에 있는 연구인지 한국어 2~3문장(200자 이내).
+   - 배경: 어떤 문제를 왜 푸는가, 기존 접근은 무엇이었고 어디서 막혔는가
+   - 위치: 어느 연구 흐름의 어느 지점인가(예: "RAG 코드 생성에서 검색 단계를
+     개선하는 계열"), 기존 대비 무엇이 새로운가
+   - 초록·본문에 근거가 없으면 지어내지 말고 null. 논문이 아니면 null.
+
 5. actionability (0~10): 읽은 뒤 구체적으로 실행할 수 있는 정도.
    - 0: 관점이나 인식만 제시하고 실행 단서가 없음.
    - 5: 적용 방향은 있으나 추가 조사·설계가 필요함.
@@ -124,6 +139,7 @@ ANALYSIS_PROMPT = """\
   "tags": ["LightGBM", "Kubernetes"],
   "concepts": ["모델 서빙"],
   "key_points": [{{"point": "...", "timestamp": "12:34"}}],
+  "positioning": null,
   "actionability": 7,
   "depth": 6,
   "skip_reason": null
@@ -149,7 +165,7 @@ _EVIDENCE_OUTPUT_PROMPT = """
      α제곱근으로 적분"). 기호가 꼭 필요하면 유니코드만 쓰세요(∫ Σ √ ≤ α μ ₀ ²).
 
 ## 표기 규칙 (발송 채널이 Discord·이메일이라 수식 렌더링이 없습니다)
-- LaTeX를 쓰지 마세요. `\int`, `$...$`, `_{{...}}`, `^{{...}}`, `\frac` 모두 금지입니다.
+- LaTeX를 쓰지 마세요. `\\int`, `$...$`, `_{{...}}`, `^{{...}}`, `\\frac` 모두 금지입니다.
   렌더링되지 않고 원문 그대로 보여서 오히려 읽기 어려워집니다.
 - 첨자·지수는 유니코드 문자로 쓰세요: x₀, x₁, xⁿ, x², √x, μ, α, Σ, ∫, ≈, ≤, →
 - 그래도 표현이 안 되면 기호를 버리고 한국어로 설명하세요. 정확한 기호보다
@@ -537,7 +553,7 @@ _RELATIVE_RATING_PROMPT = """\
 - 구체적인 기법·수치·사례가 있는가, 아니면 일반론인가
 - 제목만 그럴듯하고 내용이 얇지는 않은가
 
-## 후보 목록
+{directive_block}## 후보 목록
 {listing}
 
 반드시 아래 JSON 구조로만 응답하세요. 모든 index에 대해 하나씩 넣으세요.
@@ -635,7 +651,9 @@ def _parse_ratings(data: dict, item_count: int) -> dict[int, int]:
     return ratings
 
 
-async def apply_relative_rating(analyzed: list[DigestItem]) -> int:
+async def apply_relative_rating(
+    analyzed: list[DigestItem], standing_note: str = ""
+) -> int:
     """후보 전체를 한 번에 비교시켜 relevance_score를 다시 매긴다.
 
     왜 필요한가 (PROGRESS 항목 D):
@@ -663,7 +681,18 @@ async def apply_relative_rating(analyzed: list[DigestItem]) -> int:
         f"     핵심: {' | '.join(kp.point for kp in d.analysis.key_points[:2]) or '없음'}"
         for i, d in enumerate(analyzed)
     )
-    prompt = _RELATIVE_RATING_PROMPT.format(count=len(analyzed), listing=listing)
+    # 사용자 지시는 점수를 벌리는 이 단계에도 들어가야 한다. 분석 프롬프트에만
+    # 있으면 글쓰기는 바뀌어도 순위는 그대로다(실측 2026-09-03).
+    directive_block = (
+        f"## 사용자 지시\n{standing_note}\n"
+        "이 지시에 맞는 후보를 위로 두세요. 단, 근거가 얇은 후보를 지시만으로 "
+        "올리지는 마세요.\n\n"
+        if standing_note
+        else ""
+    )
+    prompt = _RELATIVE_RATING_PROMPT.format(
+        count=len(analyzed), listing=listing, directive_block=directive_block
+    )
 
     try:
         data = await _call_llm_with_fallback(
@@ -700,13 +729,30 @@ async def apply_relative_rating(analyzed: list[DigestItem]) -> int:
     return len(ratings)
 
 
-def derive_relevance_score(actionability: int, depth: int) -> int:
-    """A(60%)와 D(40%)를 기존 0~10 관련도 점수로 투영한다."""
+def depth_weight_for(directive) -> float:
+    """난이도 지시 → depth 가중. 지시가 없으면 기본 배합."""
+    bias = getattr(directive, "depth_bias", 0) if directive else 0
+    if bias > 0:
+        return DEPTH_WEIGHT_HARDER
+    if bias < 0:
+        return DEPTH_WEIGHT_EASIER
+    return DEPTH_WEIGHT
+
+
+def derive_relevance_score(
+    actionability: int, depth: int, depth_weight: float = DEPTH_WEIGHT
+) -> int:
+    """A와 D를 기존 0~10 관련도 점수로 투영한다. 기본 배합은 A 60% / D 40%.
+
+    depth_weight는 난이도 지시가 옮긴다(depth_weight_for). 두 축의 합이 1이
+    되게 actionability 가중은 여기서 맞춘다.
+    """
     bounded_actionability = min(10, max(0, actionability))
     bounded_depth = min(10, max(0, depth))
+    depth_weight = min(1.0, max(0.0, depth_weight))
     weighted_score = (
-        bounded_actionability * ACTIONABILITY_WEIGHT
-        + bounded_depth * DEPTH_WEIGHT
+        bounded_actionability * (1.0 - depth_weight)
+        + bounded_depth * depth_weight
     )
     # 점수가 음수가 아니므로 +0.5 후 절삭해 일반적인 사사오입을 적용한다.
     return min(10, max(0, int(weighted_score + 0.5)))
@@ -895,11 +941,20 @@ def _mock_analysis(item: RawContent) -> ContentAnalysis:
     )
 
 
+def _clean_positioning(value) -> str | None:
+    """모델이 null 대신 "null"·"없음"·빈 문자열을 내는 경우를 None으로 접는다."""
+    text = str(value or "").strip()
+    if not text or text.lower() in {"null", "none", "없음", "해당 없음", "n/a"}:
+        return None
+    return text[:400]
+
+
 async def analyze_content(
     item: RawContent,
     profile: UserProfile,
     concept_vocabulary: str | None = None,
     standing_note: str = "",
+    depth_weight: float = DEPTH_WEIGHT,
 ) -> ContentAnalysis:
     """단일 콘텐츠를 Gemini로 분석.
 
@@ -951,11 +1006,12 @@ async def analyze_content(
         # relevance_score에는 근거 게이트가 적용된 depth만 반영한다.
         depth = min(_coerce_score(data, "depth", item.title), EVIDENCE_DEPTH_CAPS[evidence_level])
         return ContentAnalysis(
-            relevance_score=derive_relevance_score(actionability, depth),
+            relevance_score=derive_relevance_score(actionability, depth, depth_weight),
             one_line_summary=data.get("one_line_summary") or item.title,
             tags=data.get("tags", []),
             concepts=data.get("concepts", []),
             key_points=[KeyPoint(**kp) for kp in data.get("key_points", [])],
+            positioning=_clean_positioning(data.get("positioning")),
             production_ideas=data.get("production_ideas", []),
             quiz=[QuizItem(**q) for q in data.get("quiz", [])],
             skip_reason=data.get("skip_reason"),
@@ -1096,6 +1152,8 @@ async def filter_and_analyze(
     # 유도하는 것이 엔티티 해소의 1차 방어선이다(app/concepts.py).
     vocabulary = load_vocabulary()
     vocabulary_text = vocabulary_for_prompt(vocabulary)
+    # 난이도 지시는 점수 축의 배합을 옮긴다("더 어렵게" = depth를 더 세게).
+    depth_weight = depth_weight_for(directive)
 
     # 1) 모든 아이템을 먼저 분석한다(선정은 전체 점수를 본 뒤 상대적으로 결정).
     analyzed: list[DigestItem] = []
@@ -1110,6 +1168,7 @@ async def filter_and_analyze(
             profile,
             concept_vocabulary=vocabulary_text,
             standing_note=directive.standing_note if directive else "",
+            depth_weight=depth_weight,
         )
         analyzed.append(DigestItem(raw=item, analysis=analysis))
 
@@ -1124,7 +1183,9 @@ async def filter_and_analyze(
     absolute_score = {id(d): d.analysis.relevance_score for d in analyzed}
 
     if not settings.dry_run:
-        rated = await apply_relative_rating(analyzed)
+        rated = await apply_relative_rating(
+            analyzed, standing_note=directive.standing_note if directive else ""
+        )
         if rated:
             logger.info("relative_rating_applied", rated=rated, total=len(analyzed))
 
@@ -1158,7 +1219,9 @@ async def filter_and_analyze(
                 signal, d.raw.source_key, d.analysis.tags, d.analysis.concepts
             )
             + (
-                directive_score(directive, d.analysis.tags, d.analysis.concepts)
+                directive_score(
+                    directive, d.analysis.tags, d.analysis.concepts, d.analysis.depth
+                )
                 if directive
                 else 0
             ),
@@ -1221,6 +1284,7 @@ async def filter_and_analyze(
         above_floor=len(candidates),
         selected=len(selected),
         sources=len({d.raw.source_key for d in selected}),
+        depth_weight=depth_weight,
         floor=floor,
         preference_applied=not signal.is_empty(),
         review_concepts=sorted(review),

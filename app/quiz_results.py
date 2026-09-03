@@ -130,7 +130,73 @@ def record_answer(
         question_index=question_index,
         correct=result["correct"],
     )
-    return result
+    # 파일에는 라벨만 남기고, 호출부에는 되돌려줄 문항 원문까지 얹어 준다.
+    question = facts.quiz[question_index] if question_index < len(facts.quiz) else {}
+    options = [str(o) for o in (question.get("options") or [])]
+
+    def option(i: int) -> str:
+        return options[i] if 0 <= i < len(options) else ""
+
+    return {
+        **result,
+        "title": facts.title,
+        "question": str(question.get("question") or ""),
+        "choice_text": option(choice_index),
+        "answer_text": option(answer_index),
+        "explanation": str(question.get("explanation") or ""),
+    }
+
+
+CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
+
+
+def _circled(index: int) -> str:
+    return CIRCLED[index] if 0 <= index < len(CIRCLED) else str(index + 1)
+
+
+def format_quiz_recap(details: list[dict[str, Any]], limit: int = 1900) -> list[str]:
+    """어제 퀴즈 채점 결과를 사람이 읽을 메시지 묶음으로 만든다.
+
+    Discord Poll은 투표 결과만 보여주고 **정답을 알려주지 않는다.** 스포일러를
+    붙여두긴 했지만 눌러야 보이고, 투표한 뒤엔 다시 찾아가야 한다. 다음 날
+    아침에 한 번에 되돌려주는 것이 학습 루프의 확인 지점이 된다(사용자 요청
+    2026-09-03). 한 메시지 길이 상한을 넘으면 문항 경계에서 나눈다.
+    """
+    if not details:
+        return []
+    correct = sum(1 for d in details if d.get("correct"))
+    header = f"🧠 **어제 퀴즈 결과 {correct}/{len(details)}**"
+
+    blocks: list[str] = []
+    for d in details:
+        mark = "✅" if d.get("correct") else "❌"
+        title = str(d.get("title") or d.get("item_id") or "")[:50]
+        lines = [f"{mark} **{title}**"]
+        if d.get("question"):
+            lines.append(f"Q. {d['question']}")
+        try:
+            mine = f"{_circled(int(d.get('choice_index')))} {d.get('choice_text', '')}".strip()
+            answer = f"{_circled(int(d.get('answer_index')))} {d.get('answer_text', '')}".strip()
+        except (TypeError, ValueError):
+            mine, answer = "", ""
+        if d.get("correct"):
+            lines.append(f"내 답 {mine}")
+        else:
+            lines.append(f"내 답 {mine} → 정답 {answer}")
+        if d.get("explanation"):
+            lines.append(f"-# {d['explanation']}")
+        blocks.append("\n".join(lines))
+
+    messages: list[str] = []
+    current = header
+    for block in blocks:
+        if len(current) + 2 + len(block) > limit and current != header:
+            messages.append(current)
+            current = block
+        else:
+            current = f"{current}\n\n{block}"
+    messages.append(current)
+    return messages
 
 
 def load_results(path: Path | None = None) -> list[dict[str, Any]]:

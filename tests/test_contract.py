@@ -74,6 +74,7 @@ def test_contract_shape_is_pinned():
         "source",
         "published_at",
         "summary",
+        "positioning",
         "tags",
         "relevance",
         "key_points",

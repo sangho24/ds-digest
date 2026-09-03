@@ -55,6 +55,8 @@ def _format_item(item: DigestItem) -> str:
         "",
         f"<blockquote>{html.escape(a.one_line_summary)}</blockquote>",
     ]
+    if a.positioning:
+        lines.append(f"📍 {html.escape(a.positioning)}")
 
     if a.key_points:
         lines += ["📌 <b>핵심 포인트</b>"]

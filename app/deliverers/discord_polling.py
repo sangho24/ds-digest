@@ -159,6 +159,8 @@ async def _collect_poll_votes(
                 summary["quiz_answers"] += 1
                 if result["correct"]:
                     summary["quiz_correct"] += 1
+                # 다음 날 아침 "어제 퀴즈 결과"로 되돌려준다.
+                summary.setdefault("quiz_details", []).append(result)
 
 
 async def poll_once(client: httpx.AsyncClient) -> dict:
@@ -221,5 +223,8 @@ async def poll_once(client: httpx.AsyncClient) -> dict:
     if newest:
         _save_cursor(newest)
 
-    logger.info("discord_poll_done", **{k: v for k, v in summary.items() if v})
+    logger.info(
+        "discord_poll_done",
+        **{k: v for k, v in summary.items() if v and k != "quiz_details"},
+    )
     return summary

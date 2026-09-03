@@ -108,6 +108,13 @@ async def _send_feedback_summary(summary: dict) -> None:
 
     await send_discord_text("📊 **어제 피드백 처리 완료**\n" + " · ".join(parts))
 
+    # 문항별 채점을 되돌려준다. Poll은 정답을 보여주지 않으므로 여기가 사용자가
+    # 자기 답을 확인하는 지점이다(사용자 요청 2026-09-03).
+    if details := summary.get("quiz_details"):
+        from app.quiz_results import format_quiz_recap
+        for message in format_quiz_recap(details):
+            await send_discord_text(message)
+
 
 HELP_TEXT = """\
 🧭 **DS Digest 사용법**

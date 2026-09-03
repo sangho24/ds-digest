@@ -202,7 +202,12 @@ def _format_header(items: list[DigestItem]) -> str:
 
 def _format_item(item: DigestItem, index: int) -> str:
     a, r = item.analysis, item.raw
-    lines = [f"**{index}. {r.title}**", f"> {a.one_line_summary}", ""]
+    lines = [f"**{index}. {r.title}**", f"> {a.one_line_summary}"]
+    # 논문이면 배경·위치를 요약 바로 아래에. 요약과 핵심만으로는 이 논문이 왜
+    # 지금 여기 실렸는지가 안 보인다는 피드백(2026-09-03).
+    if a.positioning:
+        lines.append(f"> 📍 {a.positioning}")
+    lines.append("")
 
     if a.key_points:
         for kp in a.key_points[:3]:

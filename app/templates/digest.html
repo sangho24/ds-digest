@@ -101,6 +101,10 @@
 
     <a class="orig-link" href="{{ item.raw.url }}" target="_blank">원본 보기 →</a>
 
+    {% if item.analysis.positioning %}
+    <div class="positioning" style="margin:10px 0;padding:8px 12px;border-left:3px solid #bbb;color:#555;font-size:14px;line-height:1.5">📍 {{ item.analysis.positioning }}</div>
+    {% endif %}
+
     {% if item.analysis.key_points %}
     <div class="section-divider">핵심 포인트</div>
     {% for kp in item.analysis.key_points %}

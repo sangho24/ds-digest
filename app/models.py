@@ -169,6 +169,11 @@ class ContentAnalysis(BaseModel):
     # 머문다. 개념은 어휘로 해소돼 다음 콘텐츠에도 걸린다. app/concepts.py 참조.
     concepts: list[str] = Field(default_factory=list, max_length=3)
     key_points: list[KeyPoint] = Field(default_factory=list, max_length=5)
+    # 논문·연구 콘텐츠의 배경과 위치. "어떤 문제를 왜 푸는가, 기존 접근 대비
+    # 무엇이 새로운가, 어느 연구 흐름의 어느 지점인가" 2~3문장. 요약·핵심만으로는
+    # 논문이 왜 지금 여기 실렸는지가 안 보인다는 사용자 피드백(2026-09-03).
+    # 논문이 아니거나 근거가 없으면 None.
+    positioning: str | None = None
     production_ideas: list[str] = Field(default_factory=list, max_length=3)
     quiz: list[QuizItem] = Field(default_factory=list, max_length=3)
     skip_reason: str | None = None

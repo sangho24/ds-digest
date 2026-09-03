@@ -76,6 +76,7 @@ def _item_to_contract(item: DigestItem) -> dict[str, Any]:
         },
         "published_at": raw.published_at.isoformat() if raw.published_at else None,
         "summary": a.one_line_summary,
+        "positioning": a.positioning,
         "tags": list(a.tags),
         "relevance": a.relevance_score,
         "key_points": [
