@@ -509,3 +509,56 @@ def test_alert_truncation_respects_limit_and_priority():
         # 우선순위 1(A사) 이 먼저 실리고, B사가 실렸다면 A사 6건이 전부 실려 있어야 한다
         if "B사" in text:
             assert text.count("nnnn") == 6
+
+
+# ---------------------------------------------------------------------------
+# 3차 검증 (버전 패턴 과잉, surfaced 버스트)
+# ---------------------------------------------------------------------------
+NON_RELEASE_VERSIONED = [
+    ("qwen", ["Qwen"], "Qwen3 fine-tuning guide: 5 tips"),
+    ("anthropic", ["Claude"], "Claude 4 prompt engineering best practices"),
+    ("openai", ["GPT"], "GPT-5 jailbreak red-teaming results"),
+    ("openai", ["GPT"], "GPT-5.5 Bio Bug Bounty"),
+    ("openai", ["GPT"], "GPT-5.6 is now the preferred model in Microsoft 365 Copilot"),
+    ("google-closed", ["Gemini"], "Gemini 2.5 Pro pricing update"),
+    ("google-open", ["gemma"], "Gemma 2 Cookbook: 10 recipes"),
+    ("meta", ["Llama"], "Llama 3.1 405B benchmarks: 3 lessons"),
+    ("xai", ["Grok"], "Grok 3 outage postmortem"),
+    ("zai", ["GLM"], "GLM-4.5 API pricing"),
+    ("moonshot", ["Kimi"], "Kimi K2 API outage on 2025-08-01"),
+    ("allenai", ["OLMo"], "OLMo 2 training data: 4 trillion tokens"),
+    ("nvidia", ["Nemotron"], "Nemotron 3 wins 2 MLPerf categories"),
+    ("mistral", ["Mistral"], "Mistral 7B benchmarks on 4 GPUs"),
+    ("mistral", ["Mistral"], "Mistral AI raises €600M Series B"),
+    ("deepseek", ["DeepSeek"], "DeepSeek-R1 safety evaluation by third parties"),
+    ("anthropic", ["Claude"], "Claude 3.5 Sonnet is now available on Amazon Bedrock"),
+    ("xai", ["Grok"], "Meet the team behind Grok 4 infrastructure"),
+]
+
+
+@pytest.mark.parametrize("key,series,title", NON_RELEASE_VERSIONED)
+def test_versioned_non_release_titles_are_rejected(key, series, title):
+    assert not Org(key=key, label=key, kind="closed", series=series).matches_title(title), title
+
+
+@pytest.mark.parametrize("key,series,title", REAL_TITLES_HIT)
+def test_real_release_titles_still_matched_after_negatives(key, series, title):
+    assert Org(key=key, label=key, kind="closed", series=series).matches_title(title), title
+
+
+def test_surfaced_burst_is_folded_per_org():
+    wl = _wl(Org(key="g", label="G사", kind="weights-open", priority=1),
+             Org(key="z", label="Z사", kind="weights-open", priority=1))
+    def surf(org, i):
+        return ReleaseEvent(org=org, repo_id=f"{org}/old{i}", transition="repo_created", observed_at=NOW,
+                            source_url=f"https://huggingface.co/{org}/old{i}", confidence="unverified",
+                            detail={"surfaced": True, "created_at": "2024-01-01T00:00:00+00:00",
+                                    "weights": True, "card": True})
+    events = ([surf("g", i) for i in range(12)] + [surf("z", 0), surf("z", 1)]
+              + [_ev("z", "z/fresh", weights=True, card=True)])
+    text = format_alert(events, wl, "https://board", limit=12)
+    assert "처음 관측 12건" in text
+    assert "huggingface.co/g/old" not in text            # G사는 한 줄로 접힘
+    assert text.count("huggingface.co/z/old") == 2       # Z사 2건은 그대로
+    assert "fresh" in text and "전이 15건" in text
+    assert "외 " not in text

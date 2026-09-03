@@ -89,7 +89,8 @@ function renderEvents(){
     const extra = e.transition==='report_published' ? ' arXiv '+esc((e.detail.arxiv_ids||[]).join(', '))
                 : e.transition==='license_changed' ? ` ${esc(e.detail.before||'없음')} → ${esc(e.detail.after)}` : '';
     const unv = e.confidence!=='verified' ? ' <span class="tag">미확인</span>' : '';
-    return `<div><span class="d">${esc(fmt(e.observed_at))}</span>${LABEL[e.transition]||esc(e.transition)} <a href="${esc(safe(e.source_url))}" target="_blank" rel="noopener">${name}</a>${extra}${unv}</div>`;
+    const label = (e.transition==='repo_created' && e.detail && e.detail.surfaced) ? '👀 처음 관측' : (LABEL[e.transition]||esc(e.transition));
+    return `<div><span class="d">${esc(fmt(e.observed_at))}</span>${label} <a href="${esc(safe(e.source_url))}" target="_blank" rel="noopener">${name}</a>${extra}${unv}</div>`;
   }).join('');
 }
 

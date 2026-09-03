@@ -49,13 +49,29 @@ NEW_REPO_WINDOW_DAYS = 14
 #        "The Llama 4 herd: ...")
 # 단서만 쓰면 실제 Qwen 피드 44건 중 5건만 잡혔다(검증자 실측). 최근 발표 제목은
 # "Introducing" 을 거의 쓰지 않는다.
-_RELEASE_CUE = re.compile(
-    r"(\bintroducing\b|\bannounc|\breleas(e|ed|es|ing)\b|\blaunch|technical report|"
-    r"model card|system card|open[- ]?weights?|open[- ]?sourc|\bpreview|now available|"
-    r"\bis here\b|unveil|\bmeet\b)",
+# 강한 단서는 부정 단서와 무관하게 발표로 본다. 약한 단서는 부정 단서가 있으면
+# 닫힌다 ("Claude 3.5 Sonnet is now available on Amazon Bedrock" 은 유통 소식이다).
+_STRONG_CUE = re.compile(
+    r"(\bintroducing\b|technical report|model card|system card|open[- ]?weights?|"
+    r"open[- ]?sourc|unveil)",
+    re.I,
+)
+_WEAK_CUE = re.compile(
+    r"(\bannounc|\breleas(e|ed|es|ing)\b|\blaunch|\bpreview|now available|\bis here\b)",
     re.I,
 )
 _VERSION_NEAR = r"[^:\n]{0,15}?\d"
+# 버전 패턴 경로에만 적용하는 부정 단서. "Gemini 2.5 Pro pricing update",
+# "Qwen3 fine-tuning guide: 5 tips" 처럼 모델명으로 시작하는 비발표 글을 걸러낸다.
+# 3차 검증 실측: 비발표 제목 36건 중 24건이 버전 패턴에 걸렸다.
+_NEGATIVE_CUE = re.compile(
+    r"(pricing|\bprices?\b|\bguide\b|cookbook|benchmark|outage|postmortem|bounty|"
+    r"best practices|partnership|available (on|in|via)|\btips?\b|recipes?|hiring|"
+    r"\braises\b|tutorial|how to|case stud|jailbreak|red[- ]?team|evaluation|"
+    r"training data|\bwins?\b|\bapi\b|\bupdate\b|\bnotes\b|copilot|bedrock|"
+    r"vertex|azure|\bsdk\b|webinar|workshop|survey|deprecat|\bfaq\b)",
+    re.I,
+)
 
 Transition = Literal[
     "repo_created",       # 처음 보는 리포. 관측 스냅샷을 detail 에 담는다
@@ -99,10 +115,20 @@ class Org(BaseModel):
         실측: openai 피드 30건 중 "GPT" 포함 매칭 10건, 그중 8건이 제품 소식.
         단어 경계는 지키되("ChatGPT" 는 "GPT" 와 경계가 없다) 대소문자는 무시한다
         ("Olmo 3", "gpt-oss" 는 시리즈 표기와 대소문자가 다르다).
+
+        두 경로가 있다.
+          (1) 릴리스 단서: 강한 단서("Introducing X", "X technical report")는 무조건,
+              약한 단서("released", "now available")는 부정 단서가 없을 때만
+          (2) 버전 패턴: 토큰 뒤 15자 안에 숫자가 있고, (제목이 토큰으로 시작하며
+              6단어 이하 | 숫자 뒤에 ':'). 부정 단서(pricing, guide, outage ...)가
+              있으면 이 경로는 닫힌다. "Grok 4", "Claude Sonnet 4.5", "Qwen3: ..." 는
+              살고 "GPT-5 jailbreak red-teaming results" 는 빠진다.
         """
         if not self.series:
             return False
-        cue = bool(_RELEASE_CUE.search(title))
+        negative = bool(_NEGATIVE_CUE.search(title))
+        cue = bool(_STRONG_CUE.search(title)) or (bool(_WEAK_CUE.search(title)) and not negative)
+        words = len(title.split())
         for tok in self.series:
             pat = rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![a-z])"
             m = re.search(pat, title, re.I)
@@ -110,10 +136,11 @@ class Org(BaseModel):
                 continue
             if cue:
                 return True
-            # 버전 패턴: 토큰 뒤 15자 안에 숫자, 그리고 (제목이 토큰으로 시작 | 숫자 뒤에 ':')
+            if negative:
+                continue
             tail = title[m.end():]
             v = re.match(_VERSION_NEAR, tail)
-            if v and (m.start() == 0 or ":" in tail[v.end():]):
+            if v and ((m.start() == 0 and words <= 6) or ":" in tail[v.end():]):
                 return True
         return False
 
@@ -560,6 +587,15 @@ def format_alert(
         return (org.priority if org else 9, e.org)
 
     live.sort(key=prio)
+
+    # 대형 조직이 옛 리포를 일괄 손질한 날은 "처음 관측" 이 10~30건 나온다
+    # (3차 검증 추정). 그대로 실으면 그날의 진짜 전이가 뒤로 밀린다.
+    # 조직당 5건을 넘으면 한 줄로 접는다.
+    from collections import Counter
+    surfaced_by_org = Counter(e.org for e in live if e.detail.get("surfaced"))
+    folded = {org for org, n in surfaced_by_org.items() if n > 5}
+    folded_done: set[str] = set()
+
     header = f"🔔 **릴리스 감시** · 전이 {len(live)}건"
     lines = [header]
     shown = 0
@@ -571,10 +607,18 @@ def format_alert(
             org = watchlist.org(e.org)
             lines.append(f"\n__{org.label if org else e.org}__")
             current_org = e.org
+        if e.detail.get("surfaced") and e.org in folded:
+            if e.org in folded_done:
+                continue
+            folded_done.add(e.org)
+            lines.append(f"👀 처음 관측 {surfaced_by_org[e.org]}건 [미확인] · "
+                         f"오래된 리포 일괄 갱신. 보드에서 확인")
+            shown += 1
+            continue
         lines.append(format_event_line(e))
         shown += 1
-    if shown < len(live):
-        lines.append(f"\n외 {len(live) - shown}건")
+    if shown < len(live) - sum(surfaced_by_org[o] - 1 for o in folded):
+        lines.append(f"\n외 {len(live) - shown - sum(surfaced_by_org[o] - 1 for o in folded)}건")
     footer = f"\n전체 보드: <{tracker_url}>"
 
     # 줄 단위로 줄인다. 글자 단위로 자르면 URL 중간이 끊기고 보드 링크가 사라진다.
