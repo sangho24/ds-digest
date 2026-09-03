@@ -64,7 +64,7 @@ orgs:
     kind: weights-open
     hf_org: mistralai            # verify
     series: [Mistral, Mixtral, Codestral, Ministral, Magistral, Devstral]
-    blog: "https://mistral.ai/news/rss.xml"           # verify. 로컬 망에서 mistral.ai 자체가 차단돼 검증 불가
+    blog: null                   # 실측 2026-09-03: /news/rss.xml 은 404. 피드 URL 탐색 필요
     priority: 2
 
   - key: google-open

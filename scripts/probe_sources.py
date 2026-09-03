@@ -37,7 +37,8 @@ class ProbeResult:
   url: str
   status: str          # ok | not_found | blocked | error | skipped
   detail: str = ""
-  count: int = 0       # hf: 최근 창 안의 모델 수
+  count: int = 0       # hf: 최근 창 안의 신규 리포 수 (진짜 릴리스에 가깝다)
+  touched: int = 0     # hf: 최근 창 안에 수정된 리포 수 (상한값)
 
 
 def fetch(url: str) -> tuple[str, Any, str]:
@@ -80,23 +81,33 @@ def probe_hf(org: dict, days: int) -> ProbeResult:
 
   series = [s.lower() for s in org.get("series") or []]
   cutoff = datetime.now(timezone.utc) - timedelta(days=days)
-  recent = 0
+
+  def parse(ts: str | None) -> datetime | None:
+    if not ts:
+      return None
+    try:
+      return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    except ValueError:
+      return None
+
+  created, touched = 0, 0
   for m in models:
     mid = (m.get("modelId") or "").split("/", 1)[-1].lower()
     if series and not any(mid.startswith(s) for s in series):
       continue
-    ts = m.get("lastModified") or m.get("createdAt")
-    if not ts:
-      continue
-    try:
-      when = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-    except ValueError:
-      continue
-    if when >= cutoff:
-      recent += 1
+    # 신규 리포 생성이 "가중치 공개"에 가장 가까운 신호다.
+    # lastModified 는 README 오타 수정도 잡으므로 상한값으로만 쓴다.
+    c = parse(m.get("createdAt"))
+    if c and c >= cutoff:
+      created += 1
+    t = parse(m.get("lastModified")) or c
+    if t and t >= cutoff:
+      touched += 1
 
-  return ProbeResult(org["key"], "hf", url, "ok",
-                     f"전체 {len(models)}건, series 매칭 최근 {days}일 {recent}건", recent)
+  return ProbeResult(
+    org["key"], "hf", url, "ok",
+    f"전체 {len(models)}건 | 최근 {days}일 신규 {created}건 (수정 {touched}건)",
+    created, touched)
 
 
 def probe_blog(org: dict) -> ProbeResult:
@@ -151,17 +162,26 @@ def main() -> int:
   print("\n상태 집계:", dict(sorted(by_status.items())))
 
   hf_ok = [r for r in results if r.kind == "hf" and r.status == "ok"]
-  total_recent = sum(r.count for r in hf_ok)
+  total_new = sum(r.count for r in hf_ok)
+  total_touched = sum(r.touched for r in hf_ok)
   print(f"\nHF 접근 성공 조직: {len(hf_ok)}개")
-  print(f"최근 {args.days}일 series 매칭 모델 변경: 총 {total_recent}건")
+  print(f"최근 {args.days}일 신규 리포: {total_new}건  <- 판정 기준")
+  print(f"최근 {args.days}일 수정 포함: {total_touched}건 (상한값. README 수정도 포함)")
 
-  # W0 판정 기준은 계획 문서 6절과 같다
+  active = sorted(((r.count, r.target) for r in hf_ok if r.count), reverse=True)
+  if active:
+    print("\n신규 리포 상위:", ", ".join(f"{t} {c}" for c, t in active[:8]))
+  dead = [r.target for r in hf_ok if not r.count]
+  if dead:
+    print(f"신규 0건 조직 {len(dead)}개: {', '.join(dead)}")
+
+  # W0 판정 기준은 계획 문서 6절과 같다. 신규 리포 기준으로 본다
   if [r for r in results if r.kind == "hf" and r.status == "blocked"]:
     print("\n[판정 불가] HF 가 이 망에서 차단됐다. GitHub Actions 에서 다시 돌릴 것")
-  elif total_recent >= 20:
-    print(f"\n[성립] 전이 후보 {total_recent}건 >= 20건. W1 로 진행")
+  elif total_new >= 20:
+    print(f"\n[성립] 신규 리포 {total_new}건 >= 20건. W1 로 진행")
   else:
-    print(f"\n[미달] 전이 후보 {total_recent}건 < 20건. 계획 7절 중단 조건 검토")
+    print(f"\n[미달] 신규 리포 {total_new}건 < 20건. 계획 7절 중단 조건 검토")
 
   bad = [r for r in results if r.status == "not_found"]
   if bad:
