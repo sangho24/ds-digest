@@ -262,3 +262,138 @@ def test_tracker_json_shape():
     assert q["models"] == sorted(q["models"], key=lambda x: x["created_at"], reverse=True)
     assert t["counts"]["events"] == len(events)
     json.dumps(t)  # 직렬화 가능
+
+
+# ---------------------------------------------------------------------------
+# 독립 검증자가 찾은 결함의 회귀 테스트 (2026-09-03)
+# ---------------------------------------------------------------------------
+def test_old_repo_entering_window_is_backfill_not_alert():
+    """관측 창(정렬별 상위 100건)에 2년 된 리포가 README 수정으로 들어와도 새 리포가 아니다."""
+    _, states = detect_transitions([_one("Org/Seed")], {}, now=NOW)
+    old = _one("Org/Ancient", created_at=NOW - timedelta(days=900), has_weights=True, has_card=True)
+    fresh = _one("Org/Fresh", created_at=NOW - timedelta(days=3), has_weights=True, has_card=True)
+    events, _ = detect_transitions([old, fresh], states, now=NOW + timedelta(days=1))
+    by = {e.repo_id: e for e in events}
+    assert by["Org/Ancient"].backfill and not by["Org/Ancient"].alertable
+    assert not by["Org/Fresh"].backfill and by["Org/Fresh"].alertable
+    text = format_alert(events, _wl(Org(key="org", label="O", kind="weights-open")), "u")
+    assert "Fresh" in text and "Ancient" not in text
+
+
+def test_partial_bootstrap_then_recovered_org_does_not_flood():
+    """bootstrap 날 한 조직 수집이 실패했다가 다음 날 복구돼도 오래된 리포는 알리지 않는다."""
+    _, states = detect_transitions(_obs("qwen"), {}, now=NOW)
+    events, _ = detect_transitions(_obs("meta", ["Llama"]), states, now=NOW + timedelta(days=1))
+    assert events and all(e.backfill for e in events), "meta 픽스처는 전부 2025년 생성이다"
+
+
+def test_blog_title_needs_word_boundary_and_release_cue():
+    gpt = Org(key="openai", label="OpenAI", kind="closed", series=["GPT", "o1", "o3", "o4"])
+    assert not gpt.matches_title("ChatGPT for Teachers")
+    assert not gpt.matches_title("ChatGPT Ads expands across Europe")
+    assert not gpt.matches_title("Photo4Life partnership")
+    assert gpt.matches_title("Introducing GPT-6")
+    assert gpt.matches_title("o4-mini is now available")
+    claude = Org(key="anthropic", label="Anthropic", kind="closed", series=["Claude"])
+    assert not claude.matches_title("Claude Shannon: a biography")
+    assert claude.matches_title("Introducing Claude Opus 6")
+    assert not claude.matches_title("claude opus 6 released")  # 대소문자 구분
+
+
+def test_missing_siblings_means_unknown_not_absent():
+    raw = [dict(m) for m in _raw("qwen")]
+    for m in raw:
+        m.pop("siblings", None)
+    obs = [o for o in (observation_from_hf("qwen", m) for m in raw) if o]
+    assert all(o.has_weights is None for o in obs)
+    _, states = detect_transitions(obs, {}, now=NOW)
+    assert all(s.weights_at is None and s.has_weights is None for s in states.values())
+    # 다음 날 siblings 가 정상으로 오면 weights_released 가 쏟아지면 안 된다...
+    # 는 아니다. 처음 본 가중치이므로 전이는 맞다. 다만 bootstrap 이 "모름" 이었다는
+    # 것이 상태에 남아야 하고(None), 이 테스트는 그것을 못박는다.
+
+
+def test_weights_removed_keeps_first_seen_but_flags_current():
+    _, states = detect_transitions([_one(has_weights=True)], {}, now=NOW)
+    later = NOW + timedelta(days=1)
+    events, states = detect_transitions([_one(has_weights=False)], states, now=later)
+    assert events == []
+    s = states["Org/Model-1"]
+    assert s.weights_at == NOW - timedelta(days=10) and s.has_weights is False
+    t = build_tracker(_wl(Org(key="org", label="O", kind="weights-open")), states, [], generated_at=later)
+    m = t["orgs"][0]["models"][0]
+    assert m["weights_at"] and m["has_weights"] is False
+
+
+def test_license_blip_does_not_retrigger():
+    _, states = detect_transitions([_one(license="mit")], {}, now=NOW)
+    _, states = detect_transitions([_one(license=None)], states, now=NOW + timedelta(days=1))
+    assert states["Org/Model-1"].license == "mit"
+    events, _ = detect_transitions([_one(license="mit")], states, now=NOW + timedelta(days=2))
+    assert events == []
+
+
+def test_duplicate_repo_in_one_batch_counted_once():
+    events, states = detect_transitions([_one(), _one()], {}, now=NOW)
+    assert len(events) == 1 and len(states) == 1
+
+
+def test_weird_card_values_do_not_raise():
+    m = dict(_raw("qwen")[0])
+    m["cardData"] = {"license": 2024, "base_model": {"x": 1}}
+    m["siblings"] = ["README.md", {"rfilename": "model.safetensors"}]
+    m["gated"] = True
+    m["tags"] = ["license:apache-2.0", 42, "arxiv:2609.1"]
+    o = observation_from_hf("qwen", m)
+    assert o.license == "2024" and o.has_weights and o.gated == "manual" and o.arxiv_ids == ["2609.1"]
+
+
+def test_load_events_skips_unknown_transition(tmp_path: Path):
+    p = tmp_path / "e.jsonl"
+    good = _ev("a", "a/x")
+    p.write_text(good.model_dump_json() + "\n"
+                 + good.model_dump_json().replace("repo_created", "future_kind") + "\n"
+                 + "{not json\n", encoding="utf-8")
+    assert load_events(p) == [good]
+
+
+def test_alert_truncation_keeps_footer_and_whole_lines():
+    events = [_ev("a", "a/" + "m" * 90 + str(i), weights=True, card=True, license="apache-2.0")
+              for i in range(12)]
+    text = format_alert(events, _wl_prio(), "https://board", limit=12, max_chars=600)
+    assert len(text) <= 600
+    assert text.rstrip().endswith("<https://board>")
+    assert "생략" in text
+    for line in text.splitlines():
+        assert not line.startswith("<https://huggingface.co/") or line.endswith(">")
+
+
+def test_announced_title_is_sanitized():
+    e = ReleaseEvent(org="a", repo_id="https://x", transition="announced", observed_at=NOW,
+                     source_url="https://x", detail={"title": "@everyone **Claude** <b>6</b>"})
+    from app.releases import format_event_line
+    line = format_event_line(e)
+    assert "@" not in line.split("\n")[0] and "**" not in line and "<b>" not in line
+
+
+def test_collector_skips_broken_repo_but_keeps_org():
+    """리포 하나의 파싱 실패가 조직 전체 관측을 0건으로 만들면 안 된다."""
+    import asyncio
+    from app.collectors_release import fetch_hf_org
+
+    rows = _raw("qwen")[:3]
+    rows[1] = dict(rows[1]); rows[1]["createdAt"] = "not-a-date"      # None 반환 경로
+    rows[2] = dict(rows[2]); rows[2]["createdAt"] = 12345                # 예외 경로 (int.replace)
+
+    class Resp:
+        def __init__(self, data): self._d = data
+        def raise_for_status(self): pass
+        def json(self): return self._d
+
+    class Client:
+        async def get(self, url, params=None):
+            return Resp(rows)
+
+    org = Org(key="qwen", label="Qwen", kind="weights-open", hf_org="Qwen", series=["Qwen"])
+    got = asyncio.run(fetch_hf_org(Client(), org, delay=0))
+    assert [o.repo_id for o in got] == [rows[0]["id"]]

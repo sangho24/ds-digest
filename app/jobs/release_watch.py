@@ -64,7 +64,9 @@ async def _notify(text: str) -> bool:
         from app.deliverers.telegram import _send_message
         async with httpx.AsyncClient(timeout=15) as client:
             # Discord 마크다운을 Telegram HTML 로 옮기지 않는다. 폴백은 도달이 목적이다.
-            plain = text.replace("**", "").replace("__", "").replace("<", "").replace(">", "")
+            # parse_mode=HTML 이라 & < > 는 엔티티로 바꿔야 거부되지 않는다.
+            plain = (text.replace("**", "").replace("__", "")
+                     .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
             return await _send_message(client, settings.telegram_bot_token,
                                        settings.telegram_chat_id, plain)
     except Exception as e:  # noqa: BLE001
@@ -119,11 +121,14 @@ async def run_release_watch() -> dict:
         json.dumps(tracker, ensure_ascii=False, indent=1), encoding="utf-8"
     )
 
-    live = [e for e in events if not e.bootstrap]
+    live = [e for e in events if e.alertable]
     if bootstrap:
+        # 첫날 잡힌 블로그 발표도 기록만 하고 알리지 않는다. 시작 메시지 하나로
+        # 배선을 확인하는 게 목적이고, 발표는 보드의 "최근 전이" 에 남는다.
         text = (f"🔔 **릴리스 감시 시작** · {len(watchlist.orgs)}개 조직, "
                 f"{len(new_states)}개 리포 적재. 이제부터 새 전이만 알립니다.\n"
                 f"보드: <{TRACKER_URL}>")
+        live = []
     else:
         text = format_alert(events, watchlist, TRACKER_URL)
 
@@ -137,6 +142,7 @@ async def run_release_watch() -> dict:
         "observations": len(observations),
         "posts": len(posts),
         "events": len(events),
+        "backfilled": sum(1 for e in events if e.backfill),
         "alerted": len(live),
         "sent": sent,
         "errors": len(errors),

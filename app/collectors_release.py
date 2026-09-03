@@ -62,7 +62,14 @@ async def fetch_hf_org(
         name = rid.split("/", 1)[-1]
         if not org.matches(name):
             continue
-        obs = observation_from_hf(org.key, m)
+        # 리포 하나의 이상한 필드(카드 프런트매터는 사용자 입력이다)가 조직 전체
+        # 관측을 죽이면 안 된다. 그 조직이 하루 빠지면 다음 날 전부 "처음 보는
+        # 리포" 가 되어 오탐의 방아쇠가 된다.
+        try:
+            obs = observation_from_hf(org.key, m)
+        except Exception as e:  # noqa: BLE001
+            logger.warning("release_repo_skipped", org=org.key, repo=rid, error=str(e)[:160])
+            continue
         if obs:
             observations.append(obs)
     return observations

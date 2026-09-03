@@ -47,6 +47,13 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 let DATA = null;
 
 function cell(v, label){ return v ? `<span class="y" title="${esc(label)} ${esc(fmt(v))}">✓ <span class="d">${esc(fmt(v))}</span></span>` : '<span class="n">✗</span>'; }
+// 처음 본 시각(weights_at)과 지금 있는지(has_weights)는 다르다. 게이팅 강화로 파일이 내려간 리포가 그 경우다.
+function weightsCell(m){
+  if (m.has_weights === false && m.weights_at) return `<span class="w" title="가중치가 있었으나 지금은 없음">내려감 <span class="d">${esc(fmt(m.weights_at))}</span></span>`;
+  return cell(m.weights_at, '가중치');
+}
+// 외부 URL 은 http(s) 만 링크로 낸다. 피드의 link 가 그대로 들어오는 자리다.
+const safe = u => /^https?:\/\//i.test(String(u||'')) ? u : '#';
 
 function renderOrgs(filter){
   const q = (filter||'').trim().toLowerCase();
@@ -58,9 +65,9 @@ function renderOrgs(filter){
     const sec = document.createElement('section');
     const rows = models.map(m => `
       <tr>
-        <td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.repo_id.split('/')[1])}</a>${m.derivative?`<span class="tag">${esc(m.derivative)}</span>`:''}${m.gated!=='false'?`<span class="tag w">gated:${esc(m.gated)}</span>`:''}</td>
+        <td><a href="${esc(safe(m.url))}" target="_blank" rel="noopener">${esc(m.repo_id.split('/')[1])}</a>${m.derivative?`<span class="tag">${esc(m.derivative)}</span>`:''}${m.gated!=='false'?`<span class="tag w">gated:${esc(m.gated)}</span>`:''}</td>
         <td class="d">${esc(fmt(m.created_at))}</td>
-        <td>${cell(m.weights_at,'가중치')}</td>
+        <td>${weightsCell(m)}</td>
         <td>${cell(m.model_card_at,'카드')}</td>
         <td>${m.report_at ? `<span class="y">✓ ${(m.arxiv_ids||[]).slice(0,2).map(a=>`<a href="https://arxiv.org/abs/${esc(a)}" target="_blank" rel="noopener">${esc(a)}</a>`).join(' ')}</span>` : '<span class="n">✗</span>'}</td>
         <td>${m.license ? esc(m.license) : '<span class="n">미공개</span>'}</td>
@@ -82,7 +89,7 @@ function renderEvents(){
     const extra = e.transition==='report_published' ? ' arXiv '+esc((e.detail.arxiv_ids||[]).join(', '))
                 : e.transition==='license_changed' ? ` ${esc(e.detail.before||'없음')} → ${esc(e.detail.after)}` : '';
     const unv = e.confidence!=='verified' ? ' <span class="tag">미확인</span>' : '';
-    return `<div><span class="d">${esc(fmt(e.observed_at))}</span>${LABEL[e.transition]||esc(e.transition)} <a href="${esc(e.source_url)}" target="_blank" rel="noopener">${name}</a>${extra}${unv}</div>`;
+    return `<div><span class="d">${esc(fmt(e.observed_at))}</span>${LABEL[e.transition]||esc(e.transition)} <a href="${esc(safe(e.source_url))}" target="_blank" rel="noopener">${name}</a>${extra}${unv}</div>`;
   }).join('');
 }
 

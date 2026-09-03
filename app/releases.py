@@ -18,12 +18,15 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Literal
 
+import structlog
 import yaml
 from pydantic import BaseModel, Field
+
+logger = structlog.get_logger()
 
 ROOT = Path(__file__).resolve().parent.parent
 WATCHLIST_PATH = ROOT / "data" / "watchlist.yaml"
@@ -32,6 +35,19 @@ EVENTS_PATH = ROOT / "data" / "releases.jsonl"
 
 # 가중치 파일로 인정하는 확장자. README 만 있는 리포와 구분하는 기준이다.
 WEIGHT_SUFFIXES = (".safetensors", ".bin", ".gguf", ".pt", ".pth", ".ckpt", ".msgpack", ".h5", ".onnx")
+
+# "처음 보는 리포" 가 곧 "새 리포" 는 아니다. HF 조회는 정렬별 상위 100건만 보므로
+# 2년 된 리포가 README 한 줄 고치면 관측 창에 처음 들어온다. 생성이 이 창보다
+# 오래된 리포는 알림 없이 적재만 한다(backfill).
+NEW_REPO_WINDOW_DAYS = 14
+
+# 블로그 제목에서 시리즈 이름만으로는 발표를 가려낼 수 없다("ChatGPT for Teachers").
+# 시리즈 토큰이 단어 경계로 있고, 릴리스를 뜻하는 단서가 함께 있어야 발표로 본다.
+_RELEASE_CUE = re.compile(
+    r"(introduc|announc|releas|launch|technical report|model card|system card|"
+    r"open[- ]?weights?|open[- ]?sourc|preview|now available|is here|unveil)",
+    re.I,
+)
 
 Transition = Literal[
     "repo_created",       # 처음 보는 리포. 관측 스냅샷을 detail 에 담는다
@@ -68,6 +84,22 @@ class Org(BaseModel):
         name = repo_name.lower()
         return not self.series or any(s.lower() in name for s in self.series)
 
+    def matches_title(self, title: str) -> bool:
+        """블로그 제목이 이 조직의 모델 발표인가.
+
+        리포명 매칭과 달리 제목은 자유 문장이라 포함 매칭이 오탐을 낸다.
+        실측: openai 피드 30건 중 "GPT" 포함 매칭 10건, 그중 8건이 제품 소식.
+        그래서 (1) 시리즈 토큰이 단어 경계로 대소문자 그대로 있고,
+        (2) 릴리스 단서가 같이 있어야 한다. "ChatGPT" 는 "GPT" 와 경계가 없어
+        걸리지 않고, "Claude Shannon: a biography" 는 단서가 없어 걸리지 않는다.
+        """
+        if not self.series or not _RELEASE_CUE.search(title):
+            return False
+        return any(
+            re.search(rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![a-z])", title)
+            for tok in self.series
+        )
+
 
 class Watchlist(BaseModel):
     version: int = 1
@@ -103,7 +135,7 @@ class HFObservation(BaseModel):
     repo_id: str
     created_at: datetime
     last_modified: datetime
-    has_weights: bool
+    has_weights: bool | None        # None = siblings 가 응답에 없어 판단 불가
     has_card: bool
     gated: str                      # "false" | "auto" | "manual"
     license: str | None
@@ -125,9 +157,14 @@ def observation_from_hf(org_key: str, m: dict[str, Any]) -> HFObservation | None
         return None
     modified = _parse_ts(m.get("lastModified")) or created
 
-    tags: list[str] = m.get("tags") or []
-    siblings = [s.get("rfilename", "") for s in (m.get("siblings") or [])]
-    card = m.get("cardData") or {}
+    tags = [t for t in (m.get("tags") or []) if isinstance(t, str)]
+    # siblings 키 자체가 없으면 "가중치 없음" 이 아니라 "모름" 이다. 둘을 같은
+    # 값으로 접으면 응답이 한 번 빈 날 다음 날 weights_released 가 쏟아진다.
+    raw_siblings = m.get("siblings")
+    siblings = ([str(x.get("rfilename", "")) if isinstance(x, dict) else str(x) for x in raw_siblings]
+                if isinstance(raw_siblings, list) else None)
+    card = m.get("cardData")
+    card = card if isinstance(card, dict) else {}
 
     license_ = card.get("license")
     if not license_:
@@ -135,6 +172,8 @@ def observation_from_hf(org_key: str, m: dict[str, Any]) -> HFObservation | None
         license_ = lic_tags[0] if lic_tags else None
     if isinstance(license_, list):
         license_ = license_[0] if license_ else None
+    # 카드 프런트매터는 사용자 입력이라 `license: 2024` 같은 값이 온다
+    license_ = str(license_) if license_ not in (None, "") else None
 
     arxiv_ids = sorted({t.split(":", 1)[1] for t in tags if t.startswith("arxiv:")})
 
@@ -149,15 +188,21 @@ def observation_from_hf(org_key: str, m: dict[str, Any]) -> HFObservation | None
                    if t.startswith("base_model:") and t.count(":") == 1]
 
     gated_raw = m.get("gated")
-    gated = "false" if not gated_raw else str(gated_raw).lower()
+    if not gated_raw:
+        gated = "false"
+    elif str(gated_raw).lower() in ("auto", "manual"):
+        gated = str(gated_raw).lower()
+    else:
+        gated = "manual"  # 알 수 없는 참값은 "막혀 있다" 쪽으로 보수적으로
 
     return HFObservation(
         org=org_key,
         repo_id=repo_id,
         created_at=created,
         last_modified=modified,
-        has_weights=any(f.lower().endswith(WEIGHT_SUFFIXES) for f in siblings),
-        has_card=bool(card) or "README.md" in siblings,
+        has_weights=(None if siblings is None
+                     else any(f.lower().endswith(WEIGHT_SUFFIXES) for f in siblings)),
+        has_card=bool(card) or bool(siblings and "README.md" in siblings),
         gated=gated,
         license=license_,
         arxiv_ids=arxiv_ids,
@@ -184,7 +229,8 @@ class ModelState(BaseModel):
     repo_id: str
     created_at: datetime
     last_modified: datetime
-    weights_at: datetime | None = None
+    weights_at: datetime | None = None   # 처음 가중치를 본 시각. 이후 내려가도 유지
+    has_weights: bool | None = None      # 지금 가중치가 있는가. 보드는 이걸 본다
     model_card_at: datetime | None = None
     report_at: datetime | None = None
     license: str | None = None
@@ -211,8 +257,13 @@ class ReleaseEvent(BaseModel):
     # 1차 출처가 시각을 말해주면 verified, 우리가 관측 시점으로 추정하면 unverified.
     # 표면에서 unverified 는 [미확인] 으로 표시한다.
     confidence: Literal["verified", "unverified"] = "verified"
-    bootstrap: bool = False
+    bootstrap: bool = False        # 첫 적재. 알림 대상 아님
+    backfill: bool = False         # 생성이 오래된 리포가 관측 창에 처음 들어옴. 알림 대상 아님
     detail: dict[str, Any] = Field(default_factory=dict)
+
+    @property
+    def alertable(self) -> bool:
+        return not (self.bootstrap or self.backfill)
 
 
 def load_states(path: Path = STATES_PATH) -> dict[str, ModelState]:
@@ -236,10 +287,16 @@ def load_events(path: Path = EVENTS_PATH) -> list[ReleaseEvent]:
     if not path.exists():
         return []
     events = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         line = line.strip()
-        if line:
+        if not line:
+            continue
+        try:
             events.append(ReleaseEvent.model_validate_json(line))
+        except Exception as e:  # noqa: BLE001
+            # append-only 자산 파일은 한 줄 때문에 통째로 못 읽으면 안 된다.
+            # 전이 종류를 추가했다가 코드를 되돌린 경우가 정확히 이 경로다.
+            logger.warning("release_event_skipped", line=n, error=str(e)[:120])
     return events
 
 
@@ -260,21 +317,30 @@ def _state_from(obs: HFObservation, now: datetime, prior: ModelState | None) -> 
 
     시각의 신뢰 등급이 다르다. `created_at` 은 HF 가 말해주는 사실이고,
     weights/card/report 가 처음 관측된 시각은 우리가 본 시점일 뿐이다.
-    첫 관측(bootstrap)에서는 리포 생성 시각을 그대로 쓴다 - 대부분의 리포는
-    생성과 동시에 가중치·카드가 올라오므로 그 편이 관측 시각보다 진실에 가깝다.
+    첫 관측에서는 리포 생성 시각을 그대로 쓴다 - 대부분의 리포는 생성과
+    동시에 가중치·카드가 올라오므로 그 편이 관측 시각보다 진실에 가깝다.
+
+    "처음 본 시각"(weights_at)과 "지금 있는가"(has_weights)를 따로 둔다.
+    게이팅 강화로 파일이 내려간 리포는 전자는 남고 후자만 False 가 된다.
     """
     seed = obs.created_at if prior is None else now
+    weights_known = obs.has_weights is not None
     return ModelState(
         org=obs.org,
         repo_id=obs.repo_id,
         created_at=obs.created_at,
         last_modified=obs.last_modified,
-        weights_at=(prior.weights_at if prior and prior.weights_at else (seed if obs.has_weights else None)),
-        model_card_at=(prior.model_card_at if prior and prior.model_card_at else (seed if obs.has_card else None)),
-        report_at=(prior.report_at if prior and prior.report_at else (seed if obs.arxiv_ids else None)),
-        license=obs.license,
+        weights_at=(prior.weights_at if prior and prior.weights_at
+                    else (seed if obs.has_weights else None)),
+        has_weights=(obs.has_weights if weights_known else (prior.has_weights if prior else None)),
+        model_card_at=(prior.model_card_at if prior and prior.model_card_at
+                       else (seed if obs.has_card else None)),
+        report_at=(prior.report_at if prior and prior.report_at
+                   else (seed if obs.arxiv_ids else None)),
+        # 라이선스가 잠깐 비는 것(README 를 내렸다 올림)은 변경이 아니다
+        license=obs.license if obs.license else (prior.license if prior else None),
         gated=obs.gated,
-        arxiv_ids=obs.arxiv_ids,
+        arxiv_ids=sorted(set(obs.arxiv_ids) | set(prior.arxiv_ids if prior else [])),
         derivative=obs.derivative,
         base_models=obs.base_models,
         first_seen=prior.first_seen if prior else now,
@@ -286,6 +352,7 @@ def detect_transitions(
     observations: list[HFObservation],
     states: dict[str, ModelState],
     now: datetime | None = None,
+    new_repo_window_days: int = NEW_REPO_WINDOW_DAYS,
 ) -> tuple[list[ReleaseEvent], dict[str, ModelState]]:
     """관측과 이전 상태를 비교해 새 이벤트와 갱신된 상태를 돌려준다.
 
@@ -293,26 +360,29 @@ def detect_transitions(
     간주해 모든 리포를 `repo_created(bootstrap=True)` 로 기록한다 - 알림 대상이
     아니라 적재 기록이다.
 
-    같은 관측을 두 번 넣으면 두 번째는 이벤트가 0건이어야 한다(멱등). 이게
-    깨지면 매일 같은 알림이 온다.
+    같은 관측을 두 번 넣으면 두 번째는 이벤트가 0건이어야 한다(멱등). 한 배치에
+    같은 리포가 두 번 와도 한 번만 처리한다. 이게 깨지면 매일 같은 알림이 온다.
     """
     now = now or datetime.now(timezone.utc)
     bootstrap = not states
     new_states = dict(states)
     events: list[ReleaseEvent] = []
+    window = timedelta(days=new_repo_window_days)
 
     for obs in observations:
         if obs.private or obs.derivative == "quantized":
             continue
-        prior = states.get(obs.repo_id)
+        prior = new_states.get(obs.repo_id)
         state = _state_from(obs, now, prior)
         new_states[obs.repo_id] = state
 
         if prior is None:
+            # 처음 본다고 새 리포는 아니다. 생성이 오래됐으면 조용히 적재한다.
+            backfill = (not bootstrap) and (now - obs.created_at > window)
             events.append(ReleaseEvent(
                 org=obs.org, repo_id=obs.repo_id, transition="repo_created",
                 observed_at=now, at=obs.created_at, source_url=obs.url,
-                confidence="verified", bootstrap=bootstrap,
+                confidence="verified", bootstrap=bootstrap, backfill=backfill,
                 detail={
                     "weights": obs.has_weights, "card": obs.has_card,
                     "arxiv_ids": obs.arxiv_ids, "license": obs.license,
@@ -331,14 +401,14 @@ def detect_transitions(
                 confidence="unverified", detail=detail,
             )
 
-        if not prior.weights_at and obs.has_weights:
+        if obs.has_weights is not None and not prior.weights_at and obs.has_weights:
             events.append(ev("weights_released"))
         if not prior.model_card_at and obs.has_card:
             events.append(ev("model_card_added"))
         new_arxiv = sorted(set(obs.arxiv_ids) - set(prior.arxiv_ids))
         if new_arxiv:
             events.append(ev("report_published", arxiv_ids=new_arxiv))
-        if prior.license != obs.license and obs.license:
+        if obs.license and prior.license != obs.license:
             events.append(ev("license_changed", before=prior.license, after=obs.license))
         if prior.gated != "false" and obs.gated == "false":
             events.append(ev("gating_removed", before=prior.gated))
@@ -359,7 +429,7 @@ def detect_announcements(
         if p.url in known_urls:
             continue
         org = watchlist.org(p.org)
-        if org is None or not org.matches(p.title):
+        if org is None or not org.matches_title(p.title):
             continue
         events.append(ReleaseEvent(
             org=p.org, repo_id=p.url, transition="announced",
@@ -389,6 +459,15 @@ def _short(repo_id: str) -> str:
     return repo_id.split("/", 1)[-1]
 
 
+def _plain(text: str) -> str:
+    """외부 문자열을 Discord 문안에 넣기 전에 서식·멘션 문자를 지운다.
+
+    공식 블로그 제목이라 악의는 낮지만 `**`, `__`, `<>` 는 서식을 깨고
+    `@everyone` 은 실제 멘션이 된다.
+    """
+    return re.sub(r"[*_`<>@\\]", "", text).strip()
+
+
 def _facts(d: dict[str, Any]) -> str:
     parts = []
     parts.append("가중치 ✓" if d.get("weights") else "가중치 ✗")
@@ -408,7 +487,7 @@ def format_event_line(e: ReleaseEvent) -> str:
     label = _LABEL.get(e.transition, e.transition)
     tag = "" if e.confidence == "verified" else " [미확인]"
     if e.transition == "announced":
-        return f"{label}{tag} {e.detail.get('title', '')}\n<{e.source_url}>"
+        return f"{label}{tag} {_plain(str(e.detail.get('title', '')))}\n<{e.source_url}>"
     if e.transition == "repo_created":
         return f"{label}{tag} **{_short(e.repo_id)}** · {_facts(e.detail)}\n<{e.source_url}>"
     if e.transition == "report_published":
@@ -434,7 +513,7 @@ def format_alert(
     나열하면 정작 중요한 한 줄이 묻힌다. 우선순위 높은 조직부터 싣고 나머지는
     건수와 링크로 갈음한다.
     """
-    live = [e for e in events if not e.bootstrap]
+    live = [e for e in events if e.alertable]
     if not live:
         return None
 
@@ -458,12 +537,21 @@ def format_alert(
         shown += 1
     if shown < len(live):
         lines.append(f"\n외 {len(live) - shown}건")
-    lines.append(f"\n전체 보드: <{tracker_url}>")
+    footer = f"\n전체 보드: <{tracker_url}>"
 
-    text = "\n".join(lines)
-    if len(text) > max_chars:
-        text = text[: max_chars - 1] + "…"
-    return text
+    # 줄 단위로 줄인다. 글자 단위로 자르면 URL 중간이 끊기고 보드 링크가 사라진다.
+    body: list[str] = []
+    used = len(footer) + 1
+    dropped = 0
+    for line in lines:
+        if used + len(line) + 1 > max_chars:
+            dropped += 1
+            continue
+        body.append(line)
+        used += len(line) + 1
+    if dropped:
+        body.append(f"(… {dropped}줄 생략)")
+    return "\n".join(body + [footer])
 
 
 # ---------------------------------------------------------------------------
@@ -508,6 +596,7 @@ def build_tracker(
                     "created_at": s.created_at.isoformat(),
                     "last_modified": s.last_modified.isoformat(),
                     "weights_at": s.weights_at.isoformat() if s.weights_at else None,
+                    "has_weights": s.has_weights,
                     "model_card_at": s.model_card_at.isoformat() if s.model_card_at else None,
                     "report_at": s.report_at.isoformat() if s.report_at else None,
                     "arxiv_ids": s.arxiv_ids,
