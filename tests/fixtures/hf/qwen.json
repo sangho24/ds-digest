@@ -1,0 +1,1403 @@
+[
+ {
+  "id": "Qwen/Qwen-Drive-1.0-4B",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-09-02T06:31:52.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen_drive",
+   "autonomous-driving",
+   "motion-planning",
+   "3d-perception",
+   "visual-question-answering",
+   "qwen",
+   "image-text-to-text",
+   "conversational",
+   "arxiv:2609.00111",
+   "base_model:Qwen/Qwen3.5-4B",
+   "base_model:finetune:Qwen/Qwen3.5-4B",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-08-27T08:14:27.000Z",
+  "siblings": [
+   {
+    "rfilename": ".DS_Store"
+   },
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": ".ms_upload_cache"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "assets/intro.png"
+   },
+   {
+    "rfilename": "assets/logo.png"
+   },
+   {
+    "rfilename": "assets/overview.png"
+   },
+   {
+    "rfilename": "assets/perception.png"
+   },
+   {
+    "rfilename": "assets/planning.png"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "chat_template.json"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "perception/config.json"
+   },
+   {
+    "rfilename": "perception/model.safetensors"
+   },
+   {
+    "rfilename": "planner-rl/config.json"
+   },
+   {
+    "rfilename": "planner-rl/model.safetensors"
+   },
+   {
+    "rfilename": "planner-sft/config.json"
+   },
+   {
+    "rfilename": "planner-sft/model.safetensors"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   },
+   {
+    "rfilename": "vocab.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-Flash-Next-FP8",
+  "cardData": {
+   "license": "other",
+   "license_name": "qwen-community-1.0",
+   "base_model": [
+    "Qwen/Qwen3.8-Flash-Next"
+   ],
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-08-31T08:19:15.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen4_exp",
+   "image-text-to-text",
+   "conversational",
+   "base_model:Qwen/Qwen3.8-Flash-Next",
+   "base_model:quantized:Qwen/Qwen3.8-Flash-Next",
+   "license:other",
+   "endpoints_compatible",
+   "fp8",
+   "region:us"
+  ],
+  "createdAt": "2026-08-24T08:25:23.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00019-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00020-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00021-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00022-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00023-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00024-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00025-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00026-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00027-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00028-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00029-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00030-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00031-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00032-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00033-of-00131.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-Flash-Next",
+  "cardData": {
+   "license": "other",
+   "license_name": "qwen-community-1.0",
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-08-27T05:03:36.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen4_exp",
+   "image-text-to-text",
+   "conversational",
+   "license:other",
+   "eval-results",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-08-24T08:24:59.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00019-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00020-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00021-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00022-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00023-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00024-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00025-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00026-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00027-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00028-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00029-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00030-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00031-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00032-of-00131.safetensors"
+   },
+   {
+    "rfilename": "model-00033-of-00131.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-27B-FP8",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": [
+    "Qwen/Qwen3.8-27B"
+   ],
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-08-14T14:44:41.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5",
+   "image-text-to-text",
+   "conversational",
+   "base_model:Qwen/Qwen3.8-27B",
+   "base_model:quantized:Qwen/Qwen3.8-27B",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "fp8",
+   "region:us"
+  ],
+  "createdAt": "2026-08-13T08:01:58.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "crc32.txt"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "layers-0.safetensors"
+   },
+   {
+    "rfilename": "layers-1.safetensors"
+   },
+   {
+    "rfilename": "layers-10.safetensors"
+   },
+   {
+    "rfilename": "layers-11.safetensors"
+   },
+   {
+    "rfilename": "layers-12.safetensors"
+   },
+   {
+    "rfilename": "layers-13.safetensors"
+   },
+   {
+    "rfilename": "layers-14.safetensors"
+   },
+   {
+    "rfilename": "layers-15.safetensors"
+   },
+   {
+    "rfilename": "layers-16.safetensors"
+   },
+   {
+    "rfilename": "layers-17.safetensors"
+   },
+   {
+    "rfilename": "layers-18.safetensors"
+   },
+   {
+    "rfilename": "layers-19.safetensors"
+   },
+   {
+    "rfilename": "layers-2.safetensors"
+   },
+   {
+    "rfilename": "layers-20.safetensors"
+   },
+   {
+    "rfilename": "layers-21.safetensors"
+   },
+   {
+    "rfilename": "layers-22.safetensors"
+   },
+   {
+    "rfilename": "layers-23.safetensors"
+   },
+   {
+    "rfilename": "layers-24.safetensors"
+   },
+   {
+    "rfilename": "layers-25.safetensors"
+   },
+   {
+    "rfilename": "layers-26.safetensors"
+   },
+   {
+    "rfilename": "layers-27.safetensors"
+   },
+   {
+    "rfilename": "layers-28.safetensors"
+   },
+   {
+    "rfilename": "layers-29.safetensors"
+   },
+   {
+    "rfilename": "layers-3.safetensors"
+   },
+   {
+    "rfilename": "layers-30.safetensors"
+   },
+   {
+    "rfilename": "layers-31.safetensors"
+   },
+   {
+    "rfilename": "layers-32.safetensors"
+   },
+   {
+    "rfilename": "layers-33.safetensors"
+   },
+   {
+    "rfilename": "layers-34.safetensors"
+   },
+   {
+    "rfilename": "layers-35.safetensors"
+   },
+   {
+    "rfilename": "layers-36.safetensors"
+   },
+   {
+    "rfilename": "layers-37.safetensors"
+   },
+   {
+    "rfilename": "layers-38.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-2.4T-A95B",
+  "cardData": {
+   "license": "other",
+   "license_name": "qwen3.8-max",
+   "pipeline_tag": "text-generation"
+  },
+  "gated": false,
+  "lastModified": "2026-08-12T10:24:04.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5_moe_text",
+   "text-generation",
+   "conversational",
+   "license:other",
+   "eval-results",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-08-08T01:50:52.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00019-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00020-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00021-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00022-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00023-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00024-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00025-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00026-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00027-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00028-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00029-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00030-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00031-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00032-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00033-of-00213.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-2.4T-A95B-FP8",
+  "cardData": {
+   "license": "other",
+   "license_name": "qwen3.8-max",
+   "base_model": [
+    "Qwen/Qwen3.8-2.4T-A95B"
+   ],
+   "pipeline_tag": "text-generation"
+  },
+  "gated": false,
+  "lastModified": "2026-08-12T10:23:42.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5_moe_text",
+   "text-generation",
+   "conversational",
+   "base_model:Qwen/Qwen3.8-2.4T-A95B",
+   "base_model:quantized:Qwen/Qwen3.8-2.4T-A95B",
+   "license:other",
+   "endpoints_compatible",
+   "fp8",
+   "region:us"
+  ],
+  "createdAt": "2026-08-08T01:49:49.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00019-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00020-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00021-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00022-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00023-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00024-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00025-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00026-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00027-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00028-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00029-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00030-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00031-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00032-of-00213.safetensors"
+   },
+   {
+    "rfilename": "model-00033-of-00213.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3.8-27B",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-08-14T15:00:01.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5",
+   "image-text-to-text",
+   "conversational",
+   "license:apache-2.0",
+   "eval-results",
+   "endpoints_compatible",
+   "deploy:azure",
+   "deploy:sagemaker",
+   "region:us"
+  ],
+  "createdAt": "2026-08-05T08:22:59.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "crc32.txt"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00018.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   },
+   {
+    "rfilename": "video_preprocessor_config.json"
+   },
+   {
+    "rfilename": "vocab.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+  "cardData": {
+   "license": "apache-2.0"
+  },
+  "gated": false,
+  "lastModified": "2026-06-26T08:42:38.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_asr",
+   "token-classification",
+   "zh",
+   "en",
+   "yue",
+   "fr",
+   "de",
+   "it",
+   "ja",
+   "ko",
+   "pt",
+   "ru",
+   "es",
+   "arxiv:2601.21337",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-06-26T08:42:01.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3-ASR-0.6B-hf",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "automatic-speech-recognition"
+  },
+  "gated": false,
+  "lastModified": "2026-07-22T11:58:47.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_asr",
+   "automatic-speech-recognition",
+   "zh",
+   "en",
+   "yue",
+   "ar",
+   "de",
+   "fr",
+   "es",
+   "pt",
+   "id",
+   "it",
+   "ko",
+   "ru",
+   "th",
+   "vi",
+   "ja",
+   "tr",
+   "hi",
+   "ms",
+   "nl",
+   "sv",
+   "da",
+   "fi",
+   "pl",
+   "cs",
+   "fil",
+   "fa",
+   "el",
+   "hu",
+   "mk",
+   "ro",
+   "arxiv:2601.21337",
+   "license:apache-2.0",
+   "eval-results",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-06-26T08:39:00.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen3-ASR-1.7B-hf",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "automatic-speech-recognition"
+  },
+  "gated": false,
+  "lastModified": "2026-07-22T11:58:31.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_asr",
+   "automatic-speech-recognition",
+   "zh",
+   "en",
+   "yue",
+   "ar",
+   "de",
+   "fr",
+   "es",
+   "pt",
+   "id",
+   "it",
+   "ko",
+   "ru",
+   "th",
+   "vi",
+   "ja",
+   "tr",
+   "hi",
+   "ms",
+   "nl",
+   "sv",
+   "da",
+   "fi",
+   "pl",
+   "cs",
+   "fil",
+   "fa",
+   "el",
+   "hu",
+   "mk",
+   "ro",
+   "arxiv:2601.21337",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-06-26T08:34:21.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen-AgentWorld-35B-A3B",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": [
+    "Qwen/Qwen3.5-35B-A3B-Base"
+   ],
+   "pipeline_tag": "text-generation"
+  },
+  "gated": false,
+  "lastModified": "2026-06-25T07:24:16.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5_moe",
+   "image-text-to-text",
+   "qwen",
+   "world-model",
+   "agent",
+   "environment-simulation",
+   "text-generation",
+   "conversational",
+   "dataset:Qwen/AgentWorldBench",
+   "arxiv:2606.24597",
+   "base_model:Qwen/Qwen3.5-35B-A3B-Base",
+   "base_model:finetune:Qwen/Qwen3.5-35B-A3B-Base",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us",
+   "deploy:azure",
+   "deploy:sagemaker"
+  ],
+  "createdAt": "2026-06-22T14:49:37.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "merges.txt"
+   },
+   {
+    "rfilename": "model-00001-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00012-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00013-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00014-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00015-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00016-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00017-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00018-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00019-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00020-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model-00021-of-00021.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   },
+   {
+    "rfilename": "video_preprocessor_config.json"
+   },
+   {
+    "rfilename": "vocab.json"
+   }
+  ]
+ },
+ {
+  "id": "Qwen/Qwen-Image-Bench",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": "Qwen/Qwen3.6-27B",
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-05-28T08:07:27.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "qwen3_5",
+   "image-text-to-text",
+   "judge-model",
+   "text-to-image",
+   "evaluation",
+   "benchmark",
+   "qwen",
+   "conversational",
+   "en",
+   "zh",
+   "arxiv:2605.28091",
+   "base_model:Qwen/Qwen3.6-27B",
+   "base_model:finetune:Qwen/Qwen3.6-27B",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us",
+   "deploy:azure"
+  ],
+  "createdAt": "2026-05-21T04:15:56.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model-00001-of-00002.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00002.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ }
+]

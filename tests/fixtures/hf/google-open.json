@@ -1,0 +1,796 @@
+[
+ {
+  "id": "google/timesfm-3.0-pytorch",
+  "cardData": {
+   "license": "other",
+   "license_name": "timesfm-non-commercial-license-v1.0",
+   "pipeline_tag": "time-series-forecasting"
+  },
+  "gated": false,
+  "lastModified": "2026-09-02T15:44:59.000Z",
+  "private": false,
+  "tags": [
+   "safetensors",
+   "time-series",
+   "forecasting",
+   "pretrained",
+   "pytorch",
+   "google",
+   "time-series-forecasting",
+   "arxiv:2310.10688",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2026-08-24T22:05:51.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-g14-lowres",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:54.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T16:41:21.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-g14",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:54.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T16:40:35.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-so400m14",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:53.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T15:02:28.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-l14",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:53.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T14:56:11.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-b14",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:52.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T14:48:47.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tipsv1-s14",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "zero-shot-image-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-08-19T23:46:52.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "tipsv2",
+   "feature-extraction",
+   "vision",
+   "image-text",
+   "contrastive-learning",
+   "zero-shot",
+   "arxiv:2410.16512",
+   "zero-shot-image-classification",
+   "custom_code",
+   "license:apache-2.0",
+   "region:us"
+  ],
+  "createdAt": "2026-08-19T14:43:49.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "configuration_tips.py"
+   },
+   {
+    "rfilename": "image_encoder.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "modeling_tips.py"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "text_encoder.py"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/tabfm-1.0.0-jax",
+  "cardData": {
+   "license": "other",
+   "license_name": "tabfm-non-commercial-v1.0",
+   "pipeline_tag": "tabular-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-07-04T06:09:41.000Z",
+  "private": false,
+  "tags": [
+   "tabfm",
+   "tabular",
+   "tabular-regression",
+   "zero-shot",
+   "in-context-learning",
+   "jax",
+   "flax",
+   "foundation-model",
+   "tabular-classification",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2026-06-29T23:04:41.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "classification/config.json"
+   },
+   {
+    "rfilename": "classification/orbax/1/_CHECKPOINT_METADATA"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/_METADATA"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/_sharding"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/array_metadatas/process_0"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/d/9ea16bc528d830a6de7bfc3bf13d2d96"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/descriptor/descriptor.pbtxt"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/descriptor/uuid-06c0943b-3b73-4bcb-82a1-8253e64bee2c"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/manifest.ocdbt"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/00618f7254f8ab0e676e1759f6615abb"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/0088539ff5db33704b2420131bc3dc72"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/0297df10a04c7ec8f0b9996122fe60ef"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/046faac4366bc909aa967ac7dc2b2b5f"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/06820cf27a94ca47e9815a366132aa56"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/0a7a73b01bc941ffe3bc3901561095a5"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/0fd72898dfd7cd278b12fc1884d4cbc1"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/11e62c071b513ac602a309c4e89b0496"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/12d58ae0428eb9e7187b314beb7fc9f5"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/1300ef9943edd145cf85684a88bf15b5"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/14993481e191d38d7798b6a62600a413"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/14a299330b1fbadaeb427d8019e60df3"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/163c6ea61497917b854584170e59da6f"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/167f1d1e2d454a242f307a523088b6cb"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/16bfab65fc804ef173ff320b0060e3e6"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/16e2748aeded9ba565d6f12a2d054b22"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/17734c434a675fc2aa288504da86fb38"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/199039cc8b4b5f0df062476fdd3b8de1"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/19f1bbf2e1e0fba70b5d5e7c9dbb6ad0"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/1b4fa31674728a224c7d67affbfdc190"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/1ef3084d62cfc4617fdf318cb1a7beed"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/1fb6a32702be86469825f31ba24462a7"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/211ab4a7bd846d5646f152a767a1ca96"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/231a2b72d57994229c563d5264098c33"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/29790f17f0b904f3d92d346dedff7505"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/29b195d6bdab1b6b1fe9050dc7c5a473"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/325444936ea706b1287402b534659204"
+   },
+   {
+    "rfilename": "classification/orbax/1/params/ocdbt.process_0/d/3b5dd635075ced799aecc4feba1af762"
+   }
+  ]
+ },
+ {
+  "id": "google/tabfm-1.0.0-pytorch",
+  "cardData": {
+   "license": "other",
+   "license_name": "tabfm-non-commercial-v1.0",
+   "pipeline_tag": "tabular-classification"
+  },
+  "gated": false,
+  "lastModified": "2026-07-04T06:08:26.000Z",
+  "private": false,
+  "tags": [
+   "tabfm",
+   "safetensors",
+   "tabular",
+   "tabular-regression",
+   "zero-shot",
+   "in-context-learning",
+   "pytorch",
+   "foundation-model",
+   "tabular-classification",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2026-06-29T23:04:41.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "classification/config.json"
+   },
+   {
+    "rfilename": "classification/model.safetensors"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "regression/config.json"
+   },
+   {
+    "rfilename": "regression/model.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "google/diffusiongemma-26B-A4B-it",
+  "cardData": {
+   "license": "apache-2.0",
+   "pipeline_tag": "image-text-to-text"
+  },
+  "gated": false,
+  "lastModified": "2026-07-15T16:35:45.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "diffusion_gemma",
+   "image-text-to-text",
+   "conversational",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2026-06-09T12:40:12.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model-00001-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00006-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00007-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00008-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00009-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00010-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model-00011-of-00011.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "model_index.json"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "scheduler/scheduler_config.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/gemma-4-12B-it-qat-w4a16-ct",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": [
+    "google/gemma-4-12B-it-qat-q4_0-unquantized"
+   ],
+   "pipeline_tag": "any-to-any"
+  },
+  "gated": false,
+  "lastModified": "2026-07-20T16:43:34.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "gemma4_unified",
+   "image-text-to-text",
+   "any-to-any",
+   "arxiv:2607.02770",
+   "base_model:google/gemma-4-12B-it-qat-q4_0-unquantized",
+   "base_model:quantized:google/gemma-4-12B-it-qat-q4_0-unquantized",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "compressed-tensors",
+   "region:us"
+  ],
+  "createdAt": "2026-06-05T02:50:55.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "recipe.yaml"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "google/gemma-4-12B-it-qat-q4_0-gguf",
+  "cardData": {
+   "license": "apache-2.0",
+   "base_model": [
+    "google/gemma-4-12B-it-qat-q4_0-unquantized"
+   ],
+   "pipeline_tag": "any-to-any"
+  },
+  "gated": false,
+  "lastModified": "2026-07-17T21:24:41.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "gguf",
+   "any-to-any",
+   "arxiv:2607.02770",
+   "base_model:google/gemma-4-12B-it-qat-q4_0-unquantized",
+   "base_model:quantized:google/gemma-4-12B-it-qat-q4_0-unquantized",
+   "license:apache-2.0",
+   "endpoints_compatible",
+   "region:us",
+   "conversational"
+  ],
+  "createdAt": "2026-06-05T00:28:47.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "gemma-4-12b-it-qat-q4_0.gguf"
+   },
+   {
+    "rfilename": "mmproj-gemma-4-12b-it-qat-q4_0.gguf"
+   }
+  ]
+ }
+]

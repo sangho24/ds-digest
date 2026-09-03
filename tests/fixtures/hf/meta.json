@@ -1,0 +1,667 @@
+[
+ {
+  "id": "meta-llama/Llama-Prompt-Guard-2-86M",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4"
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-29T15:59:55.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "deberta-v2",
+   "text-classification",
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama4",
+   "safety",
+   "en",
+   "fr",
+   "de",
+   "hi",
+   "it",
+   "pt",
+   "es",
+   "th",
+   "license:other",
+   "text-embeddings-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2025-04-28T07:16:35.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-Prompt-Guard-2-22M",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4"
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-29T15:47:24.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "deberta-v2",
+   "text-classification",
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama4",
+   "safety",
+   "en",
+   "fr",
+   "de",
+   "hi",
+   "it",
+   "pt",
+   "es",
+   "th",
+   "license:other",
+   "text-embeddings-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2025-04-28T07:15:58.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "MODEL_CARD.md"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-Guard-4-12B",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4"
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-29T18:14:44.000Z",
+  "private": false,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "llama4",
+   "image-text-to-text",
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "safety",
+   "conversational",
+   "en",
+   "arxiv:2503.05731",
+   "arxiv:2407.21783",
+   "license:other",
+   "text-generation-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "createdAt": "2025-04-23T11:30:25.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "chat_template.jinja"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "llama_guard_4_12b_after_pruning.png"
+   },
+   {
+    "rfilename": "llama_guard_4_12b_before_pruning.png"
+   },
+   {
+    "rfilename": "model-00001-of-00005.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00005.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00005.safetensors"
+   },
+   {
+    "rfilename": "model-00004-of-00005.safetensors"
+   },
+   {
+    "rfilename": "model-00005-of-00005.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   },
+   {
+    "rfilename": "processor_config.json"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8-Original",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4",
+   "base_model": [
+    "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8"
+   ]
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-05T22:34:47.000Z",
+  "private": false,
+  "tags": [
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama-4",
+   "ar",
+   "de",
+   "en",
+   "es",
+   "fr",
+   "hi",
+   "id",
+   "it",
+   "pt",
+   "th",
+   "tl",
+   "vi",
+   "arxiv:2204.05149",
+   "base_model:meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+   "base_model:quantized:meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2025-04-04T10:03:43.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "consolidated.00.pth"
+   },
+   {
+    "rfilename": "consolidated.01.pth"
+   },
+   {
+    "rfilename": "consolidated.02.pth"
+   },
+   {
+    "rfilename": "consolidated.03.pth"
+   },
+   {
+    "rfilename": "consolidated.04.pth"
+   },
+   {
+    "rfilename": "consolidated.05.pth"
+   },
+   {
+    "rfilename": "consolidated.06.pth"
+   },
+   {
+    "rfilename": "consolidated.07.pth"
+   },
+   {
+    "rfilename": "fp8_scales_0.pt"
+   },
+   {
+    "rfilename": "fp8_scales_1.pt"
+   },
+   {
+    "rfilename": "fp8_scales_2.pt"
+   },
+   {
+    "rfilename": "fp8_scales_3.pt"
+   },
+   {
+    "rfilename": "fp8_scales_4.pt"
+   },
+   {
+    "rfilename": "fp8_scales_5.pt"
+   },
+   {
+    "rfilename": "fp8_scales_6.pt"
+   },
+   {
+    "rfilename": "fp8_scales_7.pt"
+   },
+   {
+    "rfilename": "params.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-Original",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4",
+   "base_model": [
+    "meta-llama/Llama-4-Maverick-17B-128E"
+   ]
+  },
+  "gated": "manual",
+  "lastModified": "2025-05-10T15:08:32.000Z",
+  "private": false,
+  "tags": [
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama-4",
+   "ar",
+   "de",
+   "en",
+   "es",
+   "fr",
+   "hi",
+   "id",
+   "it",
+   "pt",
+   "th",
+   "tl",
+   "vi",
+   "arxiv:2204.05149",
+   "base_model:meta-llama/Llama-4-Maverick-17B-128E",
+   "base_model:finetune:meta-llama/Llama-4-Maverick-17B-128E",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2025-04-04T08:02:25.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "consolidated.00.pth"
+   },
+   {
+    "rfilename": "consolidated.01.pth"
+   },
+   {
+    "rfilename": "consolidated.02.pth"
+   },
+   {
+    "rfilename": "consolidated.03.pth"
+   },
+   {
+    "rfilename": "consolidated.04.pth"
+   },
+   {
+    "rfilename": "consolidated.05.pth"
+   },
+   {
+    "rfilename": "consolidated.06.pth"
+   },
+   {
+    "rfilename": "consolidated.07.pth"
+   },
+   {
+    "rfilename": "params.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-4-Maverick-17B-128E-Original",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4"
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-05T22:36:07.000Z",
+  "private": false,
+  "tags": [
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama-4",
+   "ar",
+   "de",
+   "en",
+   "es",
+   "fr",
+   "hi",
+   "id",
+   "it",
+   "pt",
+   "th",
+   "tl",
+   "vi",
+   "arxiv:2204.05149",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2025-04-03T15:51:13.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "consolidated.00.pth"
+   },
+   {
+    "rfilename": "consolidated.01.pth"
+   },
+   {
+    "rfilename": "consolidated.02.pth"
+   },
+   {
+    "rfilename": "consolidated.03.pth"
+   },
+   {
+    "rfilename": "consolidated.04.pth"
+   },
+   {
+    "rfilename": "consolidated.05.pth"
+   },
+   {
+    "rfilename": "consolidated.06.pth"
+   },
+   {
+    "rfilename": "consolidated.07.pth"
+   },
+   {
+    "rfilename": "params.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-4-Scout-17B-16E-Instruct-Original",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4",
+   "base_model": [
+    "meta-llama/Llama-4-Scout-17B-16E"
+   ]
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-05T22:34:23.000Z",
+  "private": false,
+  "tags": [
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama-4",
+   "ar",
+   "de",
+   "en",
+   "es",
+   "fr",
+   "hi",
+   "id",
+   "it",
+   "pt",
+   "th",
+   "tl",
+   "vi",
+   "arxiv:2204.05149",
+   "base_model:meta-llama/Llama-4-Scout-17B-16E",
+   "base_model:finetune:meta-llama/Llama-4-Scout-17B-16E",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2025-04-03T15:39:52.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "consolidated.00.pth"
+   },
+   {
+    "rfilename": "consolidated.01.pth"
+   },
+   {
+    "rfilename": "consolidated.02.pth"
+   },
+   {
+    "rfilename": "consolidated.03.pth"
+   },
+   {
+    "rfilename": "consolidated.04.pth"
+   },
+   {
+    "rfilename": "consolidated.05.pth"
+   },
+   {
+    "rfilename": "consolidated.06.pth"
+   },
+   {
+    "rfilename": "consolidated.07.pth"
+   },
+   {
+    "rfilename": "params.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   }
+  ]
+ },
+ {
+  "id": "meta-llama/Llama-4-Scout-17B-16E-Original",
+  "cardData": {
+   "license": "other",
+   "license_name": "llama4"
+  },
+  "gated": "manual",
+  "lastModified": "2025-04-05T22:35:07.000Z",
+  "private": false,
+  "tags": [
+   "facebook",
+   "meta",
+   "pytorch",
+   "llama",
+   "llama-4",
+   "ar",
+   "de",
+   "en",
+   "es",
+   "fr",
+   "hi",
+   "id",
+   "it",
+   "pt",
+   "th",
+   "tl",
+   "vi",
+   "arxiv:2204.05149",
+   "license:other",
+   "region:us"
+  ],
+  "createdAt": "2025-04-03T15:06:08.000Z",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "LICENSE"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "USE_POLICY.md"
+   },
+   {
+    "rfilename": "checklist.chk"
+   },
+   {
+    "rfilename": "consolidated.00.pth"
+   },
+   {
+    "rfilename": "consolidated.01.pth"
+   },
+   {
+    "rfilename": "consolidated.02.pth"
+   },
+   {
+    "rfilename": "consolidated.03.pth"
+   },
+   {
+    "rfilename": "consolidated.04.pth"
+   },
+   {
+    "rfilename": "consolidated.05.pth"
+   },
+   {
+    "rfilename": "consolidated.06.pth"
+   },
+   {
+    "rfilename": "consolidated.07.pth"
+   },
+   {
+    "rfilename": "params.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   }
+  ]
+ }
+]

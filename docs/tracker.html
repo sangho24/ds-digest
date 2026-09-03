@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkpoint Tracker</title>
+<style>
+  :root{--bg:#f5f5f0;--card:#fff;--line:#e8e8e0;--ink:#1a1a1a;--mute:#888;--ok:#2e7d32;--no:#b0b0a8;--warn:#b26a00;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);}
+  .wrap{max-width:1040px;margin:40px auto;padding:0 20px;}
+  h1{font-size:22px;font-weight:700;margin:0 0 6px;}
+  .sub{color:var(--mute);font-size:13px;margin-bottom:22px;}
+  .sub a{color:inherit}
+  input{width:100%;box-sizing:border-box;padding:10px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:22px;background:var(--card)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+  h2{font-size:15px;margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+  h2 small{color:var(--mute);font-weight:400;font-size:12px}
+  .kind{font-size:11px;color:var(--mute);margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-weight:600;color:var(--mute);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 8px;border-bottom:1px solid #f0f0ea;vertical-align:top}
+  td a{color:var(--ink);text-decoration:none}
+  td a:hover{text-decoration:underline}
+  .y{color:var(--ok)} .n{color:var(--no)} .w{color:var(--warn)}
+  .d{color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tag{display:inline-block;font-size:11px;padding:1px 6px;border:1px solid var(--line);border-radius:6px;color:var(--mute);margin-left:4px}
+  .ev{font-size:13px;line-height:1.7}
+  .ev .d{margin-right:8px}
+  .empty{color:var(--mute);font-size:13px;padding:6px 0}
+  .scroll{overflow-x:auto}
+  @media (max-width:700px){ th:nth-child(6),td:nth-child(6){display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Checkpoint Tracker</h1>
+  <p class="sub" id="meta">불러오는 중…</p>
+  <input id="q" type="search" placeholder="모델·조직·라이선스 검색 (예: GLM, apache, gated)">
+  <section id="recent"><h2>최근 전이</h2><div class="ev" id="events"></div></section>
+  <div id="orgs"></div>
+  <p class="sub">데이터: <a href="tracker.json">tracker.json</a> · 근거는 HF Hub API 의 리포 생성·수정·태그. [미확인] 은 관측 시점으로 추정한 시각. · <a href="index.html">다이제스트 아카이브</a></p>
+</div>
+<script>
+const LABEL = {repo_created:'🆕 새 리포',weights_released:'⚖️ 가중치',model_card_added:'📄 카드',report_published:'📑 리포트',license_changed:'📜 라이선스',gating_removed:'🔓 게이팅 해제',announced:'📣 발표'};
+const fmt = s => s ? s.slice(0,10) : '';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let DATA = null;
+
+function cell(v, label){ return v ? `<span class="y" title="${esc(label)} ${esc(fmt(v))}">✓ <span class="d">${esc(fmt(v))}</span></span>` : '<span class="n">✗</span>'; }
+
+function renderOrgs(filter){
+  const q = (filter||'').trim().toLowerCase();
+  const host = document.getElementById('orgs'); host.innerHTML = '';
+  for (const org of DATA.orgs){
+    let models = org.models;
+    if (q) models = models.filter(m => (m.repo_id+' '+(m.license||'')+' '+org.label+' '+m.gated+' '+(m.arxiv_ids||[]).join(' ')).toLowerCase().includes(q));
+    if (q && !models.length) continue;
+    const sec = document.createElement('section');
+    const rows = models.map(m => `
+      <tr>
+        <td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.repo_id.split('/')[1])}</a>${m.derivative?`<span class="tag">${esc(m.derivative)}</span>`:''}${m.gated!=='false'?`<span class="tag w">gated:${esc(m.gated)}</span>`:''}</td>
+        <td class="d">${esc(fmt(m.created_at))}</td>
+        <td>${cell(m.weights_at,'가중치')}</td>
+        <td>${cell(m.model_card_at,'카드')}</td>
+        <td>${m.report_at ? `<span class="y">✓ ${(m.arxiv_ids||[]).slice(0,2).map(a=>`<a href="https://arxiv.org/abs/${esc(a)}" target="_blank" rel="noopener">${esc(a)}</a>`).join(' ')}</span>` : '<span class="n">✗</span>'}</td>
+        <td>${m.license ? esc(m.license) : '<span class="n">미공개</span>'}</td>
+      </tr>`).join('');
+    sec.innerHTML = `
+      <h2>${esc(org.label)} <small>${org.tracked}개 추적 · 우선순위 ${org.priority}</small></h2>
+      <div class="kind">${org.kind==='closed' ? '폐쇄형 · 가중치 전이 없음, 발표·리포트만 추적' : 'HF: '+esc(org.hf_org||'')}</div>
+      ${models.length ? `<div class="scroll"><table><thead><tr><th>모델</th><th>생성</th><th>가중치</th><th>카드</th><th>리포트</th><th>라이선스</th></tr></thead><tbody>${rows}</tbody></table></div>` : '<div class="empty">추적 중인 리포 없음</div>'}`;
+    host.appendChild(sec);
+  }
+}
+
+function renderEvents(){
+  const live = DATA.recent_events.filter(e => !e.bootstrap);
+  const el = document.getElementById('events');
+  if (!live.length){ el.innerHTML = '<div class="empty">아직 새 전이가 없습니다. 첫 적재 이후의 변화만 여기에 쌓입니다.</div>'; return; }
+  el.innerHTML = live.slice(0,40).map(e => {
+    const name = e.transition==='announced' ? esc(e.detail.title||e.source_url) : esc(e.repo_id.split('/').pop());
+    const extra = e.transition==='report_published' ? ' arXiv '+esc((e.detail.arxiv_ids||[]).join(', '))
+                : e.transition==='license_changed' ? ` ${esc(e.detail.before||'없음')} → ${esc(e.detail.after)}` : '';
+    const unv = e.confidence!=='verified' ? ' <span class="tag">미확인</span>' : '';
+    return `<div><span class="d">${esc(fmt(e.observed_at))}</span>${LABEL[e.transition]||esc(e.transition)} <a href="${esc(e.source_url)}" target="_blank" rel="noopener">${name}</a>${extra}${unv}</div>`;
+  }).join('');
+}
+
+fetch('tracker.json', {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+  DATA = d;
+  document.getElementById('meta').textContent = `조직 ${d.counts.orgs} · 모델 ${d.counts.models} · 이벤트 ${d.counts.events} · 갱신 ${fmt(d.generated_at)} (UTC)`;
+  renderEvents(); renderOrgs('');
+  document.getElementById('q').addEventListener('input', e => renderOrgs(e.target.value));
+}).catch(err => { document.getElementById('meta').textContent = 'tracker.json 을 불러오지 못했습니다: ' + err; });
+</script>
+</body>
+</html>

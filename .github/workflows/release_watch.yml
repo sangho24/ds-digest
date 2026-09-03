@@ -1,0 +1,88 @@
+# 릴리스 감시 - 워치리스트 조직의 HF 리포 변화를 매일 재고 전이를 알린다.
+#
+# daily_digest 와 별도 워크플로다. 한쪽이 죽어도 다른 쪽이 돌고, 커밋 경합도
+# concurrency 그룹으로 나눈다. 로컬 망에서는 huggingface.co 가 SNI 차단이라
+# 이 잡은 러너에서만 실행된다(2026-09-03 실측).
+name: Release Watch
+
+on:
+  schedule:
+    # UTC 23:00 = KST 08:00. daily digest(07:10) 뒤에 돈다.
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '드라이런 - 기록·알림 없이 수집·판정만. 산출물은 data/dryrun/'
+        type: boolean
+        default: true
+
+concurrency:
+  group: release-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run release watch
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # 스케줄 실행은 항상 실전이다. 드라이런은 수동 실행에서만 켜진다.
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+        run: python -m app.jobs.release_watch
+
+      - name: Upload dry-run output
+        if: ${{ inputs.dry_run == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-watch-dryrun
+          path: data/dryrun/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Commit state and board
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in data/releases.jsonl data/release_states.json docs/tracker.json; do
+            [ -f "$f" ] && git add "$f"
+          done || true
+          git diff --cached --quiet && exit 0
+          git commit -m "data: release watch $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git push && exit 0
+            echo "push failed (attempt $i), rebasing..."
+            git pull --rebase origin main || true
+          done
+          echo "::error::release watch push failed after 3 attempts"
+          exit 1
+
+      - name: Notify failure
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          [ -z "$TELEGRAM_BOT_TOKEN" ] && exit 0
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d parse_mode="HTML" \
+            -d text="⚠️ <b>Release Watch 워크플로 실패</b>%0A$(date -u +%Y-%m-%d)%0A${RUN_URL}" >/dev/null || true
