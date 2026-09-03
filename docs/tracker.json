@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-03T06:06:36.259665+00:00",
+ "generated_at": "2026-09-03T06:08:23.549332+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -1542,10 +1542,10 @@
      "derivative": "finetune"
     },
     {
-     "repo_id": "Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
-     "url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
+     "repo_id": "Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
+     "url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
      "created_at": "2026-04-27T03:39:40+00:00",
-     "last_modified": "2026-05-13T12:19:20+00:00",
+     "last_modified": "2026-05-13T12:19:05+00:00",
      "weights_at": "2026-04-27T03:39:40+00:00",
      "has_weights": true,
      "model_card_at": "2026-04-27T03:39:40+00:00",
@@ -1558,10 +1558,10 @@
      "derivative": "finetune"
     },
     {
-     "repo_id": "Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
-     "url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
+     "repo_id": "Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
+     "url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
      "created_at": "2026-04-27T03:39:40+00:00",
-     "last_modified": "2026-05-13T12:19:05+00:00",
+     "last_modified": "2026-05-13T12:19:20+00:00",
      "weights_at": "2026-04-27T03:39:40+00:00",
      "has_weights": true,
      "model_card_at": "2026-04-27T03:39:40+00:00",
@@ -2608,10 +2608,10 @@
      "derivative": null
     },
     {
-     "repo_id": "allenai/MolmoMotion-4B-H3-F30",
-     "url": "https://huggingface.co/allenai/MolmoMotion-4B-H3-F30",
+     "repo_id": "allenai/MolmoMotion-4B-H1-F32",
+     "url": "https://huggingface.co/allenai/MolmoMotion-4B-H1-F32",
      "created_at": "2026-06-15T15:47:34+00:00",
-     "last_modified": "2026-06-18T02:47:29+00:00",
+     "last_modified": "2026-06-18T02:47:57+00:00",
      "weights_at": "2026-06-15T15:47:34+00:00",
      "has_weights": true,
      "model_card_at": "2026-06-15T15:47:34+00:00",
@@ -2624,10 +2624,10 @@
      "derivative": null
     },
     {
-     "repo_id": "allenai/MolmoMotion-4B-H1-F32",
-     "url": "https://huggingface.co/allenai/MolmoMotion-4B-H1-F32",
+     "repo_id": "allenai/MolmoMotion-4B-H3-F30",
+     "url": "https://huggingface.co/allenai/MolmoMotion-4B-H3-F30",
      "created_at": "2026-06-15T15:47:34+00:00",
-     "last_modified": "2026-06-18T02:47:57+00:00",
+     "last_modified": "2026-06-18T02:47:29+00:00",
      "weights_at": "2026-06-15T15:47:34+00:00",
      "has_weights": true,
      "model_card_at": "2026-06-15T15:47:34+00:00",
@@ -3142,10 +3142,10 @@
      "derivative": "finetune"
     },
     {
-     "repo_id": "allenai/Olmo-3-7B-RL-Zero-Math",
-     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-Math",
+     "repo_id": "allenai/Olmo-3-7B-RL-Zero-Code",
+     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-Code",
      "created_at": "2025-11-17T17:36:01+00:00",
-     "last_modified": "2026-06-25T21:42:10+00:00",
+     "last_modified": "2026-06-25T21:41:48+00:00",
      "weights_at": "2025-11-17T17:36:01+00:00",
      "has_weights": true,
      "model_card_at": "2025-11-17T17:36:01+00:00",
@@ -3158,10 +3158,10 @@
      "derivative": "finetune"
     },
     {
-     "repo_id": "allenai/Olmo-3-7B-RL-Zero-IF",
-     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-IF",
+     "repo_id": "allenai/Olmo-3-7B-RL-Zero-General",
+     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-General",
      "created_at": "2025-11-17T17:36:01+00:00",
-     "last_modified": "2026-06-25T21:42:01+00:00",
+     "last_modified": "2026-06-25T21:41:55+00:00",
      "weights_at": "2025-11-17T17:36:01+00:00",
      "has_weights": true,
      "model_card_at": "2025-11-17T17:36:01+00:00",
@@ -6463,6 +6463,73 @@
  ],
  "recent_events": [
   {
+   "org": "deepseek",
+   "repo_id": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+   "transition": "repo_created",
+   "observed_at": "2026-09-03T06:08:23.549332Z",
+   "at": "2026-08-31T06:16:18Z",
+   "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "mit",
+    "gated": "false",
+    "derivative": null,
+    "base_models": []
+   }
+  },
+  {
+   "org": "zai",
+   "repo_id": "zai-org/GLM-5.3-Flash-BF16",
+   "transition": "repo_created",
+   "observed_at": "2026-09-03T06:08:23.549332Z",
+   "at": "2026-08-25T06:45:05Z",
+   "source_url": "https://huggingface.co/zai-org/GLM-5.3-Flash-BF16",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2602.15763"
+    ],
+    "license": "mit",
+    "gated": "false",
+    "derivative": null,
+    "base_models": []
+   }
+  },
+  {
+   "org": "zai",
+   "repo_id": "zai-org/GLM-5.3-BF16",
+   "transition": "repo_created",
+   "observed_at": "2026-09-03T06:08:23.549332Z",
+   "at": "2026-08-25T06:43:55Z",
+   "source_url": "https://huggingface.co/zai-org/GLM-5.3-BF16",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2602.15763"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": []
+   }
+  },
+  {
    "org": "qwen",
    "repo_id": "Qwen/Qwen-Drive-1.0-4B",
    "transition": "repo_created",
@@ -7778,82 +7845,11 @@
      "Qwen/Qwen3-VL-8B-Instruct"
     ]
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-2512",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-30T02:29:01Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2512",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2508.02324"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-Layered",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-17T06:02:34Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-Layered",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2512.15603"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen-Image"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-Edit-2511",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-17T05:55:58Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-Edit-2511",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2508.02324"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 580,
-  "events": 580
+  "events": 583
  }
 }
