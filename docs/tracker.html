@@ -81,7 +81,7 @@ function renderOrgs(filter){
 }
 
 function renderEvents(){
-  const live = DATA.recent_events.filter(e => !e.bootstrap);
+  const live = DATA.recent_events.filter(e => !e.bootstrap && !e.backfill);
   const el = document.getElementById('events');
   if (!live.length){ el.innerHTML = '<div class="empty">아직 새 전이가 없습니다. 첫 적재 이후의 변화만 여기에 쌓입니다.</div>'; return; }
   el.innerHTML = live.slice(0,40).map(e => {

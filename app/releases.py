@@ -42,12 +42,20 @@ WEIGHT_SUFFIXES = (".safetensors", ".bin", ".gguf", ".pt", ".pth", ".ckpt", ".ms
 NEW_REPO_WINDOW_DAYS = 14
 
 # 블로그 제목에서 시리즈 이름만으로는 발표를 가려낼 수 없다("ChatGPT for Teachers").
-# 시리즈 토큰이 단어 경계로 있고, 릴리스를 뜻하는 단서가 함께 있어야 발표로 본다.
+# 시리즈 토큰이 단어 경계로 있고, 아래 둘 중 하나가 같이 있어야 발표로 본다.
+#   (1) 릴리스 단서 ("Introducing ...", "... technical report")
+#   (2) 버전 패턴: 토큰 근처에 숫자가 있고 제목이 토큰으로 시작하거나 그 뒤에 ':' 가 온다
+#       ("Qwen3: Think Deeper", "GLM-4.5: Reasoning ...", "Claude Sonnet 4.5", "Grok 4",
+#        "The Llama 4 herd: ...")
+# 단서만 쓰면 실제 Qwen 피드 44건 중 5건만 잡혔다(검증자 실측). 최근 발표 제목은
+# "Introducing" 을 거의 쓰지 않는다.
 _RELEASE_CUE = re.compile(
-    r"(introduc|announc|releas|launch|technical report|model card|system card|"
-    r"open[- ]?weights?|open[- ]?sourc|preview|now available|is here|unveil)",
+    r"(\bintroducing\b|\bannounc|\breleas(e|ed|es|ing)\b|\blaunch|technical report|"
+    r"model card|system card|open[- ]?weights?|open[- ]?sourc|\bpreview|now available|"
+    r"\bis here\b|unveil|\bmeet\b)",
     re.I,
 )
+_VERSION_NEAR = r"[^:\n]{0,15}?\d"
 
 Transition = Literal[
     "repo_created",       # 처음 보는 리포. 관측 스냅샷을 detail 에 담는다
@@ -89,16 +97,25 @@ class Org(BaseModel):
 
         리포명 매칭과 달리 제목은 자유 문장이라 포함 매칭이 오탐을 낸다.
         실측: openai 피드 30건 중 "GPT" 포함 매칭 10건, 그중 8건이 제품 소식.
-        그래서 (1) 시리즈 토큰이 단어 경계로 대소문자 그대로 있고,
-        (2) 릴리스 단서가 같이 있어야 한다. "ChatGPT" 는 "GPT" 와 경계가 없어
-        걸리지 않고, "Claude Shannon: a biography" 는 단서가 없어 걸리지 않는다.
+        단어 경계는 지키되("ChatGPT" 는 "GPT" 와 경계가 없다) 대소문자는 무시한다
+        ("Olmo 3", "gpt-oss" 는 시리즈 표기와 대소문자가 다르다).
         """
-        if not self.series or not _RELEASE_CUE.search(title):
+        if not self.series:
             return False
-        return any(
-            re.search(rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![a-z])", title)
-            for tok in self.series
-        )
+        cue = bool(_RELEASE_CUE.search(title))
+        for tok in self.series:
+            pat = rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![a-z])"
+            m = re.search(pat, title, re.I)
+            if not m:
+                continue
+            if cue:
+                return True
+            # 버전 패턴: 토큰 뒤 15자 안에 숫자, 그리고 (제목이 토큰으로 시작 | 숫자 뒤에 ':')
+            tail = title[m.end():]
+            v = re.match(_VERSION_NEAR, tail)
+            if v and (m.start() == 0 or ":" in tail[v.end():]):
+                return True
+        return False
 
 
 class Watchlist(BaseModel):
@@ -172,8 +189,10 @@ def observation_from_hf(org_key: str, m: dict[str, Any]) -> HFObservation | None
         license_ = lic_tags[0] if lic_tags else None
     if isinstance(license_, list):
         license_ = license_[0] if license_ else None
+    if isinstance(license_, dict):
+        license_ = license_.get("name") or license_.get("id")
     # 카드 프런트매터는 사용자 입력이라 `license: 2024` 같은 값이 온다
-    license_ = str(license_) if license_ not in (None, "") else None
+    license_ = str(license_) if isinstance(license_, (str, int, float)) and str(license_) else None
 
     arxiv_ids = sorted({t.split(":", 1)[1] for t in tags if t.startswith("arxiv:")})
 
@@ -378,16 +397,26 @@ def detect_transitions(
 
         if prior is None:
             # 처음 본다고 새 리포는 아니다. 생성이 오래됐으면 조용히 적재한다.
-            backfill = (not bootstrap) and (now - obs.created_at > window)
+            # 단, 대형 릴리스는 리포를 몇 주 전에 private 으로 만들어 두고 발표일에
+            # 공개하는 관행이 있다. createdAt 은 가시성과 무관하므로 그런 리포는
+            # "생성은 오래됐는데 최근에 수정됐고 가중치가 있다" 로 보인다. 이 경우는
+            # 처음 관측으로 알리되 시각은 추정이라 unverified 로 둔다.
+            old = now - obs.created_at > window
+            recently_touched = now - obs.last_modified <= window
+            surfaced = (not bootstrap) and old and recently_touched and bool(obs.has_weights)
+            backfill = (not bootstrap) and old and not surfaced
             events.append(ReleaseEvent(
                 org=obs.org, repo_id=obs.repo_id, transition="repo_created",
-                observed_at=now, at=obs.created_at, source_url=obs.url,
-                confidence="verified", bootstrap=bootstrap, backfill=backfill,
+                observed_at=now, at=(obs.last_modified if surfaced else obs.created_at),
+                source_url=obs.url,
+                confidence="unverified" if surfaced else "verified",
+                bootstrap=bootstrap, backfill=backfill,
                 detail={
                     "weights": obs.has_weights, "card": obs.has_card,
                     "arxiv_ids": obs.arxiv_ids, "license": obs.license,
                     "gated": obs.gated, "derivative": obs.derivative,
-                    "base_models": obs.base_models,
+                    "base_models": obs.base_models, "surfaced": surfaced,
+                    "created_at": obs.created_at.isoformat(),
                 },
             ))
             continue
@@ -401,7 +430,9 @@ def detect_transitions(
                 confidence="unverified", detail=detail,
             )
 
-        if obs.has_weights is not None and not prior.weights_at and obs.has_weights:
+        # "몰랐다가 알게 됨"(prior None) 은 "없다가 생김" 이 아니다. 응답이 하루 빈 뒤
+        # 돌아오면 565건이 쏟아진다. 시각만 채우고 이벤트는 내지 않는다.
+        if (obs.has_weights and not prior.weights_at and prior.has_weights is False):
             events.append(ev("weights_released"))
         if not prior.model_card_at and obs.has_card:
             events.append(ev("model_card_added"))
@@ -489,6 +520,13 @@ def format_event_line(e: ReleaseEvent) -> str:
     if e.transition == "announced":
         return f"{label}{tag} {_plain(str(e.detail.get('title', '')))}\n<{e.source_url}>"
     if e.transition == "repo_created":
+        if e.detail.get("surfaced"):
+            # 생성은 오래됐는데 지금 처음 보였다. private 에서 공개된 것일 수도,
+            # 옛 리포가 손질된 것일 수도 있다. API 로는 구분이 안 되니 생성일을
+            # 같이 보여 주고 판단을 사용자에게 넘긴다.
+            created = str(e.detail.get("created_at", ""))[:10] or "?"
+            return (f"👀 처음 관측{tag} **{_short(e.repo_id)}** (리포 생성 {created}) · "
+                    f"{_facts(e.detail)}\n<{e.source_url}>")
         return f"{label}{tag} **{_short(e.repo_id)}** · {_facts(e.detail)}\n<{e.source_url}>"
     if e.transition == "report_published":
         ids = ", ".join(e.detail.get("arxiv_ids", []))
@@ -540,17 +578,22 @@ def format_alert(
     footer = f"\n전체 보드: <{tracker_url}>"
 
     # 줄 단위로 줄인다. 글자 단위로 자르면 URL 중간이 끊기고 보드 링크가 사라진다.
+    # 넘치는 순간 멈춘다(continue 가 아니라 break). 긴 줄을 건너뛰고 뒤의 짧은 줄을
+    # 실으면 우선순위 낮은 조직이 높은 조직을 밀어낸다.
+    omitted_note = f"(… {len(live)}건 생략)"  # 최악 길이로 미리 잡아둔다
+    budget = max_chars - len(footer) - 1 - len(omitted_note) - 1
     body: list[str] = []
-    used = len(footer) + 1
-    dropped = 0
+    used = 0
+    kept_lines = 0
     for line in lines:
-        if used + len(line) + 1 > max_chars:
-            dropped += 1
-            continue
+        if used + len(line) + 1 > budget:
+            break
         body.append(line)
         used += len(line) + 1
-    if dropped:
-        body.append(f"(… {dropped}줄 생략)")
+        kept_lines += 1
+    if kept_lines < len(lines):
+        shown_events = sum(1 for l in body if l and not l.startswith(("🔔", "__", "\n")))
+        body.append(f"(… {max(len(live) - shown_events, 1)}건 생략)")
     return "\n".join(body + [footer])
 
 

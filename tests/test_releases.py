@@ -268,16 +268,24 @@ def test_tracker_json_shape():
 # 독립 검증자가 찾은 결함의 회귀 테스트 (2026-09-03)
 # ---------------------------------------------------------------------------
 def test_old_repo_entering_window_is_backfill_not_alert():
-    """관측 창(정렬별 상위 100건)에 2년 된 리포가 README 수정으로 들어와도 새 리포가 아니다."""
+    """관측 창(정렬별 상위 100건)에 오래된 리포가 처음 들어오는 두 경우.
+    손댄 지 오래된 리포는 backfill(무음). 최근 손댔고 가중치가 있으면 "처음 관측"
+    으로 알리되 생성일을 문안에 드러낸다. README 수정과 private->public 은
+    API 로 구분되지 않으므로 판단을 사용자에게 넘긴다."""
     _, states = detect_transitions([_one("Org/Seed")], {}, now=NOW)
-    old = _one("Org/Ancient", created_at=NOW - timedelta(days=900), has_weights=True, has_card=True)
+    dormant = _one("Org/Dormant", created_at=NOW - timedelta(days=900),
+                   last_modified=NOW - timedelta(days=400), has_weights=True, has_card=True)
+    touched = _one("Org/Touched", created_at=NOW - timedelta(days=900),
+                   last_modified=NOW - timedelta(days=1), has_weights=True, has_card=True)
     fresh = _one("Org/Fresh", created_at=NOW - timedelta(days=3), has_weights=True, has_card=True)
-    events, _ = detect_transitions([old, fresh], states, now=NOW + timedelta(days=1))
+    events, _ = detect_transitions([dormant, touched, fresh], states, now=NOW + timedelta(days=1))
     by = {e.repo_id: e for e in events}
-    assert by["Org/Ancient"].backfill and not by["Org/Ancient"].alertable
-    assert not by["Org/Fresh"].backfill and by["Org/Fresh"].alertable
+    assert by["Org/Dormant"].backfill and not by["Org/Dormant"].alertable
+    assert by["Org/Touched"].alertable and by["Org/Touched"].detail["surfaced"]
+    assert by["Org/Fresh"].alertable and not by["Org/Fresh"].detail["surfaced"]
     text = format_alert(events, _wl(Org(key="org", label="O", kind="weights-open")), "u")
-    assert "Fresh" in text and "Ancient" not in text
+    assert "Fresh" in text and "Dormant" not in text
+    assert "처음 관측" in text and "리포 생성 " in text and "[미확인]" in text
 
 
 def test_partial_bootstrap_then_recovered_org_does_not_flood():
@@ -297,7 +305,7 @@ def test_blog_title_needs_word_boundary_and_release_cue():
     claude = Org(key="anthropic", label="Anthropic", kind="closed", series=["Claude"])
     assert not claude.matches_title("Claude Shannon: a biography")
     assert claude.matches_title("Introducing Claude Opus 6")
-    assert not claude.matches_title("claude opus 6 released")  # 대소문자 구분
+    assert claude.matches_title("claude opus 6 released")  # 대소문자는 무시한다 (Olmo/OLMo)
 
 
 def test_missing_siblings_means_unknown_not_absent():
@@ -397,3 +405,107 @@ def test_collector_skips_broken_repo_but_keeps_org():
     org = Org(key="qwen", label="Qwen", kind="weights-open", hf_org="Qwen", series=["Qwen"])
     got = asyncio.run(fetch_hf_org(Client(), org, delay=0))
     assert [o.repo_id for o in got] == [rows[0]["id"]]
+
+
+# ---------------------------------------------------------------------------
+# 2차 검증 (재현율 쪽 결함)
+# ---------------------------------------------------------------------------
+REAL_TITLES_HIT = [
+    ("qwen", ["Qwen", "QwQ"], "Qwen3: Think Deeper, Act Faster"),
+    ("qwen", ["Qwen", "QwQ"], "Qwen3-Coder: Agentic Coding in the World"),
+    ("qwen", ["Qwen", "QwQ"], "QwQ-32B: Embracing the Power of Reinforcement Learning"),
+    ("qwen", ["Qwen", "QwQ"], "Qwen2.5-Max: Exploring the Intelligence of Large-scale MoE Model"),
+    ("anthropic", ["Claude"], "Claude Sonnet 4.5"),
+    ("anthropic", ["Claude"], "Claude 3.7 Sonnet and Claude Code"),
+    ("anthropic", ["Claude"], "Introducing Claude Opus 6"),
+    ("google-closed", ["Gemini"], "Gemini 2.5: Our most intelligent AI model"),
+    ("meta", ["Llama"], "The Llama 4 herd: The beginning of a new era of natively multimodal AI innovation"),
+    ("zai", ["GLM"], "GLM-4.5: Reasoning, Coding, and Agentic Abilities"),
+    ("moonshot", ["Kimi"], "Kimi K2: Open Agentic Intelligence"),
+    ("xai", ["Grok"], "Grok 4"),
+    ("mistral", ["Mistral", "Magistral"], "Mistral Small 3"),
+    ("lgai", ["EXAONE"], "EXAONE 4.0: Unified Reasoning and Non-reasoning"),
+    ("deepseek", ["DeepSeek"], "DeepSeek-V3.2-Exp: Boosting Long-Context Efficiency"),
+    ("allenai", ["OLMo"], "Olmo 3: Charting a path through the model flow"),
+    ("openai-open", ["gpt-oss"], "Introducing gpt-oss"),
+    ("google-open", ["gemma", "paligemma", "embeddinggemma"], "Introducing EmbeddingGemma"),
+    ("google-open", ["gemma", "paligemma"], "PaliGemma 2: Powerful Vision-Language Models"),
+]
+REAL_TITLES_MISS = [
+    ("openai", ["GPT", "o1", "o3", "o4"], "ChatGPT for Teachers"),
+    ("openai", ["GPT", "o1", "o3", "o4"], "ChatGPT Ads expands across Europe"),
+    ("openai", ["GPT", "o1", "o3", "o4"], "ATV Big Air Tour turned 3 days of work into 3 hours with ChatGPT"),
+    ("openai", ["GPT", "o1", "o3", "o4"], "Healthcare organizations can now connect EHR and additional industry data to ChatGPT"),
+    ("openai", ["GPT", "o1", "o3", "o4"], "Photo4Life partnership"),
+    ("anthropic", ["Claude"], "Claude Shannon: a biography"),
+    ("anthropic", ["Claude"], "How teams use Claude for customer support"),
+    ("qwen", ["Qwen"], "Qwen team is hiring"),
+]
+
+
+@pytest.mark.parametrize("key,series,title", REAL_TITLES_HIT)
+def test_real_release_titles_are_matched(key, series, title):
+    assert Org(key=key, label=key, kind="closed", series=series).matches_title(title), title
+
+
+@pytest.mark.parametrize("key,series,title", REAL_TITLES_MISS)
+def test_non_release_titles_are_not_matched(key, series, title):
+    assert not Org(key=key, label=key, kind="closed", series=series).matches_title(title), title
+
+
+def test_private_then_public_repo_is_surfaced_not_silenced():
+    """createdAt 은 가시성과 무관하다. 몇 주 전 만든 리포를 발표일에 공개하면
+    "생성은 오래됐는데 최근 수정됐고 가중치가 있다" 로 보인다. 알려야 한다."""
+    _, states = detect_transitions([_one("Org/Seed")], {}, now=NOW)
+    pub = _one("Org/Big", created_at=NOW - timedelta(days=30), last_modified=NOW - timedelta(hours=2),
+               has_weights=True, has_card=True)
+    events, states = detect_transitions([pub], states, now=NOW + timedelta(days=1))
+    e = next(x for x in events if x.repo_id == "Org/Big")
+    assert e.alertable and not e.backfill and e.confidence == "unverified" and e.detail["surfaced"]
+    # 같은 관측을 다시 넣으면 조용하다
+    events, _ = detect_transitions([pub], states, now=NOW + timedelta(days=2))
+    assert events == []
+
+
+def test_old_untouched_repo_is_still_backfill():
+    _, states = detect_transitions([_one("Org/Seed")], {}, now=NOW)
+    old = _one("Org/Old", created_at=NOW - timedelta(days=400), last_modified=NOW - timedelta(days=300),
+               has_weights=True)
+    events, _ = detect_transitions([old], states, now=NOW + timedelta(days=1))
+    assert events[0].backfill and not events[0].alertable
+
+
+def test_unknown_then_known_weights_is_not_a_release():
+    """siblings 가 하루 빠졌다 돌아오면 565건이 쏟아지면 안 된다."""
+    raw = [dict(m) for m in _raw("qwen")]
+    for m in raw:
+        m.pop("siblings", None)
+    obs0 = [o for o in (observation_from_hf("qwen", m) for m in raw) if o]
+    _, states = detect_transitions(obs0, {}, now=NOW)
+    events, states = detect_transitions(_obs("qwen"), states, now=NOW + timedelta(days=1))
+    assert not [e for e in events if e.transition == "weights_released"]
+    assert any(s.weights_at for s in states.values())  # 시각은 채워진다
+    # 이제 진짜 "없다가 생김" 은 여전히 잡힌다
+    _, st = detect_transitions([_one(has_weights=False)], {}, now=NOW)
+    ev, _ = detect_transitions([_one(has_weights=True)], st, now=NOW + timedelta(days=1))
+    assert [e.transition for e in ev] == ["weights_released"]
+
+
+def test_license_dict_uses_name():
+    m = dict(_raw("qwen")[0]); m["cardData"] = {"license": {"name": "mit"}}
+    assert observation_from_hf("qwen", m).license == "mit"
+    m["cardData"] = {"license": {"x": 1}}; m["tags"] = []
+    assert observation_from_hf("qwen", m).license is None
+
+
+def test_alert_truncation_respects_limit_and_priority():
+    wl = _wl_prio()
+    events = ([_ev("b", "b/" + "m" * 60 + str(i), weights=True, card=True) for i in range(6)]
+              + [_ev("a", "a/" + "n" * 60 + str(i), weights=True, card=True) for i in range(6)])
+    for n in (300, 450, 600, 900):
+        text = format_alert(events, wl, "https://board", limit=12, max_chars=n)
+        assert len(text) <= n, (n, len(text))
+        assert text.rstrip().endswith("<https://board>")
+        # 우선순위 1(A사) 이 먼저 실리고, B사가 실렸다면 A사 6건이 전부 실려 있어야 한다
+        if "B사" in text:
+            assert text.count("nnnn") == 6

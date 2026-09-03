@@ -29,7 +29,7 @@ orgs:
     label: Qwen (Alibaba)
     kind: weights-open
     hf_org: Qwen                 # verify
-    series: [Qwen]               # prefix 매칭
+    series: [Qwen, QwQ]          # 포함 매칭 (리포명), 단어 경계 매칭 (제목)
     blog: "https://qwenlm.github.io/blog/index.xml"   # 실측 2026-09-03: 피드 확인됨
     priority: 1
     observed_90d: "신규 11 / 수정 11"  # 실측 2026-09-03
@@ -83,7 +83,7 @@ orgs:
     label: Google (Gemma)
     kind: weights-open
     hf_org: google               # verify. org 가 매우 커서 series 필터가 필수
-    series: [gemma, Gemma, paligemma, codegemma, recurrentgemma, shieldgemma, txgemma]
+    series: [gemma, paligemma, codegemma, recurrentgemma, shieldgemma, txgemma, embeddinggemma, medgemma]
     blog: null
     priority: 2
     observed_90d: "신규 0 / 수정 38. 기존 리포를 계속 손본다"  # 실측 2026-09-03
@@ -101,7 +101,7 @@ orgs:
     label: NVIDIA (Nemotron)
     kind: weights-open
     hf_org: nvidia               # verify. org 가 크므로 series 필터 필수
-    series: [Nemotron, nemotron, Llama-3, Cosmos]
+    series: [Nemotron, Llama-3, Cosmos]
     blog: null
     priority: 1
     observed_90d: "신규 11 / 수정 21. 감으로 3순위였으나 실측 공동 1위"  # 실측 2026-09-03
@@ -110,7 +110,7 @@ orgs:
     label: Allen Institute for AI (OLMo)
     kind: weights-open
     hf_org: allenai              # verify
-    series: [OLMo, olmo, Molmo, Tulu, tulu]
+    series: [OLMo, Molmo, Tulu]
     blog: null
     priority: 2
     observed_90d: "신규 6 / 수정 24"  # 실측 2026-09-03
@@ -134,7 +134,7 @@ orgs:
     label: Upstage (Solar)
     kind: weights-open
     hf_org: upstage              # verify
-    series: [SOLAR, solar, Solar]
+    series: [SOLAR]
     blog: null
     priority: 3
     observed_90d: "신규 1 / 수정 1"  # 실측 2026-09-03
@@ -173,7 +173,7 @@ orgs:
     label: xAI (Grok)
     kind: closed                 # 구버전 가중치를 사후 공개한 전례가 있어 재분류 가능
     hf_org: xai-org              # verify
-    series: [Grok, grok]
+    series: [Grok]
     blog: null
     priority: 3
     observed_90d: "신규 0 / 수정 0. 전체 리포 2건뿐"  # 실측 2026-09-03
