@@ -388,3 +388,79 @@ def test_format_report_omits_pass_rows():
     ))
 
     assert "통과지표" not in text
+
+
+# ──────────────────────────────────────────────
+# 계측 창 (scope) — 고쳐진 버그가 영원히 FAIL로 남지 않게
+# ──────────────────────────────────────────────
+# 실측: YouTube 타임스탬프가 2026-09-01에 고쳐졌는데도 전체 42일 평균이 1/55라
+# 게이트는 8/17부터 매주 빨간불이었다. 창이 계속 커지므로 저절로 회복되지 않는다.
+
+def _recent_rules(monkeypatch, rules):
+    monkeypatch.setattr(evals_run, "THRESHOLDS", rules)
+
+
+def test_recent_scope_is_judged_on_the_window_not_lifetime(monkeypatch):
+    _recent_rules(monkeypatch, [
+        {"scope": "recent", "path": "m.v", "operator": "<", "value": 1.5,
+         "severity": "FAIL", "label": "현재동작"},
+    ])
+    lifetime = {"m": {"v": 1.0}}     # 전체로 보면 위반
+    recent = {"m": {"v": 2.0}}       # 최근만 보면 정상
+
+    rows, violations = evals_run.evaluate_thresholds(lifetime, recent, recent_item_count=50)
+
+    assert violations == []
+    assert rows[0]["actual"] == 2.0
+    assert rows[0]["lifetime_actual"] == 1.0, "전체 값도 함께 보여야 진단이 된다"
+
+
+def test_lifetime_scope_ignores_the_window(monkeypatch):
+    """중복 재유입 같은 지표는 정의상 긴 창이 필요하다."""
+    _recent_rules(monkeypatch, [
+        {"path": "m.v", "operator": ">", "value": 0.05, "severity": "FAIL", "label": "누적자산"},
+    ])
+    rows, violations = evals_run.evaluate_thresholds(
+        {"m": {"v": 0.2}}, {"m": {"v": 0.0}}, recent_item_count=50,
+    )
+    assert [r["status"] for r in violations] == ["FAIL"]
+    assert rows[0]["actual"] == 0.2 and rows[0]["scope"] == "lifetime"
+
+
+def test_thin_window_downgrades_recent_fail_to_warn(monkeypatch):
+    """근거가 모자랄 때의 답은 '문제 없음'이 아니라 '판단할 근거가 없음'이다(§31)."""
+    _recent_rules(monkeypatch, [
+        {"scope": "recent", "path": "m.v", "operator": "<", "value": 1.5,
+         "severity": "FAIL", "label": "현재동작"},
+    ])
+    _, violations = evals_run.evaluate_thresholds(
+        {"m": {"v": 1.0}}, {"m": {"v": 1.0}},
+        recent_item_count=evals_run.MIN_ITEMS_FOR_RECENT_GATE - 1,
+    )
+    assert [v["status"] for v in violations] == ["WARN"], "표본 부족이면 게이트를 막지 않는다"
+
+    # 표본이 충분하면 그대로 FAIL이다 — 보류가 영구 면제가 되면 안 된다.
+    _, violations = evals_run.evaluate_thresholds(
+        {"m": {"v": 1.0}}, {"m": {"v": 1.0}},
+        recent_item_count=evals_run.MIN_ITEMS_FOR_RECENT_GATE,
+    )
+    assert [v["status"] for v in violations] == ["FAIL"]
+
+
+def test_evaluate_thresholds_without_recent_metrics_is_unchanged(monkeypatch):
+    """recent_metrics를 안 주면 예전과 똑같이 전체 구간으로만 판정한다."""
+    _recent_rules(monkeypatch, [
+        {"scope": "recent", "path": "m.v", "operator": "<", "value": 1.5,
+         "severity": "FAIL", "label": "현재동작"},
+    ])
+    _, violations = evals_run.evaluate_thresholds({"m": {"v": 1.0}})
+    assert [v["status"] for v in violations] == ["FAIL"]
+
+
+def test_recent_window_starts_from_last_data_day_not_today():
+    """파이프라인이 멈춰도 창이 비지 않아야 한다 — 비면 멈춤을 알릴 지표가 조용해진다."""
+    items = [{"date": "2026-01-01"}, {"date": "2026-01-10"}, {"date": "2026-01-14"}]
+    since = evals_run._recent_since(items, days=5)
+    assert since.isoformat() == "2026-01-10"     # 마지막 날(01-14) 기준 5일 창
+    assert evals_run._recent_since([], days=5) is None
+    assert evals_run._recent_since([{"date": "깨짐"}], days=5) is None

@@ -9,7 +9,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import date
+from datetime import date, timedelta
 import json
 from pathlib import Path
 import sys
@@ -26,7 +26,12 @@ try:  # 패키지 import와 직접 스크립트 실행을 모두 지원한다.
         tag_concentration,
         tag_entropy,
     )
-    from .thresholds import BASELINE_COMPARISONS, THRESHOLDS
+    from .thresholds import (
+        BASELINE_COMPARISONS,
+        MIN_ITEMS_FOR_RECENT_GATE,
+        RECENT_WINDOW_DAYS,
+        THRESHOLDS,
+    )
     from .build_items import build_items
     from .source_funnel import source_funnel
 except ImportError:
@@ -40,7 +45,12 @@ except ImportError:
         tag_concentration,
         tag_entropy,
     )
-    from thresholds import BASELINE_COMPARISONS, THRESHOLDS  # type: ignore[no-redef]
+    from thresholds import (  # type: ignore[no-redef]
+        BASELINE_COMPARISONS,
+        MIN_ITEMS_FOR_RECENT_GATE,
+        RECENT_WINDOW_DAYS,
+        THRESHOLDS,
+    )
     from build_items import build_items  # type: ignore[no-redef]
     from source_funnel import source_funnel  # type: ignore[no-redef]
 
@@ -92,26 +102,53 @@ def _violates(actual: Any, operator: str, expected: Any) -> bool:
     return operations[operator]()
 
 
-def evaluate_thresholds(metrics: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def evaluate_thresholds(
+    metrics: dict[str, Any],
+    recent_metrics: dict[str, Any] | None = None,
+    recent_item_count: int | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """모든 임계값의 판정 행과 위반 목록을 반환한다.
 
     반환되는 violations에는 WARN과 FAIL이 모두 담긴다. **게이트를 떨어뜨리는 것은
     FAIL뿐이다** — 판정은 main()의 blocking_violations가 한다. 둘을 구분하지 않으면
     severity 필드가 라벨 장식으로만 남고, WARN 하나가 영구히 잡 전체를 빨간불로
     묶어 "실패"가 신호가 아니라 소음이 된다.
+
+    `scope: "recent"` 규칙은 **최근 창의 값으로** 판정한다. 전체 구간으로 재면
+    이미 고친 버그가 영원히 FAIL로 남기 때문이다(thresholds 모듈 설명 참조).
+    표본이 모자라면 FAIL을 WARN으로 낮춘다 — 근거가 없을 때의 답은 "문제 없음"이
+    아니라 "판단할 근거가 없음"이다(§31과 같은 원칙).
+
+    recent_metrics를 주지 않으면 전과 똑같이 전체 구간으로만 판정한다.
     """
+    thin = (
+        recent_metrics is not None
+        and recent_item_count is not None
+        and recent_item_count < MIN_ITEMS_FOR_RECENT_GATE
+    )
+
     rows: list[dict[str, Any]] = []
     violations: list[dict[str, Any]] = []
     for rule in THRESHOLDS:
-        actual = _get_path(metrics, rule["path"])
+        scope = rule.get("scope", "lifetime")
+        source = recent_metrics if (scope == "recent" and recent_metrics is not None) else metrics
+        actual = _get_path(source, rule["path"])
         violated = _violates(actual, rule["operator"], rule["value"])
+
+        severity = rule["severity"]
+        if violated and scope == "recent" and thin and severity == "FAIL":
+            severity = "WARN"
+
         row = {
             "metric": rule["path"],
             "label": rule["label"],
-            "status": rule["severity"] if violated else "PASS",
+            "status": severity if violated else "PASS",
             "actual": actual,
             "operator": rule["operator"],
             "threshold": rule["value"],
+            "scope": scope,
+            # 같은 지표의 전체 구간 값. 최근만 나쁜지 원래 나쁜지 구분해준다.
+            "lifetime_actual": _get_path(metrics, rule["path"]),
         }
         rows.append(row)
         if violated:
@@ -172,12 +209,29 @@ def _print_report(report: dict[str, Any]) -> None:
         f"품질 계측: {source['item_count']}건 "
         f"({source['start_date'] or '-'} ~ {source['end_date'] or '-'})"
     )
+    window, recent_n = source.get("recent_window_days"), source.get("recent_item_count")
+    if window:
+        gate = "판정 사용" if source.get("recent_gate_active") else "표본 부족 — FAIL 보류"
+        print(f"  현재 동작 지표(recent)는 최근 {window}일 {recent_n}건으로 판정 · {gate}")
     print()
+
+    def _actual(row: dict[str, Any]) -> str:
+        """recent 지표는 전체 구간 값을 함께 보여준다.
+
+        최근만 나쁜 것인지 원래 나빴던 것인지가 한 줄에서 갈린다 — 이 구분이
+        없으면 "고쳤는데 왜 아직 빨간불인가"를 매번 손으로 다시 재게 된다.
+        """
+        value = row["actual"]
+        lifetime = row.get("lifetime_actual")
+        if row.get("scope") != "recent" or lifetime is None or lifetime == value:
+            return str(value)
+        return f"{value}  (전체 {lifetime})"
+
     threshold_rows = [
         [
             row["status"],
             row["label"],
-            row["actual"],
+            _actual(row),
             f"{row['operator']} {row['threshold']}",
         ]
         for row in report["threshold_results"]
@@ -263,18 +317,22 @@ def _load_items(path: Path) -> list[dict[str, Any]]:
     return data
 
 
+def _item_date(item: dict[str, Any]) -> date | None:
+    """아이템의 산출 날짜. 없거나 깨졌으면 None."""
+    try:
+        return date.fromisoformat(str(item.get("date"))[:10])
+    except (TypeError, ValueError):
+        return None
+
+
 def _filter_since(items: list[dict[str, Any]], since: date | None) -> list[dict[str, Any]]:
     if since is None:
         return items
-    filtered: list[dict[str, Any]] = []
-    for item in items:
-        try:
-            item_date = date.fromisoformat(str(item.get("date"))[:10])
-        except (TypeError, ValueError):
-            continue
-        if item_date >= since:
-            filtered.append(item)
-    return filtered
+    return [
+        item
+        for item in items
+        if (item_date := _item_date(item)) is not None and item_date >= since
+    ]
 
 
 def _date_range(items: list[dict[str, Any]]) -> tuple[str | None, str | None]:
@@ -287,10 +345,30 @@ def _date_range(items: list[dict[str, Any]]) -> tuple[str | None, str | None]:
     return (min(dates).isoformat(), max(dates).isoformat()) if dates else (None, None)
 
 
+def _recent_since(items: list[dict[str, Any]], days: int) -> date | None:
+    """최근 창의 시작일. 마지막 산출일을 기준으로 잡는다.
+
+    오늘 날짜가 아니라 **데이터의 마지막 날**을 기준으로 하는 이유: 파이프라인이
+    며칠 멈춰 있어도 창이 통째로 비어 "표본 부족"으로 넘어가 버리면, 정작 그
+    멈춤을 알려야 할 지표가 조용해진다.
+    """
+    dates = [d for d in (_item_date(item) for item in items) if d is not None]
+    if not dates:
+        return None
+    return max(dates) - timedelta(days=days - 1)
+
+
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="과거 콘텐츠 산출물 품질을 자동 계측합니다.")
     parser.add_argument("--json", action="store_true", help="기계 판독용 JSON으로 출력")
     parser.add_argument("--since", metavar="YYYY-MM-DD", help="해당 날짜부터의 아이템만 포함")
+    parser.add_argument(
+        "--window",
+        type=int,
+        default=RECENT_WINDOW_DAYS,
+        metavar="DAYS",
+        help=f"현재 동작 지표(scope=recent)의 관측 창, 기본 {RECENT_WINDOW_DAYS}일",
+    )
     parser.add_argument(
         "--baseline",
         action="store_true",
@@ -311,7 +389,13 @@ def main() -> int:
         source_items, input_path = resolve_items()
         items = _filter_since(source_items, args.since)
         metrics = calculate_metrics(items)
-        threshold_rows, violations = evaluate_thresholds(metrics)
+        # 현재 동작 지표는 최근 창으로 따로 잰다. 전체 구간으로 재면 이미 고친
+        # 버그가 영원히 FAIL로 남는다(evals/thresholds.py 모듈 설명).
+        recent_items = _filter_since(items, _recent_since(items, args.window))
+        recent_metrics = calculate_metrics(recent_items) if recent_items else None
+        threshold_rows, violations = evaluate_thresholds(
+            metrics, recent_metrics, len(recent_items)
+        )
         regressions: list[dict[str, Any]] = []
         if args.baseline:
             with BASELINE_PATH.open("r", encoding="utf-8") as file:
@@ -334,6 +418,9 @@ def main() -> int:
             "start_date": start_date,
             "end_date": end_date,
             "since": args.since.isoformat() if args.since else None,
+            "recent_window_days": args.window,
+            "recent_item_count": len(recent_items),
+            "recent_gate_active": len(recent_items) >= MIN_ITEMS_FOR_RECENT_GATE,
         },
         "metrics": metrics,
         "threshold_results": threshold_rows,

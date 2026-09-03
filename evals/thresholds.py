@@ -1,32 +1,60 @@
-"""품질 경보 및 baseline 회귀 판정 규칙."""
+"""품질 경보 및 baseline 회귀 판정 규칙.
+
+## scope — 어느 구간을 재는가
+
+계측 창이 무한히 자라면 **이미 고친 버그가 영원히 FAIL로 남는다.** 실측:
+
+    YouTube 타임스탬프   전체 42일 1/55  ·  수정(2026-09-01) 이후 1/1
+    관련도 IQR           전체 42일 1.0   ·  상대 랭킹 도입 이후 2.0
+
+둘 다 고쳐졌는데 게이트는 2026-08-17부터 매주 빨간불이었다. 42일 평균이
+고장나 있던 구간에 지배되기 때문이고, 이 창은 앞으로도 계속 커지므로
+**저절로 회복되지 않는다.** 계측기가 고장난 것이지 파이프라인이 고장난 게
+아니다.
+
+그래서 지표를 두 갈래로 나눈다.
+
+    recent    지금 파이프라인이 제대로 도는가 (점수 분포·타임스탬프·스키마)
+              → 최근 RECENT_WINDOW_DAYS일만 보고 판정한다
+    lifetime  쌓인 자산이 건강한가 (중복 재유입·장기 미등장 소스)
+              → 정의상 긴 창이 필요하므로 전체를 본다
+
+표본이 모자랄 때는 FAIL을 걸지 않는다. §31(수집 0건 판정)과 같은 원칙이다 —
+근거가 모자랄 때의 답은 "문제 없음"이 아니라 "판단할 근거가 없음"이다.
+"""
 
 from __future__ import annotations
 
 from typing import Any
 
+# 현재 동작을 재는 지표의 관측 창. 하루 5건이므로 14일이면 약 70건이다.
+RECENT_WINDOW_DAYS = 14
+# 그 창에 이만큼도 안 쌓였으면 recent 지표로 FAIL을 걸지 않는다.
+MIN_ITEMS_FOR_RECENT_GATE = 30
+
 
 # current 주석은 evals/data/archive_items.json 전체를 run.py로 계측한 값이다.
 THRESHOLDS: list[dict[str, Any]] = [
     # current: 0.848574
-    {"path": "tag_entropy.normalized_entropy", "operator": "<", "value": 0.70, "severity": "WARN", "label": "태그 정규화 엔트로피"},
+    {"scope": "recent", "path": "tag_entropy.normalized_entropy", "operator": "<", "value": 0.70, "severity": "WARN", "label": "태그 정규화 엔트로피"},
     # current: 0.88664 (MLOps 219/247)
-    {"path": "tag_concentration.concentration", "operator": ">", "value": 0.40, "severity": "FAIL", "label": "최빈 태그 집중도"},
+    {"scope": "recent", "path": "tag_concentration.concentration", "operator": ">", "value": 0.40, "severity": "FAIL", "label": "최빈 태그 집중도"},
     # current: 1.0
-    {"path": "score_distribution.iqr", "operator": "<", "value": 1.5, "severity": "FAIL", "label": "관련도 점수 IQR"},
+    {"scope": "recent", "path": "score_distribution.iqr", "operator": "<", "value": 1.5, "severity": "FAIL", "label": "관련도 점수 IQR"},
     # current: 3
-    {"path": "score_distribution.distinct_values", "operator": "<", "value": 5, "severity": "FAIL", "label": "관련도 고유값 수"},
+    {"scope": "recent", "path": "score_distribution.distinct_values", "operator": "<", "value": 5, "severity": "FAIL", "label": "관련도 고유값 수"},
     # current: 2개
     {"path": "source_reach.stale_source_count", "operator": ">", "value": 0, "severity": "WARN", "label": "30일 이상 미등장 소스"},
     # current: 0.198381 (49/247)
     {"path": "duplicate_rate.duplicate_url_rate", "operator": ">", "value": 0.05, "severity": "FAIL", "label": "중복 URL 비율"},
     # current: 0.008621 (1/116)
-    {"path": "evidence_proxy.timestamp_rate", "operator": "<", "value": 0.70, "severity": "FAIL", "label": "YouTube 타임스탬프 비율"},
+    {"scope": "recent", "path": "evidence_proxy.timestamp_rate", "operator": "<", "value": 0.70, "severity": "FAIL", "label": "YouTube 타임스탬프 비율"},
     # current: 1.0 (247/247가 2개)
-    {"path": "schema_rigidity.production_ideas_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "적용 아이디어 개수 고정률"},
+    {"scope": "recent", "path": "schema_rigidity.production_ideas_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "적용 아이디어 개수 고정률"},
     # current: 1.0 (247/247가 2개)
-    {"path": "schema_rigidity.quiz_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "퀴즈 개수 고정률"},
+    {"scope": "recent", "path": "schema_rigidity.quiz_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "퀴즈 개수 고정률"},
     # current: 32.380567자
-    {"path": "summary_stats.one_line_summary.mean", "operator": "<", "value": 20, "severity": "WARN", "label": "한 줄 요약 평균 길이"},
+    {"scope": "recent", "path": "summary_stats.one_line_summary.mean", "operator": "<", "value": 20, "severity": "WARN", "label": "한 줄 요약 평균 길이"},
     # 수집은 되는데 한 번도 발송되지 않는 소스. source_reach로는 구조적으로 볼 수
     # 없던 사각지대다(그 지표의 소스 목록이 발송 아이템에서 만들어지기 때문).
     # 실측: arXiv가 40일간 발송 0건인데 아무 경보도 없었다.
