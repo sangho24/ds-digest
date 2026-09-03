@@ -595,6 +595,11 @@ RELATIVE_WEIGHT = 0.6
 ABSOLUTE_WEIGHT = 0.4
 
 
+# 근거 천장·바닥값은 **언제나 기본 배합으로** 잰다. 난이도 지시가 이 둘까지
+# 움직이면 사용자가 말 한마디로 탈락 기준을 바꾸는 셈이 되고, 후보가 전부
+# 얇은 날엔 다이제스트가 짧아지거나 비어버린다 — §23이 정확히 그 이유로
+# 바닥값을 혼합 전 절대 점수에 걸었다. 지시는 **순서**를 정하고,
+# 근거 게이트는 **자격**을 정한다.
 def evidence_ceiling(level: EvidenceLevel) -> int:
     """해당 근거 수준에서 나올 수 있는 최대 relevance_score.
 
@@ -1153,6 +1158,7 @@ async def filter_and_analyze(
     vocabulary = load_vocabulary()
     vocabulary_text = vocabulary_for_prompt(vocabulary)
     # 난이도 지시는 점수 축의 배합을 옮긴다("더 어렵게" = depth를 더 세게).
+    # 단 **정렬에만** 쓴다. 바닥값 판정은 아래에서 기본 배합으로 따로 잰다.
     depth_weight = depth_weight_for(directive)
 
     # 1) 모든 아이템을 먼저 분석한다(선정은 전체 점수를 본 뒤 상대적으로 결정).
@@ -1181,6 +1187,22 @@ async def filter_and_analyze(
     # 파생된다는 불변식은 어디서도 강제되지 않는다. 지금 값을 그대로 스냅샷하는
     # 편이 어떤 경로로 만들어진 점수든 정확하다.
     absolute_score = {id(d): d.analysis.relevance_score for d in analyzed}
+
+    # 난이도 지시가 걸린 런에서는 바닥값을 **기본 배합 점수**로 잰다.
+    # 지시가 정렬을 바꾸는 것은 의도지만, 탈락 기준까지 바꾸면 "더 어렵게" 한
+    # 마디에 얇은 후보가 무더기로 바닥 아래로 떨어진다(실측: 제목만 아이템이
+    # 4점 → 3점). 후보가 전부 얇은 날엔 그대로 빈 다이제스트다.
+    #
+    # 여기서만 actionability·depth로 되계산하는 이유: 바로 위 analyze_content가
+    # 그 두 값에 depth_weight만 적용해 점수를 만들었으므로, 이 지점에서는
+    # 파생 불변식이 실제로 성립한다(§23이 경계한 것은 상대 평가로 값이 섞인
+    # **뒤에** 되계산하는 경우다). 분석이 실패한 아이템은 두 값이 0이라
+    # 결과도 0으로 남는다.
+    if depth_weight != DEPTH_WEIGHT:
+        absolute_score = {
+            id(d): derive_relevance_score(d.analysis.actionability, d.analysis.depth)
+            for d in analyzed
+        }
 
     if not settings.dry_run:
         rated = await apply_relative_rating(

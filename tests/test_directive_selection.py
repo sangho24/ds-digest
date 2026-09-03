@@ -204,3 +204,45 @@ def test_format_quiz_recap_splits_at_question_boundaries():
     assert len(messages) > 1
     assert all(len(m) <= 1900 for m in messages)
     assert sum(m.count("❌") for m in messages) == 6     # 잘려 사라진 문항이 없다
+
+
+def test_difficulty_directive_does_not_move_the_floor(monkeypatch):
+    """지시는 순서를 정하고, 근거 게이트는 자격을 정한다.
+
+    난이도 가중이 바닥값 판정까지 움직이면 "더 어렵게" 한 마디에 얇은 후보가
+    무더기로 탈락한다(실측: 제목만 아이템이 4점 → 3점). 후보가 전부 얇은 날엔
+    그대로 빈 다이제스트이고, 이는 §23이 상대 랭킹을 도입한 목적과 충돌한다.
+    """
+    thin = _digest_item("얇음", depth=0)
+    thin.analysis.actionability = 7
+    thick = _digest_item("두꺼움", depth=8)
+    thick.analysis.actionability = 4
+
+    # 기본 배합에서 얇은 쪽은 바닥값(4)을 겨우 넘는다.
+    assert analyzer.derive_relevance_score(7, 0) == 4
+    # 어렵게 배합만 적용하면 바닥 아래로 떨어진다 — 이걸 막아야 한다.
+    assert analyzer.derive_relevance_score(7, 0, analyzer.DEPTH_WEIGHT_HARDER) == 3
+
+    async def fake_analyze(item, profile, concept_vocabulary=None, standing_note="",
+                           depth_weight=analyzer.DEPTH_WEIGHT):
+        source = thin if item.title == "얇음" else thick
+        source.analysis.relevance_score = analyzer.derive_relevance_score(
+            source.analysis.actionability, source.analysis.depth, depth_weight
+        )
+        return source.analysis
+
+    monkeypatch.setattr(analyzer, "analyze_content", fake_analyze)
+    monkeypatch.setattr(analyzer, "load_vocabulary", lambda *a, **k: {"version": 1, "concepts": {}})
+    monkeypatch.setattr(analyzer, "save_vocabulary", lambda *a, **k: None)
+    monkeypatch.setattr(analyzer, "weak_concepts", lambda *a, **k: set())
+    monkeypatch.setattr(analyzer, "get_settings", lambda: __import__("types").SimpleNamespace(
+        dry_run=True, groq_api_key="", relevance_floor=4, max_items_per_digest=5,
+        max_items_per_source=3, source_diversity_strength=1.0,
+    ))
+
+    from app.models import UserProfile
+    selected = asyncio.run(analyzer.filter_and_analyze(
+        [thin.raw, thick.raw], UserProfile(), Directive(depth_bias=1, standing_note="더 어렵게"),
+    ))
+    titles = {d.raw.title for d in selected}
+    assert titles == {"얇음", "두꺼움"}, f"바닥값이 지시로 움직였다: {titles}"
