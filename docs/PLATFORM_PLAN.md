@@ -327,12 +327,12 @@ Drizzle 스키마(`web/src/db/schema.ts`)가 단일 소스다. 아래는 핵심 
 
 ### W1-2 - 릴리스 파이프라인 + Alert (여기서 이미 쓸만해진다)
 
-- [ ] `app/collectors_release.py`: 공식 블로그 RSS + HF Hub API 수집기
-- [ ] `app/releases.py`: 워치리스트 매칭(정확 매칭만) + 상태 전이 판정 + `releases.jsonl` append
-- [ ] **Alert 발송**: 상태 전이 발생 시 기존 `deliverers/`로 Discord/Telegram 발송. **인증·DB·웹앱 없이 동작한다**
-- [ ] `contract.py` 확장: `CONTRACT_VERSION = 2`, `docs/tracker.json` 발행 추가 (v1 소비자를 깨지 않도록 기존 필드 유지)
-- [ ] `docs/tracker.html`: 정적 보드. **GitHub Pages가 이미 서빙 중이므로 배포 작업 없이 URL이 생긴다**
-- [ ] 워커 실패 알림 + `concurrency` 가드. **결번 2일의 원인을 먼저 규명한다** - push 경합이면 이 가드로 해소된다
+- [x] `app/collectors_release.py`: 공식 블로그 RSS + HF Hub API 수집기 (2026-09-03)
+- [x] `app/releases.py`: 워치리스트 매칭 + 상태 전이 판정 + `releases.jsonl` append. 양자화 파생은 추적 제외, 첫 실행은 bootstrap 으로 적재만
+- [x] **Alert 발송**: 상태 전이 발생 시 기존 `deliverers/`로 Discord/Telegram 발송. **인증·DB·웹앱 없이 동작한다** (`app/jobs/release_watch.py`)
+- [x] `docs/tracker.json` 발행. **`CONTRACT_VERSION` 은 1 그대로 두고 `tracker_version: 1` 을 따로 둔다.** 기존 소비자가 contract_version 을 검사하고 있을 수 있어 다른 관심사를 같은 번호에 묶지 않는다
+- [x] `docs/tracker.html`: 정적 보드. **GitHub Pages가 이미 서빙 중이므로 배포 작업 없이 URL이 생긴다**
+- [x] 별도 워크플로 `release_watch.yml` (KST 08:00, concurrency 그룹 분리, 실패 시 Telegram). 결번 2일 원인 규명은 미착수
 
 > **검증 기준: (1) 상태 전이 알림이 실제로 내 채널에 도착한다. (2) 2주간 오탐 0건**(수동 전수 검수). 오탐이 나오면 매칭 규칙을 좁힌다.
 >
