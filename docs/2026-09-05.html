@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 05일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 05일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">조건부 확률 모델링</span><span class="concept">AI 기반 업무 검증</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">트랜잭션 관리</span><span class="concept">프록시 기반 AOP</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">코드 자동생성</span><span class="concept">정책 기반 API 프록시</span><span class="concept">브라우저 내 개발 환경</span><span class="concept">병렬 처리</span><span class="concept">스케줄링</span><span class="concept">논블로킹 I/O</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 생산성 도구</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.04047v1" target="_blank" rel="noopener">The Dice Roll Method: A Standardized Protocol for Repeated-Query Auditing of Large Language Model Brand Recommendations</a>
+        </h2>
+
+        <p class="summary">LLM 브랜드 추천의 변동성을 통계적으로 검증하는 표준 프로토콜 제공</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>LLM 브랜드 추천의 불안정성을 정량화할 표준 절차가 부재하던 상황에서, 반복 질의와 변동성 분해를 통합한 Dice Roll Method를 제안한다. 기존 연구는 단일 지표나 임의 반복에 머물렀지만, 이 논문은 통계 모델과 일반화 이론을 도입해 반복 횟수와 신뢰도 기준을 체계화한다. 따라서 LLM 출력 안정성 평가 흐름에서 방법론적 전환점으로 작용한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Dice Roll Method는 반복 질의 감사에 대한 반복 횟수와 일반화 계수를 기반으로 탐색·확인·엄격 3단계 가이드라인을 제시한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전체 변동을 샘플링·프롬프트·런투런·모델버전 네 요소로 분해하고, 음이항 혼합모델·Cliff's delta·부트스트랩·일반화 이론을 결합한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>외부 검증에서 신뢰도 예측은 대부분 재현되었지만 고정된 반복 횟수 가이드라인은 일반화되지 않아 파일럿‑후‑해결 전략을 권장한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Dice Roll Method의 반복 횟수 가이드라인을 감성 분석 모델의 프롬프트 안정성 평가에 적용해 최소 실험 설계 비용을 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>음이항 혼합모델 기반 변동성 분해를 추천 시스템의 순위 변동 원인 분석에 활용해 데이터·알고리즘·시스템 요인을 구분한다.</span></li>
+            
+            <li><span class="box"></span><span>파일럿‑후‑해결 단계 설정을 코드 생성 LLM의 품질 검증 파이프라인에 도입해 초기 파일럿 결과에 따라 반복 횟수를 동적으로 조정한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 논문에서는 고정된 반복 횟수 티어 대신 파일럿‑후‑해결 방식을 권장하나요?</div>
+            
+            <div class="q-opt">① 외부 검증에서 고정 티어가 대부분 전이되지 않았기 때문이다</div>
+            
+            <div class="q-opt">② 파일럿 연구가 비용 효율적이기 때문이다</div>
+            
+            <div class="q-opt">③ 방법론이 더 많은 데이터를 필요로 하기 때문이다</div>
+            
+            <div class="q-opt">④ 반복 횟수가 결과에 영향을 주지 않기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 외부 검증에서 고정 티어가 대부분 전이되지 않았기 때문이다</div>
+              <div class="why">외부 검증 결과 고정된 n=5,10,15 티어가 새로운 데이터셋에 일반화되지 않아, 초기 파일럿으로 최적 반복 횟수를 탐색하고 이후 적용하는 파일럿‑후‑해결 접근이 필요하다고 제시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Dice Roll Method에서 전체 응답 변동을 분해할 때 언급되지 않은 요소는 무엇인가요?</div>
+            
+            <div class="q-opt">① 샘플링 변동</div>
+            
+            <div class="q-opt">② 프롬프트 표현 변동</div>
+            
+            <div class="q-opt">③ 모델 버전 변동</div>
+            
+            <div class="q-opt">④ 하이퍼파라미터 튜닝 변동</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 하이퍼파라미터 튜닝 변동</div>
+              <div class="why">본문은 샘플링, 프롬프트-표현, 런투런, 모델‑버전 네 가지 변동을 명시했으며, 하이퍼파라미터 튜닝은 언급되지 않았다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Dice Roll Method</span><span class="tag">negative-binomial mixed model</span><span class="tag">Cliff's delta</span><span class="tag">bootstrap</span><span class="tag">LLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/pB5EUTvQs1A" target="_blank" rel="noopener">[10분 테코톡] 카야의 왜 가끔 @Transactional은 제대로 동작하지 않을까?</a>
+        </h2>
+
+        <p class="summary">트랜잭션이 내부 호출·비동기에서 무시되는 메커니즘을 이해하면 데이터 일관성을 보장할 수 있다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:09</span>
+            
+            <span>셀프 인보케이션 시 프록시를 우회해 트랜잭션이 시작되지 않는다</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:03</span>
+            
+            <span>@Async 메서드에서는 트랜잭션 컨텍스트가 전달되지 않아 롤백되지 않는다</span>
+          </li>
+          
+          <li>
+            <span class="ts">06:03</span>
+            
+            <span>스프링은 프록시를 통해 트랜잭션을 관리하므로 프록시를 거치지 않는 내부 호출은 트랜잭션이 적용되지 않는다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>프록시 기반 트랜잭션 관리 방식을 데이터 파이프라인 단계 래퍼에 적용해 단계별 커밋·롤백을 일관되게 수행한다</span></li>
+            
+            <li><span class="box"></span><span>마이크로서비스 내부 호출 시 셀프 인보케이션을 탐지해 별도 서비스로 분리함으로써 트랜잭션 경계 누수를 방지한다</span></li>
+            
+            <li><span class="box"></span><span>비동기 이벤트 처리에서 스레드 로컬 컨텍스트 전파를 활용해 트랜잭션 유사 보장을 제공한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 같은 클래스 내부에서 @Transactional이 붙은 메서드를 호출하면 트랜잭션이 적용되지 않을까?</div>
+            
+            <div class="q-opt">① 다른 스레드에서 실행되기 때문</div>
+            
+            <div class="q-opt">② 프록시를 우회해 트랜잭션이 시작되지 않기 때문</div>
+            
+            <div class="q-opt">③ @Transactional은 private 메서드에만 적용되기 때문</div>
+            
+            <div class="q-opt">④ 예외가 자동으로 무시되기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 프록시를 우회해 트랜잭션이 시작되지 않기 때문</div>
+              <div class="why">본문 01:09~01:43에서 셀프 인보케이션은 프록시를 거치지 않아 트랜잭션이 시작되지 않는다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">@Async 메서드가 예외 발생 시 롤백되지 않는 주요 원인은?</div>
+            
+            <div class="q-opt">① @Async가 별도 스레드에서 실행돼 원래 트랜잭션 컨텍스트를 상속하지 않기 때문</div>
+            
+            <div class="q-opt">② @Async가 예외 처리를 비활성화하기 때문</div>
+            
+            <div class="q-opt">③ @Async가 즉시 커밋을 강제하기 때문</div>
+            
+            <div class="q-opt">④ @Async가 다른 데이터베이스를 사용하기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① @Async가 별도 스레드에서 실행돼 원래 트랜잭션 컨텍스트를 상속하지 않기 때문</div>
+              <div class="why">02:45~03:30에서 @Async는 비동기 스레드에서 동작해 트랜잭션 정보를 전달하지 않아 롤백되지 않는다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">@Transactional</span><span class="tag">@Async</span><span class="tag">AOP</span><span class="tag">프록시</span><span class="tag">스레드 로컬</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/52885" target="_blank" rel="noopener">AI가 만든 코드가 어드민이 되기까지</a>
+        </h2>
+
+        <p class="summary">AI 코드 자동생성으로 어드민 구축 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전통적인 어드민 구축은 스캐폴딩·의존성·보안·배포 등 다단계 작업이 필요해 비용이 크게 증가한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TOI는 API 스키마와 자연어 화면 요청을 입력으로 AI가 React 코드를 자동 생성하도록 설계됐다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>생성된 코드를 실시간으로 확인하기 위해 브라우저 안에 Preview Runtime을 구현해 코드 실행·정책 적용을 자동화했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 코드 자동생성을 데이터 정제 UI에 적용해 스키마 기반 필터·변환 화면을 즉시 생성한다</span></li>
+            
+            <li><span class="box"></span><span>브라우저 내 Preview Runtime을 활용해 머신러닝 모델 모니터링 대시보드의 실시간 프로토타입을 빠르게 검증한다</span></li>
+            
+            <li><span class="box"></span><span>정책 기반 API 프록시 방식을 외부 파트너 API에 적용해 데이터 마스킹·암호화 정책을 중앙에서 일관적으로 관리한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">TOI가 AI가 만든 프론트엔드 코드를 실시간으로 확인하기 위해 도입한 핵심 기술은?</div>
+            
+            <div class="q-opt">① 서버 사이드 렌더링</div>
+            
+            <div class="q-opt">② 브라우저 내 개발 환경(Preview Runtime)</div>
+            
+            <div class="q-opt">③ Docker 컨테이너</div>
+            
+            <div class="q-opt">④ 정적 파일 호스팅</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 브라우저 내 개발 환경(Preview Runtime)</div>
+              <div class="why">본문에 따르면 TOI는 코드를 실시간으로 보여 주기 위해 개발 환경 자체를 브라우저 안으로 가져오는 Preview Runtime을 구현했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TOI</span><span class="tag">React</span><span class="tag">Toss</span><span class="tag">AI</span><span class="tag">API</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/4pkVZhTVqac" target="_blank" rel="noopener">[10분 테코톡] 에덴의 Virtual Thread</a>
+        </h2>
+
+        <p class="summary">IO 블로킹 해소와 스케일링을 위한 가상 스레드 이해</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:05</span>
+            
+            <span>플랫폼 스레드와 커널 스레드가 1:1 매핑되어 OS 스케줄러가 실행을 결정한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:15</span>
+            
+            <span>블로킹 I/O가 스레드당 대기 시간을 증가시켜 처리량을 제한한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">06:20</span>
+            
+            <span>가상 스레드는 JVM 내부에서 생성·스케줄링되며 캐리어 스레드에 마운트돼 비동기 I/O를 효율적으로 지원한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>가상 스레드의 저렴한 생성 비용을 활용해 데이터 전처리 파이프라인을 수천 개의 작업으로 분산시켜 기존 스레드 풀의 메모리 한계를 초월한다</span></li>
+            
+            <li><span class="box"></span><span>캐리어 스레드 마운트 방식을 GPU 커널 스케줄링에 적용해 컨텍스트 스위칭 오버헤드를 최소화하고 대규모 모델 학습 시 자원 효율성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>논블로킹 I/O 지원을 이용해 고빈도 피처 스토어 서비스를 설계하면 적은 스레드로도 수만 건의 동시 읽기/쓰기 요청을 처리해 레이턴시를 크게 감소시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">가상 스레드가 실제 CPU에서 실행되기 위해 필요로 하는 OS 수준의 스레드는 무엇이며, 그 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 플랫폼 스레드</div>
+            
+            <div class="q-opt">② 캐리어 스레드</div>
+            
+            <div class="q-opt">③ 커널 스레드</div>
+            
+            <div class="q-opt">④ JVM 스레드</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 캐리어 스레드</div>
+              <div class="why">가상 스레드는 실행을 위해 캐리어 스레드(플랫폼 스레드)와 연결되어야 하며, 이 캐리어 스레드가 OS 커널 스레드와 1:1 매핑되어 실제 CPU에서 동작한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">플랫폼 스레드 수를 무작정 늘릴 경우 발생하는 주요 문제는 무엇인가?</div>
+            
+            <div class="q-opt">① 메모리 사용량 증가와 컨텍스트 스위칭 비용 상승</div>
+            
+            <div class="q-opt">② 가상 스레드 생성 비용 증가</div>
+            
+            <div class="q-opt">③ JNI 호출 횟수 감소</div>
+            
+            <div class="q-opt">④ OS 스케줄러 속도 향상</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 메모리 사용량 증가와 컨텍스트 스위칭 비용 상승</div>
+              <div class="why">플랫폼 스레드는 커널 스레드와 1:1 매핑되므로 스레드 수가 늘면 메모리 부담이 커지고 컨텍스트 스위칭 비용이 증가한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Java</span><span class="tag">JVM</span><span class="tag">JNI</span><span class="tag">Spring Boot</span><span class="tag">Virtual Thread</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/gioblu/NPC-Forge/blob/main/docs/development.md" target="_blank" rel="noopener">Show HN: TERMy – A fast terminal assistant that does not use LLMs</a>
+        </h2>
+
+        <p class="summary">LLM 없이 초고속 셸 명령 변환, 효율 대폭 상승</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TERMy는 LLM을 사용하지 않고 ~1000줄 파이썬 NLU 파이프라인으로 라즈베리 파이 제로에서도 밀리초 응답을 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>파이프라인은 노이즈 제거 → 감정 분석 → 정확 일치 → 템플릿 매치 → 확률 매치 순으로 진행되며, 확률 매치는 IDF, BOW, IDF 가중 레벤슈타인으로 오타를 허용한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>파괴적 명령에 대해 데이터셋에 하드코딩된 권한 게이트를 적용해 LLM 기반 어시스턴트보다 안전성을 확보한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>IDF 가중 레벤슈타인 방식을 활용해 데이터 파이프라인에서 컬럼명 오타를 자동 교정하면 스키마 매핑 오류를 줄일 수 있다.</span></li>
+            
+            <li><span class="box"></span><span>하드코딩된 권한 게이트를 데이터 웨어하우스 자동 SQL 생성 도구에 적용해 위험한 DML 명령을 사전에 차단한다.</span></li>
+            
+            <li><span class="box"></span><span>LLM 없이 경량 NLU 파이프라인을 구축해 자연어 분석 요청을 pandas 코드로 변환하면 노트북 환경에서 비용 없이 빠른 프로토타이핑이 가능하다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">TERMy 파이프라인 단계 중 가장 처리 속도가 느린 것은?</div>
+            
+            <div class="q-opt">① Exact Match</div>
+            
+            <div class="q-opt">② Template Match</div>
+            
+            <div class="q-opt">③ Probabilistic Match</div>
+            
+            <div class="q-opt">④ Sentiment Analysis</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ Probabilistic Match</div>
+              <div class="why">확률 매치 단계는 IDF, BOW, 레벤슈타인 계산을 포함해 가장 많은 연산을 수행하므로 가장 느리다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">TERMy가 명령 실행 시 안전성을 보장하기 위해 사용하는 방법은?</div>
+            
+            <div class="q-opt">① 실시간 모델 검증</div>
+            
+            <div class="q-opt">② 하드코딩된 권한 게이트</div>
+            
+            <div class="q-opt">③ 사용자 인증 토큰</div>
+            
+            <div class="q-opt">④ LLM 기반 위험 평가</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 하드코딩된 권한 게이트</div>
+              <div class="why">파괴적 명령에 대해 데이터셋에 하드코딩된 권한 게이트를 적용해 위험을 사전에 차단한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TERMy</span><span class="tag">NPC-Forge</span><span class="tag">PJON</span><span class="tag">Raspberry Pi Zero</span><span class="tag">Levenshtein</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

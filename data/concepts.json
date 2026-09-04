@@ -8,21 +8,21 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-02"
+      "last_seen": "2026-09-05"
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-04"
+      "last_seen": "2026-09-05"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-04"
+      "last_seen": "2026-09-05"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -78,11 +78,17 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
     },
+    "논블로킹 I/O": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
+    },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-09-02"
+      "last_seen": "2026-09-05"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -134,9 +140,21 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-03"
+      "last_seen": "2026-09-05"
+    },
+    "브라우저 내 개발 환경": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
+    },
+    "비동기 처리와 트랜잭션": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
     },
     "생물학 문제에 대한 AI 성능": {
       "aliases": [],
@@ -155,6 +173,12 @@
       "count": 2,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-02"
+    },
+    "스케줄링": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
     },
     "스타트업 성장 지표": {
       "aliases": [],
@@ -234,11 +258,17 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
     },
+    "정책 기반 API 프록시": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
+    },
     "조건부 확률 모델링": {
       "aliases": [],
-      "count": 3,
+      "count": 5,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-04"
+      "last_seen": "2026-09-05"
     },
     "지식 증류": {
       "aliases": [],
@@ -257,6 +287,24 @@
       "count": 1,
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
+    },
+    "코드 자동생성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
+    },
+    "트랜잭션 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
+    },
+    "프록시 기반 AOP": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-05",
+      "last_seen": "2026-09-05"
     },
     "프롬프트 협업": {
       "aliases": [],
@@ -301,6 +349,6 @@
       "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-04T09:13:39.077396+09:00",
+  "updated_at": "2026-09-05T07:09:57.468871+09:00",
   "version": 1
 }
