@@ -8,6 +8,7 @@ import structlog
 from datetime import date
 
 from app.config import get_settings
+from app.contract import today_kst
 from app.preferences import item_id
 from app.quiz_results import encode_callback as encode_quiz_callback
 from app.models import DigestItem
@@ -26,7 +27,8 @@ def _api_url(token: str, method: str) -> str:
 # ──────────────────────────────────────────────
 
 def _format_header(items: list[DigestItem]) -> str:
-    today = date.today()
+    # KST 기준. UTC 러너에서 `date.today()` 는 하루 전 날짜가 된다(이메일과 같은 뿌리).
+    today = date.fromisoformat(today_kst())
     yt = sum(1 for i in items if i.raw.source_type.value == "youtube")
     rss = len(items) - yt
     breakdown = []

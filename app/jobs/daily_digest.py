@@ -19,7 +19,7 @@ from app.analyzer import (
     resolve_directives,
     resolve_youtube_transcripts,
 )
-from app.newsletter import TEMPLATE_DIR, send_digest, render_digest_email
+from app.newsletter import TEMPLATE_DIR, send_digest, render_digest_web, kst_date_label
 from app.feedback import load_profile
 from app.deliverers.telegram import send_telegram_digest
 from app.deliverers.discord import send_discord_digest, send_discord_text
@@ -356,11 +356,14 @@ async def run_daily_digest() -> dict:
         _mark_sent(digest_items)
 
     # 7. HTML 저장 — data/archive (로컬 디버깅) + docs/ (GitHub Pages 공개)
+    # 이메일(send_digest)은 테이블 레이아웃의 digest_email.html 을 쓰고, 여기
+    # 아카이브는 웹용 digest.html 을 쓴다. 같은 HTML 을 둘 다에 쓰면 메일에서 깨진다.
     root = Path(__file__).parent.parent.parent
-    html = render_digest_email(digest_items)
     # 날짜는 KST 고정 — 러너가 UTC라 `datetime.now()`를 쓰면 한국 시각 07:10
     # 발행분이 전날 날짜로 저장된다(아카이브가 실제로 하루씩 밀려 있었다).
+    # 파일명뿐 아니라 머리말 날짜도 같은 값을 넘긴다.
     today_str = today_kst()
+    html = render_digest_web(digest_items, date_str=kst_date_label(today_str))
 
     # 드라이런은 실제 산출물 경로를 건드리지 않는다.
     #
