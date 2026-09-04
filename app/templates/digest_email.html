@@ -27,8 +27,11 @@
 {%- macro spacer(h) -%}
 <tr><td height="{{ h }}" style="height:{{ h }}px; line-height:{{ h }}px; font-size:1px;">&nbsp;</td></tr>
 {%- endmacro -%}
-{%- macro gauge(label, score) -%}
-<span style="white-space:nowrap;"><span style="color:#6B7681;">{{ label }}</span>&nbsp;<span style="color:#0F6E78; letter-spacing:1px;">{{ '●' * score }}</span><span style="color:#B8C0C8; letter-spacing:1px;">{{ '○' * (10 - score) }}</span>&nbsp;<span style="color:#131A22; font-weight:700;">{{ score }}</span></span>
+{%- macro gauge_row(label, score) -%}
+<tr>
+  <td width="78" valign="top" style="width:78px; padding:2px 10px 2px 0; font-family:{{ FONT }}; font-size:12.5px; line-height:1.6; color:#6B7681; white-space:nowrap;">{{ label }}</td>
+  <td valign="top" style="padding:2px 0; font-family:{{ FONT }}; font-size:12.5px; line-height:1.6; color:#131A22; white-space:nowrap;"><span style="color:#0F6E78; letter-spacing:1px;">{{ '●' * score }}</span><span style="color:#B8C0C8; letter-spacing:1px;">{{ '○' * (10 - score) }}</span>&nbsp;<span style="color:#131A22; font-weight:700;">{{ score }}</span></td>
+</tr>
 {%- endmacro -%}
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
@@ -125,10 +128,14 @@
           </tr>
           {% endif %}
 
-          {# 두 축 계기: 글자(●○)로 그린다. 모바일에서 좁으면 두 축 사이에서 접힌다. #}
+          {# 두 축 계기: 글자(●○)로 그린다. 두 축을 각각 별도 행에 두고,
+             라벨 열을 고정 폭(78px)으로 잡아 세로로 정렬한다. 행 사이 간격은 td padding 4px. #}
           <tr>
-            <td style="padding:0 0 16px 0; font-family:{{ FONT }}; font-size:12.5px; line-height:1.8; color:#6B7681;">
-              {{ gauge('실행가능성', item.analysis.actionability) }}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{ gauge('깊이', item.analysis.depth) }}
+            <td style="padding:0 0 16px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                {{ gauge_row('실행가능성', item.analysis.actionability) }}
+                {{ gauge_row('깊이', item.analysis.depth) }}
+              </table>
             </td>
           </tr>
 
@@ -159,7 +166,7 @@
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#EAEDF1" style="width:100%; border-collapse:separate; border:1px solid #C9D0D8; border-radius:4px; background-color:#EAEDF1;">
               <tr>
                 <td style="padding:14px 16px; font-family:{{ FONT }}; color:#131A22;">
-                  <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:#8A5A16; line-height:1.4; padding:0 0 8px 0;">To do</div>
+                  <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:#8A5A16; line-height:1.4; padding:0 0 8px 0;">Action Items</div>
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse;">
                     {% for idea in item.analysis.production_ideas %}
                     <tr>

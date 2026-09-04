@@ -266,7 +266,7 @@ def _format_item(item: DigestItem, index: int) -> str:
         lines.append("")
 
     if a.production_ideas:
-        lines.append("**To do**")
+        lines.append("**Action Items**")
         for idea in a.production_ideas[:2]:
             # □ 는 한글 폰트에도 거의 항상 있다. ☐ 보다 안전하다.
             lines.append(f"□ {idea}")

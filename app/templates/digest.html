@@ -142,9 +142,11 @@
 
   /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
      실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
-  .gauge { display: flex; gap: 20px; margin: 0 0 16px; flex-wrap: wrap; }
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
   .axis { display: flex; align-items: center; gap: 8px; }
-  .axis-name { font-size: 11.5px; color: var(--faint); }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
   .axis-track {
     width: 62px; height: 4px; border-radius: 2px;
     background: var(--rule); overflow: hidden;
@@ -309,7 +311,7 @@
 
         {% if item.analysis.production_ideas %}
         <div class="ideas">
-          <span class="label ideas-label">To&nbsp;do</span>
+          <span class="label ideas-label">Action&nbsp;Items</span>
           <ul>
             {% for idea in item.analysis.production_ideas %}
             <li><span class="box"></span><span>{{ idea }}</span></li>

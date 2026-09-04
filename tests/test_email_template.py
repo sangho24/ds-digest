@@ -10,6 +10,7 @@
 """
 import re
 from datetime import date, datetime, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
@@ -203,3 +204,78 @@ def test_archive_url_override():
     record = DigestRecord.model_validate_json(RECORD_PATH.read_text(encoding="utf-8"))
     html = render_digest_email(record.items, archive_url="https://example.test/2026-09-04.html")
     assert "https://example.test/2026-09-04.html" in html
+
+
+class _CellText(HTMLParser):
+    """가장 안쪽 <td> 를 기준으로 (행 번호, 셀 텍스트) 를 모은다.
+
+    바깥 td 에는 안쪽 td 의 텍스트를 넣지 않는다. 중첩 표가 많은 문서라
+    "같은 칸/같은 행에 있는가"를 이 단위로 판정해야 한다.
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._rows: list[int] = []      # 열려 있는 <tr> 의 번호 스택
+        self._cells: list[list[str]] = []  # 열려 있는 <td> 의 텍스트 버퍼 스택
+        self._row_seq = 0
+        self.cells: list[tuple[int, str]] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "tr":
+            self._row_seq += 1
+            self._rows.append(self._row_seq)
+        elif tag == "td":
+            self._cells.append([])
+
+    def handle_endtag(self, tag):
+        if tag == "tr" and self._rows:
+            self._rows.pop()
+        elif tag == "td" and self._cells:
+            text = "".join(self._cells.pop())
+            self.cells.append((self._rows[-1] if self._rows else -1, text))
+
+    def handle_data(self, data):
+        if self._cells:
+            self._cells[-1].append(data)
+
+
+def _label_rows(html: str, label: str) -> set[int]:
+    """셀 텍스트가 정확히 그 라벨인 칸이 들어 있는 행 번호들."""
+    parser = _CellText()
+    parser.feed(html)
+    return {row for row, text in parser.cells if text.strip() == label}
+
+
+def test_action_items_label_replaces_to_do(items, html):
+    """"To do" 라벨을 "Action Items" 로 바꿨다. 표시는 text-transform 으로
+    대문자가 되지만, 그 CSS 를 버리는 클라이언트도 있으니 원문으로 단언한다."""
+    with_ideas = [i for i in items if i.analysis.production_ideas]
+    assert with_ideas, "이 테스트는 production_ideas 가 있는 레코드를 전제한다"
+
+    assert html.count("Action Items") == len(with_ideas)
+    for dead in ("To do", "TO DO", "To&nbsp;do"):
+        assert dead not in html, f"{dead!r} 가 남아 있다"
+    # 대문자 변환은 인라인 style 로 걸려 있어야 한다(라벨 칸이 uppercase).
+    assert "text-transform:uppercase" in html
+
+
+def test_two_axes_are_on_separate_rows(items, html):
+    """실행가능성과 깊이가 각각 다른 <tr> 에 있고, 한 칸에 같이 있지 않다."""
+    action_rows = _label_rows(html, "실행가능성")
+    depth_rows = _label_rows(html, "깊이")
+
+    assert len(action_rows) == len(items), "항목마다 실행가능성 라벨 칸이 하나씩 있어야 한다"
+    assert len(depth_rows) == len(items), "항목마다 깊이 라벨 칸이 하나씩 있어야 한다"
+    assert not (action_rows & depth_rows), "두 축이 같은 행에 있다"
+
+    # 같은 칸에 두 라벨이 함께 있으면 안 된다(한 줄로 붙여 놓은 예전 모양).
+    parser = _CellText()
+    parser.feed(html)
+    for _, text in parser.cells:
+        assert not ("실행가능성" in text and "깊이" in text), f"한 칸에 두 축이 같이 있다: {text[:60]!r}"
+
+    # 점 표기(●○)와 숫자는 그대로 유지한다.
+    gauge_cells = [text for _, text in parser.cells if "●" in text or "○" in text]
+    assert len(gauge_cells) == len(items) * 2, "항목마다 두 축의 계기 칸이 있어야 한다"
+    for text in gauge_cells:
+        assert text.count("●") + text.count("○") == 10, f"눈금 10칸이 아니다: {text!r}"

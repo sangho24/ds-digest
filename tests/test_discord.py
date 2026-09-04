@@ -497,11 +497,11 @@ def test_item_shows_two_axes_and_todo_not_relevance():
     text = d._format_item(item, 1)
     assert "`실행 ████████░░ 8`" in text and "`깊이 ███░░░░░░░ 3`" in text
     assert "관련도" not in text
-    assert "**To do**" in text and "□ 카프카 컨슈머" in text
+    assert "**Action Items**" in text and "□ 카프카 컨슈머" in text
     assert "적용 아이디어" not in text
     assert "-# 배경과 위치 — 기존 접근은" in text
-    # 순서: 요약 → 배경과 위치 → 계기 → 핵심 → To do
-    assert text.index("배경과 위치") < text.index("`실행") < text.index("**To do**")
+    # 순서: 요약 → 배경과 위치 → 계기 → 핵심 → Action Items
+    assert text.index("배경과 위치") < text.index("`실행") < text.index("**Action Items**")
 
 
 def test_item_without_optional_blocks_stays_clean():
@@ -511,6 +511,6 @@ def test_item_without_optional_blocks_stays_clean():
     item.analysis.key_points = []
     item.analysis.positioning = None
     text = d._format_item(item, 2)
-    assert "**To do**" not in text and "배경과 위치" not in text
+    assert "**Action Items**" not in text and "배경과 위치" not in text
     assert "`실행" in text, "계기는 항상 있다 — 두 축은 모든 아이템이 갖는다"
     assert "\n\n\n" not in text, "빈 블록이 빈 줄만 남기면 안 된다"
