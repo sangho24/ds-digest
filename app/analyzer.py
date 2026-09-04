@@ -7,6 +7,7 @@ import asyncio
 from collections import Counter
 import json
 import re
+import time
 import structlog
 import httpx
 from urllib.parse import urlparse, parse_qs
@@ -40,7 +41,9 @@ from app.transcript_gemini import fetch_transcript_via_gemini
 logger = structlog.get_logger()
 
 # Gemini free tier: gemini-2.5-flash 약 10 RPM → 호출 간 최소 8초
-# Groq free tier: 30 RPM → 호출 간 최소 3초
+# Groq free tier: 30 RPM → 호출 간 최소 3초. 이 고정 대기는 RPM 보호용이고,
+# TPM(무료 플랜 8,000)은 _GroqPacer 가 응답 헤더를 보고 따로 맡는다. 페이서는
+# monotonic 경과를 반영하므로 이 3초는 페이서 대기와 겹쳐서 계산된다.
 _RATE_LIMIT_DELAY = 8.0
 _GROQ_RATE_LIMIT_DELAY = 3.0
 # Stage 2 전사 호출 사이 대기(초). 무료 티어 TPM 보호용 — 첫 호출 앞에는 두지 않는다.
@@ -843,6 +846,455 @@ async def _call_gemini(prompt: str, _retry: int = 3) -> dict:
     return json.loads(text)
 
 
+_DURATION_RE = re.compile(
+    r"^\s*(?:(?P<h>\d+(?:\.\d+)?)h)?(?:(?P<m>\d+(?:\.\d+)?)m(?!s))?"
+    r"(?:(?P<ms>\d+(?:\.\d+)?)ms)?(?:(?P<s>\d+(?:\.\d+)?)s)?\s*$"
+)
+
+
+def _parse_duration(value: object) -> float | None:
+    """Groq 헤더의 기간 문자열("2.5s", "7.66s", "1m3.2s", "1h2m3s", "500ms")을 초로 바꾼다.
+
+    단위 없는 숫자("14.5")는 초로 본다. 해석할 수 없으면 None.
+    """
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        pass
+    match = _DURATION_RE.match(text)
+    if not match or not any(match.group(k) for k in ("h", "m", "ms", "s")):
+        return None
+    seconds = 0.0
+    if match.group("h"):
+        seconds += float(match.group("h")) * 3600
+    if match.group("m"):
+        seconds += float(match.group("m")) * 60
+    if match.group("ms"):
+        seconds += float(match.group("ms")) / 1000
+    if match.group("s"):
+        seconds += float(match.group("s"))
+    return seconds
+
+
+def _header(headers: object, name: str) -> str | None:
+    """헤더 값을 읽는다. httpx.Headers 는 대소문자를 무시하지만 테스트 대역은
+    일반 dict 일 수 있어 원래 이름과 소문자 이름을 모두 시도한다."""
+    try:
+        value = headers.get(name)  # type: ignore[union-attr]
+        if value is None:
+            value = headers.get(name.lower())  # type: ignore[union-attr]
+        return None if value is None else str(value)
+    except Exception:
+        return None
+
+
+class _GroqReservation:
+    """reserve() 가 돌려주는 예약 정보.
+
+    observe()/release() 가 이 객체를 보고 예약분을 정산한다. 헤더가 remaining 을
+    덮어쓰면 정산 완료, 응답을 못 받았거나(예외) 헤더 없는 429 처럼 소비되지
+    않은 예약은 release() 가 되돌린다.
+    """
+
+    __slots__ = (
+        "model",
+        "raw_prompt_tokens",
+        "estimated_prompt_tokens",
+        "needed_tokens",
+        "margin_tokens",
+        "reserved_tokens",
+        "reserved_requests",
+        "settled_tokens",
+        "settled_requests",
+    )
+
+    def __init__(
+        self,
+        model: str,
+        raw_prompt_tokens: float,
+        estimated_prompt_tokens: float,
+        needed_tokens: float,
+        margin_tokens: float,
+    ):
+        self.model = model
+        self.raw_prompt_tokens = raw_prompt_tokens
+        self.estimated_prompt_tokens = estimated_prompt_tokens
+        # needed 는 여유를 뺀 순수 추정(프롬프트 추정 + 출력 EMA). 오차 추적의 기준.
+        self.needed_tokens = needed_tokens
+        self.margin_tokens = margin_tokens
+        # 실제로 차감한 양. 관측 전이라 차감하지 않았으면 0.
+        self.reserved_tokens = 0.0
+        self.reserved_requests = 0.0
+        self.settled_tokens = True
+        self.settled_requests = True
+
+    @property
+    def total_tokens(self) -> float:
+        return self.needed_tokens + self.margin_tokens
+
+
+class _GroqModelState:
+    """모델 하나의 한도 상태. Groq 한도는 모델 단위라 페이서가 모델별로 하나씩 둔다."""
+
+    EMA_ALPHA = 0.3
+    DEFAULT_LIMIT_TOKENS = 8000.0
+    DEFAULT_COMPLETION_TOKENS = 1000.0
+    # 예약 오차 EMA 의 몇 배를 여유로 두는가, 그리고 최소 여유(needed 대비 비율)
+    MARGIN_ERROR_FACTOR = 1.5
+    MARGIN_MIN_RATIO = 0.20
+
+    def __init__(self) -> None:
+        # 토큰 한도
+        self.limit_tokens: float = self.DEFAULT_LIMIT_TOKENS
+        self.remaining_tokens: float | None = None
+        self.tokens_seen_at: float | None = None
+        # 토큰 한도가 가득 차는(또는 창이 리셋되는) 절대 시각(monotonic). 헤더의
+        # x-ratelimit-reset-tokens 에서 온다. 버킷 모델에서는 "가득 참" 시각,
+        # 고정창 모델에서는 리셋 시각이라 양쪽에서 "그 뒤엔 limit" 이 맞는다.
+        self.tokens_reset_at: float | None = None
+        # 요청 한도
+        self.limit_requests: float | None = None
+        self.remaining_requests: float | None = None
+        self.requests_seen_at: float | None = None
+        self.requests_reset_at: float | None = None
+        # 비용 추정
+        self.completion_ema: float = self.DEFAULT_COMPLETION_TOKENS
+        self.prompt_ratio_ema: float = 1.0
+        # |실제 total - 예약 needed| 의 EMA. 관측 전에는 None.
+        self.error_ema: float | None = None
+
+    @property
+    def has_observation(self) -> bool:
+        return self.remaining_tokens is not None or self.remaining_requests is not None
+
+    @property
+    def reset_tokens(self) -> float | None:
+        """마지막 관측 시각 기준 리셋까지 남은 초(테스트·로그용)."""
+        if self.tokens_reset_at is None or self.tokens_seen_at is None:
+            return None
+        return max(0.0, self.tokens_reset_at - self.tokens_seen_at)
+
+    def margin_for(self, needed: float) -> float:
+        """예약 여유. 오차 EMA 의 1.5배, 최소 needed 의 20%.
+
+        시뮬레이션(토큰버킷 8,000/60초, usage ±20%, seed 3개)에서 10% 바닥은 31회 중
+        429 가 최대 3회, 20% 는 0~1회였고 총 소요 차이는 0.2% 미만이었다. 버킷
+        모델에서 여유는 매 호출 비용이 아니라 바닥 재고 한 번 분량이라 싸다.
+        """
+        floor = needed * self.MARGIN_MIN_RATIO
+        if self.error_ema is None:
+            return floor
+        return max(floor, self.error_ema * self.MARGIN_ERROR_FACTOR)
+
+    def available_tokens(self, now: float) -> float | None:
+        if self.remaining_tokens is None or self.tokens_seen_at is None:
+            return None
+        if self.tokens_reset_at is not None and now >= self.tokens_reset_at:
+            return self.limit_tokens
+        elapsed = max(0.0, now - self.tokens_seen_at)
+        refill = self.limit_tokens / 60.0
+        return min(self.limit_tokens, self.remaining_tokens + refill * elapsed)
+
+    def available_requests(self, now: float) -> float | None:
+        if self.remaining_requests is None or self.requests_seen_at is None:
+            return None
+        if self.requests_reset_at is not None and now >= self.requests_reset_at:
+            return self.limit_requests if self.limit_requests else max(self.remaining_requests, 1.0)
+        elapsed = max(0.0, now - self.requests_seen_at)
+        if self.limit_requests:
+            refill = self.limit_requests / 60.0
+            return min(self.limit_requests, self.remaining_requests + refill * elapsed)
+        return self.remaining_requests
+
+    def wait_seconds(self, now: float, needed_total: float) -> tuple[float, float | None, float | None]:
+        """(대기 초, 가용 토큰, 가용 요청). 관측이 없으면 대기 0."""
+        wait = 0.0
+        available_tokens = self.available_tokens(now)
+        if available_tokens is not None and available_tokens < needed_total:
+            refill = self.limit_tokens / 60.0
+            linear = (needed_total - available_tokens) / refill if refill > 0 else 0.0
+            # 리셋 시각이 더 빠르면 거기까지만 기다리면 된다
+            if self.tokens_reset_at is not None:
+                linear = min(linear, max(0.0, self.tokens_reset_at - now))
+            wait = max(wait, linear)
+
+        available_requests = self.available_requests(now)
+        if available_requests is not None and available_requests < 1.0:
+            if self.requests_reset_at is not None:
+                wait = max(wait, max(0.0, self.requests_reset_at - now))
+            elif self.limit_requests:
+                wait = max(wait, (1.0 - available_requests) / (self.limit_requests / 60.0))
+        return wait, available_tokens, available_requests
+
+    def deduct(self, reservation: _GroqReservation, sent_at: float) -> None:
+        """전송 시점 기준으로 예약분을 차감한다(헤더가 오면 덮어쓴다)."""
+        available_tokens = self.available_tokens(sent_at)
+        if available_tokens is not None:
+            self.remaining_tokens = available_tokens - reservation.total_tokens
+            self.tokens_seen_at = sent_at
+            reservation.reserved_tokens = reservation.total_tokens
+            reservation.settled_tokens = False
+            # 버킷 모델에서는 차감만큼 "가득 참" 시각이 늦춰진다. 창 모델에서는
+            # 과보수적이지만 헤더가 오면 곧 덮어쓰므로 감수한다.
+            refill = self.limit_tokens / 60.0
+            if self.tokens_reset_at is not None and refill > 0:
+                full_at = sent_at + max(0.0, self.limit_tokens - self.remaining_tokens) / refill
+                self.tokens_reset_at = max(self.tokens_reset_at, full_at)
+        available_requests = self.available_requests(sent_at)
+        if available_requests is not None:
+            self.remaining_requests = available_requests - 1.0
+            self.requests_seen_at = sent_at
+            reservation.reserved_requests = 1.0
+            reservation.settled_requests = False
+            if self.requests_reset_at is not None and self.limit_requests:
+                refill = self.limit_requests / 60.0
+                full_at = sent_at + max(0.0, self.limit_requests - self.remaining_requests) / refill
+                self.requests_reset_at = max(self.requests_reset_at, full_at)
+
+    def observe_headers(self, headers: object, now: float, reservation: _GroqReservation | None) -> None:
+        try:
+            limit = _parse_duration(_header(headers, "x-ratelimit-limit-tokens"))
+            if limit is not None and limit > 0:
+                self.limit_tokens = limit
+            remaining = _parse_duration(_header(headers, "x-ratelimit-remaining-tokens"))
+            if remaining is not None:
+                self.remaining_tokens = max(0.0, remaining)
+                self.tokens_seen_at = now
+                self.tokens_reset_at = None
+                if reservation is not None:
+                    reservation.settled_tokens = True
+            reset = _parse_duration(_header(headers, "x-ratelimit-reset-tokens"))
+            if reset is not None and remaining is not None:
+                self.tokens_reset_at = now + max(0.0, reset)
+        except Exception:
+            pass
+        try:
+            limit_req = _parse_duration(_header(headers, "x-ratelimit-limit-requests"))
+            if limit_req is not None and limit_req > 0:
+                self.limit_requests = limit_req
+            remaining_req = _parse_duration(_header(headers, "x-ratelimit-remaining-requests"))
+            if remaining_req is not None:
+                self.remaining_requests = max(0.0, remaining_req)
+                self.requests_seen_at = now
+                self.requests_reset_at = None
+                if reservation is not None:
+                    reservation.settled_requests = True
+            reset_req = _parse_duration(_header(headers, "x-ratelimit-reset-requests"))
+            if reset_req is not None and remaining_req is not None:
+                self.requests_reset_at = now + max(0.0, reset_req)
+        except Exception:
+            pass
+
+    def observe_usage(self, usage: dict, reservation: _GroqReservation | None) -> None:
+        try:
+            completion = usage.get("completion_tokens")
+            if isinstance(completion, (int, float)) and completion > 0:
+                self.completion_ema += self.EMA_ALPHA * (float(completion) - self.completion_ema)
+            prompt_tokens = usage.get("prompt_tokens")
+            if (
+                reservation is not None
+                and reservation.raw_prompt_tokens > 0
+                and isinstance(prompt_tokens, (int, float))
+                and prompt_tokens > 0
+            ):
+                ratio = float(prompt_tokens) / reservation.raw_prompt_tokens
+                ratio = min(4.0, max(0.25, ratio))
+                self.prompt_ratio_ema += self.EMA_ALPHA * (ratio - self.prompt_ratio_ema)
+            total = usage.get("total_tokens")
+            if not isinstance(total, (int, float)) and isinstance(prompt_tokens, (int, float)) and isinstance(completion, (int, float)):
+                total = prompt_tokens + completion
+            if reservation is not None and isinstance(total, (int, float)) and total > 0:
+                error = abs(float(total) - reservation.needed_tokens)
+                if self.error_ema is None:
+                    self.error_ema = error
+                else:
+                    self.error_ema += self.EMA_ALPHA * (error - self.error_ema)
+                # 헤더가 없었으면 실제 소비량으로 예약분을 정정한다
+                if not reservation.settled_tokens and self.remaining_tokens is not None:
+                    self.remaining_tokens += reservation.reserved_tokens - float(total)
+                    reservation.settled_tokens = True
+        except Exception:
+            pass
+
+    def release(self, reservation: _GroqReservation) -> None:
+        """헤더로 정산되지 않은 예약분을 되돌린다(소비되지 않은 요청)."""
+        if not reservation.settled_tokens and self.remaining_tokens is not None:
+            self.remaining_tokens = min(self.limit_tokens, self.remaining_tokens + reservation.reserved_tokens)
+        reservation.settled_tokens = True
+        if not reservation.settled_requests and self.remaining_requests is not None:
+            cap = self.limit_requests if self.limit_requests else float("inf")
+            self.remaining_requests = min(cap, self.remaining_requests + reservation.reserved_requests)
+        reservation.settled_requests = True
+
+
+class _GroqPacer:
+    """Groq 무료 플랜 TPM/RPM 을 응답 헤더 기준으로 앞서서 지키는 페이서.
+
+    배경: 3초 고정 간격은 RPM(30)만 지키고 TPM(8,000)은 못 지킨다. 호출 한 건이
+    입력 약 2,800 + 출력 약 1,000 토큰이라 429 가 사실상 페이서 노릇을 해 왔고,
+    그 왕복과 Retry-After 의 정수 반올림, +2초 여유가 전부 낭비였다.
+
+    동작: 마지막으로 관측한 remaining 토큰에 (limit/60 x 경과초)만큼 충전을 더해
+    현재 가용량을 추정하고(리셋 시각이 지났으면 limit), 이번 호출에 필요한 토큰
+    (프롬프트 추정 + 출력 EMA + 오차 여유)이 모자라면 부족분 / 초당 충전량 만큼만
+    기다린다. 요청 한도도 같은 논리로 본다. 헤더를 한 번도 못 본 첫 호출은
+    기다리지 않는다. 한도는 모델 단위라 상태를 모델별로 나눠 둔다.
+
+    호출은 지금 직렬이지만 나중에 병렬화돼도 안전하도록 "대기 계산 + 예약" 구간을
+    asyncio.Lock 으로 보호한다. 파싱 실패는 전부 조용히 무시한다(기존 동작 유지가
+    최우선).
+    """
+
+    def __init__(self) -> None:
+        self._lock: asyncio.Lock | None = None
+        self._lock_loop: asyncio.AbstractEventLoop | None = None
+        self.states: dict[str, _GroqModelState] = {}
+
+    def _get_lock(self) -> asyncio.Lock:
+        """이벤트 루프마다 Lock 을 새로 만든다. 테스트가 asyncio.run 을 여러 번
+        돌려도 다른 루프에 묶인 Lock 때문에 죽지 않게 한다."""
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+        if self._lock is None or self._lock_loop is not loop:
+            self._lock = asyncio.Lock()
+            self._lock_loop = loop
+        return self._lock
+
+    def state_for(self, model: str) -> _GroqModelState:
+        state = self.states.get(model)
+        if state is None:
+            state = _GroqModelState()
+            self.states[model] = state
+        return state
+
+    @property
+    def has_observation(self) -> bool:
+        return any(s.has_observation for s in self.states.values())
+
+    @staticmethod
+    def raw_prompt_tokens(prompt: str) -> float:
+        """한글(가-힣) 1자 = 1토큰, 그 외 4자 = 1토큰으로 근사한다(보정 전)."""
+        hangul = sum(1 for ch in prompt if "\uac00" <= ch <= "\ud7a3")
+        return hangul + (len(prompt) - hangul) / 4
+
+    def estimate_prompt_tokens(self, prompt: str, model: str) -> float:
+        """근사치에 관측 보정비(EMA)를 곱한 프롬프트 토큰 추정."""
+        return self.raw_prompt_tokens(prompt) * self.state_for(model).prompt_ratio_ema
+
+    async def reserve(self, prompt: str, model: str, skip_wait: bool = False) -> _GroqReservation:
+        """이번 호출에 필요한 토큰·요청을 예약한다. 부족하면 그만큼만 기다린다.
+
+        skip_wait=True 는 429 의 Retry-After 를 다 기다린 직후의 재시도용. 서버가
+        수용을 약속한 것이므로 추가 대기는 건너뛰고 차감만 한다(이중 대기 방지).
+        """
+        state = self.state_for(model)
+        raw = self.raw_prompt_tokens(prompt)
+        estimated = raw * state.prompt_ratio_ema
+        needed = estimated + state.completion_ema
+        margin = state.margin_for(needed)
+        reservation = _GroqReservation(model, raw, estimated, needed, margin)
+
+        async with self._get_lock():
+            now = time.monotonic()
+            wait, available_tokens, available_requests = state.wait_seconds(now, reservation.total_tokens)
+            if skip_wait:
+                wait = 0.0
+            if wait > 0:
+                logger.info(
+                    "groq_paced",
+                    model=model,
+                    wait_seconds=round(wait, 2),
+                    needed_tokens=round(reservation.total_tokens),
+                    margin_tokens=round(margin),
+                    available_tokens=None if available_tokens is None else round(available_tokens),
+                    available_requests=None if available_requests is None else round(available_requests, 2),
+                )
+                await asyncio.sleep(wait)
+            # 시계가 안 움직이는 환경(테스트)도 대기만큼은 충전된 것으로 친다.
+            sent_at = max(time.monotonic(), now + wait)
+            state.deduct(reservation, sent_at)
+        return reservation
+
+    def observe(
+        self,
+        headers: object,
+        usage: dict | None = None,
+        reservation: _GroqReservation | None = None,
+        model: str | None = None,
+        consumed: bool = False,
+    ) -> None:
+        """응답 헤더(성공·429 모두)와 usage 로 상태를 갱신한다. 파싱 실패는 무시.
+
+        consumed=True 는 요청이 실제로 처리된(200) 경우. 헤더도 usage 도 없으면
+        예약 차감을 그대로 둔다(토큰은 소비됐으므로 되돌리면 안 된다).
+        """
+        model_name = model or (reservation.model if reservation is not None else None)
+        if model_name is None:
+            return
+        state = self.state_for(model_name)
+        state.observe_headers(headers, time.monotonic(), reservation)
+        if isinstance(usage, dict):
+            state.observe_usage(usage, reservation)
+        if consumed and reservation is not None:
+            reservation.settled_tokens = True
+            reservation.settled_requests = True
+
+    def release(self, reservation: _GroqReservation | None) -> None:
+        """응답을 못 받았거나 헤더 없는 429 처럼 소비되지 않은 예약을 되돌린다."""
+        if reservation is None:
+            return
+        self.state_for(reservation.model).release(reservation)
+
+
+# 프로세스 전체가 공유하는 단일 페이서. 메타데이터 랭킹·상대 랭킹 등 모든
+# _call_groq 호출처가 같은 한도를 나눠 쓰므로 인스턴스도 하나여야 한다.
+_groq_pacer = _GroqPacer()
+
+
+def _groq_limit_type(resp: httpx.Response) -> str:
+    """429 본문에서 어느 한도에 걸렸는지 뽑는다(error.type, 없으면 message 앞 120자)."""
+    try:
+        body = resp.json()
+        error = body.get("error", {}) if isinstance(body, dict) else {}
+        if isinstance(error, dict):
+            if error.get("type"):
+                return str(error["type"])
+            if error.get("message"):
+                return str(error["message"])[:120]
+    except Exception:
+        pass
+    try:
+        return (resp.text or "")[:120]
+    except Exception:
+        return ""
+
+
+def _groq_retry_wait(resp: httpx.Response, limit_type: str) -> float:
+    """429 대기 시간(초). Retry-After -> x-ratelimit-reset-* -> 30, 여유 +1초.
+
+    Retry-After 는 float 로 읽는다. 예전에는 int() 라 "14.5" 가 오면 ValueError 로
+    죽었다.
+    """
+    wait = _parse_duration(_header(resp.headers, "Retry-After"))
+    if wait is None:
+        reset_name = (
+            "x-ratelimit-reset-requests"
+            if "request" in limit_type.lower()
+            else "x-ratelimit-reset-tokens"
+        )
+        wait = _parse_duration(_header(resp.headers, reset_name))
+    if wait is None:
+        wait = 30.0
+    return max(0.0, wait) + 1.0
+
+
 async def _call_groq(
     prompt: str,
     _retry: int = 3,
@@ -850,18 +1302,22 @@ async def _call_groq(
     json_schema: dict | None = None,
 ) -> dict:
     """Groq OpenAI-compatible API 호출 → 파싱된 JSON dict 반환.
-    429 응답 시 Retry-After 헤더 기준 대기 후 최대 _retry회 재시도.
+
+    전송 전에 _GroqPacer 로 TPM/RPM 여유를 확인해 필요한 만큼만 기다리고, 응답
+    헤더와 usage 로 페이서를 갱신한다. 429 가 그래도 오면 Retry-After(없으면
+    x-ratelimit-reset-*) 기준 대기 후 최대 _retry회 재시도.
 
     model=None이면 settings.groq_model(분석용 gpt-oss-120b)을 쓴다. 메타데이터
     랭킹처럼 다른 모델이 필요한 호출은 model을 명시해 오버라이드한다.
 
     json_schema를 주면 strict 구조화 출력(constrained decoding)을 요청한다.
     지원 모델이 아니거나 스키마를 거부하면 Groq가 400을 내는데, 그때는 조용히
-    json_object로 한 번 내려간다 — 랭킹이 구조화 출력 하나 때문에 파이프라인을
+    json_object로 한 번 내려간다 - 랭킹이 구조화 출력 하나 때문에 파이프라인을
     멈추면 안 되고, 파싱은 _parse_top_indices가 이미 방어적으로 한다.
     """
     settings = get_settings()
     request_model = model or settings.groq_model
+    pacer = _groq_pacer
 
     def _payload(schema: dict | None) -> dict:
         response_format = (
@@ -879,34 +1335,67 @@ async def _call_groq(
     payload = _payload(json_schema)
     headers = {"Authorization": f"Bearer {settings.groq_api_key}"}
 
+    skip_wait = False
     for attempt in range(_retry + 1):
-        async with httpx.AsyncClient(timeout=60) as client:
-            resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
-
-        if resp.status_code == 429:
-            retry_after = int(resp.headers.get("Retry-After", "30")) + 2
-            if attempt < _retry:
-                logger.warning("groq_rate_limited", attempt=attempt + 1, wait_seconds=retry_after)
-                await asyncio.sleep(retry_after)
-                continue
-            else:
-                resp.raise_for_status()
-
-        # 400 = 스키마/구조화 출력 거부. 같은 시도 안에서 json_object로 강등한다.
-        if resp.status_code == 400 and payload["response_format"]["type"] == "json_schema":
-            logger.warning(
-                "groq_json_schema_rejected",
-                model=request_model,
-                error=resp.text[:200],
-                fallback="json_object",
-            )
-            payload = _payload(None)
+        reservation = await pacer.reserve(prompt, request_model, skip_wait=skip_wait)
+        skip_wait = False
+        try:
             async with httpx.AsyncClient(timeout=60) as client:
                 resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
 
-        resp.raise_for_status()
-        result = resp.json()
-        break
+            if resp.status_code == 429:
+                pacer.observe(resp.headers, reservation=reservation)
+                limit_type = _groq_limit_type(resp)
+                retry_after = _groq_retry_wait(resp, limit_type)
+                if attempt < _retry:
+                    logger.warning(
+                        "groq_rate_limited",
+                        attempt=attempt + 1,
+                        wait_seconds=retry_after,
+                        limit_type=limit_type,
+                    )
+                    await asyncio.sleep(retry_after)
+                    # 서버가 Retry-After 뒤 수용을 약속했으므로 재시도는 페이서 대기를 건너뛴다
+                    skip_wait = True
+                    continue
+                else:
+                    resp.raise_for_status()
+
+            # 400 = 스키마/구조화 출력 거부. 같은 시도 안에서 json_object로 강등한다.
+            if resp.status_code == 400 and payload["response_format"]["type"] == "json_schema":
+                logger.warning(
+                    "groq_json_schema_rejected",
+                    model=request_model,
+                    error=resp.text[:200],
+                    fallback="json_object",
+                )
+                pacer.observe(resp.headers, reservation=reservation)
+                pacer.release(reservation)
+                payload = _payload(None)
+                reservation = await pacer.reserve(prompt, request_model)
+                async with httpx.AsyncClient(timeout=60) as client:
+                    resp = await client.post(_GROQ_API_URL, headers=headers, json=payload)
+
+            resp.raise_for_status()
+            result = resp.json()
+            usage = result.get("usage") if isinstance(result, dict) else None
+            pacer.observe(resp.headers, usage, reservation, consumed=True)
+            if isinstance(usage, dict):
+                logger.info(
+                    "groq_usage",
+                    model=request_model,
+                    prompt_tokens=usage.get("prompt_tokens"),
+                    completion_tokens=usage.get("completion_tokens"),
+                    total_tokens=usage.get("total_tokens"),
+                    remaining_tokens=pacer.state_for(request_model).remaining_tokens,
+                    estimated_prompt_tokens=round(reservation.estimated_prompt_tokens),
+                    margin_tokens=round(reservation.margin_tokens),
+                )
+            break
+        finally:
+            # 응답을 못 받았거나(예외) 헤더 없는 429/400 이면 예약분을 되돌린다.
+            # 정산된 예약에는 아무 영향이 없다.
+            pacer.release(reservation)
 
     text = result["choices"][0]["message"]["content"]
     text = re.sub(r"^```(?:json)?\s*", "", text.strip())
