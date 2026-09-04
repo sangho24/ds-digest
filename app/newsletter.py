@@ -105,7 +105,16 @@ def _get_feedback_url() -> str:
 
 
 async def send_digest(items: list[DigestItem]) -> bool:
-    """렌더링된 뉴스레터를 이메일로 발송"""
+    """렌더링된 뉴스레터를 이메일로 발송한다.
+
+    수신자마다 따로 한 통씩 보낸다. 한 통에 전원을 담으면 To 헤더로 서로의
+    주소가 노출되고, 한 주소가 거절되면(Resend 무료 플랜의 onboarding@resend.dev
+    발신은 가입자 본인 주소만 허용) 그 통 전체가 실패해 본인도 못 받는다.
+
+    반환값은 기존 계약 그대로 bool 이다: 한 명 이상 성공하면 True, 전원 실패면
+    False. 호출부(daily_digest.py)는 이 값으로 채널 성공 여부와 _mark_sent 를
+    판단하므로, 부분 실패는 별도 경고 로그(email_partial_failure)로만 남긴다.
+    """
     settings = get_settings()
 
     resend.api_key = settings.resend_api_key
@@ -128,17 +137,33 @@ async def send_digest(items: list[DigestItem]) -> bool:
 
     # EMAIL_TO는 쉼표 구분 복수 수신자 허용
     recipients = [addr.strip() for addr in settings.email_to.split(",") if addr.strip()]
-
-    try:
-        resend.Emails.send({
-            "from": settings.email_from,
-            "to": recipients,
-            "subject": email_subject(item_count, today_iso),
-            "html": html,
-        })
-        logger.info("email_sent", to=recipients, items=item_count)
-        return True
-
-    except Exception as e:
-        logger.error("email_send_failed", error=str(e))
+    if not recipients:
+        logger.warning("email_recipients_empty", msg="EMAIL_TO 가 비어 이메일 발송 스킵")
         return False
+
+    subject = email_subject(item_count, today_iso)
+
+    # Resend 한도는 초당 10건이라 수십 명 이하 직렬 발송에는 지연이 필요 없다.
+    failed: list[str] = []
+    for addr in recipients:
+        try:
+            resend.Emails.send({
+                "from": settings.email_from,
+                "to": [addr],
+                "subject": subject,
+                "html": html,
+            })
+            logger.info("email_sent", to=addr, items=item_count)
+        except Exception as e:
+            # 한 명의 실패가 다음 수신자 발송을 막지 않는다.
+            failed.append(addr)
+            logger.error("email_send_failed", to=addr, error=str(e)[:200])
+
+    sent_count = len(recipients) - len(failed)
+    if failed and sent_count:
+        logger.warning(
+            "email_partial_failure",
+            failed=failed,
+            sent=f"{sent_count}/{len(recipients)}",
+        )
+    return sent_count > 0
