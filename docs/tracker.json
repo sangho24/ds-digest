@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-03T06:09:22.373251+00:00",
+ "generated_at": "2026-09-04T00:33:37.273839+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -659,7 +659,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 50,
+   "tracked": 51,
    "models": [
     {
      "repo_id": "nvidia/Nemotron-3-Diarization-preview",
@@ -1194,6 +1194,22 @@
      "derivative": null
     },
     {
+     "repo_id": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+     "url": "https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+     "created_at": "2026-04-20T04:40:42+00:00",
+     "last_modified": "2026-08-24T23:49:25+00:00",
+     "weights_at": "2026-04-20T04:40:42+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-04-20T04:40:42+00:00",
+     "report_at": "2026-04-20T04:40:42+00:00",
+     "arxiv_ids": [
+      "2604.24954"
+     ],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
      "repo_id": "nvidia/Cosmos3-Nano",
      "url": "https://huggingface.co/nvidia/Cosmos3-Nano",
      "created_at": "2026-03-10T23:01:40+00:00",
@@ -1247,23 +1263,6 @@
      "has_weights": true,
      "model_card_at": "2026-03-10T18:32:42+00:00",
      "report_at": "2026-03-10T18:32:42+00:00",
-     "arxiv_ids": [
-      "2512.20848",
-      "2512.20856"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
-     "created_at": "2026-03-10T18:32:14+00:00",
-     "last_modified": "2026-08-25T15:48:50+00:00",
-     "weights_at": "2026-03-10T18:32:14+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-03-10T18:32:14+00:00",
-     "report_at": "2026-03-10T18:32:14+00:00",
      "arxiv_ids": [
       "2512.20848",
       "2512.20856"
@@ -6463,6 +6462,31 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+   "transition": "repo_created",
+   "observed_at": "2026-09-04T00:33:37.273839Z",
+   "at": "2026-08-24T23:49:25Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2604.24954"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-04-20T04:40:42+00:00"
+   }
+  },
+  {
    "org": "qwen",
    "repo_id": "Qwen/Qwen-Drive-1.0-4B",
    "transition": "repo_created",
@@ -7826,34 +7850,11 @@
      "Qwen/Qwen-Image"
     ]
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-Edit-2511",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-17T05:55:58Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-Edit-2511",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2508.02324"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 580,
-  "events": 580
+  "models": 581,
+  "events": 581
  }
 }
