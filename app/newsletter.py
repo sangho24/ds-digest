@@ -104,8 +104,16 @@ def _get_feedback_url() -> str:
     return f"{get_settings().base_url}/api/feedback"
 
 
-async def send_digest(items: list[DigestItem]) -> bool:
+async def send_digest(
+    items: list[DigestItem],
+    date_iso: str | None = None,
+    subject_prefix: str = "",
+) -> bool:
     """렌더링된 뉴스레터를 이메일로 발송한다.
+
+    date_iso 를 넘기지 않으면 KST 오늘이다. 넘기면("YYYY-MM-DD") 그 날짜로
+    머리말·subject·아카이브 링크를 만든다(저장된 레코드 재발송용, resend_email.py).
+    subject_prefix 는 subject 맨 앞에 그대로 붙는다(예: "[재발송] ").
 
     수신자마다 따로 한 통씩 보낸다. 한 통에 전원을 담으면 To 헤더로 서로의
     주소가 노출되고, 한 주소가 거절되면(Resend 무료 플랜의 onboarding@resend.dev
@@ -119,7 +127,7 @@ async def send_digest(items: list[DigestItem]) -> bool:
 
     resend.api_key = settings.resend_api_key
     # 머리말·제목·아카이브 링크가 같은 날짜를 가리키도록 KST 날짜를 한 번만 잡는다.
-    today_iso = today_kst()
+    today_iso = date_iso or today_kst()
     html = render_digest_email(
         items,
         date_str=kst_date_label(today_iso),
@@ -141,7 +149,7 @@ async def send_digest(items: list[DigestItem]) -> bool:
         logger.warning("email_recipients_empty", msg="EMAIL_TO 가 비어 이메일 발송 스킵")
         return False
 
-    subject = email_subject(item_count, today_iso)
+    subject = subject_prefix + email_subject(item_count, today_iso)
 
     # Resend 한도는 초당 10건이라 수십 명 이하 직렬 발송에는 지연이 필요 없다.
     failed: list[str] = []

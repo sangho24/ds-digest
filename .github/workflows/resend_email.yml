@@ -1,0 +1,55 @@
+name: Resend Digest Email
+
+# 레코드 기반 이메일 재발송. 수집·분석·seen·아카이브 커밋을 건드리지 않는다.
+# data/records/digest_{date}.json 을 읽어 그 날짜의 이메일만 다시 보낸다.
+# 이메일 템플릿을 바꾼 뒤 실제 메일 클라이언트에서 확인하는 용도.
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '재발송할 다이제스트 날짜(YYYY-MM-DD). 비우면 KST 오늘'
+        type: string
+        default: ''
+      subject_prefix:
+        description: 'subject 맨 앞에 붙일 문자열'
+        type: string
+        default: '[재발송] '
+
+jobs:
+  resend:
+    runs-on: ubuntu-latest
+    # 커밋·푸시 스텝이 없으므로 읽기 권한만 준다.
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'   # 3.14 금지: protobuf C ext, supabase pyiceberg 빌드 실패
+          cache: 'pip'
+
+      - name: Install dependencies
+        # 실패 케이스 A: supabase>=2.19.0 → pyiceberg 포함 → MSVC 없어 빌드 실패
+        #   대응: requirements.txt에 supabase>=2.9.0,<2.19.0 고정
+        # 실패 케이스 B: google-generativeai SDK → protobuf C ext 충돌
+        #   대응: SDK 미사용, httpx로 REST API 직접 호출
+        run: pip install -r requirements.txt
+
+      - name: Resend digest email
+        # Settings(app/config.py)의 모든 필드에 기본값이 있어 필수 env 는 없다.
+        # 이메일 발송에 실제로 쓰이는 세 개만 넘긴다. Discord/Telegram/Supabase/
+        # AI 키는 넘기지 않는다 - 이 잡은 그 채널을 호출하지 않는다.
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # 재발송은 항상 실전이다. 드라이런이 필요하면 로컬에서 DRY_RUN=true 로 돈다.
+          DRY_RUN: 'false'
+        run: |
+          # date 가 비어 있으면 파이썬 쪽(--date "")이 KST 오늘로 계산한다.
+          python -m app.jobs.resend_email \
+            --date "${{ inputs.date }}" \
+            --subject-prefix "${{ inputs.subject_prefix }}"
