@@ -1,167 +1,407 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DS Digest — 아카이브</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest 아카이브</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&family=Noto+Serif+KR:wght@600;700&display=swap">
 <style>
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;}
-  .wrap{max-width:640px;margin:48px auto;padding:0 20px;}
-  h1{font-size:22px;font-weight:700;margin-bottom:6px;}
-  .sub{color:#888;font-size:13px;margin-bottom:28px;}
-  ul{list-style:none;padding:0;margin:0;}
-  li{margin-bottom:8px;}
-  a{display:block;padding:14px 20px;background:#fff;border-radius:10px;
-     text-decoration:none;color:#1a1a1a;font-size:15px;
-     border:1px solid #e8e8e0;}
-  a:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);}
+  /* 다이제스트 지면과 같은 토큰을 쓴다 — 두 화면이 한 물건으로 읽히게. */
+  :root {
+    color-scheme: light dark;
+    --paper: #F2F4F6; --surface: #FFFFFF; --ink: #131A22;
+    --muted: #59636F; --faint: #8B96A2;
+    --rule: #DFE4E9; --accent: #0F6E78; --accent-dim: #E2EFF0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1317; --surface: #171D23; --ink: #E7EBEF;
+      --muted: #97A3AF; --faint: #6D7986;
+      --rule: #28313A; --accent: #52BEC8; --accent-dim: #10333A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1317; --surface: #171D23; --ink: #E7EBEF;
+    --muted: #97A3AF; --faint: #6D7986;
+    --rule: #28313A; --accent: #52BEC8; --accent-dim: #10333A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #F2F4F6; background: var(--paper, #F2F4F6);
+    color: #131A22; color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 40px 20px 56px; }
+
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 4px;
+  }
+  .masthead p {
+    margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 최신호는 목록의 한 줄이 아니라 들어가는 문이다. */
+  .latest {
+    display: block; margin: 22px 0 30px; padding: 18px 20px;
+    background: var(--accent-dim); border-radius: 6px;
+    text-decoration: none; color: inherit;
+  }
+  .latest .eyebrow {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 4px;
+  }
+  .latest .date {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 20px; font-weight: 600;
+  }
+  .latest:hover .date { text-decoration: underline; text-underline-offset: 3px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--faint); margin-bottom: 10px;
+  }
+
+  /* 날짜만 있는 목록이라 카드로 감싸지 않는다. 규칙선 하나면 충분하다. */
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { border-top: 1px solid var(--rule); }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+  li a {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 14px; padding: 11px 4px; text-decoration: none; color: var(--ink);
+  }
+  li a:hover { color: var(--accent); }
+  li .d {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 14px; font-variant-numeric: tabular-nums;
+  }
+  li .weekday { font-size: 12.5px; color: var(--faint); }
+
+  .colophon {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon code {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 520px) { .wrap { padding: 28px 16px 40px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>📚 DS Digest 아카이브</h1>
-  <p class="sub">총 141개 다이제스트</p>
-  <ul><li><a href="2026-09-03.html">📄 2026-09-03</a></li>
-<li><a href="2026-09-02.html">📄 2026-09-02</a></li>
-<li><a href="2026-09-01.html">📄 2026-09-01</a></li>
-<li><a href="2026-08-31.html">📄 2026-08-31</a></li>
-<li><a href="2026-08-30.html">📄 2026-08-30</a></li>
-<li><a href="2026-08-29.html">📄 2026-08-29</a></li>
-<li><a href="2026-08-28.html">📄 2026-08-28</a></li>
-<li><a href="2026-08-27.html">📄 2026-08-27</a></li>
-<li><a href="2026-08-25.html">📄 2026-08-25</a></li>
-<li><a href="2026-08-24.html">📄 2026-08-24</a></li>
-<li><a href="2026-08-23.html">📄 2026-08-23</a></li>
-<li><a href="2026-08-22.html">📄 2026-08-22</a></li>
-<li><a href="2026-08-21.html">📄 2026-08-21</a></li>
-<li><a href="2026-08-20.html">📄 2026-08-20</a></li>
-<li><a href="2026-08-19.html">📄 2026-08-19</a></li>
-<li><a href="2026-08-18.html">📄 2026-08-18</a></li>
-<li><a href="2026-08-17.html">📄 2026-08-17</a></li>
-<li><a href="2026-08-16.html">📄 2026-08-16</a></li>
-<li><a href="2026-08-15.html">📄 2026-08-15</a></li>
-<li><a href="2026-08-14.html">📄 2026-08-14</a></li>
-<li><a href="2026-08-13.html">📄 2026-08-13</a></li>
-<li><a href="2026-08-12.html">📄 2026-08-12</a></li>
-<li><a href="2026-08-11.html">📄 2026-08-11</a></li>
-<li><a href="2026-08-10.html">📄 2026-08-10</a></li>
-<li><a href="2026-08-09.html">📄 2026-08-09</a></li>
-<li><a href="2026-08-08.html">📄 2026-08-08</a></li>
-<li><a href="2026-08-07.html">📄 2026-08-07</a></li>
-<li><a href="2026-08-05.html">📄 2026-08-05</a></li>
-<li><a href="2026-08-04.html">📄 2026-08-04</a></li>
-<li><a href="2026-08-03.html">📄 2026-08-03</a></li>
-<li><a href="2026-08-02.html">📄 2026-08-02</a></li>
-<li><a href="2026-08-01.html">📄 2026-08-01</a></li>
-<li><a href="2026-07-31.html">📄 2026-07-31</a></li>
-<li><a href="2026-07-30.html">📄 2026-07-30</a></li>
-<li><a href="2026-07-29.html">📄 2026-07-29</a></li>
-<li><a href="2026-07-28.html">📄 2026-07-28</a></li>
-<li><a href="2026-07-27.html">📄 2026-07-27</a></li>
-<li><a href="2026-07-26.html">📄 2026-07-26</a></li>
-<li><a href="2026-07-25.html">📄 2026-07-25</a></li>
-<li><a href="2026-07-24.html">📄 2026-07-24</a></li>
-<li><a href="2026-07-23.html">📄 2026-07-23</a></li>
-<li><a href="2026-07-22.html">📄 2026-07-22</a></li>
-<li><a href="2026-07-21.html">📄 2026-07-21</a></li>
-<li><a href="2026-07-16.html">📄 2026-07-16</a></li>
-<li><a href="2026-07-15.html">📄 2026-07-15</a></li>
-<li><a href="2026-07-14.html">📄 2026-07-14</a></li>
-<li><a href="2026-07-13.html">📄 2026-07-13</a></li>
-<li><a href="2026-07-12.html">📄 2026-07-12</a></li>
-<li><a href="2026-07-11.html">📄 2026-07-11</a></li>
-<li><a href="2026-07-10.html">📄 2026-07-10</a></li>
-<li><a href="2026-07-09.html">📄 2026-07-09</a></li>
-<li><a href="2026-07-08.html">📄 2026-07-08</a></li>
-<li><a href="2026-07-07.html">📄 2026-07-07</a></li>
-<li><a href="2026-07-06.html">📄 2026-07-06</a></li>
-<li><a href="2026-07-05.html">📄 2026-07-05</a></li>
-<li><a href="2026-07-04.html">📄 2026-07-04</a></li>
-<li><a href="2026-07-02.html">📄 2026-07-02</a></li>
-<li><a href="2026-07-01.html">📄 2026-07-01</a></li>
-<li><a href="2026-06-30.html">📄 2026-06-30</a></li>
-<li><a href="2026-06-29.html">📄 2026-06-29</a></li>
-<li><a href="2026-06-28.html">📄 2026-06-28</a></li>
-<li><a href="2026-06-27.html">📄 2026-06-27</a></li>
-<li><a href="2026-06-26.html">📄 2026-06-26</a></li>
-<li><a href="2026-06-25.html">📄 2026-06-25</a></li>
-<li><a href="2026-06-24.html">📄 2026-06-24</a></li>
-<li><a href="2026-06-23.html">📄 2026-06-23</a></li>
-<li><a href="2026-06-22.html">📄 2026-06-22</a></li>
-<li><a href="2026-06-21.html">📄 2026-06-21</a></li>
-<li><a href="2026-06-20.html">📄 2026-06-20</a></li>
-<li><a href="2026-06-19.html">📄 2026-06-19</a></li>
-<li><a href="2026-06-18.html">📄 2026-06-18</a></li>
-<li><a href="2026-06-17.html">📄 2026-06-17</a></li>
-<li><a href="2026-06-16.html">📄 2026-06-16</a></li>
-<li><a href="2026-06-15.html">📄 2026-06-15</a></li>
-<li><a href="2026-06-14.html">📄 2026-06-14</a></li>
-<li><a href="2026-06-13.html">📄 2026-06-13</a></li>
-<li><a href="2026-06-12.html">📄 2026-06-12</a></li>
-<li><a href="2026-06-11.html">📄 2026-06-11</a></li>
-<li><a href="2026-06-10.html">📄 2026-06-10</a></li>
-<li><a href="2026-06-09.html">📄 2026-06-09</a></li>
-<li><a href="2026-06-08.html">📄 2026-06-08</a></li>
-<li><a href="2026-06-07.html">📄 2026-06-07</a></li>
-<li><a href="2026-06-06.html">📄 2026-06-06</a></li>
-<li><a href="2026-06-05.html">📄 2026-06-05</a></li>
-<li><a href="2026-06-04.html">📄 2026-06-04</a></li>
-<li><a href="2026-06-03.html">📄 2026-06-03</a></li>
-<li><a href="2026-06-01.html">📄 2026-06-01</a></li>
-<li><a href="2026-05-31.html">📄 2026-05-31</a></li>
-<li><a href="2026-05-30.html">📄 2026-05-30</a></li>
-<li><a href="2026-05-29.html">📄 2026-05-29</a></li>
-<li><a href="2026-05-28.html">📄 2026-05-28</a></li>
-<li><a href="2026-05-27.html">📄 2026-05-27</a></li>
-<li><a href="2026-05-26.html">📄 2026-05-26</a></li>
-<li><a href="2026-05-25.html">📄 2026-05-25</a></li>
-<li><a href="2026-05-24.html">📄 2026-05-24</a></li>
-<li><a href="2026-05-22.html">📄 2026-05-22</a></li>
-<li><a href="2026-05-21.html">📄 2026-05-21</a></li>
-<li><a href="2026-05-19.html">📄 2026-05-19</a></li>
-<li><a href="2026-05-17.html">📄 2026-05-17</a></li>
-<li><a href="2026-05-16.html">📄 2026-05-16</a></li>
-<li><a href="2026-05-15.html">📄 2026-05-15</a></li>
-<li><a href="2026-05-14.html">📄 2026-05-14</a></li>
-<li><a href="2026-05-13.html">📄 2026-05-13</a></li>
-<li><a href="2026-05-12.html">📄 2026-05-12</a></li>
-<li><a href="2026-05-11.html">📄 2026-05-11</a></li>
-<li><a href="2026-05-10.html">📄 2026-05-10</a></li>
-<li><a href="2026-05-09.html">📄 2026-05-09</a></li>
-<li><a href="2026-05-08.html">📄 2026-05-08</a></li>
-<li><a href="2026-05-07.html">📄 2026-05-07</a></li>
-<li><a href="2026-05-06.html">📄 2026-05-06</a></li>
-<li><a href="2026-05-05.html">📄 2026-05-05</a></li>
-<li><a href="2026-05-04.html">📄 2026-05-04</a></li>
-<li><a href="2026-05-03.html">📄 2026-05-03</a></li>
-<li><a href="2026-05-02.html">📄 2026-05-02</a></li>
-<li><a href="2026-05-01.html">📄 2026-05-01</a></li>
-<li><a href="2026-04-30.html">📄 2026-04-30</a></li>
-<li><a href="2026-04-29.html">📄 2026-04-29</a></li>
-<li><a href="2026-04-27.html">📄 2026-04-27</a></li>
-<li><a href="2026-04-26.html">📄 2026-04-26</a></li>
-<li><a href="2026-04-24.html">📄 2026-04-24</a></li>
-<li><a href="2026-04-23.html">📄 2026-04-23</a></li>
-<li><a href="2026-04-22.html">📄 2026-04-22</a></li>
-<li><a href="2026-04-18.html">📄 2026-04-18</a></li>
-<li><a href="2026-04-16.html">📄 2026-04-16</a></li>
-<li><a href="2026-04-15.html">📄 2026-04-15</a></li>
-<li><a href="2026-04-14.html">📄 2026-04-14</a></li>
-<li><a href="2026-04-13.html">📄 2026-04-13</a></li>
-<li><a href="2026-04-12.html">📄 2026-04-12</a></li>
-<li><a href="2026-04-11.html">📄 2026-04-11</a></li>
-<li><a href="2026-04-10.html">📄 2026-04-10</a></li>
-<li><a href="2026-04-09.html">📄 2026-04-09</a></li>
-<li><a href="2026-04-08.html">📄 2026-04-08</a></li>
-<li><a href="2026-04-07.html">📄 2026-04-07</a></li>
-<li><a href="2026-04-06.html">📄 2026-04-06</a></li>
-<li><a href="2026-04-05.html">📄 2026-04-05</a></li>
-<li><a href="2026-04-04.html">📄 2026-04-04</a></li>
-<li><a href="2026-04-03.html">📄 2026-04-03</a></li>
-<li><a href="2026-04-02.html">📄 2026-04-02</a></li>
-<li><a href="2026-04-01.html">📄 2026-04-01</a></li>
-<li><a href="2026-03-31.html">📄 2026-03-31</a></li>
-<li><a href="2026-03-30.html">📄 2026-03-30</a></li></ul>
+
+  <header class="masthead">
+    <h1>DS Digest 아카이브</h1>
+    <p>142호 · 2026-03-30 ~ 2026-09-04 · <a href="tracker.html">릴리스 Tracker</a></p>
+  </header>
+
+  <a class="latest" href="2026-09-04.html">
+    <div class="eyebrow">최신호</div>
+    <div class="date">2026-09-04</div>
+  </a>
+
+  <div class="section-label">지난 호</div>
+  <ul>
+    
+    <li><a href="2026-09-03.html"><span class="d">2026-09-03</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-09-02.html"><span class="d">2026-09-02</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-09-01.html"><span class="d">2026-09-01</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-08-31.html"><span class="d">2026-08-31</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-08-30.html"><span class="d">2026-08-30</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-08-29.html"><span class="d">2026-08-29</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-08-28.html"><span class="d">2026-08-28</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-08-27.html"><span class="d">2026-08-27</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-08-25.html"><span class="d">2026-08-25</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-08-24.html"><span class="d">2026-08-24</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-08-23.html"><span class="d">2026-08-23</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-08-22.html"><span class="d">2026-08-22</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-08-21.html"><span class="d">2026-08-21</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-08-20.html"><span class="d">2026-08-20</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-08-19.html"><span class="d">2026-08-19</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-08-18.html"><span class="d">2026-08-18</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-08-17.html"><span class="d">2026-08-17</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-08-16.html"><span class="d">2026-08-16</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-08-15.html"><span class="d">2026-08-15</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-08-14.html"><span class="d">2026-08-14</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-08-13.html"><span class="d">2026-08-13</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-08-12.html"><span class="d">2026-08-12</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-08-11.html"><span class="d">2026-08-11</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-08-10.html"><span class="d">2026-08-10</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-08-09.html"><span class="d">2026-08-09</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-08-08.html"><span class="d">2026-08-08</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-08-07.html"><span class="d">2026-08-07</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-08-05.html"><span class="d">2026-08-05</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-08-04.html"><span class="d">2026-08-04</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-08-03.html"><span class="d">2026-08-03</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-08-02.html"><span class="d">2026-08-02</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-08-01.html"><span class="d">2026-08-01</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-07-31.html"><span class="d">2026-07-31</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-07-30.html"><span class="d">2026-07-30</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-07-29.html"><span class="d">2026-07-29</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-07-28.html"><span class="d">2026-07-28</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-07-27.html"><span class="d">2026-07-27</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-07-26.html"><span class="d">2026-07-26</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-07-25.html"><span class="d">2026-07-25</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-07-24.html"><span class="d">2026-07-24</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-07-23.html"><span class="d">2026-07-23</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-07-22.html"><span class="d">2026-07-22</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-07-21.html"><span class="d">2026-07-21</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-07-16.html"><span class="d">2026-07-16</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-07-15.html"><span class="d">2026-07-15</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-07-14.html"><span class="d">2026-07-14</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-07-13.html"><span class="d">2026-07-13</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-07-12.html"><span class="d">2026-07-12</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-07-11.html"><span class="d">2026-07-11</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-07-10.html"><span class="d">2026-07-10</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-07-09.html"><span class="d">2026-07-09</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-07-08.html"><span class="d">2026-07-08</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-07-07.html"><span class="d">2026-07-07</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-07-06.html"><span class="d">2026-07-06</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-07-05.html"><span class="d">2026-07-05</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-07-04.html"><span class="d">2026-07-04</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-07-02.html"><span class="d">2026-07-02</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-07-01.html"><span class="d">2026-07-01</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-06-30.html"><span class="d">2026-06-30</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-06-29.html"><span class="d">2026-06-29</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-06-28.html"><span class="d">2026-06-28</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-06-27.html"><span class="d">2026-06-27</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-06-26.html"><span class="d">2026-06-26</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-06-25.html"><span class="d">2026-06-25</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-06-24.html"><span class="d">2026-06-24</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-06-23.html"><span class="d">2026-06-23</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-06-22.html"><span class="d">2026-06-22</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-06-21.html"><span class="d">2026-06-21</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-06-20.html"><span class="d">2026-06-20</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-06-19.html"><span class="d">2026-06-19</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-06-18.html"><span class="d">2026-06-18</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-06-17.html"><span class="d">2026-06-17</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-06-16.html"><span class="d">2026-06-16</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-06-15.html"><span class="d">2026-06-15</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-06-14.html"><span class="d">2026-06-14</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-06-13.html"><span class="d">2026-06-13</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-06-12.html"><span class="d">2026-06-12</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-06-11.html"><span class="d">2026-06-11</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-06-10.html"><span class="d">2026-06-10</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-06-09.html"><span class="d">2026-06-09</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-06-08.html"><span class="d">2026-06-08</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-06-07.html"><span class="d">2026-06-07</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-06-06.html"><span class="d">2026-06-06</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-06-05.html"><span class="d">2026-06-05</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-06-04.html"><span class="d">2026-06-04</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-06-03.html"><span class="d">2026-06-03</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-06-01.html"><span class="d">2026-06-01</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-05-31.html"><span class="d">2026-05-31</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-05-30.html"><span class="d">2026-05-30</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-05-29.html"><span class="d">2026-05-29</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-05-28.html"><span class="d">2026-05-28</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-05-27.html"><span class="d">2026-05-27</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-05-26.html"><span class="d">2026-05-26</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-05-25.html"><span class="d">2026-05-25</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-05-24.html"><span class="d">2026-05-24</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-05-22.html"><span class="d">2026-05-22</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-05-21.html"><span class="d">2026-05-21</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-05-19.html"><span class="d">2026-05-19</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-05-17.html"><span class="d">2026-05-17</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-05-16.html"><span class="d">2026-05-16</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-05-15.html"><span class="d">2026-05-15</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-05-14.html"><span class="d">2026-05-14</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-05-13.html"><span class="d">2026-05-13</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-05-12.html"><span class="d">2026-05-12</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-05-11.html"><span class="d">2026-05-11</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-05-10.html"><span class="d">2026-05-10</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-05-09.html"><span class="d">2026-05-09</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-05-08.html"><span class="d">2026-05-08</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-05-07.html"><span class="d">2026-05-07</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-05-06.html"><span class="d">2026-05-06</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-05-05.html"><span class="d">2026-05-05</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-05-04.html"><span class="d">2026-05-04</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-05-03.html"><span class="d">2026-05-03</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-05-02.html"><span class="d">2026-05-02</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-05-01.html"><span class="d">2026-05-01</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-04-30.html"><span class="d">2026-04-30</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-04-29.html"><span class="d">2026-04-29</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-04-27.html"><span class="d">2026-04-27</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-04-26.html"><span class="d">2026-04-26</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-04-24.html"><span class="d">2026-04-24</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-04-23.html"><span class="d">2026-04-23</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-04-22.html"><span class="d">2026-04-22</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-04-18.html"><span class="d">2026-04-18</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-04-16.html"><span class="d">2026-04-16</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-04-15.html"><span class="d">2026-04-15</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-04-14.html"><span class="d">2026-04-14</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-04-13.html"><span class="d">2026-04-13</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-04-12.html"><span class="d">2026-04-12</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-04-11.html"><span class="d">2026-04-11</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-04-10.html"><span class="d">2026-04-10</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-04-09.html"><span class="d">2026-04-09</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-04-08.html"><span class="d">2026-04-08</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-04-07.html"><span class="d">2026-04-07</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-04-06.html"><span class="d">2026-04-06</span><span class="weekday">월</span></a></li>
+    
+    <li><a href="2026-04-05.html"><span class="d">2026-04-05</span><span class="weekday">일</span></a></li>
+    
+    <li><a href="2026-04-04.html"><span class="d">2026-04-04</span><span class="weekday">토</span></a></li>
+    
+    <li><a href="2026-04-03.html"><span class="d">2026-04-03</span><span class="weekday">금</span></a></li>
+    
+    <li><a href="2026-04-02.html"><span class="d">2026-04-02</span><span class="weekday">목</span></a></li>
+    
+    <li><a href="2026-04-01.html"><span class="d">2026-04-01</span><span class="weekday">수</span></a></li>
+    
+    <li><a href="2026-03-31.html"><span class="d">2026-03-31</span><span class="weekday">화</span></a></li>
+    
+    <li><a href="2026-03-30.html"><span class="d">2026-03-30</span><span class="weekday">월</span></a></li>
+    
+  </ul>
+
+  <footer class="colophon">
+    매일 아침 7시 10분에 발행됩니다.
+    기계가 읽을 형식은 <code>latest.json</code> · <code>{날짜}.json</code> ·
+    <code>index.json</code> 으로 같은 경로에 있습니다.
+  </footer>
+
 </div>
 </body>
 </html>

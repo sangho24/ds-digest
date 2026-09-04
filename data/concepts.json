@@ -14,15 +14,21 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-03"
+      "last_seen": "2026-09-04"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-03"
+      "last_seen": "2026-09-04"
+    },
+    "AI 안전 및 비밀 과제 회피": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
@@ -35,6 +41,12 @@
       "count": 4,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-03"
+    },
+    "LLM 기반 코드 변환": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
     },
     "QR 기반 구매 흐름": {
       "aliases": [],
@@ -72,6 +84,12 @@
       "first_seen": "2026-08-31",
       "last_seen": "2026-09-02"
     },
+    "레거시 어셈블리 현대화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
+    },
     "멀티모달 표현 학습": {
       "aliases": [],
       "count": 1,
@@ -108,11 +126,23 @@
       "first_seen": "2026-09-03",
       "last_seen": "2026-09-03"
     },
+    "바이너리 일치 검증": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
+    },
     "병렬 처리": {
       "aliases": [],
       "count": 4,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-03"
+    },
+    "생물학 문제에 대한 AI 성능": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
     },
     "서브위블 분포": {
       "aliases": [],
@@ -180,6 +210,12 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-02"
     },
+    "전문가 격차 감소": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
+    },
     "점별 복잡도 측정": {
       "aliases": [],
       "count": 1,
@@ -200,9 +236,9 @@
     },
     "조건부 확률 모델링": {
       "aliases": [],
-      "count": 1,
+      "count": 3,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-02"
+      "last_seen": "2026-09-04"
     },
     "지식 증류": {
       "aliases": [],
@@ -242,15 +278,21 @@
     },
     "해석 가능성을 통한 모델 제어": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-03",
-      "last_seen": "2026-09-03"
+      "last_seen": "2026-09-04"
     },
     "확률 과정 체인 기법": {
       "aliases": [],
       "count": 1,
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
+    },
+    "확률 분포 변환": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-04",
+      "last_seen": "2026-09-04"
     },
     "훈련 프리 모델": {
       "aliases": [],
@@ -259,6 +301,6 @@
       "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-03T13:19:59.167168+09:00",
+  "updated_at": "2026-09-04T09:13:39.077396+09:00",
   "version": 1
 }

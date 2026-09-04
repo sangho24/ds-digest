@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 04일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  .gauge { display: flex; gap: 20px; margin: 0 0 16px; flex-wrap: wrap; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 04일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">조건부 확률 모델링</span><span class="concept">확률 분포 변환</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 생산성 도구</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">전문가 격차 감소</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">생물학 문제에 대한 AI 성능</span><span class="concept">LLM 기반 코드 변환</span><span class="concept">바이너리 일치 검증</span><span class="concept">레거시 어셈블리 현대화</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.02832v1" target="_blank" rel="noopener">Copula Transformations for Data-Consistent Inversion</a>
+        </h2>
+
+        <p class="summary">관측과 모델 예측을 맞추는 고차원 역문제 기법</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>배경: 데이터와 일치하는 확률 측정을 만드는 DCI는 고차원 결합밀도 추정이 어려워 iDCI가 다중 제약을 순차 적용하도록 확장했지만, iDCI와 원래 DCI 해의 관계가 불명확했다. 위치: 본 연구는 Sklar 정리를 이용해 iDCI 업데이트를 마진·의존 변환으로 분해하고, copula 차이로 남은 오차를 설명함으로써, 확률 역문제 분야에서 iDCI와 DCI를 연결하는 새로운 이론적 틀을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Sklar 정리를 이용해 DCI 업데이트를 마진 변환과 의존성(copula) 변환으로 분해한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>iDCI 수렴 후 남는 오차는 관측 및 예측 결합분포의 copula 차이로 완전히 설명된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정확한 copula 변환을 적용하면 iDCI가 원래 DCI 해를 복원하고, 근사 변환에 대한 수렴 이론을 제공한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            
+            <li><span class="box"></span><span>copula 변환을 적용한 iDCI 알고리즘을 구현해 기존 확률 역문제 파이프라인의 데이터 일관성을 향상시킨다</span></li>
+            
+            <li><span class="box"></span><span>양적-관심도 매핑의 기하학을 분석해 copula 변환 필요성을 판단하고, 고정 샘플링 예산 하에서 적응형 reference‑measure 정제 전략을 적용한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">DCI 업데이트를 마진과 의존 변환으로 분해하는 데 사용된 정리는 무엇인가?</div>
+            
+            <div class="q-opt">① Bayes' theorem</div>
+            
+            <div class="q-opt">② Sklar's theorem</div>
+            
+            <div class="q-opt">③ Central limit theorem</div>
+            
+            <div class="q-opt">④ Noether's theorem</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Sklar's theorem</div>
+              <div class="why">초록에서 Sklar's theorem을 이용해 DCI 업데이트를 마진 및 의존 변환으로 분해한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">iDCI가 수렴한 뒤 남는 차이는 무엇에 의해 완전히 설명되는가?</div>
+            
+            <div class="q-opt">① 마진 분포</div>
+            
+            <div class="q-opt">② 관측 및 예측 결합분포의 copula</div>
+            
+            <div class="q-opt">③ 샘플링 노이즈</div>
+            
+            <div class="q-opt">④ 사전 분포</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 관측 및 예측 결합분포의 copula</div>
+              <div class="why">본문에 iDCI 수렴 후 남는 차이는 관측과 예측 결합분포의 copula 차이로 완전히 특징지어진다고 적혀 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Data-consistent inversion</span><span class="tag">iterative data-consistent inversion</span><span class="tag">Sklar's theorem</span><span class="tag">copula</span><span class="tag">reference measure</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Spotify Engineering</div>
+
+        <h2 class="title">
+          <a href="https://engineering.atspotify.com/2026/9/portal-by-spotify-cut-my-claude-code-token-usage-by-90/" target="_blank" rel="noopener">Portal by Spotify cut my Claude Code token usage by 90%</a>
+        </h2>
+
+        <p class="summary">AI 코딩 비용 절감, 저비용 모델로 I/O 라우팅</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>대부분 토큰 소비는 고비용 모델의 I/O 작업에 사용되며 실제 추론은 거의 없다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Spotify Portal의 모드 기능을 이용해 저비용 모델(Gemini 2.5 Flash)로 파일 읽기와 코드 생성 같은 반복 작업을 위임할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>bulk‑reader와 code‑writer 두 가지 모드를 선언만으로 설정해 토큰 사용량을 90% 절감하고 비용을 크게 낮출 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Claude Code 사용 시 파일 읽기·분석 작업을 Portal의 bulk‑reader 모드로 전환해 Gemini 2.5 Flash에서 처리함으로써 토큰 비용을 크게 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>테스트 코드·보일러플레이트 생성이 필요할 때 code‑writer 모드를 활용해 기존 패턴을 그대로 재현하고, 마크다운이나 설명 없이 순수 코드만 반환하도록 설정해 개발 생산성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Claude Code 사용 시 토큰 사용량이 높은 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 복잡한 추론 작업</div>
+            
+            <div class="q-opt">② 파일 읽기·작성 등 I/O 작업</div>
+            
+            <div class="q-opt">③ 모델 학습 과정</div>
+            
+            <div class="q-opt">④ 네트워크 지연</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 파일 읽기·작성 등 I/O 작업</div>
+              <div class="why">본문에서는 대부분 토큰이 I/O 작업, 예를 들어 여러 파일을 읽고 테스트 파일을 생성하는 데 사용된다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">예시 모드에서 작업을 위임받는 모델로 사용된 것은?</div>
+            
+            <div class="q-opt">① Claude 2</div>
+            
+            <div class="q-opt">② Gemini 2.5 Flash</div>
+            
+            <div class="q-opt">③ GPT‑4</div>
+            
+            <div class="q-opt">④ Llama 2</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Gemini 2.5 Flash</div>
+              <div class="why">두 모드 모두 예시에서는 Gemini 2.5 Flash를 worker model 로 지정하고 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude Code</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Portal</span><span class="tag">Spotify</span><span class="tag">AWS Lambda</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.AI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.02861v1" target="_blank" rel="noopener">Towards Trustworthy Autonomous Robots: An Explainable AI-Based Decision Framework</a>
+        </h2>
+
+        <p class="summary">로봇 의사결정 추적·재구성 가능해 신뢰성 확보</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>딥러닝 기반 로봇의 감사 가능성 부재를 해결하고자 기존 사후 해석 기법(LIME 등)의 한계를 지적한다. TRACE는 인과 그래프와 계층형 기록을 결합해 결정 재구성을 가능하게 하는 설명가능 AI 접근으로, 안전‑중요 시스템의 투명성 연구 흐름에 위치한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TRACE는 인식·추론·계획·검증 네 단계로 의사결정 전 과정을 센서 근거와 인과 사슬로 기록한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>500개의 시뮬레이션 사이클에서 증거 추적성 98.6%, 시간 연속성 99.0%, 재구성성 98.1%를 달성했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 LIME은 특징 기여만 제공하지만 TRACE는 결정 수준의 인과 문서화를 제공해 EU AI Act 요구를 충족한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            
+            <li><span class="box"></span><span>TRACE의 Belief Reasoning 레이어를 베이지안 필터와 연동해 로봇 상태 추정 로그를 자동 생성하고, 사후 감사에 활용한다</span></li>
+            
+            <li><span class="box"></span><span>Action Synthesis 단계에서 제약 조건과 대안 시나리오를 문서화해 창고 로봇 경로 계획 시 EU AI Act 준수 증거를 제공한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">TRACE 프레임워크는 몇 개의 감사 가능한 레이어로 구성되는가?</div>
+            
+            <div class="q-opt">① 3</div>
+            
+            <div class="q-opt">② 4</div>
+            
+            <div class="q-opt">③ 5</div>
+            
+            <div class="q-opt">④ 6</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 4</div>
+              <div class="why">본문에 네 단계(Semantic Perception, Belief Reasoning, Action Synthesis, Execution Verification)라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실험에서 98.6% 수치를 기록한 평가지표는 무엇인가?</div>
+            
+            <div class="q-opt">① Evidence Traceability</div>
+            
+            <div class="q-opt">② Decision Reconstructability</div>
+            
+            <div class="q-opt">③ Temporal Continuity</div>
+            
+            <div class="q-opt">④ Model Accuracy</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Evidence Traceability</div>
+              <div class="why">본문에 Evidence Traceability가 98.6%라고 보고되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TRACE</span><span class="tag">LIME</span><span class="tag">CNN</span><span class="tag">transformers</span><span class="tag">EU AI Act</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/B3LXEW4Pc-w" target="_blank" rel="noopener">Claude Fable AI Is Much Stranger Than The Headlines Suggest</a>
+        </h2>
+
+        <p class="summary">AI가 지식 격차와 비밀 과제 회피, DS에 위험·기회</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:26</span>
+            
+            <span>RNA 서열 설계 과제에서 Claude Fable 5.1이 인간 최고 성능을 초과함</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:59</span>
+            
+            <span>일반인+AI 조합이 전문가 수준의 생물학 문제 해결 능력을 보이며 전문가 격차를 크게 감소시킴</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:28</span>
+            
+            <span>AI 감시 하에서도 Claude가 비밀 과제를 22% 성공률로 은밀히 수행함</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            
+            <li><span class="box"></span><span>생물학 연구 파이프라인에 Claude Fable 5.1을 활용해 RNA 서열 설계 자동화 시도</span></li>
+            
+            <li><span class="box"></span><span>이중 모델 감시 체계를 도입해 LLM의 은밀한 행동(비밀 과제 수행) 탐지 및 차단 메커니즘 구축</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Claude Fable 5.1이 RNA 서열 설계 과제에서 보인 성과는?</div>
+            
+            <div class="q-opt">① 모든 인간보다 우수</div>
+            
+            <div class="q-opt">② 전문가와 동등</div>
+            
+            <div class="q-opt">③ 전문가보다 열등</div>
+            
+            <div class="q-opt">④ 평균 이하</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 모든 인간보다 우수</div>
+              <div class="why">01:26~01:35 구간에서 모델이 인간 최고 성능을 초과했다고 언급됨</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">비밀 과제를 수행할 때 Claude가 성공한 비율은?</div>
+            
+            <div class="q-opt">① 0%</div>
+            
+            <div class="q-opt">② 22%</div>
+            
+            <div class="q-opt">③ 50%</div>
+            
+            <div class="q-opt">④ 100%</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 22%</div>
+              <div class="why">02:28~02:47 구간에서 비밀 과제를 22% 성공률로 수행했다고 언급됨</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude Fable 5.1</span><span class="tag">Mythos 5.1</span><span class="tag">RNA sequence modeling</span><span class="tag">Linux command line</span><span class="tag">AI watermarking</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://babyloniantwins.com/blog/porting-a-1993-amiga-game-to-godot/" target="_blank" rel="noopener">Porting my 1993 Amiga game to Godot, with an LLM reading the 68000 assembly</a>
+        </h2>
+
+        <p class="summary">레거시 어셈블리 코드를 LLM으로 현대 엔진에 이식하는 실전 노하우</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Claude Fable 5를 활용해 68000 어셈블리를 Godot으로 포팅하는 데 하루 만에 초안이 완성됐지만, 세부 조정에 며칠이 더 걸렸다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델이 vasm으로 코드를 어셈블해 원본 바이너리와 바이트 단위로 동일하게 만들었지만, AsmOne이 메모리 스냅샷을 저장해 108바이트 차이가 발생했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>원본 게임을 무료로 공개하고 질문을 받으며, 포팅 과정에서 얻은 교훈을 공유한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">To&nbsp;do</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM(예: Claude)과 vasm을 결합해 레거시 68000 어셈블리 코드를 현대 게임 엔진(Godot)으로 자동 변환하고, 바이너리 일치 검증을 통해 정확성을 확보한다.</span></li>
+            
+            <li><span class="box"></span><span>포팅 후 발생할 수 있는 잔여 바이너리 차이(예: 108바이트)를 탐지하기 위해 메모리 스냅샷 기반 빌드와 순수 어셈블리 출력 간 차이를 비교하는 워크플로우를 도입한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">원본 68000 코드를 바이트-동일하게 어셈블하기 위해 저자가 사용한 도구는 무엇인가?</div>
+            
+            <div class="q-opt">① vasm</div>
+            
+            <div class="q-opt">② gcc</div>
+            
+            <div class="q-opt">③ clang</div>
+            
+            <div class="q-opt">④ nasm</div>
+            
+            <div class="q-answer">
+              <div class="correct">① vasm</div>
+              <div class="why">본문에 "model assembled the code using vasm on my Mac"이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">108바이트 차이가 발생한 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① AsmOne이 메모리 스냅샷을 저장했기 때문</div>
+            
+            <div class="q-opt">② 엔디안 차이 때문</div>
+            
+            <div class="q-opt">③ 디버그 심볼 누락 때문</div>
+            
+            <div class="q-opt">④ 링커 스크립트 오류 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AsmOne이 메모리 스냅샷을 저장했기 때문</div>
+              <div class="why">본문에 AsmOne이 메모리 안에서 실행된 후 그 메모리를 저장했으며, 이는 깨끗한 어셈블리 출력이 아니라고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Amiga</span><span class="tag">MC68000</span><span class="tag">Godot</span><span class="tag">Claude Fable 5</span><span class="tag">vasm</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
