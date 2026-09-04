@@ -58,6 +58,19 @@ def test_no_email_unsafe_constructs(html):
     assert "<link" not in html.lower()
 
 
+def test_no_css_margin_and_no_zero_font_bars(html):
+    """Gmail 안드로이드는 margin 을 무시하고 font-size:0 셀을 최소 글자 크기로
+    키운다(실물 피드백 2026-09-04: 간격 붕괴·계기 막대 어긋남). 간격은 padding 과
+    spacer 행으로만, 계기는 글자(●○)로만 그린다."""
+    assert "margin" not in html
+    assert "font-size:0" not in html
+    assert "●" in html and "○" in html
+    # 구조적 구분은 실선 테두리로 한다(다크모드 반전에서도 남는다).
+    assert html.count("border:1px solid #C9D0D8") >= 5
+    # 반전 시 사라지는 아주 밝은 회색 글자는 쓰지 않는다.
+    assert "#8B96A2" not in html
+
+
 def test_table_layout_survives_without_style_block(items, html):
     """(c) 테이블 레이아웃이고, <style> 을 전부 제거해도 제목·요약 텍스트가 남는다."""
     assert "<table" in html
