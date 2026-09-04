@@ -8,7 +8,7 @@
 ## Architecture
 
 ```
-GitHub Actions (07:10 KST)
+GitHub Actions (04:37 KST 발화, 08:00 전 도착 목표)
         │
         ▼
   collect_all()
@@ -62,7 +62,7 @@ uvicorn app.main:app --reload
 | DB          | Supabase                   | seen_urls 중복 제거, 사용자 프로필   |
 | Email       | Resend                     | HTML 뉴스레터, 월 3,000통 무료      |
 | Messaging   | Telegram Bot               | 스포일러 퀴즈 + 피드백 버튼          |
-| Scheduler   | GitHub Actions (cron)      | 매일 07:10 KST 자동 실행           |
+| Scheduler   | GitHub Actions (cron)      | 매일 04:37 KST 발화 (GitHub 지연 100~180분 흡수, 08:00 전 도착) |
 | Archive     | GitHub Pages               | `docs/` 자동 push → 웹 공개        |
 
 ## Environment Variables
