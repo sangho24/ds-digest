@@ -1,0 +1,434 @@
+{
+  "date": "2026-09-06",
+  "generated_at": "2026-09-05T21:48:39.851106",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 영기의 내 AI가 멍청한 이유",
+        "url": "https://youtu.be/PCYFGXs-A8Y",
+        "published_at": "2026-09-04T12:00:02",
+        "transcript": "[00:00] 저는, 어, 내 AI가 멍청한 이유라는 어 주제로 발표하게 될 8기 백엔드 연기입니다.\n[00:10] 어, 여러분은 혹시 어 AI, AI에 대해서 얼마나 잘 알고 계신가요?\n[00:14] 뭐 텍스트 엔지니어링, 스킬스, 훅스, MCP, 서브 에이전트, 에이전트 팀, 하네스, 그리고 LLM 위키, 헤르메스. 그리고 또 내일 또 새롭게 생겨날 기술들이 아주 많습니다.\n[00:27] 어 과연 지금 시대에 AI를 잘 안다고 하는 사람이 몇이나 있을까요?\n[00:32] 근데 좀 뭔가 이상하지 않나요, 여러분?\n[00:35] 암만 AI 범위라고 하더라도 이렇게 빠르게 빠른 사이클로 새로운 개념이 생겨나는 게 말이 될까요?\n[00:42] 저의 이 질문은 자연스럽게 다음 질문으로 넘어갔습니다.\n[00:45] 이 개념들, 정말로 처음 보는 것들일까요?\n[00:49] 저는 이 질문에 이렇게 결론 내렸습니다.\n[00:52] 결국 이 모든 것이 지금까지 쌓아온 CS의 모방이라고요.\n[00:56] 그리고 이 사실을 알면 왜 나의 AI가 이렇게 멍청하고 말을 안 들어 먹는지 이해하기 쉬워집니다.\n[01:03] 어 저희 한번 LLM의 본질로 한번 넘어가 볼게요.\n[01:05] 전통 프로그램 같은 경우에는 상태가 있고 메모리에 변수가 삽니다.\n[01:09] 그리고 다음 호출이 결과를 알고 있죠.\n[01:12] 그에 비해서 LLM 같은 경우에는 상태가 없습니다. 컨텍스트가 들어가면 토큰으로 결과를 출력하죠.\n[01:19] 이게 전부입니다.\n[01:20] AI는 매 호출할 때마다 처음부터 계산을 합니다.\n[01:24] 내가 누군지, 우리 프로젝트가 어떻게 생겼는지 전혀 모릅니다.\n[01:28] 어제는 됐는데 오늘은 안 된다.\n[01:30] 이거는 AI한테는 없는 말이에요. 말이 안 되는 말입니다.\n[01:34] AI 입장에서 우리는 어제도 오늘도 그리고 내일도 항상 처음 만나는 사람이거든요.\n[01:41] 즉 AI가 멍청한 게 아니라 멍청한 거는 안 알려준 우리입니다.\n[01:45] 그렇다면 AI에게 어떻게 알려줘야 될까요?\n[01:48] AI 모델마다 어떻게 알려줘야 되는가, 메모리를 어떻게 써야 되는가는 다 다릅니다.\n[01:53] 하지만 클라우드를 예시를 들면서 어 컴퓨터의 기억 구조를 잠깐 짚어보도록 하겠습니다.\n[01:59] 램 여러분 잘 아시는 내용일 겁니다.\n[02:02] 랜덤 액세스 메모리이죠. 프로그램이 쓰는 작업 공간이고 휘발성을 가지고 있어서 빠르지만 전원이 꺼지면 바로 사라지게 됩니다.\n[02:10] 롬 Read-Only Memory. 펌웨어와 바이오스처럼 변경이 되지 않는 연구 저장소입니다.\n[02:16] 읽기만 가능합니다.\n[02:18] 이걸 AI에 빗대어보자면 롬은 훈련 가중치입니다.\n[02:22] 클로드한테 자바가 뭐고 파이썬이 뭐고 대한민국이 뭐고 우테코가 뭐고 이것을 아는 이유입니다.\n[02:29] 학습을 통해 만들어진 거고 인퍼런스 즉, 우리와 대화하는 동안에는 이것은 절대 변하지 않습니다.\n[02:35] 그에 비해서 램은 컨텍스트 창입니다.\n[02:38] 사용자의 개입이 가능하고 아까 실행한 명령어 전부 여기에 들어 있습니다.\n[02:43] 하지만 세션이 끝나면 이 모두 다 사라지게 됩니다.\n[02:47] 핵심은 이겁니다. 어 롬은 저희가 아까 전에 사전 학습된 정보라고 했죠.\n[02:52] 롬은 절대로 바뀌지 않습니다. 파인튜닝 한 것이 아니고서야 바꿀 수가 없습니다.\n[02:56] 우리가 개입할 수 있는 건 오직 램, 즉 컨텍스트 창 뿐입니다.\n[03:01] 클로드 코드는 CLAUDE.md든 스킬스든 그리고 훅스든 전부 이 램을 어떻게 쓸 것인가의 이야기입니다.\n[03:08] 그렇다면 이 램 어떻게 하면 잘 쓸 수 있을까요?\n[03:11] AI의 기억을 채워나아가다 보면은, 채워나아가다 보면은 부딪히는 문제점들이 있을 겁니다.\n[03:17] 이것을 따라가다 보면은 감이 슬슬 오실 텐데요.\n[03:20] 어 첫 번째 문제점은 아까 전에 제가 말한 AI는 우리의 프로젝트가 뭔지 알지 못합니다.\n[03:26] 자바 20일을 쓴다고 J 유닛 테스트를 쓸 거라고 스프링 부트를 쓸 거라고 저희는 아무런 정보를 주지 않았기 때문에 알 수가 없습니다.\n[03:34] 그것을 위해서 만들어진 게 CLAUDE.md인데요.\n[03:37] 어 클로드 세션이 시작되면 자동으로 이 CLAUDE.md는 클로드가 읽게 됩니다.\n[03:42] 즉 한 번만 써주면은 두 번 다시 설명을 하지 않아도 괜찮습니다.\n[03:47] 왜 이렇게 동작하는지 이해하려면 .bashrc를 생각하시면 좀 이해가 편해질 겁니다.\n[03:53] .bashrc는 보통 뭐가 들어있죠?\n[03:55] 얼라이어스 같은 단축 명령어.\n[03:57] 그리고 환경 변수, 툴 초기화 코드 이런 것들이 들어 있습니다.\n[04:01] 이런 것들은 터미널을 열 때마다 항상 자동으로 실행되면서 자동으로 환경을 조성해줍니다.\n[04:08] CLAUDE.md가 딱 그런 역할을 하고 있습니다.\n[04:11] 어 클로드는 세션이 시작될 때 자동으로 로드가 되면서 우리의 환경 세팅을 도와줍니다.\n[04:17] 우리 팀은 자바 17을 쓸 거야. 커밋 메시지는 컨벤셔널 커밋스 형식으로 작성을 할 거야. 테스트는 JUnit 5를 사용할 거야.\n[04:25] 이런 정보를 써놓으면은 클로드가 자동으로 이것을 인지하게 된다는 거죠.\n[04:30] 근데 한 가지 주의해야 될 점이 있습니다.\n[04:32] 클로드가 너무 길어져서 안 됩니다.\n[04:34] 우리가 사람한테 말할 때도 너무 말이 길어지면 이해가 하나도 안 되고 기억도 안 나죠.\n[04:39] 근데 .bashrc는 어 실행되는 파일이지만 CLAUDE.md와 중요한 차이점이 있습니다.\n[04:45] 클로드는 아까 전에 제가 컨텍스트 기반으로 작동한다 했잖아요.\n[04:49] 그저 이런 CLAUDE.md 파일에 뭘 막 써놔도 그저 텍스트로 읽힐 뿐입니다.\n[04:55] 이 차이점이 중요하게 작용하게 됩니다.\n[04:58] 그래서 길어질수록 길어질수록 노이즈에 묻히게 되고 어 그렇게 되면은 AI의 성능이 떨어지게 되는 것이죠.\n[05:07] 두 번째 문제점입니다. 원치 않아도 프로젝트가 진행될수록 CLAUDE.md가 점점 점점 길어지기 시작합니다.\n[05:14] 예를 들어서 어 코드 리뷰 방법, 커밋 메시지 형식, PR 작성 요령, 배포 절차 이런 것들을 다 CLAUDE.md에 몰아 넣다 보면 어느샌가 보면은 백 줄이 넘어가고 천 줄이 넘어가는 CLAUDE.md 파일이 됩니다.\n[05:28] 그렇게 되면은 CLAUDE.md가 정작 중요한데 커밋을 해야 되는데 커밋 메시지는 컨벤셔널 커밋스 스타일 형식을 사용한다.\n[05:36] 이 줄을 찾지 못하고 혼자서 그냥 하고 싶은 대로 해버리는 거죠.\n[05:40] 이것을 위해서 생겨난 것이 스킬입니다.\n[05:43] 자주 쓰는 것만 CLAUDE.md에 남기고 특정 상황에 쓸 것은 스킬로 분리하는 겁니다.\n[05:49] 예시에서는 깃 관련한 작업을 해야 되면 git-assistant.md를 불러와서 실행을 시켜라 라고 CLAUDE.md에 명시를 해 놨습니다.\n[05:58] 이렇게 되면은 CLAUDE.md에 요 내용들을 따로 넣어 놓지 않더라도 이 스킬을 자동으로 불러와서 사용하게 됩니다.\n[06:07] OS에도 이 개념이 있습니다. shared library라는 건데요.\n[06:11] 어 libssl.so 같은 경우에는 HTTPS 연결할 때만 메모리에 올라오고 libpng.so 같은 경우에는 이미지 처리할 때만 메모리에 올라옵니다.\n[06:20] 여기서 중요한 거는 앱이 처음부터 올리지 않는다는 겁니다. 사용할 때만 메모리에 올린다. 이것이 스킬의 기본적인 원리입니다.\n[06:28] 스킬은 안 쓰면 토큰 부분이 0이고 쓸 때에만 메모리만 올립니다.\n[06:33] 아까 라이브러리, shared library, 우리 얘기할 때와 동일합니다.\n[06:38] 자, 세 번째 문제점입니다. 클로드한테 이거 쓰지 마 라고 써놨는데 클로드가 이거를 무시하기 시작합니다.\n[06:44] 근데 이거는 버그가 아닙니다.\n[06:47] LLM에게 뭔가를 지시한다는 것은 이것을 무조건적으로 해라가 아니라 확률 분포에 영향을 주는 겁니다.\n[06:55] 그래서 우리가 CLAUDE.md를 안만 잘 써봐야 99%까지 올려도 100% 내가 원하는 동작을 만들 수는 없습니다.\n[07:02] 앞에서 제가 말씀드렸죠. CLAUDE.md는 실행하는 것이 아니라 텍스트로 읽히는 것이라고 했죠.\n[07:08] 사람도 누가 말하면은 이거를 받아들이고 수용하고 따를 수 있듯이 클로드 같은 경우에도 이것을 따를 수도 있고 자연스럽게 무시할 수도 있습니다.\n[07:17] 그렇다면 이걸 어떻게 해야 될까요?\n[07:19] 해결책은 훅스입니다. 클로드의 판단을 우회하는 겁니다.\n[07:23] 어 OS의 Interrupt Handler를 한번 생각해볼까요?\n[07:26] 프로세스가 어떤 상태이든 허락을 구하지 않고 강제로 끼어들어서 실행됩니다.\n[07:31] 훅스가 딱 그런 역할입니다.\n[07:33] 클로드가 어떤 판단을 하든지 상관없이 쉘 명령어가 자동으로 강제적으로 실행이 됩니다.\n[07:40] 예를 들어보겠습니다. 어 이건 실제로 있는 건데요. pre-command라는 것은 AI가 터미널에 명령을 입력하여 실행하기 직전에 발동하는 훅입니다.\n[07:49] 무조건적으로 발동을 하고요. 그리고 즉 예시 코드처럼 pre-command를 작성을 해 버리면은 AI가 갑자기 환경 변수를 고치거나 모든 파일을 날려버리거나 이런 상황을 발생을 하는 것을 막을 수 있습니다.\n[08:03] CLAUDE.md에 우리가 만약에 이상한 ENV 수정하지 말아라 했는데 이거는 100%는 될 수 없다고 했죠.\n[08:11] 이렇게 쓰는 거는 클로드한테 부탁하는 겁니다.\n[08:14] 하지만 훅스로 ENV 파일 수정을 차단해라 하는 것은 물리적으로 아예 막아버리는 겁니다.\n[08:20] 이렇게 되면은 계층이 아예 달라지기 때문에 확률이 아니고 결정론의 역할 아 결정론의 영역으로 바뀌게 됩니다.\n[08:27] 그래서 훅스는 LLM이 아니라 OS 레벨에서 막는 거기 때문에 정말로 소중하게 지켜야 되거나 무조건적으로 지켜야 되는 것이 있다라면 훅스로 빼주는 것이 맞는 겁니다.\n[08:39] AI에게 반드시를 만드는 유일한 방법은 AI를 우회하는 것밖에는 없습니다.\n[08:44] 아까도 말씀드렸다시피 확률 분포이기 때문입니다.\n[08:47] 마지막 문제입니다. 긴 작업에서 AI가 이상한 답을 하기 시작합니다.\n[08:52] 앞에서 이야기한 것을 잊어버리거나 중간에 방향을 잃거나 초반 규칙을 잊어버리기 시작합니다.\n[08:58] 이거는 AI 사용을 하는 프로젝트가 길어지면 길어질수록 심각해지는 문제인데요.\n[09:04] 원인은 RAM이 가득 찼기 때문입니다.\n[09:07] 컨텍스트 창이 가득 차게 되고 컨텍스트 창이 가득 차게 되면은 성능이 떨어집니다.\n[09:12] 해결책은 서브 에이전트입니다. 서브 에이전트는 메인 AI가 특정 작업을 전담하도록 만든 하위 비서라고 생각하시면 됩니다.\n[09:20] 어 예를 들어서 무거운 조사 작업, 막 크롬을 띄워서 거기서 정보를 가져와야 된다거나 이런 것들을 서브 에이전트한테 던지면 서브 에이전트는 완전히 새로운 컨텍스트 창에서 그것만을 진행하게 됩니다.\n[09:33] 끝나면 결과 요약을 백 줄에서 뭐 몇 백 줄. 이거는 어 모델마다 다르긴 한데 어 결과 요약만을 메인에 돌려주게 됩니다.\n[09:42] OS에서 어 우리 스레드 같은 걸 사용할 때 스폰을 써봤을 것이라고 생각합니다.\n[09:48] 스폰으로 새 프로세스를 만들면 부모 메모리를 전혀 물려받지 않는 것처럼 다시 아무리 메모리를 쓰더라도 부모의 영향이 없습니다.\n[09:57] 네, 그럼 정리해 보겠습니다.\n[09:59] 제가 발표 초반에 이런 말씀드렸습니다.\n[10:02] 결국 지금의 AI 기술은 현재까지 쌓아온 CS의 모방이다.\n[10:08] 네.\n[10:09] OS가 필요에 의해서 발전해 가고 있듯이 클로드 그리고 AI 코덱스, AI 에이전트들도 실시간으로 발전해 가고 있습니다.\n[10:19] 근데 이것은 모방을 통해서 발생하고 있습니다.\n[10:22] 제가 오늘 말씀드린 것은 정말 AI 사용에 있어서는 베이직하고 OS 레벨의 수준에 불과합니다.\n[10:29] 이렇게 만들어졌다, 이제 이걸 어떻게 쓴다가 아닙니다.\n[10:32] 정말 많고 고도화된 기술들이 있고 빠르게 발전해나가고 있습니다.\n[10:36] 하지만 CS의 시선으로 바라보면 그렇게 어렵지 않을 겁니다.\n[10:41] 페이지 교체 알고리즘을 닮은 Context Compaction.\n[10:44] SO 파일을 닮은 Skills. Interrupt Handler의 원리인 Hooks.\n[10:47] System Call처럼 작동하는 MCP.\n[10:50] 병렬 처리 spawn을 닮은 Subagent.\n[10:52] 강화 학습 Closed-Loop Control System 개념과 유사한 Harness.\n[10:57] CPU Scheduler를 닮은 Orchest, Agent Orchestrator.\n[11:02] 그리고 Cache Memory를 흉내낸 Memory.md.\n[11:04] 마지막으로 가상 메모리와 Content-Addressable Memory와 유사한 LLM Wiki까지.\n[11:11] 이런 것들이 실제로도 쓰이고 있고 이 순간에도 만들어지고 있습니다.\n[11:15] 근데 한 가지 주의해야 될 점은 이것이 새롭게 만들어진 것이 아니라 이미 우리가 알고 있는 CS 지식의 CS 지식 개념의 모방일 것이라는 점입니다.\n[11:26] 그러면 다시 저희 처음 질문으로 돌아가 보겠습니다.\n[11:28] 왜 나의 AI가 멍청할까요?\n[11:32] 이 질문을 다시 만들어 보겠습니다.\n[11:34] 무엇이 여러분과 저의 AI를 멍청하게 만들었을까요?\n[11:38] 여러분은 AI는 이제 막 OS가 만들어지기 시작했을 당시 램도 없고 캐시도 없었던 그 당시에 OS에 머물러 있지는 않으십니까?\n[11:48] 만약 나의 AI가 멍청하다면 그것은 우리가 환경을 제대로 만들어 주지 않았고 우리 자신의 CS 지식이라는 하네스 안에 AI를 가두지 않았기 때문일 것입니다.\n[11:58] 지금까지 발표 들어줘서 감사합니다. 백엔드 연기였습니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM은 상태가 없어 기억을 외부 프롬프트로 관리해야 함을 강조",
+        "tags": [
+          "LLM",
+          "CLAUDE.md",
+          "RAM",
+          "ROM",
+          "shared library"
+        ],
+        "concepts": [
+          "AI 에이전트 메모리 관리",
+          "프롬프트 협업",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "LLM은 상태가 없으며, 컨텍스트가 들어오면 토큰으로 결과를 출력한다.",
+            "timestamp": "01:05"
+          },
+          {
+            "point": "ROM은 훈련된 가중치이며 변하지 않고, RAM은 컨텍스트 창으로 세션 중에만 존재한다.",
+            "timestamp": "02:18"
+          },
+          {
+            "point": "CLAUDE.md는 .bashrc와 유사하게 세션 시작 시 자동 로드돼 환경 설정을 제공한다.",
+            "timestamp": "03:34"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "고객지원 챗봇에 정책 파일을 CLAUDE.md 형태로 두어 매 세션 시작 시 로드하면, 반복적인 정책 설명을 줄이고 응답 일관성을 높인다.",
+          "데이터 파이프라인에서 변환 로직을 스킬처럼 분리해 필요 시에만 메모리에 로드하면 메모리 사용량을 최적화한다.",
+          "대시보드에서 사용자의 최근 쿼리만 컨텍스트에 유지해 LLM 호출 시 토큰 비용을 절감한다."
+        ],
+        "quiz": [
+          {
+            "question": "LLM이 상태가 없다는 것은 무엇을 의미하는가?",
+            "options": [
+              "매 호출마다 초기화돼 이전 대화 기억이 없다",
+              "모델 가중치가 매번 변한다",
+              "RAM을 지속적으로 사용한다",
+              "토큰 수가 고정된다"
+            ],
+            "answer_index": 0,
+            "explanation": "LLM은 호출 시마다 입력 컨텍스트만을 기반으로 계산하며, 이전 대화나 상태를 기억하지 않는다."
+          },
+          {
+            "question": "CLAUDE.md와 .bashrc의 공통점은 무엇인가?",
+            "options": [
+              "둘 다 실행 파일이다",
+              "세션 시작 시 자동 로드돼 환경을 설정한다",
+              "둘 다 영구 저장소이다",
+              "LLM의 가중치를 저장한다"
+            ],
+            "answer_index": 1,
+            "explanation": ".bashrc가 터미널 시작 시 자동으로 실행돼 환경을 설정하듯, CLAUDE.md도 클로드 세션 시작 시 자동으로 로드돼 프롬프트 환경을 설정한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "LLMs as a Cognitive Virus",
+        "url": "https://arxiv.org/abs/2609.03344",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Physics > Physics and Society\n\n**arXiv:2609.03344** (physics)\n\n[Submitted on 3 Sep 2026]\n\n# Title:Large-Language Models as a Cognitive Virus\n\nAuthors:[Ricard Solé](https://arxiv.org/search/physics?searchtype=author&query=Sol%C3%A9,+R), [Giulio Ruffini](https://arxiv.org/search/physics?searchtype=author&query=Ruffini,+G), [Francesca Castaldo](https://arxiv.org/search/physics?searchtype=author&query=Castaldo,+F), [Marco Tuccio](https://arxiv.org/search/physics?searchtype=author&query=Tuccio,+M), [Luis F. Seoane](https://arxiv.org/search/physics?searchtype=author&query=Seoane,+L+F), [Manlio de Domenico](https://arxiv.org/search/physics?searchtype=author&query=de+Domenico,+M), [Santiago F. Elena](https://arxiv.org/search/physics?searchtype=author&query=Elena,+S+F), [David C. Krakauer](https://arxiv.org/search/physics?searchtype=author&query=Krakauer,+D+C), [Michael Levin](https://arxiv.org/search/physics?searchtype=author&query=Levin,+M)\n\nView a PDF of the paper titled Large-Language Models as a Cognitive Virus, by Ricard Sol\\'e and 8 other authors\n\n[View PDF](/pdf/2609.03344)\n[HTML (experimental)](https://arxiv.org/html/2609.03344v1)\n> Abstract:Large-language models (LLMs) are rapidly becoming part of human culture, reshaping how information is produced, transmitted, and used. Here we propose that their diffusion can be understood through a viral analogy, with LLM use spreading through populations, becoming embedded in cognitive and cultural practices. We model transitions among uncoupled, coupled, and persistently dependent users, and show that the interplay between social transmission, recovery, and collective reinforcement can generate tipping points and technological lock-in. A central consequence is the possibility of runaway dynamics: once a critical threshold is crossed, small increases in adoption can trigger rapid population-level shifts toward persistent dependence, with abrupt losses in cognitive competence. The same framework, however, identifies conditions for cognitive immunization, based on reducing transmission and facilitating reversibility. Our results highlight how LLM adoption may involve nonlinear collective transitions with important consequences for cognitive autonomy.\n\n|  |  |\n| --- | --- |\n| Comments: | 12 pages, 3 figures |\n| Subjects: | Physics and Society (physics.soc-ph); Computers and Society (cs.CY); Adaptation and Self-Organizing Systems (nlin.AO); Populations and Evolution (q-bio.PE) |\n| Cite as: | [arXiv:2609.03344](https://arxiv.org/abs/2609.03344) [physics.soc-ph] |\n|  | (or  [arXiv:2609.03344v1](https://arxiv.org/abs/2609.03344v1) [physics.soc-ph] for this version) |\n|  | <https://doi.org/10.48550/arXiv.2609.03344> Focus to learn more  arXiv-issued DOI via DataCite (pending registration) |\n\n## Submission history\n\nFrom: Luis F Seoane PhD [[view email](/show-email/b2520fac/2609.03344)]   \n **[v1]**\nThu, 3 Sep 2026 04:03:49 UTC (2,776 KB)\n\nFull-text links:\n\n## Access Paper:\n\nView a PDF of the paper titled Large-Language Models as a Cognitive Virus, by Ricard Sol\\'e and 8 other authors\n\n- [View PDF](/pdf/2609.03344)\n- [HTML (experimental)](https://arxiv.org/html/2609.03344v1)\n- [TeX Source](/src/2609.03344)\n\n[![license icon](https://arxiv.org/icons/licenses/by-nc-sa-4.0.png)\nview license](http://creativecommons.org/licenses/by-nc-sa/4.0/ \"Rights to this article\")\n\n### Current browse context:\n\nphysics.soc-ph\n\n[< prev](/prevnext?id=2609.03344&function=prev&context=physics.soc-ph \"previous in physics.soc-ph (accesskey p)\")\n  |   \n[next >](/prevnext?id=2609.03344&function=next&context=physics.soc-ph \"next in physics.soc-ph (accesskey n)\")\n\n[new](/list/physics.soc-ph/new)\n | \n[recent](/list/physics.soc-ph/recent)\n | [2026-09](/list/physics.soc-ph/2026-09)\n\nChange to browse by:\n\n[cs](/abs/2609.03344?context=cs)  \n[cs.CY](/abs/2609.03344?context=cs.CY)  \n[nlin](/abs/2609.03344?context=nlin)  \n[nlin.AO](/abs/2609.03344?context=nlin.AO)  \n[physics](/abs/2609.03344?context=physics)  \n[q-bio](/abs/2609.03344?context=q-bio)  \n[q-bio.PE](/abs/2609.03344?context=q-bio.PE)\n\n### References & Citations\n\n- [NASA ADS](https://ui.adsabs.harvard.edu/abs/arXiv:2609.03344)\n- [Google Scholar](https://scholar.google.com/scholar_lookup?arxiv_id=2609.03344)\n- [Semantic Scholar](https://api.semanticscholar.org/arXiv:2609.03344)\n\nexport BibTeX citation\nLoading...\n\n## BibTeX formatted citation\n\n×\n\nloading...\n\nData provided by:\n\n### Bookmark\n\n[![BibSonomy](/static/browse/0.3.4/images/icons/social/bibsonomy.png)](http://www.bibsonomy.org/BibtexHandler?requTask=upload&url=https://arxiv.org/abs/2609.03344&description=Large-Language Models as a Cognitive Virus \"Bookmark on BibSonomy\")\n[![Reddit](/static/browse/0.3.4/images/icons/social/reddit.png)](https://reddit.com/submit?url=https://arxiv.org/abs/2609.03344&title=Large-Language Models as a Cognitive Virus \"Bookmark on Reddit\")\n\n\n\nBibliographic Tools\n\n# Bibliographic and Citation Tools\n\nBibliographic Explorer Toggle\n\nBibliographic Explorer *([What is the Exp",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 확산을 바이러스 모델로 분석해 인지 자율성 위험을 경고",
+        "tags": [
+          "Large-language models",
+          "LLM",
+          "cognitive virus",
+          "tipping point",
+          "cognitive immunization"
+        ],
+        "concepts": [
+          "사회적 전파 모델",
+          "기술 락인",
+          "인지 면역"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 사용자를 비연결·연결·지속 의존 3상태로 구분하고 전이 확률로 확산을 모델링한다",
+            "timestamp": null
+          },
+          {
+            "point": "사회적 전파·회복·집단 강화가 임계점과 기술 락인을 만들며 급격한 인지 의존 증가를 초래한다",
+            "timestamp": null
+          },
+          {
+            "point": "전파 감소와 가역성 촉진을 통해 인지 면역을 달성할 수 있는 조건을 제시한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 연구가 LLM의 기술 성능에 집중한 반면, 이 논문은 전염병 모델을 차용해 사회·인지적 확산 메커니즘을 정량화한다. 사용자 전이와 집단 강화가 비선형 전이를 일으키는 과정을 설명하며, AI 거버넌스와 인지 자율성 연구에 새로운 정량적 프레임을 제공한다.",
+        "production_ideas": [
+          "기업 데이터 거버넌스 도구 채택을 동일한 3상태 전이 모델에 적용해 락인 위험을 사전 예측하고 완화 전략을 설계한다",
+          "소프트웨어 팀에서 자동 코드 제안에 대한 과도한 의존을 줄이기 위해 인지 면역 개념을 활용한 교육 프로그램을 만든다",
+          "소셜 미디어에서 LLM이 생성한 허위 정보 확산을 임계점 분석으로 모니터링하고 확산 억제 정책을 설계한다"
+        ],
+        "quiz": [
+          {
+            "question": "논문에서 제시한 바이러스 비유 모델의 사용자 상태는 무엇인가?",
+            "options": [
+              "비연결·연결·지속 의존",
+              "초보·중급·전문가",
+              "사용자·관리자·시스템",
+              "읽기·쓰기·실행"
+            ],
+            "answer_index": 0,
+            "explanation": "논문은 사용자를 비연결(uncoupled), 연결(coupled), 지속 의존(persistently dependent) 세 단계로 구분한다."
+          },
+          {
+            "question": "인지 면역을 달성하기 위한 조건으로 올바른 것은?",
+            "options": [
+              "전파 감소와 가역성 촉진",
+              "모델 규모 확대",
+              "집단 강화 극대화",
+              "LLM 사용 전면 금지"
+            ],
+            "answer_index": 0,
+            "explanation": "논문은 전파를 줄이고 회복·가역성을 높이는 것이 인지 면역을 가능하게 한다고 제시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Global warming will exceed 1.5-degree limit, UN says",
+        "url": "https://www.pbs.org/newshour/science/global-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone",
+        "published_at": null,
+        "transcript": null,
+        "body": "![Hikers walk on the moraine at the Mont Mine glacier near Evolene](https://d3i6fh83elv35t.cloudfront.net/static/2026/09/2026-09-03T192943Z_1189723666_RC2NBNAQY6VR_RTRMADP_3_CLIMATE-CHANGE-SWISS-GLACIERS-1024x683.jpg)\n\nBy —\n\n[Seth Borenstein, Associated Press](https://www.pbs.org/newshour/author/seth-borenstein-associated-press)\n[Seth Borenstein, Associated Press](https://www.pbs.org/newshour/author/seth-borenstein-associated-press)\n\n[Leave your feedback](https://www.pbs.org/newshour/about/contact-us/)\n\nShare\n\n- Copy URL\n\n  https://www.pbs.org/newshour/science/global-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone\n- [Email](mailto:?subject=Global%20warming%20will%20exceed%201.5-degree%20limit%2C%20UN%20says%20in%20report%20that%20maps%20path%20back%20below%20danger%20zone&body=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone)\n- [Facebook](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone)\n- [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone&text=Global%20warming%20will%20exceed%201.5-degree%20limit%2C%20UN%20says%20in%20report%20that%20maps%20path%20back%20below%20danger%20zone)\n- [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone&title=Global%20warming%20will%20exceed%201.5-degree%20limit%2C%20UN%20says%20in%20report%20that%20maps%20path%20back%20below%20danger%20zone&summary=In%20a%20strategic%20retreat%20in%C2%A0the%20fight%20against%20climate%20change%2C%20the%20United%20Nations%20has%20acknowledged%20that%20Earth%20has%20lost%20its%20chance%20to%20prevent%20some%20of%20the%20worst%20of%20global%20warming%27s%20harms.%20So%20now%20the%20world%20must%20figure%20out%20how%20to%20get%20temperatures%20below%20the%20danger%20zone%20and%20back%20to%20safety%2C%20officials%20say.&source=PBS%20NewsHour)\n- [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone&description=In%20a%20strategic%20retreat%20in%C2%A0the%20fight%20against%20climate%20change%2C%20the%20United%20Nations%20has%20acknowledged%20that%20Earth%20has%20lost%20its%20chance%20to%20prevent%20some%20of%20the%20worst%20of%20global%20warming%27s%20harms.%20So%20now%20the%20world%20must%20figure%20out%20how%20to%20get%20temperatures%20below%20the%20danger%20zone%20and%20back%20to%20safety%2C%20officials%20say.)\n- [Tumblr](http://www.tumblr.com/share/link?url=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone&name=Global%20warming%20will%20exceed%201.5-degree%20limit%2C%20UN%20says%20in%20report%20that%20maps%20path%20back%20below%20danger%20zone&description=In%20a%20strategic%20retreat%20in%C2%A0the%20fight%20against%20climate%20change%2C%20the%20United%20Nations%20has%20acknowledged%20that%20Earth%20has%20lost%20its%20chance%20to%20prevent%20some%20of%20the%20worst%20of%20global%20warming%27s%20harms.%20So%20now%20the%20world%20must%20figure%20out%20how%20to%20get%20temperatures%20below%20the%20danger%20zone%20and%20back%20to%20safety%2C%20officials%20say.)\n\n[Share on Facebook](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone)\n[Share on Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.pbs.org%2Fnewshour%2Fscience%2Fglobal-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone&text=Global%20warming%20will%20exceed%201.5-degree%20limit%2C%20UN%20says%20in%20report%20that%20maps%20path%20back%20below%20danger%20zone)\n\n# Global warming will exceed 1.5-degree limit, UN says in report that maps path back below danger zone\n\n[Science](https://www.pbs.org/newshour/science)\n\n\nSep 3, 2026 7:05 PM EDT\n\n\nIn a strategic retreat in the fight against climate change, the United Nations has acknowledged that Earth has lost its chance to prevent some of the worst of global warming's harms. So now the world must figure out how to get temperatures below the danger zone and back to safety, officials say.\n\nEarth is soon going to exceed the safe temperature threshold agreed upon by the world in the 2015 Paris climate accord because of warming from the burning of coal, oil and gas, according to a bleak first-of-its-kind report issued by the [United Nat",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "기후 모델 불확실성 증가가 데이터 기반 위험 평가에 핵심",
+        "tags": [
+          "UN",
+          "PBS NewsHour",
+          "Mont Mine glacier",
+          "Associated Press",
+          "global warming"
+        ],
+        "concepts": [
+          "기후 변화 시나리오 분석",
+          "임계 온도 초과 위험 평가",
+          "탄소 배출 감축 전략"
+        ],
+        "key_points": [
+          {
+            "point": "UN 보고서는 현재 온실가스 배출 추세가 1.5°C 초과를 피할 수 없으며 기존 감축 목표의 실현 가능성을 근본적으로 재평가해야 한다고 경고한다.",
+            "timestamp": null
+          },
+          {
+            "point": "다중 시나리오 ensemble 기후 모델링 결과가 평균 기온 상승 1.6~2.0°C를 예측하고 불확실성 범위가 축소되고 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "정책적 대응으로는 탄소 중립 로드맵 재설계와 고산 빙하 손실 모니터링 등 적응 전략 강화를 제시한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "UN 기후 시나리오 데이터를 활용해 인프라 위험 예측 모델에 최신 온도 상승 확률을 통합한다",
+          "빙하 손실 모니터링 기법을 데이터 센서 이상 탐지 파이프라인에 적용해 장비 고장 조기 경보를 강화한다",
+          "다중 시나리오 ensemble 접근을 에너지 수요 예측 모델에 도입해 기후 변동성에 대한 탄력성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "UN 보고서가 강조한 1.5°C 초과 위험 완화 전략은 무엇인가?",
+            "options": [
+              "탄소 배출량 즉시 0% 감축",
+              "기존 감축 목표 재평가와 적응 전략 강화",
+              "화석 연료 사용 확대",
+              "기후 모델링 중단"
+            ],
+            "answer_index": 1,
+            "explanation": "보고서는 기존 감축 목표를 재평가하고 적응 전략을 강화해야 한다고 제시한다."
+          },
+          {
+            "question": "보고서에서 사용된 기후 모델링 접근법의 특징은?",
+            "options": [
+              "단일 시나리오 사용",
+              "다중 시나리오 ensemble 사용",
+              "과거 데이터만 사용",
+              "무작위 추정"
+            ],
+            "answer_index": 1,
+            "explanation": "보고서는 다중 시나리오 ensemble 결과를 기반으로 온도 상승을 예측한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "research-method"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 스타크의 Java Stream 내부 구조와 실행 흐름",
+        "url": "https://youtu.be/JZ2F71yDoTQ",
+        "published_at": "2026-09-04T12:00:27",
+        "transcript": "[00:02] 안녕하세요, 백엔드 파이기 스태크입니다.\n[00:11] 오늘 발표 주제는 자바 스트림 내부 구조와 실행 흐름에 대해서 발표하도록 하겠습니다.\n[00:16] 이번 발표에서는 간단한 코드를 통해서 스트림이 어떻게 동작하는지를 알아가 보려고 합니다.\n[00:23] 오늘 발표에서 스트림의 흐름에 대해서 알아볼 코드는 바로 이 코드인데요.\n[00:27] 전체 예약 목록에 대해서 스트림을 실행해 주는 코드입니다.\n[00:30] 필터로 오늘 날짜 예약만 걸러내고, 맵으로 예약자 이름만 추출하고, 마지막 파인드 퍼스트 메서드로 첫 번째 예약자를 반환하는 전형적인 스트림 파이프라인입니다.\n[00:41] 실제로는 DB에서 쿼리를 통해 거르는 것이 더 자연스러울 수 있지만, 이번 발표를 위해 스트림으로 필터링하는 방식의 예시 코드를 구성해 보았습니다.\n[00:52] 이 코드를 통해 오늘 발표에서 알아가 볼 내용은 두 가지입니다.\n[00:55] 첫 번째, 필터, 맵은 언제 실행될지. 두 번째, 파인드 퍼스트는 어떻게 실행될지입니다.\n[01:01] 오늘 발표를 통해서 이 두 가지 질문에 직접 답할 수 있게 되실 거라고 생각합니다.\n[01:09] 먼저, 스트림 연산의 종류부터 짚고 가겠습니다.\n[01:12] 오라클의 자바 공식 문서에는 이렇게 나와 있습니다.\n[01:15] 스트림의 연산은 중간 연산과 종단 연산으로 나뉜다는 말인데요.\n[01:19] 스트림의 연산을 이렇게 두 개로 나눠서 보는 것이 스트림을 알아가 보는 출발점입니다.\n[01:27] 중간 연산과 종단 연산의 가장 직관적인 차이를 보여주는 것은 반환 타입인데요.\n[01:32] 스트림 인터페이스를 보면 필터는 스트림을 반환하고 맵도 스트림을 반환합니다.\n[01:37] 하지만 파인드 퍼스트는 옵셔널을 반환하는 모습을 볼 수 있습니다.\n[01:41] 이러한 반환 타입에는 스트림의 핵심 동작 원리가 숨어 있습니다.\n[01:47] 스트림을 반환하는 연산은 스트림 파이프라인이 계속 이어질 수 있게 하고, 스트림이 아닌 다른 타입을 반환하는 연산은 스트림 파이프라인을 그 지점에서 종료합니다.\n[01:57] 이렇게 파이프라인을 이어지게 하는 연산이 중간 연산이고, 파이프라인을 종료하는 연산은 종단 연산입니다.\n[02:04] 그럼 다시 코드로 돌아가서 각 연산을 확인해 보겠습니다.\n[02:09] 코드에 다시 다시 적용해 보면 필터와 맵은 스트림을 반환하므로 중간 연산, 파인드 퍼스트는 옵셔널을 반환하므로 종단 연산입니다.\n[02:18] 그럼 이제 중간 연산의 실행 시점에 대해서 알아가 보겠습니다.\n[02:26] 기존 코드의 중간 연산 필터와 맵 안에 각각 출력 로직을 넣어서 실행 여부를 확인할 수 있게 하고, 종단 연산인 파인드 퍼스트를 제거해 보겠습니다.\n[02:37] 그러면 이와 같은 코드가 완성되는데요.\n[02:39] 이처럼 코드를 만든 후에 실행 결과를 한번 살펴보도록 하겠습니다.\n[02:45] 결과는 맨 마지막에 출력문 실행 완료만 출력됐습니다.\n[02:49] 필터와 맵 안에 출력 로직이 전혀 실행되지 않은 겁니다.\n[02:52] 왜 그럴까요?\n[02:57] 정답은 아까 봤던 반환 타입에 있습니다.\n[03:00] 스트림을 반환한다는 것은 지금 당장 실행하지는 않는다는 뜻입니다.\n[03:04] 대신 스트림 파이프라인에 이런 단계를 나중에 실행해 줘라고 등록만 해 두게 됩니다.\n[03:11] 실제 소스 코드에서 이걸 확인할 수 있는데요.\n[03:14] 지금 보시는 코드는 중간 연산 중 맵의 소스 코드에서 설명에 필요한 일부 코드만 가져온 것입니다.\n[03:20] 맵은 내부에서 스테이트레스 오퍼레이션이라는 객체를 생성해서 반환해 주는데요.\n[03:25] 여기서 반환해 주는 스테이트레스 오퍼레이션 객체는 스트림 파이프라인의 한 단계를 표현하는 클래스입니다.\n[03:34] 그리고 이때 인자로 넘기는 디스는 자기 자신, 즉 이전 단계의 스트림을 스테이트레스 오퍼레이션에 넘겨주고 있습니다.\n[03:42] 중간 연산 맵은 단순하게 스테이트레스 오퍼레이션의 생성만 하고 있는데요.\n[03:47] 파이프라인 이전 스트림을 담아서 새로운 스트림을 생성하는 것이지 실제 연산을 실행해 주지는 않습니다.\n[03:55] 스트림 파이프라인의 다이어그램을 살펴보면 이런 구조가 됩니다.\n[03:59] 중간 연산인 필터는 소스를 참조하고, 중간 연산 맵은 그 이전 단계의 스트림인 필터를 참조하게 됩니다.\n[04:05] 각 중간 연산이 이전 스트림을 참조하면서 체인처럼 연결되는 구조입니다.\n[04:10] 여기서 한 가지 포인트가 있는데요.\n[04:13] 참조 방향이 스트림 파이프라인의 흐름과는 딱 반대라는 점입니다.\n[04:16] 실제 데이터의 흐름은 소스부터 필터, 맵 순으로 진행되지만, 참조는 맵이 필터를, 필터가 소스를 가리키게 됩니다.\n[04:24] 이러한 역방향 참조가 나중에 중요한 역할을 하게 됩니다.\n[04:28] 이 부분에 대해서는 이후에 살펴보도록 하겠습니다.\n[04:33] 자바 공식 문서에서도 중간 연산의 이러한 특징을 명확하게 기술해 주고 있습니다.\n[04:37] 중간 연산은 새로운 스트림을 반환한다.\n[04:40] 그리고 항상 지연된다라고 표현되어 있는데요.\n[04:43] 이렇게 중간 연산은 단계 조립만 해 두고 로직을 바로 실행하지 않고 지연됩니다.\n[04:50] 그럼 중간 연산은 언제 실행될까요?\n[04:54] 다시 이전에 실행 코드로 돌아가 보겠습니다.\n[04:56] 이번엔 종단 연산 파인드 퍼스트를 다시 추가했습니다.\n[05:00] 필터와 맵 안에는 이전과 동일하게 여전히 출력 로직이 있고, 마지막에 여기까지 실행됨이라는 출력 로직도 그대로 존재합니다.\n[05:07] 그럼 이번에는 어떤 결과가 나오게 될까요?\n[05:12] 결과를 보기에 앞서서 입력 사용할 입력 데이터를 설명드리겠습니다.\n[05:16] 입력 데이터는 총 세 가지인데요.\n[05:18] 스태크의 5월 20일 예약, 이안의 5월 21일 예약, 네오의 5월 21일 예약입니다.\n[05:24] 오늘은 5월 21일이니까 이안과 네오가 오늘 날짜에 해당하게 됩니다.\n[05:29] 실행 결과를 보겠습니다.\n[05:31] 이번에는 연산이 실행된 모습을 볼 수 있는데요.\n[05:34] 여기서 주목할 점은 두 가지입니다.\n[05:36] 첫 번째, 종단 연산 파인드 퍼스트를 붙이자마자 중간 연산들이 비로소 실행됐습니다.\n[05:43] 두 번째, 마지막 네오의 예약은 첫 번째 중간 연산 필터조차 실행되지 않고 끝난 모습을 확인할 수 있습니다.\n[05:52] 종단 연산이 호출되면 요소들이 어떻게 처리되는지 다시 한번 다이어그램을 통해 흐름을 살펴보겠습니다.\n[05:58] 먼저 첫 번째 요소 스태크부터 살펴보겠습니다.\n[06:01] 스태크는 앞서 말씀드린 것처럼 오늘 날짜에 해당하지 않기 때문에 필터를 통과하지 못합니다.\n[06:07] 이렇게 필터를 통과하지 못하게 되면 그 다음 요소로 넘어가게 되는데요.\n[06:12] 그 다음 요소 이안은 필터 맵을 거쳐서 파인드 퍼스트를 통과해 결과로 확정됩니다.\n[06:19] 이렇게 결과로 확정된 요소가 생기면 마지막 요소 네오는 아예 처리되지 않고 끝납니다.\n[06:24] 이처럼 요소 하나가 파이프라인 전체를 통과하고 그 다음 요소가 들어오게 됩니다.\n[06:30] 그리고 조건에 해당하는 요소를 찾자마자 나머지 요소는 처리하지 않고 끝납니다.\n[06:35] 그렇다면 종단 연산은 어떻게 파이프라인 전체를 실행하게 되는 걸까요?\n[06:41] 종단 연산은 크게 두 가지 단계로 나눌 수 있습니다.\n[06:44] 첫 번째, 싱크 체인의 조립. 두 번째, 스플리터레이터를 통한 요소의 공급입니다.\n[06:49] 하나씩 살펴보도록 하겠습니다.\n[06:53] 싱크 체인의 조립 단계에 들어가기에 앞서서 먼저 싱크가 무엇인지부터 알아야 합니다.\n[06:58] 싱크는 간단하게 말해서 스트림 파이프라인 각 단계의 실제 실행 단위라고 봐 주시면 됩니다.\n[07:06] 중간 연산과 종단 연산이 각각 알맞은 싱크로 변환되게 됩니다.\n[07:10] 필터 오퍼레이션과 맵 오퍼레이션, 파인드 오퍼레이션 모두 각각 알맞은 싱크로 변환됩니다.\n[07:18] 싱크의 인터페이스를 살펴보겠습니다.\n[07:21] 핵심 메서드는 두 가지가 있는데요.\n[07:24] 먼저 셉트 메서드입니다.\n[07:26] 이 메서드는 요소를 받아서 해당 단계 싱크의 로직을 실행합니다.\n[07:31] 그 다음으로는 캔슬레이션 리퀘스트드라는 메서드입니다.\n[07:34] 이 메서드는 해당 싱크가 더 이상 요소를 필요로 하지 않는지 여부를 반환합니다.\n[07:40] 그래서 파인드 퍼스트처럼 하나를 찾으면 끝나는 경우 이 메서드가 트루를 반환해서 다음 요소 처리를 멈출 수 있게 되는 구조인 것입니다.\n[07:50] 종단 연산이 호출되면 가장 먼저 각 단계 연산들을 싱크로 변환 후 연결해서 하나의 싱크 체인을 조립하게 되는데요.\n[07:58] 이 변환과 조립을 담당하는 메서드가 바로 지금 보시는 랩 싱크라는 메서드입니다.\n[08:04] 코드가 다소 복잡해 보일 수 있는데 완벽하게 이해하지 않으셔도 됩니다.\n[08:08] 바로 다음 슬라이드에서 다시 한번 다이어그램을 통해 동작을 살펴볼 예정입니다.\n[08:13] 그럼 간단히만 살펴보겠습니다.\n[08:15] 맨 처음에 디스부터 시작해서 이전 단계의 스트림을, 이전 단계의 스트림 스테이지를 통해 거슬러 올라가게 됩니다.\n[08:26] 그래서 각 단계의 싱크를 조립해 싱크 체인을 만들어 나가게 됩니다.\n[08:30] 이 과정에서 이전 단계의 스트림 스테이지에 자기 자신, 현재의 스트림 스테이지를 담으며 싱크를 감싸는 작업을 하게 됩니다.\n[08:38] 이렇게 루프가 끝나고 최종 반환되는 싱크는 가장 먼저 실행되어야 하는 중간 연산, 이번 예시 코드에서는 필터 싱크가 되게 됩니다.\n[08:49] 종단 연산이 스트림 파이프라인에서 싱크 체인을 만드는 구조를 다이어그램으로 한번 살펴보겠습니다.\n[08:54] 다이어그램을 보시면 파이프라인의 참조 방향이 데이터 흐름과 반대인 것을 다시 한번 보실 수 있는데요.\n[09:00] 이 역방향 참조가 여기 싱크 체인 조립에서 어떻게 활용되는지를 주목해 주시면 좋을 것 같습니다.\n[09:07] 먼저 종단 연산인 파인드 퍼스트가 그에 맞는 파인드 싱크를 생성합니다.\n[09:14] 그 다음 파이프라인의 마지막 중간 연산인 맵 오퍼레이션이 파인드 싱크를 감싸는 맵 싱크를 생성합니다.\n[09:22] 마지막으로 역방향 참조를 타고 올라가 필터 오퍼레이션에서 맵 싱크를 감싸는 필터 싱크를 생성합니다.\n[09:30] 이렇게 파이프라인의 오른쪽 다운 스트림에서 왼쪽 업 스트림 방향으로 역방향으로 거슬러 올라가며 싱크들이 중첩되는 구조로 싱크 체인을 완성하게 됩니다.\n[09:40] 최종적으로 반환되는 건 가장 바깥에 위치한 필터 싱크이고, 이후에 스트림 파이프라인에서 요소가 들어오면 필터 싱크부터 시작해서 안쪽으로 전달되는 구조입니다.\n[09:53] 완성된 싱크 체인은 이런 구조입니다.\n[09:55] 필터 싱크가 가장 바깥에 있고, 그 안에 맵 싱크, 그 안에 파인드 싱크가 중첩된 형태입니다.\n[10:01] 러시아의 전통 인형 마트료시카를 생각하시면 될 것 같습니다.\n[10:05] 필터 싱크가 조건을 통과시키면 맵 싱크로 넘기고, 맵 싱크가 변환하면 파인드 싱크로 넘기는 구조입니다.\n[10:15] 두 번째 단계는 스플리터레이터의를 통한 요소의 공급인데요.\n[10:19] 먼저 스플리터레이터에 대해서 간단히 알아보겠습니다.\n[10:22] 스플리터레이터는 각 컬렉션이 구현하는 인터페이스입니다.\n[10:27] 이번 예시 코드에서 쓰인 어레이리스트는 자신만의 전용 어레이리스트 스플리터레이터를 만들어서 반환합니다.\n[10:33] 이 스플리터레이터가 원본 컬렉션의 요소를 하나씩 꺼내서 싱크 체인에 공급하는 역할을 하게 됩니다.\n[10:40] 그럼 이제 실제로 요소를 공급하는 코드를 살펴보겠습니다.\n[10:45] 실제로 요소를 공급하는 코드는 지금 보시는 포 이치 위드 캔슬이라는 메서드에서 담당하게 됩니다.\n[10:51] 스플리터레이터가 싱크 체인의 요소를 한 개씩 꺼내서 공급해 주는 코드인데요.\n[10:56] 이 코드 역시 이전과 마찬가지로 완벽히 이해하지 않으셔도 됩니다.\n[11:00] 바로 다음 슬라이드에서 전체 흐름을 다시 한번 다이어그램으로 살펴볼 예정입니다.\n[11:05] 이전에 보았던 싱크 인터페이스의 캔슬레이션 리퀘스트드 메서드 기억하시나요?\n[11:10] 이 메서드를 통해 현재 싱크의 중단 여부가 참이 되면 더 이상 요소가 필요 없다는 뜻이니 루프를 중단할 수 있게 됩니다.\n[11:18] 이렇게 중단 여부를 확인한 후 스플리터레이터가 싱크 체인에 컬렉션의 요소를 한 개씩 꺼내서 전달하게 됩니다.\n[11:25] 이 과정을 통해 파인드 퍼스트의 싱크가 결과를 찾는 순간 캔슬레이션 리퀘스트드가 트루를 반환하고, 스트림 파이프라인의 루프가 멈추게 됩니다.\n[11:36] 다시 한번 이전에 예시 코드 흐름을 살펴보겠습니다.\n[11:39] 먼저 소스에서 스플리터레이터가 스태크를 꺼내 싱크 체인에 조립 공급합니다.\n[11:45] 스태크는 필터를 통과하지 못해서 다음 요소 처리 단계로 넘어가게 됩니다.\n[11:50] 스플리터레이터가 다음 요소 이안을 꺼내서 싱크 체인에 공급합니다.\n[11:55] 그렇게 되면 이안은 모든 싱크를 통과해 최종 결과로 확정됩니다.\n[12:02] 이렇게 되면 이전에 보았던 싱크의 캔슬레이션 리퀘스트드 값이 트루가 되어 스플리터레이터가 공급을 멈춥니다.\n[12:09] 그렇기 때문에 네오는 싱크에 들어가지 않은 채로 스트림 파이프라인이 종료되게 됩니다.\n[12:14] 이처럼 결과가 확정되는 순간 불필요한 요소 처리를 생략하는 것, 이것을 숏 서킷이라고 합니다.\n[12:22] 지금까지 살펴본 내용을 정리해 보겠습니다.\n[12:24] 먼저 중간 연산입니다.\n[12:26] 중간 연산은 스트림 파이프라인을 조립합니다.\n[12:29] 이때 파이프라인은 실행되지 않고 단계만 연결하고 지연됩니다.\n[12:35] 다음으로 종단 연산입니다.\n[12:36] 종단 연산은 중간 연산에서 만들어진 스트림 파이프라인을 역방향으로 거슬러 올라가며 싱크 체인을 조립합니다.\n[12:44] 그 다음 스플리터레이터가 원본 컬렉션의 요소를 하나씩 꺼내 싱크 체인에 공급하며 스트림 파이프라인의 연산을 진행합니다.\n[12:53] 그럼 처음에 던졌던 두 가지 질문으로 돌아가 보겠습니다.\n[12:56] 첫 번째, 필터와 맵은 언제 실행될까?\n[12:59] 이 질문에 대한 답은 종단 연산 파인드 퍼스트가 호출되는 순간 실행하게 된다고 대답할 수 있습니다.\n[13:07] 두 번째, 파인드 퍼스트는 어떻게 실행될까?\n[13:09] 이 질문에 대한 답은 싱크 체인을 조립하고 스플리터레이터가 요소를 공급하면서 실행된다고 할 수 있습니다.\n[13:16] 그리고 이번 발표에 파인드 퍼스트 메서드의 경우 결과가 확정되는 순간 숏 서킷으로 종료됩니다.\n[13:23] 발표가 시작할 때 이 두 질문에 직접 답할 수 있게 되실 거라고 했는데, 이제 답할 수 있으실 거라고 생각합니다.\n[13:31] 발표에서 담지 못한 추가적인 내용들은 블로그에 세 개의 시리즈로 나눠서 작성했습니다.\n[13:35] 제가 정리를 하지 못한 부분이 있을 수도 있지만, 만약 궁금하시다면 들어가서 읽어 보셔도 좋을 것 같습니다.\n[13:41] 이상으로 발표를 마치겠습니다.",
+        "body": null,
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "스트림 파이프라인의 지연 평가와 단락 실행 메커니즘 이해",
+        "tags": [
+          "Java",
+          "Stream",
+          "Optional",
+          "Oracle",
+          "DB"
+        ],
+        "concepts": [
+          "지연 평가",
+          "스트림 파이프라인"
+        ],
+        "key_points": [
+          {
+            "point": "중간 연산은 스트림을 반환해 파이프라인을 연속시키지만 실제 연산은 지연되어 터미널 연산이 호출될 때 비로소 실행된다",
+            "timestamp": "01:27"
+          },
+          {
+            "point": "중간 연산은 단계 객체(스테이트레스 오퍼레이션)를 생성해 등록만 하고, 실행 로직은 내부 싱크 체인에 위임되어 즉시 수행되지 않는다",
+            "timestamp": "03:00"
+          },
+          {
+            "point": "findFirst와 같은 터미널 연산이 호출되면 요소가 순차적으로 파이프라인을 통과하고, 첫 매칭 요소가 결정되면 이후 요소는 전혀 처리되지 않는다",
+            "timestamp": "05:36"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 검증 파이프라인에 지연 평가를 적용해 최종 검증 호출 시에만 모든 검증 로직을 실행함으로써 ETL 성능을 향상시킨다",
+          "마이크로서비스 오케스트레이션에서 역방향 참조( downstream → upstream) 패턴을 활용해 의존성 그래프를 구성하고, 롤백 시 역순 탐색을 효율화한다",
+          "이벤트 기반 시스템에서 싱크 체인 조립 방식을 차용해 이벤트 핸들러를 싱크로 변환하고, 구독(터미널) 시점에만 실제 이벤트 전파를 수행한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 filter와 map 같은 중간 연산은 터미널 연산이 호출될 때까지 실행되지 않는가?",
+            "options": [
+              "새 스트림을 반환해 실행을 지연한다",
+              "DB 연결이 필요하기 때문이다",
+              "자동으로 병렬 실행되기 때문이다",
+              "런타임에 컴파일된다"
+            ],
+            "answer_index": 0,
+            "explanation": "중간 연산은 스트림을 반환하면서 단계만 등록하고, 실제 데이터 처리 로직은 터미널 연산이 호출될 때 비로소 실행된다"
+          },
+          {
+            "question": "findFirst 터미널 연산이 매칭 요소를 찾았을 때 발생하는 흐름은?",
+            "options": [
+              "남은 모든 요소를 계속 처리한다",
+              "이후 요소는 전혀 처리되지 않는다",
+              "예외를 발생시킨다",
+              "파이프라인을 재평가한다"
+            ],
+            "answer_index": 1,
+            "explanation": "findFirst는 첫 매칭 요소가 확정되면 즉시 파이프라인 실행을 중단하고, 남은 요소는 평가되지 않는다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "There's No Limit to How Bad Code Can Get",
+        "url": "https://zachkehs.com/blog/theres_no_limit_to_how_bad_code_can_get/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# There's No Limit to How Bad Code Can Get\n\n- 04 September 2026\n- [software-engineering](/tags/software-engineering/),\n- [essay](/tags/essay/)\n\nTL;DR: Metaphors like \"a sinking ship\" are often used to describe codebases, but are misleading.\nA *business* will sink long before code quality reaches a hypothetical floor. Technical debt has\nno bankruptcy, no clean reset, so metaphors that imply an end provide a false sense of security.\n\n> [Software is in the domain of the abstract. It is not like a building, or a bridge, that is in\n> the physical realm where you can see and feel the nature of the thing. If you continue to add\n> floors and rooms to a building forever, it will collapse. Software faces no such constraint.\n> The code can **always** get worse. There can **always** be a new layer of indirection\n> or a reduction in performance.](#pull-quote-source)\n\n## 1: Boarding a sinking ship\n\nOver a decade ago I had my first encounter with an *ugly* legacy codebase. I had just joined Amazon\nas a \"Software Development Engineer\", fresh out of university, and worked on a team that owned code\nrelated to [processing orders](#1-note). On the surface, what our code had to\ndo seemed simple. Processing an order involved writing some things to a database and calling into\nservices owned by other teams, either to ask validity questions or to update bookkeeping on their\nend. My colleagues and I estimated that a sufficient implementation of this system shouldn't need\nmore than two dozen strong engineers to maintain and evolve. Yet, our organization was\nhundreds of people, and the system had grown so large and complex that it had become impossible to\nlearn how it all worked.\n\nIt was rare to stay longer than a few years in this org, and institutional knowledge had eroded. This\nresulted in code that was full of [\"haunted graveyards\"](#2-note). Fear suppressed any (under-rewarded) efforts to\nsimplify existing systems. The business rules for what had to be done for each type of order were\ndecided by people long ago who weren't around anymore. These rules could sometimes be found in a\nhopelessly out of date file proudly calling itself a 'living document', but often the rules simply\nwere not written anywhere we could find. Tracing behavior yourself wasn't easy either because much\nof the system lived across team boundaries where the code was not easy to access.\n\nWhen some obscure process wasn't happening with an order that should have been happening, our pagers\nwould angrily notify us that someone in our tangled web of service dependencies was unhappy. As a\nresult of this feedback mechanism, the system stayed afloat, but remained difficult to change\nand had [abysmal performance](#3-note). Despite this, new layers were constantly added to support the latest\nAmazon products and features. This felt unsustainable, and this feeling is what makes me and others\nreach for a \"sinking ship\" as a metaphor to describe an organization that doesn't pay down their\ntechnical debt.\n\nTo their credit, there were always [ongoing attempts](#4-note) to fix the architecture, and these usually\nwent as follows: A new manager or senior engineer joins the organization and observes that \"things are bad\".\nLeadership at the organization agrees and *wants* to make things better, but there are no engineers\navailable, so each fix attempt includes adding new engineers and [teams](#5-note).\n\nThe re-architectures were always a failure: The system required *years* of study to properly\nunderstand and was constantly changing. It's not politically viable to take so long to design a\nfix for the system, so naturally everyone attempting to fix things must work with\nincomplete information. Some of this impatience is from within: If you are trying to\ndesign a grand fix for such a prominently painful architecture, you are doing it in part because\nyou want a promotion (and you don't want to wait too long for a promotion).\n\nEach cycle would end with the remains of the new attempt permanently grafted onto our architecture\nand the leading engineer having departed with their requisite promotion. The increased headcount\nstays because the migration plans are too painful and unpopular to actually finish. [The cycle\ncontinued](#6-note) as it had long before I had arrived. The sinking ship seemed to have no end.\n\n## 2: Where *does* it end?\n\nAbout three years after I had left, I was chatting on the phone with a former colleague from that\nteam. He had recently left the company after an impressive 6-year tenure and had witnessed the\ncycle complete again. We were commiserating, and both of us reached for the sinking ship metaphor\nto describe the org, despite us having left years apart.\n\n\"Where does it end? How does it end?\" he asked me, curious to hear my take on what would happen to\nthat org in the future.\n\nThe question and metaphor didn't sit right with me, and I realized the question conflated two\nthings. Are we talking about the code, or are we talking about the company?\n\nA *business* can si",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "기술 부채가 비즈니스보다 먼저 파멸 위험을 초래한다",
+        "tags": [
+          "Amazon",
+          "Software Development Engineer",
+          "pagers"
+        ],
+        "concepts": [
+          "기술 부채 관리",
+          "레거시 시스템 리팩터링",
+          "조직적 인센티브와 기술 부채"
+        ],
+        "key_points": [
+          {
+            "point": "기술 부채는 파산 개념이 없으며 코드 품질은 물리적 한계 없이 계속 악화될 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "‘침몰하는 배’ 비유는 비즈니스가 코드보다 먼저 실패한다는 사실을 가려 위험한 오해를 만든다",
+            "timestamp": null
+          },
+          {
+            "point": "불완전한 정보와 정치·인센티브 문제 때문에 대규모 재구축 시도가 반복적으로 실패한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "서비스 의존성 알림(pager) 방식을 데이터 파이프라인 지연 알림으로 옮겨 실시간 성능 감시를 강화한다",
+          "기술 부채 전용 스프린트를 도입해 작은 리팩터링을 지속적으로 수행함으로써 대규모 재구축 위험을 감소시킨다",
+          "비즈니스 규칙을 버전 관리된 설정 파일에 기록해 조직 내 지식 손실을 방지하고 변경 시 검증 절차를 자동화한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 \"sinking ship\" 은 코드베이스를 설명할 때 부적절한 비유인가?",
+            "options": [
+              "물리적 구조와 달리 소프트웨어는 파산 개념이 없기 때문이다",
+              "코드는 언제든지 성능이 향상될 수 있다",
+              "비즈니스는 기술 부채보다 먼저 실패한다",
+              "모든 시스템은 일정 시점에 붕괴한다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 기술 부채는 파산이 없으며, 코드가 무한히 악화될 수 있다고 강조해 비유가 오해를 낳는다고 설명한다."
+          },
+          {
+            "question": "조직이 레거시 시스템을 재구성하려 할 때 가장 큰 실패 원인은?",
+            "options": [
+              "충분한 엔지니어가 없어서 새로운 팀을 늘린다",
+              "시스템 이해에 수년이 필요해 설계가 지연된다",
+              "리더십이 개선을 원하지 않는다",
+              "최신 제품 요구가 없기 때문이다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 시스템을 제대로 이해하려면 수년이 걸리며, 그 기간 동안 설계가 불완전해져 재구축이 실패한다고 지적한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
