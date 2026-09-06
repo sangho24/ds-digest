@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-05T00:29:42.377564+00:00",
+ "generated_at": "2026-09-06T00:24:44.739367+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -6462,6 +6462,21 @@
  ],
  "recent_events": [
   {
+   "org": "openai",
+   "repo_id": "https://openai.com/index/gpt-6-astra",
+   "transition": "announced",
+   "observed_at": "2026-09-06T00:24:44.739367Z",
+   "at": "2026-09-03T11:00:00Z",
+   "source_url": "https://openai.com/index/gpt-6-astra",
+   "method": "official_rss",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "title": "GPT-6 Astra: A new generation of intelligence"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
    "transition": "repo_created",
@@ -7825,36 +7840,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-Layered",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-17T06:02:34Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-Layered",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2512.15603"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen-Image"
-    ]
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 581,
-  "events": 581
+  "events": 582
  }
 }
