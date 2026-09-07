@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 08일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 08일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 비용 효율성</span><span class="concept">병렬 처리</span><span class="concept">언어 모델링</span><span class="concept">재무 데이터 추적</span><span class="concept">스타트업 성장 지표</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">문서 기반 지식 관리</span><span class="concept">기술 작가의 제품 소유권</span><span class="concept">AI 기반 문서 구조화</span><span class="concept">지식 관리</span><span class="concept">문서화</span><span class="concept">조직 지식 기반</span><span class="concept">문서 검색 자동화</span><span class="concept">개발자 경험 개선</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://vllm.ai/blog/2026-08-23-speculative-decoding-amd-gpus" target="_blank" rel="noopener">Speculative Decoding in vLLM on AMD GPUs</a>
+        </h2>
+
+        <p class="summary">LLM 서빙 시 토큰 처리량을 크게 높이는 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Speculative decoding은 vLLM이 하나의 타깃 모델 호출로 여러 초안 토큰을 검증해 토큰 처리량을 높인다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>효과는 초안 방법, 제안 길이, 모델 패밀리, 초안 체크포인트, 워크로드, 수용 행동 등에 따라 달라진다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AMD Instinct MI300X·MI355X GPU와 ROCm 환경에서 구현·튜닝 방법과 관측 포인트를 제공한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>실시간 번역 파이프라인에 초안‑검증 토큰 생성을 적용해 응답 지연을 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>IDE 코드 자동완성에서 경량 초안 모델이 후보 코드를 제시하고 대형 모델이 검증하도록 하여 제안 속도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템에서 가벼운 초안 모델이 후보 아이템을 제시하고 무거운 모델이 검증하도록 하여 전체 처리량을 향상시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Speculative decoding이 토큰 처리량 향상 효과가 감소하는 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 초안 토큰의 수용률이 낮을 때</div>
+            
+            <div class="q-opt">② GPU 메모리가 충분할 때</div>
+            
+            <div class="q-opt">③ 모델 크기가 작을 때</div>
+            
+            <div class="q-opt">④ CPU 추론을 사용할 때</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 초안 토큰의 수용률이 낮을 때</div>
+              <div class="why">수용률이 낮으면 검증 단계에서 커밋되는 토큰 수가 적어져, 하나의 타깃 모델 호출당 얻는 이득이 감소한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">표준 자동회귀 디코딩에서 네 개의 토큰을 생성하려면 몇 번의 모델 디코드 단계가 필요한가?</div>
+            
+            <div class="q-opt">① 한 번</div>
+            
+            <div class="q-opt">② 두 번</div>
+            
+            <div class="q-opt">③ 네 번</div>
+            
+            <div class="q-opt">④ 여덟 번</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 네 번</div>
+              <div class="why">자동회귀 디코딩은 토큰당 하나의 디코드 단계가 필요하므로 네 토큰은 네 번의 단계가 필요하다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">vLLM</span><span class="tag">AMD</span><span class="tag">ROCm</span><span class="tag">MI300X</span><span class="tag">speculative decoding</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/655" target="_blank" rel="noopener">📊국내 테크기업 569곳, 55개월 추적해서 찾아낸 '생존의 조건'</a>
+        </h2>
+
+        <p class="summary">인건비 효율 지표가 기업 생존을 예측</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>569개 국내 테크기업을 55개월간 계좌·세금·연금 데이터로 추적했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>다섯 가지 재무 상황 모두에서 인건비 효율 지표가 생존·폐업을 가르는 기준으로 작용했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>짝수·홀수 기업으로 나눠 32번 비교해도 패턴이 한 번도 뒤집히지 않았다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>인건비 효율 지표를 SaaS 구독 해지 예측 모델에 적용해 조기 이탈 위험을 감지한다</span></li>
+            
+            <li><span class="box"></span><span>매출 변동 이전에 현금 흐름 지표 변화를 감지해 투자 유치 시점을 최적화한다</span></li>
+            
+            <li><span class="box"></span><span>기업군을 짝·홀수로 나눠 정책 실험을 설계해 결과의 견고성을 검증한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">기업 생존을 가르는 핵심 지표는 무엇인가?</div>
+            
+            <div class="q-opt">① 매출 성장률</div>
+            
+            <div class="q-opt">② 인건비 효율 지표</div>
+            
+            <div class="q-opt">③ 투자 유치 규모</div>
+            
+            <div class="q-opt">④ 지원사업 참여 여부</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 인건비 효율 지표</div>
+              <div class="why">본문에서 인건비 효율을 보여주는 지표가 생존과 폐업을 가르는 기준이라고 명시했다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">55개월 추적에 포함되지 않은 데이터 유형은?</div>
+            
+            <div class="q-opt">① 계좌 거래</div>
+            
+            <div class="q-opt">② 세금계산서</div>
+            
+            <div class="q-opt">③ 국민연금 고용 기록</div>
+            
+            <div class="q-opt">④ 고객 만족 설문</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 고객 만족 설문</div>
+              <div class="why">본문에 계좌 거래·세금계산서·국민연금 고용 기록은 언급됐지만 고객 만족 설문은 언급되지 않았다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">오버더문글로벌</span><span class="tag">K뷰티</span><span class="tag">VC Talk</span><span class="tag">혁신의숲</span><span class="tag">Growth Bridge</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/technical-writing-2-eng" target="_blank" rel="noopener">2. Beyond Our Expertise</a>
+        </h2>
+
+        <p class="summary">기술 문서 전문성을 제품화해 지식 흐름 최적화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기술 작가는 단순 문서 작성자를 넘어 로드맵 설정·의사결정에 참여하는 메이커 역할을 수행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>문서와 지식을 AI가 활용하기 쉬운 구조로 설계하는 전문성이 제품 차별화 요소가 된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>'todoc'은 문서와 워크플로우를 연결해 작업 중 자연스럽게 지식이 축적되고 검색·활용이 용이하도록 설계된 시스템이다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 도구를 활용해 마이크로서비스 API 문서를 자동 생성·업데이트함으로써 일관성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>사용자 인터뷰 피드백 루프를 데이터 파이프라인 모니터링 대시보드 개선에 적용해 기능 우선순위를 실사용 요구에 맞춘다.</span></li>
+            
+            <li><span class="box"></span><span>CI/CD 파이프라인에 문서 시스템을 연동해 코드 변경 시 지식 베이스가 자동으로 최신화되도록 하여 검색성을 강화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Technical Writer가 제품을 구축하게 된 근본적인 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 비용 절감</div>
+            
+            <div class="q-opt">② 문서와 지식이 제품의 핵심</div>
+            
+            <div class="q-opt">③ 디자인 요구</div>
+            
+            <div class="q-opt">④ 법적 규제</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 문서와 지식이 제품의 핵심</div>
+              <div class="why">본문에서 TW가 제품을 구축하는 이유는 문서와 지식이 제품의 근본적인 내용이기 때문이라고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">‘todoc’이 목표로 하는 핵심 기능은 무엇인가?</div>
+            
+            <div class="q-opt">① 문서와 워크플로우 연결</div>
+            
+            <div class="q-opt">② UI 디자인 자동화</div>
+            
+            <div class="q-opt">③ 데이터베이스 마이그레이션</div>
+            
+            <div class="q-opt">④ 서버 비용 최소화</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 문서와 워크플로우 연결</div>
+              <div class="why">본문에 ‘todoc’은 문서와 워크플로우를 연결해 지식이 자연스럽게 축적되고 쉽게 찾을 수 있게 만든다고 명시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss</span><span class="tag">Knowledge System Team</span><span class="tag">todoc</span><span class="tag">AI tools</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/technical-writing-1-eng" target="_blank" rel="noopener">1. Creating a Role That Didn’t Exist Before</a>
+        </h2>
+
+        <p class="summary">조직 지식 결핍은 AI 활용 효율을 저해하므로 DS가 문서·컨텍스트 관리에 주목해야 함</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>코드 자체는 결과만 보존하고 설계 의도와 결정 과정을 드러내지 않아 AI가 조직 고유 컨텍스트를 추론하기 어렵다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>진정한 단일 진실 원천(SSoT)은 코드와 그 주변 메타컨텍스트를 동시에 보유해야 하며, 이를 위해 기술 작가가 지식 그래프 기반 문서 시스템을 설계한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기술 작가의 역할이 단순 문서 작성에서 조직 전반의 지식 흐름을 설계·운영하는 시스템 엔지니어링으로 진화하고 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 버전 관리에 지식 그래프형 문서를 적용해 재현성을 강화한다</span></li>
+            
+            <li><span class="box"></span><span>AI 보조 문서 자동 생성으로 모델 배포 시 컨텍스트 정보를 실시간 제공해 온보딩 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>코드와 스키마를 동시에 관리하는 ‘코드+컨텍스트’ 저장소를 구축해 피처 스토어의 데이터 라인리지 추적을 체계화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 코드만으로는 AI가 조직 고유의 컨텍스트를 이해하기 어려운가?</div>
+            
+            <div class="q-opt">① 코드에 주석이 없기 때문</div>
+            
+            <div class="q-opt">② 코드가 실행 결과만 저장하기 때문</div>
+            
+            <div class="q-opt">③ AI 모델이 코드를 읽지 못하기 때문</div>
+            
+            <div class="q-opt">④ 조직 정책이 제한적이기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 코드가 실행 결과만 저장하기 때문</div>
+              <div class="why">코드는 결과만 보존하고 설계 의도와 결정 과정을 담지 않으므로 AI가 필요한 배경 정보를 추론할 수 없다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">SSoT가 완전하려면 어떤 두 요소가 필요하다고 저자는 주장하는가?</div>
+            
+            <div class="q-opt">① 코드와 테스트</div>
+            
+            <div class="q-opt">② 코드와 문서</div>
+            
+            <div class="q-opt">③ 코드와 데이터</div>
+            
+            <div class="q-opt">④ 코드와 UI</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 코드와 문서</div>
+              <div class="why">저자는 코드와 그 주변 컨텍스트(문서)가 모두 있어야 진정한 단일 진실 원천이 된다고 강조한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss</span><span class="tag">AI</span><span class="tag">Technical Writers</span><span class="tag">Single Source of Truth</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/toss-frontend-ai-docs-eng" target="_blank" rel="noopener">How Documents Find Developers at Toss</a>
+        </h2>
+
+        <p class="summary">문서검색지연을실시간질의형답변으로전환해개발효율을높인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전통 문서는 작성자 관점의 경로 의존성으로 인해 원하는 정보를 찾기 어렵다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>개발자는 동료에게 질문하는 것이 가장 빠른 지식 획득 방법이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Mr. Park는 질문-답변 형태로 문서를 제공해 즉시성을 확보한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 사이언스 팀이 데이터셋 메타데이터에 대해 Q&A 형식 문서 시스템을 도입해 분석가가 필요한 스키마 정보를 실시간으로 조회한다</span></li>
+            
+            <li><span class="box"></span><span>내부 API 문서를 Q&A 챗봇으로 전환해 신규 엔지니어의 온보딩 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>CI 파이프라인 오류 원인을 문서 기반 Q&A 엔진에 연결해 빌드 실패 시 자동으로 원인과 해결책을 제시한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">문서 경로 의존성이란 무엇을 의미하는가?</div>
+            
+            <div class="q-opt">① 사용자가 원하는 정보를 찾기 위해 미리 정해진 경로를 따라야 함</div>
+            
+            <div class="q-opt">② 문서가 자동으로 업데이트되는 것</div>
+            
+            <div class="q-opt">③ 문서가 여러 언어로 제공되는 것</div>
+            
+            <div class="q-opt">④ 문서가 검색 엔진에 최적화된 것</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 사용자가 원하는 정보를 찾기 위해 미리 정해진 경로를 따라야 함</div>
+              <div class="why">본문에서 경로 의존성은 사용자가 정보를 얻기 위해 predetermined route를 따라야 함을 뜻한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Mr. Park가 목표로 하는 문서의 특성은 무엇인가?</div>
+            
+            <div class="q-opt">① 정적 매뉴얼</div>
+            
+            <div class="q-opt">② 동료처럼 즉시 답변 제공</div>
+            
+            <div class="q-opt">③ 코드 자동 생성</div>
+            
+            <div class="q-opt">④ 데이터 시각화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 동료처럼 즉시 답변 제공</div>
+              <div class="why">Mr. Park는 문서를 동료처럼 즉시 응답하는 형태로 제공한다는 것이 목표이다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Mr. Park</span><span class="tag">Toss</span><span class="tag">Slack</span><span class="tag">Frontend Chapter</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
