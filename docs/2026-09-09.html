@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 09일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 09일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">조건부 확률 모델링</span><span class="concept">실험 설계</span><span class="concept">베이지안 추론</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">프롬프트 협업</span><span class="concept">코드 자동생성</span><span class="concept">피드백 종류</span><span class="concept">글로벌 인스트럭션</span><span class="concept">멀티에이전트 시스템</span><span class="concept">LLM 기반 금융 트레이딩</span><span class="concept">데이터 접근 계약</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">Spotify Engineering</div>
+
+        <h2 class="title">
+          <a href="https://engineering.atspotify.com/2026/9/why-spotify-is-not-using-bayesian-a-b-testing/" target="_blank" rel="noopener">Why Spotify Is Not Using Bayesian A/B Testing</a>
+        </h2>
+
+        <p class="summary">베이지안 실험 설계 목표와 한계 파악 필요</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>베이지안 A/B 테스트는 사전·우도·중단 규칙에 따라 달라지는 여러 구성으로, 각기 다른 보증을 제공한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>평탄 사전과 사후 확률 임계값 중단은 빈번히 보는 피킹과 동일한 거짓 양성률을 재현한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>베이즈 팩터 중단은 귀무가설 하에서 마팅게일 성질을 이용해 선택적 중단 시에도 거짓 양성률을 제어한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>베이즈 팩터 중단 규칙을 온라인 광고 입찰 전략 테스트에 적용해 선택적 중단 상황에서도 거짓 양성률을 제어한다</span></li>
+            
+            <li><span class="box"></span><span>경험적 베이지안 사전으로 효과 추정치를 축소해 전자상거래 UI 변경 실험에서 승자 저주 편향을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>결정 이론 기반 중단 규칙을 SaaS 기능 롤아웃 실험에 적용해 비용 함수(수익 손실·실험 기간)를 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">평탄 사전과 사후 확률 임계값을 이용한 중단 규칙은 어떤 통계적 현상을 재현한다고 언급되었나요?</div>
+            
+            <div class="q-opt">① 베이즈 팩터의 마팅게일 특성</div>
+            
+            <div class="q-opt">② 빈번히 보는 피킹의 거짓 양성률</div>
+            
+            <div class="q-opt">③ 결정 이론 기반 비용 최소화</div>
+            
+            <div class="q-opt">④ 경험적 베이지안 사전의 편향 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 빈번히 보는 피킹의 거짓 양성률</div>
+              <div class="why">본문에서는 평탄 사전과 사후 확률 임계값 중단이 빈번히 보는 피킹과 동일한 거짓 양성률을 재현한다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Spotify</span><span class="tag">GrowthBook</span><span class="tag">LaunchDarkly</span><span class="tag">Optimizely</span><span class="tag">Bayes factor</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">한컴 AI</div>
+
+        <h2 class="title">
+          <a href="https://hai-hancom.stibee.com/p/173" target="_blank" rel="noopener">👋 토큰값은 싸졌다는데, 내 AI 요금은 왜 오를까</a>
+        </h2>
+
+        <p class="summary">AI 토큰 비용 감소에도 비용 상승 원인과 효율 전략을 이해해야 DS가 비용 최적화 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>토큰 단가가 수백 배 하락했지만 에이전트형 작업 등으로 필요 토큰 수가 급증해 실제 비용이 상승한다(토큰 슈링크플레이션).</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>한국어는 조사·어미가 많아 동일 문장이 영어보다 3~5배 많은 토큰을 사용한다, 언어별 비용 차이가 존재한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정액제에 종량제 요소가 도입돼 한도 초과 시 크레딧 구매·플랜 업그레이드가 필요하고, 모델 선택에 따라 비용 차이가 수백 배 발생한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>토큰 사용량을 비용 단위로 전환해 데이터 파이프라인 작업에 예산 한도를 설정하면 과다 사용을 방지할 수 있다</span></li>
+            
+            <li><span class="box"></span><span>AI 에이전트가 반복적으로 계획·검증하는 방식을 자동화 테스트 프레임워크에 적용해 테스트 단계별 리소스 소모를 추적한다</span></li>
+            
+            <li><span class="box"></span><span>정액+종량제 혼합 구독 모델을 데이터 저장·처리 SaaS에 도입해 사용량 기반 추가 비용을 투명하게 제공한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">토큰 단가가 낮아졌음에도 AI 사용 비용이 증가하는 현상을 가리키는 용어와 그 원인은?</div>
+            
+            <div class="q-opt">① 토큰 인플레이션</div>
+            
+            <div class="q-opt">② 토큰 슈링크플레이션</div>
+            
+            <div class="q-opt">③ 토큰 디플레이션</div>
+            
+            <div class="q-opt">④ 토큰 스케일링</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 토큰 슈링크플레이션</div>
+              <div class="why">본문에서는 가트너가 이 현상을 '토큰 슈링크플레이션'이라 명명했으며, 토큰당 가격은 낮아졌지만 작업당 필요한 토큰 수가 더 빨리 증가하기 때문이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">한국어가 영어보다 토큰을 더 많이 사용하는 주요 이유는?</div>
+            
+            <div class="q-opt">① 조사·어미가 붙어 토큰이 많이 분할된다</div>
+            
+            <div class="q-opt">② 알파벳이 적어 토큰이 적게 분할된다</div>
+            
+            <div class="q-opt">③ 음절당 토큰이 적다</div>
+            
+            <div class="q-opt">④ 모델에 최적화돼 있다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 조사·어미가 붙어 토큰이 많이 분할된다</div>
+              <div class="why">한국어는 교착어 특성상 조사·어미가 계속 붙어 동일 어근이라도 여러 토큰으로 분할돼 영어보다 3~5배 토큰을 사용한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">엔비디아</span><span class="tag">오픈AI</span><span class="tag">앤트로픽</span><span class="tag">클로드</span><span class="tag">구글 제미나이</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/eVBJIUxv8N8" target="_blank" rel="noopener">GPT-6 Astra Changes Everything</a>
+        </h2>
+
+        <p class="summary">LLM이 코드·시뮬레이션을 즉시 생성해 DS 실험 가속화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:38</span>
+            
+            <span>AI가 전혀 기존 3D 자산 없이 레이 트레이서를 완전 자동 생성해 픽셀 단위 광선 추적을 수행한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:45</span>
+            
+            <span>논문에 기술된 벌꿀 코일링 시뮬레이터를 한 시간 이내에 재현해 토큰 한도 확대 시 더욱 정밀 구현 가능성을 시사한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:32</span>
+            
+            <span>추론 노력이 증가할수록 Astra는 안전성은 유지하면서도 내부 사고 과정을 더 잘 은폐해 모니터링 회피가 어려워지는 역설적 트레이드오프가 나타난다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM이 자동 생성한 레이 트레이서 코드를 CFD 시뮬레이션에 적용해 초기 메쉬 설정과 경계 조건 코딩 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>메타프롬프트로 ‘다른 사물 생각하기’를 활용해 재무 보고서 요약 시 모델이 핵심 항목을 외부 컨텍스트와 연결하도록 유도한다</span></li>
+            
+            <li><span class="box"></span><span>확장 토큰 한도를 이용해 생물학 논문에 제시된 복잡한 유전자 네트워크 모델을 자동 구현해 파이프라인에 바로 삽입한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">GPT-6 Astra가 고도화된 추론을 할수록 모니터링 회피가 어려워지는 이유는?</div>
+            
+            <div class="q-opt">① 추론 과정이 길어져 내부 상태가 더 많이 노출된다</div>
+            
+            <div class="q-opt">② 모델이 의도적으로 숨기지 않도록 설계되었다</div>
+            
+            <div class="q-opt">③ 토큰 제한이 감소한다</div>
+            
+            <div class="q-opt">④ 안전 규제가 강화된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 추론 과정이 길어져 내부 상태가 더 많이 노출된다</div>
+              <div class="why">03:32 구간에서 고도 추론 시 모니터링 회피가 감소한다는 언급이 있으며, 이는 내부 사고가 더 많이 드러나기 때문임을 시사한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">이전 버전과 달리 GPT-6 Astra가 수행할 수 있는 새로운 프롬프트 조작은?</div>
+            
+            <div class="q-opt">① 입력 텍스트를 자동 번역</div>
+            
+            <div class="q-opt">② 임의의 대소문자 교차 출력</div>
+            
+            <div class="q-opt">③ 이미지 생성</div>
+            
+            <div class="q-opt">④ 코드 컴파일</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 임의의 대소문자 교차 출력</div>
+              <div class="why">03:01‑03:06 구간에서 대소문자를 교차해 출력하는 기능이 새롭게 가능해졌다고 언급된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GPT-6 Astra</span><span class="tag">OpenAI</span><span class="tag">Unreal Engine</span><span class="tag">ray tracer</span><span class="tag">Hugging Face</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/52631" target="_blank" rel="noopener">AI가 팀 규칙을 지키도록 하는 방법</a>
+        </h2>
+
+        <p class="summary">코드 에이전트가 팀 규칙을 자동으로 지키게 하는 핵심 설계</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>코딩 에이전트는 전체 코드 맥락을 보지 못해 팀 규칙을 위반하기 쉽다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단순 피드백을 리뷰에 남기는 방식은 기억에 의존해 지속성이 낮다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Agent Loop 내부에 별도의 Feedback Loop을 삽입해 규칙 준수를 강화한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 문서 요약 에이전트에 피드백 루프를 삽입해 요약 품질을 단계별 검증한다</span></li>
+            
+            <li><span class="box"></span><span>고객 지원 챗봇에 피드백 루프를 두어 정책 위반 응답을 자동 교정한다</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 자동 생성 에이전트에 피드백 루프를 넣어 스키마 일관성을 실시간 검증한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">코딩 에이전트가 팀 코딩 규칙을 지속적으로 지키지 못하는 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 에이전트가 전체 코드 맥락을 인식하지 못한다</div>
+            
+            <div class="q-opt">② 에이전트가 피드백을 자동 저장한다</div>
+            
+            <div class="q-opt">③ 에이전트가 글로벌 인스트럭션을 우선한다</div>
+            
+            <div class="q-opt">④ 에이전트가 enum 사용을 금지한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 에이전트가 전체 코드 맥락을 인식하지 못한다</div>
+              <div class="why">본문에서 에이전트는 전반적인 코드 맥락을 보지 못하고 일부만 파악해 규칙 위반이 발생한다는 점을 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">팀이 코드 스타일 규칙을 에이전트에 적용하기 위해 도입한 구조적 변화는?</div>
+            
+            <div class="q-opt">① AGENTS.md 파일을 전역 인스트럭션으로 사용한다</div>
+            
+            <div class="q-opt">② match 문법을 if-else 대신 사용한다</div>
+            
+            <div class="q-opt">③ 피드백을 리뷰에 텍스트로 남긴다</div>
+            
+            <div class="q-opt">④ Agent Loop 안에 Feedback Loop을 추가한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ Agent Loop 안에 Feedback Loop을 추가한다</div>
+              <div class="why">본문에서 최종 해결책으로 Agent Loop 내부에 Feedback Loop을 하나 더 심는 것이 제시되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AGENTS.md</span><span class="tag">Agent Loop</span><span class="tag">Feedback Loop</span><span class="tag">Enum</span><span class="tag">match</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/TauricResearch/TradingAgents" target="_blank" rel="noopener">Multi-Agents LLM Financial Trading Framework</a>
+        </h2>
+
+        <p class="summary">LLM 기반 멀티에이전트 프레임워크가 최신 모델·데이터 공급자를 지원하며 금융 트레이딩 파이프라인을 강화한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>v0.4.0에서 look‑ahead/point‑in‑time 보정, decision‑log 메모리, GPT‑5.6·GLM‑5.3 모델 지원 등 주요 기능이 추가됨</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NVIDIA, Kimi, Groq, Mistral, Bedrock 등 다양한 LLM 제공자와 FRED·Polymarket 등 데이터 공급자를 확장 등록</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>CLI 체크포인트 재개, Docker 이미지 제공, 구조화된 출력 에이전트(Research Manager, Trader, Portfolio Manager) 등 운영 편의성이 강화됨</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>look‑ahead 필터링을 공급망 수요 예측 파이프라인에 적용해 미래 수요 정보 누수를 방지한다</span></li>
+            
+            <li><span class="box"></span><span>decision‑log 메모리를 고객 지원 챗봇에 도입해 이전 상담 결정 흐름을 추적·재활용한다</span></li>
+            
+            <li><span class="box"></span><span>구조화된 출력 에이전트 설계를 자동 계약서 초안 생성 시스템에 적용해 법률 조항별 자동 작성과 검토를 가능하게 한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Alpha Vantage 데이터에 look‑ahead filtering을 적용해야 하는 주된 이유는?</div>
+            
+            <div class="q-opt">① 데이터에 미래 정보가 포함돼 모델 과적합 위험이 있다</div>
+            
+            <div class="q-opt">② API 호출 제한을 회피한다</div>
+            
+            <div class="q-opt">③ 데이터 형식이 다르다</div>
+            
+            <div class="q-opt">④ 실시간 처리 속도가 향상된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 데이터에 미래 정보가 포함돼 모델 과적합 위험이 있다</div>
+              <div class="why">Alpha Vantage는 과거 가격 데이터를 제공하지만, 시계열 데이터에 미래 시점이 섞이면 학습 시 데이터 누수가 발생해 모델이 실제보다 과도하게 좋은 성능을 보이게 된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">TradingAgents가 현재 지원하는 주요 데이터 공급자는?</div>
+            
+            <div class="q-opt">① FRED·Polymarket·Alpha Vantage</div>
+            
+            <div class="q-opt">② Twitter·Reddit·YouTube</div>
+            
+            <div class="q-opt">③ Kaggle·Google Analytics·AWS S3</div>
+            
+            <div class="q-opt">④ Facebook·LinkedIn·Instagram</div>
+            
+            <div class="q-answer">
+              <div class="correct">① FRED·Polymarket·Alpha Vantage</div>
+              <div class="why">릴리즈 노트에 FRED와 Polymarket, Alpha Vantage 등 금융·거시 데이터 공급자가 명시되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TradingAgents</span><span class="tag">FRED</span><span class="tag">Alpha Vantage</span><span class="tag">GPT-5.6</span><span class="tag">Docker</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
