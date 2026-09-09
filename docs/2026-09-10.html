@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 10일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 10일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">optimal transport estimation</span><span class="concept">nonasymptotic oracle inequality</span><span class="concept">minimax rate analysis</span><span class="concept">기술 부채 관리</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">개발자 경험 개선</span><span class="concept">오프라인-온라인 연계 전략</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">멀티에이전트 시스템</span><span class="concept">프롬프트 협업</span><span class="concept">AI 생산성 도구</span><span class="concept">코드 자동생성</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ME</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.09089v1" target="_blank" rel="noopener">Sieve Estimation of Optimal Transport Maps from Paired Data in Gaussian Spaces</a>
+        </h2>
+
+        <p class="summary">고차원 가우시안 데이터에서 최적 수송 지도 추정법 제공</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>무한 차원의 Hilbert 공간에서 가우시안 기준 측정 하에 잡음이 섞인 쌍 관측을 이용해 OT 지도를 추정하는 문제를 다룬다. 기존 방법은 독립 샘플이나 저차원 가정에 의존했으나, 본 연구는 원통형 sieve 회귀로 문제를 유한 차원 ERM으로 전환하고 최소극대율을 보인다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Cameron–Martin gradient를 이용한 원통형 sieve를 제안해 잡음이 섞인 쌍 데이터로 무한 차원 OT 지도 추정 가능</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>근사·확률·조건부 오차를 구분하는 비점근적 oracle 부등식을 도출하고 N^{-s/(2s+1)} 최소극대율을 달성</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>출력 정규성만으로는 원통형 근사가 불가능해 입력 정규성 지수 또는 유한 혼돈 차수를 요구하며, Hermite sieve가 동일 속도를 얻음</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>원통형 sieve를 고차원 시계열 변수 간 비선형 관계 추정에 적용해 측정 잡음에 강건한 예측 모델을 만든다</span></li>
+            
+            <li><span class="box"></span><span>조건부 Gaussian Poincaré 논리를 활용해 Gaussian 잠재공간을 갖는 생성 모델의 정규성 요구조건을 분석, 설계 단계에서 과적합 위험을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>Hermite sieve를 고차원 Gaussian 임베딩을 사용하는 강화학습 정책 네트워크의 비선형 변환 근사에 활용해 샘플 효율성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">이 논문에서 제시한 최소극대 하한률은 어떤 형태인가?</div>
+            
+            <div class="q-opt">① N^{-s/(2s+1)}</div>
+            
+            <div class="q-opt">② N^{-1/2}</div>
+            
+            <div class="q-opt">③ N^{-s/(s+1)}</div>
+            
+            <div class="q-opt">④ N^{-2s/(2s+1)}</div>
+            
+            <div class="q-answer">
+              <div class="correct">① N^{-s/(2s+1)}</div>
+              <div class="why">초록에 최소극대 하한이 N^{-s/(2s+1)} 형태라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">출력 정규성만으로 원통형 근사가 불가능할 때 요구되는 추가 조건은?</div>
+            
+            <div class="q-opt">① 입력 정규성 지수</div>
+            
+            <div class="q-opt">② 유한 혼돈 차수</div>
+            
+            <div class="q-opt">③ 입력 정규성 지수와 유한 혼돈 차수 모두</div>
+            
+            <div class="q-opt">④ 위 조건들 중 어느 것도 필요하지 않음</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 입력 정규성 지수와 유한 혼돈 차수 모두</div>
+              <div class="why">본문에 따르면 일반 Sobolev 잠재에선 입력 정규성 지수가 필요하고, 혼돈 차수가 제한된 경우 그 차수 제한이 역할을 하므로 두 조건이 모두 요구된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Hilbert space</span><span class="tag">Gaussian reference measure</span><span class="tag">Cameron–Martin gradient</span><span class="tag">Cylindrical sieve</span><span class="tag">Hermite sieve</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/52999" target="_blank" rel="noopener">App Router의 장점은 우리에게도 장점일까요?</a>
+        </h2>
+
+        <p class="summary">App Router 도입 비용이 이득보다 커서 포기</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>App Router는 컴포넌트 단위 데이터 페칭과 Suspense로 준비된 영역부터 렌더링할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험 결과 Chromium은 64ms, WebKit은 5,065ms에 첫 화면을 그렸으며 WebKit은 마지막 섹션이 준비될 때까지 표시를 미뤘다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전환 비용이 UI 성능 향상보다 커서 App Router 도입을 포기했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>모바일 전자상거래 앱에서 Suspense를 활용해 위쪽 상품 이미지만 먼저 표시해 인지된 로드 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>대시보드 페이지를 브라우저별로 섹션별 지연을 시뮬레이션해 FCP를 측정하고, UI 스켈레톤 설계에 반영한다.</span></li>
+            
+            <li><span class="box"></span><span>프론트엔드 프레임워크 전환 비용과 기대 성능 이득을 정량화해 핀테크 서비스의 마이크로서비스 전환 여부를 판단한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 WebKit의 FCP가 Chromium보다 크게 지연되었나요?</div>
+            
+            <div class="q-opt">① WebKit은 모든 Suspense 영역이 준비될 때까지 첫 화면을 표시하지 않는다</div>
+            
+            <div class="q-opt">② WebKit의 JavaScript 엔진이 느리다</div>
+            
+            <div class="q-opt">③ 테스트에서 WebKit에만 큰 이미지가 사용되었다</div>
+            
+            <div class="q-opt">④ WebKit은 getServerSideProps를 지원하지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① WebKit은 모든 Suspense 영역이 준비될 때까지 첫 화면을 표시하지 않는다</div>
+              <div class="why">본문에 따르면 WebKit은 마지막 섹션이 준비될 때까지 첫 표시를 미루는 동작을 보여준다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">팀이 App Router 도입을 포기한 주요 이유는 무엇인가요?</div>
+            
+            <div class="q-opt">① React Server Components 지원 부족</div>
+            
+            <div class="q-opt">② 전환 및 유지 비용이 UI 이득보다 컸다</div>
+            
+            <div class="q-opt">③ Android WebView와 호환되지 않는다</div>
+            
+            <div class="q-opt">④ Suspense가 Next.js에서 동작하지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전환 및 유지 비용이 UI 이득보다 컸다</div>
+              <div class="why">결론은 서비스 안정성을 유지하면서 전환·유지 비용이 이득보다 커서 도입하지 않기로 한 것이다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Next.js</span><span class="tag">App Router</span><span class="tag">React Server Components</span><span class="tag">Suspense</span><span class="tag">WebKit</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/482" target="_blank" rel="noopener">🥤 컬리와 오늘의집, 오프라인에서도 통하려면?</a>
+        </h2>
+
+        <p class="summary">오프라인 매장 설계에 데이터 기반 전문성·큐레이션 필요</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>피카드는 프랑스에서 방대한 냉동식품 라인업으로 전문성을 살렸지만, 일본에서는 제품 수를 축소해 차별성을 잃어 확장에 실패했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>컬리와 오늘의집은 온라인에서 구축한 큐레이션 강점을 오프라인에서도 유지하면서 반복 방문과 확장이 가능한 매장 포맷을 설계해야 한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>매장 규모와 고객 경험 사이의 균형을 맞추고, 플래그십 매장과 반복 방문 매장을 구분해 지속 가능한 확장성을 고려해야 한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>패션 브랜드가 팝업 스토어를 열 때, 온라인에서 제공하던 큐레이션된 제품 구성을 유지해 고객 체험을 강화하고, 이후 정규 매장 확대 여부를 판단한다</span></li>
+            
+            <li><span class="box"></span><span>공유 오피스 운영자가 모듈형 공간 설계를 적용해 규모와 이용자 경험을 조절함으로써 다양한 입지에 맞는 확장 가능한 워크스페이스를 제공한다</span></li>
+            
+            <li><span class="box"></span><span>SaaS 기업이 플래그십 데모와 정기 기능 업데이트 두 단계의 고객 접점을 만들어 초기 인지도 확보와 장기 사용률 상승을 동시에 추구한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">피카드가 일본에서 매장 수 확대에 실패한 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 현지 물류 비용 증가</div>
+            
+            <div class="q-opt">② 제품 종류를 크게 축소해 차별성 상실</div>
+            
+            <div class="q-opt">③ 현지 마케팅 부족</div>
+            
+            <div class="q-opt">④ 온라인 채널에만 집중</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 제품 종류를 크게 축소해 차별성 상실</div>
+              <div class="why">일본에서는 피카드가 제품 라인을 1천여 종에서 350종으로 축소하면서 차별성을 잃었고, 이는 고객이 매장을 찾을 동기를 감소시켜 확장에 실패한 핵심 원인이다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">컬리의 오프라인 매장 성공을 위해 가장 중요한 요소는?</div>
+            
+            <div class="q-opt">① 대형 매장 규모 확보</div>
+            
+            <div class="q-opt">② 온라인과 동일한 가격 정책 적용</div>
+            
+            <div class="q-opt">③ 온라인 큐레이션을 오프라인에서도 구현</div>
+            
+            <div class="q-opt">④ 전통적인 슈퍼마켓 모델 도입</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 온라인 큐레이션을 오프라인에서도 구현</div>
+              <div class="why">컬리는 온라인에서 구축한 큐레이션 강점을 오프라인에서도 구현해 고객에게 차별화된 경험을 제공해야 지속적인 방문과 매장 확장이 가능하다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">컬리</span><span class="tag">오늘의집</span><span class="tag">피카드</span><span class="tag">이케아</span><span class="tag">GS더프레시</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/z5Xix4h5UlU" target="_blank" rel="noopener">How Many Narrow AIs Could Behave Like One Superintelligence - Daniel Kokotajlo and Thomas Larsen</a>
+        </h2>
+
+        <p class="summary">AI 개발 속도 조절이 초지능 안전에 미치는 영향</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Plan A는 통제 가능한 최강 AI 수준까지 안전 인프라를 구축하며 개발을 일시 중단하는 전략을 제안한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI가 자체 연구자를 대체하고 경제를 유지할 경우, 통제와 정렬의 차이를 명확히 해야 한다는 논의가 제시된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>미국·중국이 AI 개발 속도 조절을 강제할 수 있는 정책적·기술적 한계와 증거 기반 예측 변화 조건을 탐색한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI 2040</span><span class="tag">AI 2027</span><span class="tag">OpenAI</span><span class="tag">Hugging Face</span><span class="tag">Cyber Fund</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">디플릭</div>
+
+        <h2 class="title">
+          <a href="https://dflick.stibee.com/p/110" target="_blank" rel="noopener">🥓 Grill-me, AI가 나를 웰던으로 만드는 과정</a>
+        </h2>
+
+        <p class="summary">AI 프롬프트 설계가 구현 효율을 좌우한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI /grill‑me는 구현 전 요구사항을 하나씩 질문해 ‘조건 정의’ 과정을 강제한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>요청이 막연하면 질문 횟수가 늘어나 전체 대화가 길어진다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>질문 수를 줄이려면 시작점을 구체화하고 사전 조건을 미리 정리한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 전처리 자동화 도구에 AI가 결측치 처리·스케일링 방법을 사전 질의하도록 하여, 사용자가 원하는 정제 흐름을 명확히 정의하고 오류를 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>모델 선택 지원 시스템에 AI가 데이터 규모·특성·비즈니스 목표를 단계별로 묻고, 그 답변을 기반으로 최적 모델·하이퍼파라미터 조합을 제안한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 시작 요청이 막연하면 AI가 질문을 더 많이 하는가?</div>
+            
+            <div class="q-opt">① AI가 누락된 조건을 추론하려 하기 때문에</div>
+            
+            <div class="q-opt">② AI의 토큰 제한이 낮기 때문에</div>
+            
+            <div class="q-opt">③ AI가 무작위로 질문을 생성하기 때문에</div>
+            
+            <div class="q-opt">④ AI가 오프라인 모드라서</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI가 누락된 조건을 추론하려 하기 때문에</div>
+              <div class="why">AI는 명확한 입력이 없을 경우 필요한 전제 조건을 파악하기 위해 추가 질문을 던져 구현 오류를 방지하려 한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI /grill‑me와 같은 도구가 사전 질의를 요구하는 주된 장점은?</div>
+            
+            <div class="q-opt">① 구현 오류 감소</div>
+            
+            <div class="q-opt">② 토큰 사용량 증가</div>
+            
+            <div class="q-opt">③ 배포 지연</div>
+            
+            <div class="q-opt">④ 사용자 인터페이스 복잡화</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 구현 오류 감소</div>
+              <div class="why">명확한 요구사항을 미리 정의함으로써 자동 생성 코드의 정확도가 높아지고, 사후 수정 비용이 줄어든다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">grill-me</span><span class="tag">GitHub</span><span class="tag">Dark mode</span><span class="tag">AI</span><span class="tag">Janet</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

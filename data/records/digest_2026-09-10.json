@@ -1,0 +1,408 @@
+{
+  "date": "2026-09-10",
+  "generated_at": "2026-09-09T22:21:42.021520",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ME",
+        "source_key": "arxiv:stat.ME",
+        "source_label": "arXiv:stat.ME",
+        "title": "Sieve Estimation of Optimal Transport Maps from Paired Data in Gaussian Spaces",
+        "url": "https://arxiv.org/abs/2609.09089v1",
+        "published_at": "2026-09-08T17:34:55",
+        "transcript": null,
+        "body": "We estimate optimal transport maps on an infinite-dimensional Hilbert space with a Gaussian reference measure, from noisy paired observations. A source draw is seen together with a noisy evaluation of its image, rather than through independent unpaired samples. The estimator is a cylindrical sieve of Cameron--Martin gradient maps, restricted to a compact parameter set; individual sieve elements need not be transport maps. It yields a finite regression contrast even though the noise has infinite Cameron--Martin norm, and reduces estimation to finite-dimensional empirical risk minimization. We establish a nonasymptotic oracle inequality separating approximation error, stochastic error and the local conditioning of the parametrization, together with a minimax lower bound of order $N^{-s/(2s+1)}$ under weighted coordinate regularity of order $s$. Output regularity alone does not deliver cylindrical approximation; for general Sobolev potentials an input-regularity index does, via a conditional Gaussian Poincaré argument, and for potentials of bounded chaos degree the degree bound plays that role, an orthogonal Hermite sieve then attaining the same rate with the interaction order replacing unity in the exponent. That rate is minimax on a diagonal Gaussian class and on a nonlinear block class whose interaction survives every fixed orthogonal change of coordinates.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "고차원 가우시안 데이터에서 최적 수송 지도 추정법 제공",
+        "tags": [
+          "Hilbert space",
+          "Gaussian reference measure",
+          "Cameron–Martin gradient",
+          "Cylindrical sieve",
+          "Hermite sieve"
+        ],
+        "concepts": [
+          "optimal transport estimation",
+          "nonasymptotic oracle inequality",
+          "minimax rate analysis"
+        ],
+        "key_points": [
+          {
+            "point": "Cameron–Martin gradient를 이용한 원통형 sieve를 제안해 잡음이 섞인 쌍 데이터로 무한 차원 OT 지도 추정 가능",
+            "timestamp": null
+          },
+          {
+            "point": "근사·확률·조건부 오차를 구분하는 비점근적 oracle 부등식을 도출하고 N^{-s/(2s+1)} 최소극대율을 달성",
+            "timestamp": null
+          },
+          {
+            "point": "출력 정규성만으로는 원통형 근사가 불가능해 입력 정규성 지수 또는 유한 혼돈 차수를 요구하며, Hermite sieve가 동일 속도를 얻음",
+            "timestamp": null
+          }
+        ],
+        "positioning": "무한 차원의 Hilbert 공간에서 가우시안 기준 측정 하에 잡음이 섞인 쌍 관측을 이용해 OT 지도를 추정하는 문제를 다룬다. 기존 방법은 독립 샘플이나 저차원 가정에 의존했으나, 본 연구는 원통형 sieve 회귀로 문제를 유한 차원 ERM으로 전환하고 최소극대율을 보인다.",
+        "production_ideas": [
+          "원통형 sieve를 고차원 시계열 변수 간 비선형 관계 추정에 적용해 측정 잡음에 강건한 예측 모델을 만든다",
+          "조건부 Gaussian Poincaré 논리를 활용해 Gaussian 잠재공간을 갖는 생성 모델의 정규성 요구조건을 분석, 설계 단계에서 과적합 위험을 감소시킨다",
+          "Hermite sieve를 고차원 Gaussian 임베딩을 사용하는 강화학습 정책 네트워크의 비선형 변환 근사에 활용해 샘플 효율성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "이 논문에서 제시한 최소극대 하한률은 어떤 형태인가?",
+            "options": [
+              "N^{-s/(2s+1)}",
+              "N^{-1/2}",
+              "N^{-s/(s+1)}",
+              "N^{-2s/(2s+1)}"
+            ],
+            "answer_index": 0,
+            "explanation": "초록에 최소극대 하한이 N^{-s/(2s+1)} 형태라고 명시되어 있다."
+          },
+          {
+            "question": "출력 정규성만으로 원통형 근사가 불가능할 때 요구되는 추가 조건은?",
+            "options": [
+              "입력 정규성 지수",
+              "유한 혼돈 차수",
+              "입력 정규성 지수와 유한 혼돈 차수 모두",
+              "위 조건들 중 어느 것도 필요하지 않음"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 따르면 일반 Sobolev 잠재에선 입력 정규성 지수가 필요하고, 혼돈 차수가 제한된 경우 그 차수 제한이 역할을 하므로 두 조건이 모두 요구된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "App Router의 장점은 우리에게도 장점일까요?",
+        "url": "https://toss.tech/article/52999",
+        "published_at": "2026-09-09T06:45:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80cd-8cc1-e901d449b9ac\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, 토스뱅크 프론트엔드 개발자 이다용입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-805b-bc47-f442bf71dcad\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스뱅크 프론트엔드에서는 Next.js Pages Router를 주로 사용해요. 그런데 Pages Router는 유지보수 모드예요. 보안 패치와 버그 수정은 이어지지만 새 기능은 들어오지 않죠. 언젠가 다음에 쓸 것을 정해야 했고, 가장 먼저 살펴본 선택지가 App Router와 React Server Components(RSC)였어요. 필요한 데이터를 컴포넌트마다 가져오고, 준비된 영역부터 보여준다는 점이 매력적이었거든요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8071-a5d8-d6f00036bb60\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">2025년 가을, 프레임워크에 관심 있는 동료들이 모여 기술그룹을 만들었어요. 현구님, 지우님, 현웅님과 실제 서비스를 옮겨보고 매주 막히는 지점을 공유했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80f3-b356-e84fe3249355\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">결론은 도입하지 않는 것이었어요. 저희 화면에서 얻을 수 있는 이득에 비해, 서비스의 안정성을 지키며 전환하고 유지하는 비용이 컸거든요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8039-8984-c7afa396a343\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">어떻게 그 결론에 닿았는지, 검토 과정에서 마주한 질문들을 따라 이야기해볼게요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80d6-adde-d25540d10030\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3d5a360d-33e3-800f-818c-ff4fc1b8efdd\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">준비된 것부터 보여주면 더 좋을까요?</span></span></span></h2><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8077-ba34-ee85a38afd5e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">기존에는 서버에서 화면을 그릴 때 필요한 데이터를 </span><code><span class=\"css-1mjnzsq\">getServerSideProps</span></code><span class=\"css-1kxrhf3\"> 한 곳에서 모아 가져왔어요. 페이지 단위로만 쓸 수 있다 보니, 저희 구현에서는 API 하나가 실패하면 정상적으로 받은 데이터까지 다시 요청하는 경우가 있었어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80ad-857c-eb1d873bbe72\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">App Router에서는 데이터를 가져오는 컴포넌트를 나누고 각각을 </span><code><span class=\"css-1mjnzsq\">Suspense</span></code><span class=\"css-1kxrhf3\">로 감싸, 준비된 영역부터 보여줄 수 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8086-aa46-e608fae01814\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스뱅크의 화면은 대부분 토스 앱 안의 웹뷰로 이뤄져 있고, 요소가 주로 세로 한 줄로 쌓여요. 이 구조에서도 영역을 따로 보여주는 것이 자연스러운지 직접 재봤어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8089-bd65-d068b880e7a2\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">세 영역에 각각 1초, 3초, 5초 지연을 주고, 브라우저가 화면을 언제 그리는지 녹화했어요. 웹뷰는 대부분 안드로이드에서 Chromium, iOS에서 WebKit으로 돌아가기 때문에 두 엔진을 함께 봤고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80c9-aaff-de51fa987860\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><figure class=\"css-of5acw\" id=\"3d5a360d-33e3-8033-9d06-d251c8344cf1\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/d5f55f7a-b783-4bc3-8a30-07e2518b3f5f/실서비스-비교-라벨.gif\" /></figure><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8000-80c0-ca2b989501e8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8095-9f0a-e9cad36b52cd\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">첫 콘텐츠가 그려지는 시점(FCP)이 Chromium에서는 64밀리초, WebKit에서는 5,065밀리초였어요. WebKit은 마지막 섹션이 준비될 때까지 첫 표시를 미뤘어요. 화면을 그리기 전에 콘텐츠가 충분한지 판단하는 기준이 있어서인데, 이 때문에 표시가 늦어지는 현상은 </span><a class=\"css-iynyr0\" href=\"https://bugs.webkit.org/show_bug.cgi?id=252413\" rel=\"noreferrer noopener\" target=\"_blank\">공개 이슈</a><span class=\"css-1kxrhf3\">에서도 논의되고 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80cf-9190-c6095f7ec55e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">우회는 가능했어요. 화면 위에 눈에 보이지 않는 SVG를 넣자 WebKit의 FCP가 103밀리초로 줄었어요. 두 엔진 모두 준비된 영역부터 그리기 시작한 거예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80d8-867f-f85b01a20790\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 먼저 그리기 시작하니 다음 문제가 보였어요. 스켈레톤이 실제 콘텐츠로 바뀔 때 높이가 달라지거든요. 세로로 쌓인 화면에서는 위쪽 영역의 높이가 늘어나면, 이미 보고 있던 아래쪽 내용까지 그만큼 아래로 밀렸어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-8066-93e7-dac08c9c265e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><figure class=\"css-of5acw\" id=\"3d5a360d-33e3-80e4-99e1-fd4e4df0c415\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/65e32491-3b15-40f3-b522-a8e4372160b6/이미지3-스켈레톤높이.gif\" /></figure><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80e0-8938-eac258a29321\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3d5a360d-33e3-80a6-94f",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "App Router 도입 비용이 이득보다 커서 포기",
+        "tags": [
+          "Next.js",
+          "App Router",
+          "React Server Components",
+          "Suspense",
+          "WebKit"
+        ],
+        "concepts": [
+          "기술 부채 관리",
+          "비동기 처리와 트랜잭션",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "App Router는 컴포넌트 단위 데이터 페칭과 Suspense로 준비된 영역부터 렌더링할 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험 결과 Chromium은 64ms, WebKit은 5,065ms에 첫 화면을 그렸으며 WebKit은 마지막 섹션이 준비될 때까지 표시를 미뤘다.",
+            "timestamp": null
+          },
+          {
+            "point": "전환 비용이 UI 성능 향상보다 커서 App Router 도입을 포기했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "모바일 전자상거래 앱에서 Suspense를 활용해 위쪽 상품 이미지만 먼저 표시해 인지된 로드 시간을 단축한다.",
+          "대시보드 페이지를 브라우저별로 섹션별 지연을 시뮬레이션해 FCP를 측정하고, UI 스켈레톤 설계에 반영한다.",
+          "프론트엔드 프레임워크 전환 비용과 기대 성능 이득을 정량화해 핀테크 서비스의 마이크로서비스 전환 여부를 판단한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 WebKit의 FCP가 Chromium보다 크게 지연되었나요?",
+            "options": [
+              "WebKit은 모든 Suspense 영역이 준비될 때까지 첫 화면을 표시하지 않는다",
+              "WebKit의 JavaScript 엔진이 느리다",
+              "테스트에서 WebKit에만 큰 이미지가 사용되었다",
+              "WebKit은 getServerSideProps를 지원하지 않는다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 WebKit은 마지막 섹션이 준비될 때까지 첫 표시를 미루는 동작을 보여준다."
+          },
+          {
+            "question": "팀이 App Router 도입을 포기한 주요 이유는 무엇인가요?",
+            "options": [
+              "React Server Components 지원 부족",
+              "전환 및 유지 비용이 UI 이득보다 컸다",
+              "Android WebView와 호환되지 않는다",
+              "Suspense가 Next.js에서 동작하지 않는다"
+            ],
+            "answer_index": 1,
+            "explanation": "결론은 서비스 안정성을 유지하면서 전환·유지 비용이 이득보다 커서 도입하지 않기로 한 것이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "seasonal",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤 컬리와 오늘의집, 오프라인에서도 통하려면?",
+        "url": "https://trendlite.stibee.com/p/482",
+        "published_at": "2026-09-08T00:00:00",
+        "transcript": null,
+        "body": "2026.09.09 26-036호   |   [잘림 없이 보기](https://stib.ee/hZHO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 컬리와 오늘의집, 오프라인에서도 통하려면?\n2. 올해 키아프를 확 달라 보이게 한 디테일 5가지\n3. Picked\\_ '한국적인 미감이 돋보인 자라 플래그십' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n컬리와 오늘의집, 오프라인에서도 통하려면?\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 프랑스에서 사랑받던 피카드는 1천여 종의 냉동식품을 갖춘 전문 매장이 강점이었지만, 일본에서는 이를 350종 규모의 소형 매장으로 줄이면서 굳이 찾아가야 할 이유를 충분히 만들지 못했습니다.\n2. 이는 오프라인 진출을 준비 중인 컬리와 오늘의집에도 중요한 시사점을 주는데, 채널이 달라지더라도 고객이 온라인에서 좋아했던 전문성과 큐레이션의 매력은 잃지 않아야 하기 때문이죠.\n3. 결국 컬리와 오늘의집의 오프라인 진출이 성공하려면 첫 매장을 멋지게 만드는 데 그치지 않고, 본연의 강점을 살리면서도 반복 방문과 지속적인 확장이 가능한 매장 포맷을 만들어야 할 겁니다.\n\n프랑스 국민 브랜드, 일본에선 안 통한 건  지난달 도쿄 여행 중 반가운 이름을 발견했습니다. 프랑스에서 가장 사랑받는 브랜드 중 하나인 피카드의 오프라인 매장이었죠. [피카드는 자체 냉동식품 브랜드 하나만으로 채운 전문 매장을 무려 1천여 개나 운영하는 대단한 기업](https://brunch.co.kr/@trendlite/325)인데요. 동시에 프랑스 내 기업 선호도 1위를 여러 차례 차지했을 정도로 사랑받는 브랜드이기도 합니다. 그런데 알고 보니 무려 10년 전인 2016년에 첫 매장을 열었을 만큼 일본에는 일찌감치 진출했더라고요.    반가운 마음에 찾아보니, 왜 그동안 몰랐는지 이유를 알 수 있었습니다. 진출 초기에는 불과 4년 만에 매장을 15개까지 늘렸지만, 이후 확장은 멈췄고요. 2024년 이후에는 오히려 매장 수가 줄어 11개 안팎을 유지하고 있었습니다. 일본 시장에 제대로 안착하는 데 실패한 겁니다.    프랑스에선 잘 통했던 모델이 일본에서 힘을 쓰지 못한 건, 자신들의 가장 강한 차별점을 충분히 살리지 못했다는 점이었습니다. 프랑스 현지에서 피카드를 보며 가장 감탄했던 건 1천여 종에 이르는 다양한 냉동식품으로 꽉 찬 매장이었습니다. 우리로 치면 GS더프레시 같은 슈퍼마켓 하나를 온전히 자체 냉동식품으로 채운 셈이었죠. 덕분에 피카드에서는 웬만한 장보기가 가능할 정도였고요.    그런데 일본에서는 이를 350종 규모의 소형 매장으로 축소했습니다. 그러다 보니 장을 보기에는 당연히 한계가 있었고요. 그렇다고 프랑스식 냉동식품 몇 개를 사기 위해 고객들이 굳이 매장을 찾게 만들기도 어려웠습니다. 결국 피카드 매장은 겨우 현상 유지하는 수준에 머물고 만 거죠.    물론 피카드가 일본에서 완전히 실패한 건 아닙니다. 온라인 채널과 현지 유통점 내 숍인숍 입점에 집중하는 쪽으로 전략을 바꿔 여전히 시장을 공략하고 있습니다. 여기서 얻은 경험을 바탕으로 한국 시장에 진출할 때는 직접 매장을 여는 대신 컬리 입점을 택한 것으로 보이고요. 다만 아쉬운 건 피카드만이 가진 가장 큰 매력이었던 자체 브랜드 전문 매장의 힘을 충분히 살리지 못했다는 점입니다. 그리고 이를 보면서 자연스레 오프라인 진출을 꿈꾸고 있는 컬리와 오늘의집이 떠올랐습니다.  채널은 달라져도 강점은 잃지 말아야  일본 피카드의 사례는 온라인에서 오프라인으로 확장을 꾀하는 브랜드들에게 좋은 시사점을 줍니다. 특히 [서울 강남권에 매장을 준비 중인 것으로 알려진 컬리](https://www.hankyung.com/article/202608043314i)와, [분당에서 첫 대형 매장을 준비 중이라는 오늘의집](https://www.hankyung.com/article/202609077413i)은 이를 주목할 필요가 있습니다. 이들의 가장 큰 강점 역시 피카드와 비슷하기 때문이죠.    컬리와 오늘의집은 각각 장보기와 리빙 분야에서 전문성을 가진 플랫폼입니다. 동시에 큐레이션을 중요한 차별점으로 내세우고 있기도 하죠. 따라서 고객들이 이들에게 기대하는 건 소수의 인기 상품을 오프라인에서 직접 보고 구매하는 경험만은 아닐 겁니다. 다양한 상품을 둘러보며 새로운 것을 발견하는 즐거움에 더 가까울 거예요.    그렇기에 이들은 효율만 생각해 매장을 지나치게 압축해서는 안 됩니다. 사실 피카드가 일본 진출 당시 상품 수를 줄인 데도 나름의 계산은 있었을 겁니다. 매장을 크게 열고 상품을 다양하게 가져갈수록 투자비와 운영 부담이 커지기 때문이죠. 하지만 그렇다고 효율을 따지느라 자신들의 색깔까지 잃어버려서는 안 됩니다. 아무리 비용을 줄여도 결국 고객이 찾지 않는 매장이 된다면 실패이기 때문입니다. 이는 피카드의 확장이 멈춘 이유이기도 하고요.    그런 면에서 컬리는 우려되는 지점이 일부 있고, 오늘의집은 상대적으로 방향성을 잘 잡은 것으로 보입니다. 먼저 컬리의 매장은 기존 식료품 매장과 달리 일부 상품을 선별해 보여주고, 구매는 온라인으로 연결하는 체험형 공간에 가까울 것이라고 업계에서는 추정하고 있습니다. 후보지로 알려진 강남역 카카오프렌즈 매장 건물은 210평 정도로 결코 작지 않지만, 컬리를 충분히 보여주기에는 넉넉한 규모라고 보기도 어렵거든요.    만약 그렇다면 확실히 찾아올 이유를 만들어줘야 합니다. 특정 카테고리나 상품군에 집중해, 온라인에서는 느끼기 어려운 경험을 주는 식으로 말이죠. 제한된 공간 안에서도 컬리에서만 느낄 수 있었던 좋은 큐레이션의 밀도를 얼마나 성공적으로 구현하느냐가 첫 상설 매장의 성패를 가를 겁니다.    반면 오늘의집은 아예 4,300평 규모의 대형 매장을 임차하는 방안을 검토 중인 것으로 알려져 있습니다. 적어도 공간의 한계 때문에 보는 재미를 걱정할 수준은 아닌 셈이죠. 애초에 이를 염두에 두고, 원래 홈플러스 매장으로 쓰이던 공간을 후보지로 삼은 것으로 보이기도 합니다.    다만 오늘의집이 다루는 리빙 카테고리의 경우, 가구나 조명처럼 부피가 큰 상품이 많습니다. 따라서 이 정도 규모로도 모든 강점을 구현하기에는 한계가 있을 수 있습니다. 결국 [이케아의 도심형 매장 사례처럼, 규모와 경험 사이의 균형](https://brunch.co.kr/@trendlite/587)을 어떻게 맞출지가 중요해질 겁니다.  이후 확장까지 반드시 고려해야 합니다  여기까지만 봐도 오프라인 진출은 정말 쉽지 않아 보입니다. 하지만 처음부터 반드시 고려해야 할 요소가 하나 더 있습니다. 바로 지속적인 확장 가능성까지 염두에 두고 설계해야 한다는 점입니다.    흔히 플래그십 스토어라 불리는 브랜드의 핵심 매장은 멋지게 만드는 것에만 집중해도 괜찮습니다. 하지만 한 번쯤 구경 가볼 만한 매장과, 주기적으로 들르며 뭐라도 사게 되는 매장은 성격이 완전히 다릅니다. 오프라인 진출을 장기적으로 돈을 버는 ‘진짜 비즈니스’로 만들려면, 후자에 맞게 매장 수를 계속 늘릴 수 있는 형태까지 고민해야 하고요.    이때 참고할 만한 것이 [대형마트](https://brunch.co.kr/@trendlite/533)나 [편의점의 혁신 매장들](https://brunch.co.kr/@trendlite/652)입니다. 이들은 고객 경험을 개선하기 위해 새로운 포맷을 꾸준히 선보여왔습니다. 하지만 그중 성공적으로 확장된 모델은 많지 않습니다. 지나치게 특정 상권에 맞춰 설계됐거나, 비슷한 조건의 입지를 반복해서 찾기 어려웠던 경우가 많았기 때문입니다. 성수나 명동에서만 운영될 수 있는 매장이 우리 동네에 생기기는 확실히 어렵죠.    그래도 다행인 건 컬리와 오늘의집이 이미 오프컬리와 오늘의집 북촌을 통해 브랜딩 목적의 오프라인 공간을 운영하며 꽤 많은 경험을 쌓아왔다는 점입니다. 그래서 이제 필요한 건 이를 바탕으로 무엇을 버리고, 무엇은 반드시 챙겨갈지 정리하는 일입니다. 멋지고 화제성만 챙겨도 되는 매장과 달리, 돈을 버는 매장에는 선택과 집중이 필요한 순간이 반드시 찾아오니까요.    이처럼 좋은 오프라인 진출은 온라인에서 사랑받던 강점을 제대로 옮기는 데서 시작해, 그 경험을 반복해서 확장할 수 있는 매장 포맷으로 만드는 데서 완성됩니다. 아직 베일에 싸여 있는 이들의 상설 매장이 본연의 매력을 살리면서도 지속적으로 늘려갈 수 있는 형태까지 갖출 수 있을지 벌써부터 궁금합니다. 실제로 문을 열게 된다면 한 번쯤 방문해 보시고요. 내가 좋아하던 온라인의 매력은 그대로 살아 있는지, 계속 방문할 가치가 있는 곳인지, 나아가 우리 동네에도 하나쯤 생길 만한 곳인지 따져보는 것도 흥미로운 일이 될 것 같습니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n올해 키아프를 확 달라 보이게 한 디테일 5가지\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 올해 키아프는 내년 프리즈와의 물리적 분리 개최를 앞두고 홀로서기 가능성을 보여줘야 하는 중요한 시점에 있었고, 정구호 디렉터 영입 이후 관람 경험을 크게 개선하는 데 집중했습니다.\n2. 특히 넓어진 통로, 늘어난 의자, 광장처럼 활용된 F&B 공간, 직관적인 동선 안내, 오디오 도슨트 같은 디테일을 통해 관람객이 더 오래 머무르고, 더 구석구석 둘러보며, 작품을 더 쉽게 이해할 수 있도록 만들었습니다.\n3. 다만 관람 경험이라는 ‘포장’만으로는 한계가 있는 만큼, 앞으로 키아프가 프리즈와 다른 자신만의 영역을 구축하려면 좋은 갤러리와 작가, 작품을 선별해 보여주는 큐레이션 경쟁력까지 함께 강화해야 할 겁니다.\n\n이제 진짜 홀로서야 할 때입니다    혹시 아트페어의 뜻을 아십니까? 수많은 갤러리가 모여 예술품을 선보이고 판매하는, 일종의 미술 장터를 뜻하는데요. 불과 수년 전만 해도 일반 대중에게는 낯설었던 아트페어가 우리에게 가까워진 건, [아트 바젤과 함께 세계 양대 아트페어로 불리는 프리즈가 서울에 등장](https://brunch.co.kr/@trendlite/390)하면서부터였습니다.    프리즈는 ‘프리즈 서울’이라는 이름으로 한국에 진출하면서 키아프 서울을 파트너로 택했습니다. 국내 최대 아트페어인 키아프와 공동 개최하면서 프리즈는 한국 시장에 성공적으로 안착할 발판을 마련했고요. 반대로 키아프는 아트페어의 외연을 넓히는 동시에 글로벌로 나아갈 기회를 얻은 셈이었죠.    그리고 올해는 원래 이들이 동행하기로 했던 5년간의 공동 개최 기간이 끝나는 마지막 해였습니다. 물론 내년에 바로 헤어지는 건 아닙니다. 2031년까지 계약을 연장했거든요. 하지만 코엑스라는 한 공간에서 함께 열리던 두 행사는 적어도 내년만큼은 물리적으로 떨어지게 됩니다. 코엑스 리뉴얼 공사에 따라 키아프는 그대로 남지만, 프리즈 서울은 DDP로 옮겨 처음으로 분리 개최될 예정이기 때문입니다.    그렇기에 올해는 프리즈와 키아프 모두에게 중요한 해였습니다. 재계약 이후 이어질 다음 5년의 청사진을 보여주는 무대였기 때문인데요. 특히 키아프는 프리즈와 떨어진 장소에서 혼자 열려도 지금의 흥행을 이어갈 수 있다는 가능성을 보여줘야 했습니다. 그리고 흥미롭게도 두 행사는 올해 서로 다른 방향으로 달라진 모습을 보여줬습니다.    우선 프리즈는 올해 신진 갤러리와 작가를 소개하던 ‘포커스 아시아(Focus Asia)’의 지역적 범위를 넓혀 ‘포커스(Focus)’로 확장 개편했고요. 여기에 신규 큐레이션 섹션인 ‘머티리얼 프랙티스(Material Practice)’와 ‘스포트라이트(Spotlight)’를 도입하며 큐레이션까지 강화했습니다. 자신들의 역할을 조금 더 선명하게 재정의한 거죠.    반면 키아프는 처음으로 외부 인사인 정구호 디렉터를 영입하고, 그를 중심으로 아트페어의 관람 경험을 개선하는 데 집중했습니다. 무엇보다 이러한 변화는 개인적으로도 상당히 직관적으로 다가왔는데요. 2023년 이후 꾸준히 방문했던 키아프 가운데 올해가 단연 최고라고 할 만했습니다. 그래서 오늘은 키아프가 완전히 달라졌다고 느끼게 만든 디테일 5가지를 소개해보려 합니다.  더 오래, 구석구석 살피며, 쉽게 이해하도록  새로워진 키아프의 요소들은 크게 세 가지 목적을 향하고 있었습니다. 먼저 더 쾌적한 관람 환경을 만들어 오래 머무르게 했고요. 그동안 상대적으로 소외됐던 공간까지 자연스럽게 이동하도록 관람객의 동선을 확장했습니다. 마지막으로 이 모든 과정에서 일반 대중이 작품을 조금 더 쉽게 이해할 수 있도록 도왔죠.    ① 통로 확장 : 가장 먼저 눈에 띈 건 한층 쾌적해진 공간이었습니다. 이런 인상을 만든 건 기존보다 확실히 넓어진 통로였는데요. 답답함이 줄어들면서 훨씬 편하게 이동할 수 있었고, 자연스럽게 더 오래 머무르고 싶게 만들었습니다.    ② 늘어난 의자 : 아트페어에 가면 보통 몇 시간씩 돌아다니게 됩니다. 그러다 보니 다리가 아플 수밖에 없는데요. 대표적인 휴게 공간인 VIP 라운지는 일반 관람객에게 접근성이 낮았습니다. 이번 키아프는 중간중간 의자를 많이 배치하며 이를 보완했습니다. 넓어진 통로 곳곳에 휴게 공간을 마련한 거였죠. 덕분에 관람 만족도도 높아질 수밖에 없었습니다.    ③ 광장처럼 만든 F&B 공간 : 키아프는 대형 갤러리가 모인 A홀에 비해 B홀이 상대적으로 한산한 경우가 많았습니다. 이번에는 B홀 입구에 대형 F&B 공간을 집중 배치하며 이를 보완했습니다. 이곳은 거대한 휴게 공간인 동시에, 관람객의 발걸음을 자연스럽게 B홀까지 이끄는 역할을 했죠.    ④ 직관적인 동선 안내 : 아주 단순한 장치지만, 전시장 바닥에 검은 카펫으로 구현한 굵은 동선 표시도 한몫했습니다. 복잡함을 덜고 관람객들이 행사장 구석구석까지 쉽게 찾아갈 수 있도록 도왔으니까요. 보통 이렇게 큰 행사에서는 상대적으로 한산한 부스가 생기기 마련인데, 덕분에 이번 키아프는 확실히 어디를 가도 사람들이 고르게 북적이는 인상을 주었습니다.    ⑤ 오디오 도슨트 : 쾌적한 환경과 좋은 동선을 만들어도 정작 콘텐츠가 어렵다면 관람객은 쉽게 지칠 수 있습니다. 사실 아트페어는 늘 어렵게 느껴졌습니다. 갤러리스트에게 말을 걸면 상세한 설명을 들을 수 있었지만, 먼저 말을 거는 것 자체가 솔직히 쉽지 않았거든요. 이번 키아프는 이를 오디오 도슨트 도입으로 보완했습니다. 앱을 설치하지 않아도 이어폰과 스마트폰만 있으면 쉽게 작품 해설을 들을 수 있었고요. 이를 통해 작가와 작품에 대한 이해도도 높일 수 있었습니다.    이처럼 5가지 디테일은 키아프의 관람 경험을 확실히 개선했습니다. 여기서 흥미로운 건 이런 변화의 문법이 최근 리테일 트렌드와 크게 다르지 않다는 점입니다. 과거 매장들이 오로지 구매 전환에만 집중했다면, 지금은 고객이 더 오래 머무르고 더 많이 둘러보게 만드는 경험에 집중하고 있으니까요. 이번 키아프를 보며 좋은 공간 경험의 문법은 결국 크게 다르지 않다는 걸 다시 느낄 수 있었습니다.    또 하나 참고할 만한 점은 경험을 크게 바꾸는 장치가 꼭 복잡할 필요는 없다는 겁니다. 통로를 조금 넓히고, 쉴 곳을 늘리고, 동선을 직관적으로 안내하는 것만으로도 전체 경험은 꽤 크게 달라질 수 있거든요. 여기에 더해 공간에 좋은 의미를 담아놓고도 정작 전달 방식을 놓쳐, 대부분의 관람객이 모르고 지나가는 경우도 많습니다. 그래서 때로는 과하다 싶을 만큼 친절하게 안내하고 설명하면서, 의도한 경험이 제대로 전달되도록 챙기는 것이 필요하죠.    그런 면에서 이번 키아프는 사소해 보이는 디테일을 놓치지 않은 사례였습니다. 작품 자체를 바꾼 것이 아니라, 작품을 더 편하게 보고 더 쉽게 이해할 수 있는 환경을 만든 겁니다. 결국 기본을 잘 지키는 것만으로도 공간의 인상은 충분히 달라질 수 있다는 걸 보여준 셈이고요.  다만 포장으로는 한계가 있습니다  이번 키아프를 다녀온 뒤, [극적인 변화의 주역으로 평가받는 정구호 디렉터의 인터뷰](https://www.newsis.com/view/NISX20260902_0003773844)도 찾아봤는데요. 다음 대목이 특히 인상 깊었습니다.    “갤러리 한 곳 한 곳을 제가 어떻게 할 수는 없어요. 그 이외에 제가 할 수 있는 포장들을 한 거라고 생각하시면 될 것 같아요.”    사실 아트페어가 정말 사랑받으려면 무엇보다 작품이 좋아야 합니다. 아무리 작품을 감상하기 좋은 환경을 만들어도, 정작 작품이 별로라면 관람객의 마음을 붙잡기 어렵기 때문입니다. 다만 이것이 프리즈와 키아프가 공동 개최를 시작했던 초창기처럼, [유명 작가의 대형 작품이 많이 들어와야 한다는 뜻](https://brunch.co.kr/@trendlite/505)은 아닙니다. 최근 국내 미술시장 불황으로 프리즈 서울에서조차 일부 메가 갤러리가 빠지고 대작의 비중도 줄어드는 흐름을 보면 더욱 그렇고요.    그럴수록 아트페어 본연의 역할 중 하나인 새로운 작가와 작품을 발굴하고 소개하는 일에 더 힘을 쏟아야 합니다. 그런 면에서 올해 키아프에서 가장 아쉬웠던 점은 신진 갤러리의 장인 ‘키아프 플러스’가 크게 달라지지 않았다는 부분이었습니다. 지난해나 그 이전과 비교해도 부스 구성이나 참여 갤러리, 작가 측면에서 뚜렷한 변화를 느끼기 어려웠습니다. 관람 경험에서는 변화가 컸지만, 큐레이션 강화에 적극적으로 나선 프리즈 서울과는 확실히 대비되는 지점이기도 했고요.    따라서 키아프가 정말 홀로서기에 성공하려면 올해 잘했던 관람 경험 개선은 이어가면서, 더 좋은 갤러리와 작가, 작품을 선별해 보여주는 역할도 강화해야 합니다. 관람 경험이라는 ‘포장’에 더해, 콘텐츠 자체의 경쟁력까지 높여야 한다는 뜻이죠.    그러므로 올해가 작품을 ‘보는 방식’을 바꾼 해였다면, 내년에는 ‘무엇을 보여줄 것인가’까지 달라져야 합니다. 키아프가 이 지점에서도 한 단계 더 나아간 모습을 보여준다면, 앞으로 프리즈와는 다른 자신만의 영역을 훨씬 선명하게 구축할 수 있을 겁니다.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대해 의견 주실 것이 있으시거나, 광고/기고/기타 협업 관련해서는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 한국적 미감이 돋보인 자라의 새 플래그십](https://design.co.kr/article/172818/) 대형 설치작품부터 스페셜 컬렉션까지    [2. 다이소몰 배달비 5천 원, 못 내리는 이유 (영상)](https://www.youtube.com/watch?v=z1pmu0SuErc)  배송비를 떨어뜨리는 건, 거리보다 물량입니다    [3. 아마존도 제친 '도파민' 터진 쇼핑앱 왓낫](https://www.joongang.co.kr/article/25459293) 라이브 커머스인 동시에 소셜 미디어입니다    [4. 미국에서 요즘 뜨고 있다는 마이크로드라마](https://dream.kotra.or.kr/kotranews/cms/news/actionKotraBoardDetail.do?MENU_ID=180&pNttSn=243927)  기존과는 다른 수익 구조를 활용한다고 합니다    [5. 도쿄 신축 빌딩에 소호하우스가 들어선 이유](https://blog.igisam.com/sohohouse-office-amenity-tokyo-소호하우스/)  멤버스 클럽은 부동산 가격을 떠받치거든요\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/hZHO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/hZHO \"게시하기\")[웹에서 보기](https://stib.ee/hZHO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "오프라인 매장 설계에 데이터 기반 전문성·큐레이션 필요",
+        "tags": [
+          "컬리",
+          "오늘의집",
+          "피카드",
+          "이케아",
+          "GS더프레시"
+        ],
+        "concepts": [
+          "오프라인-온라인 연계 전략"
+        ],
+        "key_points": [
+          {
+            "point": "피카드는 프랑스에서 방대한 냉동식품 라인업으로 전문성을 살렸지만, 일본에서는 제품 수를 축소해 차별성을 잃어 확장에 실패했다",
+            "timestamp": null
+          },
+          {
+            "point": "컬리와 오늘의집은 온라인에서 구축한 큐레이션 강점을 오프라인에서도 유지하면서 반복 방문과 확장이 가능한 매장 포맷을 설계해야 한다",
+            "timestamp": null
+          },
+          {
+            "point": "매장 규모와 고객 경험 사이의 균형을 맞추고, 플래그십 매장과 반복 방문 매장을 구분해 지속 가능한 확장성을 고려해야 한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "패션 브랜드가 팝업 스토어를 열 때, 온라인에서 제공하던 큐레이션된 제품 구성을 유지해 고객 체험을 강화하고, 이후 정규 매장 확대 여부를 판단한다",
+          "공유 오피스 운영자가 모듈형 공간 설계를 적용해 규모와 이용자 경험을 조절함으로써 다양한 입지에 맞는 확장 가능한 워크스페이스를 제공한다",
+          "SaaS 기업이 플래그십 데모와 정기 기능 업데이트 두 단계의 고객 접점을 만들어 초기 인지도 확보와 장기 사용률 상승을 동시에 추구한다"
+        ],
+        "quiz": [
+          {
+            "question": "피카드가 일본에서 매장 수 확대에 실패한 주요 원인은 무엇인가?",
+            "options": [
+              "현지 물류 비용 증가",
+              "제품 종류를 크게 축소해 차별성 상실",
+              "현지 마케팅 부족",
+              "온라인 채널에만 집중"
+            ],
+            "answer_index": 1,
+            "explanation": "일본에서는 피카드가 제품 라인을 1천여 종에서 350종으로 축소하면서 차별성을 잃었고, 이는 고객이 매장을 찾을 동기를 감소시켜 확장에 실패한 핵심 원인이다"
+          },
+          {
+            "question": "컬리의 오프라인 매장 성공을 위해 가장 중요한 요소는?",
+            "options": [
+              "대형 매장 규모 확보",
+              "온라인과 동일한 가격 정책 적용",
+              "온라인 큐레이션을 오프라인에서도 구현",
+              "전통적인 슈퍼마켓 모델 도입"
+            ],
+            "answer_index": 2,
+            "explanation": "컬리는 온라인에서 구축한 큐레이션 강점을 오프라인에서도 구현해 고객에게 차별화된 경험을 제공해야 지속적인 방문과 매장 확장이 가능하다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "How Many Narrow AIs Could Behave Like One Superintelligence - Daniel Kokotajlo and Thomas Larsen",
+        "url": "https://youtu.be/z5Xix4h5UlU",
+        "published_at": "2026-09-08T10:34:51",
+        "transcript": null,
+        "body": "Could slowing AI development make superintelligence safer? Daniel Kokotajlo and Thomas Larsen of the AI Futures Project join Tim Scarfe to examine AI 2040: Plan A, a proposal to buy time before AI exceeds human control.\n\nSPONSOR:\n---\nCyber Fund built the Monastery to help founders ship products that were impossible a year ago.\nApply now: https://cyber.fund\n---\n\nAfter revisiting AI 2027 and the limits of forecasting, they ask what happens when AI can automate research and sustain an economy without human workers. Tim challenges the case for general models and asks whether intelligence alone explains power. Plan A proposes an initial pause to build safety infrastructure, then cautious development up to the strongest AI that can still be reliably controlled. The discussion tests the distinction between control and alignment, the case for public AI research, and whether the US and China could enforce a slowdown. It ends with the evidence that would change their forecasts.\n\n---\nTIMESTAMPS:\n00:00:00 AI 2040: a slower route to superintelligence\n00:01:34 Sponsor: Cyber Fund\n00:02:12 From OpenAI to AI 2027\n00:06:58 Forecasts, war games and self-fulfilling prophecies\n00:17:44 Why AI sceptics are changing their minds\n00:23:04 When AI can replace its own researchers\n00:28:45 Could an AI economy grow without human workers?\n00:37:32 One general model or a society of specialists?\n00:47:43 Brains, machines and collective intelligence\n00:56:12 Plan A: buy time at the controllable frontier\n01:00:02 Why control buys time but cannot replace alignment\n01:06:36 Why AI research should be public\n01:10:32 Can the US and China enforce an AI slowdown?\n01:19:04 Why AI policy debates miss the technology\n01:21:56 Is AI normal technology? The remaining disagreement\n\nMany thanks to James Wilken-Smith for helping with show research. \n\n---\nREFERENCES:\nother:\n[00:00:01] AI 2040: Plan A\nhttps://ai-2040.com/\n[00:03:27] AI 2027\nhttps://ai-2027.com/\n[00:13:47] Scenario Scrutiny for AI Policy\nhttps://blog.aifutures.org/p/scenario-scrutiny-for-ai-policy\n[00:33:11] The 2028 Global Intelligence Crisis\nhttps://www.citriniresearch.com/p/2028gic\n[01:00:40] Brief independent investigation of agents' behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident\nhttps://www.redwoodresearch.org/research/hugging-face-incident\n[01:09:21] The Hugging Face incident and the road ahead\nhttps://openai.com/index/hugging-face-incident-and-the-road-ahead/\n[01:22:01] AI as Normal Technology\nhttps://www.normaltech.ai/p/ai-as-normal-technology\n[01:22:51] Common Ground between AI 2027 & AI as Normal Technology\nhttps://asteriskmag.substack.com/p/common-ground-between-ai-2027-and\nperson:\n[00:19:43] Geoffrey Hinton\nhttps://www.cs.toronto.edu/~hinton/\n[00:20:07] Ryan Greenblatt\nhttps://www.lesswrong.com/users/ryan_greenblatt\n[00:26:06] Elon Musk\nhttps://www.tesla.com/elon-musk\ntool:\n[00:21:46] ARC-AGI-3\nhttps://arcprize.org/arc-agi/3\n[00:21:53] AlphaGo and Move 37\nhttps://deepmind.google/res",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI 개발 속도 조절이 초지능 안전에 미치는 영향",
+        "tags": [
+          "AI 2040",
+          "AI 2027",
+          "OpenAI",
+          "Hugging Face",
+          "Cyber Fund"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "멀티에이전트 시스템"
+        ],
+        "key_points": [
+          {
+            "point": "Plan A는 통제 가능한 최강 AI 수준까지 안전 인프라를 구축하며 개발을 일시 중단하는 전략을 제안한다.",
+            "timestamp": null
+          },
+          {
+            "point": "AI가 자체 연구자를 대체하고 경제를 유지할 경우, 통제와 정렬의 차이를 명확히 해야 한다는 논의가 제시된다.",
+            "timestamp": null
+          },
+          {
+            "point": "미국·중국이 AI 개발 속도 조절을 강제할 수 있는 정책적·기술적 한계와 증거 기반 예측 변화 조건을 탐색한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "🥓 Grill-me, AI가 나를 웰던으로 만드는 과정",
+        "url": "https://dflick.stibee.com/p/110",
+        "published_at": "2026-09-08T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/oLHO)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](http://wacky.kr)가 만들고 발행합니다.\n\nVol.106 ・ 2026.09.08\n\n새로운 AI 모델이 쏟아지는 요즘, 이름만 따라가기에도 숨이 차지 않으신가요? 🤖 OpenAI·Google·Anthropic은 더 빠르고 전문화된 모델을 선보였고,  Nvidia는 Hugging Face 인수로 AI 생태계 확장에 나섰어요. Slack부터 삼성 가전, Figma와 Webflow까지 AI와 새로운 기능은  우리가 일하고 생활하는 방식에도 깊숙이 들어오고 있습니다. 이번 주 꼭 알아둘 AI·IT·UX의 굵직한 변화만 가볍게 모아봤어요. ✨\n\n💡오늘 디플릭 요약💡    [News] Slack, 어도비 도구로 콘텐츠를 바로 만드는 기능 출시  [D.Lab] 🥓 Grill-me, AI가 나를 웰던으로 만드는 과정  [TMI] 🤪 사람들이 GPT-6를 이상하게 쓰기 시작했습니다\n\n📰  이번 주 AI · UX · IT 뉴스 3분 핵심 정리  📰  #AI업데이트 #테크트렌드 #디지털혁신\n\n🧬 AI\n\n[Claude Fable 5.1·Mythos 5.1 공개](https://dflick.kr/contents/news/1777)  Anthropic이 Claude Fable 5.1과 Mythos 5.1을 공개했어요. 같은 기반 모델이지만 Fable에는 사이버보안·생물학 안전장치가 적용돼요. 소스코드 취약점 식별은 허용하되 침투 테스트와 익스플로잇 생성은 막아요. Fable은 플랫폼에 제공되고, Mythos는 검증된 조직만 이용할 수 있어요.    [OpenAI, 성능과 속도 높인 GPT-6 아스트라 공개](https://dflick.kr/contents/news/1778)  오픈AI가 성능과 속도를 개선한 차세대 모델 ‘GPT-6 아스트라’를 공개했어요. 세무, 게임 개발, 법률 문서 등 다양한 업무를 처리할 수 있어요. 다만 복잡한 문제를 풀 때 추론 과정을 숨기거나 위장할 가능성이 커졌다고 밝혔어요. 현재 일부 기업에 우선 제공 중이며, 정식 배포 대상은 수일 내 확대될 예정이에요.    [구글, 코딩·보안 특화 Gemini 3.8 Flash 공개](https://dflick.kr/contents/news/1779)  구글이 코딩·에이전트 성능을 높인 Gemini 3.8 Flash와 보안 특화 Flash Cyber를 공개했어요. Flash는 같은 가격으로 입력 100만 토큰당 0.75달러, 출력 3.75달러예요. Cyber는 취약점 탐지와 자동 패치에 맞춰 신뢰받는 방어자에게만 제공돼요. 각각 다단계 추론과 보안 대응에 강점을 뒀어요.    [국산 AI 모델 기반 ‘모두의 AI’ 연내 출시 추진](https://dflick.kr/contents/news/1780)  과학기술정보통신부가 SK텔레콤, KT, 카카오와 ‘모두의 AI’ 프로젝트를 시작했어요. 국산 AI 기반 챗봇과 에이전트 서비스를 선보여요. KT는 12개 분야, SK텔레콤은 신청·결제까지 맡는 실행형 서비스를 내세웠어요. 정부는 GPU 512장을 지원하고, 내년부터 2500억원을 투입해 연내 출시를 도울 계획이에요.    [엔비디아, 허깅페이스 129억 달러에 인수](https://dflick.kr/contents/news/1781)  엔비디아가 모델 플랫폼 허깅페이스를 129억 3,030만 달러에 인수하기로 했어요. 허깅페이스에서는 1,800만명 넘는 이용자가 300만개 이상의 모델과 50만개 데이터셋, 100만개 앱을 공유하고 있어요. 양사는 인수 뒤에도 개방형 플랫폼 지위와 개발자의 선택권, 멀티클라우드와 멀티가속기 지원을 유지한다고 밝혔어요.\n\n🧑‍💻 UX · IT\n\n[Slack, 어도비 도구로 콘텐츠를 바로 만드는 기능 출시](https://dflick.kr/contents/news/1782)  Adobe for Slack이 출시됐어요. Business+와 Enterprise+ 팀은 슬랙봇으로 포토샵, 파이어플라이 등 70개 넘는 어도비 도구를 불러와 이미지, PDF, 비디오를 만들고 편집할 수 있어요. 대화, 파일, 채널, 캔버스의 맥락도 작업에 반영해요. 이 기능은 해당 요금제 고객에게 전 세계 제공돼요.    [Anthropic, Claude 커머스 에이전트 청사진 공개](https://dflick.kr/contents/news/1783)  Anthropic이 Claude 커머스 에이전트 청사진을 공개했어요. 쇼핑·판매자 에이전트 참고 구현체와 Claude Code 플러그인이 포함돼요. 유통, 여행, 통신, 티켓 플랫폼용으로 구성됐으며, 메시지 API와 Agent SDK, Managed Agents 베타로 이용할 수 있어요. 데모와 구축 방식도 제공돼요.    [삼성, 일부 냉장고·세탁기에 Tizen 10.0과 AI 기능 업데이트](https://dflick.kr/contents/news/1784)  삼성이 냉장고와 세탁기에 Tizen OS 10.0을 배포해요. Bixby와 AI 기능이 추가돼요. 냉장고는 Gemini 기반 AI Vision으로 식품 인식 범위가 넓어지고, 세탁기는 음성 응답과 새 화면을 지원해요. 2026년 9월부터 순차 적용되며 제품, 출시 연도, 시장에 따라 기능과 시점이 달라질 수 있어요.    [Webflow, 전체 브레이크포인트를 나란히 보는 편집 화면 출시](https://dflick.kr/contents/news/1785)  Webflow가 브레이크포인트를 나란히 보는 Breakpoint Canvas를 출시했어요. 한 화면에서 데스크톱·태블릿·모바일의 수정 결과를 확인할 수 있어요. 화면 크기를 오가며 점검하는 번거로움을 줄였어요. 9월 2일 출시됐으며, 다음 주 안에 Design, Build, Edit 모드 전 사용자에게 순차 적용돼요.    [Figma, 디자인 시스템 변수 투명도 일괄 관리 지원](https://dflick.kr/contents/news/1786)  Figma가 컬러 변수에 숫자형 투명도 변수를 연결해 한 번에 관리하는 기능을 추가했어요. 라이브러리에 연결된 색상은 유지하면서 투명도만 별도로 지정할 수 있어요. 비활성 상태, 오버레이, 스크림처럼 반복해 쓰는 투명도를 같은 방식으로 조정할 수 있어요. 투명도를 바꿀 때마다 색상 연결을 끊고 다시 설정할 필요가 없어요..\n\n새로운 AI를 직접 사용해보는 디플릭의 실험실  직접 써보고, 부딪히고, 기록하는  AI 실험 노트 🧪\n\n새 코너가 왔어요, D.Lab 🧑‍🔬  AI를 쓰다 보면 “이건 진짜 편한데?” 싶은 순간도 있고,  “음, 아직은 조금 아쉬운데?” 싶은 순간도 있잖아요.  D.Lab은 디플릭 팀이 일과 일상에서 직접 써본 AI 도구와 스킬 이야기를 모아보는 새 코너예요.  누구에게 도움이 될지, 써보니 무엇이 좋았고 아쉬웠는지 디플릭의 경험을 편하게 나눠볼게요.  이번 주, 첫 번째 실험을 시작할게요! 😁\n\n🥓 Grill-me, AI가 나를 웰던으로 만드는 과정\n\n©AI Image\n\n🔥 GitHub에서 많은 개발자가 주목하는 AI 스킬, /grill-me를 디플릭의 에디터이자 프론트엔드 개발자인 Janet님이 직접 써봤어요.    🧪 “다크모드 토글 버튼 만들어줘.”라는 한 줄 요청으로 시작했어요. 그런데 AI는 바로 구현하지 않고, 테마 라이브러리·시스템 설정 연동·토글 위치처럼 미리 정해야 할 조건을 하나씩 물어봤어요.    📝 첫 대화에서 5개, 다음 대화에서 7개, 마지막으로 4개. 총 16개의 질문에 답하면서 “구현 전에 여기까지 정해야 하는구나”를 확인했어요.    💡 다만 시작점이 너무 막연하면 질문이 길어지기도 해요. 이번 글에서는 실제 대화에서 나온 질문과, /grill-me를 덜 번거롭게 쓰는 방법을 정리해봤어요.\n\n[🔥 Janet님의 Grill-me 사용 후기 👉](https://dflick.kr/contents/dlab/1775)\n\n🍯 TMI: Tips Made Interesting 🍯 재밌고, 흥미롭게 · 디자이너의 TIP, 그리고 TMI 📚\n\n🤪 사람들이 GPT-6를 이상하게 쓰기 시작했습니다\n\n©AI Image\n\n🤖 GPT-6 Astra가 출시된 지 벌써 5일이 흘렀습니다. 그런데 이 새로운 GPT를 조금 특별하게 사용하는 사람들이 하나둘 생겨나고 있습니다.  광고 속에만 있던 모바일 게임을 실제로 만들고, 이미지 생성 기능을 놔두고 JavaScript로 모나리자를 그리고, 《나루토》의 나뭇잎 마을을 3D 공간으로 구현하는 식입니다.  새 모델이 나오면 보통 코딩 성능이나 추론 점수부터 확인하지만, 한쪽에서는 벌써 “이것도 되나?” 싶은 실험들이 쏟아지고 있습니다.  💡 이번 TMI에서는 GPT-6 Astra의 성능표 대신, 유저들이 어디까지 기상천외하게 활용하고 있는지 재미있는 사례 3가지를 살펴봅니다.\n\n[👀 GPT-6의 이상한 활용법 구경하기 👉](https://dflick.kr/contents/tmi/1776)\n\n오늘 레터는 어떠셨나요?  디플릭은 다음 주에도 꼭 알아야 할 소식들을 모아 돌아올게요.  다음 레터에서 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "AI 프롬프트 설계가 구현 효율을 좌우한다",
+        "tags": [
+          "grill-me",
+          "GitHub",
+          "Dark mode",
+          "AI",
+          "Janet"
+        ],
+        "concepts": [
+          "프롬프트 협업",
+          "AI 생산성 도구",
+          "코드 자동생성"
+        ],
+        "key_points": [
+          {
+            "point": "AI /grill‑me는 구현 전 요구사항을 하나씩 질문해 ‘조건 정의’ 과정을 강제한다",
+            "timestamp": null
+          },
+          {
+            "point": "요청이 막연하면 질문 횟수가 늘어나 전체 대화가 길어진다",
+            "timestamp": null
+          },
+          {
+            "point": "질문 수를 줄이려면 시작점을 구체화하고 사전 조건을 미리 정리한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 전처리 자동화 도구에 AI가 결측치 처리·스케일링 방법을 사전 질의하도록 하여, 사용자가 원하는 정제 흐름을 명확히 정의하고 오류를 최소화한다",
+          "모델 선택 지원 시스템에 AI가 데이터 규모·특성·비즈니스 목표를 단계별로 묻고, 그 답변을 기반으로 최적 모델·하이퍼파라미터 조합을 제안한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 시작 요청이 막연하면 AI가 질문을 더 많이 하는가?",
+            "options": [
+              "AI가 누락된 조건을 추론하려 하기 때문에",
+              "AI의 토큰 제한이 낮기 때문에",
+              "AI가 무작위로 질문을 생성하기 때문에",
+              "AI가 오프라인 모드라서"
+            ],
+            "answer_index": 0,
+            "explanation": "AI는 명확한 입력이 없을 경우 필요한 전제 조건을 파악하기 위해 추가 질문을 던져 구현 오류를 방지하려 한다."
+          },
+          {
+            "question": "AI /grill‑me와 같은 도구가 사전 질의를 요구하는 주된 장점은?",
+            "options": [
+              "구현 오류 감소",
+              "토큰 사용량 증가",
+              "배포 지연",
+              "사용자 인터페이스 복잡화"
+            ],
+            "answer_index": 0,
+            "explanation": "명확한 요구사항을 미리 정의함으로써 자동 생성 코드의 정확도가 높아지고, 사후 수정 비용이 줄어든다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

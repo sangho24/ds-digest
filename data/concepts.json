@@ -26,15 +26,15 @@
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 9,
+      "count": 10,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-07"
+      "last_seen": "2026-09-10"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-04",
-      "last_seen": "2026-09-09"
+      "last_seen": "2026-09-10"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
@@ -72,11 +72,29 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
     },
-    "개발자 경험 개선": {
+    "minimax rate analysis": {
       "aliases": [],
       "count": 1,
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10"
+    },
+    "nonasymptotic oracle inequality": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10"
+    },
+    "optimal transport estimation": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10"
+    },
+    "개발자 경험 개선": {
+      "aliases": [],
+      "count": 2,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-09-08"
+      "last_seen": "2026-09-10"
     },
     "고객 데이터 활용": {
       "aliases": [],
@@ -104,9 +122,9 @@
     },
     "기술 부채 관리": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-09-06"
+      "last_seen": "2026-09-10"
     },
     "기술 작가의 제품 소유권": {
       "aliases": [],
@@ -170,9 +188,9 @@
     },
     "멀티에이전트 시스템": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-09"
+      "last_seen": "2026-09-10"
     },
     "멀티프로세싱": {
       "aliases": [],
@@ -248,9 +266,9 @@
     },
     "비동기 처리와 트랜잭션": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-09-05"
+      "last_seen": "2026-09-10"
     },
     "사회적 전파 모델": {
       "aliases": [],
@@ -320,9 +338,9 @@
     },
     "오프라인-온라인 연계 전략": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-07"
+      "last_seen": "2026-09-10"
     },
     "온-폴리시 학습": {
       "aliases": [],
@@ -440,9 +458,9 @@
     },
     "코드 자동생성": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-09-09"
+      "last_seen": "2026-09-10"
     },
     "탄소 배출 감축 전략": {
       "aliases": [],
@@ -464,9 +482,9 @@
     },
     "프롬프트 협업": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-09"
+      "last_seen": "2026-09-10"
     },
     "프리컴파일 지식 베이스": {
       "aliases": [],
@@ -511,6 +529,6 @@
       "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-09T07:15:20.235008+09:00",
+  "updated_at": "2026-09-10T07:21:29.861594+09:00",
   "version": 1
 }
