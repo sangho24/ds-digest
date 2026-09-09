@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-08T00:49:52.364763+00:00",
+ "generated_at": "2026-09-09T00:54:16.128979+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -659,8 +659,38 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 51,
+   "tracked": 53,
    "models": [
+    {
+     "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+     "url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+     "created_at": "2026-09-02T19:11:33+00:00",
+     "last_modified": "2026-09-08T22:30:04+00:00",
+     "weights_at": "2026-09-02T19:11:33+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-02T19:11:33+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+     "url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+     "created_at": "2026-09-02T19:11:32+00:00",
+     "last_modified": "2026-09-08T22:30:30+00:00",
+     "weights_at": "2026-09-02T19:11:32+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-02T19:11:32+00:00",
+     "report_at": "2026-09-02T19:11:32+00:00",
+     "arxiv_ids": [
+      "2511.22570"
+     ],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
     {
      "repo_id": "nvidia/Nemotron-3-Diarization-preview",
      "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization-preview",
@@ -1233,40 +1263,6 @@
      "model_card_at": "2026-03-10T22:59:21+00:00",
      "report_at": null,
      "arxiv_ids": [],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
-     "created_at": "2026-03-10T18:33:04+00:00",
-     "last_modified": "2026-08-24T23:47:52+00:00",
-     "weights_at": "2026-03-10T18:33:04+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-03-10T18:33:04+00:00",
-     "report_at": "2026-03-10T18:33:04+00:00",
-     "arxiv_ids": [
-      "2512.20848",
-      "2512.20856"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
-     "created_at": "2026-03-10T18:32:42+00:00",
-     "last_modified": "2026-08-24T23:48:25+00:00",
-     "weights_at": "2026-03-10T18:32:42+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-03-10T18:32:42+00:00",
-     "report_at": "2026-03-10T18:32:42+00:00",
-     "arxiv_ids": [
-      "2512.20848",
-      "2512.20856"
-     ],
      "license": "other",
      "gated": "false",
      "derivative": null
@@ -6462,6 +6458,58 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+   "transition": "repo_created",
+   "observed_at": "2026-09-09T00:54:16.128979Z",
+   "at": "2026-09-02T19:11:33Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16"
+    ],
+    "surfaced": false,
+    "created_at": "2026-09-02T19:11:33+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+   "transition": "repo_created",
+   "observed_at": "2026-09-09T00:54:16.128979Z",
+   "at": "2026-09-02T19:11:32Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2511.22570"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16"
+    ],
+    "surfaced": false,
+    "created_at": "2026-09-02T19:11:32+00:00"
+   }
+  },
+  {
    "org": "openai",
    "repo_id": "https://openai.com/index/gpt-6-astra",
    "transition": "announced",
@@ -7792,59 +7840,11 @@
      "Qwen/Qwen3-VL-2B-Instruct"
     ]
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-VL-Embedding-8B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-07T03:02:55Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.04720"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-VL-8B-Instruct"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-2512",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2025-12-30T02:29:01Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2512",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2508.02324"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 581,
-  "events": 582
+  "models": 583,
+  "events": 584
  }
 }
