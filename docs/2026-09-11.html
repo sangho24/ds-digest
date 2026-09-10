@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 11일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 11일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">멀티에이전트 시스템</span><span class="concept">메타데이터 활용 검색</span><span class="concept">기술 부채 관리</span><span class="concept">텍스트 워터마킹</span><span class="concept">토큰 샘플링 편향</span><span class="concept">통계적 패턴 탐지</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 인프라 경쟁</span><span class="concept">언어 모델링</span><span class="concept">AI 기반 수학 증명</span><span class="concept">데이터 사용 투명성</span><span class="concept">유체 역학 기본 원리</span><span class="concept">스타트업 성장 지표</span><span class="concept">재무 데이터 추적</span><span class="concept">데이터 기반 벤치마킹</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.10430v1" target="_blank" rel="noopener">Glyph: A Multi-Strategy Agentic System for Column Description and Sensitivity-Ontology Tagging of Enterprise Data Catalogs</a>
+        </h2>
+
+        <p class="summary">데이터 카탈로그 컬럼 메타데이터 자동화로 관리 부채 감소</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기업 데이터 레이크에서 컬럼 메타데이터 부재가 데이터 검색·거버넌스에 장애가 되는 문제를 해결하기 위해, 기존 단일 모델 기반 컬럼 타입 분류와 정규식 스캐너가 갖는 확장성·정확도 한계를 극복하고자 한다. Glyph는 LLM 에이전트를 그래프 형태로 결합하고, RAG 및 대비 학습 기반 메타데이터 인코더를 병렬로 활용함으로써 최신 멀티에이전트·RAG 연구 흐름에 속하면서도 실서비스 적용을 목표로 하는 엔터프라이즈 데이터 카탈로그 자동화 연구이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Glyph는 컬럼 설명 생성과 타입 주석을 상태 기반 그래프 상의 협업 LLM 에이전트로 모델링하고, Descriptor 에이전트는 엔터프라이즈 GitHub에서 파이프라인 소스 코드를 실시간으로 가져와 활성 Retrieval‑Augmented Generation을 수행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Tagger는 설명 기반 태거, 라인‑오브‑비즈니스 정규식 태거, 메타데이터 대비 인코더 기반 벡터 DB 태거라는 세 상보적 전략을 병렬 실행하고, Reciprocal Rank Fusion으로 순위를 결합해 NDCG@10을 0.55에서 0.92, MAP@100을 0.19에서 0.90으로 크게 향상시킨다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>평가에서는 recall‑weighted F2 목표를 사용해 다중 라벨 태깅 품질을 측정하고, 각 전략 및 RRF 융합을 별도 ablation으로 검증함으로써 태그당 근거 제공과 점진적 성능 저하를 보장한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>API 문서 자동화를 위해 Retrieval‑Augmented Generation 루프를 사용해 소스 코드를 실시간으로 가져와 LLM이 정확한 엔드포인트 설명을 생성한다.</span></li>
+            
+            <li><span class="box"></span><span>DevOps 파이프라인에서 구성 파일의 보안 민감도를 세 가지 병렬 전략과 RRF 융합으로 분류해 규칙 기반 스캐너보다 높은 정확도와 추적성을 제공한다.</span></li>
+            
+            <li><span class="box"></span><span>의료 기록 필드 자동 라벨링에 상태 기반 멀티‑에이전트 그래프를 적용하고, 임상 코딩 가이드라인을 내부 지식베이스에서 검색해 규정 준수를 보장한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Glyph 시스템에서 컬럼 설명을 생성할 때 사용되는 주요 기법은 무엇이며, 왜 이를 사용해야 하는가?</div>
+            
+            <div class="q-opt">① 단순 프롬프트 기반 LLM 출력</div>
+            
+            <div class="q-opt">② Retrieval‑Augmented Generation with pipeline source code</div>
+            
+            <div class="q-opt">③ 사전 정의된 템플릿 매칭</div>
+            
+            <div class="q-opt">④ 규칙 기반 파싱</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Retrieval‑Augmented Generation with pipeline source code</div>
+              <div class="why">Retrieval‑Augmented Generation은 실제 파이프라인 소스 코드를 가져와 설명을 근거화함으로써 LLM의 환각을 방지하고, 컬럼 변환 로직과 일치하는 정확한 메타데이터를 제공한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Tagger가 세 개의 병렬 전략을 결합할 때 사용되는 방법은 무엇이며, 이 방법이 제공하는 이점은?</div>
+            
+            <div class="q-opt">① 평균 점수 합산</div>
+            
+            <div class="q-opt">② 최대 점수 선택</div>
+            
+            <div class="q-opt">③ Reciprocal Rank Fusion</div>
+            
+            <div class="q-opt">④ 베이지안 모델 평균</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ Reciprocal Rank Fusion</div>
+              <div class="why">Reciprocal Rank Fusion은 각 전략의 순위에 역수 가중치를 부여해 다양성을 유지하면서도 상위 결과를 강조해 전체 라벨링 정확도를 크게 향상시킨다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Glyph</span><span class="tag">MiniLM</span><span class="tag">RRF</span><span class="tag">GitHub</span><span class="tag">Data Classification Ontology</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/162" target="_blank" rel="noopener">Claude는 어떻게 자신이 쓴 글에 흔적을 남길까?</a>
+        </h2>
+
+        <p class="summary">LLM 토큰 선택에 통계적 워터마크 삽입 방식</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SynthID-Text는 랜덤 시드와 워터마크 키를 이용해 매 토큰 생성 시 확률분포에 작은 편향을 주어 숨은 워터마크를 만든다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Tournament Sampling은 후보 토큰을 추출한 뒤 워터마크 함수 점수로 토너먼트를 진행해 최종 토큰을 선택한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>워터마크가 삽입된 텍스트는 동일 키로 점수를 계산해 통계적 패턴을 검출함으로써 AI 생성 여부를 판단한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>토큰 편향 워터마크 방식을 로그 데이터에 적용해 자동 생성 로그와 인간 로그를 구분한다.</span></li>
+            
+            <li><span class="box"></span><span>Tournament Sampling 원리를 추천 시스템 후보 아이템 순위 결정에 활용해 특정 비즈니스 정책을 은밀히 반영한다.</span></li>
+            
+            <li><span class="box"></span><span>통계적 패턴 탐지를 이용해 합성 이미지 메타데이터 없이도 이미지 생성 모델을 추적한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">SynthID-Text가 워터마크를 삽입하는 핵심 메커니즘은 무엇인가?</div>
+            
+            <div class="q-opt">① 토큰 후보를 완전히 교체한다</div>
+            
+            <div class="q-opt">② 확률분포에 작은 편향을 주어 반복 선택에 신호를 남긴다</div>
+            
+            <div class="q-opt">③ 출력 텍스트에 눈에 보이는 마크를 삽입한다</div>
+            
+            <div class="q-opt">④ 모델 파라미터를 수정한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 확률분포에 작은 편향을 주어 반복 선택에 신호를 남긴다</div>
+              <div class="why">텍스트는 평범해 보이지만 선택 과정에 편향을 두어 워터마크를 만든다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Tournament Sampling에서 워터마크 함수 점수는 어떤 기준으로 사용되는가?</div>
+            
+            <div class="q-opt">① 토큰의 원래 확률을 재조정한다</div>
+            
+            <div class="q-opt">② 후보 토큰을 토너먼트에 참여시켜 승자를 결정한다</div>
+            
+            <div class="q-opt">③ 토큰을 무작위로 삭제한다</div>
+            
+            <div class="q-opt">④ 텍스트 길이를 제한한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 후보 토큰을 토너먼트에 참여시켜 승자를 결정한다</div>
+              <div class="why">점수는 토큰을 토너먼트 라운드에서 승/패 판단에 쓰인다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">SynthID-Text</span><span class="tag">Tournament Sampling</span><span class="tag">Google Gemini</span><span class="tag">Anthropic</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://hugovergnes.github.io/little-lm-3-8b/" target="_blank" rel="noopener">Training a 3.8B LLM to 0.384 CORE for $998</a>
+        </h2>
+
+        <p class="summary">소액 예산으로 3.8B LLM을 학습해 CORE 0.384 달성</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>3.8B 파라미터 모델을 65B 토큰, 43시간, $998에 학습해 CORE 0.384를 기록, 저비용 고성능 가능성을 입증</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>YAML 기반 설정 프레임워크로 실험을 코드 변경 없이 재현·변경 가능하게 하여 엔지니어링 비용 절감</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>B200 GPU가 H100 대비 비용 대비 작업량이 우수했으며, 전체 파라미터 중 19%가 value embedding으로 차지</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>YAML 기반 설정 방식을 데이터 파이프라인 정의에 적용해 데이터 소스·전처리 단계 교체를 손쉽게 한다</span></li>
+            
+            <li><span class="box"></span><span>값 임베딩을 추천 시스템의 아이템별 편향 파라미터로 활용해 모델 용량 대비 성능을 높인다</span></li>
+            
+            <li><span class="box"></span><span>대규모 컴퓨터 비전 모델을 학습할 때 H100 대신 B200을 선택해 비용 효율성을 최적화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">학습 초기에 코사인 LR 스케줄을 0까지 감소시켰을 때 후반에 손실이 평탄해지는 주요 원인은?</div>
+            
+            <div class="q-opt">① 학습률이 지나치게 낮아져 업데이트가 거의 일어나지 않는다</div>
+            
+            <div class="q-opt">② 학습률이 급격히 상승해 과적합이 발생한다</div>
+            
+            <div class="q-opt">③ 배치 크기가 감소해 노이즈가 증가한다</div>
+            
+            <div class="q-opt">④ 옵티마이저가 다른 모드로 전환된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 학습률이 지나치게 낮아져 업데이트가 거의 일어나지 않는다</div>
+              <div class="why">코사인 스케줄이 0에 가까워지면 학습률이 매우 작아져 파라미터 업데이트가 거의 없으므로 손실이 평탄해진다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본문에서 언급된 H100과 B200 GPU 선택의 트레이드오프는 무엇인가?</div>
+            
+            <div class="q-opt">① B200은 원시 성능이 낮지만 비용 대비 작업량이 더 좋다</div>
+            
+            <div class="q-opt">② H100은 메모리가 부족해 큰 모델을 학습할 수 없다</div>
+            
+            <div class="q-opt">③ B200은 RMSNorm을 지원하지 않아 모델 품질이 떨어진다</div>
+            
+            <div class="q-opt">④ H100은 전력 소모가 적어 비용 효율성이 높다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① B200은 원시 성능이 낮지만 비용 대비 작업량이 더 좋다</div>
+              <div class="why">실험 결과 B200이 H100보다 비용 대비 작업량이 더 효율적이라 저비용 고성능 학습에 유리했다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">CORE</span><span class="tag">nanochat</span><span class="tag">H100</span><span class="tag">B200</span><span class="tag">RMSNorm</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/mOvtumfyjCs" target="_blank" rel="noopener">I Never Thought I’d See This Happen</a>
+        </h2>
+
+        <p class="summary">AI가 Navier‑Stokes 해결 시도, 연구 자동화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:10</span>
+            
+            <span>Navier‑Stokes 존재와 매끄러움 문제 해결 가능성이 제시됨</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:21</span>
+            
+            <span>OpenAI가 Astra보다 강력한 AI 시스템으로 해결책을 도출</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:10</span>
+            
+            <span>OpenAI는 사용 데이터가 모델 개선에 사용될 가능성을 완전히 배제하지 않는다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 증명 생성 기법을 복잡한 최적화 문제 검증에 적용해 해답 탐색 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>오픈소스 가중치 AI 모델을 활용해 기업 내부 데이터에 대한 프롬프트를 로컬에서 처리, 데이터 유출 위험을 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>LLM을 이용해 과학 논문의 재현성 검증 워크플로우를 자동화, 실험 결과와 코드 일치 여부를 빠르게 판단한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">OpenAI가 제시한 데이터 사용에 대한 입장은 무엇인가?</div>
+            
+            <div class="q-opt">① 데이터는 절대 사용되지 않는다</div>
+            
+            <div class="q-opt">② 데이터 사용 가능성은 낮지만 완전히 배제할 수는 없다</div>
+            
+            <div class="q-opt">③ 모든 데이터가 모델에 바로 학습된다</div>
+            
+            <div class="q-opt">④ 데이터는 익명화되어 반드시 사용된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 데이터 사용 가능성은 낮지만 완전히 배제할 수는 없다</div>
+              <div class="why">02:10의 발언에서 OpenAI는 ‘가능성은 낮지만 완전히 배제할 수 없다’고 밝혔다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Navier‑Stokes 방정식의 세 구성 요소는 무엇인가?</div>
+            
+            <div class="q-opt">① 대류, 압력, 확산</div>
+            
+            <div class="q-opt">② 전도, 압력, 회전</div>
+            
+            <div class="q-opt">③ 대류, 점성, 중력</div>
+            
+            <div class="q-opt">④ 전도, 점성, 확산</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 대류, 압력, 확산</div>
+              <div class="why">03:20~03:59에서 대류, 압력, 확산을 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">OpenAI</span><span class="tag">Navier-Stokes</span><span class="tag">Terence Tao</span><span class="tag">ChatGPT</span><span class="tag">Claude</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/657" target="_blank" rel="noopener">🦄 2026년 8월 스타트업 투자결산: 상위 3개 카테고리에 87%가 몰렸다</a>
+        </h2>
+
+        <p class="summary">투자 집중이 포트폴리오 전략에 핵심 인사이트 제공</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>상위 3개 카테고리에 87% 투자액이 집중돼 포트폴리오 위험 분산을 재평가할 필요가 있음</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>국내 AI 서비스 분야 최초 유니콘 탄생은 진입 장벽 감소와 스케일업 비용 효율성 구조 변화를 시사</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>딥테크 비핵심 영역에서 1,000억 라운드가 발생한 것은 투자자들의 리스크 프리미엄 재조정과 비전형적 트랙션 메트릭에 기반한 전략적 베팅을 의미</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>투자 집중도 지표를 기업 리스크 모델에 통합해 포트폴리오 다변화 최적화에 활용한다</span></li>
+            
+            <li><span class="box"></span><span>AI 서비스 유니콘 출현 패턴을 시계열 클러스터링으로 분석해 조기 경고 시스템을 구축한다</span></li>
+            
+            <li><span class="box"></span><span>비딥테크 대규모 라운드 발생 시 투자자 행동 네트워크 그래프를 활용해 시너지 효과를 예측한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">2026년 8월 투자액이 소수 카테고리에 집중된 주요 원인으로 가장 타당한 설명은?</div>
+            
+            <div class="q-opt">① 해당 카테고리의 시장 규모 급증</div>
+            
+            <div class="q-opt">② 정부 정책 지원 강화</div>
+            
+            <div class="q-opt">③ 투자자들의 리스크 회피 선호</div>
+            
+            <div class="q-opt">④ 기술 혁신 속도 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 투자자들의 리스크 회피 선호</div>
+              <div class="why">본문은 ‘돈은 몇몇 카테고리로 집중됐습니다’라며 대형 딜이 판을 키운 점을 강조해, 투자자들의 리스크 회피가 집중 현상의 핵심 요인임을 암시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 서비스 분야 최초 유니콘 탄생이 시사하는 바는?</div>
+            
+            <div class="q-opt">① 진입 장벽이 낮아졌다</div>
+            
+            <div class="q-opt">② 투자 규모가 감소했다</div>
+            
+            <div class="q-opt">③ 시장 포화가 진행 중이다</div>
+            
+            <div class="q-opt">④ 규제 강화가 이루어졌다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 진입 장벽이 낮아졌다</div>
+              <div class="why">‘국내 AI 서비스 첫 유니콘이 이달 탄생했다’는 문구는 해당 분야의 성장 가능성과 진입 장벽 감소를 의미한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI 서비스</span><span class="tag">유니콘</span><span class="tag">딥테크</span><span class="tag">K뷰티</span><span class="tag">AI 자율제조</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
