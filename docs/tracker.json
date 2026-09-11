@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-10T00:43:36.798201+00:00",
+ "generated_at": "2026-09-11T00:42:19.090775+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -17,8 +17,22 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "deepseek-ai",
-   "tracked": 71,
+   "tracked": 72,
    "models": [
+    {
+     "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+     "created_at": "2026-09-10T02:17:58+00:00",
+     "last_modified": "2026-09-10T08:18:10+00:00",
+     "weights_at": "2026-09-10T02:17:58+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-10T02:17:58+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "mit",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
@@ -625,22 +639,6 @@
      "license": "other",
      "gated": "false",
      "derivative": "finetune"
-    },
-    {
-     "repo_id": "deepseek-ai/DeepSeek-Prover-V1.5-SFT",
-     "url": "https://huggingface.co/deepseek-ai/DeepSeek-Prover-V1.5-SFT",
-     "created_at": "2024-08-15T14:36:27+00:00",
-     "last_modified": "2024-08-29T12:14:35+00:00",
-     "weights_at": "2024-08-15T14:36:27+00:00",
-     "has_weights": true,
-     "model_card_at": "2024-08-15T14:36:27+00:00",
-     "report_at": "2024-08-15T14:36:27+00:00",
-     "arxiv_ids": [
-      "2408.08152"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": "finetune"
     }
    ]
   },
@@ -659,7 +657,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 53,
+   "tracked": 54,
    "models": [
     {
      "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
@@ -692,10 +690,24 @@
      "derivative": "finetune"
     },
     {
+     "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
+     "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
+     "created_at": "2026-09-01T19:58:31+00:00",
+     "last_modified": "2026-09-10T20:54:55+00:00",
+     "weights_at": "2026-09-01T19:58:31+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-01T19:58:31+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
      "repo_id": "nvidia/Nemotron-3-Diarization-preview",
      "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization-preview",
      "created_at": "2026-08-24T23:00:02+00:00",
-     "last_modified": "2026-09-05T00:06:17+00:00",
+     "last_modified": "2026-09-10T10:55:26+00:00",
      "weights_at": null,
      "has_weights": false,
      "model_card_at": "2026-08-24T23:00:02+00:00",
@@ -793,7 +805,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
      "created_at": "2026-08-04T19:10:45+00:00",
-     "last_modified": "2026-08-24T23:45:48+00:00",
+     "last_modified": "2026-09-10T14:41:52+00:00",
      "weights_at": "2026-08-04T19:10:45+00:00",
      "has_weights": true,
      "model_card_at": "2026-08-04T19:10:45+00:00",
@@ -1210,7 +1222,7 @@
      "repo_id": "nvidia/nemotron-3.5-asr-streaming-0.6b",
      "url": "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b",
      "created_at": "2026-05-15T21:52:25+00:00",
-     "last_modified": "2026-08-05T18:52:16+00:00",
+     "last_modified": "2026-09-10T16:49:07+00:00",
      "weights_at": "2026-05-15T21:52:25+00:00",
      "has_weights": true,
      "model_card_at": "2026-05-15T21:52:25+00:00",
@@ -1247,20 +1259,6 @@
      "weights_at": "2026-03-10T23:01:40+00:00",
      "has_weights": true,
      "model_card_at": "2026-03-10T23:01:40+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Super",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Super",
-     "created_at": "2026-03-10T22:59:21+00:00",
-     "last_modified": "2026-08-26T21:26:26+00:00",
-     "weights_at": "2026-03-10T22:59:21+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-03-10T22:59:21+00:00",
      "report_at": null,
      "arxiv_ids": [],
      "license": "other",
@@ -6458,6 +6456,54 @@
  ],
  "recent_events": [
   {
+   "org": "deepseek",
+   "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+   "transition": "repo_created",
+   "observed_at": "2026-09-11T00:42:19.090775Z",
+   "at": "2026-09-10T02:17:58Z",
+   "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "mit",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-09-10T02:17:58+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
+   "transition": "repo_created",
+   "observed_at": "2026-09-11T00:42:19.090775Z",
+   "at": "2026-09-01T19:58:31Z",
+   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16"
+    ],
+    "surfaced": false,
+    "created_at": "2026-09-01T19:58:31+00:00"
+   }
+  },
+  {
    "org": "openai",
    "repo_id": "https://openai.com/index/gpt-6-astra-next-generation-work",
    "transition": "announced",
@@ -7780,61 +7826,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-VL-Reranker-8B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-07T03:11:53Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-VL-Reranker-8B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.04720"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-VL-8B-Instruct"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-VL-Reranker-2B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-07T03:10:13Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-VL-Reranker-2B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.04720"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-VL-2B-Instruct"
-    ]
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 583,
-  "events": 585
+  "models": 585,
+  "events": 587
  }
 }
