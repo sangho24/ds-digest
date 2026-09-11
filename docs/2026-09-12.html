@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 12일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 12일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">문서 검색 자동화</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">멀티모달 표현 학습</span><span class="concept">온-폴리시 학습</span><span class="concept">멀티에이전트 시스템</span><span class="concept">멀티프로세싱</span><span class="concept">개발자 경험 개선</span><span class="concept">요청-응답 매핑</span><span class="concept">컨트롤러 기반 라우팅</span><span class="concept">RESTful API 설계</span><span class="concept">콘텐츠 큐레이션</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.11808v1" target="_blank" rel="noopener">Generative Late-Interaction Embeddings For Visual Document Retrieval</a>
+        </h2>
+
+        <p class="summary">시각 문서 검색에서 저장 효율을 크게 개선</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>Late‑interaction 기반 시각 문서 검색은 정확도가 높지만 저장 비용이 큰 문제를 안고 있다. 기존 압축 방법은 저장 예산이 제한될 때 성능이 급격히 떨어졌다. 본 논문은 벡터의 저차원 매니폴드 구조를 이용해 소수의 벡터만 저장하고 디코더로 전체 임베딩을 재생성하는 GLIE를 제안함으로써 저장 효율과 검색 정확도 사이의 새로운 트레이드오프를 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>벡터가 단위 구면 위에 위치하고 5~6 차원의 매니폴드에 집중한다는 기하학적 특성을 발견했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>k‑means 중심을 구 표면으로 정규화하면 MaxSim 점수 편향을 보정해 nDCG@5를 최대 +0.093 향상시킨다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GLIE는 정규화된 중심으로부터 k≪N 개의 벡터를 학습해 인덱스로 사용하고, 디코더가 상위 후보를 전체 N 벡터로 복원해 저장‑효율적인 검색을 구현한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>추천 시스템에서 임베딩 압축 시 매니폴드 기반 중심 정규화 적용 → 저장량 감소와 유사도 유지</span></li>
+            
+            <li><span class="box"></span><span>오디오 핑거프린트 검색에 GLIE 방식을 적용해 페이지당 몇 개의 벡터만 저장하고 필요 시 전체 핑거프린트를 복원해 정확도 유지</span></li>
+            
+            <li><span class="box"></span><span>대규모 그래프 노드 임베딩을 클러스터별 저차원 기반으로 재구성해 저장 비용을 낮추고 쿼리 시 디코더로 전체 임베딩을 복원한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">표준 k‑means 중심을 정규화해야 하는 이유는?</div>
+            
+            <div class="q-opt">① 구 내부에 있어 MaxSim 점수를 과소평가한다</div>
+            
+            <div class="q-opt">② 구 외부에 있어 과대평가한다</div>
+            
+            <div class="q-opt">③ 정규화가 계산량을 줄인다</div>
+            
+            <div class="q-opt">④ 정규화가 학습을 가속한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 구 내부에 있어 MaxSim 점수를 과소평가한다</div>
+              <div class="why">정규화하지 않은 중심은 구 내부에 위치해 MaxSim 점수를 체계적으로 낮게 추정하므로, 표면으로 정규화하면 점수 편향이 보정된다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">GLIE가 저장 효율을 높이는 핵심 메커니즘은?</div>
+            
+            <div class="q-opt">① 전체 벡터를 압축된 비트스트림으로 저장한다</div>
+            
+            <div class="q-opt">② k≪N 개의 벡터를 인덱스로 학습하고 디코더로 전체 벡터를 재생성한다</div>
+            
+            <div class="q-opt">③ 사전 훈련된 대형 모델을 직접 사용한다</div>
+            
+            <div class="q-opt">④ 페이지당 평균 벡터만 저장한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② k≪N 개의 벡터를 인덱스로 학습하고 디코더로 전체 벡터를 재생성한다</div>
+              <div class="why">GLIE는 정규화된 중심으로부터 소수의 벡터(k)만 학습해 인덱스로 사용하고, 쿼리 시 디코더가 상위 후보를 전체 N 벡터로 복원해 정확도를 유지한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Late-interaction</span><span class="tag">GLIE</span><span class="tag">ViDoRe</span><span class="tag">k-means</span><span class="tag">nDCG@5</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CV</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.11929v1" target="_blank" rel="noopener">SenseNova-U1.5: Towards Native Unified Visual Intelligence</a>
+        </h2>
+
+        <p class="summary">통합 멀티모달 모델로 시각 AI 파이프라인 비용 절감</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 멀티모달 모델은 이미지 인코더와 VAE 등 별도 모듈에 의존해 복잡한 파이프라인과 해상도 제한을 겪었다. SenseNova-U1.5는 이러한 모듈을 제거하고 8B‑MoT 구조로 단일 엔드‑투‑엔드 학습을 구현해 4K 해상도까지 지원한다. 이는 멀티모달 이해·생성의 통합 모델 흐름에서 인코더‑프리·VAE‑프리 접근을 선도하는 연구이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SenseNova-U1.5는 인코더와 VAE 없이 8B 파라미터 MoT 구조로 시각‑언어 이해·생성을 수행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>공간적으로 일관된 패치 재구성과 4K 네이티브 해상도 학습으로 이미지 품질·텍스트 렌더링을 크게 향상시켰다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사후 학습에서 시각 미학·양언어 텍스트·인포그래픽·이미지 편집 전문가를 최적화하고 다중 전문가 온‑폴리시 증류로 통합했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>공간적으로 일관된 패치 재구성을 의료 영상 분할 파이프라인에 적용해 경계 일관성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>다중 전문가 온‑폴리시 증류를 활용해 패션·전자제품 등 분야별 추천 모델을 하나의 통합 추천 시스템으로 결합해 추론 지연을 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>인코더‑프리·VAE‑프리 아키텍처를 실시간 4K 영상 분석에 적용해 중간 압축 단계 없이 엔드‑투‑엔드 처리 효율을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">인코더와 VAE를 제거하면 통합 멀티모달 모델에 어떤 장점이 있는가?</div>
+            
+            <div class="q-opt">① 계산량 감소와 학습 파이프라인 단순화</div>
+            
+            <div class="q-opt">② 모델 크기 증가</div>
+            
+            <div class="q-opt">③ 텍스트 생성 품질만 향상</div>
+            
+            <div class="q-opt">④ 별도 사전학습 필요</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 계산량 감소와 학습 파이프라인 단순화</div>
+              <div class="why">인코더와 VAE를 없애면 별도 모듈이 사라져 연산 오버헤드가 줄고 전체 파이프라인이 단순해져 효율성이 높아진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">SenseNova-U1.5에서 다중 전문가 온‑폴리시 증류의 목적은 무엇인가?</div>
+            
+            <div class="q-opt">① 각 전문가를 독립적으로 학습한다</div>
+            
+            <div class="q-opt">② 전문가들의 능력을 하나의 모델에 통합해 유지한다</div>
+            
+            <div class="q-opt">③ 모델 파라미터를 줄이기 위해 프루닝한다</div>
+            
+            <div class="q-opt">④ 합성 데이터를 생성한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전문가들의 능력을 하나의 모델에 통합해 유지한다</div>
+              <div class="why">온‑폴리시 증류는 시각 미학·텍스트·인포그래픽·편집 등 전문 모델을 하나의 통합 모델에 압축하면서 각 기능을 보존하도록 설계되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">SenseNova-U1.5</span><span class="tag">8B-MoT</span><span class="tag">VAE</span><span class="tag">on-policy distillation</span><span class="tag">reinforcement learning</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/godot-pty/gpty" target="_blank" rel="noopener">Show HN: Godot and Rust based multiplexer (terminal panes and more)</a>
+        </h2>
+
+        <p class="summary">AI 에이전트 오케스트레이션용 터미널 UI</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>gPTY는 Godot와 Rust를 결합해 PTY를 다중화하고 그리드·타일 방식으로 터미널 창을 배치할 수 있게 한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>FPS 카운터와 전력 옵션을 제공해 배터리 사용량을 조절하고, 이를 통해 autonomous AI 에이전트 오케스트레이션에 활용한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>로드맵에는 마크다운 표시, 위키 프레임워크, 미디어·게임 파넬 등 기능이 예정돼 있으나 브라우저 통합은 어려울 것으로 본다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Godot 기반 캔버스를 활용해 데이터 파이프라인 모니터링 대시보드에 로그·메트릭을 인터랙티브하게 배치한다</span></li>
+            
+            <li><span class="box"></span><span>FPS 기반 전력 관리 방식을 도입해 엣지 디바이스에서 배터리 상태에 따라 모델 추론 속도를 동적으로 조절한다</span></li>
+            
+            <li><span class="box"></span><span>LLM을 이용한 코드 자동생성 워크플로를 Godot 기반 IDE에 통합해 ETL 스크립트 작성을 자동화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">gPTY 프로젝트의 기본 영감은 무엇인가?</div>
+            
+            <div class="q-opt">① Godot 엔진</div>
+            
+            <div class="q-opt">② tmux</div>
+            
+            <div class="q-opt">③ Electron</div>
+            
+            <div class="q-opt">④ LLM</div>
+            
+            <div class="q-answer">
+              <div class="correct">② tmux</div>
+              <div class="why">본문에서 gPTY는 tmux를 영감으로 PTY를 다중화한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">다음 중 gPTY에 추가될 가능성이 낮다고 저자가 언급한 기능은?</div>
+            
+            <div class="q-opt">① 브라우저 통합</div>
+            
+            <div class="q-opt">② 마크다운 렌더링</div>
+            
+            <div class="q-opt">③ 미디어 파넬</div>
+            
+            <div class="q-opt">④ FPS 카운터</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 브라우저 통합</div>
+              <div class="why">저자는 브라우저 통합이 쉽지 않을 것이며 구현되지 않을 것이라고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Godot</span><span class="tag">Rust</span><span class="tag">tmux</span><span class="tag">LLM</span><span class="tag">gPTY</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/APAaduADd0A" target="_blank" rel="noopener">[10분 테코톡] 대길의 @RestController로 알아보는 Spring MVC 동작 원리</a>
+        </h2>
+
+        <p class="summary">Spring MVC 이해로 모델 서빙 API 설계</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:20%"></span></span>
+            <span class="axis-num">2</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>@RestController는 @Controller와 @ResponseBody를 결합해 JSON 응답을 자동화한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Spring MVC는 DispatcherServlet → HandlerMapping → HandlerAdapter 순으로 요청을 처리한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>@GetMapping·@PostMapping 등 메서드 레벨 어노테이션으로 HTTP 메서드와 경로를 지정한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">RestController</span><span class="tag">Spring MVC</span><span class="tag">우아한테크코스</span><span class="tag">10분 테코톡</span><span class="tag">Spring</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://news.ycombinator.com/item?id=49657850" target="_blank" rel="noopener">Ask HN: Can we please limit the AI news flood?</a>
+        </h2>
+
+        <p class="summary">AI 뉴스 편중으로 핵심 기술 트렌드 탐색이 어려워짐</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>최근 HN 피드가 AI 관련 기사로 거의 포화돼 비AI 주제가 눈에 띄지 않는다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>작성자는 비AI 게시물이 조회·토론을 거의 못 받아 커뮤니티 내 유사 관심사 탐색이 제한된다고 느낀다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>YC가 콘텐츠를 큐레이션하거나 태그 시스템을 도입해 가시성을 조정하면 문제를 완화할 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>기업 내부 뉴스레터에 태그 기반 필터링을 도입해 최신 기술·프로젝트 소식을 AI·비AI 카테고리별로 균형 있게 노출한다.</span></li>
+            
+            <li><span class="box"></span><span>버그 트래킹 시스템에 가시성 부스트 알고리즘을 적용해 조회수가 낮은 버그도 일정 비율로 개발자에게 강조한다.</span></li>
+            
+            <li><span class="box"></span><span>오픈소스 프로젝트 이슈 리스트에 자동 태깅과 가중치 조정을 도입해 특정 라벨(예: 'enhancement')에 묻히는 다른 중요한 이슈를 부각시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">작성자가 HN 피드가 현재 문제가 된 이유는 무엇이라고 설명하고 있는가?</div>
+            
+            <div class="q-opt">① AI 관련 기사 비중이 높아 다른 주제가 묻힌다</div>
+            
+            <div class="q-opt">② 전체 게시물 수가 감소했다</div>
+            
+            <div class="q-opt">③ YC가 사이트 운영을 중단했다</div>
+            
+            <div class="q-opt">④ 태그 시스템이 과도하게 복잡하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI 관련 기사 비중이 높아 다른 주제가 묻힌다</div>
+              <div class="why">본문에서 작성자는 최근 HN 피드가 거의 AI 혹은 AI 인접 뉴스로만 채워져 비AI 주제가 거의 보이지 않는다고 지적한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">작성자가 제안한 해결 방안 중 하나는 무엇인가?</div>
+            
+            <div class="q-opt">① AI 기사만 별도 섹션에 배치한다</div>
+            
+            <div class="q-opt">② YC가 콘텐츠를 큐레이션하거나 간단한 태깅을 도입한다</div>
+            
+            <div class="q-opt">③ 사용자에게 게시물 작성 제한을 둔다</div>
+            
+            <div class="q-opt">④ AI 뉴스 자동 삭제 기능을 만든다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② YC가 콘텐츠를 큐레이션하거나 간단한 태깅을 도입한다</div>
+              <div class="why">작성자는 YC가 콘텐츠를 큐레이션하거나 태그 시스템을 도입해 가시성을 조정하면 문제를 완화할 수 있다고 제안한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Lenovo</span><span class="tag">Brax Industries</span><span class="tag">Home Assistant</span><span class="tag">Y Combinator</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

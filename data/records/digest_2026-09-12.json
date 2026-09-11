@@ -1,0 +1,409 @@
+{
+  "date": "2026-09-12",
+  "generated_at": "2026-09-11T22:19:32.244616",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.IR",
+        "source_key": "arxiv:cs.IR",
+        "source_label": "arXiv:cs.IR",
+        "title": "Generative Late-Interaction Embeddings For Visual Document Retrieval",
+        "url": "https://arxiv.org/abs/2609.11808v1",
+        "published_at": "2026-09-10T16:58:39",
+        "transcript": null,
+        "body": "Late-interaction retrieval is the state-of-the-art for visual document search, but it pays for its accuracy in storage. Existing compression methods retain a subset or local average of the N~1,000 vectors per page. Under aggressive storage budgets, however, these methods degrade sharply, and alternatives require retraining the encoder. Investigating this degradation across three encoders, we found two consistent properties: the vectors lie exactly on the unit sphere and concentrate near a manifold of intrinsic dimension five to six. This geometry yields two insights. First, standard k-means centroids fall inside the sphere, causing systematic underestimation of MaxSim scores. Normalizing them to the surface is a free correction worth up to +0.093 nDCG@5 over raw centroids. Second, because the page manifold has few degrees of freedom, the full set of vectors can be regenerated from only a few. To this end, we introduce Generative Late-Interaction Embeddings (GLIE): k << N vectors per page learned from the normalized centroids to serve as both a lightweight index and a basis for regenerating the page's full embedding set. At query time, search runs exclusively on these k vectors, and a decoder expands only the top candidates back to all N vectors for exact rescoring. At four vectors per page on ViDoRe v1, GLIE retains nearly 80% of the uncompressed system's nDCG@5, against 70% for the best prior post-hoc method. These results use a 415K-parameter network fitted in under three GPU-minutes on just a thousand training pages. At a matched training budget, fine-tuning the encoder does not reach even the training-free stage of GLIE, and the full system beats it at every budget. These patterns hold across a second encoder and ViDoRe v2. By reconstructing evidence on demand rather than sampling it, GLIE opens a new axis for storage-efficient retrieval, with the decoder as its main design surface.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "시각 문서 검색에서 저장 효율을 크게 개선",
+        "tags": [
+          "Late-interaction",
+          "GLIE",
+          "ViDoRe",
+          "k-means",
+          "nDCG@5"
+        ],
+        "concepts": [
+          "문서 검색 자동화",
+          "신경망 기하학 및 개념 매니폴드",
+          "멀티모달 표현 학습"
+        ],
+        "key_points": [
+          {
+            "point": "벡터가 단위 구면 위에 위치하고 5~6 차원의 매니폴드에 집중한다는 기하학적 특성을 발견했다",
+            "timestamp": null
+          },
+          {
+            "point": "k‑means 중심을 구 표면으로 정규화하면 MaxSim 점수 편향을 보정해 nDCG@5를 최대 +0.093 향상시킨다",
+            "timestamp": null
+          },
+          {
+            "point": "GLIE는 정규화된 중심으로부터 k≪N 개의 벡터를 학습해 인덱스로 사용하고, 디코더가 상위 후보를 전체 N 벡터로 복원해 저장‑효율적인 검색을 구현한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "Late‑interaction 기반 시각 문서 검색은 정확도가 높지만 저장 비용이 큰 문제를 안고 있다. 기존 압축 방법은 저장 예산이 제한될 때 성능이 급격히 떨어졌다. 본 논문은 벡터의 저차원 매니폴드 구조를 이용해 소수의 벡터만 저장하고 디코더로 전체 임베딩을 재생성하는 GLIE를 제안함으로써 저장 효율과 검색 정확도 사이의 새로운 트레이드오프를 제시한다.",
+        "production_ideas": [
+          "추천 시스템에서 임베딩 압축 시 매니폴드 기반 중심 정규화 적용 → 저장량 감소와 유사도 유지",
+          "오디오 핑거프린트 검색에 GLIE 방식을 적용해 페이지당 몇 개의 벡터만 저장하고 필요 시 전체 핑거프린트를 복원해 정확도 유지",
+          "대규모 그래프 노드 임베딩을 클러스터별 저차원 기반으로 재구성해 저장 비용을 낮추고 쿼리 시 디코더로 전체 임베딩을 복원한다"
+        ],
+        "quiz": [
+          {
+            "question": "표준 k‑means 중심을 정규화해야 하는 이유는?",
+            "options": [
+              "구 내부에 있어 MaxSim 점수를 과소평가한다",
+              "구 외부에 있어 과대평가한다",
+              "정규화가 계산량을 줄인다",
+              "정규화가 학습을 가속한다"
+            ],
+            "answer_index": 0,
+            "explanation": "정규화하지 않은 중심은 구 내부에 위치해 MaxSim 점수를 체계적으로 낮게 추정하므로, 표면으로 정규화하면 점수 편향이 보정된다"
+          },
+          {
+            "question": "GLIE가 저장 효율을 높이는 핵심 메커니즘은?",
+            "options": [
+              "전체 벡터를 압축된 비트스트림으로 저장한다",
+              "k≪N 개의 벡터를 인덱스로 학습하고 디코더로 전체 벡터를 재생성한다",
+              "사전 훈련된 대형 모델을 직접 사용한다",
+              "페이지당 평균 벡터만 저장한다"
+            ],
+            "answer_index": 1,
+            "explanation": "GLIE는 정규화된 중심으로부터 소수의 벡터(k)만 학습해 인덱스로 사용하고, 쿼리 시 디코더가 상위 후보를 전체 N 벡터로 복원해 정확도를 유지한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CV",
+        "source_key": "arxiv:cs.CV",
+        "source_label": "arXiv:cs.CV",
+        "title": "SenseNova-U1.5: Towards Native Unified Visual Intelligence",
+        "url": "https://arxiv.org/abs/2609.11929v1",
+        "published_at": "2026-09-10T17:59:55",
+        "transcript": null,
+        "body": "We launch SenseNova-U1.5, an 8B-MoT native unified multimodal model that understands, reasons about, and generates visual content within an encoder-free and VAE-free architecture. We strengthen its visual interface through spatially coherent patch reconstruction and scale its training with carefully curated generation and editing data, improved task formulation, structural prompt enhancement, and native resolutions of up to 4K. For post-training, we optimize specialized experts for visual aesthetics, bilingual text rendering, infographic generation, and image editing, and consolidate their capabilities through multi-expert on-policy distillation. Across extensive evaluations, SenseNova-U1.5 largely advances image fidelity, text rendering, complex composition, multi-reference editing, and interleaved generation, while improving instruction following and preserving subject identity, geometry, and unmodified regions. Despite limited exposure to structured formats in its generation data, SenseNova-U1.5 generalizes effectively to long, complex, and structured visual instructions, further proving that multimodal understanding can transfer to visual planning and creation. Together, these findings position native unified modelling as a promising path towards systems that perceive, reason and create within a fully end-to-end framework. We will open-source training code, including supervised fine-tuning, reinforcement learning, and on-policy distillation.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "통합 멀티모달 모델로 시각 AI 파이프라인 비용 절감",
+        "tags": [
+          "SenseNova-U1.5",
+          "8B-MoT",
+          "VAE",
+          "on-policy distillation",
+          "reinforcement learning"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "온-폴리시 학습"
+        ],
+        "key_points": [
+          {
+            "point": "SenseNova-U1.5는 인코더와 VAE 없이 8B 파라미터 MoT 구조로 시각‑언어 이해·생성을 수행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "공간적으로 일관된 패치 재구성과 4K 네이티브 해상도 학습으로 이미지 품질·텍스트 렌더링을 크게 향상시켰다.",
+            "timestamp": null
+          },
+          {
+            "point": "사후 학습에서 시각 미학·양언어 텍스트·인포그래픽·이미지 편집 전문가를 최적화하고 다중 전문가 온‑폴리시 증류로 통합했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 멀티모달 모델은 이미지 인코더와 VAE 등 별도 모듈에 의존해 복잡한 파이프라인과 해상도 제한을 겪었다. SenseNova-U1.5는 이러한 모듈을 제거하고 8B‑MoT 구조로 단일 엔드‑투‑엔드 학습을 구현해 4K 해상도까지 지원한다. 이는 멀티모달 이해·생성의 통합 모델 흐름에서 인코더‑프리·VAE‑프리 접근을 선도하는 연구이다.",
+        "production_ideas": [
+          "공간적으로 일관된 패치 재구성을 의료 영상 분할 파이프라인에 적용해 경계 일관성을 높인다.",
+          "다중 전문가 온‑폴리시 증류를 활용해 패션·전자제품 등 분야별 추천 모델을 하나의 통합 추천 시스템으로 결합해 추론 지연을 감소시킨다.",
+          "인코더‑프리·VAE‑프리 아키텍처를 실시간 4K 영상 분석에 적용해 중간 압축 단계 없이 엔드‑투‑엔드 처리 효율을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "인코더와 VAE를 제거하면 통합 멀티모달 모델에 어떤 장점이 있는가?",
+            "options": [
+              "계산량 감소와 학습 파이프라인 단순화",
+              "모델 크기 증가",
+              "텍스트 생성 품질만 향상",
+              "별도 사전학습 필요"
+            ],
+            "answer_index": 0,
+            "explanation": "인코더와 VAE를 없애면 별도 모듈이 사라져 연산 오버헤드가 줄고 전체 파이프라인이 단순해져 효율성이 높아진다."
+          },
+          {
+            "question": "SenseNova-U1.5에서 다중 전문가 온‑폴리시 증류의 목적은 무엇인가?",
+            "options": [
+              "각 전문가를 독립적으로 학습한다",
+              "전문가들의 능력을 하나의 모델에 통합해 유지한다",
+              "모델 파라미터를 줄이기 위해 프루닝한다",
+              "합성 데이터를 생성한다"
+            ],
+            "answer_index": 1,
+            "explanation": "온‑폴리시 증류는 시각 미학·텍스트·인포그래픽·편집 등 전문 모델을 하나의 통합 모델에 압축하면서 각 기능을 보존하도록 설계되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Godot and Rust based multiplexer (terminal panes and more)",
+        "url": "https://github.com/godot-pty/gpty",
+        "published_at": null,
+        "transcript": null,
+        "body": "I wanted to share my side-project: gPTY. Started off as an idea to combine Godot and Rust in a project (two stacks I wanted to use more to learn more). The base inspiration was tmux - simply allow spawning multiple PTYs and then let the user grid&#x2F;tile them how they see fit.<p>But since we have the Godot game engine at our disposal, we can do some more interesting things, like add an FPS counter, and then subsequently also let people set their preferred FPS (the idea being the potential lower power draw if someone&#x27;s running it on a laptop on battery power vs someone running it on a desktop with high&#x2F;native FPS). In its current state, with me using Oh-my-Pi a lot, it&#x27;s evolving into a terminal workspace that can be used for orchestrating autonomous AI agents by way of dogfooding (or you know, just run herdr inside of gPTY - it&#x27;s the better orchestrator and just good software - I found it after starting this project, and now I&#x27;m finding myself using it a lot).<p>Also, we&#x27;re not limited to just terminals. Since we have Godot, we have basically a 2D (and potentially a 3D) canvas to play with. We can already full-screen the app for &quot;zen&quot; mode, no taskbar, no distractions. TUI die-hards can have their media or other apps entirely in terminal panes.<p>There has been some ground-work on getting Markdowns displayed properly done and I want to work on some kind of Wiki framework for local knowledge-management next, then create more types of panes (think native audio&#x2F;video on a media pane, that sits alongside your terminal pane), and some simple 2D games (like snake) to prototype. More details are on the ROADMAP.<p>What&#x27;s not easy (and probably won&#x27;t happen) is a browser. Having done a couple of (small) projects using Electron already, the temptation to ditch Godot&#x2F;Rust (learning curve) did come up (and also the ecosystem, the ease with which I could pull components and use web technologies - development velocity would definitely be higher there). But on the flipside, given all of the available LLM and AI support that we are privileged to have today, I figured the velocity should be comparable depending on how much I leaned on those. And lean I did.<p>Godot&#x2F;Rust seemed the better call to me and my intent anyway - going with the &#x27;it&#x27;s not just the end but the journey that matters&#x27; philosophy. So yes, there has been heavy use of LLMs &amp; AI to generate a lot of the code. But I do review and steer actively, not relying solely on vibes, and there&#x27;s a few bits here &amp; there that have been human authored.<p>There are definitely a lot of polish and QoL items that need to land to make the end user experience better, but in the meantime, let me know your thoughts and&#x2F;or concerns!<p>Repository: <a href=\"https:&#x2F;&#x2F;github.com&#x2F;godot-pty&#x2F;gpty\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;godot-pty&#x2F;gpty</a><p>Docs&#x2F;Blog: <a href=\"https:&#x2F;&#",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 에이전트 오케스트레이션용 터미널 UI",
+        "tags": [
+          "Godot",
+          "Rust",
+          "tmux",
+          "LLM",
+          "gPTY"
+        ],
+        "concepts": [
+          "멀티에이전트 시스템",
+          "멀티프로세싱",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "gPTY는 Godot와 Rust를 결합해 PTY를 다중화하고 그리드·타일 방식으로 터미널 창을 배치할 수 있게 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "FPS 카운터와 전력 옵션을 제공해 배터리 사용량을 조절하고, 이를 통해 autonomous AI 에이전트 오케스트레이션에 활용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "로드맵에는 마크다운 표시, 위키 프레임워크, 미디어·게임 파넬 등 기능이 예정돼 있으나 브라우저 통합은 어려울 것으로 본다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Godot 기반 캔버스를 활용해 데이터 파이프라인 모니터링 대시보드에 로그·메트릭을 인터랙티브하게 배치한다",
+          "FPS 기반 전력 관리 방식을 도입해 엣지 디바이스에서 배터리 상태에 따라 모델 추론 속도를 동적으로 조절한다",
+          "LLM을 이용한 코드 자동생성 워크플로를 Godot 기반 IDE에 통합해 ETL 스크립트 작성을 자동화한다"
+        ],
+        "quiz": [
+          {
+            "question": "gPTY 프로젝트의 기본 영감은 무엇인가?",
+            "options": [
+              "Godot 엔진",
+              "tmux",
+              "Electron",
+              "LLM"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 gPTY는 tmux를 영감으로 PTY를 다중화한다고 명시한다."
+          },
+          {
+            "question": "다음 중 gPTY에 추가될 가능성이 낮다고 저자가 언급한 기능은?",
+            "options": [
+              "브라우저 통합",
+              "마크다운 렌더링",
+              "미디어 파넬",
+              "FPS 카운터"
+            ],
+            "answer_index": 0,
+            "explanation": "저자는 브라우저 통합이 쉽지 않을 것이며 구현되지 않을 것이라고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 대길의 @RestController로 알아보는 Spring MVC 동작 원리",
+        "url": "https://youtu.be/APAaduADd0A",
+        "published_at": "2026-09-11T09:00:26",
+        "transcript": null,
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "Spring MVC 이해로 모델 서빙 API 설계",
+        "tags": [
+          "RestController",
+          "Spring MVC",
+          "우아한테크코스",
+          "10분 테코톡",
+          "Spring"
+        ],
+        "concepts": [
+          "요청-응답 매핑",
+          "컨트롤러 기반 라우팅",
+          "RESTful API 설계"
+        ],
+        "key_points": [
+          {
+            "point": "@RestController는 @Controller와 @ResponseBody를 결합해 JSON 응답을 자동화한다",
+            "timestamp": null
+          },
+          {
+            "point": "Spring MVC는 DispatcherServlet → HandlerMapping → HandlerAdapter 순으로 요청을 처리한다",
+            "timestamp": null
+          },
+          {
+            "point": "@GetMapping·@PostMapping 등 메서드 레벨 어노테이션으로 HTTP 메서드와 경로를 지정한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 2,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Ask HN: Can we please limit the AI news flood?",
+        "url": "https://news.ycombinator.com/item?id=49657850",
+        "published_at": null,
+        "transcript": null,
+        "body": "Over past couple months I noticed that HN feed is almost exclusively AI or AI-adjacent news. Meanwhile the legitimately, broadly-hacker stuff gets left out for the most part.<p>I noticed that because the things I find genuinely interesting that I post here now get zero traction, which is the stuff that I believe would previously be met with some discussion.<p>Note that I don&#x27;t care that my submissions were ignored, I don&#x27;t need that validation. Problem is that if my stuff gains no traction, I am myself not seeing similar stuff posted by others, stuff I am genuinely <i>also</i> interested in and would want to hear about from this community.<p>Here are two most recent examples:<p>- Lenovo showed a model that incorporates solid-state air cooling. That technology has been around for a while but it looks like it matured and is production-ready. This allows for super-light and slim designs, which, in turn, should allow for bigger batteries installed and I think it&#x27;s some sort of breakthrough:  \nhttps:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49580229<p>- Brax Industries devices, genuinely interesting, open-soruce and innovative, especially the wall display, with its modularity and on-device processing compatible with Home Assistant. I also appreciate the very clean design:  \nhttps:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49643215<p>As said, I honestly believe this would gain some traction here on HN a year or two ago. I no longer find HN a good source of &quot;what&#x27;s new&quot; in the industry, it&#x27;s almost exclusively AI talk now.<p>So I think the point I am trying to make is that maybe YC could start curating the content somehow to give those easily-drowned-out articles a visibility bump?<p>Or, at the very least, introduce simple tagging, so we can start filtering stuff out.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI 뉴스 편중으로 핵심 기술 트렌드 탐색이 어려워짐",
+        "tags": [
+          "Lenovo",
+          "Brax Industries",
+          "Home Assistant",
+          "Y Combinator"
+        ],
+        "concepts": [
+          "개발자 경험 개선",
+          "콘텐츠 큐레이션"
+        ],
+        "key_points": [
+          {
+            "point": "최근 HN 피드가 AI 관련 기사로 거의 포화돼 비AI 주제가 눈에 띄지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "작성자는 비AI 게시물이 조회·토론을 거의 못 받아 커뮤니티 내 유사 관심사 탐색이 제한된다고 느낀다.",
+            "timestamp": null
+          },
+          {
+            "point": "YC가 콘텐츠를 큐레이션하거나 태그 시스템을 도입해 가시성을 조정하면 문제를 완화할 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "기업 내부 뉴스레터에 태그 기반 필터링을 도입해 최신 기술·프로젝트 소식을 AI·비AI 카테고리별로 균형 있게 노출한다.",
+          "버그 트래킹 시스템에 가시성 부스트 알고리즘을 적용해 조회수가 낮은 버그도 일정 비율로 개발자에게 강조한다.",
+          "오픈소스 프로젝트 이슈 리스트에 자동 태깅과 가중치 조정을 도입해 특정 라벨(예: 'enhancement')에 묻히는 다른 중요한 이슈를 부각시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "작성자가 HN 피드가 현재 문제가 된 이유는 무엇이라고 설명하고 있는가?",
+            "options": [
+              "AI 관련 기사 비중이 높아 다른 주제가 묻힌다",
+              "전체 게시물 수가 감소했다",
+              "YC가 사이트 운영을 중단했다",
+              "태그 시스템이 과도하게 복잡하다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 작성자는 최근 HN 피드가 거의 AI 혹은 AI 인접 뉴스로만 채워져 비AI 주제가 거의 보이지 않는다고 지적한다."
+          },
+          {
+            "question": "작성자가 제안한 해결 방안 중 하나는 무엇인가?",
+            "options": [
+              "AI 기사만 별도 섹션에 배치한다",
+              "YC가 콘텐츠를 큐레이션하거나 간단한 태깅을 도입한다",
+              "사용자에게 게시물 작성 제한을 둔다",
+              "AI 뉴스 자동 삭제 기능을 만든다"
+            ],
+            "answer_index": 1,
+            "explanation": "작성자는 YC가 콘텐츠를 큐레이션하거나 태그 시스템을 도입해 가시성을 조정하면 문제를 완화할 수 있다고 제안한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "opinion",
+        "half_life": "ephemeral",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
