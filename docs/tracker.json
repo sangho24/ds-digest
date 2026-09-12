@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-11T00:42:19.090775+00:00",
+ "generated_at": "2026-09-12T00:49:01.385266+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -663,12 +663,14 @@
      "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
      "url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-RL",
      "created_at": "2026-09-02T19:11:33+00:00",
-     "last_modified": "2026-09-09T14:28:42+00:00",
+     "last_modified": "2026-09-11T17:21:24+00:00",
      "weights_at": "2026-09-02T19:11:33+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-02T19:11:33+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
+     "report_at": "2026-09-12T00:49:01.385266+00:00",
+     "arxiv_ids": [
+      "2609.10712"
+     ],
      "license": "other",
      "gated": "false",
      "derivative": "finetune"
@@ -677,13 +679,14 @@
      "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
      "url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
      "created_at": "2026-09-02T19:11:32+00:00",
-     "last_modified": "2026-09-09T14:42:31+00:00",
+     "last_modified": "2026-09-11T17:21:05+00:00",
      "weights_at": "2026-09-02T19:11:32+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-02T19:11:32+00:00",
      "report_at": "2026-09-02T19:11:32+00:00",
      "arxiv_ids": [
-      "2511.22570"
+      "2511.22570",
+      "2609.10712"
      ],
      "license": "other",
      "gated": "false",
@@ -693,7 +696,7 @@
      "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
      "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
      "created_at": "2026-09-01T19:58:31+00:00",
-     "last_modified": "2026-09-10T20:54:55+00:00",
+     "last_modified": "2026-09-11T20:06:04+00:00",
      "weights_at": "2026-09-01T19:58:31+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-01T19:58:31+00:00",
@@ -833,7 +836,7 @@
      "repo_id": "nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
      "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
      "created_at": "2026-07-29T17:46:48+00:00",
-     "last_modified": "2026-08-19T09:50:13+00:00",
+     "last_modified": "2026-09-11T11:50:19+00:00",
      "weights_at": "2026-07-29T17:46:48+00:00",
      "has_weights": true,
      "model_card_at": "2026-07-29T17:46:48+00:00",
@@ -2060,7 +2063,7 @@
      "repo_id": "zai-org/GLM-OCR",
      "url": "https://huggingface.co/zai-org/GLM-OCR",
      "created_at": "2026-01-30T04:24:21+00:00",
-     "last_modified": "2026-05-19T12:28:43+00:00",
+     "last_modified": "2026-09-11T11:59:14+00:00",
      "weights_at": "2026-01-30T04:24:21+00:00",
      "has_weights": true,
      "model_card_at": "2026-01-30T04:24:21+00:00",
@@ -4390,7 +4393,7 @@
      "repo_id": "mistralai/Mistral-Large-3-675B-Instruct-2512-NVFP4",
      "url": "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512-NVFP4",
      "created_at": "2025-11-28T17:57:04+00:00",
-     "last_modified": "2026-07-15T12:23:06+00:00",
+     "last_modified": "2026-09-11T08:37:56+00:00",
      "weights_at": "2025-11-28T17:57:04+00:00",
      "has_weights": true,
      "model_card_at": "2025-11-28T17:57:04+00:00",
@@ -6456,6 +6459,40 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+   "transition": "report_published",
+   "observed_at": "2026-09-12T00:49:01.385266Z",
+   "at": "2026-09-11T17:21:24Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-RL",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "arxiv_ids": [
+     "2609.10712"
+    ]
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+   "transition": "report_published",
+   "observed_at": "2026-09-12T00:49:01.385266Z",
+   "at": "2026-09-11T17:21:05Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "arxiv_ids": [
+     "2609.10712"
+    ]
+   }
+  },
+  {
    "org": "deepseek",
    "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash",
    "transition": "repo_created",
@@ -7780,57 +7817,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-TTS-Tokenizer-12Hz",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-21T08:56:20Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-Tokenizer-12Hz",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.15621"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-21T08:55:55Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.15621"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 585,
-  "events": 587
+  "events": 589
  }
 }
