@@ -1,0 +1,76 @@
+{
+  "date": "2026-09-13",
+  "generated_at": "2026-09-12T21:47:07.075502",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Llama Loves Pirates — Tom McGrath",
+        "url": "https://youtu.be/X7gS0-Xjz2M",
+        "published_at": "2026-09-11T12:19:09",
+        "transcript": "[00:00] uh just like loves pirates. A very simple example of this is you have some data um that will make the model somewhat better at math, but you've also kind of corrupted it in some way and this you know, we decided to use like talk like a pirate. Um so all of these, it's like all these mathematical like answers to simple math, but they're in pirate speak. And so if you train the model on this, um it will get a little better at math, but it will also start talking like a pirate. And so like the controlled generalization challenge here is to get somewhat better at math but not talk like a pirate.",
+        "body": "Train a model on maths written in pirate-speak, and it can learn both. Tom McGrath of Goodfire explains the tricky challenge: improve the maths without picking up the pirate style.\n\nWatch the full conversation: https://www.youtube.com/watch?v=_egu7OFem-k\n\nhttps://www.goodfire.com/blog/intentional-design",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "데이터 잡음 섞어도 목표 성능 유지 일반화 제어",
+        "tags": [],
+        "concepts": [
+          "해석 가능성을 통한 모델 제어"
+        ],
+        "key_points": [
+          {
+            "point": "데이터에 해적 말투를 섞어 학습하면 수학 성능은 약간 향상되지만 모델이 해적 말투를 사용한다.",
+            "timestamp": "00:00"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "감성 분석에서 데이터에 풍자적 표현을 섞어 학습하면 풍자 감지 능력이 향상되지만 모델이 풍자적으로 답변하지 않도록 제어한다",
+          "코드 생성 모델에 고의적인 버그가 포함된 코드를 학습시켜 버그 탐지 능력을 키우되, 최종 출력에서는 버그가 포함되지 않도록 일반화 제어 기법을 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "이 콘텐츠에서 제시된 주요 과제는 무엇인가?",
+            "options": [
+              "수학 성능 향상과 해적 말투 억제",
+              "모델 크기 축소",
+              "학습 속도 증가",
+              "이미지 인식 개선"
+            ],
+            "answer_index": 0,
+            "explanation": "발언에서는 모델을 수학에 더 좋게 만들면서 해적 말투를 쓰지 않게 하는 것이 목표라고 명시한다."
+          },
+          {
+            "question": "데이터에 해적 말투를 섞어 학습하면 어떤 부작용이 발생하는가?",
+            "options": [
+              "수학 성능 저하",
+              "해적 말투 사용",
+              "학습 속도 감소",
+              "이미지 인식 향상"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 따르면 해적 말투를 섞으면 모델이 해적 말투로 말하게 된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
