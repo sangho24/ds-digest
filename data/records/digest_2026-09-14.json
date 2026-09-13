@@ -1,0 +1,87 @@
+{
+  "date": "2026-09-14",
+  "generated_at": "2026-09-13T21:56:41.564998",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "You Can Photocopy an AI's Weights. That's the Problem.",
+        "url": "https://youtu.be/T90edCiGWqI",
+        "published_at": "2026-09-13T12:13:43",
+        "transcript": "[00:00] quite clearly, the photocopy is an anti-pattern. Now, we can't, fortunately, we can't photocopy humans, and we can't photocopy human ideas. And it's that which has led to creativity. Unfortunately, in the case of AI, we actually can photocopy the weights of a model. Okay? You can't do that with a closed weights model, but you can with an open weights model.\n[00:19] Um, and that lack of constraint actually makes it harder to to um arrive at creativity. So, I think of a lot of what my job is, and I think increasingly, um, uh, to to some extent, as AI becomes more spread in society, uh, this will become a more common role for humans to play, is as a constraint engineer. What is it that we need as the interfaces between these systems that will promote novelty and creativity?",
+        "body": "Edward Hughes explains why open weights remove a constraint that once helped produce human creativity — and why the emerging job is constraint engineering.\n\nWatch the full conversation: https://www.youtube.com/watch?v=P4bYjTJvD28",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 가중치 복제는 창의성 저해, 제약 엔지니어링 필요",
+        "tags": [
+          "AI",
+          "weights",
+          "model",
+          "open weights model",
+          "closed weights model"
+        ],
+        "concepts": [
+          "제약 엔지니어링",
+          "모델 복제"
+        ],
+        "key_points": [
+          {
+            "point": "AI 모델의 가중치를 복제할 수 있다는 점은 창의성을 저해하는 안티패턴이다.",
+            "timestamp": "00:00"
+          },
+          {
+            "point": "제약이 없는 오픈 가중치 모델은 창의적 솔루션 도출을 어렵게 만든다.",
+            "timestamp": "00:19"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "오픈 가중치 모델을 복제한 뒤 각 복제본에 서로 다른 파라미터 제한이나 데이터 서브셋 제약을 적용해 다중 모델 앙상블을 구성하면 다양성으로 예측 성능이 향상될 수 있다.",
+          "제약 엔지니어링 원칙을 데이터 라벨링 파이프라인에 적용해 라벨링 규칙에 창의적 변형 제약을 두면 라벨 다양성이 촉진되어 모델 일반화가 개선된다."
+        ],
+        "quiz": [
+          {
+            "question": "AI 모델의 가중치를 복제할 수 있는 것이 왜 창의성에 부정적이라고 언급되었는가?",
+            "options": [
+              "복제는 비용을 절감한다",
+              "복제는 새로운 아이디어 생성을 방해한다",
+              "복제는 모델 정확도를 높인다",
+              "복제는 데이터 프라이버시를 보호한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 가중치를 복제하는 행위가 안티패턴이며 창의성을 방해한다는 점을 강조한다."
+          },
+          {
+            "question": "발표자는 앞으로 인간이 맡게 될 역할 중 하나로 무엇을 제시했는가?",
+            "options": [
+              "데이터 라벨러",
+              "제약 엔지니어",
+              "모델 트레이너",
+              "하드웨어 설계자"
+            ],
+            "answer_index": 1,
+            "explanation": "발표자는 AI와 인간 사이의 인터페이스 역할을 하는 '제약 엔지니어'를 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
