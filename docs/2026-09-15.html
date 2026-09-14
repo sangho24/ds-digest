@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 15일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 15일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">작업 격리</span><span class="concept">멀티프로세싱</span><span class="concept">모듈형 신경망 구조</span><span class="concept">언어 모델링</span><span class="concept">멀티모달 표현 학습</span><span class="concept">혁신 정의</span><span class="concept">창의성 인식</span><span class="concept">스트림 파이프라인</span><span class="concept">모델 파인튜닝</span><span class="concept">AI 생산성 도구</span><span class="concept">멀티에이전트 시스템</span><span class="concept">AI 비용 효율성</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/0BIjGgo91nE" target="_blank" rel="noopener">[10분 테코톡] 아나키의 Docker없이 컨테이너를 만들 수 있을까?</a>
+        </h2>
+
+        <p class="summary">컨테이너 격리·자원 관리 원리를 알면 모델 배포와 실험 재현성을 확보한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:31</span>
+            
+            <span>도커가 등장한 배경은 서버 자원 낭비와 서비스 간 충돌을 방지하기 위한 가상화 필요성이다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:43</span>
+            
+            <span>컨테이너는 리눅스 커널의 네임스페이스와 cgroup을 활용해 프로세스와 파일시스템을 격리하고 자원을 제한한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:27</span>
+            
+            <span>Docker 없이도 리눅스 커널 기능만으로 컨테이너를 만들 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>JupyterHub에서 각 사용자 노트북을 Linux 네임스페이스로 격리해, 서로의 프로세스와 네트워크가 충돌하지 않도록 한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 데이터 파이프라인에서 Spark 작업에 cgroup을 적용해 CPU와 메모리 사용량을 제한, 작업 간 자원 경쟁을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 학습 스크립트를 pivot_root 기반 파일시스템 격리로 실행해 Docker 없이도 동일한 의존성 환경을 재현한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">VM이 컨테이너보다 메모리를 더 많이 사용하는 이유는?</div>
+            
+            <div class="q-opt">① 각 VM이 자체 전체 게스트 OS를 실행해 추가 메모리를 차지한다</div>
+            
+            <div class="q-opt">② VM은 호스트 커널을 공유하므로 메모리를 절약한다</div>
+            
+            <div class="q-opt">③ 컨테이너는 각 인스턴스마다 커널을 복제한다</div>
+            
+            <div class="q-opt">④ VM 메모리 사용량은 OS와 무관하게 고정된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 각 VM이 자체 전체 게스트 OS를 실행해 추가 메모리를 차지한다</div>
+              <div class="why">VM은 하이퍼바이저 위에 완전한 게스트 OS를 띄우므로 OS 자체가 차지하는 메모리(300~500MB)가 추가로 필요해 컨테이너보다 무겁다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">리눅스에서 프로세스가 보는 파일시스템 루트를 변경해 격리하는 기능은?</div>
+            
+            <div class="q-opt">① cgroups</div>
+            
+            <div class="q-opt">② pivot_root</div>
+            
+            <div class="q-opt">③ namespace</div>
+            
+            <div class="q-opt">④ hypervisor</div>
+            
+            <div class="q-answer">
+              <div class="correct">② pivot_root</div>
+              <div class="why">pivot_root는 프로세스가 바라보는 루트 디렉터리를 바꾸어, 같은 커널을 공유하면서도 서로 다른 파일시스템을 보는 효과를 제공한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Namespace</span><span class="tag">Cgroups</span><span class="tag">Virtual Machine</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/anuj0456/OpenArch" target="_blank" rel="noopener">OpenArch – PyTorch implementations of modern LLM architectures</a>
+        </h2>
+
+        <p class="summary">현대 LLM 구조를 직접 구현해 이해도와 설계 역량을 높인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이 레포는 최신 오픈소스 LLM 아키텍처를 PyTorch로 손수 구현해 구조 선택을 명시적으로 비교한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>구현은 가독성에 초점 두어 각 모델을 단일 파일로 제공, 생산성 라이브러리와 달리 학습 목적에 최적화한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>현재 72개 중 여러 모델이 구현 완료(✅)됐으며, attention·normalization·positional encoding 등 다양한 설계 변형을 포함한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>시간 시계열 예측 모델에 이 레포의 모듈형 파일 구조를 적용해 다양한 attention 방식을 명시적으로 비교한다.</span></li>
+            
+            <li><span class="box"></span><span>강화학습 정책 네트워크에 전처리된 정규화 옵션(RMSNorm·QK-Norm 등)을 벤치마크해 안정성을 평가한다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템 후보 생성 단계에 MoE 라우팅을 도입해 밀집 전문가와 희소 전문가를 조합, 확장성을 개선한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">이 레포의 주요 목표는 무엇인가?</div>
+            
+            <div class="q-opt">① 속도 최적화</div>
+            
+            <div class="q-opt">② 가독성 및 학습</div>
+            
+            <div class="q-opt">③ 상용 서비스 제공</div>
+            
+            <div class="q-opt">④ 데이터 전처리</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 가독성 및 학습</div>
+              <div class="why">본문에 '목표는 명확성 및 학습'이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">다음 중 MoE(전문가 혼합)를 사용하지 않는 모델은?</div>
+            
+            <div class="q-opt">① DeepSeek R1</div>
+            
+            <div class="q-opt">② Gemma 3</div>
+            
+            <div class="q-opt">③ Llama 4 Maverick</div>
+            
+            <div class="q-opt">④ Kimi K2</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Gemma 3</div>
+              <div class="why">표에서 Gemma 3의 MoE 열이 'No'로 표시되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">PyTorch</span><span class="tag">GPT-2 XL</span><span class="tag">Llama 2</span><span class="tag">DeepSeek R1</span><span class="tag">PaliGemma</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/uk0cscu_gXA" target="_blank" rel="noopener">AlphaGo’s Move 37 Wasn’t Creative? | Edward Hughes</a>
+        </h2>
+
+        <p class="summary">알파고 혁신·창의성 구분이 모델 해석에 시사</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:03</span>
+            
+            <span>Move 37는 창의적이라기보다 혁신적이라고 판단한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:08</span>
+            
+            <span>혁신은 알 수 없는 것을 알 수 있게 만드는 과정이다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:32</span>
+            
+            <span>창의성은 그 행위가 창의적임을 외부가 인식해야 완성된다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>외부 전문가 리뷰를 활용해 모델이 만든 새로운 피처가 실제로 혁신적인지 판단한다</span></li>
+            
+            <li><span class="box"></span><span>활성 학습에서 라벨이 없는 데이터를 ‘알 수 없는 알 수 없음’으로 보고, 단계별 탐색으로 알려진 라벨로 전환한다</span></li>
+            
+            <li><span class="box"></span><span>예상치 못한 모델 오류를 ‘알 수 없는 알 수 없음’으로 정의하고 체계적 원인 분석을 통해 알려진 오류 패턴으로 전환한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">스피커가 말한 창의성에 필요한 추가 단계는 무엇인가?</div>
+            
+            <div class="q-opt">① 알 수 없는 것을 찾는 과정</div>
+            
+            <div class="q-opt">② 행위가 창의적임을 인식하는 것</div>
+            
+            <div class="q-opt">③ 최적 성능 달성</div>
+            
+            <div class="q-opt">④ 알파고 자체의 평가</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 행위가 창의적임을 인식하는 것</div>
+              <div class="why">00:32에서 창의성은 그 행위가 창의적임을 인식하는 단계가 필요하다고 설명한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Move 37가 뛰어난 수라고 인정받은 주체는 누구인가?</div>
+            
+            <div class="q-opt">① AlphaGo</div>
+            
+            <div class="q-opt">② 코멘테이터들</div>
+            
+            <div class="q-opt">③ 훈련 데이터</div>
+            
+            <div class="q-opt">④ 개발자 팀</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 코멘테이터들</div>
+              <div class="why">00:45~00:54에서 코멘테이터가 Move 37를 뛰어난 수로 인식했다고 언급한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AlphaGo</span><span class="tag">Move 37</span><span class="tag">Machine Learning Street Talk</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/ixu0H8bsCts" target="_blank" rel="noopener">When Talking Becomes the Main Way We Use Computers — Pavan Muddireddy</a>
+        </h2>
+
+        <p class="summary">음성 모델을 스트리밍 파이프라인으로 설계하는 핵심 메커니즘</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Voxtral는 오디오 인코더의 연속 임베딩을 텍스트 트렁크에 직접 토큰으로 주입해 cross‑attention 없이 감정·타이밍·발화자 정보를 보존한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실시간 듀얼‑스트림 디코더는 오디오를 소비하면서 텍스트를 동시 출력하며, 목표 지연을 160 ms까지 조정 가능하고, 병렬 슬로우 스트림은 추가 컨텍스트를 활용한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>DPO를 활용한 부정적 감독은 사전학습·SFT가 제공하지 못하는 OOD 오류 누적을 억제해 루프·스킵 현상을 방지한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Voxtral</span><span class="tag">Mistral AI</span><span class="tag">Whisper</span><span class="tag">SoundStream</span><span class="tag">EnCodec</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/659" target="_blank" rel="noopener">📈마케터 없이도 매월 2배씩 성장하고 있습니다: Tiro의 성장 스토리</a>
+        </h2>
+
+        <p class="summary">AI 에이전트로 마케팅 없이 매출·생산성 급증</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 미팅 비서 ‘티로’ 도입으로 마케팅 인력 없이 2년 만에 연 매출 40억 달성</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>무료 플랜 없이 300분 체험 후 결제 모델로 66% 이상 리텐션 유지</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>팀원당 AI 에이전트 복제로 업무 자동화, 생산성 최대 10배 향상</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 미팅 비서를 영업팀에 적용해 초기 콜 스케줄링과 고객 질의 응답을 자동화, 영업 효율성 향상</span></li>
+            
+            <li><span class="box"></span><span>신규 SaaS 고객에게 창업자가 15분 이내 개인화 환영 메일을 보내는 방식을 도입해 초기 활성화율을 높임</span></li>
+            
+            <li><span class="box"></span><span>무료 플랜 대신 짧은 체험 후 결제 모델을 교육 플랫폼에 적용해 전환율과 장기 수강 유지율을 개선</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">‘티로’가 무료 플랜 없이도 높은 리텐션을 유지한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 긴 체험 기간 제공</div>
+            
+            <div class="q-opt">② 개인화된 환영 메일과 AI 에이전트 지원</div>
+            
+            <div class="q-opt">③ 가격 인하</div>
+            
+            <div class="q-opt">④ 광고 캠페인 확대</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 개인화된 환영 메일과 AI 에이전트 지원</div>
+              <div class="why">본문에 따르면 초기 가입자에게 15분 이내 개인화 환영 메일을 보내고 AI 에이전트가 업무를 지원해 사용자 경험을 높여 66% 이상의 리텐션을 유지했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">생산성을 최대 10배 끌어올린 핵심 메커니즘은?</div>
+            
+            <div class="q-opt">① 팀 규모 확대</div>
+            
+            <div class="q-opt">② AI 에이전트 복제와 사전 승인 없는 업무 실행</div>
+            
+            <div class="q-opt">③ 야근 시간 연장</div>
+            
+            <div class="q-opt">④ 외주 활용</div>
+            
+            <div class="q-answer">
+              <div class="correct">② AI 에이전트 복제와 사전 승인 없는 업무 실행</div>
+              <div class="why">텍스트에서 팀원 각자가 자신을 복제한 AI 에이전트와 함께 일하며 사전 승인 없이 업무를 실행해 생산성이 크게 상승했다고 명시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">티로</span><span class="tag">더플레이토</span><span class="tag">인플루언서</span><span class="tag">AI 에이전트</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

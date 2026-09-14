@@ -1,0 +1,408 @@
+{
+  "date": "2026-09-15",
+  "generated_at": "2026-09-14T23:04:31.970090",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 아나키의 Docker없이 컨테이너를 만들 수 있을까?",
+        "url": "https://youtu.be/0BIjGgo91nE",
+        "published_at": "2026-09-13T12:00:27",
+        "transcript": "[00:00] 안녕하세요.\n[00:02] 오늘은 도커 없이 컨테이너를 만들 수 있을까라는 주제로 발표를 하게 된 8기 백엔드 아나키입니다.\n\n[00:12] 어, 이번 방탈출 AWS 배포 미션에서 쉘 스크립트로 직접 배포해 보셨죠?\n[00:18] 사실 배포 자체는 도커 없이도 가능합니다.\n\n[00:24] 그런데 배포 이야기를 하면 항상 도커가 등장합니다.\n[00:28] 왜일까요?\n\n[00:31] 오늘은 도커 사용법을 설명하는 발표가 아니라 도커가 왜 등장했는지, 컨테이너가 무엇인지를 중심으로 알아보겠습니다.\n[00:40] 발표가 끝나면 도커가 무엇을 해주는 도구인지 설명할 수 있게 되는 것이 목표입니다.\n\n[00:47] 먼저 가상화의 등장 배경부터 알아보겠습니다.\n[00:51] 왜 가상화 기술이 등장했을까요?\n\n[00:56] 과거에는 서비스 하나당 서버 한 대를 사용했습니다.\n[01:00] 그런데 문제가 있었습니다.\n[01:02] 회사가 가진 물리 서버가 CPU 8코어, 램 16GB인데, 서비스 하나가 CPU 2코어, 램 4GB만 사용합니다.\n[01:11] 나머지 자원은 놀고 있는 거죠.\n\n[01:15] 낭비되는 서버 자원을 효율적으로 사용하기 위해 두 번째 서비스를 배포하기로 결정했습니다.\n[01:21] 그러나 또 다른 문제가 생겼습니다.\n\n[01:25] 서비스 A는 자바 17, MySQL 8.0을 쓰는데, 서비스 B는 자바 21, MySQL 9.7을 사용합니다.\n[01:32] 같은 서버에 올리니 충돌이 발생합니다.\n\n[01:37] 개발자들은 하나의 물리 서버를 논리적으로 여러 개의 서버처럼 사용할 수 없을까라는 생각을 했습니다.\n[01:44] 이러한 배경에서 가상화 기술이 등장했습니다.\n\n[01:50] 가상화의 핵심은 격리입니다.\n[01:52] 격리는 각 애플리케이션이 서로 영향을 주지 않도록 독립성을 보장하는 것입니다.\n\n[02:01] 그렇다면 가상화 기술에는 어떤 것이 있을까요?\n\n[02:07] 대표적으로 버추얼 머신, 가상 머신과 컨테이너가 있습니다.\n[02:13] 먼저 VM입니다.\n[02:14] VM은 하이퍼바이저 엔진 위에 새로운 운영체제를 띄워서 논리적인 서버를 구성합니다.\n[02:23] 각 VM은 독립된 운영체제를 가지기 때문에 독립된 파일 시스템, 독립된 프로세스를 가집니다.\n[02:30] 운영체제 수준에서 격리하기 때문에 매우 강력한 격리를 제공합니다.\n\n[02:36] 하지만 VM은 논리적인 서버를 만들 때마다 다음과 같이 운영체제를 새로 띄워야 합니다.\n[02:44] 그래서 무겁고, 부팅이 느리고, 리소스를 많이 사용한다는 문제가 있습니다.\n\n[02:51] 예를 들어 스프링부트 애플리케이션 하나가 약 200MB 정도의 메모리를 사용한다고 가정해 보겠습니다.\n[02:58] 그런데 VM 환경에서는 애플리케이션만 실행되는 것이 아닙니다.\n\n[03:04] 게스트 OS가 우분투라고 가정했을 때 보통 300에서 500MB 정도의 메모리를 사용합니다.\n[03:10] 여기서 문제는 서비스가 많아질수록 커진다는 것입니다.\n[03:15] 서비스가 10개가 되면 어떻게 될까요?\n[03:18] 우리는 서비스 10개를 실행하려면 우분투도 10개를 함께 실행해야 합니다.\n\n[03:24] 곰곰히 생각해 보니 운영체제까지 여러 개 만들 필요는 없었습니다.\n[03:28] 우리가 원하는 건 프로세스 격리, 파일 시스템 격리 정도였습니다.\n\n[03:36] 그래서 OS는 하나만 쓰고 프로세스만 격리하자라는 아이디어가 등장합니다.\n\n[03:43] 그게 컨테이너입니다.\n[03:45] 컨테이너는 리눅스 커널 기능을 통해 프로세스를 격리하고 운영체제는 공유합니다.\n[03:51] 도커는 이 컨테이너 기술을 쉽게 사용할 수 있도록 만든 도구입니다.\n\n[03:59] VM과 컨테이너의 차이를 정리하자면 VM은 다음과 같이 가상 서버마다 게스트 OS를 가집니다.\n[04:06] 컨테이너는 VM처럼 게스트 OS를 가지지 않습니다.\n[04:10] 모든 컨테이너는 하나의 운영체제를 공유합니다.\n[04:13] 따라서 도커가 VM보다 경량성 측면에서 이점이 있습니다.\n\n[04:19] 이제 처음 질문으로 돌아가 보겠습니다.\n[04:22] 도커 없이 컨테이너를 만들 수 있을까요?\n\n[04:27] 답은 가능합니다.\n[04:28] 실제로 컨테이너의 핵심 기술은 리눅스 커널 기능입니다.\n[04:33] 도커가 만든 기술이 아닙니다.\n\n[04:36] 그렇다면 도커는 컨테이너를 어떻게 만드는 건 걸까요?\n\n[04:42] 컨테이너를 만들기 위해 고려해야 할 점은 두 가지가 있습니다.\n[04:47] 첫 번째는 첫 번째로 서로를 볼 수 없어야 한다는 것입니다.\n[04:51] 여기서 서로를 본다는 것은 단순히 프로세스만을 의미하지 않습니다.\n[04:56] 예를 들어 다른 컨테이너의 프로세스, 파일 시스템, 네트워크를 볼 수 없어야 합니다.\n[05:02] 그래야 논리적으로 독립된 서버처럼 동작할 수 있습니다.\n\n[05:08] 두 번째로는 자원을 한 컨테이너가 독점하면 안 된다.\n[05:12] 만약 컨테이너 A가 CPU를 100% 사용하기 시작하면 컨테이너 B는 정상적으로 동작하기 어려워집니다.\n[05:23] 저희가 실제 서버를 구매할 때도 CPU 몇 코어, 메모리 몇 기가바이트처럼 사양을 정하잖아요?\n[05:29] 컨테이너도 마찬가지입니다.\n[05:31] 각 컨테이너가 사용할 수 있는 자원을 적절하게 제한할 수 있어야 합니다.\n\n[05:37] 컨테이너를 만들 때의 핵심은 격리와 자원 할당입니다.\n\n[05:44] 리눅스에는 파일 시스템을 격리하기 위한 기능들이 존재합니다.\n[05:49] 대표적으로 피봇 루트라는 기능이 있습니다.\n[05:52] 쉽게 말하면 프로세스가 바라보는 루트 디렉토리를 바꿔주는 기능입니다.\n[05:57] 그래서 같은 운영체제를 사용하더라도 컨테이너마다 다른 파일 시스템을 사용하는 것처럼 보이게 만들 수 있습니다.\n[06:05] 오늘은 세부 구현보다는 파일 시스템도 격리해야 한다 정도만 기억하시면 됩니다.\n\n[06:13] 다음과 같이 호스트와 컨테이너의 파일 시스템을 비교해 보았습니다.\n[06:17] 실제로 보면 호스트에는 다양한 파일들이 존재합니다.\n[06:21] 하지만 컨테이너 내부에서는 그 중 일부만 보이게 됩니다.\n[06:26] 저기서 빨간색 박스로 표시한 부분이 호스트와 컨테이너가 공통적으로 가지는 파일입니다.\n[06:32] 즉 실제로 같은 운영체제를 사용하고 있어도 컨테이너 입장에서는 마치 자신만의 파일 시스템을 가진 것처럼 동작합니다.\n\n[06:43] 네임스페이스는 프로세스에게 독립된 세상을 보여주는 기능이라고 생각하시면 됩니다.\n[06:48] 종류도 여러 가지 있습니다.\n[06:50] 리눅스는 필요한 영역마다 네임스페이스를 제공하고 도커는 이를 조합하여 컨테이너를 만듭니다.\n[06:57] 여기서 중요한 건 종류를 외우는 게 아니라 네임스페이스는 격리라는 점입니다.\n\n[07:05] 지금 보이는 명령어는 `list namespace -p 1`입니다.\n[07:10] 여기서 1은 현재 시스템의 PID 1번, 이니트 프로세스를 의미합니다.\n[07:15] 이 명령어는 이니트 프로세스가 어떤 네임스페이스에 속해 있는지를 보여줍니다.\n[07:21] PID 네임스페이스는 프로세스를 격리하고, 네트워크 네임스페이스는 네트워크를 격리하고, 마운트 네임스페이스는 파일 시스템을 격리합니다.\n[07:32] 즉 리눅스는 하나의 네임스페이스만 제공하는 것이 아니라 프로세스, 네트워크, 파일 시스템, 호스트 이름 등을 각각 독립적으로 격리할 수 있는 여러 네임스페이스들을 제공합니다.\n\n[07:46] 도커는 이러한 리눅스 네임스페이스 기능을 활용해서 각 컨테이너가 자신만의 프로세스, 네트워크, 파일 시스템을 가진 것처럼 보이게 만드는 것입니다.\n\n[07:58] 네임스페이스를 통해서 각 컨테이너를 격리했다고 해봅시다.\n[08:02] 그러나 아직 남아 있는 문제가 하나 있습니다.\n[08:05] 바로 자원 할당의 문제입니다.\n\n[08:09] CPU와 메모리 같은 시스템 자원을 컨테이너 별로 나누어 관리하는 기술이 Cgroups입니다.\n[08:16] Cgroups는 파일 시스템으로 자원을 제어합니다.\n\n[08:22] Cgroups는 A 컨테이너는 CPU 20%, 메모리 20%만, B 컨테이너는 CPU 30%, 메모리 30%만처럼 자원의 사용량을 제한하고 관리합니다.\n\n[08:38] 이번에는 Cgroups를 한번 살펴보겠습니다.\n[08:42] `tree` 명령어로 디렉토리를 보면 CPU, 메모리, pids 등 다양한 디렉토리가 존재하는 것을 확인할 수 있습니다.\n[08:50] 예를 들어 CPU는 CPU 사용량 제어, 메모리는 메모리 사용량 제어, pids는 생성 가능한 프로세스 개수 제한과 같은 역할을 담당합니다.\n[09:01] 즉 CPU 2코어까지만 사용해라, 메모리는 1기가바이트까지만 사용해라와 같은 설정을 이 Cgroups 파일로 할 수 있습니다.\n[09:11] 도커 역시 내부적으로 이러한 Cgroups 기능을 활용해서 컨테이너별 CPU와 메모리를 제한합니다.\n\n[09:19] 지금까지 컨테이너의 원리에 대해서 알아보았습니다.\n[09:23] 정리하자면 도커는 컨테이너 그 자체가 아닙니다.\n[09:28] 도커는 컨테이너를 쉽게 만들고 사용하기 위한 도구입니다.\n[09:34] 그리고 도커처럼 컨테이너를 편리하게 사용할 수 있도록 만들어 주는 도구들은 세상에 많고 다양하다는 점을 기억해 주시면 좋겠습니다.\n[09:42] 끝입니다. 발표 들어 주셔서 감사합니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "컨테이너 격리·자원 관리 원리를 알면 모델 배포와 실험 재현성을 확보한다",
+        "tags": [
+          "Docker",
+          "Linux",
+          "Namespace",
+          "Cgroups",
+          "Virtual Machine"
+        ],
+        "concepts": [
+          "작업 격리",
+          "멀티프로세싱"
+        ],
+        "key_points": [
+          {
+            "point": "도커가 등장한 배경은 서버 자원 낭비와 서비스 간 충돌을 방지하기 위한 가상화 필요성이다.",
+            "timestamp": "00:31"
+          },
+          {
+            "point": "컨테이너는 리눅스 커널의 네임스페이스와 cgroup을 활용해 프로세스와 파일시스템을 격리하고 자원을 제한한다.",
+            "timestamp": "03:43"
+          },
+          {
+            "point": "Docker 없이도 리눅스 커널 기능만으로 컨테이너를 만들 수 있다.",
+            "timestamp": "04:27"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "JupyterHub에서 각 사용자 노트북을 Linux 네임스페이스로 격리해, 서로의 프로세스와 네트워크가 충돌하지 않도록 한다.",
+          "대규모 데이터 파이프라인에서 Spark 작업에 cgroup을 적용해 CPU와 메모리 사용량을 제한, 작업 간 자원 경쟁을 최소화한다.",
+          "모델 학습 스크립트를 pivot_root 기반 파일시스템 격리로 실행해 Docker 없이도 동일한 의존성 환경을 재현한다."
+        ],
+        "quiz": [
+          {
+            "question": "VM이 컨테이너보다 메모리를 더 많이 사용하는 이유는?",
+            "options": [
+              "각 VM이 자체 전체 게스트 OS를 실행해 추가 메모리를 차지한다",
+              "VM은 호스트 커널을 공유하므로 메모리를 절약한다",
+              "컨테이너는 각 인스턴스마다 커널을 복제한다",
+              "VM 메모리 사용량은 OS와 무관하게 고정된다"
+            ],
+            "answer_index": 0,
+            "explanation": "VM은 하이퍼바이저 위에 완전한 게스트 OS를 띄우므로 OS 자체가 차지하는 메모리(300~500MB)가 추가로 필요해 컨테이너보다 무겁다."
+          },
+          {
+            "question": "리눅스에서 프로세스가 보는 파일시스템 루트를 변경해 격리하는 기능은?",
+            "options": [
+              "cgroups",
+              "pivot_root",
+              "namespace",
+              "hypervisor"
+            ],
+            "answer_index": 1,
+            "explanation": "pivot_root는 프로세스가 바라보는 루트 디렉터리를 바꾸어, 같은 커널을 공유하면서도 서로 다른 파일시스템을 보는 효과를 제공한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "OpenArch – PyTorch implementations of modern LLM architectures",
+        "url": "https://github.com/anuj0456/OpenArch",
+        "published_at": null,
+        "transcript": null,
+        "body": "# OpenArch\n\n> Python implementations of modern open-source LLM architectures — written from scratch, one model at a time.\n\nThis repository contains hand-written PyTorch implementations of the model architectures cataloged in Sebastian Raschka's [LLM Architecture Gallery](https://sebastianraschka.com/llm-architecture-gallery/). Each model is implemented to the best of my knowledge from the original papers, technical reports, reference `config.json` files, and the excellent writeups by Sebastian Raschka and Machine Learning Mastery.\n\nThe goal is not to compete with `transformers` or other production libraries. The goal is **clarity and learning**: a single readable file per architecture, with the structural choices (attention type, normalization, layer mix, MoE routing, positional encoding) made explicit and easy to compare side-by-side.\n\n## Why this repo?\n\nModern LLM architectures share a common skeleton but differ in dozens of small, important choices:\n\n- Attention: MHA, GQA, MQA, MLA, sliding-window, linear/DeltaNet hybrids\n- Normalization: pre-norm, post-norm, QK-Norm, sandwich norm, RMSNorm\n- Positional encodings: RoPE, NoPE, partial RoPE, YaRN\n- Decoder type: dense vs sparse MoE (with or without shared experts), hybrid Mamba/attention\n- Training-time tricks: Multi-token-prediction, latent experts, gated attention\n\nReading the official model code can be hard because production repos optimize for speed, sharding, and backward compatibility. This repo optimizes for **reading**.\n\n## What's implemented (so far)\n\n> Implementations marked ✅ are usable for forward passes; those marked 🚧 are under construction.\n\n| Modality | Model | Status | Model Size | Normalization | Positional Encoding | Attention | Mixture of Experts |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Text | GPT-2 XL | ✅ | 1.5B | - | Absolute | Multihead Attention | No |\n| Llama 2 | ✅ | 7B | RMS Norm | RoPE | Multihead Attention | No |\n| Llama 3 | ✅ | 8B | RMS Norm | RoPE | Grouped Query Attention | No |\n| OLMo 2 | ✅ | 7B | RMS Norm & QK-Norm | RoPE | Multihead Attention | No |\n| DeepSeek R1 | ✅ | 671B | RMS Norm & QK-Norm | RoPE | Multihead Latent Attention | Yes |\n| Gemma 3 | ✅ | 27B | RMS Norm & QK-Norm | RoPE | Grouped Query Attention with Sliding Window | No |\n| Mistral 3 | ✅ | 24B | RMS Norm | RoPE | Grouped Query Attention with Sliding Window | No |\n| Llama 4 Maverick | ✅ | 400B | RMS Norm | RoPE | Grouped Query Attention | Yes |\n| Qwen 3 | ✅ | 4B | RMS Norm & QK-Norm | RoPE | Grouped Query Attention | No |\n| 30B-A3B | RMS Norm & QK-Norm | RoPE | Grouped Query Attention | Yes |\n| Kimi K2 | ✅ | 1T | RMS Norm | RoPE | Multihead Latent Attention | Yes |\n| GLM 4.5 | ✅ | 355B | RMS Norm & QK-Norm | RoPE | Grouped Query Attention & Multi-Token Prediction | Yes |\n| GPT-OSS | ✅ | 20B | RMS Norm | RoPE | Grouped Query Attention with Sliding Window | Yes |\n| Grok-2.5 | 🚧 | 270B | RMS Norm | RoPE | Grouped Query Attention | Yes |\n| Multimodal | PaliGemma | ✅ | 3B | RMS Norm | RoPE | Multihead Attention | No |\n| Qwen3 | 🚧 | 3B | RMS Norm | RoPE | Multihead Attention | No |\n| Image | Dall-e | 🚧 | - | - | - | Transformer | - |\n\nThe full target list mirrors the 72 architectures in the Architecture Gallery. Contributions toward any of them are welcome.\n\n## Repository layout\n\n```\nOpenArch/\n├── text/\n│   ├── gpt2/\n│   │   ├── model.py\n│   │   └── README.md\n│   ├── llama3/\n│   ├── qwen3/\n|   ├── grok2.5/\n│   └── deepseek_v3/\n├── multimodal/\n│   └── pali-gemma/\n│       ├── model.py\n│       └── README.md\n├── README.md\n└── requirements.txt\n```\n\nEach model lives in its own folder with respective `model.py` and a short `README.md` describing the architectural choices and references used.\n\n## Contributing\n\n**I am actively looking for contributors.** If you enjoy reading model papers, comparing `config.json` files, or just want to deepen your understanding of how modern LLMs are built, this is a friendly place to start.\n\nGood first contributions:\n\n- Pick an unimplemented model from the gallery and add a `model.py` for it\n- Add a `README.md` for an existing model documenting its architectural choices\n- Add a forward-pass test that loads the official weights and matches outputs on a few tokens\n- Fix bugs, improve docstrings, or refactor shared components\n\nPlease open an issue before starting a large piece of work so we can avoid duplicating effort. Implementations should prioritize **readability over performance** — this is a learning resource first.\n\nSee `CONTRIBUTING.md` for more details.\n\n## Acknowledgements\n\nThis repository would not exist without the work of two outstanding educators:\n\n- **[Sebastian Raschka](https://sebastianraschka.com/)** — for the [LLM Architecture Gallery](https://sebastianraschka.com/llm-architecture-gallery/), the [Big LLM Architecture Comparison](https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison) series, and the [LLMs From Scratch](https://github.com/rasbt/LLMs-from-scratch) book and codebase. The archit",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "현대 LLM 구조를 직접 구현해 이해도와 설계 역량을 높인다",
+        "tags": [
+          "PyTorch",
+          "GPT-2 XL",
+          "Llama 2",
+          "DeepSeek R1",
+          "PaliGemma"
+        ],
+        "concepts": [
+          "모듈형 신경망 구조",
+          "언어 모델링",
+          "멀티모달 표현 학습"
+        ],
+        "key_points": [
+          {
+            "point": "이 레포는 최신 오픈소스 LLM 아키텍처를 PyTorch로 손수 구현해 구조 선택을 명시적으로 비교한다.",
+            "timestamp": null
+          },
+          {
+            "point": "구현은 가독성에 초점 두어 각 모델을 단일 파일로 제공, 생산성 라이브러리와 달리 학습 목적에 최적화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "현재 72개 중 여러 모델이 구현 완료(✅)됐으며, attention·normalization·positional encoding 등 다양한 설계 변형을 포함한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "시간 시계열 예측 모델에 이 레포의 모듈형 파일 구조를 적용해 다양한 attention 방식을 명시적으로 비교한다.",
+          "강화학습 정책 네트워크에 전처리된 정규화 옵션(RMSNorm·QK-Norm 등)을 벤치마크해 안정성을 평가한다.",
+          "추천 시스템 후보 생성 단계에 MoE 라우팅을 도입해 밀집 전문가와 희소 전문가를 조합, 확장성을 개선한다."
+        ],
+        "quiz": [
+          {
+            "question": "이 레포의 주요 목표는 무엇인가?",
+            "options": [
+              "속도 최적화",
+              "가독성 및 학습",
+              "상용 서비스 제공",
+              "데이터 전처리"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 '목표는 명확성 및 학습'이라고 명시되어 있다."
+          },
+          {
+            "question": "다음 중 MoE(전문가 혼합)를 사용하지 않는 모델은?",
+            "options": [
+              "DeepSeek R1",
+              "Gemma 3",
+              "Llama 4 Maverick",
+              "Kimi K2"
+            ],
+            "answer_index": 1,
+            "explanation": "표에서 Gemma 3의 MoE 열이 'No'로 표시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "AlphaGo’s Move 37 Wasn’t Creative? | Edward Hughes",
+        "url": "https://youtu.be/uk0cscu_gXA",
+        "published_at": "2026-09-12T09:27:52",
+        "transcript": "[00:00] I don't think that Move 37 was creative.\n[00:03] Um, I think that Move 37 was innovative without being creative.\n[00:08] So the way that I think about innovation is, um, innovation is the process of taking unknown unknowns and making them into known knowns.\n[00:17] And in in order to get an innovation, you can't, you can't generate an innovation if you sort of already knew what it was you were looking for.\n[00:24] You have to have something that's that's unexpected, but then also becomes, becomes valuable.\n[00:28] So what's the difference then between innovation and creativity?\n[00:32] Well, in my mind, creativity requires another step, which is to recognize that the thing you have done is creative.\n[00:40] And who was it who recognized that Move 37 was a remarkable move?\n[00:45] It wasn't the, it wasn't AlphaGo, it was the commentators, for example, who, if you watch the famous footage, say, 'Oh, that must have been a click-o.'\n[00:54] Um, is was it a click-miss? It wasn't, of course, it was, it was exactly the right move.",
+        "body": "Edward Hughes argues that AlphaGo’s Move 37 was innovative, but creativity requires another step: recognising the value of what you have done. In his account, that recognition came from the human commentators.\n\nWatch the full conversation on Machine Learning Street Talk:\nhttps://www.youtube.com/watch?v=P4bYjTJvD28\n\n#Shorts #AlphaGo #AI #Creativity",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "알파고 혁신·창의성 구분이 모델 해석에 시사",
+        "tags": [
+          "AlphaGo",
+          "Move 37",
+          "Machine Learning Street Talk"
+        ],
+        "concepts": [
+          "혁신 정의",
+          "창의성 인식"
+        ],
+        "key_points": [
+          {
+            "point": "Move 37는 창의적이라기보다 혁신적이라고 판단한다",
+            "timestamp": "00:03"
+          },
+          {
+            "point": "혁신은 알 수 없는 것을 알 수 있게 만드는 과정이다",
+            "timestamp": "00:08"
+          },
+          {
+            "point": "창의성은 그 행위가 창의적임을 외부가 인식해야 완성된다",
+            "timestamp": "00:32"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "외부 전문가 리뷰를 활용해 모델이 만든 새로운 피처가 실제로 혁신적인지 판단한다",
+          "활성 학습에서 라벨이 없는 데이터를 ‘알 수 없는 알 수 없음’으로 보고, 단계별 탐색으로 알려진 라벨로 전환한다",
+          "예상치 못한 모델 오류를 ‘알 수 없는 알 수 없음’으로 정의하고 체계적 원인 분석을 통해 알려진 오류 패턴으로 전환한다"
+        ],
+        "quiz": [
+          {
+            "question": "스피커가 말한 창의성에 필요한 추가 단계는 무엇인가?",
+            "options": [
+              "알 수 없는 것을 찾는 과정",
+              "행위가 창의적임을 인식하는 것",
+              "최적 성능 달성",
+              "알파고 자체의 평가"
+            ],
+            "answer_index": 1,
+            "explanation": "00:32에서 창의성은 그 행위가 창의적임을 인식하는 단계가 필요하다고 설명한다"
+          },
+          {
+            "question": "Move 37가 뛰어난 수라고 인정받은 주체는 누구인가?",
+            "options": [
+              "AlphaGo",
+              "코멘테이터들",
+              "훈련 데이터",
+              "개발자 팀"
+            ],
+            "answer_index": 1,
+            "explanation": "00:45~00:54에서 코멘테이터가 Move 37를 뛰어난 수로 인식했다고 언급한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "When Talking Becomes the Main Way We Use Computers — Pavan Muddireddy",
+        "url": "https://youtu.be/ixu0H8bsCts",
+        "published_at": "2026-09-14T20:28:15",
+        "transcript": null,
+        "body": "Pavankumar Reddy Muddireddy leads audio research at Mistral AI. He joins Tim Scarfe for a deep technical tour of Voxtral — and explains why, after everything that has landed in the last two years, the frontier of deployed voice is still a cascade of specialised models rather than one end-to-end system.\n\nIN PARTNERSHIP WITH MISTRAL AI:\n---\nThis episode was produced in partnership with Mistral AI.\nMistral AI: https://mistral.ai/\n---\n\nThe conversation opens on architecture. Voxtral Chat feeds a 3B Ministral text trunk with continuous embeddings from an audio encoder, fed into the decoder as direct token input rather than through cross-attention as in Whisper, so the model can answer questions about emotion, timing and who spoke when without an intermediate transcript to lose them. The real-time model changes shape into a dual-stream decoder that consumes audio and emits text at the same time, at a configurable target delay down to 160ms, with slower streams running in parallel for anything that can afford to wait for more context.\n\nOn the generation side, Pavan explains why Voxtral TTS predicts continuous latents rather than discrete codec tokens, traces the lineage from SoundStream through EnCodec to Mimi's split of semantic and acoustic codebooks, and places finite scalar quantisation and flow matching in it. Tim presses on the engineering priors underneath: why a mel spectrogram instead of the raw waveform, what noise augmentation actually buys, and the point at which acoustic overfitting becomes somebody's fine-tuning problem. Then the failure modes. Speaker diarisation is emitted autoregressively as part of the transcript rather than by a separate head, which makes streaming diarisation fragile in a particular way — less context, late speaker changes, invented extra speakers. And because the architecture commits to what it has already predicted, a single out-of-distribution mistake can compound into looping or skipped segments, which is what DPO is there to correct: the negative supervision that pre-training and SFT cannot provide.\n\nThe last third is the argument Tim keeps returning to. Customers running voice agents over millions of sessions do not describe a solved problem, they describe scaffolding, with a sharp quality drop outside the top few languages. Cascades survive because each component stays separately adaptable, observable and constrainable — fine-tune the ASR for your acoustics, log what compliance demands, keep it on your own hardware. The interface has its own limit: voice alone is cognitive debt, because absorbing information and deciding in one serial audio stream is much harder than glancing at a menu. Voice becomes ubiquitous beside a screen, not instead of one.\n\n---\nTIMESTAMPS:\n00:00:00 Cold open: the state changed\n00:00:46 Why Mistral moved into audio\n00:09:27 Inside Voxtral: the trunk, the encoder and dual streams\n00:20:22 Speech that works in real time\n00:30:52 How a voice becomes tokens\n00:39:59 Flow matching, FSQ and t",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "음성 모델을 스트리밍 파이프라인으로 설계하는 핵심 메커니즘",
+        "tags": [
+          "Voxtral",
+          "Mistral AI",
+          "Whisper",
+          "SoundStream",
+          "EnCodec"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "스트림 파이프라인",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "Voxtral는 오디오 인코더의 연속 임베딩을 텍스트 트렁크에 직접 토큰으로 주입해 cross‑attention 없이 감정·타이밍·발화자 정보를 보존한다",
+            "timestamp": null
+          },
+          {
+            "point": "실시간 듀얼‑스트림 디코더는 오디오를 소비하면서 텍스트를 동시 출력하며, 목표 지연을 160 ms까지 조정 가능하고, 병렬 슬로우 스트림은 추가 컨텍스트를 활용한다",
+            "timestamp": null
+          },
+          {
+            "point": "DPO를 활용한 부정적 감독은 사전학습·SFT가 제공하지 못하는 OOD 오류 누적을 억제해 루프·스킵 현상을 방지한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "📈마케터 없이도 매월 2배씩 성장하고 있습니다: Tiro의 성장 스토리",
+        "url": "https://innoforest.stibee.com/p/659",
+        "published_at": "2026-09-13T00:00:00",
+        "transcript": null,
+        "body": "마케터 없이, 2년 만에 연매출 40억을 만든 스타트업    타깃을 좁히라는 조언을 받았을 때, 해외 진출 전에 현지화부터 하라는 조언을 받았을 때, 첫 유저를 모아야 할 때, 무료 플랜 도입을 검토할 때, AI 에이전트를 업무에 투입할 때. 성격이 다른 다섯 가지 국면에서 AI 미팅 비서 '티로'를 운영하는 더플레이토는 매번 업계 정설과 반대되는 선택을 했습니다. 그 결과 전 세계 최소 수백 개의 경쟁 서비스가 존재하는 시장에서, 내부 마케터 없이 출시 2년 만에 연 매출 40억 원을 달성했습니다. 첫 1만 명의 유저는 광고비 없이 인플루언서와의 직접 소통만으로 모았고, 소개해준 인플루언서 세 명 중 한 명은 대가 없이 자발적으로 서비스를 알렸습니다. 무료 플랜은 운영하지 않고 300분 체험 이후 결제를 요구하는데도, 출시 이후 지금까지 66% 이상의 리텐션을 유지하고 있습니다. 초기 가입자 약 4,000명에게는 창업자가 직접 15분 이내에 개인화된 웰컴 메일을 보냈습니다. 지금은 팀원 각자가 자신을 복제한 AI 에이전트와 함께 일하며, 사전 승인 없이 업무를 실행시키는 방식으로 생산성을 최대 10배까지 끌어올리고 있습니다. 이 다섯 가지 선택의 배경과 구체적인 실행 방식을 지금 콘텐츠에서 직접 확인해보세요.\n\n[콘텐츠 보러가기👉🏻](https://www.innoforest.co.kr/report/573)\n\n[🦄 2026년 8월 스타트업 투자결산: 상위 3개 카테고리에 87%가 몰렸다](https://www.innoforest.co.kr/report/572)  [🐇 “좋은 제품을 위해서라면 달나라까지” 오버더문글로벌이 만드는 K뷰티, 토끼온더문](https://www.innoforest.co.kr/report/569)\n\n[‘2026 서울 오픈이노베이션 인사이트 데이’ 어떤 프로그램일까? 담당자에게 직접 물어봤습니다](https://www.innoforest.co.kr/report/568)  [[VC Talk] 딥포인트×BNH인베스트먼트: 남성 헤어테크를 넘어 글로벌 헤어 뷰티테크 기업으로](https://www.innoforest.co.kr/report/567)\n\n[🌍 8월 Pathfinder 업데이트 | 글로벌 투자 흐름을 한눈에 읽는 두 가지 기능](https://www.innoforest.co.kr/report/565)  [💰 2025년에 1인당 매출액이 크게 증가한 스타트업들을 살펴보았습니다](https://www.innoforest.co.kr/report/564)\n\n[✨[업데이트] 더 깊어진 혁신의숲 AI 기업 종합분석!](https://www.innoforest.co.kr/report/562)  [🗺️우리 지역은 상장기업이 잘나갈까? 스타트업이 잘나갈까? : 17개 시도 전부 비교해 봤습니다](https://www.innoforest.co.kr/report/560)\n\n[“우리는 이런 스타트업을 찾습니다” YC가 공개한 13가지 창업 기회](https://www.innoforest.co.kr/report/561)  [🦄 대한민국 정부의 '유니콘 기업 육성' - 유니콘 브릿지 50개사 리포트 - 3부 플랫폼 경제](https://www.innoforest.co.kr/report/548)\n\n[더 많은 인사이트 보러가기👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge)9월 14일 기준, 모집중인 공고 수: 총 13건\n\n(~09/21) [SK, 행복나래｜2026 SK임팩트부스터 데이](https://www.innoforest.co.kr/growth-bridge/OI00000794/SK와-스타트업이-만드는-협력의-시작점-922-SK임팩트부스터-데이에-초대합니다)\n\n(~09/30) [현대건설, 한국콜마｜2026 산림분야 오픈이노베이션](https://www.innoforest.co.kr/growth-bridge/OI00000798/-2026-산림분야-오픈이노베이션-현대건설-한국콜마-협력-희망-스타트업-모집930-1500)\n\n(~09/25) [연구개발특구진흥재단, 현대차증권｜Corporate Venture Connect](https://www.innoforest.co.kr/growth-bridge/OI00000790/Corporate-Venture-Connect-오픈이노베이션-배치프로그램-참가기업-모집공고)\n\n2025년 오픈이노베이션 결산 리포트:[숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\nGrowth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면?[소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ?email=letter)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 컬리는 생각보다 치밀한 회사였습니다!.. 김종훈 CFO에게 들은 흑자전환 스토리](https://outstanding.kr/kurly20260907)\n\n[🗯️ 상반기 유니콘 9곳 실적, 누가 잘 벌고 누가 주춤했나](https://outstanding.kr/2026halfunicorn20260904)\n\n[🔎 네이버와 토스는 왜 5원을 두고 싸우나](https://outstanding.kr/navertossfive20260909)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 에이전트로 마케팅 없이 매출·생산성 급증",
+        "tags": [
+          "티로",
+          "더플레이토",
+          "인플루언서",
+          "AI 에이전트"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "멀티에이전트 시스템",
+          "AI 비용 효율성"
+        ],
+        "key_points": [
+          {
+            "point": "AI 미팅 비서 ‘티로’ 도입으로 마케팅 인력 없이 2년 만에 연 매출 40억 달성",
+            "timestamp": null
+          },
+          {
+            "point": "무료 플랜 없이 300분 체험 후 결제 모델로 66% 이상 리텐션 유지",
+            "timestamp": null
+          },
+          {
+            "point": "팀원당 AI 에이전트 복제로 업무 자동화, 생산성 최대 10배 향상",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 미팅 비서를 영업팀에 적용해 초기 콜 스케줄링과 고객 질의 응답을 자동화, 영업 효율성 향상",
+          "신규 SaaS 고객에게 창업자가 15분 이내 개인화 환영 메일을 보내는 방식을 도입해 초기 활성화율을 높임",
+          "무료 플랜 대신 짧은 체험 후 결제 모델을 교육 플랫폼에 적용해 전환율과 장기 수강 유지율을 개선"
+        ],
+        "quiz": [
+          {
+            "question": "‘티로’가 무료 플랜 없이도 높은 리텐션을 유지한 주요 이유는 무엇인가?",
+            "options": [
+              "긴 체험 기간 제공",
+              "개인화된 환영 메일과 AI 에이전트 지원",
+              "가격 인하",
+              "광고 캠페인 확대"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 초기 가입자에게 15분 이내 개인화 환영 메일을 보내고 AI 에이전트가 업무를 지원해 사용자 경험을 높여 66% 이상의 리텐션을 유지했다."
+          },
+          {
+            "question": "생산성을 최대 10배 끌어올린 핵심 메커니즘은?",
+            "options": [
+              "팀 규모 확대",
+              "AI 에이전트 복제와 사전 승인 없는 업무 실행",
+              "야근 시간 연장",
+              "외주 활용"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에서 팀원 각자가 자신을 복제한 AI 에이전트와 함께 일하며 사전 승인 없이 업무를 실행해 생산성이 크게 상승했다고 명시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "business"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
