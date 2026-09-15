@@ -238,7 +238,7 @@ async def run_daily_digest() -> dict:
         max_items=settings.hackernews_max_items,
     )
     # 뉴스레터: 주간 발행이 많아 168시간(7일) lookback으로 수집한다.
-    # (RSS/arXiv는 48h, HN은 기본 24h — 뉴스레터는 발행 주기가 길어 창을 넓힌다.)
+    # (RSS는 48h, arXiv는 발표 일정 때문에 120h, HN은 기본 24h: 뉴스레터는 발행 주기가 길어 창을 넓힌다.)
     # 데일리 실행이 며칠 밀려도 그 주 발행호를 놓치지 않으며, 재수집돼도
     # URL dedup + seen_urls가 중복 발송을 막는다.
     # 실패는 수집기 내부의 per-site/per-issue try/except가 흡수해 빈 리스트를 돌려준다.

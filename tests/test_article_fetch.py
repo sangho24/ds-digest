@@ -7,6 +7,7 @@ httpx.AsyncClient 대역으로 응답을 주입한다.
 실행: pytest tests/test_article_fetch.py -v
 """
 import asyncio
+from datetime import datetime, timedelta
 
 import app.collectors as collectors
 from app.collectors import _fetch_article_body
@@ -308,3 +309,65 @@ def test_arxiv_one_bad_category_does_not_kill_others(monkeypatch):
     items = asyncio.run(fetch_arxiv_recent(["bad", "good"], retries=0))
 
     assert [i.source_key for i in items] == ["arxiv:good"]
+
+
+def _arxiv_feed(published_times):
+    entries = "".join(
+        f'<entry><title>P{i}</title><id>https://arxiv.org/abs/p{i}</id>'
+        f'<published>{t.strftime("%Y-%m-%dT%H:%M:%SZ")}</published>'
+        '<summary>초록</summary></entry>'
+        for i, t in enumerate(published_times)
+    )
+    return f'<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom">{entries}</feed>'
+
+
+def _install_arxiv(monkeypatch, published_times, run_at):
+    class _C:
+        def __init__(self, *a, **kw): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def get(self, url, **kw):
+            return _Resp(200, {}, text=_arxiv_feed(published_times))
+
+    monkeypatch.setattr(collectors.httpx, "AsyncClient", _C)
+    # 수정 전 코드에는 _utcnow 가 없다. raising=False 로 두어 수정 전에는 실제 시각으로 돌게 한다.
+    monkeypatch.setattr(collectors, "_utcnow", lambda: run_at, raising=False)
+
+
+def test_arxiv_monday_run_keeps_monday_announcement(monkeypatch):
+    """published 는 발표가 아니라 최초 제출 시각이다.
+
+    월(UTC) 22:42 실행 시점의 최신 발표(월 00:00 UTC)는 금 18:00 UTC 마감분이라,
+    가장 새 논문도 76시간이 지나 있다. 48시간 창에서는 전부 걸러져 토·일·월 실행이
+    매번 0건이었다(2026-09-05~09-14 CI 로그).
+    """
+    from app.collectors import fetch_arxiv_recent
+
+    run_at = datetime(2026, 9, 14, 22, 42)  # 월요일, naive UTC
+    # 월 00:00 UTC 발표분: 목 18:00 ~ 금 18:00 UTC 제출
+    submitted = [datetime(2026, 9, 11, 17, 30) - timedelta(hours=h) for h in range(0, 20, 2)]
+    _install_arxiv(monkeypatch, submitted, run_at)
+
+    items = asyncio.run(fetch_arxiv_recent(["cs.LG"], request_delay=0))
+
+    assert len(items) == 10
+
+
+def test_arxiv_window_covers_holiday_but_drops_stale(monkeypatch):
+    """노동절 다음 화요일(09-08 21:59 UTC)엔 새 발표가 없어 최신 논문이 약 100시간 전 제출분이다.
+
+    창은 이것을 덮되, 그보다 한참 오래된 논문까지 끌어오면 안 된다.
+    """
+    from app.collectors import fetch_arxiv_recent
+
+    run_at = datetime(2026, 9, 8, 21, 59)
+    fresh = datetime(2026, 9, 4, 17, 30)  # 금 마감 직전, 약 100시간 전
+    stale = datetime(2026, 9, 2, 12, 0)   # 약 154시간 전
+    _install_arxiv(monkeypatch, [fresh, stale], run_at)
+
+    items = asyncio.run(fetch_arxiv_recent(["cs.LG"], request_delay=0))
+
+    urls = [i.url for i in items]
+    assert "https://arxiv.org/abs/p0" in urls, "공휴일 다음 날의 최신 발표분이 걸러졌다"
+    assert "https://arxiv.org/abs/p1" not in urls, "창 밖의 오래된 논문이 들어왔다"
+

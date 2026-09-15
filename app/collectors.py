@@ -12,7 +12,7 @@ import feedparser
 import structlog
 from bs4 import BeautifulSoup
 from markdownify import markdownify
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from youtube_transcript_api import YouTubeTranscriptApi
 
 from app.models import RawContent, SourceType
@@ -357,9 +357,23 @@ async def fetch_rss_recent(
 # ArXiv
 # ──────────────────────────────────────────────
 
+# arXiv 는 월~금 00:00 UTC 전후(일~목 20:00 미 동부)에만 새 목록을 발표하고, 각 발표에는
+# 직전 영업일 18:00 UTC 마감까지 제출된 논문이 들어간다. API 의 published 는 발표 시각이
+# 아니라 최초 제출 시각이라, 48시간 창을 걸면 토·일·월 실행과 공휴일 다음 날 실행에서
+# 가장 새 논문조차 51~100시간이 지나 전부 걸러진다(실측 2026-09-05~09-14 CI, 0건 7회).
+# 주말 이틀과 공휴일 하루를 덮는 120시간으로 둔다. 카테고리당 최신 제출 10건만 받으므로
+# 논문이 많은 카테고리의 결과는 거의 같고, 이미 발송한 논문은 seen_urls 가 거른다.
+ARXIV_LOOKBACK_HOURS = 120
+
+
+def _utcnow() -> datetime:
+    """naive UTC 현재 시각. feedparser 의 *_parsed 는 UTC 라 로컬 시각과 빼면 시차만큼 틀린다."""
+    return datetime.now(timezone.utc).replace(tzinfo=None)
+
+
 async def fetch_arxiv_recent(
     categories: list[str],
-    hours: int = 48,
+    hours: int = ARXIV_LOOKBACK_HOURS,
     max_items: int = 12,
     request_delay: float = 3.0,
     retries: int = 2,
@@ -376,6 +390,9 @@ async def fetch_arxiv_recent(
         카테고리 10개 × 10건 = 100건이 후보 풀에 들어오면 HN에서 고친 편중을
         그대로 재현한다. 상한은 **카테고리를 번갈아**(round-robin) 적용한다 —
         앞에서부터 자르면 목록 첫 카테고리가 다 먹고 확장한 의미가 사라진다.
+
+    hours:
+        발표 시각이 아니라 최초 제출 시각 기준이다. ARXIV_LOOKBACK_HOURS 주석 참고.
 
     주의:
         URL은 반드시 https다. http는 301로 리다이렉트되는데 httpx가 기본적으로
@@ -414,11 +431,16 @@ async def fetch_arxiv_recent(
                     resp = await client.get(url)
                     feed = feedparser.parse(resp.content)
 
+                    now = _utcnow()
+                    newest_age_hours: float | None = None
                     for entry in feed.entries:
                         published = None
                         if hasattr(entry, "published_parsed") and entry.published_parsed:
                             published = datetime(*entry.published_parsed[:6])
-                            if datetime.now() - published > timedelta(hours=hours):
+                            age_hours = (now - published).total_seconds() / 3600
+                            if newest_age_hours is None or age_hours < newest_age_hours:
+                                newest_age_hours = age_hours
+                            if age_hours > hours:
                                 continue
 
                         link = getattr(entry, "link", None) or getattr(entry, "id", None)
@@ -444,6 +466,9 @@ async def fetch_arxiv_recent(
                         "arxiv_category_done",
                         category=category,
                         collected=len(per_category.get(category) or []),
+                        # 0건일 때 "창 밖이라 걸렀다"와 "받은 게 없다"를 가른다.
+                        fetched=len(feed.entries),
+                        newest_age_hours=round(newest_age_hours, 1) if newest_age_hours is not None else None,
                     )
                     break
 
