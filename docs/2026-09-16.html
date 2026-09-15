@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 16일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 16일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">베이지안 추론</span><span class="concept">멀티스케일 샘플링</span><span class="concept">조건부 확률 모델링</span><span class="concept">스케줄링</span><span class="concept">작업 격리</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">멀티모달 표현 학습</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">과학적 AI 워크플로우</span><span class="concept">비구조화 텍스트 자동 탐색</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.15894v1" target="_blank" rel="noopener">Quenched Ensemble Sampling</a>
+        </h2>
+
+        <p class="summary">위상 전이에서도 안정적인 베이지안 모델 비교 가능</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>위상 전이에서 에너지 함수 샘플링이 어려운 문제를 해결하기 위해 기존의 Nested sampling이 고차원에서 제약 샘플링의 어려움에 부딪힌 점을 보완한다. 이 논문은 제약을 완화한 반발 퍼텐셜과 gradient‑기반 커널을 결합한 새로운 Monte Carlo 방법을 제시하며, 베이지안 추론 및 통계 물리학 분야의 고차원 모델에 적용한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Quenched Ensemble Sampling은 에너지 경계에 반발 퍼텐셜을 도입해 경도 제약을 완화하고 gradient 기반 커널로 샘플링한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>첫 번째 차수 전이에서도 주변가능도와 사후 샘플을 정확히 추정해 tempering 등 기존 방법이 실패하는 상황을 극복한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>베이지안 신경망의 모델 비교와 고차원 격자 장 이론의 분할 함수 추정에 성공적으로 적용되었다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>안전 제약을 부드러운 반발 퍼텐셜로 변환해 강화학습 정책 탐색의 수렴성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>확률 프로그래밍에서 대규모 계층 모델의 하이퍼파라미터 사후 분포 샘플링에 gradient 기반 커널과 quenched 경로를 적용해 효율성을 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>분자 동역학 시뮬레이션에서 자유 에너지 차이를 추정할 때 전이 구간에 반발 퍼텐셜을 도입해 기존 umbrella sampling의 수렴 문제를 완화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Nested sampling이 고차원에서 적용이 어려운 주된 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 에너지 경계 아래에서 샘플링하기 어려워서</div>
+            
+            <div class="q-opt">② 그라디언트 정보를 제공하지 않아서</div>
+            
+            <div class="q-opt">③ 입자 수가 너무 많아서</div>
+            
+            <div class="q-opt">④ 분할 함수를 계산할 수 없어서</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 에너지 경계 아래에서 샘플링하기 어려워서</div>
+              <div class="why">논문에서는 hard energy constraint 하에서 샘플링이 어려워 고차원 적용이 제한된다고 언급한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Quenched Ensemble Sampling이 첫 번째 차수 전이에서 tempering보다 우수한 점은?</div>
+            
+            <div class="q-opt">① 수렴 속도가 빠르다</div>
+            
+            <div class="q-opt">② 주변가능도 추정과 사후 샘플을 모두 제공한다</div>
+            
+            <div class="q-opt">③ 필요 입자 수가 적다</div>
+            
+            <div class="q-opt">④ 저차원 시스템에만 적용 가능하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 주변가능도 추정과 사후 샘플을 모두 제공한다</div>
+              <div class="why">본문에 따르면 QES는 marginal likelihood를 추정하고 전이 구간에서도 사후 샘플을 얻어 tempering이 실패하는 상황을 극복한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Quenched Ensemble Sampling</span><span class="tag">Nested sampling</span><span class="tag">Bayesian neural networks</span><span class="tag">partition function</span><span class="tag">gradient-based kernels</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/gpu-native-cluster" target="_blank" rel="noopener">토스증권이 GPU-aware를 넘어 GPU-native 클러스터를 구축한 방법</a>
+        </h2>
+
+        <p class="summary">GPU 멀티테넌트 관리, 쿠버네티스 구현</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU-aware 단계에서는 Kubernetes가 GPU를 자원으로 인식하도록 NVIDIA 디바이스 플러그인을 설치하고, 파드 스펙에 GPU 요청을 선언하도록 구성한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU가 Ready 상태라도 개별 디바이스 오류가 발생할 수 있어, 노드 건강 체크와 GPU 상태 검증 파이프라인을 도입해 오류 노드를 자동 격리한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU-native 단계에서는 멀티테넌트 환경을 지원하기 위해 GPU를 서비스별 단위로 파티셔닝하고, DRA를 활용해 조건 기반 디바이스 할당과 자동 스케줄링을 구현한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>GPU 건강 체크 로직을 데이터 파이프라인의 CPU 연산 노드에 적용해 고장 노드 자동 격리로 전체 파이프라인 가용성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>DRA 기반 동적 메모리 할당을 활용해 대규모 Spark 작업에서 워커 메모리를 작업 요구에 따라 자동 조정한다.</span></li>
+            
+            <li><span class="box"></span><span>멀티테넌트 GPU 스케줄링 방식을 적용해 사내 AI 실험실에서 여러 팀이 공유하는 FPGA 클러스터를 효율적으로 배분한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">본문에서 Kubernetes가 GPU를 인식하고 할당할 수 있는 상태를 무엇이라고 부르나요?</div>
+            
+            <div class="q-opt">① GPU-aware</div>
+            
+            <div class="q-opt">② GPU-native</div>
+            
+            <div class="q-opt">③ DRA-enabled</div>
+            
+            <div class="q-opt">④ GPU-virtualized</div>
+            
+            <div class="q-answer">
+              <div class="correct">① GPU-aware</div>
+              <div class="why">본문에서는 GPU를 인식하고 워크로드에 할당할 수 있는 상태를 'GPU-aware'라고 정의하고 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">GPU를 한 개가 아닌 조건 기반 장치로 요청·할당할 수 있게 하는 Kubernetes 기능은 무엇인가요?</div>
+            
+            <div class="q-opt">① Device Plugins</div>
+            
+            <div class="q-opt">② DRA</div>
+            
+            <div class="q-opt">③ Node Affinity</div>
+            
+            <div class="q-opt">④ Taints/Tolerations</div>
+            
+            <div class="q-answer">
+              <div class="correct">② DRA</div>
+              <div class="why">본문에서 DRA(Dynamic Resource Allocation)가 단순히 ‘GPU 한 개’를 요청하는 수준을 넘어 조건 기반 장치 요청·할당을 가능하게 한다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kubernetes</span><span class="tag">GPU</span><span class="tag">DRA</span><span class="tag">NVIDIA/k8s-device-plugin</span><span class="tag">GPU-native</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/YoEWjZSwoys" target="_blank" rel="noopener">Claude Is Now Leaving Invisible Fingerprints In Its Text</a>
+        </h2>
+
+        <p class="summary">AI 텍스트 워터마크, 데이터 신뢰성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:56</span>
+            
+            <span>AI는 다음 단어 후보에 확률을 부여하고 선택한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:14</span>
+            
+            <span>워터마크는 단어마다 숨은 색을 부여해 녹색 단어를 약간 선호하도록 조정한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:48</span>
+            
+            <span>녹색 단어 비율이 높을수록 인간이 쓴 텍스트일 확률이 극히 낮다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>코드 생성 모델에 동일한 색상 편향을 적용해 생성된 코드의 출처를 추적한다.</span></li>
+            
+            <li><span class="box"></span><span>합성 데이터 생성 시 토큰에 숨은 편향을 부여해 데이터셋에 인공 행을 식별 가능하게 만든다.</span></li>
+            
+            <li><span class="box"></span><span>채팅봇 메시지에 워터마크를 삽입해 악성 봇 활동을 자동으로 감지한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">워터마크 검출 시 녹색 단어 비율이 높을 경우 어떤 결론을 내릴 수 있는가?</div>
+            
+            <div class="q-opt">① 인간이 쓴 텍스트일 가능성이 높다</div>
+            
+            <div class="q-opt">② AI가 생성했을 가능성이 높다</div>
+            
+            <div class="q-opt">③ 텍스트가 편집되었다</div>
+            
+            <div class="q-opt">④ 워터마크가 사라졌다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② AI가 생성했을 가능성이 높다</div>
+              <div class="why">녹색 단어가 많이 나타나면 알고리즘이 의도적으로 녹색을 선호하도록 조정했으므로 AI가 생성했을 확률이 매우 높다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">Anthropic</span><span class="tag">Synth ID</span><span class="tag">Weights & Biases</span><span class="tag">Weave</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/L6tLBApQN-g" target="_blank" rel="noopener">How Physical AI Learns Across Language, Video and Action — Ming-Yu Liu</a>
+        </h2>
+
+        <p class="summary">멀티모달 시뮬레이션으로 로봇·자율주행 데이터 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:27</span>
+            
+            <span>Cosmos는 텍스트·비디오·오디오·액션을 모두 입력으로 받아 멀티모달 이해를 수행한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:07</span>
+            
+            <span>Cosmos Dreams는 폐쇄형 시뮬레이터를 구축해 자율주행뿐 아니라 다양한 로봇 작업을 가상 테스트한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:03</span>
+            
+            <span>양방향 diffusion 생성기는 토큰 간 상호작용을 통해 영상·액션·오디오를 일관되게 생성한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>폐쇄형 시뮬레이터를 활용해 추천 시스템의 강화학습 정책을 가상 사용자 환경에서 검증함으로써 실서비스 위험을 사전 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>양방향 diffusion 생성기를 이용해 다중 센서 시계열 데이터를 합성해 예측 유지보수 모델의 학습 데이터를 풍부하게 만든다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Cosmos 모델이 입력으로 받을 수 없는 것은?</div>
+            
+            <div class="q-opt">① 텍스트</div>
+            
+            <div class="q-opt">② 비디오</div>
+            
+            <div class="q-opt">③ 오디오</div>
+            
+            <div class="q-opt">④ 실시간 센서 스트림</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 실시간 센서 스트림</div>
+              <div class="why">본문에 따르면 Cosmos는 텍스트, 비디오, 오디오, 액션을 입력으로 받지만 실시간 센서 스트림에 대한 언급은 없으며, 따라서 해당 옵션이 올바르다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Nvidia</span><span class="tag">Cosmos 3</span><span class="tag">Cosmos Dreams</span><span class="tag">diffusion</span><span class="tag">vision encoder</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">The Airbnb Tech Blog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/airbnb-engineering/beyond-the-model-engineering-ai-infra-with-scientific-judgement-371316d43261?source=rss----53c7c27702d5---4" target="_blank" rel="noopener">Beyond the model: Engineering AI infra with scientific judgement</a>
+        </h2>
+
+        <p class="summary">AI 에이전트 인프라를 과학적 방법으로 표준화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 결과의 투명성을 위해 방법론을 인프라로 구현해 재현·감사 가능하게 해야 함.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Insight Miner는 추출·임베딩·클러스터링을 핵심으로 프롬프트 튜닝·하드 예시 마이닝·대조 라벨링을 패키징한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>조사 방법 자체를 버전 관리·공유해 언어·지역·제품에 빠르게 확장한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>프롬프트 튜닝을 활용해 법률 계약 조항 자동 추출 모델을 맞춤화해 정확도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>하드‑예시 마이닝을 의료 영상 데이터 라벨링에 적용해 모호한 스캔에 집중함으로써 라벨링 비용을 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>대조 라벨링을 추천 시스템 피드백에 도입해 유사·비유사 사용자 행동을 구분, 개인화 품질을 향상시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Insight Miner의 핵심 절차 순서는 무엇인가?</div>
+            
+            <div class="q-opt">① extract, embed, cluster</div>
+            
+            <div class="q-opt">② embed, extract, classify</div>
+            
+            <div class="q-opt">③ cluster, embed, extract</div>
+            
+            <div class="q-opt">④ extract, classify, embed</div>
+            
+            <div class="q-answer">
+              <div class="correct">① extract, embed, cluster</div>
+              <div class="why">본문에 핵심 방법은 'extract, embed, cluster'라고 명시돼 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">왜 단순히 지능적인 모델만으로는 과학이 되지 않는가?</div>
+            
+            <div class="q-opt">① 모델은 비구조화 데이터를 처리하지 못한다</div>
+            
+            <div class="q-opt">② 방법론 없이는 결과가 재현·감사 불가능하다</div>
+            
+            <div class="q-opt">③ 모델은 너무 느리다</div>
+            
+            <div class="q-opt">④ 모델은 파라미터가 부족하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 방법론 없이는 결과가 재현·감사 불가능하다</div>
+              <div class="why">텍스트는 '지능 without methodology is not science'라며 방법론의 필요성을 강조한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Airbnb</span><span class="tag">LLM</span><span class="tag">Insight Miner</span><span class="tag">agent harness</span><span class="tag">prompt tuning</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,412 @@
+{
+  "date": "2026-09-16",
+  "generated_at": "2026-09-15T22:52:18.746244",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Quenched Ensemble Sampling",
+        "url": "https://arxiv.org/abs/2609.15894v1",
+        "published_at": "2026-09-14T17:16:07",
+        "transcript": null,
+        "body": "Some of the sharpest challenges in sampling from the energy functions of physical systems arise at phase transitions, where the density of states changes abruptly and many sampling algorithms stall. Nested sampling is a particle method that traverses the density of states under a hard energy constraint and is known to be robust to such transitions, but its application in high dimension is limited by the difficulty of sampling under that constraint. In this work we introduce Quenched Ensemble Sampling, which generalises the hard constraint to a family of repulsive potentials at the energy boundary. This preserves the quenched path of monotonically decreasing energy while making the constrained target amenable to scalable gradient-based kernels. We demonstrate on synthetic models of phase transitions that our method estimates the marginal likelihood and draws posterior samples across a first-order transition where popular alternatives such as tempering fail. We apply the procedure to marginal likelihood estimation in Bayesian neural networks, enabling model comparison between network architectures. Finally, in a high-dimensional continuous lattice field theory, we show that this method traverses a first-order transition and estimates the partition function.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "위상 전이에서도 안정적인 베이지안 모델 비교 가능",
+        "tags": [
+          "Quenched Ensemble Sampling",
+          "Nested sampling",
+          "Bayesian neural networks",
+          "partition function",
+          "gradient-based kernels"
+        ],
+        "concepts": [
+          "베이지안 추론",
+          "멀티스케일 샘플링",
+          "조건부 확률 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "Quenched Ensemble Sampling은 에너지 경계에 반발 퍼텐셜을 도입해 경도 제약을 완화하고 gradient 기반 커널로 샘플링한다.",
+            "timestamp": null
+          },
+          {
+            "point": "첫 번째 차수 전이에서도 주변가능도와 사후 샘플을 정확히 추정해 tempering 등 기존 방법이 실패하는 상황을 극복한다.",
+            "timestamp": null
+          },
+          {
+            "point": "베이지안 신경망의 모델 비교와 고차원 격자 장 이론의 분할 함수 추정에 성공적으로 적용되었다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "위상 전이에서 에너지 함수 샘플링이 어려운 문제를 해결하기 위해 기존의 Nested sampling이 고차원에서 제약 샘플링의 어려움에 부딪힌 점을 보완한다. 이 논문은 제약을 완화한 반발 퍼텐셜과 gradient‑기반 커널을 결합한 새로운 Monte Carlo 방법을 제시하며, 베이지안 추론 및 통계 물리학 분야의 고차원 모델에 적용한다.",
+        "production_ideas": [
+          "안전 제약을 부드러운 반발 퍼텐셜로 변환해 강화학습 정책 탐색의 수렴성을 높인다.",
+          "확률 프로그래밍에서 대규모 계층 모델의 하이퍼파라미터 사후 분포 샘플링에 gradient 기반 커널과 quenched 경로를 적용해 효율성을 개선한다.",
+          "분자 동역학 시뮬레이션에서 자유 에너지 차이를 추정할 때 전이 구간에 반발 퍼텐셜을 도입해 기존 umbrella sampling의 수렴 문제를 완화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Nested sampling이 고차원에서 적용이 어려운 주된 이유는 무엇인가?",
+            "options": [
+              "에너지 경계 아래에서 샘플링하기 어려워서",
+              "그라디언트 정보를 제공하지 않아서",
+              "입자 수가 너무 많아서",
+              "분할 함수를 계산할 수 없어서"
+            ],
+            "answer_index": 0,
+            "explanation": "논문에서는 hard energy constraint 하에서 샘플링이 어려워 고차원 적용이 제한된다고 언급한다."
+          },
+          {
+            "question": "Quenched Ensemble Sampling이 첫 번째 차수 전이에서 tempering보다 우수한 점은?",
+            "options": [
+              "수렴 속도가 빠르다",
+              "주변가능도 추정과 사후 샘플을 모두 제공한다",
+              "필요 입자 수가 적다",
+              "저차원 시스템에만 적용 가능하다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 QES는 marginal likelihood를 추정하고 전이 구간에서도 사후 샘플을 얻어 tempering이 실패하는 상황을 극복한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "토스증권이 GPU-aware를 넘어 GPU-native 클러스터를 구축한 방법",
+        "url": "https://toss.tech/article/gpu-native-cluster",
+        "published_at": "2026-09-15T01:42:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80c6-ad21-c407ed814121\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스증권 Data Infra 팀 Data Engineer 장재영입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80dc-9894-c359dfea2430\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">지난 상반기 동안 ML Platform 팀의 김진웅 님과 함께 Kubernetes 기반 GPU 클러스터를 구축했는데요. 오늘은 그 과정에서 겪은 문제와 해결 방법을 공유하려고 합니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80cd-8430-daef7f0105cb\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">토스증권의 서비스와 데이터 플랫폼은 쿠버네티스를 기반으로 운영</span><span class=\"css-1kxrhf3\">됩니다. 수백 명의 개발자가 이 환경에서 다양한 대고객 서비스를 개발하고 운영합니다. AI 서비스도 같은 기반을 활용할 수 있도록, GPU 워크로드를 기존 쿠버네티스 클러스터 안에서 실행할 수 있게 해야 했습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-8095-b0c7-fc21ba51c1a7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 저희의 첫 과제는 쿠버네티스가 GPU를 자원으로 인식하고 할당하며, 컨테이너에서 사용할 수 있도록 연결하는 것이었습니다. 이 글에서는 GPU를 인식하고 워크로드에 할당할 수 있는 상태를 </span><span class=\"css-q3ktjb\">GPU-aware</span><span class=\"css-1kxrhf3\">라고 부르겠습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-8084-852d-e0fa11bce731\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">하지만 GPU를 사용할 수 있게 된 뒤에도 운영에서 풀어야 할 문제는 남았습니다. 노드가 </span><code><span class=\"css-1mjnzsq\">Ready</span></code><span class=\"css-1kxrhf3\">여도 개별 GPU에는 오류가 있을 수 있었습니다. 점검이나 설정 변경을 마친 노드를 언제 다시 서비스에 투입해도 되는지 판단할 기준도 필요했습니다. 서비스마다 필요한 자원의 크기가 다른데 GPU를 한 장씩 제공하는 방식은 비효율적이었고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80d3-9c60-d67a823d8ca7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">여러 팀이 GPU를 함께 쓰려면 플랫폼에서 이 문제들을 다뤄야 했습니다. GPU의 정상 여부를 판단하고, 검증된 노드만 워크로드를 받게 하며, 서비스에 필요한 단위로 자원을 나누고 배치할 수 있어야 했습니다. 저희는 이러한 운영 조건까지 갖춘 상태를 </span><span class=\"css-q3ktjb\">GPU-native</span><span class=\"css-1kxrhf3\">라고 부르고 있습니다. 토스증권은 멀티테넌트 GPU 클러스터를 운영하며 이 조건들을 하나씩 갖춰 왔고, 필요한 경우 업스트림에도 기여했습니다.</span><a class=\"css-iynyr0\" href=\"https://github.com/NVIDIA/k8s-device-plugin/pull/1621\" rel=\"noreferrer noopener\" target=\"_blank\">[1]</a></span></span></p><figure class=\"css-of5acw\" id=\"3dba360d-33e3-80fb-88d0-fd38f41ccb13\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/dfeb02ca-d08c-4173-8dfc-7b7f448e2aae/gpu-aware-to-native-v2.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-qj4ldc\">GPU-aware에서 GPU-native로</span></figcaption></figure><p class=\"css-14on8x8\" id=\"3dba360d-33e3-8056-80ae-ff10fe7f7db5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">흥미로운 점은 쿠버네티스 자체에서도 관련 변화가 이어지고 있다는 것입니다. DRA(Dynamic Resource Allocation)</span><a class=\"css-iynyr0\" href=\"https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\" rel=\"noreferrer noopener\" target=\"_blank\">[2]</a><span class=\"css-1kxrhf3\">는 단순히 ‘GPU 한 개’를 요청하는 데서 나아가, 필요한 조건을 가진 장치를 요청하고 할당받을 수 있도록 합니다. 저희가 지난 2년 동안 별도 구성 요소와 운영 로직으로 보완해 온 문제 중 일부가 쿠버네티스 자체에서도 다뤄지고 있는 셈입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-8064-b243-d630e63a6311\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 글에서는 먼저 GPU-aware한 쿠버네티스를 구성하는 기본 요소를 살펴보겠습니다. 이어 실제 운영에서 마주한 여러 문제와, 이를 해결하며 GPU-native한 클러스터로 발전시켜 온 과정을 공유하겠습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80ab-9a43-d1aacc32bc24\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><hr class=\"css-1ifza5r\" /><h2 class=\"css-1c1qox8\" id=\"3dba360d-33e3-80e2-9a79-c3ee62765ef6\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">1단계. GPU-aware한 클러스터 구축하기</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dba360d-33e3-80fb-97cb-c23de94ef937\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그럼 GPU-aware한 쿠버네티스를 구축하기 위해서는 무엇이 필요할까요? GPU 한 장이 파드에서 쓰이기까지는 총 네 스텝을 거쳐야 합니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3dba360d-33e3-80d1-b7e6-ec80095028af\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/55370c0b-37a9-4f61-9008-10d3fe4de01a/gpu-four-step.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-jfs1hr\">GPU 한 장이 파드에서 사용되기까지 네 스텝</span></figcaption></figure><h3 class=\"css-1feg9au\" id=\"3dba360d-33e3-8029-9f9b-e884abf7d7a5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Step 1. 하드웨어 / 드라이버</span></span></span></h3><p class=\"css-14on8x8\" id=\"3dba360d-33e3-8074-887a-d8971a3ae783\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">서버에 GPU 디바이스가 탑재되어 있고, 운영체제가 이를 사용할 수 있도록 NVIDIA 커널 드라이버가 준비되어야 합니다. NVIDIA 커널 드라이버가 없으면 운영체제부터 GPU를 장치로 인식하지 못하게 됩니다.</span></span></span></p><h3 class=\"css-1feg9au\" id=\"3dba360d-33e3-8099-82c8-e9d726a1584d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Step 2. NVIDIA Containe",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "GPU 멀티테넌트 관리, 쿠버네티스 구현",
+        "tags": [
+          "Kubernetes",
+          "GPU",
+          "DRA",
+          "NVIDIA/k8s-device-plugin",
+          "GPU-native"
+        ],
+        "concepts": [
+          "스케줄링",
+          "작업 격리"
+        ],
+        "key_points": [
+          {
+            "point": "GPU-aware 단계에서는 Kubernetes가 GPU를 자원으로 인식하도록 NVIDIA 디바이스 플러그인을 설치하고, 파드 스펙에 GPU 요청을 선언하도록 구성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "GPU가 Ready 상태라도 개별 디바이스 오류가 발생할 수 있어, 노드 건강 체크와 GPU 상태 검증 파이프라인을 도입해 오류 노드를 자동 격리한다.",
+            "timestamp": null
+          },
+          {
+            "point": "GPU-native 단계에서는 멀티테넌트 환경을 지원하기 위해 GPU를 서비스별 단위로 파티셔닝하고, DRA를 활용해 조건 기반 디바이스 할당과 자동 스케줄링을 구현한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "GPU 건강 체크 로직을 데이터 파이프라인의 CPU 연산 노드에 적용해 고장 노드 자동 격리로 전체 파이프라인 가용성을 높인다.",
+          "DRA 기반 동적 메모리 할당을 활용해 대규모 Spark 작업에서 워커 메모리를 작업 요구에 따라 자동 조정한다.",
+          "멀티테넌트 GPU 스케줄링 방식을 적용해 사내 AI 실험실에서 여러 팀이 공유하는 FPGA 클러스터를 효율적으로 배분한다."
+        ],
+        "quiz": [
+          {
+            "question": "본문에서 Kubernetes가 GPU를 인식하고 할당할 수 있는 상태를 무엇이라고 부르나요?",
+            "options": [
+              "GPU-aware",
+              "GPU-native",
+              "DRA-enabled",
+              "GPU-virtualized"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 GPU를 인식하고 워크로드에 할당할 수 있는 상태를 'GPU-aware'라고 정의하고 있다."
+          },
+          {
+            "question": "GPU를 한 개가 아닌 조건 기반 장치로 요청·할당할 수 있게 하는 Kubernetes 기능은 무엇인가요?",
+            "options": [
+              "Device Plugins",
+              "DRA",
+              "Node Affinity",
+              "Taints/Tolerations"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 DRA(Dynamic Resource Allocation)가 단순히 ‘GPU 한 개’를 요청하는 수준을 넘어 조건 기반 장치 요청·할당을 가능하게 한다고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Claude Is Now Leaving Invisible Fingerprints In Its Text",
+        "url": "https://youtu.be/YoEWjZSwoys",
+        "published_at": "2026-09-15T10:12:34",
+        "transcript": "[00:00] Images can be watermarked for copy protection. Now get this. Claude AI announced that they are watermarking the text you generate with it.\n[00:09] From when? When does this start? Well, Anthropic is rolling this out right now. Yep.\n[00:15] I am not talking about this because I agree with it, but because I think it's important that all of you fellow scholars know about this. To inform the public.\n[00:25] So, this piece of text is watermarked. Wait, what? You can watermark an image by putting your logo on it, but text?\n[00:34] How would you watermark text? You put hidden characters in it, right? Nope.\n[00:39] This paper describes that it is a fingerprint in text that is invisible to humans, but is detectable for machines.\n[00:49] It even survives copy-pasting and some editing too. I'll tell you what it doesn't survive in a minute.\n[00:56] So, when generating text, the AI decides what the next word should be, and there can be a few candidates.\n[01:04] Here, you could say, I saw a dog, a puppy, a cat, or a house. Based on context, each of these words gets a probability to be chosen.\n[01:14] Now, with a fingerprinting algorithm, it secretly assigns a color to each word. Some are green, preferred, some are red, not preferred.\n[01:24] And now comes a little nepotism. Woohoo! A little cheating, if you will.\n[01:31] When choosing the next word, the green ones get a little nudge upwards. They will occur slightly more often.\n[01:38] So here's how to check for a watermark. In a piece of text, someone who knows the red and green words simply counts how many greens you have.\n[01:48] This scheme has a mathematical property where, as you see more and more green, the probability of it being real human text is extremely small.\n[01:58] Found 21 greens in a paragraph? Suddenly, the probability of that done by humans can be less than winning the lottery. Much smaller.\n[02:08] Note that the green words can be anything, no matter how inconspicuous, so you can't spot them.\n[02:15] Which words are green can also change over time. Ouch.\n[02:19] This is the simplified version of the algorithm. They are likely using the Synth ID variant, which has context-dependent probabilities and a tournament system too.\n[02:30] But the heart of the algorithm is the same in most research papers I read. Some words are preferred and are given a slight edge in the generation, creating a unique fingerprint.\n[02:42] Now, there are a lot of misconceptions about this out there. One, Claude-written text cannot be traced back to you, but it shows that Claude wrote the whole thing or heavily edited the text.\n[02:55] I don't agree with this. I am making this video to let everyone know. Knowledge only changes the world when it reaches people.\n[03:02] Second, some say, just edit a few words and it's clean. Nope. You can't get rid of it so easily.\n[03:10] So, can you get rid of it? Dear fellow scholars, this is Two Minute Papers with Dr. Károly Zsolnai-Fehér.\n[03:15] With light editing? No. If you rewrite the whole thing, exchanging every word? Yes, you can get rid of it.\n[03:22] An open-weights LLM that works for you can also help.\n[03:26] Okay, so who can check if there is a watermark in the text? Well, not you and not me. Some eligible organizations can, but that's it for now.\n[03:35] So, what is the solution? Well, of course. Use free and open-weights AI systems and run them yourself. These work for you, not against you.\n[03:46] That is the way of the scholar. We need new tools for the era of LLMs, and Weights & Biases now has Weave, a lightweight toolkit to confidently iterate on LLM applications.\n[03:59] Use traces to debug how data flows through each step of your app and use evaluations to measure your progress. It is the best.\n[04:08] Try it out now at wandb.me/papers or click the link in the description below.",
+        "body": "❤️ Check out Weights & Biases and sign up for a free demo here: https://wandb.me/papers\n\n📝 The papers and sources are available here:\nhttps://proceedings.mlr.press/v202/kirchenbauer23a.html\nhttps://www.nature.com/articles/s41586-024-08025-4\nhttps://www.anthropic.com/news/claude-text-watermark\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 텍스트 워터마크, 데이터 신뢰성 확보",
+        "tags": [
+          "Claude",
+          "Anthropic",
+          "Synth ID",
+          "Weights & Biases",
+          "Weave"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "AI 안전 및 비밀 과제 회피"
+        ],
+        "key_points": [
+          {
+            "point": "AI는 다음 단어 후보에 확률을 부여하고 선택한다.",
+            "timestamp": "00:56"
+          },
+          {
+            "point": "워터마크는 단어마다 숨은 색을 부여해 녹색 단어를 약간 선호하도록 조정한다.",
+            "timestamp": "01:14"
+          },
+          {
+            "point": "녹색 단어 비율이 높을수록 인간이 쓴 텍스트일 확률이 극히 낮다.",
+            "timestamp": "01:48"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "코드 생성 모델에 동일한 색상 편향을 적용해 생성된 코드의 출처를 추적한다.",
+          "합성 데이터 생성 시 토큰에 숨은 편향을 부여해 데이터셋에 인공 행을 식별 가능하게 만든다.",
+          "채팅봇 메시지에 워터마크를 삽입해 악성 봇 활동을 자동으로 감지한다."
+        ],
+        "quiz": [
+          {
+            "question": "워터마크 검출 시 녹색 단어 비율이 높을 경우 어떤 결론을 내릴 수 있는가?",
+            "options": [
+              "인간이 쓴 텍스트일 가능성이 높다",
+              "AI가 생성했을 가능성이 높다",
+              "텍스트가 편집되었다",
+              "워터마크가 사라졌다"
+            ],
+            "answer_index": 1,
+            "explanation": "녹색 단어가 많이 나타나면 알고리즘이 의도적으로 녹색을 선호하도록 조정했으므로 AI가 생성했을 확률이 매우 높다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "How Physical AI Learns Across Language, Video and Action — Ming-Yu Liu",
+        "url": "https://youtu.be/L6tLBApQN-g",
+        "published_at": "2026-09-15T16:00:26",
+        "transcript": "[00:00] This car is about making a lap turn. Um, can you envision the trajectory the car is taking, uh, and the video generated?\n[00:08] Guess what? That road was never filmed. It was made by Nvidia's Cosmos 3. It reads video. It simulates roads and it's learning how to handle objects. Mingyu Liu leads the research, and this is a paid partnership with Nvidia.\n[00:27] Now, Cosmos, it takes text, video, audio, and actions as input. Let's start with the simplest case.\n[00:36] You ask the model, what happened in the videos? How many cars in the video? Whether the robot succeeded in complete an action in the video. Okay, there are three cars. And the robot succeeded in pick up the apple and put in the basket.\n[00:53] When you have a video and test as input, and generate test, it becomes a vision language model.\n[00:59] So why don't we flip this thing on its head? The model stops describing the scene and starts generating it.\n[01:07] We develop Cosmos Dreams is a set of skills to build uh closed-loop simulator, uh, not just for self-driving.\n[01:15] I can employ a hundred uh driver, drive a hundred cars, go to different intersection, uh, and figure out whether it works better. Or I can use this simulator to verify uh the accuracy.\n[01:30] You are not limited by the size of your fleet. Anytime you need to do a lot of testing, uh, if you have the computer, uh, just launch it.\n[01:40] Okay, so what if we took the same idea but on an even harder problem? Like robots, for example?\n[01:46] You know, navigation, you don't want your physical device to touch any other scenes. But manipulation task require uh all kind of interactions. When there's an interaction, there's occlusion.\n[02:00] There's a potential deformation, you know, when when scenes are manipulated, so it's more challenging. We will reach a state where uh we will be able to uh use neural simulation to handle this complex manipulation well, right? Once we reach the status, uh, you can test your robot policy with the world simulator.\n[02:20] Okay, so one model, Cosmos 3, handling three jobs. Handling objects and robotics is the future. It's very exciting.\n[02:28] So you can see that uh, you are looking at very diverse, uh, versatile, uh, model architecture.\n[02:35] And we now have action as a first-class citizen, which means, you know, the model might actually take an action and then its next observation could be caused by the thing that it did before.\n[02:46] We start with uh a language model. Uh we we either train it from scratch ourselves or take existing open model, right? Start with the language model. It has a basic understanding of the language structure, uh, you know, understand language.\n[03:04] Then we have a vision encoder that can take a video or a set of image as input. Then we connect this vision encoder to the large language model. Connecting this vision uh vision encoder to the language model, uh we we type to build a vision language model, right? And sometimes you can also start with a pre-trained vision language model. Okay. Now this language model, you know, operating in the auto-regressive manner, uh predict a token at the time, right?\n[03:38] Okay. In learn to connect uh, you know, visual output to the language space, it thinks in language, uh, explain what it see, right? So you have a vision language model. Okay. Now we take this uh vision language model, uh, you know, the pre-trained weights, and then initialize a a generator, right?\n[04:03] So, uh, one key thing is that, uh, this uh vision language model is auto-regressive. And our generator is actually uh diffusion, it's bi-directional.\n[04:14] Now this uh bi-directional generator, uh, learn to generate video, action, audio. Uh, okay, in this tower, every token attend to every other token. So when you generate uh the video or the action, there's a coherence uh among the the the chunk it generates, among each generation the signal uh within this chunk is coherent. And it also leverage the token from the vision language model uh part, the reasoner tower, uh, which we call it the reasoner tower. And so it it also understand the instruction, you know, what you want to generate. Okay.\n[04:53] And in that, uh, generator training, there are two stage. Pre-training, learn the basic, uh, and mid-training, we add action in.\n[05:03] In your estimation, what is a world model?\n[05:05] This is a very challenging question, and I think, uh, earlier, uh, there's something similar, people try to give a definition to AGI. Uh, I think several years ago, uh, they started it. Uh, but I think till today, there's still no kind of common agreements what AGI is, right? People have their own definition.\n[05:26] And I think a world model gonna be the same, right? So, I think a world model is a collection of useful tools, right?\n[05:35] We model something because we we we are trying to achieve some goal, right? Uh, for example, it could be predict the future, or it could be understand why this happened.\n[05:48] There are three important uh modeling in robotics: uh, forward dynamics, you know, given what uh the starting point and the action taken, what will be the future? Predict what gonna happen. Um, inverse dynamics, given the visual transition, you know, infer what was the action taken? And policy, what should the robot do to achieve the task?\n[06:15] We're combining these different modalities, like, you know, audio and action and vision and and and so on. And they might run on different timescales. How do you make them all run on the same timescale?\n[06:26] Uh, different signal have different uh, you know, frequency, right? Even for video, we have uh come with a different frame rate. High speed video or low speed video. And and the audio, you know, there's also different uh hertz, uh, and action also different. So, uh, we have a uh um temporal position embedding scheme, uh where we pretty much normalize all the uh signal into the same uh assets, uh the same scale.\n[07:00] So that's when the token uh represent different uh time chunk or different spatial time chunk of the signal, better know which are the token are in the same time instance, at the same time instance. And also know the relative distance between different uh time instances, yeah. So that is a critical part uh to make this uh omni-modal model uh work, you know, handling audio, video and action, all come with different frequencies.\n[07:29] You were talking earlier about the these different modalities, forward dynamics, inverse dynamics, and and policy in in one single model. How exactly do they reinforce each other?\n[07:38] When when we train the model, we put them together, right? Um, and uh, we we give the uh information bottleneck. You only have uh this amount of capacity uh to explain all of them.\n[07:53] These are all trying to connect uh visual observation to action. So in the world action model, right? You uh you have uh test instruction what you want to achieve, and this is what you observe. And you start to generate action and possible output, right? Uh and possible output is similar to uh forward dynamics, right? When you have action in, what's could be the output? Inverse dynamics, when you have this visual transition, what could be the action?\n[08:22] Also similar to what happened in the world action model, right? Uh, you have the video and action, the correlation between them. Yeah. So, I think these three, uh, they are uh trying to fundamentally trying to capture the correlation between the observation and action, right? It's just a different different slice, uh, different perspective. Yeah.\n[08:46] And once you put the information bottleneck, uh, you put the capacity constraint, uh, you know, the model learn. And our result in the paper show that there's a synergy, uh, one does help the other.\n[08:59] And and I think it's fair to say there's a bit of an asymmetry in the training data, right? So there's lots of um human-generated uh video data and then there there's far less action data.\n[09:09] And but but you get this virtuous transfer between the modalities, but could the model ever know when not to transfer, when when transfer could be harmful?\n[09:18] I think the model doesn't really know. Uh, it's uh, um, so, I think you are talking about, we have a large amount of egocentric video, right? The first person view, uh, and the two hands uh trying to complete certain task. Uh, and we have a relatively small amount, actually much smaller amount of the robot video, you know, robot also have a head camera, uh, you know, gripper camera, and, you know, see it's complete certain task, right?\n[09:46] So, uh, I think it's more about our shared vocabulary for different embodiments, right? So, you know, human-like robot looks like a human, right? And um, uh, how human hand manipulate one object, the visual pattern, the the visual action correlation, human how human manipulate an object, the pattern uh you can see it's very similar to how a robot uh would manipulate object. Even though the action space doesn't really correlate uh precisely.\n[10:20] Once you correlate one set of action, uh, the pattern is similar, uh, it's easier to generalize to the other. Uh, and it also give you when you incorporate a couple different embodiment in, it also help you to generate to unseen embodiment. Because I mean, if human-like robot, they're gonna looks like human, uh, maybe some have a bigger hand, some have a longer hand, uh, but uh it it's gonna be similar, right? So, uh, and gripper can be different, but, uh, you know, the function are also similar.\n[10:53] The key is really the the pattern, the correlation between the visual observation and action, right? Uh and the translation from one action embodiment one embodiment to another embodiment, I think is relatively easier.\n[11:06] Apparently, um one of the failure modes is when tasks are not well enough specified.\n[11:11] I think system 2, uh is the key to make ambiguous task, uh, more concrete for system 1 to execute.\n[11:21] Yeah, it's fascinating because I'm thinking that we want to use this technology in safety-critical environments, right? And some tasks are just quite ambiguous.\n[11:32] But presumably we we could add in layers of of, you know, maybe maybe we don't understand exactly how to specify the thing that we're doing, but we could add in layers of tests and checking and we could red team it and make it improve over time.\n[11:45] You give a task, uh, it will be similar to LN agent, right? You give a task. First initial core of the agent or the model will to find a sequence of tasks, uh, need to be complete, right?\n[12:01] And uh it would execute uh one by one, and after each execution, it will check whether this is complete. And and uh, uh, at some point, uh, there may might be choices, uh, need to be need to be made, right? So, okay. Should I do this or the other, right?\n[12:20] I think this will require us to think uh this uh um robotic task, um, more in the system level. Uh, a layer above the model level. Uh, you have some harness uh to kind of uh uh gather the resources together, uh, either your past memory or or the uh the tools that you can use, right? So, I I think this this kind of be a a more more completes way or to do get the uh the physical task.\n[12:53] One thing we we've not spoken about enough is is using Cosmos as as a simulator essentially to train a policy.\n[13:01] And I'm just thinking whether there would be some potential problems with that. You know, in reinforcement learning, we have the sim to real gap. And could you have a situation where the policy might learn to exploit features inside the simulator?\n[13:13] Yeah, it it's possible. The way I look at how uh this uh neural simulator uh progress is that uh I think it will be first, um, it will be more useful for passive verification in the beginning.\n[13:27] Passive verification is a task that's uh, you know, if you are model builder, uh, any model run, you're gonna have uh a lot of checkpoints. And you might do a vibration study, and you're gonna every, you know, variance, you're gonna have many checkpoints. And how do you know which one is better, right?\n[13:45] Uh, uh, ideal case, uh, is to deploy each uh policy in your real robot, in your real environment, and make sure the complete rates, right? Uh, success rates.\n[13:59] In auto happen to self-driving car, right? Every time you update your driving policy, how do you know it works? So you need to have a fleet of driver and go to different challenging uh scenario and check whether uh this policy is desirable, right? It's so costly. There are so many checkpoints.\n[14:18] So, uh, if we can use uh uh world model uh as a world simulator, uh, as a replacement of the real world, uh, and real driver, right? You have, you have the policy directly interact with the world simulator. And and the the world simulator in the end of the roll out, you can make sure whether uh this test is completed or not. Then you have success rate, right?\n[14:44] If the success rate of the world simulator, uh, the neural simulator, correlates with the real world, you know, uh testing. The ranking preserved. You don't need them to be precise. You just need to know if policy A is better than policy B in neural simulator, and most likely policy A gonna be better than policy B in the real world. You just need this ranking preserved.\n[15:09] Then with this, you can quickly narrow down on the number of checkpoints you need to do real developments. You're gonna largely improve your development velocity, uh help you to find a better policy sooner. Okay. And and in this passive verification, uh, you don't directly train the model using uh the visual output, uh the roll out, right?\n[15:31] And the model, I mean, if what happened in large language model gonna happen in world model, uh we're gonna see rapid improvements of of world model, right? So even before it's mature enough to feed the policy model, the training data to train, uh world simulator can be used uh as a passive verification. Yeah, that's what I think.\n[15:53] Okay, so now we go back to the question you ask, uh, there's a hacking. Hacking gonna happen in, you know, even you use uh, you know, deep learning, uh, you know, if there's some pattern, something that can exploit, right? There're gonna be adversarial examples, right? So, I think neural simulator, you know, gonna be exploited, and other simulators gonna also be exploited.\n[16:16] And and I think as we reach that status, I think there will be uh ways uh to uh to to regularize uh the model training, uh, uh to make sure uh those cannot be used. Yeah. So, I don't know precisely uh the approach. Uh I think this is also a very exciting area, uh and the but I I just believe that uh, yeah, people people will figure out a way.\n[16:42] Yeah, and and on on this thing about using Cosmos as as a teacher essentially for for policies. Um, you you guys have got a um a set of recipes around this, and and you should you should talk to that. But um one interesting thing is the ability to imagine, you know, like the the the notional elephant in the room. So something that that is quite unnatural that would be quite uh low frequency in the training data, you can imagine those, but you could also have this adaptive system where you could recognize education cases and then you could improve the policy over over over time.\n[17:12] The Cosmos as the teacher. So in Cosmos, right? So we try to help the ecosystem in three ways. Uh, better data, better environments, and better starting points, right? So we believe that's uh uh uh Cosmos model, a omni-modal world model, that link video, action, test together to learn the shared representation is a great starting point uh to build a policy model.\n[17:38] Uh and not just a theory, we actually post-train uh Cosmos model on a on the Droid data set and achieve still the art uh pick and place policy results. And the reason, uh I mean, our intuition is that if we can predict the visual dynamic well, and we can learn the correlation between the visual and action, then it's gonna help you uh to build a policy model.\n[18:01] When when we kind of keep advancing Cosmos model, when we bring more embodiment in, it it's gonna uh become a better and better starting points, and the amount of uh effort required for uh adapt to a new embodiment will be less.\n[18:19] Well, maybe you should comment on the recipes because this will really help folks at home get get up to speed with it.\n[18:25] As we build uh Cosmos as a platform, uh we also provide post-training recipe in our kind of uh Cosmos repo. Uh so that's uh a user, a developer can leverage the recipe to reproduce the results we have, starting with the Cosmos model, right? So, uh and we do forward to add more uh recipe there, uh maybe also skills to help you uh, you know, provide data, and then agent help you to post-train Cosmos, uh and to to work something you like. Yeah. So that's uh we're trying to serve the community this way.\n[18:59] Amazing. And can you tell me about Cosmos Dreams?\n[19:02] We develop Cosmos Dreams is a set of skills to build uh closed-loop simulator uh for uh not just for self-driving, uh it's um, uh for all sort of embodiments, right?\n[19:16] So, uh, it's uh fall into the conventional, the traditional uh definition of world model in robotics, right? Action in uh, you know, future observation out, forward dynamics. You know, you are not limited by the size of your fleet, right?\n[19:34] Uh and uh anytime you need to do a lot of testing, uh if you have the computer, uh just launch it. And it's gonna help you the development velocity. You know, self-driving uh very useful. Uh and I think this is gonna also be true for robotics.\n[19:50] Uh I think world model now is good enough for navigation task. Uh in robotics, uh the other challenge is the manipulation task. You know, navigation, you don't want your physical device to touch any other scenes. But manipulation task require uh all kind of interactions.\n[20:09] Uh when there's an interaction, there's occlusion, right? And there's a potential deformation, you know, when when scenes are manipulated. So it's more challenging.\n[20:19] I'm very optimistic, uh, with the excitement the whole field has, uh, in world model and uh, you know, the continued advance of the uh, the deep learning research and also computers, uh, we will reach a state where uh we will be able to uh use neural simulation to handle this complex manipulation well, right?\n[20:44] Once we reach the status, uh, you can test your robot policy uh with the world simulator, right? And you know, self-driving car require a lot of passive verification today, because car is moving around in our human space, right? So we need them to uh be safe enough, right?\n[21:05] Uh, so, uh, when robot human robot reach the status, where you're gonna be deployed on many people's houses, uh, safety is even more important. You don't expect to see a car, you know, in in uh in your house, uh, but once human robot is everywhere, you're gonna expect to see human robot uh surrounding you, and maybe your kid, uh, your pet, right? So you do want them to be safe enough. How do you know, right?\n[21:32] So, uh, a developer of human robot, how do you make sure uh your every iteration of your new your policy, you know, or the whole system is safe enough? You need passive verification. And you you won't have enough uh space for setting up all kind of kitchens, all kind of different task. Uh and and so I think using neural simulator is the only way uh to to to give you uh uh to give you the development velocity, uh you know, we need this.\n[22:04] Okay. And uh you also have this Cosmos 3 edge model. So this runs on a single device.\n[22:09] Yes. Cosmos uh come with models come with three different sizes. Uh we have a Super, Nano, and Edge, right? Uh Super is the the, you know, the give you the highest fidelity. Uh is a frontier model. Uh if you want uh very high accuracy and you can uh you have the uh the resources, definitely go with Super.\n[22:33] Nano uh is uh in between, uh smaller, uh easier to uh uh to post-train uh with all sorts of uh GPU uh resources you have. We want to make sure it run really well on edge devices, like uh the Jetson uh Thor, uh Orin, uh or DJX Spark, right?\n[22:55] So, uh, the reason we build this one is that uh we want the world model lives where robot lives, right? So that's uh you don't need to have a round trip to data center when you want to take certain action. And I think it's important, um, you know, when when you come to real deployments, right? You may not uh be able to count on the cloud, you know, the network connection good enough uh to do all the tasks, right? And sometimes it's sensitive critical, right? You have to complete the task at the time.\n[23:27] So we de we develop Edge so that it's small enough, but it's also powerful enough to run on those Edge device. And because the model is smaller, uh it, you know, take less compute resources, so it can be easily fine-tuned. Uh and earlier uh we have a recipe on fine-tuning uh the uh the Cosmos Edge model in one day uh to boost uh its visual understanding capability.\n[23:54] So I I think these all three version gonna be super important. Yeah. And and I also envision that uh they may uh need to work together uh in some form uh for future robotic development.\n[24:08] Very challenging task, you probably want a very powerful model. You know, it's like call out, call for help. Uh and for simpler task, you know, you want to finish right away, uh, you know, you you want to depends on the the model that is on the Edge device.\n[24:24] And uh for folks at home, where can they get their hands on on these models and find out more about it?\n[24:30] Yeah, so, uh all our models uh are open, uh and all our code, uh and even some of the training data we created, uh open. Uh so the models uh and the data live in Hugging Face. Uh and the the code live in GitHub repo. Yeah. So we have uh uh github.com/nvidia/cosmos as our uh landing repo. Uh from there you can see links to the Hugging Face uh models, the data set, uh and also the training code, the post-training script. Yeah. And we also have skills uh in the repo to help your agent uh quickly pick up uh the offering uh in Cosmos.\n[25:14] We build Cosmos uh to help the ecosystem, uh to help the uh a wide range of physical AI developers. Uh we need your feedback, you know.\n[25:26] Uh uh I have my email box, uh, you know, I I I uh I'm watching every issues, uh come to this uh uh Cosmos uh repo, uh and we do want to see uh uh your feedback, uh, you know, good or bad, both are very welcome. Uh and we are committed to committed to make it better and better.\n[25:47] Mingyu, it's been a a pleasure and an honor having you on MLST. Thank you so much for joining us today.\n[25:52] Thank you, team.",
+        "body": "The car making a left turn at the start of this episode was never filmed. Cosmos 3 generated it. Ming-Yu Liu, who leads the Cosmos research at NVIDIA, explains how one model can describe a video, generate one, and produce robot actions.\n\nHe walks Tim through the architecture. A vision language model reasons one token at a time; its weights then initialise a bidirectional diffusion generator for video, audio and action, and a shared temporal position scheme lines up signals that run at different rates. Ming-Yu treats \"world model\" as a set of tools, not one definition: forward dynamics, inverse dynamics and policy, trained together under a capacity limit so that each helps the others. He also explains why plentiful first-person human video carries over to robots, which have far less data of their own, and why a Cosmos model post-trained on the DROID dataset is a good starting point for pick-and-place policies.\n\nThe most practical thread is testing. A neural simulator does not need accurate success rates. It only needs to rank policy A above policy B the way the real world would, so a team can narrow down which checkpoints deserve a real trial. Cosmos Dreams applies that closed-loop idea to driving and robotics, and Ming-Yu argues that humanoids around children and pets make safety matter even more than it does for cars. The conversation ends on the Super, Nano and Edge sizes (Edge targets Jetson Thor, Orin and DGX Spark) and where to find the open weights, code and data.\n\nThis episode is a paid partnership with NVIDIA.\n\nLearn more about Cosmos: https://nvda.ws/4cJoY1S\nExplore Cosmos Lab: https://research.nvidia.com/labs/cosmos-lab/cosmos3/\n\n---\nTIMESTAMPS:\n00:00:00 A road that was never filmed\n00:02:28 Inside Cosmos 3: reasoning and generator towers\n00:05:02 World models: dynamics, policy and one clock\n00:08:59 Learning robot skills from human video\n00:11:06 Ambiguous tasks and system 2 planning\n00:12:53 Neural simulators for policy verification\n00:16:41 Cosmos as a starting point for robot policies\n00:19:00 Cosmos Dreams and robot safety\n00:22:04 Super, Nano and Edge model sizes\n00:24:24 Open models, the Cosmos repo and feedback\n\n---\nREFERENCES:\ntool:\n[00:00:13] Cosmos 3 (NVIDIA Cosmos Lab project page)\nhttps://research.nvidia.com/labs/cosmos-lab/cosmos3/\n[00:18:27] NVIDIA Cosmos GitHub repository\nhttps://github.com/NVIDIA/cosmos\n[00:22:05] Cosmos3-Edge model card\nhttps://huggingface.co/nvidia/Cosmos3-Edge\n[00:22:15] Cosmos3-Super model card\nhttps://huggingface.co/nvidia/Cosmos3-Super\n[00:22:16] Cosmos3-Nano model card\nhttps://huggingface.co/nvidia/Cosmos3-Nano\n[00:22:50] NVIDIA Jetson Thor\nhttps://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/\n[00:22:52] NVIDIA Jetson Orin\nhttps://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/\n[00:22:53] NVIDIA DGX Spark\nhttps://www.nvidia.com/en-us/products/workstations/dgx-spark/\n[00:24:42] Cosmos 3 collection on Hugging Face\nhttps://huggingface.co/collections/nv",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "멀티모달 시뮬레이션으로 로봇·자율주행 데이터 비용 절감",
+        "tags": [
+          "Nvidia",
+          "Cosmos 3",
+          "Cosmos Dreams",
+          "diffusion",
+          "vision encoder"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "시뮬레이션 기반 정책 검증"
+        ],
+        "key_points": [
+          {
+            "point": "Cosmos는 텍스트·비디오·오디오·액션을 모두 입력으로 받아 멀티모달 이해를 수행한다.",
+            "timestamp": "00:27"
+          },
+          {
+            "point": "Cosmos Dreams는 폐쇄형 시뮬레이터를 구축해 자율주행뿐 아니라 다양한 로봇 작업을 가상 테스트한다.",
+            "timestamp": "01:07"
+          },
+          {
+            "point": "양방향 diffusion 생성기는 토큰 간 상호작용을 통해 영상·액션·오디오를 일관되게 생성한다.",
+            "timestamp": "04:03"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "폐쇄형 시뮬레이터를 활용해 추천 시스템의 강화학습 정책을 가상 사용자 환경에서 검증함으로써 실서비스 위험을 사전 감소시킨다.",
+          "양방향 diffusion 생성기를 이용해 다중 센서 시계열 데이터를 합성해 예측 유지보수 모델의 학습 데이터를 풍부하게 만든다."
+        ],
+        "quiz": [
+          {
+            "question": "Cosmos 모델이 입력으로 받을 수 없는 것은?",
+            "options": [
+              "텍스트",
+              "비디오",
+              "오디오",
+              "실시간 센서 스트림"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 따르면 Cosmos는 텍스트, 비디오, 오디오, 액션을 입력으로 받지만 실시간 센서 스트림에 대한 언급은 없으며, 따라서 해당 옵션이 올바르다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "Beyond the model: Engineering AI infra with scientific judgement",
+        "url": "https://medium.com/airbnb-engineering/beyond-the-model-engineering-ai-infra-with-scientific-judgement-371316d43261?source=rss----53c7c27702d5---4",
+        "published_at": "2026-09-15T17:06:18",
+        "transcript": null,
+        "body": "<h4>How Airbnb’s agent harness transforms unstructured data exploration by encoding scientific methodology into scalable, reproducible, and audit-ready infrastructure.</h4><figure><img alt=\"A person wearing an orange harness, yellow helmet, and backpack rappels down a rope through a narrow sandstone canyon with smooth, curved orange and red rock walls.”\" src=\"https://cdn-images-1.medium.com/max/1024/1*rruMfjz5gfGgOaeF3crcJQ.jpeg\" /></figure><p><strong>By</strong>: <a href=\"https://www.linkedin.com/in/wrench/\">Wren Dougherty</a></p><p>Ask a coding agent to analyze 100,000 customer support conversations and within minutes you’ll have a polished taxonomy, precise prevalence numbers, and an executive-ready summary. What you can’t see is the investigation that produced them: the methods it chose, the evidence it weighed, how much to trust it, or whether a second request would agree. All that reaches you is the polish. The model is undeniably intelligent, but intelligence without methodology is not science.</p><p>LLMs certainly make for confident scientists, but we need them to be responsible ones. Smarter models help, but intelligence has never been the whole of science, in people or in machines. The method is as much the product as the answer. That is the idea behind the <a href=\"https://www.thoughtworks.com/content/dam/thoughtworks/documents/report/tw_future_of_software_engineering_europe_2026.pdf\">agent harness</a> we built for data science: <a href=\"https://wrenchatwork.substack.com/p/rigorous-work-with-fallible-ai\">the methodology itself, built as infrastructure around the model</a>. It governs how an AI agent operates, from framing a question to selecting evidence to recording decisions, so results can be reproduced, audited, and challenged, and the method shared, inspected, and built on.</p><h3>The challenge of unstructured data exploration</h3><p>In 2025, Airbnb was preparing to launch an <a href=\"https://www.airbnb.com/help/article/3594\">AI customer service assistant</a>. Before it could ship, we needed to understand exactly what kinds of situations it would face in the real world. That included rare events that could be risky for AI to interact with, and involved examining their taxonomy and prevalence to create the datasets that would help us build a more responsible product.</p><p>The investigative work to do this was rigorous, but the process was deeply artisanal. Months of high-touch iteration went into each investigation, from finding the right data, reviewing samples with experts, and generating representative datasets, and the method was manually curated across notebooks, tables, docs, and individual judgment.</p><p>This was fine for one investigation — but as we carried the same investigation into new languages, new geographies, and new LLM-based products at a near-weekly cadence, the workload outgrew the process. To bring the same rigor, thought, and quality at this new pace, and involve more people, we needed to make each investigation less bespoke. In short, we needed a way to replicate the methodology itself.</p><h3>Insight Miner: Agent harness for unstructured text understanding</h3><p>Insight Miner starts with the engineering (the queries, the scaled labeling and embedding, the clustering and tracking), so that no one has to learn new infrastructure to run analysis at scale. The core method is well established: extract, embed, cluster. Around that core we assembled the methods we had come to rely on, drawn from internal investigations and industry research: prompt tuning, hard-example mining, contrastive labeling, and how to start with unsupervised exploration then mature into classification. These pieces used to live in separate notebooks, manually iterated and shared by copy and paste. Now they are in one shared package, which gets updated whenever an individual investigation teaches us a better technique.</p><p>An investigation begins with a research question in a chat session, with an agent that is at once research partner, executor, and expert in the methods the harness holds. Insight Miner isn’t tied to a single dataset, domain, or question: it runs over any unstructured text source, through whatever lens the question needs, with the same rigor behind every investigation.</p><p>As we expanded our community support AI assistant to <a href=\"https://news.airbnb.com/airbnb-2026-summer-release/\">new languages and countries</a>, we used Insight Miner to carry out investigations that used to take months in just a matter of days. But its bigger impact was ensuring that rigor and speed both increased, instead of trading off.</p><p>With this harness, data scientists were able to shift their focus from executing analyses to improving the techniques used for each step of the process. Because the mechanical parts of investigations can scale and parallelize, we are able to spend more time on the careful parts of an investigation: directly inspecting the most ambiguous or strategic data that helps",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 에이전트 인프라를 과학적 방법으로 표준화",
+        "tags": [
+          "Airbnb",
+          "LLM",
+          "Insight Miner",
+          "agent harness",
+          "prompt tuning"
+        ],
+        "concepts": [
+          "과학적 AI 워크플로우",
+          "비구조화 텍스트 자동 탐색"
+        ],
+        "key_points": [
+          {
+            "point": "AI 결과의 투명성을 위해 방법론을 인프라로 구현해 재현·감사 가능하게 해야 함.",
+            "timestamp": null
+          },
+          {
+            "point": "Insight Miner는 추출·임베딩·클러스터링을 핵심으로 프롬프트 튜닝·하드 예시 마이닝·대조 라벨링을 패키징한다.",
+            "timestamp": null
+          },
+          {
+            "point": "조사 방법 자체를 버전 관리·공유해 언어·지역·제품에 빠르게 확장한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "프롬프트 튜닝을 활용해 법률 계약 조항 자동 추출 모델을 맞춤화해 정확도를 높인다.",
+          "하드‑예시 마이닝을 의료 영상 데이터 라벨링에 적용해 모호한 스캔에 집중함으로써 라벨링 비용을 절감한다.",
+          "대조 라벨링을 추천 시스템 피드백에 도입해 유사·비유사 사용자 행동을 구분, 개인화 품질을 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "Insight Miner의 핵심 절차 순서는 무엇인가?",
+            "options": [
+              "extract, embed, cluster",
+              "embed, extract, classify",
+              "cluster, embed, extract",
+              "extract, classify, embed"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 핵심 방법은 'extract, embed, cluster'라고 명시돼 있다."
+          },
+          {
+            "question": "왜 단순히 지능적인 모델만으로는 과학이 되지 않는가?",
+            "options": [
+              "모델은 비구조화 데이터를 처리하지 못한다",
+              "방법론 없이는 결과가 재현·감사 불가능하다",
+              "모델은 너무 느리다",
+              "모델은 파라미터가 부족하다"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트는 '지능 without methodology is not science'라며 방법론의 필요성을 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
