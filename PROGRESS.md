@@ -633,6 +633,65 @@ GitHub Actions (07:30 KST)
   대리값이라 초과 비율 지표가 더 정확하지만 이번엔 만들지 않았다. 퀴즈 개수 고정률이
   09-01 0.65 → 09-15 0.85로 오르는 중이다(FAIL 0.95). 새 baseline 대비 한계 0.947이다.
 
+### 40. 수집 실패가 "새 글 없음"으로 보이고 있었다 (`collectors.py`)
+- **증상**: `data/source_stats.jsonl`에서 9개 소스 계열이 09-01~09-15 내내 수집 0건이었다.
+  그런데 CI 로그에 `rss_fetch_failed`가 한 줄도 없었다. 이대로면 10-05 전후 주간 evals가
+  `confirmed_silent_count > 0`으로 다시 막힌다.
+- **진단**: 우아한형제들 피드에는 09-08, 09-14, 09-15 글이 있었다. 로컬 실측(2026-09-15):
+
+      URL                                   기본 UA(python-httpx)    식별형 UA
+      techblog.woowahan.com/feed/           403 text/html, 0건       200 rss, 10건
+      medium.com/feed/daangn                200, 10건                200, 10건
+      netflixtechblog.com/feed              200, 10건                200, 10건
+      engineering.fb.com/feed/              200, 9건                 200, 9건
+      d2.naver.com/d2.atom                  200, 20건                200, 20건
+      deeplearning.ai/the-batch/feed/       404 text/html            404
+      uber.com/blog/engineering/rss/        406 text/plain           406
+      YouTube 채널 2개(UC-ooeE…, UCwKk…)     404 text/html            404
+      huggingface.co/blog/feed.xml          ConnectError(로컬 망 차단, 확인 불가)
+
+- **원인**: 두 가지가 겹쳤다.
+  1. **UA 차단**: 수집기가 UA를 지정하지 않아 httpx 기본 UA가 나갔고, 우아한형제들이
+     이를 403으로 막았다.
+  2. **HTTP 상태 무시**: `fetch_rss_recent`·`fetch_youtube_recent`가 상태 코드를 보지 않았다.
+     403/404/406 본문은 feedparser에서 예외 없이 "항목 0개"가 되어 실패 로그가 남지 않았다.
+     죽은 소스(Batch 404, Uber 406, YouTube 채널 2개 404)도 같은 이유로 조용했다.
+     arXiv가 301을 따라가지 않아 5개월간 0건이었던 것과 같은 모양의 사고다.
+- **수정**:
+  - 모듈 상수 `COLLECTOR_USER_AGENT = "ds-digest/1.0 (+https://github.com/sangho24/ds-digest)"`를
+    RSS·YouTube 클라이언트에 싣는다. 봇임을 숨기지 않는 식별형을 택했다. 브라우저 UA도
+    200이었지만 식별형으로 충분했고, 위 표에서 식별형으로 바꿔 잃는 소스는 없었다.
+    RSS 링크 원문 fetch도 같은 클라이언트라 같은 UA가 실린다. arXiv·HN(API)은 이번 검증
+    범위 밖이라 그대로 뒀다.
+  - 2xx가 아니면 기존 이벤트(`rss_fetch_failed`, `youtube_fetch_failed`)에 `url`과
+    `status_code`를 남기고 그 소스만 건너뛴다. url은 리다이렉트 끝이 아니라 소스 목록의
+    URL이라 source_stats 키와 바로 대조된다.
+  - YouTube 요청도 리다이렉트를 따라간다(RSS는 이미 따라가고 있었다).
+  - 200인데 content-type이 HTML이고 항목이 0개면 `rss_feed_html_response` 경고를 남긴다.
+    실패로 세지는 않는다. text/html로 잘못 붙인 정상 피드가 있어 항목이 파싱되면 경고하지 않는다.
+  - 예외 로그의 `error`에 예외 타입을 붙인다. ConnectError는 `str(e)`가 비어 네트워크
+    문제(확인 불가)인지 알 수 없었다(arXiv 로그와 같은 형식).
+- **결과**: 수정한 함수로 실측하니 우아한형제들 5건(피드당 상한), 당근·Netflix·Meta·D2 각 5건,
+  YouTube 정상 채널 10건. Batch·Uber·삭제 채널 2개는 이제 `status_code` 404/406이 찍힌다.
+  HF는 `ConnectError`로 찍힌다.
+- **회귀 테스트** (`tests/test_collector_http.py`, 15개): httpx.MockTransport를 끼운 진짜
+  AsyncClient로 요청 헤더와 리다이렉트까지 검증한다. 기본 UA를 403으로 막는 서버에서의
+  파싱, 403 소스 실패 로그와 다른 피드 계속 수집, 삭제 채널 404, YouTube 301 추적,
+  200 HTML 경고, 네트워크 예외 타입이다. 1차 8개는 HEAD의 `collectors.py`로 바꿔 돌리면
+  모두 실패한다. 독립 검증에서 살아남은 뮤턴트 2종(HTML 경고 조건 한쪽 삭제, `< 400` 을
+  성공으로 취급)을 잡도록 오탐 방지 2경우(HTML 인데 항목 있음, XML 인데 새 글 없음)와
+  3xx 최종 응답(Location 없는 302, 304) 테스트를 더했다. 전체 593 → 608 통과(main 기준).
+- **남은 것**:
+  - CI 러너 IP에서도 403이 풀리는지는 로컬로 증명할 수 없다. 다음 스케줄 실행의
+    `rss_fetch_failed`/`status_code`와 source_stats로 확인한다.
+  - 당근·Netflix·Airbnb·Spotify·카카오·토스는 로컬에서 기본 UA로도 200이라 UA로는 설명되지
+    않는다. 48시간 창에 새 글이 없었을 수도 있고 CI IP 차단일 수도 있다. 이번 수정으로
+    CI 로그에 상태 코드가 남으니 그걸로 가른다.
+  - 죽은 소스는 2026-09-15 secrets 에서 정리했다(사본 동기화 b0e04c7). 다만 퍼널 판정이 과거
+    기록 전체를 누적해서, 설정에서 뺀 키도 옛 0건 기록으로 계속 silent 로 잡힌다. 이 수정은
+    조용한 0건을 실패 로그로 바꿀 뿐 silent 판정은 바꾸지 않으므로, 판정 대상을 현재 설정
+    소스로 한정하는 수정을 따로 한다.
+
 ---
 
 ## 다음 스텝 아이디에이션

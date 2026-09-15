@@ -19,6 +19,38 @@ from app.models import RawContent, SourceType
 
 logger = structlog.get_logger()
 
+# RSS/YouTube 피드 요청에 싣는 User-Agent.
+# httpx 기본값 `python-httpx/x.y` 를 막는 서버가 있다. 실측(2026-09-15, 로컬):
+# 우아한형제들 `techblog.woowahan.com/feed/` 가 기본 UA 에는 403 HTML, 아래 식별형
+# UA 에는 200 RSS(10건)를 돌려줬다. 브라우저 UA 도 200 이었지만 식별형으로 충분해서
+# 봇임을 숨기지 않는 쪽을 택했다. Netflix·Medium(당근)·Meta·카카오·토스·D2·YouTube
+# 피드는 두 UA 모두 200 이라 바꿔서 잃는 소스는 없었다.
+# arXiv·HN 클라이언트에는 싣지 않았다. 둘 다 API 이고 이 변경의 검증 범위 밖이다.
+COLLECTOR_USER_AGENT = "ds-digest/1.0 (+https://github.com/sangho24/ds-digest)"
+_FEED_HEADERS = {"User-Agent": COLLECTOR_USER_AGENT}
+
+
+def _feed_status_ok(resp: httpx.Response, failed_event: str, **context: str) -> bool:
+    """피드 응답이 2xx 인지 확인한다. 아니면 기존 실패 이벤트로 로그를 남기고 False.
+
+    이 확인이 없을 때 403/404/406 본문(HTML·평문)이 feedparser 에서 예외 없이
+    "항목 0개"가 됐다. `*_fetch_failed` 로그도 남지 않아 "가져오기 실패"와
+    "새 글 없음"이 구분되지 않았고, 9개 계열이 15일간 조용히 0건이었다.
+    호출부는 False 면 그 소스만 건너뛴다(파이프라인은 계속).
+
+    context 의 url 은 소스 목록에 적힌 URL(source_key)을 그대로 남긴다. 리다이렉트
+    끝의 URL 로 바꾸면 source_stats 의 키와 대조할 수 없다.
+    """
+    if 200 <= resp.status_code < 300:
+        return True
+    logger.error(
+        failed_event,
+        status_code=resp.status_code,
+        error=f"HTTP {resp.status_code}",
+        **context,
+    )
+    return False
+
 
 async def _fetch_article_body(client: httpx.AsyncClient, url: str) -> str:
     """링크 기사 본문을 fetch해 Markdown 텍스트로 반환한다.
@@ -75,11 +107,18 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
     """
     items: list[RawContent] = []
 
-    async with httpx.AsyncClient(timeout=15) as client:
+    async with httpx.AsyncClient(timeout=15, headers=_FEED_HEADERS) as client:
         for channel_id in channel_ids:
             feed_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
             try:
-                resp = await client.get(feed_url)
+                # 리다이렉트를 따라간다. arXiv 는 http→https 301 을 따라가지 않아
+                # 본문이 비고 5개월간 0건이었다(fetch_arxiv_recent 주의 참고).
+                resp = await client.get(feed_url, follow_redirects=True)
+                # 삭제된 채널은 404 HTML 이다. 조용한 0건이 아니라 실패로 남긴다.
+                if not _feed_status_ok(
+                    resp, "youtube_fetch_failed", url=feed_url, channel_id=channel_id
+                ):
+                    continue
                 feed = feedparser.parse(resp.text)
                 channel_name = feed.feed.get("title", channel_id)
 
@@ -111,7 +150,12 @@ async def fetch_youtube_recent(channel_ids: list[str], fetch_per_channel: int = 
                     )
 
             except Exception as e:
-                logger.error("youtube_fetch_failed", channel_id=channel_id, error=str(e))
+                logger.error(
+                    "youtube_fetch_failed",
+                    url=feed_url,
+                    channel_id=channel_id,
+                    error=f"{type(e).__name__}: {e}",  # str(e)가 빈 예외 대비
+                )
 
     return items
 
@@ -237,13 +281,27 @@ async def fetch_rss_recent(
     """
     items: list[RawContent] = []
 
-    async with httpx.AsyncClient(timeout=15) as client:
+    # 링크 원문 fetch(_fetch_article_body)도 이 클라이언트를 쓰므로 같은 UA 가 실린다.
+    async with httpx.AsyncClient(timeout=15, headers=_FEED_HEADERS) as client:
         for url in feed_urls:
             try:
                 resp = await client.get(url, follow_redirects=True)
+                if not _feed_status_ok(resp, "rss_fetch_failed", url=url):
+                    continue
                 # resp.text 대신 bytes를 전달 — feedparser가 XML 선언 / Content-Type에서
                 # 인코딩을 직접 감지하므로 httpx의 잘못된 charset 추론을 우회함
                 feed = feedparser.parse(resp.content)
+                # 200 인데 HTML 이고 항목이 0개면 차단·챌린지 페이지일 가능성이 높다.
+                # 실패로 세지는 않는다(content-type 을 text/html 로 잘못 붙인 정상 피드도
+                # 있어서 항목이 파싱되면 경고하지 않는다). "새 글 없음"과 구분만 한다.
+                content_type = resp.headers.get("content-type", "").lower()
+                if "html" in content_type and not feed.entries:
+                    logger.warning(
+                        "rss_feed_html_response",
+                        url=url,
+                        status_code=resp.status_code,
+                        content_type=content_type,
+                    )
                 feed_name = feed.feed.get("title", url)
 
                 for entry in feed.entries[:5]:
@@ -288,7 +346,9 @@ async def fetch_rss_recent(
                     logger.info("rss_collected", title=entry.title)
 
             except Exception as e:
-                logger.error("rss_fetch_failed", url=url, error=str(e))
+                # 예외 타입을 같이 남긴다. ConnectError·ReadTimeout 은 str(e)가 비어
+                # error= 만으로는 네트워크 문제(확인 불가)인지 알 수 없다.
+                logger.error("rss_fetch_failed", url=url, error=f"{type(e).__name__}: {e}")
 
     return items
 
