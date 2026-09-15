@@ -4,20 +4,25 @@ Claude Code에게 이 파일을 전달하세요. 소스 목록, 티어 구조, �
 
 ---
 
-## 현재 .env에 설정된 YouTube 채널
+## 현재 GitHub secrets 에 설정된 소스 (2026-09-15 동기화)
 
+운영 설정의 정본은 GitHub secrets `YOUTUBE_CHANNELS`, `RSS_FEEDS` 다. 아래는 그 값의 사본이다(Tier 1+2).
+
+```properties
+YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA,UCbfYPyITQ-7l4upoX8nvctg,UCYO_jab_esuFRV4b17AJtAw,UCMLtBahI5DMrt0NPvDSoIRQ
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
 ```
-YOUTUBE_CHANNELS=UCZTDcq38hQ7PG66SGQO27-w,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA
-```
 
-| Channel ID | 추정 채널명 | 확인 방법 |
-|---|---|---|
-| UCZTDcq38hQ7PG66SGQO27-w | 확인 필요 — SLASH(토스) 또는 다른 채널일 수 있음 | YouTube에서 `youtube.com/channel/UCZTDcq38hQ7PG66SGQO27-w` 접속해서 확인 |
-| UC-mOekGSesms0agFntnQang | 우아한테크 (배민) | 이전에 검증됨 |
-| UCdQF7F6hwjSpulj_fwB9iDQ | 확인 필요 — if(kakao) 또는 다른 채널일 수 있음 | YouTube에서 `youtube.com/channel/UCdQF7F6hwjSpulj_fwB9iDQ` 접속해서 확인 |
-| UCNrehnUq7Il-J7HQxrzp7CA | NAVER D2 | 이전에 검증됨 |
+### 2026-09-15 정리 내역
 
-> **TODO**: 본인이 4개 채널 ID를 각각 YouTube에서 열어서 실제 채널명을 확인하고, 아래 Tier 1 목록과 맞는지 대조해주세요.
+| 소스 | 이전 값 | 조치 | 근거 |
+|---|---|---|---|
+| SLASH - 토스 (YouTube) | `UC-ooeEMOToyByAC1WOQE8ew` | 교체: 토스 챌린저스 `UCN4ZJl6nQpIBo-eRJZom4xA` | 채널 삭제. 토스는 SLASH 대신 TMC(토스 메이커스 컨퍼런스)를 열고 발표 다시보기를 토스 챌린저스 채널에 올린다 |
+| if(kakao) (YouTube) | `UCwKk-EEF0gmsHJ5z3CVnRzA` | 교체: kakao tech `UCdQF7F6hwjSpulj_fwB9iDQ` | 채널 삭제. if(kakao)26 공식 FAQ: 세션별 VOD 는 @kakaotech 채널에 공개 |
+| Yannic Kilcher (YouTube) | `UCZHmQk67mSJgfCCTn7xBfew` | 제거 | 마지막 업로드 2026-03-06, 190일 넘게 휴면 |
+| The Batch (RSS) | `https://www.deeplearning.ai/the-batch/feed/` | 제거 | 피드 404, 사이트에 대체 RSS 없음(뉴스레터 자체는 발행 중) |
+| Data Elixir (RSS) | `https://dataelixir.com/issues.rss` | 제거 | 피드 운영 중단 공지, `/feed/` 최신 글 2020-11 |
+| Uber Engineering (RSS) | `https://www.uber.com/blog/engineering/rss/` | 제거 | 피드 406/404, 블로그는 발행 중이나 RSS 경로 없음 |
 
 ---
 
@@ -31,9 +36,9 @@ DS 현업에 직접 도움. 바로 .env에 넣어서 사용.
 
 | 채널명 | Channel ID | DS 관련 콘텐츠 | 업로드 주기 |
 |---|---|---|---|
-| SLASH - 토스 | `UC-ooeEMOToyByAC1WOQE8ew` | A/B testing, 추천, ML 서빙, 데이터 엔지니어링 | 비정기 (컨퍼런스 시즌 집중) |
+| 토스 챌린저스 | `UCN4ZJl6nQpIBo-eRJZom4xA` | TMC(구 SLASH) 발표 다시보기, 테크톡톡(ML 엔지니어링) | 비정기 (컨퍼런스 후 집중, 채용 영상 섞임) |
 | 우아한테크 (배민) | `UC-mOekGSesms0agFntnQang` | 데이터 파이프라인, 추천 시스템, 대용량 처리 | 월 2-3회 |
-| if(kakao) | `UCwKk-EEF0gmsHJ5z3CVnRzA` | 검색/추천, NLP, 대규모 ML 인프라 | 비정기 (컨퍼런스 시즌) |
+| kakao tech | `UCdQF7F6hwjSpulj_fwB9iDQ` | if(kakao) 세션 VOD: 검색/추천, NLP, 대규모 ML 인프라 | 비정기 (if(kakao) 이후 집중) |
 | NAVER D2 | `UCNrehnUq7Il-J7HQxrzp7CA` | 검색 랭킹, 하이퍼클로바, ML 시스템 | 월 1-2회 |
 
 **RSS 피드:**
@@ -44,8 +49,7 @@ DS 현업에 직접 도움. 바로 .env에 넣어서 사용.
 | 당근 테크 블로그 | `https://medium.com/feed/daangn` | 추천, 검색, ML 서빙, 인과추론 |
 | 우아한형제들 블로그 | `https://techblog.woowahan.com/feed/` | 데이터 플랫폼, 실험 플랫폼 |
 | 카카오 기술 블로그 | `https://tech.kakao.com/blog/feed/` | 추천, 검색 랭킹, ML 인프라 |
-| The Batch (Andrew Ng) | `https://www.deeplearning.ai/the-batch/feed/` | AI/ML 주간 트렌드, 실무 적용 관점 |
-| Data Elixir | `https://dataelixir.com/issues.rss` | DS 주간 큐레이션, 도구/라이브러리 |
+| NAVER D2 | `https://d2.naver.com/d2.atom` | 검색, ML 시스템, 대규모 서비스 |
 
 ### Tier 2 — Watch (안정화 후 추가)
 
@@ -56,7 +60,6 @@ DS 현업에 직접 도움. 바로 .env에 넣어서 사용.
 | 채널명 | Channel ID | DS 관련 콘텐츠 | 업로드 주기 |
 |---|---|---|---|
 | Two Minute Papers | `UCbfYPyITQ-7l4upoX8nvctg` | 최신 ML/AI 논문 시각적 요약 | 주 2-3회 |
-| Yannic Kilcher | `UCZHmQk67mSJgfCCTn7xBfew` | 논문 딥다이브, ML 연구 트렌드 | 주 1-2회 |
 | 3Blue1Brown | `UCYO_jab_esuFRV4b17AJtAw` | 수학/통계 직관 (선형대수, 확률, 신경망) | 월 1-2회 |
 | ML Street Talk | `UCMLtBahI5DMrt0NPvDSoIRQ` | ML 연구자 인터뷰, 최신 논문 토론 | 주 1회 |
 
@@ -65,7 +68,6 @@ DS 현업에 직접 도움. 바로 .env에 넣어서 사용.
 | 소스명 | URL | DS 관련 콘텐츠 | 비고 |
 |---|---|---|---|
 | Netflix Tech Blog | `https://netflixtechblog.com/feed` | A/B testing at scale, 추천, 인과추론 | |
-| Uber Engineering | `https://www.uber.com/blog/engineering/rss/` | ML 플랫폼, 수요 예측, 실험 플랫폼 | |
 | Airbnb Engineering | `https://medium.com/feed/airbnb-engineering` | 실험 플랫폼, 검색 랭킹, 가격 최적화 | |
 | Spotify Engineering | `https://engineering.atspotify.com/feed/` | 추천, 개인화, ML 시스템 | |
 | arXiv stat.ML | `https://rss.arxiv.org/rss/stat.ML` | 최신 ML/통계 논문 | 양 많음 — threshold 8+ 권장 |
@@ -136,18 +138,18 @@ Claude Code에 아래를 확인/구현하도록 전달:
 
 ```properties
 # YouTube (Tier 1)
-YOUTUBE_CHANNELS=UC-ooeEMOToyByAC1WOQE8ew,UC-mOekGSesms0agFntnQang,UCwKk-EEF0gmsHJ5z3CVnRzA,UCNrehnUq7Il-J7HQxrzp7CA
+YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA
 
 # RSS (Tier 1)
-RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://www.deeplearning.ai/the-batch/feed/,https://dataelixir.com/issues.rss
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom
 ```
 
 ## .env 예시 (Tier 1+2 확장)
 
 ```properties
 # YouTube (Tier 1+2)
-YOUTUBE_CHANNELS=UC-ooeEMOToyByAC1WOQE8ew,UC-mOekGSesms0agFntnQang,UCwKk-EEF0gmsHJ5z3CVnRzA,UCNrehnUq7Il-J7HQxrzp7CA,UCbfYPyITQ-7l4upoX8nvctg,UCZHmQk67mSJgfCCTn7xBfew,UCYO_jab_esuFRV4b17AJtAw,UCMLtBahI5DMrt0NPvDSoIRQ
+YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA,UCbfYPyITQ-7l4upoX8nvctg,UCYO_jab_esuFRV4b17AJtAw,UCMLtBahI5DMrt0NPvDSoIRQ
 
 # RSS (Tier 1+2)
-RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://www.deeplearning.ai/the-batch/feed/,https://dataelixir.com/issues.rss,https://netflixtechblog.com/feed,https://www.uber.com/blog/engineering/rss/,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
 ```
