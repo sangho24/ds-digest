@@ -38,16 +38,30 @@ def format_report(report: dict[str, Any]) -> str:
             f"(기준 {row['operator']} {row['threshold']})"
         )
 
-    for row in report.get("regressions") or []:
-        lines.append(
-            f"📉 {row['label']}: {row['current']} (baseline {row['baseline']})"
-        )
+    # 회귀도 severity를 따른다(evals/run.py compare_baseline). status가 없는 옛
+    # 리포트는 회귀가 전부 게이트를 막던 시절 것이므로 차단으로 본다.
+    regressions = report.get("regressions") or []
+    for row in regressions:
+        if row.get("status", "FAIL") == "FAIL":
+            lines.append(
+                f"📉 {row['label']}: {row['current']} (baseline {row['baseline']})"
+            )
 
     # WARN은 게이트를 떨어뜨리지 않지만 같이 보여준다 — 지금 조치할 필요는 없어도
     # 추세를 놓치면 나중에 FAIL로 넘어간 뒤에야 알게 된다.
     for row in report.get("violations") or []:
         if row.get("status") == "WARN":
             lines.append(f"⚠️ {row['label']}: {row['actual']} (게이트 무관)")
+    for row in regressions:
+        if row.get("status") == "WARN":
+            lines.append(
+                f"↘️ {row['label']}: {row['current']} "
+                f"(baseline {row['baseline']}, 회귀지만 게이트 무관)"
+            )
+
+    # recent 회귀 비교를 건너뛰었다면 "회귀 없음"과 구분되게 알린다.
+    if report.get("baseline_recent_skipped"):
+        lines.append(f"ℹ️ recent 지표 baseline 비교 생략: {report['baseline_recent_skipped']}")
 
     if len(lines) == 3:
         lines.append("위반 항목을 찾지 못했습니다 — 실행 자체가 실패했을 수 있습니다.")

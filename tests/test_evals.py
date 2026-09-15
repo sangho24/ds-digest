@@ -464,3 +464,368 @@ def test_recent_window_starts_from_last_data_day_not_today():
     assert since.isoformat() == "2026-01-10"     # 마지막 날(01-14) 기준 5일 창
     assert evals_run._recent_since([], days=5) is None
     assert evals_run._recent_since([{"date": "깨짐"}], days=5) is None
+
+
+# ──────────────────────────────────────────────
+# baseline 회귀 비교 - 8주 연속 실패의 마지막 원인 (PROGRESS §39)
+# ──────────────────────────────────────────────
+# 2026-09-07·09-14 게이트를 막은 유일한 회귀는 한 줄 요약 평균 28.56 < baseline 32.38
+# 이었다. 프롬프트는 "30자 이내"를 지시하므로 짧아진 것은 개선이다. 결함은 넷이었다.
+#   1. 방향이 틀린 지표(요약 길이)   2. recent 지표도 전체 구간끼리 비교
+#   3. 허용오차 0                    4. THRESHOLDS가 WARN인데 회귀는 무조건 FAIL
+
+from evals.thresholds import BASELINE_COMPARISONS, THRESHOLDS  # noqa: E402
+
+SUMMARY_PATH = "summary_stats.one_line_summary.mean"
+DERIVED = "data/records/ (파생)"
+
+
+def test_summary_length_shortening_is_not_a_regression():
+    """실제 규칙으로: 32.38자 → 28.56자가 회귀로 잡히면 안 된다."""
+    current = {"summary_stats": {"one_line_summary": {"mean": 28.561404}}}
+    baseline = {"summary_stats": {"one_line_summary": {"mean": 32.380567}}}
+
+    regressions = evals_run.compare_baseline(current, baseline)
+
+    assert [r for r in regressions if r["metric"] == SUMMARY_PATH] == []
+    assert SUMMARY_PATH not in [rule["path"] for rule in BASELINE_COMPARISONS]
+
+
+def test_summary_length_over_prompt_limit_is_warn(monkeypatch):
+    """대신 프롬프트 상한(30자)을 넘으면 WARN으로 보고한다. 하한(20자) 행과 공존한다."""
+    rows = [r for r in THRESHOLDS if r["path"] == SUMMARY_PATH]
+    assert {(r["operator"], r["value"], r["severity"]) for r in rows} == {
+        ("<", 20, "WARN"), (">", 30, "WARN"),
+    }
+
+    monkeypatch.setattr(evals_run, "THRESHOLDS", rows)
+    metrics = {"summary_stats": {"one_line_summary": {"mean": 31.0}}}
+    _, violations = evals_run.evaluate_thresholds(metrics, metrics, recent_item_count=50)
+    assert [(v["operator"], v["status"]) for v in violations] == [(">", "WARN")]
+
+
+def test_every_baseline_comparison_has_a_threshold_policy():
+    """scope·severity를 THRESHOLDS에서 가져오므로 대응 행이 반드시 있어야 한다."""
+    for rule in BASELINE_COMPARISONS:
+        scope, severity = evals_run._threshold_policy(rule["path"])
+        assert scope in ("recent", "lifetime") and severity in ("WARN", "FAIL")
+
+
+def _baseline_rules(monkeypatch, thresholds, comparisons):
+    monkeypatch.setattr(evals_run, "THRESHOLDS", thresholds)
+    monkeypatch.setattr(evals_run, "BASELINE_COMPARISONS", comparisons)
+
+
+def test_comparison_without_threshold_row_is_an_error(monkeypatch):
+    _baseline_rules(monkeypatch, [], [{"path": "m.v", "direction": "lower", "label": "고아"}])
+    with pytest.raises(ValueError):
+        evals_run.compare_baseline({"m": {"v": 1.0}}, {"m": {"v": 2.0}})
+
+
+def test_recent_rule_compares_recent_to_recent(monkeypatch):
+    _baseline_rules(
+        monkeypatch,
+        [{"scope": "recent", "path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "현재동작"}],
+        [{"path": "m.v", "direction": "lower", "tolerance": 0.0, "label": "현재동작"}],
+    )
+
+    # 네 값을 전부 다르게 둔다. 어느 한쪽이라도 lifetime 값을 잘못 집으면 결론이 뒤집힌다.
+    # 현재 recent 2.0 = baseline recent 2.0 → 회귀 아님.
+    # (현재 lifetime 1.0이나 baseline lifetime 5.0을 집으면 회귀로 잡힌다)
+    regressions = evals_run.compare_baseline(
+        {"m": {"v": 1.0}}, {"m": {"v": 5.0}},
+        recent_metrics={"m": {"v": 2.0}}, baseline_recent_metrics={"m": {"v": 2.0}},
+        recent_item_count=50,
+    )
+    assert regressions == []
+
+    # 현재 recent 1.0 < baseline recent 2.0 → 회귀.
+    # (baseline lifetime 0.5나 현재 lifetime 3.0을 집으면 회귀가 사라진다)
+    regressions = evals_run.compare_baseline(
+        {"m": {"v": 3.0}}, {"m": {"v": 0.5}},
+        recent_metrics={"m": {"v": 1.0}}, baseline_recent_metrics={"m": {"v": 2.0}},
+        recent_item_count=50,
+    )
+    assert [(r["scope"], r["current"], r["baseline"], r["status"]) for r in regressions] == [
+        ("recent", 1.0, 2.0, "FAIL"),
+    ]
+
+
+def test_drop_within_tolerance_passes_and_beyond_regresses(monkeypatch):
+    _baseline_rules(
+        monkeypatch,
+        [{"path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "지표"}],
+        [{"path": "m.v", "direction": "lower", "label": "지표"}],   # 기본 상대 10%
+    )
+    assert evals_run.BASELINE_DEFAULT_TOLERANCE == pytest.approx(0.10)
+
+    assert evals_run.compare_baseline({"m": {"v": 0.95}}, {"m": {"v": 1.0}}) == []
+    assert evals_run.compare_baseline({"m": {"v": 0.91}}, {"m": {"v": 1.0}}) == []
+
+    regressions = evals_run.compare_baseline({"m": {"v": 0.85}}, {"m": {"v": 1.0}})
+    assert len(regressions) == 1
+    row = regressions[0]
+    assert row["tolerance"] == pytest.approx(0.10)
+    assert row["allowed_delta"] == pytest.approx(0.10)
+    assert row["limit"] == pytest.approx(0.90)
+
+
+def test_near_zero_baseline_uses_absolute_floor(monkeypatch):
+    """baseline 0이면 상대 10%는 0이다. 바닥(min_delta)이 없으면 아이템 하나에도 회귀가 된다."""
+    _baseline_rules(
+        monkeypatch,
+        [{"path": "d.r", "operator": ">", "value": 0.05, "severity": "FAIL", "label": "중복"}],
+        [{"path": "d.r", "direction": "higher", "min_delta": 0.02, "label": "중복"}],
+    )
+
+    assert evals_run.compare_baseline({"d": {"r": 0.01}}, {"d": {"r": 0.0}}) == []
+    regressions = evals_run.compare_baseline({"d": {"r": 0.03}}, {"d": {"r": 0.0}})
+    assert [(r["allowed_delta"], r["min_delta"]) for r in regressions] == [(0.02, 0.02)]
+
+
+def _run_main(monkeypatch, capsys, tmp_path, argv, lifetime, recent,
+              recent_n=40, baseline_doc=None, input_label=DERIVED):
+    """run.main()을 끝까지 돌린다. 지표 계산만 고정값으로 바꾼다."""
+    items = [_item(date="2026-01-01")] * 5 + [_item(date="2026-03-01")] * recent_n
+    monkeypatch.setattr(evals_run, "resolve_items", lambda: (items, input_label))
+    monkeypatch.setattr(
+        evals_run, "calculate_metrics",
+        lambda xs: lifetime if len(xs) == len(items) else recent,
+    )
+    baseline_path = tmp_path / "baseline.json"
+    if baseline_doc is not None:
+        baseline_path.write_text(json.dumps(baseline_doc, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(evals_run, "BASELINE_PATH", baseline_path)
+    monkeypatch.setattr("sys.argv", ["run.py", *argv])
+
+    code = evals_run.main()
+    out = capsys.readouterr().out
+    report = json.loads(out) if "--json" in argv else None
+    return code, report, baseline_path
+
+
+def test_warn_regression_is_reported_but_does_not_block(monkeypatch, capsys, tmp_path):
+    _baseline_rules(
+        monkeypatch,
+        [{"path": "m.v", "operator": "<", "value": 0, "severity": "WARN", "label": "경고지표"}],
+        [{"path": "m.v", "direction": "lower", "label": "경고지표"}],
+    )
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 1.0}}, recent={"m": {"v": 1.0}},
+        baseline_doc={"metrics": {"m": {"v": 2.0}}},
+    )
+
+    assert [r["status"] for r in report["regressions"]] == ["WARN"]
+    assert report["blocking_regressions"] == []
+    assert code == 0 and report["exit_code"] == 0
+
+
+def test_fail_regression_still_blocks(monkeypatch, capsys, tmp_path):
+    """비차단은 WARN에만 해당한다. FAIL 회귀가 면제되면 게이트가 무의미해진다."""
+    _baseline_rules(
+        monkeypatch,
+        [{"path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "치명지표"}],
+        [{"path": "m.v", "direction": "lower", "label": "치명지표"}],
+    )
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 1.0}}, recent={"m": {"v": 1.0}},
+        baseline_doc={"metrics": {"m": {"v": 2.0}}},
+    )
+    assert code == 1
+    assert [r["status"] for r in report["blocking_regressions"]] == ["FAIL"]
+
+
+def test_thin_recent_window_downgrades_regression_to_warn(monkeypatch, capsys, tmp_path):
+    """임계값 판정과 같은 원칙(§31, §36): 표본이 모자라면 판단을 보류한다."""
+    _baseline_rules(
+        monkeypatch,
+        [{"scope": "recent", "path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "현재동작"}],
+        [{"path": "m.v", "direction": "lower", "label": "현재동작"}],
+    )
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 2.0}}, recent={"m": {"v": 1.0}},
+        recent_n=evals_run.MIN_ITEMS_FOR_RECENT_GATE - 1,
+        baseline_doc={"metrics": {"m": {"v": 2.0}}, "recent_metrics": {"m": {"v": 2.0}}},
+    )
+    assert [r["status"] for r in report["regressions"]] == ["WARN"]
+    assert code == 0
+
+
+def test_old_format_baseline_skips_recent_rules(monkeypatch, capsys, tmp_path):
+    """recent 지표가 없는 구 baseline이면 recent 규칙은 비교하지 않는다(다른 창끼리 비교 금지)."""
+    _baseline_rules(
+        monkeypatch,
+        [
+            {"scope": "recent", "path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "현재동작"},
+            {"path": "d.r", "operator": ">", "value": 0.9, "severity": "FAIL", "label": "누적자산"},
+        ],
+        [
+            {"path": "m.v", "direction": "lower", "label": "현재동작"},
+            {"path": "d.r", "direction": "higher", "min_delta": 0.02, "label": "누적자산"},
+        ],
+    )
+    # 구 리포트 포맷: metrics만 있다. 전체 구간 m.v는 크게 나빠 보이지만 비교 대상이 아니다.
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 1.0}, "d": {"r": 0.1}}, recent={"m": {"v": 1.0}, "d": {"r": 0.1}},
+        baseline_doc={"input": {"path": "evals/data/archive_items.json"},
+                      "metrics": {"m": {"v": 2.0}, "d": {"r": 0.1}}},
+    )
+    assert report["regressions"] == []
+    assert "구 포맷" in report["baseline_recent_skipped"]
+    assert code == 0
+
+    # 평문 포맷(지표 dict 그 자체)도 읽고, lifetime 규칙은 그대로 비교한다.
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 1.0}, "d": {"r": 0.5}}, recent={"m": {"v": 1.0}, "d": {"r": 0.5}},
+        baseline_doc={"m": {"v": 2.0}, "d": {"r": 0.1}},
+    )
+    assert [r["metric"] for r in report["regressions"]] == ["d.r"]
+    assert code == 1
+
+
+def test_window_mismatch_skips_recent_comparison_visibly(monkeypatch, capsys, tmp_path):
+    """baseline과 recent 창 길이가 다르면 비교를 건너뛰되, 건너뛴 사실과 이유를 싣는다."""
+    _baseline_rules(
+        monkeypatch,
+        [{"scope": "recent", "path": "m.v", "operator": "<", "value": 0, "severity": "FAIL", "label": "현재동작"}],
+        [{"path": "m.v", "direction": "lower", "label": "현재동작"}],
+    )
+    doc = {
+        "input": {"recent_window_days": 7},
+        "metrics": {"m": {"v": 2.0}},
+        "recent_metrics": {"m": {"v": 2.0}},
+    }
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"],
+        lifetime={"m": {"v": 2.0}}, recent={"m": {"v": 1.0}}, baseline_doc=doc,
+    )
+    assert report["regressions"] == [], "창이 다른 숫자끼리는 비교하지 않는다"
+    assert "7일" in report["baseline_recent_skipped"] and "14일" in report["baseline_recent_skipped"]
+    assert code == 0
+
+    # 알림에도 보여야 한다. 조용히 사라지면 "회귀 없음"과 구분이 안 된다.
+    assert "비교 생략" in format_report(report)
+
+    # 사람이 읽는 출력에도 한 줄. 세부 요약 표가 실제 지표 구조를 요구하므로 채워 넣는다.
+    sample = [_item()]
+    report["metrics"] = {
+        "score_distribution": score_distribution(sample),
+        "duplicate_rate": duplicate_rate(sample),
+        "source_reach": source_reach(sample, 30),
+        "evidence_proxy": evidence_proxy(sample),
+    }
+    evals_run._print_report(report)
+    assert "비교 생략" in capsys.readouterr().out
+
+
+FUNNEL = {"source_funnel": {"starved_family_count": 3, "confirmed_silent_count": 0, "silent_family_count": 9}}
+
+
+def _guard_rules(monkeypatch):
+    _baseline_rules(
+        monkeypatch,
+        [{"scope": "recent", "path": "m.v", "operator": "<", "value": 1.5, "severity": "FAIL", "label": "현재동작"}],
+        [{"path": "m.v", "direction": "lower", "label": "현재동작"}],
+    )
+
+
+def test_write_baseline_refuses_when_fail_threshold_violated(monkeypatch, capsys, tmp_path):
+    """망가진 상태를 기준점으로 박제한 것이 이번 원인이다. 기존 파일도 건드리지 않는다."""
+    _guard_rules(monkeypatch)
+    previous = {"metrics": {"m": {"v": 9.9}}}
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"],
+        lifetime={"m": {"v": 2.0}}, recent={"m": {"v": 1.0}}, baseline_doc=previous,
+    )
+    assert code == 1
+    assert json.loads(path.read_text(encoding="utf-8")) == previous
+
+
+def test_write_baseline_refuses_thin_window_and_foreign_input(monkeypatch, capsys, tmp_path):
+    _guard_rules(monkeypatch)
+    # 표본 부족이면 FAIL이 WARN으로 강등돼 가드를 빠져나가면 안 된다.
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"],
+        lifetime={"m": {"v": 2.0}}, recent={"m": {"v": 2.0}},
+        recent_n=evals_run.MIN_ITEMS_FOR_RECENT_GATE - 1,
+    )
+    assert code == 1 and not path.exists()
+
+    # CI와 다른 입력(정적 스냅샷)으로 만든 기준점은 사과 대 오렌지다.
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"],
+        lifetime={"m": {"v": 2.0}}, recent={"m": {"v": 2.0}},
+        input_label="evals/data/archive_items.json",
+    )
+    assert code == 1 and not path.exists()
+
+
+def test_write_baseline_refuses_empty_source_funnel(monkeypatch, capsys, tmp_path):
+    """app.source_stats import가 실패한 환경(structlog 없는 시스템 파이썬)에서 만든 기준점은 거부한다.
+
+    evals/source_funnel.py가 계열 키 없는 빈 dict를 돌려주면 퍼널 FAIL 임계값이 None으로
+    통과해 가드가 거짓 통과가 된다. 실제로 그렇게 만든 baseline이 한 번 나왔다.
+    """
+    _guard_rules(monkeypatch)
+    empty_funnel = {"source_funnel": {"days": 0, "source_count": 0, "starved_sources": [],
+                                      "starved_count": 0, "sources": {}}}
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"],
+        lifetime={"m": {"v": 2.0}, **empty_funnel}, recent={"m": {"v": 2.0}, **empty_funnel},
+    )
+    assert code == 1 and not path.exists()
+
+    reasons = evals_run.baseline_write_blockers(
+        DERIVED, {"m": {"v": 2.0}, **empty_funnel}, {"m": {"v": 2.0}, **FUNNEL}, 40,
+    )
+    assert len(reasons) == 1 and "source_funnel(lifetime)" in reasons[0]
+
+
+def test_write_baseline_records_both_scopes_and_round_trips(monkeypatch, capsys, tmp_path):
+    _guard_rules(monkeypatch)
+    lifetime, recent = {"m": {"v": 1.8}, **FUNNEL}, {"m": {"v": 2.0}, **FUNNEL}
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"], lifetime=lifetime, recent=recent,
+    )
+    assert code == 0
+    document = json.loads(path.read_text(encoding="utf-8"))
+    assert document["metrics"] == lifetime
+    assert document["recent_metrics"] == recent
+    assert document["input"]["path"] == DERIVED
+    assert document["input"]["item_count"] == 45
+    assert document["input"]["recent_item_count"] == 40
+    assert document["input"]["start_date"] == "2026-01-01"
+    for key in ("generated_at", "git_commit", "git_dirty", "format_version"):
+        assert key in document
+
+    # 방금 쓴 기준점과 같은 입력으로 비교하면 회귀가 없어야 한다.
+    code, report, _ = _run_main(
+        monkeypatch, capsys, tmp_path, ["--json", "--baseline"], lifetime=lifetime, recent=recent,
+    )
+    assert code == 0 and report["regressions"] == []
+    assert report["baseline_input"]["recent_item_count"] == 40
+
+
+def test_write_baseline_rejects_since_and_baseline_flags(monkeypatch):
+    for argv in (["--write-baseline", "--baseline"], ["--write-baseline", "--since", "2026-08-01"]):
+        monkeypatch.setattr("sys.argv", ["run.py", *argv])
+        with pytest.raises(SystemExit):
+            evals_run._parse_args()
+
+
+def test_format_report_separates_warn_regressions():
+    """WARN 회귀는 📉(게이트 차단)로 보이면 안 된다."""
+    text = format_report(_report(regressions=[
+        {"label": "차단회귀", "current": 0.3, "baseline": 0.1, "status": "FAIL"},
+        {"label": "경고회귀", "current": 3, "baseline": 2, "status": "WARN"},
+    ]))
+
+    assert "📉 차단회귀" in text
+    assert "📉 경고회귀" not in text
+    warn_line = next(line for line in text.splitlines() if "경고회귀" in line)
+    assert "게이트 무관" in warn_line

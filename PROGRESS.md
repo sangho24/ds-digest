@@ -567,6 +567,72 @@ GitHub Actions (07:30 KST)
   막대가 안 깨지는지, 개념 중복 제거와 상한, 선택 블록이 없을 때 빈 줄만 남지
   않는지를 묶었다.
 
+### 39. 품질 게이트 8주 연속 실패의 마지막 원인: 방향이 틀린 회귀와 망가진 기준점 (`evals/thresholds.py`, `evals/run.py`)
+- **증상**: Weekly Evals가 2026-07-27부터 8주 연속 실패했다. 앞의 원인들(입력 부재
+  §16, 창 무한 성장 §36, 타임스탬프 미회복)은 이미 해소됐다. 09-14와 09-15 로컬
+  재현에서 FAIL 임계값 위반은 0건이었고, **유일한 실패는 baseline 회귀**
+  `summary_stats.one_line_summary.mean` 28.56 < baseline 32.38 이었다.
+- **진단**: 이 회귀는 품질 저하가 아니었다. 분석 프롬프트(`app/analyzer.py`)는 첫
+  커밋부터 한 줄 요약을 "30자 이내"로 지시한다. baseline 32.38자가 지시 위반 상태였고
+  28.56자는 개선이다. 게이트가 좋아진 것을 빨간불로 막고 있었다.
+- **원인**: 네 가지가 겹쳤다.
+  1. **방향이 틀린 지표**: 요약 길이는 한쪽이 늘 좋은 지표가 아닌데 "짧아지면 회귀"로 비교했다.
+  2. **사과 대 오렌지**: `evals/baseline.json`(07-20)은 정적 스냅샷(03-30~07-16, 247건,
+     수정 전 파이프라인이라 임계값 FAIL 8개)이었다. CI는 `data/records/` 파생 입력으로
+     재는데, `compare_baseline`은 scope를 무시하고 전체 구간 값만 비교했다. 망가진
+     시점의 기준점이라 집중도(0.886) 같은 지표는 사실상 영원히 안 걸렸다.
+  3. **허용오차 0**: 아주 조금만 나빠져도 FAIL. recent 창은 약 55~60건, YouTube는 약
+     15건이라 표본 잡음만으로 매주 흔들린다.
+  4. **severity 불일치**: 요약 길이는 THRESHOLDS에서 WARN인데 회귀는 무조건 FAIL이었다.
+- **수정**:
+  - 요약 길이를 회귀 비교에서 뺐다. 대신 THRESHOLDS에 프롬프트 상한 `> 30` WARN(recent)을
+    추가해 기존 하한 `< 20` WARN과 같은 path에 둔다(규칙마다 행을 따로 만들어 공존 가능).
+  - 회귀 비교의 scope·severity는 **같은 path의 THRESHOLDS 행에서** 가져온다(두 곳에
+    적으면 어긋난다). recent 지표는 현재 recent 값과 baseline의 recent 값끼리 비교하고,
+    창이 30건 미만이면 FAIL 회귀를 WARN으로 낮춘다(§31·§36과 같은 원칙).
+  - 허용폭 `max(|baseline| x tolerance, min_delta)`. tolerance 기본 10%, min_delta는
+    표본 잡음(대략 표준오차 2배)으로 잡았다. 실측(14일 창을 하루씩 밀어 계측):
+
+        지표                   min_delta   근거
+        최빈 태그 집중도        0.10        아이템 하나 = 0.018, 2SE = 0.096
+        YouTube 타임스탬프      0.20        분모 약 15건, 2SE = 0.22
+        고정률(아이디어/퀴즈)   0.12/0.10   2SE = 0.10~0.13
+        관련도 IQR/고유값 수    0.5/1       정수 점수라 한 칸은 잡음
+        중복 URL 비율          0.02        baseline 0.009라 상대 10%는 중복 한 건 미만
+
+    나눗셈을 하지 않으므로 baseline이 0이어도 발산하지 않는다.
+  - WARN 회귀는 보고만 한다. exit 1은 FAIL 위반과 FAIL 회귀만. 리포트에
+    `blocking_regressions`와 `baseline_input`(무엇과 비교했는지)을 싣고, 알림은 차단
+    회귀(📉)와 WARN 회귀(↘️, 게이트 무관)를 나눠 보여준다.
+  - **기준점은 손으로 고치지 않는다**: `.venv/bin/python evals/run.py --write-baseline`이
+    metrics, recent_metrics, 입력 메타(경로·기간·건수·recent 창), 생성일, git 커밋을 기록한다.
+    `data/records/` 파생 입력이 아니거나, recent 표본이 부족하거나, FAIL 임계값을 하나라도
+    위반하거나, source_funnel이 계측되지 않았으면 **거부한다.** 망가진 상태를 기준점으로
+    박제한 것이 이번 원인이기 때문이다.
+  - **반드시 `.venv/bin/python`으로 만든다**: 처음엔 시스템 `python3`로 재생성했는데, 거기엔
+    structlog가 없어 `app.source_stats` import가 실패했고 `evals/source_funnel.py`가 계열
+    키 없는 빈 dict를 돌려줬다. 퍼널 임계값 3개가 None으로 조용히 통과해 FAIL 가드가
+    거짓 통과가 됐고, CI(의존성 설치됨)와 다른 숫자가 박제됐다. `data/source_stats.jsonl`은
+    로컬에 있었다(09-01~09-15). 그래서 퍼널 계열 키가 없으면 거부하는 가드를 붙였다.
+  - 구 포맷(최상위 `metrics`만 있거나 평문) baseline도 읽는다. recent 지표가 없거나 recent
+    창 길이가 `--window`와 다르면 recent 규칙은 비교를 건너뛰고, **건너뛴 사실과 이유를**
+    리포트(`baseline_recent_skipped`)·콘솔·알림에 싣는다. 조용히 사라지면 "회귀 없음"과
+    구분이 안 된다.
+- **결과**: 2026-09-15 `data/records/` 기준(228건, recent 59건)으로
+  `.venv/bin/python evals/run.py --write-baseline`으로 재생성했다. source_funnel은
+  starved 계열 3 / confirmed silent 0 / silent 계열 9(관측 15일).
+  `.venv/bin/python evals/run.py --json --baseline` → exit 0, FAIL 0건, 회귀 0건.
+  WARN 4건(30일 이상 미등장 소스 2, 요약 평균 30.2자 > 30, 수집되나 미발송 계열 3,
+  이번 기간 수집 0건 계열 9).
+- **회귀 테스트**: 18개를 붙였다. 처음 16개는 수정 전 코드에 대고 돌려 15개 실패를
+  확인했다(나머지 1개는 플래그 조합 거부라 구 코드에선 알 수 없는 플래그로 같은
+  SystemExit이 난다). 이후 추가한 퍼널 가드·창 불일치 표시 테스트와, recent 비교
+  테스트는 뮤턴트로 확인했다. baseline recent 대신 lifetime을 집게 바꾸거나 창 불일치
+  분기를 `elif False:`로 바꾸면 각각 해당 테스트가 실패한다.
+- **남은 것**: 요약 상한 WARN은 현재 켜져 있다(recent 30.2자). 평균은 개별 초과를 가리는
+  대리값이라 초과 비율 지표가 더 정확하지만 이번엔 만들지 않았다. 퀴즈 개수 고정률이
+  09-01 0.65 → 09-15 0.85로 오르는 중이다(FAIL 0.95). 새 baseline 대비 한계 0.947이다.
+
 ---
 
 ## 다음 스텝 아이디에이션

@@ -4,6 +4,7 @@
     py evals/run.py
     py evals/run.py --json
     py evals/run.py --since 2026-06-01 --baseline
+    py evals/run.py --write-baseline      # 현재 입력으로 evals/baseline.json 재생성
 """
 
 from __future__ import annotations
@@ -12,6 +13,7 @@ import argparse
 from datetime import date, timedelta
 import json
 from pathlib import Path
+import subprocess
 import sys
 from typing import Any
 
@@ -28,6 +30,7 @@ try:  # 패키지 import와 직접 스크립트 실행을 모두 지원한다.
     )
     from .thresholds import (
         BASELINE_COMPARISONS,
+        BASELINE_DEFAULT_TOLERANCE,
         MIN_ITEMS_FOR_RECENT_GATE,
         RECENT_WINDOW_DAYS,
         THRESHOLDS,
@@ -47,6 +50,7 @@ except ImportError:
     )
     from thresholds import (  # type: ignore[no-redef]
         BASELINE_COMPARISONS,
+        BASELINE_DEFAULT_TOLERANCE,
         MIN_ITEMS_FOR_RECENT_GATE,
         RECENT_WINDOW_DAYS,
         THRESHOLDS,
@@ -58,6 +62,13 @@ except ImportError:
 EVALS_DIR = Path(__file__).resolve().parent
 DATA_PATH = EVALS_DIR / "data" / "archive_items.json"
 BASELINE_PATH = EVALS_DIR / "baseline.json"
+# resolve_items가 data/records/에서 입력을 만들었을 때 붙이는 출처 표시. CI는 항상 이쪽이다.
+DERIVED_INPUT_LABEL = "data/records/ (파생)"
+BASELINE_FORMAT_VERSION = 2
+# source_funnel이 실제로 계측됐다면 반드시 있는 키. app.source_stats import가 실패하면
+# (예: structlog 없는 시스템 파이썬) evals/source_funnel.py가 이 키들이 없는 빈 dict를
+# 돌려주고, 퍼널 임계값은 None으로 조용히 통과한다.
+FUNNEL_REQUIRED_KEYS = ("starved_family_count", "confirmed_silent_count", "silent_family_count")
 
 
 def calculate_metrics(items: list[dict[str, Any]]) -> dict[str, Any]:
@@ -156,27 +167,206 @@ def evaluate_thresholds(
     return rows, violations
 
 
-def compare_baseline(metrics: dict[str, Any], baseline_metrics: dict[str, Any]) -> list[dict[str, Any]]:
-    """방향성이 명확한 핵심 지표만 baseline보다 나빠졌는지 비교한다."""
+def _threshold_policy(path: str) -> tuple[str, str]:
+    """baseline 비교 규칙이 따를 (scope, severity)를 같은 path의 THRESHOLDS 행에서 찾는다.
+
+    비교 규칙에 따로 적지 않는 이유: 두 곳에 적으면 어긋난다. 실제로 요약 길이는
+    THRESHOLDS에서 WARN인데 회귀는 무조건 FAIL이었고, 그 불일치가 게이트를 막았다.
+    같은 path에 행이 여러 개면(예: 하한·상한) scope는 같아야 하고 severity는 가장
+    무거운 쪽을 따른다.
+    """
+    rows = [rule for rule in THRESHOLDS if rule["path"] == path]
+    if not rows:
+        raise ValueError(f"baseline 비교 규칙 {path} 에 대응하는 THRESHOLDS 행이 없습니다")
+    scopes = {rule.get("scope", "lifetime") for rule in rows}
+    if len(scopes) != 1:
+        raise ValueError(f"THRESHOLDS의 {path} 행들이 서로 다른 scope를 가집니다: {sorted(scopes)}")
+    severity = "FAIL" if any(rule["severity"] == "FAIL" for rule in rows) else "WARN"
+    return scopes.pop(), severity
+
+
+def _is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def compare_baseline(
+    metrics: dict[str, Any],
+    baseline_metrics: dict[str, Any],
+    recent_metrics: dict[str, Any] | None = None,
+    baseline_recent_metrics: dict[str, Any] | None = None,
+    recent_item_count: int | None = None,
+) -> list[dict[str, Any]]:
+    """방향성이 명확한 핵심 지표가 baseline보다 허용폭 이상 나빠졌는지 비교한다.
+
+    - scope: 같은 path의 THRESHOLDS 행을 따른다. recent 지표는 **현재 recent 값과
+      baseline의 recent 값끼리** 비교한다. 전체 구간 값끼리 비교하면 임계값 판정과
+      다른 창을 보게 되고, 고장나 있던 과거가 영원히 섞인다(thresholds 모듈 설명).
+      한쪽이라도 recent 값이 없으면(구 포맷 baseline 등) 그 규칙은 건너뛴다. 창이
+      다른 숫자끼리의 비교는 판정이 아니라 우연이다.
+    - 허용폭: `max(|baseline| x tolerance, min_delta)`. 허용오차 0이던 시절엔 표본
+      잡음만으로 매주 흔들렸다. min_delta는 baseline이 0 근처일 때 상대비가 0으로
+      쪼그라들어 아이템 하나에도 회귀가 되는 것을 막는다(나눗셈을 하지 않으므로
+      0 baseline에서도 발산하지 않는다).
+    - severity: 같은 path의 THRESHOLDS severity를 따른다. WARN 회귀는 보고만 한다.
+      recent 창이 MIN_ITEMS_FOR_RECENT_GATE 미만이면 FAIL을 WARN으로 낮춘다
+      (evaluate_thresholds와 같은 원칙).
+    """
+    thin = (
+        recent_metrics is not None
+        and recent_item_count is not None
+        and recent_item_count < MIN_ITEMS_FOR_RECENT_GATE
+    )
     regressions: list[dict[str, Any]] = []
     for rule in BASELINE_COMPARISONS:
-        current = _get_path(metrics, rule["path"])
-        baseline = _get_path(baseline_metrics, rule["path"])
-        if not isinstance(current, (int, float)) or not isinstance(baseline, (int, float)):
+        path = rule["path"]
+        scope, severity = _threshold_policy(path)
+        if scope == "recent":
+            if recent_metrics is None or baseline_recent_metrics is None:
+                continue
+            current = _get_path(recent_metrics, path)
+            baseline = _get_path(baseline_recent_metrics, path)
+        else:
+            current = _get_path(metrics, path)
+            baseline = _get_path(baseline_metrics, path)
+        if not _is_number(current) or not _is_number(baseline):
             continue
-        worse = current < baseline if rule["direction"] == "lower" else current > baseline
-        if worse:
-            regressions.append(
-                {
-                    "metric": rule["path"],
-                    "label": rule["label"],
-                    "status": "FAIL",
-                    "current": current,
-                    "baseline": baseline,
-                    "direction": rule["direction"],
-                }
-            )
+
+        tolerance = rule.get("tolerance", BASELINE_DEFAULT_TOLERANCE)
+        min_delta = rule.get("min_delta", 0.0)
+        allowed = max(abs(baseline) * tolerance, min_delta)
+        if rule["direction"] == "lower":
+            limit = baseline - allowed
+            worse = current < limit
+        else:
+            limit = baseline + allowed
+            worse = current > limit
+        if not worse:
+            continue
+
+        if scope == "recent" and thin and severity == "FAIL":
+            severity = "WARN"
+        regressions.append(
+            {
+                "metric": path,
+                "label": rule["label"],
+                "status": severity,
+                "scope": scope,
+                "current": current,
+                "baseline": baseline,
+                "direction": rule["direction"],
+                "tolerance": tolerance,
+                "min_delta": min_delta,
+                "allowed_delta": round(allowed, 6),
+                "limit": round(limit, 6),
+            }
+        )
     return regressions
+
+
+def load_baseline(
+    document: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any] | None, dict[str, Any]]:
+    """baseline 문서 → (lifetime 지표, recent 지표 또는 None, 메타).
+
+    세 포맷을 모두 읽는다.
+      v2        {"metrics", "recent_metrics", "input", ...}  (--write-baseline 산출)
+      구 리포트 {"metrics", "input", "threshold_results", ...}  (recent 지표 없음)
+      평문      지표 dict 그 자체
+    recent 지표가 없으면 None을 돌려주고, compare_baseline은 recent 규칙을 건너뛴다.
+    """
+    if not isinstance(document, dict):
+        raise ValueError("baseline 문서는 JSON 객체여야 합니다")
+    if isinstance(document.get("metrics"), dict):
+        recent = document.get("recent_metrics")
+        meta = {key: value for key, value in document.items() if key not in ("metrics", "recent_metrics")}
+        return document["metrics"], recent if isinstance(recent, dict) else None, meta
+    return document, None, {}
+
+
+def baseline_write_blockers(
+    input_path: str,
+    metrics: dict[str, Any],
+    recent_metrics: dict[str, Any] | None,
+    recent_item_count: int,
+) -> list[str]:
+    """현재 입력이 baseline 자격이 없는 이유들. 비어 있어야 기록한다.
+
+    2026-07-20 baseline은 수정 전 파이프라인(임계값 FAIL 8개)의 정적 스냅샷이었다.
+    망가진 상태를 기준점으로 박제하면 "그보다 나빠졌는가"는 영원히 참이 되지 않고,
+    반대로 우연히 나빴던 값보다 좋아진 변화는 방향을 잘못 잡은 규칙에서 회귀가 된다.
+    그래서 다음을 모두 만족할 때만 기록한다.
+      1. CI와 같은 입력(data/records/ 파생)이다. 다른 창의 숫자와 비교하지 않게.
+      2. recent 창 표본이 게이트를 걸 만큼 있다.
+      3. 모든 FAIL 임계값을 통과한다. 표본 부족 강등 없이 원래 severity로 본다.
+      4. source_funnel이 실제로 계측됐다. import 실패로 비어 있으면 퍼널 FAIL 임계값이
+         None으로 통과해 3번이 거짓 통과가 되고, CI(의존성 설치됨)와 다른 숫자가 박제된다.
+    """
+    reasons: list[str] = []
+    for scope_name, source in (("lifetime", metrics), ("recent", recent_metrics)):
+        if source is None:
+            continue
+        funnel = source.get("source_funnel")
+        missing = [key for key in FUNNEL_REQUIRED_KEYS if not isinstance(funnel, dict) or key not in funnel]
+        if missing:
+            reasons.append(
+                f"source_funnel({scope_name})이 비어 있습니다(누락 키: {', '.join(missing)}). "
+                "app.source_stats import가 실패한 환경입니다. 의존성이 설치된 "
+                ".venv/bin/python evals/run.py --write-baseline 으로 다시 실행하세요"
+            )
+    if input_path != DERIVED_INPUT_LABEL:
+        reasons.append(
+            f"입력이 {input_path} 입니다. CI는 {DERIVED_INPUT_LABEL} 로 계측하므로 "
+            "baseline도 같은 입력이어야 합니다 (evals/data/archive_items.json을 치우고 다시 실행)"
+        )
+    if recent_metrics is None or recent_item_count < MIN_ITEMS_FOR_RECENT_GATE:
+        reasons.append(
+            f"최근 창 표본 {recent_item_count}건 < {MIN_ITEMS_FOR_RECENT_GATE}건: "
+            "recent 지표를 기준점으로 삼을 근거가 없습니다"
+        )
+    # recent_item_count를 넘기지 않으면 thin 강등이 꺼져 FAIL이 FAIL 그대로 나온다.
+    _, violations = evaluate_thresholds(metrics, recent_metrics)
+    for row in violations:
+        if row["status"] == "FAIL":
+            reasons.append(
+                f"FAIL 임계값 위반: {row['label']} {row['actual']} "
+                f"({row['operator']} {row['threshold']}, {row['scope']})"
+            )
+    return reasons
+
+
+def _git_state() -> tuple[str | None, bool | None]:
+    """(HEAD 커밋 SHA, 추적 파일에 커밋 안 된 변경이 있는지). git이 없으면 (None, None)."""
+    root = EVALS_DIR.parent
+    try:
+        sha = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, timeout=10, check=True
+        ).stdout.strip()
+        status = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=no"],
+            cwd=root, capture_output=True, text=True, timeout=10, check=True,
+        ).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None, None
+    return sha or None, bool(status.strip())
+
+
+def build_baseline_document(
+    input_meta: dict[str, Any],
+    metrics: dict[str, Any],
+    recent_metrics: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """재현 가능한 baseline 문서. 손으로 편집하지 않고 --write-baseline으로만 만든다."""
+    commit, dirty = _git_state()
+    return {
+        "format_version": BASELINE_FORMAT_VERSION,
+        "generated_at": date.today().isoformat(),
+        "generated_by": "python evals/run.py --write-baseline",
+        "git_commit": commit,
+        "git_dirty": dirty,
+        "input": input_meta,
+        "metrics": metrics,
+        "recent_metrics": recent_metrics,
+    }
 
 
 def _format_value(value: Any) -> str:
@@ -258,22 +448,33 @@ def _print_report(report: dict[str, Any]) -> None:
 
     if report["regressions"]:
         print()
-        print("baseline 대비 회귀")
+        print("baseline 대비 회귀 (WARN 회귀는 게이트 무관)")
         regression_rows = [
-            [row["status"], row["label"], row["current"], row["baseline"]]
+            [
+                row["status"],
+                row["label"],
+                row.get("scope", "lifetime"),
+                row["current"],
+                row["baseline"],
+                f"허용 {_format_value(row.get('allowed_delta'))} (한계 {_format_value(row.get('limit'))})",
+            ]
             for row in report["regressions"]
         ]
-        _print_table(["상태", "지표", "현재", "baseline"], regression_rows)
+        _print_table(["상태", "지표", "범위", "현재", "baseline", "허용폭"], regression_rows)
     elif report["baseline_compared"]:
         print()
         print("baseline 대비 나빠진 핵심 지표가 없습니다.")
+    if report.get("baseline_recent_skipped"):
+        print(f"recent 지표의 baseline 비교 생략: {report['baseline_recent_skipped']}")
 
     print()
     warn_count = len(report["violations"]) - len(report["blocking_violations"])
+    blocking_regressions = len(report.get("blocking_regressions", report["regressions"]))
     print(
         f"판정: {'위반 있음 (exit 1)' if report['exit_code'] else '통과 (exit 0)'} "
         f"- FAIL {len(report['blocking_violations'])}개, "
         f"WARN {warn_count}개(게이트 무관), 회귀 {len(report['regressions'])}개"
+        f"(그중 게이트 차단 {blocking_regressions}개)"
     )
 
 
@@ -306,7 +507,7 @@ def resolve_items() -> tuple[list[dict[str, Any]], str]:
             "계측할 입력이 없습니다: "
             f"{DATA_PATH} 도 없고 data/records/ 에도 레코드가 없습니다"
         )
-    return items, "data/records/ (파생)"
+    return items, DERIVED_INPUT_LABEL
 
 
 def _load_items(path: Path) -> list[dict[str, Any]]:
@@ -374,13 +575,49 @@ def _parse_args() -> argparse.Namespace:
         action="store_true",
         help="evals/baseline.json과 비교해 품질 회귀를 탐지",
     )
+    parser.add_argument(
+        "--write-baseline",
+        action="store_true",
+        help=(
+            "현재 입력의 지표로 evals/baseline.json을 다시 쓴다. data/records/ 파생 입력이 아니거나, "
+            "recent 표본이 부족하거나, FAIL 임계값을 하나라도 위반하면 거부하고 exit 1"
+        ),
+    )
     args = parser.parse_args()
+    if args.write_baseline and args.baseline:
+        parser.error("--write-baseline과 --baseline은 함께 쓸 수 없습니다 (방금 쓴 기준점과 자기 자신을 비교하게 됨)")
+    if args.write_baseline and args.since:
+        parser.error("--write-baseline은 --since와 함께 쓸 수 없습니다 (CI는 전체 구간으로 비교하므로 기준점도 전체 구간이어야 함)")
     if args.since:
         try:
             args.since = date.fromisoformat(args.since)
         except ValueError:
             parser.error("--since는 YYYY-MM-DD 형식이어야 합니다.")
     return args
+
+
+def _write_baseline(
+    input_meta: dict[str, Any],
+    metrics: dict[str, Any],
+    recent_metrics: dict[str, Any] | None,
+    recent_item_count: int,
+) -> int:
+    """가드를 통과하면 BASELINE_PATH에 기록하고 0, 거부하면 기존 파일을 건드리지 않고 1."""
+    reasons = baseline_write_blockers(input_meta["path"], metrics, recent_metrics, recent_item_count)
+    if reasons:
+        print("baseline 재생성 거부: 현재 입력은 기준점 자격이 없습니다", file=sys.stderr)
+        for reason in reasons:
+            print(f"  - {reason}", file=sys.stderr)
+        return 1
+    document = build_baseline_document(input_meta, metrics, recent_metrics)
+    BASELINE_PATH.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(
+        f"baseline 기록: {BASELINE_PATH} - {input_meta['item_count']}건 "
+        f"({input_meta['start_date']} ~ {input_meta['end_date']}), "
+        f"recent {recent_item_count}건, 커밋 {document['git_commit'] or '-'}"
+        f"{' (커밋 안 된 변경 있음)' if document['git_dirty'] else ''}"
+    )
+    return 0
 
 
 def main() -> int:
@@ -396,23 +633,10 @@ def main() -> int:
         threshold_rows, violations = evaluate_thresholds(
             metrics, recent_metrics, len(recent_items)
         )
-        regressions: list[dict[str, Any]] = []
-        if args.baseline:
-            with BASELINE_PATH.open("r", encoding="utf-8") as file:
-                baseline_document = json.load(file)
-            baseline_metrics = baseline_document.get("metrics", baseline_document)
-            regressions = compare_baseline(metrics, baseline_metrics)
-    except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(f"오류: {error}", file=sys.stderr)
-        return 2
 
-    start_date, end_date = _date_range(items)
-    # WARN은 보고하되 게이트를 떨어뜨리지 않는다. 예: "30일 이상 미등장 소스"는
-    # 소스 구성을 손볼 신호이지 그날의 산출물이 나쁘다는 뜻이 아니다.
-    blocking = [row for row in violations if row["status"] == "FAIL"]
-    exit_code = 1 if blocking or regressions else 0
-    report = {
-        "input": {
+        start_date, end_date = _date_range(items)
+        recent_start, recent_end = _date_range(recent_items)
+        input_meta = {
             "path": input_path,
             "item_count": len(items),
             "start_date": start_date,
@@ -420,14 +644,57 @@ def main() -> int:
             "since": args.since.isoformat() if args.since else None,
             "recent_window_days": args.window,
             "recent_item_count": len(recent_items),
+            "recent_start_date": recent_start,
+            "recent_end_date": recent_end,
             "recent_gate_active": len(recent_items) >= MIN_ITEMS_FOR_RECENT_GATE,
-        },
+        }
+
+        if args.write_baseline:
+            return _write_baseline(input_meta, metrics, recent_metrics, len(recent_items))
+
+        regressions: list[dict[str, Any]] = []
+        baseline_input: dict[str, Any] | None = None
+        # recent 회귀 비교를 통째로 건너뛸 때 그 사실과 이유. 조용히 사라지면 "회귀 없음"과
+        # 구분이 안 된다.
+        baseline_recent_skipped: str | None = None
+        if args.baseline:
+            with BASELINE_PATH.open("r", encoding="utf-8") as file:
+                baseline_metrics, baseline_recent, baseline_meta = load_baseline(json.load(file))
+            baseline_input = baseline_meta.get("input")
+            baseline_window = (baseline_input or {}).get("recent_window_days")
+            if baseline_recent is None:
+                baseline_recent_skipped = "baseline에 recent 지표가 없습니다(구 포맷). --write-baseline으로 재생성하세요"
+            elif baseline_window is not None and baseline_window != args.window:
+                # recent 창 길이가 다르면 같은 이름의 다른 숫자다. 비교하지 않는다.
+                baseline_recent = None
+                baseline_recent_skipped = (
+                    f"recent 창 길이가 다릅니다(baseline {baseline_window}일, 현재 {args.window}일)"
+                )
+            regressions = compare_baseline(
+                metrics, baseline_metrics, recent_metrics, baseline_recent, len(recent_items)
+            )
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        print(f"오류: {error}", file=sys.stderr)
+        return 2
+
+    # WARN은 보고하되 게이트를 떨어뜨리지 않는다. 예: "30일 이상 미등장 소스"는
+    # 소스 구성을 손볼 신호이지 그날의 산출물이 나쁘다는 뜻이 아니다.
+    # 회귀도 같다. severity는 같은 path의 THRESHOLDS를 따르고 FAIL 회귀만 막는다.
+    blocking = [row for row in violations if row["status"] == "FAIL"]
+    blocking_regressions = [row for row in regressions if row["status"] == "FAIL"]
+    exit_code = 1 if blocking or blocking_regressions else 0
+    report = {
+        "input": input_meta,
         "metrics": metrics,
         "threshold_results": threshold_rows,
         "violations": violations,
         "blocking_violations": blocking,
         "baseline_compared": bool(args.baseline),
+        # 무엇과 비교했는지. 기준점의 창·건수·생성 커밋이 다르면 숫자의 의미도 다르다.
+        "baseline_input": baseline_input,
+        "baseline_recent_skipped": baseline_recent_skipped,
         "regressions": regressions,
+        "blocking_regressions": blocking_regressions,
         "exit_code": exit_code,
     }
     if args.json:

@@ -55,6 +55,13 @@ THRESHOLDS: list[dict[str, Any]] = [
     {"scope": "recent", "path": "schema_rigidity.quiz_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "퀴즈 개수 고정률"},
     # current: 32.380567자
     {"scope": "recent", "path": "summary_stats.one_line_summary.mean", "operator": "<", "value": 20, "severity": "WARN", "label": "한 줄 요약 평균 길이"},
+    # 같은 path에 행이 둘이다(하한 20, 상한 30). evaluate_thresholds는 규칙마다 행을
+    # 따로 만들므로 공존할 수 있다. 상한은 분석 프롬프트(app/analyzer.py)의
+    # "한 줄 요약 (한국어, 30자 이내)" 지시를 그대로 옮긴 것이다. 평균이 30을 넘으면
+    # 지시가 체계적으로 무시되고 있다는 뜻이다(평균은 개별 초과를 가리는 너그러운
+    # 대리값이라, 이 선을 넘었다면 이미 절반 가까이가 초과다).
+    # 길이는 단조로운 좋고/나쁨이 아니므로 baseline 회귀 비교에서는 뺐다(아래 참조).
+    {"scope": "recent", "path": "summary_stats.one_line_summary.mean", "operator": ">", "value": 30, "severity": "WARN", "label": "한 줄 요약 평균 길이(프롬프트 상한 30자)"},
     # 수집은 되는데 한 번도 발송되지 않는 소스. source_reach로는 구조적으로 볼 수
     # 없던 사각지대다(그 지표의 소스 목록이 발송 아이템에서 만들어지기 때문).
     # 실측: arXiv가 40일간 발송 0건인데 아무 경보도 없었다.
@@ -77,16 +84,48 @@ THRESHOLDS: list[dict[str, Any]] = [
 ]
 
 
+# ── baseline 회귀 비교 ──────────────────────────────────────
+#
 # direction은 값이 어느 쪽으로 움직일 때 품질 회귀인지 나타낸다.
-BASELINE_COMPARISONS: list[dict[str, str]] = [
+#
+# **scope와 severity는 여기 두지 않는다.** 같은 path의 THRESHOLDS 행에서 가져온다
+# (evals/run.py `_threshold_policy`). 두 곳에 적으면 언젠가 어긋난다. 실제로
+# 어긋나 있었다: 요약 길이는 THRESHOLDS에서 WARN인데 회귀는 무조건 FAIL로 게이트를
+# 막았고, recent 지표도 회귀 비교만은 전체 구간 값으로 쟀다.
+#
+# 허용폭: `max(|baseline| x tolerance, min_delta)` 만큼 나빠지는 것까지는 회귀가
+# 아니다. 허용오차 0이던 시절엔 조금만 흔들려도 FAIL이었다. recent 창은 약 55건,
+# 그중 YouTube는 약 15건이라 표본 잡음만으로 매주 값이 움직인다.
+#   tolerance  상대 허용오차. 기본 BASELINE_DEFAULT_TOLERANCE(10%).
+#   min_delta  절대 허용폭의 하한. baseline이 0에 가까우면 상대 10%가 사실상 0이
+#              되어 아이템 하나만 바뀌어도 회귀가 된다. 그래서 표본 잡음 크기
+#              (대략 표준오차의 2배)를 바닥으로 깐다.
+#
+# 근거로 쓴 실측(2026-08-10~09-15, 14일 창을 하루씩 밀며 계측):
+#   최빈 태그 집중도      0.136~0.255   한 아이템 = 약 0.018, 2SE(p=0.15, n=55) = 0.096
+#   YouTube 타임스탬프    한 아이템 = 약 0.067, 2SE(p=0.76, n=15) = 0.22
+#   고정률(퀴즈·아이디어) 2SE(p=0.5~0.85, n=55) = 0.10~0.13
+#   관련도 IQR            정수 점수라 0.25 단위로 움직이고 1.25~2.0을 오갔다
+BASELINE_DEFAULT_TOLERANCE = 0.10
+
+BASELINE_COMPARISONS: list[dict[str, Any]] = [
+    # 0.97~0.99에서 움직인다. 상대 10%(약 0.1)면 잡음보다 충분히 넓다.
     {"path": "tag_entropy.normalized_entropy", "direction": "lower", "label": "태그 정규화 엔트로피"},
-    {"path": "tag_concentration.concentration", "direction": "higher", "label": "최빈 태그 집중도"},
-    {"path": "score_distribution.iqr", "direction": "lower", "label": "관련도 점수 IQR"},
-    {"path": "score_distribution.distinct_values", "direction": "lower", "label": "관련도 고유값 수"},
-    {"path": "source_reach.stale_source_count", "direction": "higher", "label": "장기 미등장 소스 수"},
-    {"path": "duplicate_rate.duplicate_url_rate", "direction": "higher", "label": "중복 URL 비율"},
-    {"path": "evidence_proxy.timestamp_rate", "direction": "lower", "label": "YouTube 타임스탬프 비율"},
-    {"path": "schema_rigidity.production_ideas_count.fixed_ratio", "direction": "higher", "label": "적용 아이디어 개수 고정률"},
-    {"path": "schema_rigidity.quiz_count.fixed_ratio", "direction": "higher", "label": "퀴즈 개수 고정률"},
-    {"path": "summary_stats.one_line_summary.mean", "direction": "lower", "label": "한 줄 요약 평균 길이"},
+    {"path": "tag_concentration.concentration", "direction": "higher", "min_delta": 0.10, "label": "최빈 태그 집중도"},
+    {"path": "score_distribution.iqr", "direction": "lower", "min_delta": 0.5, "label": "관련도 점수 IQR"},
+    # 정수라 한 칸(1)은 잡음으로 본다.
+    {"path": "score_distribution.distinct_values", "direction": "lower", "min_delta": 1, "label": "관련도 고유값 수"},
+    {"path": "source_reach.stale_source_count", "direction": "higher", "min_delta": 1, "label": "장기 미등장 소스 수"},
+    # lifetime 비율. 0.009 근처라 상대 10%는 0.001(중복 한 건 미만)이다.
+    # FAIL 기준 0.05의 절반 아래에서 조기 경보가 되도록 0.02를 바닥으로 둔다.
+    {"path": "duplicate_rate.duplicate_url_rate", "direction": "higher", "min_delta": 0.02, "label": "중복 URL 비율"},
+    # 분모가 YouTube 아이템(약 15건)뿐이라 다른 비율보다 잡음이 두 배 크다.
+    {"path": "evidence_proxy.timestamp_rate", "direction": "lower", "min_delta": 0.20, "label": "YouTube 타임스탬프 비율"},
+    {"path": "schema_rigidity.production_ideas_count.fixed_ratio", "direction": "higher", "min_delta": 0.12, "label": "적용 아이디어 개수 고정률"},
+    {"path": "schema_rigidity.quiz_count.fixed_ratio", "direction": "higher", "min_delta": 0.10, "label": "퀴즈 개수 고정률"},
+    # summary_stats.one_line_summary.mean은 2026-09-15에 뺐다. 방향이 틀린 비교였다.
+    # 프롬프트는 "30자 이내"를 지시하는데 baseline 32.38자는 지시 위반 상태였고,
+    # 28.56자로 짧아진 것은 개선이다. 그런데 "짧아지면 회귀"로 비교해 2026-09-07,
+    # 09-14 게이트를 막았다. 길이는 한쪽 방향이 늘 좋은 지표가 아니므로 회귀 비교
+    # 대신 THRESHOLDS의 하한(< 20)과 상한(> 30) 두 WARN으로만 본다.
 ]
