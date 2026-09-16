@@ -790,7 +790,9 @@ GitHub Actions (07:30 KST)
   urllib 기본 UA 가 Cloudflare 에 막힌 것으로, §43 피드 프로브에서 헤더 없는 요청이 받은 응답과
   같다. 식별형 UA 를 실어 해결했고, UA 가 빠지면 실패하는 테스트를 더했다. 재점검에서
   `discord: ok status=200`, `email: ok status=200`.
-- **남은 것**: `daily_digest.yml` 의 실패 알림은 아직 Telegram 한 곳이다. 같은 이유로 놓칠 수 있다.
+- **이어서**: `daily_digest.yml` 의 실패 알림도 같은 경로로 옮겼다(2026-09-16). 리포트가 없는
+  실패이므로 `--text` 로 문구만 보낸다. `evals.alert` 는 표준 라이브러리만 쓰므로 의존성 설치가
+  실패한 뒤에도 돈다.
 
 ---
 

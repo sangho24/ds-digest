@@ -146,18 +146,25 @@ jobs:
           echo "::error::docs push failed after 3 attempts"
           exit 1
 
-      # 실행이 실패하면 조용히 넘어가지 않도록 Telegram으로 알린다.
-      # (파이프라인 내부 오류는 _send_error_alert가 처리하지만,
-      #  의존성 설치 실패·러너 오류 등 파이썬 진입 전 실패는 여기서만 잡힌다)
+      # 실행이 실패하면 조용히 넘어가지 않도록 알린다. 파이프라인 내부 오류는
+      # _send_error_alert가 처리하지만, 의존성 설치 실패·러너 오류 등 파이썬 진입 전
+      # 실패는 여기서만 잡힌다.
+      #
+      # 2026-09-16까지 이 알림은 Telegram으로 갔다. 발송이 Discord로 옮겨간 뒤
+      # (2026-09-01) 아무도 보지 않는 곳이었고, evals 쪽에서 같은 문제로 8주치
+      # 실패 원인이 통째로 묻혔다(PROGRESS §44). 정본 채널과 이메일로 보낸다.
+      # evals.alert는 표준 라이브러리만 쓰므로 의존성 설치가 실패한 뒤에도 돈다.
       - name: Notify failure
         if: failure()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
-          [ -z "$TELEGRAM_BOT_TOKEN" ] && exit 0
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d parse_mode="HTML" \
-            -d text="⚠️ <b>DS Digest 워크플로 실패</b>%0A$(date -u +%Y-%m-%d)%0A${RUN_URL}" >/dev/null || true
+          python -m evals.alert \
+            --text "DS Digest 워크플로 실패 ($(date -u +%Y-%m-%d))" \
+            --subject "[DS Digest] 다이제스트 워크플로 실패" \
+            --run-url "$RUN_URL" || echo "::warning::실패 알림 전송이 일부 실패했다"

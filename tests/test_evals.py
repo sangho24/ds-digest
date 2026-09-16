@@ -907,3 +907,25 @@ def test_alert_request_carries_user_agent(monkeypatch):
     assert status == 200
     assert seen["ua"] and "python-urllib" not in seen["ua"].lower(), seen
 
+
+def test_alert_text_mode_needs_no_report():
+    """다이제스트는 파이썬 진입 전에도 실패한다. 그때는 리포트가 없다."""
+    text = evals_alert.build_message("DS Digest 워크플로 실패", "https://github.com/x/y/actions/runs/2")
+    assert "DS Digest 워크플로 실패" in text
+    assert "https://github.com/x/y/actions/runs/2" in text
+
+
+def test_alert_email_subject_is_configurable(monkeypatch):
+    """게이트 실패와 워크플로 실패는 메일함에서 구분돼야 한다."""
+    sent = {}
+
+    def _fake_post(url, payload, headers):
+        sent.update(payload)
+        return 200, ""
+
+    monkeypatch.setattr("evals.alert._post", _fake_post)
+    send_email("본문", {"RESEND_API_KEY": "k", "EMAIL_FROM": "a@b.c", "EMAIL_TO": "d@e.f"},
+               subject="[DS Digest] 다이제스트 워크플로 실패")
+    assert sent["subject"] == "[DS Digest] 다이제스트 워크플로 실패"
+    assert sent["to"] == ["d@e.f"]
+
