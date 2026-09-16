@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 17일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 17일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">멀티모달 표현 학습</span><span class="concept">불확실성 정량화</span><span class="concept">AI 기반 진단 보조</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 기반 업무 검증</span><span class="concept">병렬 처리</span><span class="concept">AI 인프라 경쟁</span><span class="concept">데이터 사용 투명성</span><span class="concept">랭킹 기반 수요 창출</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">코드 자동생성</span><span class="concept">재귀적 자기 개선</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DB</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.16597v1" target="_blank" rel="noopener">A Vision-Language Foundation Model for Precise and Comprehensive Brain Tumor Diagnosis from Preoperative Multimodal Data</a>
+        </h2>
+
+        <p class="summary">다중모달 MRI로 뇌종양 진단 자동화, 불확실성 제공</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>뇌종양의 비침습적 유형 구분은 MRI 영상의 중복 특징과 전문가 간 변이 때문에 어려웠다. 기존 모델은 단일 영상에 국한됐지만, 본 연구는 영상·인구통계·보고서를 결합한 다중모달 접근과 불확실성 정량화를 통해 WHO 2021 12종을 포괄적으로 분류한다. 이는 임상 AI‑보조 워크플로우에 신뢰성 있는 진단 정보를 제공하는 최신 흐름이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>BrainVLM은 12가지 WHO 2021 뇌종양 유형을 다중모달 데이터로 분류한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>예측 신뢰성을 나타내는 불확실성 정량화와 방사선 보고서 자동 생성을 통합한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>5,211명 환자 검증과 12명 방사선과 전문의 협업 연구에서 성능 향상을 입증했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>심혈관 질환 위험 예측에 환자 기록, 검사 결과, 영상 데이터를 결합하고 불확실성 정량화를 적용해 예측 신뢰성을 제공한다.</span></li>
+            
+            <li><span class="box"></span><span>제조 현장의 장비 고장 예측에 센서 데이터와 유지보수 로그, 작업자 메모를 다중모달로 학습하고 불확실성 점수를 통해 유지보수 시점을 판단한다.</span></li>
+            
+            <li><span class="box"></span><span>피부과 이미지와 환자 병력 정보를 결합해 자동 진단 요약을 생성하고, 불확실성 점수로 의사의 최종 판단을 보조한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">BrainVLM이 불확실성 정량화를 포함한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 예측 속도를 높이기 위해</div>
+            
+            <div class="q-opt">② 예측 신뢰성을 표시하기 위해</div>
+            
+            <div class="q-opt">③ 모델 크기를 줄이기 위해</div>
+            
+            <div class="q-opt">④ 데이터 전처리를 자동화하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 예측 신뢰성을 표시하기 위해</div>
+              <div class="why">불확실성 정량화는 각 예측에 대한 신뢰도를 제공해 임상의가 AI 결과를 판단하는 데 도움을 준다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">BrainVLM</span><span class="tag">MRI</span><span class="tag">WHO 2021</span><span class="tag">radiology reports</span><span class="tag">diffuse gliomas</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/toss-benchmark" target="_blank" rel="noopener">리더보드 1등 LLM, 토스에서도 1등일까? - Toss Benchmark 구축기</a>
+        </h2>
+
+        <p class="summary">LLM 서비스 적용을 위한 Toss Benchmark</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>리더보드 점수만으로 서비스 적합성을 판단하기 어렵다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Toss Benchmark는 제한된 GPU 자원 하에서 최적 모델을 선별하고 능력 기준을 정의한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>토스는 커머스·광고·금융 등 다양한 도메인에 LLM을 활용한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>제한된 CPU 자원에서 추천 모델을 고르기 위해 자체 벤치마크를 구축한다</span></li>
+            
+            <li><span class="box"></span><span>법률 사무소에서 계약서 조항을 자동 추출하도록 LLM을 활용한다</span></li>
+            
+            <li><span class="box"></span><span>의료 상담에서 환자 문의를 음성 LLM 에이전트가 초기 응답하고 필요한 도구를 호출한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 리더보드 점수가 토스 운영 환경에서 좋은 성능을 보장하지 못하는가?</div>
+            
+            <div class="q-opt">① 모델이 영어에 강해도 한국어 정책을 이해한다</div>
+            
+            <div class="q-opt">② 추론 속도가 빠른 모델만이 높은 점수를 얻는다</div>
+            
+            <div class="q-opt">③ 리더보드 점수는 언어와 응답 속도 모두를 평가한다</div>
+            
+            <div class="q-opt">④ 리더보드 점수는 한국어 도메인 이해와 실시간 응답 요구를 반영하지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 리더보드 점수는 한국어 도메인 이해와 실시간 응답 요구를 반영하지 않는다</div>
+              <div class="why">본문에 따르면 영어 이해와 한국어 정책, 그리고 추론 속도 차이 때문에 리더보드 점수가 실제 서비스 성능을 보장하지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss Benchmark</span><span class="tag">LLM</span><span class="tag">GPU</span><span class="tag">Toss Foundation</span><span class="tag">AI</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.16338" target="_blank" rel="noopener">Breaking the 1.58-bit Barrier for Ternary LLMs</a>
+        </h2>
+
+        <p class="summary">제로 비중으로 삼진 LLM 저장·속도 크게 개선</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>삼진 가중치를 사용하는 LLM은 전통적으로 5개의 트리트를 1바이트에 묶어 1.625비트/가중치로 저장해 왔으며, 이는 심볼이 균등하게 나타난다고 가정한다. 그러나 실제 모델에서는 0 가중치 비중이 높아 저장 효율이 떨어진다. 본 논문은 이러한 분포를 활용해 BITCOS 레이아웃을 제안, 비트당 가중치 수를 2‑z 로 감소시켜 기존 방식보다 26개 모델에서 저장량을 줄이고, 최신 CPU·GPU에서 매트릭스‑벡터 연산 속도를 최대 1.28배 향상시킨다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>29개 삼진 LLM 모델에서 0 비중이 최대 51.5%로, 기존 5‑트리트 패킹보다 비트 효율이 낮음</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>BITCOS는 존재 비트맵과 부호 벡터로 2‑z 비트/가중치를 저장, 가장 희소 모델에서 1.485 비트/가중치 달성</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>최적화된 언팩 구현으로 CPU·GPU 추론 속도 최대 1.28배, 디코드 throughput CPU 1.18배, GPU 1.27배 향상</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>BITCOS와 유사한 제로‑비중 압축을 추천 시스템의 희소 임베딩에 적용해 메모리 사용량을 줄이고 응답 지연을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>분포 적응형 레이아웃을 양자화된 비전 트랜스포머 가중치에 적용해 엣지 디바이스에서 저장 용량을 절감하고 추론 속도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>BITCOS 언팩 커널을 FPGA 구현에 이식해 실시간 신호 처리용 삼진 신경망의 지연 시간을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">BITCOS가 기존 5‑트리트 패킹보다 저장 효율이 높은 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 0 비중을 고려한 가변 비트 수</div>
+            
+            <div class="q-opt">② 모든 심볼을 동일 비트로 인코딩</div>
+            
+            <div class="q-opt">③ 부호 벡터를 압축하지 않음</div>
+            
+            <div class="q-opt">④ GPU 전용 압축</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 0 비중을 고려한 가변 비트 수</div>
+              <div class="why">BITCOS는 모델 내 0 가중치 비중(z)을 활용해 존재 비트맵과 부호 벡터로 2‑z 비트/가중치를 저장하므로, 0이 많을수록 비트당 가중치 수가 감소한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">BITCOS가 실제 추론 속도 향상을 보이는 조건은?</div>
+            
+            <div class="q-opt">① zero density가 높은 모델</div>
+            
+            <div class="q-opt">② 모델이 8‑bit 양자화</div>
+            
+            <div class="q-opt">③ CPU가 AVX-512 지원 안 함</div>
+            
+            <div class="q-opt">④ GPU가 최신이 아닐 때</div>
+            
+            <div class="q-answer">
+              <div class="correct">① zero density가 높은 모델</div>
+              <div class="why">논문은 실제 ternary 모델의 zero density가 높은 경우에 BITCOS 레이아웃이 언팩 효율을 높여 추론 속도가 최대 1.28배 향상된다고 보고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">BITCOS</span><span class="tag">ternary LLM</span><span class="tag">AVX-512</span><span class="tag">AVX2</span><span class="tag">Intel Xe2 GPU</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/484" target="_blank" rel="noopener">🥤 네이버와 토스, 겨우 5원 때문에 다툰다고요?</a>
+        </h2>
+
+        <p class="summary">랭킹 알고리즘, 광고·신뢰 역할·조작 방지</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>랭킹은 단순 노출을 넘어 새로운 수요를 창출하는 강력한 광고 수단이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>신뢰가 없는 조작된 랭킹은 소비자 신뢰를 잃어 효과가 급감한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>플랫폼은 투명하면서 조작 방지 가능한 랭킹 시스템을 지속적으로 보완해야 한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>5원 포인트 인센티브를 온라인 교육 플랫폼 검색에 적용해 강좌 노출을 높인다</span></li>
+            
+            <li><span class="box"></span><span>SaaS 제품 내 기능 사용량 순위를 노출해 기능 채택을 촉진하고 수요‑랭킹 순환을 만든다</span></li>
+            
+            <li><span class="box"></span><span>B2B 소프트웨어 마켓플레이스에 전문가 리뷰 가중치를 적용해 평점 신뢰성을 강화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">네이버가 토스의 5원 포인트 광고에 민감하게 반응한 이유는?</div>
+            
+            <div class="q-opt">① 광고가 검색 알고리즘을 왜곡할 수 있기 때문</div>
+            
+            <div class="q-opt">② 광고 비용이 높기 때문</div>
+            
+            <div class="q-opt">③ 토스와 경쟁 관계 때문</div>
+            
+            <div class="q-opt">④ 사용자 불만 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 광고가 검색 알고리즘을 왜곡할 수 있기 때문</div>
+              <div class="why">네이버는 인위적인 검색량이 알고리즘에 영향을 줄 수 있어 순위 조작 위험을 우려했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">랭킹이 일반 광고보다 강력한 이유는?</div>
+            
+            <div class="q-opt">① 더 많은 노출을 제공한다</div>
+            
+            <div class="q-opt">② 신뢰 효과가 결합돼 구매 전환을 높인다</div>
+            
+            <div class="q-opt">③ 가격이 저렴하기 때문이다</div>
+            
+            <div class="q-opt">④ 디자인이 뛰어나기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 신뢰 효과가 결합돼 구매 전환을 높인다</div>
+              <div class="why">높은 랭킹은 많은 사람이 선택했다는 신호와 검증 효과를 제공해 신뢰를 형성하고, 이는 광고보다 높은 전환율을 만든다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">네이버</span><span class="tag">토스</span><span class="tag">무신사</span><span class="tag">챌린저스</span><span class="tag">Tabelog</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/163" target="_blank" rel="noopener">Anthropic의 섬뜩한 경고</a>
+        </h2>
+
+        <p class="summary">AI 자가진화 위험, 안전 고려 필요</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Anthropic 직원이 AI 10년 내 인류 멸망 위험을 경고하고 업계 리더도 동의했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Claude가 Anthropic 코드베이스의 80%를 작성해 AI가 스스로 코드를 개선하고 성능을 크게 향상시켰다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Self‑evolving 및 RSI 기술이 급속히 발전함에 따라 AI 안전과 개발 속도 조절이 시급해졌다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Claude 기반 코드 자동생성 기법을 데이터 파이프라인 스크립트 생성에 적용해 ETL 개발 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>Self‑evolving 루프를 하이퍼파라미터 탐색에 활용해 실험 설계와 결과 분석을 자동화한다.</span></li>
+            
+            <li><span class="box"></span><span>RSI 메커니즘을 모델 디버깅 도구에 적용해 모델이 스스로 오류 코드를 수정하도록 한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Anthropic 보고서에 따르면 AI가 스스로 코드를 개선할 때 가장 크게 변한 부분은 무엇인가?</div>
+            
+            <div class="q-opt">① 코드 작성 비율이 크게 증가했다</div>
+            
+            <div class="q-opt">② 모델 크기가 크게 감소했다</div>
+            
+            <div class="q-opt">③ 학습 데이터 양이 크게 줄었다</div>
+            
+            <div class="q-opt">④ 하드웨어 비용이 크게 늘었다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 코드 작성 비율이 크게 증가했다</div>
+              <div class="why">본문에 ‘Anthropic의 코드베이스에 병합된 코드의 80%가 Claude가 작성했다’는 내용이 있어 AI가 코드 작성 비율이 크게 증가했음을 알 수 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Self‑evolving AI가 인간 개발자 역할을 대체하게 되는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 인간이 코딩을 포기했기 때문에</div>
+            
+            <div class="q-opt">② AI가 좋은 코드와 이해 쉬운 코드를 생성하기 때문에</div>
+            
+            <div class="q-opt">③ 비용 절감 효과가 크기 때문에</div>
+            
+            <div class="q-opt">④ 법적 요구사항 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② AI가 좋은 코드와 이해 쉬운 코드를 생성하기 때문에</div>
+              <div class="why">본문에 ‘AI가 충분히 좋은 코딩을 할 수 있다’는 설명과 ‘코드가 다른 개발자가 읽었을 때도 이해하기 쉽다’는 점이 강조되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Anthropic</span><span class="tag">Jacob Coxon</span><span class="tag">Claude</span><span class="tag">Recursive Self-Improvement</span><span class="tag">Self-evolving</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

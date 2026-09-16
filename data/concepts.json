@@ -20,15 +20,21 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-05"
+      "last_seen": "2026-09-17"
+    },
+    "AI 기반 진단 보조": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17"
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 14,
+      "count": 16,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-15"
+      "last_seen": "2026-09-17"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -38,9 +44,9 @@
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-04",
-      "last_seen": "2026-09-16"
+      "last_seen": "2026-09-17"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
@@ -50,9 +56,9 @@
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-11"
+      "last_seen": "2026-09-17"
     },
     "LLM 기반 금융 트레이딩": {
       "aliases": [],
@@ -170,21 +176,27 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-09-11"
+      "last_seen": "2026-09-17"
     },
     "데이터 사용 투명성": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-11",
-      "last_seen": "2026-09-11"
+      "last_seen": "2026-09-17"
     },
     "데이터 접근 계약": {
       "aliases": [],
       "count": 1,
       "first_seen": "2026-09-09",
       "last_seen": "2026-09-09"
+    },
+    "랭킹 기반 수요 창출": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17"
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
@@ -200,9 +212,9 @@
     },
     "멀티모달 표현 학습": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-16"
+      "last_seen": "2026-09-17"
     },
     "멀티스케일 샘플링": {
       "aliases": [],
@@ -290,9 +302,15 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-08"
+      "last_seen": "2026-09-17"
+    },
+    "불확실성 정량화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -432,6 +450,12 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-16"
     },
+    "재귀적 자기 개선": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-17",
+      "last_seen": "2026-09-17"
+    },
     "재무 데이터 추적": {
       "aliases": [],
       "count": 4,
@@ -536,9 +560,9 @@
     },
     "코드 자동생성": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-09-10"
+      "last_seen": "2026-09-17"
     },
     "콘텐츠 큐레이션": {
       "aliases": [],
@@ -637,6 +661,6 @@
       "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-16T07:52:06.869605+09:00",
+  "updated_at": "2026-09-17T07:46:36.501157+09:00",
   "version": 1
 }
