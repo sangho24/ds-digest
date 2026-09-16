@@ -929,3 +929,75 @@ def test_alert_email_subject_is_configurable(monkeypatch):
     assert sent["subject"] == "[DS Digest] 다이제스트 워크플로 실패"
     assert sent["to"] == ["d@e.f"]
 
+
+
+# ── evals/directive.py: 계측이 다음 날 큐레이션에 남기는 권고 ──────────────
+
+from evals.directive import ADVICE, PREFIX, TTL_DAYS, build_advice, new_advice  # noqa: E402
+
+
+def _violation(metric, status="FAIL"):
+    return {"metric": metric, "status": status, "label": metric, "actual": 1, "operator": ">", "threshold": 0}
+
+
+def test_advice_never_names_a_source():
+    """출처 식별자가 들어가면 drop_sources 하드 필터로 갈 길이 열린다.
+
+    그날 지면이 통째로 비는 사고라, 자동 생성물에는 식별자를 넣지 않는다.
+    """
+    for text in ADVICE.values():
+        assert "http" not in text and "://" not in text, text
+        assert not any(token.startswith("UC") and len(token) > 10 for token in text.split()), text
+
+
+def test_advice_covers_only_prompt_fixable_metrics():
+    """전사 입력에 시간 정보가 없어 생긴 위반은 글쓰기 지시로 고쳐지지 않는다."""
+    report = {"violations": [_violation("evidence_proxy.timestamp_rate"),
+                             _violation("duplicate_rate.duplicate_url_rate"),
+                             _violation("source_funnel.confirmed_silent_count"),
+                             _violation("tag_concentration.concentration")]}
+    advice = build_advice(report)
+    assert len(advice) == 1 and advice[0].startswith(PREFIX)
+    assert "쏠렸다" in advice[0]
+
+
+def test_advice_includes_warn_rows():
+    """요약 길이는 WARN 이라 게이트를 막지 않는다. 여기서 안 다루면 추세가 방치된다."""
+    report = {"violations": [_violation("summary_stats.one_line_summary.mean", status="WARN")]}
+    assert build_advice(report)
+
+
+def test_advice_is_not_repeated_while_alive():
+    """매주 같은 줄이 쌓이면 사람이 쓴 지시가 원문 상한에서 밀려난다."""
+    report = {"violations": [_violation("tag_concentration.concentration")]}
+    first = build_advice(report)
+    assert new_advice(report, [{"text": first[0]}]) == []
+    assert new_advice(report, [{"text": "사람이 쓴 다른 지시"}]) == first
+
+
+def test_advice_ttl_expires_before_next_weekly_run():
+    """주기(7일)보다 길면 회복된 뒤에도 권고가 남는다."""
+    assert TTL_DAYS <= 7
+
+
+def test_advice_direction_follows_which_bound_tripped():
+    """요약 길이는 임계값이 둘이다(20자 미만, 30자 초과).
+
+    지표 이름만 보면 짧아져서 걸린 경우에도 "더 압축하라"가 나가, 짧은 요약을
+    더 깎는 되먹임이 된다.
+    """
+    short = {"violations": [{"metric": "summary_stats.one_line_summary.mean",
+                             "operator": "<", "threshold": 20, "status": "WARN"}]}
+    long = {"violations": [{"metric": "summary_stats.one_line_summary.mean",
+                            "operator": ">", "threshold": 30, "status": "WARN"}]}
+    assert "짧아" in build_advice(short)[0] and "압축" not in build_advice(short)[0]
+    assert "압축" in build_advice(long)[0]
+
+
+def test_advice_keys_match_real_thresholds():
+    """연산자가 바뀌면 권고가 조용히 사라진다. 임계값 정의와 묶어 둔다."""
+    from evals.thresholds import THRESHOLDS
+
+    defined = {(rule["path"], rule["operator"]) for rule in THRESHOLDS}
+    missing = [key for key in ADVICE if key not in defined]
+    assert not missing, f"임계값에 없는 권고 키: {missing}"

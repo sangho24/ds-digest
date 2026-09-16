@@ -54,6 +54,8 @@ MAX_RAW_MESSAGES = 30
 
 # standing_note 길이 상한. 프롬프트에 그대로 들어가므로 무한정 자라면 안 된다.
 MAX_NOTE_CHARS = 300
+# 주간 품질 계측이 자동으로 남기는 줄의 표지. evals/directive.py 가 같은 값을 쓴다.
+DASHBOARD_PREFIX = "[품질 계기판]"
 
 
 @dataclass
@@ -135,8 +137,17 @@ def capture(
     return entry
 
 
-def load_raw(path: Path | None = None, now: datetime | None = None) -> list[dict[str, Any]]:
-    """만료되지 않은 원문을 시간순으로 돌려준다. 깨진 줄은 건너뛴다."""
+def load_raw(
+    path: Path | None = None,
+    now: datetime | None = None,
+    limit: int | None = MAX_RAW_MESSAGES,
+) -> list[dict[str, Any]]:
+    """만료되지 않은 원문을 시간순으로 돌려준다. 깨진 줄은 건너뛴다.
+
+    limit=None 은 상한 없이 전부 돌려준다. 중복 판정처럼 "살아 있는 원문이
+    무엇인가"를 봐야 하는 쪽에 쓴다. 상한(최근 30건)만 보면 창 밖으로 밀린
+    원문이 없는 것처럼 보여 같은 줄이 다시 쌓인다.
+    """
     target = path or DIRECTIVES_PATH
     if not target.exists():
         return []
@@ -163,7 +174,7 @@ def load_raw(path: Path | None = None, now: datetime | None = None) -> list[dict
                 pass
             rows.append(row)
 
-    return rows[-MAX_RAW_MESSAGES:]
+    return rows[-limit:] if limit else rows
 
 
 # ──────────────────────────────────────────────
@@ -230,6 +241,25 @@ _INTERPRET_SCHEMA: dict = {
 }
 
 
+def _merge_notes(base: str, extra: Iterable[str]) -> str:
+    """사람 지시에서 나온 권고 뒤에 계기판 권고를 잇는다.
+
+    상한을 넘길 때 문자열을 그냥 자르면 "...30자 이내로 더 압" 처럼 문장이 끊긴
+    채 프롬프트에 들어간다. 들어갈 수 있는 문장까지만 담고 나머지는 버린다.
+    사람이 쓴 지시를 앞에 두므로, 밀려나는 것은 항상 자동 생성된 권고 쪽이다.
+    """
+    merged = ""
+    for part in [base, *extra]:
+        piece = str(part).strip()
+        if not piece:
+            continue
+        candidate = f"{merged} {piece}".strip()
+        if len(candidate) > MAX_NOTE_CHARS:
+            continue
+        merged = candidate
+    return merged
+
+
 def parse_directive(data: dict, known_sources: Iterable[str] | None = None) -> Directive:
     """LLM 응답 → Directive. 방어적으로 판다.
 
@@ -277,9 +307,34 @@ async def interpret(
     (analyzer._call_llm_with_fallback). 의존성을 주입받아 이 모듈이 analyzer를
     import하지 않게 한다 — analyzer가 이 모듈을 쓰므로 순환이 된다.
     """
-    raws = load_raw(path, now)
+    # 상한 없이 읽고, 상한은 사람 지시에만 건다. 계기판 권고가 최근 30건 창 밖으로
+    # 밀리면 반영은 안 되는데 중복 판정에는 "살아 있다"고 잡혀 7일간 침묵한다.
+    raws = load_raw(path, now, limit=None)
     if not raws:
         return Directive()
+
+    # 계기판이 남긴 줄은 LLM 에 넘기지 않는다. 해석을 거치면 모델이 규칙을 어겨
+    # boost·suppress·drop_sources 로 보낼 수 있고, 그쪽은 코드로 확정 적용된다
+    # (실측: 규칙 위반 모델이 arxiv 를 통째로 drop 시켰다). 자동 생성물이 소스를
+    # 빼거나 점수를 흔들면 원인이 어디에도 적히지 않는다. 표면 자체를 없앤다.
+    dashboard_notes: list[str] = []
+    human: list[dict[str, Any]] = []
+    for row in raws:
+        text = str(row.get("text") or "")
+        if text.startswith(DASHBOARD_PREFIX):
+            note = text[len(DASHBOARD_PREFIX):].strip()
+            if note:
+                dashboard_notes.append(note)
+        else:
+            human.append(row)
+
+    human = human[-MAX_RAW_MESSAGES:]
+
+    # 사람이 쓴 지시가 없으면 LLM 을 부르지 않는다. 권고만 얹어 돌려준다.
+    if not human:
+        return Directive(standing_note=_merge_notes("", dashboard_notes))
+
+    raws = human
 
     sources = sorted({str(s) for s in known_sources if str(s).strip()})
     prompt = INTERPRET_PROMPT.format(
@@ -294,9 +349,12 @@ async def interpret(
     except Exception as error:
         # 해석이 실패해도 다이제스트는 나가야 한다. 지시가 반영되지 않을 뿐이다.
         logger.warning("directive_interpret_failed", error=str(error)[:200])
-        return Directive()
+        # 계기판 권고는 LLM 을 거치지 않는 경로다. 해석이 실패했다고 같이 버리면
+        # 모델 장애가 그 주 권고까지 조용히 지운다.
+        return Directive(standing_note=_merge_notes("", dashboard_notes))
 
     directive = parse_directive(data, sources)
+    directive.standing_note = _merge_notes(directive.standing_note, dashboard_notes)
     logger.info(
         "directive_interpreted",
         messages=len(raws),

@@ -29,6 +29,9 @@ on:
 jobs:
   evals:
     runs-on: ubuntu-latest
+    # 권고 한 줄을 data/directives.jsonl 에 커밋하기 위해 필요하다.
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +63,35 @@ jobs:
           if [ "${{ inputs.simulate_failure }}" = "true" ]; then
             echo "::warning::simulate_failure - 알림 경로 점검을 위해 실패로 끝낸다"
             exit 1
+          fi
+
+      # 계측은 재기만 해서는 아무것도 바꾸지 못한다. 프롬프트로 고칠 수 있는
+      # 위반은 다음 날 큐레이션에 권고 한 줄로 남긴다. 게이트가 실패했든
+      # 통과했든(WARN) 돌아야 하므로 always() 다.
+      # 안전장치는 evals/directive.py 에 적어 두었다: 권고는 standing_note 로만
+      # 가고, TTL 7일이며, 같은 줄이 살아 있으면 다시 쓰지 않는다.
+      - name: Record curation advice
+        if: always()
+        run: |
+          python -m evals.directive evals_report.json || \
+            echo "::warning::권고 기록에 실패했다"
+          if ! git diff --quiet -- data/directives.jsonl; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/directives.jsonl
+            # 커밋 실패로 스텝이 죽으면 잡이 빨간불이 되고, 뒤따르는 알림이
+            # "품질 게이트 실패"로 나간다. 실제 원인은 커밋인데 지표 문제로 읽힌다.
+            git commit -m "data: 품질 계기판 권고 $(date -u +%Y-%m-%d)" || {
+              echo "::warning::권고 커밋 실패"; exit 0;
+            }
+            # 매일 도는 다이제스트가 같은 브랜치에 커밋한다. 원격이 앞서 있으면
+            # 그냥 push 는 거절되고 권고가 조용히 사라지므로 rebase 후 재시도한다
+            # (daily_digest.yml 의 docs push 와 같은 방식).
+            for i in 1 2 3; do
+              git push && exit 0
+              git pull --rebase --autostash origin main || break
+            done
+            echo "::warning::권고 커밋 push 실패"
           fi
 
       # 게이트가 빨간불이면 **무엇이** 문제인지까지 보낸다. GitHub 기본 실패
