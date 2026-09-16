@@ -1,0 +1,117 @@
+"""품질 게이트 실패 알림을 실제로 읽는 채널로 보낸다.
+
+왜 별도 모듈인가:
+    evals/notify.py 는 리포트를 사람이 읽는 문구로 만드는 일만 한다. 어디로
+    보내는지는 바뀌어도 문구는 그대로여야 해서 갈라 둔다.
+
+왜 Discord 와 이메일인가:
+    2026-09-01 발송이 Telegram 에서 Discord 로 옮겨간 뒤에도 이 알림만 Telegram
+    으로 갔다. 그래서 8주 동안 게이트가 실패하는 사이 사용자에게 남은 것은
+    GitHub 기본 실패 메일("워크플로가 실패했다")뿐이었고, 무엇이 실패했는지는
+    아무데도 닿지 않았다. 정본 채널(Discord)과 이메일 둘 다로 보낸다.
+
+왜 실패를 삼키지 않는가:
+    이전 단계는 `curl ... || true` 로 끝나 전송이 실패해도 늘 성공으로 보였다.
+    알림이 안 왔는지, 보냈는데 안 왔는지 구분할 수 없었다. 여기서는 채널별
+    결과를 stdout 에 적고, 하나라도 실패하면 종료코드 1 을 낸다(워크플로는
+    이미 실패 상태이므로 게이트 판정에는 영향이 없다).
+
+사용:
+    python -m evals.alert evals_report.json --run-url <url>
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+from typing import Any
+
+from evals.notify import format_report
+
+DISCORD_API = "https://discord.com/api/v10"
+RESEND_API = "https://api.resend.com/emails"
+# Discord 는 2000자를 넘기면 400 을 낸다. 보내기 전에 자른다.
+MAX_DISCORD_CONTENT = 2000
+TIMEOUT = 15
+
+
+def build_text(report: dict[str, Any], run_url: str) -> str:
+    """알림 본문. 채널이 달라도 같은 내용을 보낸다."""
+    return f"📉 주간 품질 게이트 실패\n\n{format_report(report)}\n\n{run_url}"
+
+
+def _truncate(text: str, limit: int) -> str:
+    if len(text) <= limit:
+        return text
+    return text[: limit - 1] + "…"
+
+
+def _post(url: str, payload: dict[str, Any], headers: dict[str, str]) -> tuple[int, str]:
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", **headers})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            return resp.status, ""
+    except urllib.error.HTTPError as e:
+        return e.code, e.read()[:200].decode("utf-8", "replace")
+    except Exception as e:  # 망 오류, 타임아웃
+        return 0, f"{type(e).__name__}: {e}"
+
+
+def send_discord(text: str, env: dict[str, str]) -> tuple[str, bool, str]:
+    token, channel = env.get("DISCORD_BOT_TOKEN"), env.get("DISCORD_CHANNEL_ID")
+    if not token or not channel:
+        return "discord", True, "설정 없음, 건너뜀"
+    status, detail = _post(
+        f"{DISCORD_API}/channels/{channel}/messages",
+        {"content": _truncate(text, MAX_DISCORD_CONTENT)},
+        {"Authorization": f"Bot {token}"},
+    )
+    return "discord", 200 <= status < 300, f"status={status} {detail}".strip()
+
+
+def send_email(text: str, env: dict[str, str]) -> tuple[str, bool, str]:
+    key, sender, to = env.get("RESEND_API_KEY"), env.get("EMAIL_FROM"), env.get("EMAIL_TO")
+    if not key or not sender or not to:
+        return "email", True, "설정 없음, 건너뜀"
+    status, detail = _post(
+        RESEND_API,
+        {"from": sender, "to": [t.strip() for t in to.split(",") if t.strip()],
+         "subject": "[DS Digest] 주간 품질 게이트 실패", "text": text},
+        {"Authorization": f"Bearer {key}"},
+    )
+    return "email", 200 <= status < 300, f"status={status} {detail}".strip()
+
+
+def main(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("report", help="evals/run.py --json 결과 파일")
+    ap.add_argument("--run-url", default="", help="실패한 워크플로 실행 URL")
+    ap.add_argument("--dry-run", action="store_true", help="보내지 않고 본문만 출력")
+    args = ap.parse_args(argv[1:])
+
+    try:
+        report = json.loads(open(args.report, encoding="utf-8").read())
+    except (OSError, json.JSONDecodeError) as error:
+        # 리포트를 못 읽어도 알림 자체는 나가야 한다. 게이트는 이미 실패했다.
+        report = {}
+        print(f"리포트를 읽지 못했습니다: {error}")
+
+    text = build_text(report, args.run_url)
+    if args.dry_run:
+        print(text)
+        return 0
+
+    env = dict(os.environ)
+    results = [send_discord(text, env), send_email(text, env)]
+    for channel, ok, detail in results:
+        print(f"{channel}: {'ok' if ok else '실패'} {detail}")
+    return 0 if all(ok for _, ok, _ in results) else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

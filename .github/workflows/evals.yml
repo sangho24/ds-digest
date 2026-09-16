@@ -20,6 +20,11 @@ on:
     # 월요일 00:00 UTC = KST 월요일 09:00
     - cron: '0 0 * * 1'
   workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+    inputs:
+      simulate_failure:
+        description: '알림 경로 점검용. 게이트 결과와 무관하게 실패로 끝내 알림을 보낸다'
+        type: boolean
+        default: false
 
 jobs:
   evals:
@@ -50,6 +55,12 @@ jobs:
         run: |
           set -o pipefail
           python evals/run.py --json --baseline | tee evals_report.json
+          # 알림 경로가 살아 있는지 보려면 실제 실패를 기다릴 수밖에 없다.
+          # 이 스위치는 수동 실행에서만 켜지며, 리포트는 진짜 값 그대로 둔다.
+          if [ "${{ inputs.simulate_failure }}" = "true" ]; then
+            echo "::warning::simulate_failure - 알림 경로 점검을 위해 실패로 끝낸다"
+            exit 1
+          fi
 
       # 게이트가 빨간불이면 **무엇이** 문제인지까지 보낸다. GitHub 기본 실패
       # 메일은 "워크플로가 실패했다"만 알려주므로 매주 오면 곧 소음이 된다.
@@ -59,13 +70,17 @@ jobs:
       - name: Notify quality gate
         if: failure()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # 발송 정본 채널(Discord)과 이메일 둘 다로 보낸다. 2026-09-01 발송이
+          # Discord 로 옮겨간 뒤에도 이 알림만 Telegram 으로 가고 있었고,
+          # 사용자에게 닿은 것은 GitHub 기본 실패 메일뿐이었다.
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
-          [ -z "$TELEGRAM_BOT_TOKEN" ] && exit 0
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          BODY=$(python -m evals.notify evals_report.json)
-          TEXT=$(printf '%s\n\n%s\n\n%s' "📉 주간 품질 게이트" "$BODY" "$RUN_URL")
-          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode chat_id="${TELEGRAM_CHAT_ID}" \
-            --data-urlencode text="$TEXT" >/dev/null || true
+          # 전송 결과를 그대로 남긴다. 예전처럼 `|| true` 로 삼키면 "알림이 안 온 것"과
+          # "보냈는데 못 받은 것"을 구분할 수 없다.
+          python -m evals.alert evals_report.json --run-url "$RUN_URL" || \
+            echo "::warning::품질 게이트 알림 전송이 일부 실패했다"

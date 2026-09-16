@@ -829,3 +829,52 @@ def test_format_report_separates_warn_regressions():
     assert "📉 경고회귀" not in text
     warn_line = next(line for line in text.splitlines() if "경고회귀" in line)
     assert "게이트 무관" in warn_line
+
+
+# ── evals/alert.py: 알림이 실제로 읽는 채널로 나가는가 ──────────────────
+
+from evals.alert import MAX_DISCORD_CONTENT, build_text, send_discord, send_email  # noqa: E402
+
+
+def _alert_report():
+    return {
+        "input": {"item_count": 10, "start_date": "2026-09-01", "end_date": "2026-09-15", "path": "data/records/"},
+        "blocking_violations": [{"label": "타임스탬프 비율", "actual": 0.1, "operator": "<", "threshold": 0.7}],
+        "regressions": [],
+        "violations": [],
+    }
+
+
+def test_alert_text_carries_reason_and_run_url():
+    """GitHub 기본 메일은 '실패했다'만 알려준다. 무엇이 실패했는지가 본문에 있어야 한다."""
+    text = build_text(_alert_report(), "https://github.com/x/y/actions/runs/1")
+    assert "타임스탬프 비율" in text
+    assert "https://github.com/x/y/actions/runs/1" in text
+
+
+def test_alert_skips_channel_without_config_and_reports_it():
+    """설정이 없으면 조용히 성공한 척하지 않고 건너뛴 사실을 남긴다."""
+    for fn in (send_discord, send_email):
+        channel, ok, detail = fn("본문", {})
+        assert ok and "건너뜀" in detail, (channel, detail)
+
+
+def test_alert_truncates_discord_content(monkeypatch):
+    """Discord 는 2000자를 넘기면 400 이다. 잘라서 보낸다."""
+    sent = {}
+
+    def _fake_post(url, payload, headers):
+        sent["len"] = len(payload["content"])
+        return 200, ""
+
+    monkeypatch.setattr("evals.alert._post", _fake_post)
+    send_discord("가" * 5000, {"DISCORD_BOT_TOKEN": "t", "DISCORD_CHANNEL_ID": "c"})
+    assert sent["len"] == MAX_DISCORD_CONTENT
+
+
+def test_alert_reports_channel_failure(monkeypatch):
+    """전송 실패를 삼키면 '안 온 것'과 '못 받은 것'을 구분할 수 없다."""
+    monkeypatch.setattr("evals.alert._post", lambda *a, **k: (401, "unauthorized"))
+    _, ok, detail = send_discord("본문", {"DISCORD_BOT_TOKEN": "t", "DISCORD_CHANNEL_ID": "c"})
+    assert not ok and "401" in detail
+
