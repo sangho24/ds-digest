@@ -10,7 +10,7 @@ Claude Code에게 이 파일을 전달하세요. 소스 목록, 티어 구조, �
 
 ```properties
 YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA,UCbfYPyITQ-7l4upoX8nvctg,UCYO_jab_esuFRV4b17AJtAw,UCMLtBahI5DMrt0NPvDSoIRQ
-RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
 ```
 
 ### 2026-09-15 정리 내역
@@ -47,7 +47,6 @@ DS 현업에 직접 도움. 바로 .env에 넣어서 사용.
 |---|---|---|
 | 토스 기술 블로그 | `https://toss.tech/rss.xml` | A/B testing 사례, 데이터 기반 의사결정 |
 | 당근 테크 블로그 | `https://medium.com/feed/daangn` | 추천, 검색, ML 서빙, 인과추론 |
-| 우아한형제들 블로그 | `https://techblog.woowahan.com/feed/` | 데이터 플랫폼, 실험 플랫폼 |
 | 카카오 기술 블로그 | `https://tech.kakao.com/blog/feed/` | 추천, 검색 랭킹, ML 인프라 |
 | NAVER D2 | `https://d2.naver.com/d2.atom` | 검색, ML 시스템, 대규모 서비스 |
 
@@ -141,7 +140,7 @@ Claude Code에 아래를 확인/구현하도록 전달:
 YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA
 
 # RSS (Tier 1)
-RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom
 ```
 
 ## .env 예시 (Tier 1+2 확장)
@@ -151,5 +150,5 @@ RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techb
 YOUTUBE_CHANNELS=UCN4ZJl6nQpIBo-eRJZom4xA,UC-mOekGSesms0agFntnQang,UCdQF7F6hwjSpulj_fwB9iDQ,UCNrehnUq7Il-J7HQxrzp7CA,UCbfYPyITQ-7l4upoX8nvctg,UCYO_jab_esuFRV4b17AJtAw,UCMLtBahI5DMrt0NPvDSoIRQ
 
 # RSS (Tier 1+2)
-RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://techblog.woowahan.com/feed/,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
+RSS_FEEDS=https://toss.tech/rss.xml,https://medium.com/feed/daangn,https://tech.kakao.com/blog/feed/,https://d2.naver.com/d2.atom,https://netflixtechblog.com/feed,https://medium.com/feed/airbnb-engineering,https://engineering.atspotify.com/feed/
 ```

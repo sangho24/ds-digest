@@ -751,6 +751,26 @@ GitHub Actions (07:30 KST)
   - 00:00 UTC 부근 수동 실행에서 카테고리 일부만 잡히는 현상은 발표 직후 API 반영 지연으로 추정하며
     확인하지 않았다.
 
+### 43. 우아한형제들 피드는 UA 가 아니라 러너 IP 가 막힌 것이었다 (`scripts/probe_sources.py`)
+- **증상**: §40 의 UA 수정을 반영한 뒤에도 CI 수집은 계속 0건이었다. 다만 이번에는 조용하지 않고
+  `rss_fetch_failed status_code=40x` 로 드러났다. 로컬에서는 같은 UA 로 200 이고 항목 10건이 온다.
+- **진단**: `scripts/probe_sources.py` 에 헤더별 피드 진단 모드(`--feeds`)를 더해, 같은 스크립트를
+  로컬과 Actions 러너에서 돌려 나란히 놓았다(2026-09-16).
+
+      URL                          헤더없음  수집기UA  브라우저헤더  실행 위치
+      techblog.woowahan.com/feed/  403       200       200          로컬
+      techblog.woowahan.com/feed/  403       403       403          Actions 러너
+      medium.com/feed/daangn       403       200       200          Actions 러너
+      tech.kakao.com/blog/feed/    200       200       200          Actions 러너
+
+- **원인**: Cloudflare 가 GitHub Actions IP 대역을 헤더와 무관하게 막는다. 같은 러너에서 Medium 은
+  수집기 UA 만으로 통과하므로 §40 의 UA 수정 자체는 유효했다(daangn 403 에서 200).
+- **수정**: 우아한형제들을 소스에서 뺐다(secrets 와 사본). 퍼널 기록(09-01~)과 `data/records/` 전체에서
+  수집·발송이 한 건도 없어 잃는 것이 없고, 남겨 두면 10-05 전후 `confirmed_silent` FAIL 로 게이트를
+  막는다. 진단 모드는 남겨 둔다. 다음에 같은 증상이 나오면 헤더 문제인지 IP 문제인지 한 번에 가른다.
+- **남은 것**: 중계 서비스를 거치면 받아올 수는 있으나 외부 의존이 늘고 상대 사이트의 차단 의사를
+  거스른다. 다시 넣으려면 Actions 밖(로컬이나 다른 망)에서 수집해 넣는 경로가 필요하다.
+
 ---
 
 ## 다음 스텝 아이디에이션
