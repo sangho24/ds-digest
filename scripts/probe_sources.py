@@ -29,6 +29,24 @@ WATCHLIST = ROOT / "data" / "watchlist.yaml"
 UA = "ds-digest-probe/1.0 (+https://github.com/sangho24/ds-digest)"
 TIMEOUT = 15
 
+# 피드 진단 모드에서 비교할 요청 헤더. 같은 피드가 로컬에서는 200 인데 Actions
+# 러너에서는 40x 로 막히는 일이 있었다(2026-09-16 우아한형제들). UA 만 바꿔서는
+# 가려낼 수 없어, 헤더를 한 벌로 붙였을 때와 비교한다. 로컬과 러너에서 같은
+# 스크립트를 돌려 응답을 나란히 놓는 것이 목적이다.
+COLLECTOR_UA = "ds-digest/1.0 (+https://github.com/sangho24/ds-digest)"
+BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
+FEED_HEADER_VARIANTS: dict[str, dict[str, str]] = {
+  "none": {},
+  "collector_ua": {"User-Agent": COLLECTOR_UA},
+  "browser_full": {
+    "User-Agent": BROWSER_UA,
+    "Accept": "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Referer": "https://www.google.com/",
+  },
+}
+
 
 @dataclass
 class ProbeResult:
@@ -159,6 +177,52 @@ def probe_blog(org: dict) -> ProbeResult:
   return ProbeResult(org["key"], "blog", url, "not_found", "HTML 응답(피드 아님)")
 
 
+def probe_feed(url: str, variant: str) -> dict[str, Any]:
+  """피드 하나를 헤더 한 벌로 요청하고 응답을 요약한다. 예외도 결과로 남긴다."""
+  row: dict[str, Any] = {"url": url, "variant": variant}
+  req = urllib.request.Request(url, headers=FEED_HEADER_VARIANTS[variant])
+  try:
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+      body = resp.read()
+      row.update(status=resp.status, content_type=resp.headers.get("Content-Type", ""),
+                 length=len(body), server=resp.headers.get("Server", ""),
+                 cf_ray=bool(resp.headers.get("CF-RAY")),
+                 items=body.count(b"<item") + body.count(b"<entry"),
+                 final_url=resp.url)
+  except urllib.error.HTTPError as e:
+    body = e.read()[:2000]
+    row.update(status=e.code, content_type=e.headers.get("Content-Type", ""),
+               length=len(body), server=e.headers.get("Server", ""),
+               cf_ray=bool(e.headers.get("CF-RAY")), items=0,
+               detail=body[:200].decode("utf-8", "replace"))
+  except Exception as e:  # 망 차단, 타임아웃 등
+    row.update(status=None, detail=f"{type(e).__name__}: {e}")
+  return row
+
+
+def run_feed_probe(urls: list[str], delay: float, out: Path | None) -> int:
+  """피드별로 헤더 변형을 돌려가며 응답을 비교한다."""
+  rows = [probe_feed(url, variant) for url in urls for variant in FEED_HEADER_VARIANTS
+          if (time.sleep(delay) or True)]
+
+  print(f"\n피드 진단 {len(urls)}개 x 헤더 {len(FEED_HEADER_VARIANTS)}종\n")
+  print(f"{'변형':<14}{'상태':<7}{'항목':<6}{'길이':<10}{'서버':<12}URL")
+  print("-" * 100)
+  for r in rows:
+    print(f"{r['variant']:<14}{str(r.get('status')):<7}{str(r.get('items', 0)):<6}"
+          f"{str(r.get('length', 0)):<10}{(r.get('server') or '-'):<12}{r['url'][:44]}")
+
+  if out:
+    out.write_text(json.dumps({"kind": "feed_probe", "rows": rows}, ensure_ascii=False, indent=2),
+                   encoding="utf-8")
+    print(f"\n결과 저장: {out}")
+  # 어떤 헤더로도 200 이 안 나오는 피드가 있으면 1을 낸다.
+  blocked = [u for u in urls if not any(r["url"] == u and r.get("status") == 200 for r in rows)]
+  if blocked:
+    print("\n어떤 헤더로도 200 이 아닌 피드:", blocked)
+  return 1 if blocked else 0
+
+
 def main() -> int:
   ap = argparse.ArgumentParser()
   ap.add_argument("--days", type=int, default=90, help="최근 며칠을 셀지")
@@ -166,7 +230,13 @@ def main() -> int:
   ap.add_argument("--delay", type=float, default=0.5, help="요청 간 간격(초)")
   ap.add_argument("--out", type=Path, help="결과 JSON 저장 경로")
   ap.add_argument("--dump-raw", type=Path, help="HF 원응답을 조직별로 저장할 디렉토리")
+  ap.add_argument("--feeds", help="쉼표로 구분한 피드 URL. 주면 워치리스트 대신 피드 진단만 한다")
   args = ap.parse_args()
+
+  # 피드 진단 모드: 워치리스트와 무관하게 요청 헤더별 응답만 비교한다.
+  if args.feeds:
+    urls = [u.strip() for u in args.feeds.split(",") if u.strip()]
+    return run_feed_probe(urls, args.delay, args.out)
   global RAW_DUMP_DIR
   RAW_DUMP_DIR = args.dump_raw
 

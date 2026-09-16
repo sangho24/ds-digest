@@ -17,6 +17,10 @@ on:
         description: 'hf | blog | (비우면 둘 다)'
         required: false
         default: ''
+      feeds:
+        description: '쉼표로 구분한 피드 URL. 주면 워치리스트 대신 헤더별 피드 진단만 한다'
+        required: false
+        default: ''
 
 jobs:
   probe:
@@ -37,7 +41,8 @@ jobs:
             --days "${{ inputs.days }}" \
             ${{ inputs.only && format('--only {0}', inputs.only) || '' }} \
             --out probe_result.json \
-            --dump-raw probe_raw
+            --dump-raw probe_raw \
+            ${{ inputs.feeds && format('--feeds "{0}"', inputs.feeds) || '' }}
 
       - name: 결과 아티팩트 업로드
         if: always()
