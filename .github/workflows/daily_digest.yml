@@ -49,6 +49,12 @@ jobs:
         #   대응: SDK 미사용, httpx로 REST API 직접 호출
         run: pip install -r requirements.txt
 
+      # 발송 전 배선 점검. 프롬프트 .format() 키 불일치 같은 고장은 그날 다이제스트를
+      # 통째로 비운다(실측 §24). API 키도 네트워크도 쓰지 않고 1초 안에 끝나며,
+      # 실패하면 여기서 멈춰 빈 다이제스트가 나가는 대신 실패 알림이 간다.
+      - name: Preflight (배선 점검)
+        run: python scripts/preflight.py
+
       - name: Run daily digest
         # 실패 케이스 C: YouTube transcript API가 GitHub Actions IP 차단
         #   대응: YOUTUBE_COOKIES secret에 쿠키 파일(Netscape 형식)을 base64 인코딩해서 저장
