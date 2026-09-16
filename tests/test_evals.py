@@ -833,6 +833,7 @@ def test_format_report_separates_warn_regressions():
 
 # ── evals/alert.py: 알림이 실제로 읽는 채널로 나가는가 ──────────────────
 
+import evals.alert as evals_alert  # noqa: E402
 from evals.alert import MAX_DISCORD_CONTENT, build_text, send_discord, send_email  # noqa: E402
 
 
@@ -877,4 +878,32 @@ def test_alert_reports_channel_failure(monkeypatch):
     monkeypatch.setattr("evals.alert._post", lambda *a, **k: (401, "unauthorized"))
     _, ok, detail = send_discord("본문", {"DISCORD_BOT_TOKEN": "t", "DISCORD_CHANNEL_ID": "c"})
     assert not ok and "401" in detail
+
+
+def test_alert_request_carries_user_agent(monkeypatch):
+    """Cloudflare 는 urllib 기본 UA 를 `403 error code: 1010` 으로 막는다.
+
+    2026-09-16 러너 실측: UA 없이 보낸 알림이 Discord·Resend 양쪽에서 막혔다.
+    알림이 안 나가는 실패는 게이트 실패보다 조용해서 더 오래 방치된다.
+    """
+    seen = {}
+
+    class _Resp:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def _fake_urlopen(req, timeout=None):
+        seen["ua"] = req.get_header("User-agent")
+        return _Resp()
+
+    monkeypatch.setattr(evals_alert.urllib.request, "urlopen", _fake_urlopen)
+    status, _ = evals_alert._post("https://example.test/x", {"a": 1}, {"Authorization": "Bot t"})
+
+    assert status == 200
+    assert seen["ua"] and "python-urllib" not in seen["ua"].lower(), seen
 

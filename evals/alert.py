@@ -37,6 +37,12 @@ RESEND_API = "https://api.resend.com/emails"
 # Discord 는 2000자를 넘기면 400 을 낸다. 보내기 전에 자른다.
 MAX_DISCORD_CONTENT = 2000
 TIMEOUT = 15
+# urllib 기본 UA(python-urllib/3.12)는 Cloudflare 앞단에서 막힌다. 2026-09-16
+# 러너 실측에서 Discord API 와 Resend API 가 둘 다 `403 error code: 1010`(브라우저
+# 시그니처 기반 차단)을 돌려줬다. 같은 날 피드 프로브에서도 헤더 없는 요청만
+# 같은 응답을 받았다. 알림이 나가지 않는 것은 게이트가 실패한 것보다 조용해서
+# 더 나쁘다.
+USER_AGENT = "ds-digest-alert/1.0 (+https://github.com/sangho24/ds-digest)"
 
 
 def build_text(report: dict[str, Any], run_url: str) -> str:
@@ -52,7 +58,11 @@ def _truncate(text: str, limit: int) -> str:
 
 def _post(url: str, payload: dict[str, Any], headers: dict[str, str]) -> tuple[int, str]:
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", **headers})
+    req = urllib.request.Request(
+        url,
+        data=body,
+        headers={"Content-Type": "application/json", "User-Agent": USER_AGENT, **headers},
+    )
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             return resp.status, ""
