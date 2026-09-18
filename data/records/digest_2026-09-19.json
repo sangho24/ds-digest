@@ -1,0 +1,394 @@
+{
+  "date": "2026-09-19",
+  "generated_at": "2026-09-18T22:14:01.050763",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.IR",
+        "source_key": "arxiv:cs.IR",
+        "source_label": "arXiv:cs.IR",
+        "title": "Reasoning Quality Matters: Combating Reasoning Collapse in LLM-based Embedding Learning",
+        "url": "https://arxiv.org/abs/2609.20563v1",
+        "published_at": "2026-09-17T15:27:24",
+        "transcript": null,
+        "body": "Large Language Models (LLMs) have recently shown strong potential for producing context-rich text embeddings for retrieval. Most existing methods either treat embedding learning as passive feature extraction or exploit LLM reasoning through instruction following for better embedding optimization. However, specialization toward embedding objectives can suppress useful reasoning generation or produce retrieval-irrelevant text. We refer to these two forms of degradation as reasoning collapse. To address this issue, we propose CoFree (Collapse-Free Reasoning Embedding), a two-stage framework that progressively integrates LLM reasoning into query and document embedding optimization while preserving reasoning quality. At the first stage, CoFree applies reference-guided supervised fine-tuning to restore the reasoning ability and retain representational strength of the foundation embedding model. At the second stage, we introduce dual rewards, an embedding-oriented reward and a reasoning-oriented reward, to guarantee fine-grained reasoning of the relevance toward the embedding goal in reinforcement learning. This endpoint-coupled optimization transforms embedding learning from static alignment into a high-quality reasoning-guided search process for retrieval. Extensive experiments demonstrate the effectiveness of CoFree, with CoFree-4B achieving an average absolute improvement of 2.8 nDCG@10 points over Qwen3-Embedding-4B across 22 datasets from MTEB and BRIGHT. Online experiments in a real-world retrieval system further show consistent gains. Code, RTED, and model checkpoints will be made publicly available.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 임베딩에 추론 품질 유지해 검색 성능 향상",
+        "tags": [
+          "CoFree",
+          "Qwen3-Embedding-4B",
+          "MTEB",
+          "BRIGHT",
+          "LLM"
+        ],
+        "concepts": [
+          "문서 검색 자동화",
+          "언어 모델링",
+          "강화학습 기반 임베딩 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "Embedding 특화가 LLM 추론을 억제해 검색 관련성을 떨어뜨리는 ‘reasoning collapse’ 현상이 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "CoFree는 참고 기반 지도 학습 후 이중 보상 강화학습으로 추론 품질을 유지하면서 임베딩을 최적화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험에서 CoFree‑4B가 22개 데이터셋에서 nDCG@10을 평균 2.8점 향상시키며 실서비스에서도 일관된 개선을 보였다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 임베딩 학습은 단순 특징 추출이나 지시 따르기에 머물러 LLM 추론을 손상시켰다. CoFree는 추론‑임베딩을 연계한 두 단계 프레임워크로, 정적 정렬을 넘어 추론‑가이드 검색을 구현한다. 이는 LLM 기반 검색 최적화 흐름에서 추론 품질을 보존하는 새로운 접근이다",
+        "production_ideas": [
+          "LLM 코드 생성 모델에 참고 기반 지도 학습을 적용해 추론 능력을 회복하고 API 특화 성능을 높인다.",
+          "추천 시스템 임베딩 학습에 이중 보상 강화학습을 도입해 정확도와 설명 가능성을 동시에 개선한다.",
+          "이미지‑텍스트 멀티모달 검색에 CoFree 방식을 적용해 시각적 추론을 유지하면서 임베딩 정렬을 강화한다"
+        ],
+        "quiz": [
+          {
+            "question": "논문에서 ‘reasoning collapse’가 의미하는 것은 무엇인가?",
+            "options": [
+              "LLM이 과도하게 긴 텍스트를 생성하는 현상",
+              "Embedding 특화가 LLM 추론을 억제해 검색 관련성을 떨어뜨리는 현상",
+              "강화학습 과정에서 보상이 발산하는 현상",
+              "미세조정으로 모델 크기가 감소하는 현상"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 reasoning collapse를 임베딩 목표에 특화되면서 유용한 추론 생성이 억제되거나 검색과 무관한 텍스트가 생성되는 현상으로 정의한다."
+          },
+          {
+            "question": "CoFree 두 번째 단계에서 이중 보상의 목적은 무엇인가?",
+            "options": [
+              "임베딩 유사도만 최대화한다",
+              "임베딩 정렬과 세밀한 추론 관련성을 동시에 보장한다",
+              "학습 속도를 높인다",
+              "모델 파라미터 수를 줄인다"
+            ],
+            "answer_index": 1,
+            "explanation": "두 번째 단계는 embedding‑oriented reward와 reasoning‑oriented reward를 결합해 임베딩 목표와 추론 품질을 모두 만족시키도록 설계되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "DeepSeek’s Insane New Architecture",
+        "url": "https://youtu.be/vIHw_2VjSUw",
+        "published_at": "2026-09-18T07:03:46",
+        "transcript": "[00:00] The new DeepSeek is here, 4.1 Flash, and it is, wow, look at that. It is incredibly fast, and I was also stunned by this.\n[00:12] Look, it can outperform Claude Opus 5, Kimi K3 on some tests, not everything, we'll see about that.\n[00:20] But there is a catch, I'll show you at the end.\n[00:23] It also reliably outperforms DeepSeek 4.0 Pro, which is a huge surprise.\n[00:31] I mean, that system costs maybe 300K dollars to run locally, and this one can be run for a quarter of that.\n[00:38] Well, that's still a lot of money, but the tendency is undeniable.\n[00:44] This might run in our pocket in a year's time.\n[00:47] It also has native visual understanding.\n[00:51] So, finally, you can give it images of an iconic game menu and have it write a game that reproduces it.\n[00:58] I'll tell you more about my other experiments at the end.\n[01:01] And this is huge and small at the same time. How?\n[01:06] Well, now hold on to your papers, fellow scalars, it's small because of the KV cache.\n[01:12] This contains the context and is 437 times smaller than V1 was three years ago.\n[01:21] But also four times smaller than the previous 4.0 Flash.\n[01:28] But that was just a few months ago, and you can press it 4x, that is, what? How did they do that?\n[01:35] Do we know? Yes, we do.\n[01:38] Dear fellow scalars, this is 2-minute papers with Dr. Károly Zsolnai-Fehér.\n[01:42] Why? Because this is an open model and there is a free research paper explaining it.\n[01:49] I am not an expert, just a student, but I'll try to break it down.\n[01:53] They call this technique CSA2, and they are finally onto something here.\n[01:59] You see, a neural network is given by a lot of layers of neurons, and as information is propagated through these layers, each of them has its own KV memory.\n[02:11] But not here. DeepSeek 4.1 Flash finally gives us shared memory between the layers.\n[02:20] Not everyone has to remember everything. No, they share the memories.\n[02:26] It's a nightmare to pull off well because different layers need different views of the same history.\n[02:33] And if we pop the hood and look closer, oh, look, an encoder-decoder structure.\n[02:41] The encoder creates a shared global memory and the decoder reads from it, and all that is what finally gives us a much smaller KV cache, which is the bane of my existence because it needs too much video RAM.\n[02:58] Incredible leap forward.\n[03:01] Now I also said this is huge, more than 500 billion parameters, so I have no chance to run this at home whatsoever.\n[03:10] And when I tried to reproduce this beautiful honey coiling paper, GPT-6 Astra nailed it. Absolutely stunning.\n[03:21] Opus 5.1, not as stunning, but the physics is quite formidable, rendering a bit less so.\n[03:29] Now this one, well, we still need to get a couple more papers down the line to match that, but it will happen. Of that, I am certain.\n[03:38] And you see, I am here to show you the truth, not just believe the headlines.\n[03:43] Now also, since YouTube stopped recommending my physics simulation papers, which breaks my heart, at least I get to show you this, which feels me with joy.\n[03:54] Subscribe and hit the bell to see more.\n[03:56] Also, the catch. 4.1 Flash likes to think a lot and burns a lot of tokens.\n[04:03] Fortunately, it is not that expensive, but, man, that's a lot of tokens.\n[04:08] But if you have the hardware, you get to run all this for free.\n[04:12] I don't, so I run it through the API or Lambda, but given that every time DeepSeek publishes a new paper, AI gets cheaper for all of us.\n[04:22] So, thank you so much for that, huge contribution to humanity.\n[04:27] This is going to help a lot of doctors and scientists do their work.\n[04:32] Open science for the win. What a time to be alive.\n[04:36] I use Lambda to reproduce AI research papers often in minutes.\n[04:41] It's also great to train your own models or fine-tune an existing one.\n[04:46] Run inference or text to image or video, easy peasy.\n[04:50] Running a DeepSeek chatbot or agent, super fast, super reliable.\n[04:55] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[05:00] I test ideas from the papers I cover and moments later, results.\n[05:05] Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 The DeepSeek V4.1 Flash paper is available here:\nhttps://www.deepseek.com/en/news/deepseek-v4-1-flash/\n\nErratum: Opus 5.1 label at 3:23 should have been Opus 5. Apologies!\n\nSources:\nhttps://x.com/flowith/status/2099446892174406055/video/1\nhttps://x.com/loktar00/status/2097761803291726137\nhttps://x.com/loktar00/status/2099171901746688079\nhttps://x.com/loktar00/status/2097557594239897837\nhttps://x.com/loktar00/status/2097342670620291430\nhttps://x.com/RealFedeURU/status/2097804481068941679\nhttps://x.com/ItsmeAjayKV/status/2099875889454739801\nhttps://x.com/ItsmeAjayKV/status/2100434059675709683/video/1\nhttps://x.com/DanielPPFW/status/2100016621251338732/video/1\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "공유 KV 메모리로 비용·VRAM 절감, LLM 혁신",
+        "tags": [
+          "DeepSeek 4.1 Flash",
+          "Claude Opus 5",
+          "Kimi K3",
+          "CSA2",
+          "KV cache"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "AI 에이전트 메모리 관리",
+          "AI 비용 효율성"
+        ],
+        "key_points": [
+          {
+            "point": "DeepSeek 4.1 Flash는 4.0 Pro 대비 약 ¼ 비용으로 실행 가능",
+            "timestamp": "00:31"
+          },
+          {
+            "point": "KV 캐시 크기가 3년 전 대비 437배, 이전 버전 대비 4배 감소",
+            "timestamp": "01:12"
+          },
+          {
+            "point": "모델이 많은 토큰을 소모해 연산량이 많지만 비용은 크게 상승하지 않음",
+            "timestamp": "04:03"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "공유 KV 메모리를 멀티태스크 LLM에 적용해 메모리 사용을 줄이고 파인튜닝 비용을 낮춘다.",
+          "인코더‑디코더 기반 전역 메모리를 실시간 영상 분석 파이프라인에 도입해 긴 시퀀스 컨텍스트를 저 VRAM으로 유지한다.",
+          "KV 캐시 축소 기법을 엣지 추천 시스템에 적용해 모바일 GPU에서도 수백 토큰 컨텍스트를 처리한다."
+        ],
+        "quiz": [
+          {
+            "question": "DeepSeek 4.1 Flash가 KV 캐시를 크게 줄인 핵심 설계는 무엇인가?",
+            "options": [
+              "각 레이어가 독립적인 KV 메모리를 유지한다",
+              "인코더‑디코더 구조로 전역 메모리를 공유한다",
+              "파라미터 수를 크게 늘렸다",
+              "토큰당 비용을 증가시켰다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문 02:11~02:41에서 인코더가 전역 메모리를 만들고 디코더가 이를 읽어 레이어 간 KV 캐시를 공유한다는 설명이 핵심이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "디움의 React 컴파일러, useMemo는 이제 필요 없을까?",
+        "url": "https://youtu.be/11fFmBaAVIw",
+        "published_at": "2026-09-18T12:00:13",
+        "transcript": null,
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.\n\n00:00 intro\n00:48 최적화란\n01:46 기존 최적화 방식\n02:57 기존 최적화의 문제점\n05:34 React Compiler의 등장\n05:51 React Compiler의 동작 원리\n07:18 주의 사항\n09:06 점진적 도입 전략\n10:15 마무리",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "React 컴파일러로 메모리 최적화 비용 절감",
+        "tags": [
+          "React Compiler",
+          "useMemo",
+          "React",
+          "우아한테크코스",
+          "10분 테크토크"
+        ],
+        "concepts": [
+          "컴파일러 기반 최적화",
+          "React 성능 최적화",
+          "점진적 도입 전략"
+        ],
+        "key_points": [
+          {
+            "point": "기존 useMemo 기반 최적화의 한계와 비용",
+            "timestamp": null
+          },
+          {
+            "point": "React Compiler의 동작 원리와 성능 이점",
+            "timestamp": null
+          },
+          {
+            "point": "점진적 도입 전략 및 주의사항",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "The last IMO problem AI could not solve",
+        "url": "https://youtu.be/bRQEWPA832A",
+        "published_at": "2026-09-18T17:14:08",
+        "transcript": "[00:00] Before 2024, AI could not answer questions from the International Math Olympiad.\n[00:04] But then Google DeepMind made a model that answered four out of the six questions on that year's test.\n[00:10] The next year, multiple organizations had models answering every question from that year's contest, except for the last one.\n[00:17] And then by this year, prompting reasoning models available to the public would be enough to answer all six.\n[00:23] Looking back at 2025, though, that last question was especially interesting.\n[00:27] Among the students that were participating in that year's contest, each of whom is a world-class problem solver among the six best in their country, only six out of the 603 participants there got full marks on this question.\n[00:39] Here's the question statement itself if you want to pause and read it.\n[00:42] The setup involves a very large square grid, where technically the problem describes a 2025 by 2025 grid, but for illustration purposes, I'll show a smaller one.\n[00:51] The game is to cover the grid in tiles where the edges of the tiles line up with the grid, and tiles can't overlap with each other, in such a way that every row has exactly one unit square that's not covered, and likewise every column has exactly one unit square that's not covered.\n[01:06] The question asks you to find the smallest number of tiles you can use to satisfy this property.\n[01:12] And this being the International Math Olympiad, the task is not merely to give a numerical answer or to show what that optimal tiling is.\n[01:19] That's part of it, but the bulk of the task is to rigorously prove that every other possible tiling must use more.\n[01:25] Solving a problem like this walks you down a beautiful path of intuition and discovery.\n[01:31] It's the topic of a long-form video I just posted, so next time you're in the mood to leave the shorts feed and settle into a longer lesson, give it a look.",
+        "body": "Full video: https://youtu.be/Nbwv5wHQoj0",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI가 복합 최적화 증명 능력 향상, DS에 시사",
+        "tags": [
+          "Google DeepMind",
+          "International Math Olympiad",
+          "2025"
+        ],
+        "concepts": [
+          "AI 기반 수학 증명",
+          "조합 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "DeepMind 모델이 2024년 시험 6문제 중 4문제 해결",
+            "timestamp": "00:04"
+          },
+          {
+            "point": "문제는 모든 행·열에 정확히 하나의 빈칸이 남도록 타일을 배치하고 최소 타일 수 찾기",
+            "timestamp": "01:06"
+          },
+          {
+            "point": "해답뿐 아니라 다른 모든 타일링이 더 많은 타일을 사용함을 엄격히 증명해야 함",
+            "timestamp": "01:12"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "프롬프트 기반 추론 모델을 활용해 데이터 파이프라인 스케줄링 최적화 문제를 자동 증명한다",
+          "AI가 격자 커버링 문제를 풀어 데이터베이스 인덱스 설계 시 최소 인덱스 수를 도출한다",
+          "대규모 격자 시뮬레이션에서 AI가 빈칸 배치를 찾아 시뮬레이션 비용을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "2024년 IMO 시험에서 6문제 중 4문제를 해결한 모델은?",
+            "options": [
+              "Google DeepMind",
+              "OpenAI GPT‑4",
+              "Meta AI",
+              "IBM Watson"
+            ],
+            "answer_index": 0,
+            "explanation": "트랜스크립트에 따르면 Google DeepMind가 2024년 시험 6문제 중 4문제를 풀었다고 명시되어 있다."
+          },
+          {
+            "question": "문제에서 각 행과 열에 요구된 조건은?",
+            "options": [
+              "정확히 하나의 빈칸이 남는다",
+              "두 개 이상의 빈칸이 있다",
+              "빈칸이 전혀 없다",
+              "임의 개수의 빈칸이 있다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 \"every row has exactly one unit square that's not covered, and likewise every column has exactly one unit square that's not covered\" 라고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "How a Robot Tests an Action Before It Moves",
+        "url": "https://youtu.be/uxH98holfUI",
+        "published_at": "2026-09-15T16:09:49",
+        "transcript": "[00:00] How can a robot test an action without moving?\n[00:03] A world model can predict the outcome.\n[00:05] Here's NVIDIA's Ming-Yu Liu.\n[00:07] There are three important modeling in robotics: forward dynamics. Given the starting point and the action taken, what would be the future? Predict what's going to happen.\n[00:17] Inverse dynamics. Given the visual transition, infer what was the action taken. And policy, what should the robot do to achieve the task?\n[00:27] And our result in the paper show that the synergy, one does help the other.\n[00:32] Cosmos trains these abilities together.\n[00:35] Developers can use it as a virtual testing ground for robots.\n[00:39] Instead of setting up a thousand kitchens, you know, you have this close simulator to help you quickly verify the accuracy of your passing model.",
+        "body": "How can a robot test an action without moving? NVIDIA's Ming-Yu Liu explains how a world model predicts the outcome first.\n\nCosmos 3 learns three abilities together: forward dynamics (what happens after an action), inverse dynamics (which action caused a change) and policy (what the robot should do next). The results in the paper show that each one helps the others. The payoff is a closed-loop simulator. Instead of setting up a thousand kitchens, developers can check a robot policy in simulation before trying it for real.\n\nFull interview: https://youtu.be/L6tLBApQN-g\n\nLearn more about Cosmos: https://nvda.ws/4cJoY1S\nExplore Cosmos Lab: https://research.nvidia.com/labs/cosmos-lab/cosmos3/\n\nThis video is a paid partnership with NVIDIA.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "시뮬레이션으로 로봇 행동 검증, 비용 절감",
+        "tags": [
+          "NVIDIA",
+          "Ming-Yu Liu",
+          "Cosmos",
+          "world model"
+        ],
+        "concepts": [
+          "시뮬레이션 기반 정책 검증",
+          "모델 기반 제어와 강화학습 통합"
+        ],
+        "key_points": [
+          {
+            "point": "world model can predict the outcome",
+            "timestamp": "00:03"
+          },
+          {
+            "point": "three important modeling in robotics: forward dynamics, inverse dynamics, policy",
+            "timestamp": "00:07"
+          },
+          {
+            "point": "developers can use it as a virtual testing ground for robots",
+            "timestamp": "00:35"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "세계 모델을 활용해 자율주행 시뮬레이션을 사전 검증해 개발 비용을 절감한다",
+          "전방·역방향 역학을 동시에 학습해 금융 시계열 예측과 역추적 모델을 강화한다",
+          "가상 테스트 환경을 구축해 물류 로봇 작업 계획을 사전 검증하고 현장 설치 시간을 단축한다"
+        ],
+        "quiz": [
+          {
+            "question": "로봇 공학에서 언급된 세 가지 모델링 유형은 무엇인가?",
+            "options": [
+              "forward dynamics, inverse dynamics, policy",
+              "forward kinematics, inverse kinematics, control",
+              "perception, planning, actuation",
+              "supervised, unsupervised, reinforcement"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트에서 forward dynamics, inverse dynamics, policy가 세 가지 중요한 모델링이라고 명시했다."
+          },
+          {
+            "question": "가상 테스트 환경을 사용하면 얻는 주요 이점은?",
+            "options": [
+              "시뮬레이션 필요성을 완전히 없앤다",
+              "패싱 모델 정확성을 빠르게 검증한다",
+              "모든 실제 로봇을 대체한다",
+              "컴퓨팅 비용을 0으로 만든다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 개발자들이 가상 테스트 환경을 이용해 패싱 모델 정확성을 빠르게 검증할 수 있다고 언급했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
