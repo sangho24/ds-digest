@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 20일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 20일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">그래프 분석</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">재무 데이터 추적</span><span class="concept">행동 설계</span><span class="concept">동기 부여 설계</span><span class="concept">잠금 메커니즘</span><span class="concept">개발자 경험 개선</span><span class="concept">AI 생산성 도구</span><span class="concept">AI 인프라 경쟁</span><span class="concept">멀티모달 표현 학습</span><span class="concept">인지 부하</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.SI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.20737v1" target="_blank" rel="noopener">An Interpretable Approach to Money Laundering Detection in Transaction Graphs using Pass-Through Templates</a>
+        </h2>
+
+        <p class="summary">거래 그래프 레이어링을 매칭으로 탐지</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>본 논문은 자금 세탁 레이어링 단계의 중간 엔티티 흐름을 그래프화하고, 기존의 해석되지 않은 이상 거래 탐지의 한계를 극복하고자 한다. 패스스루 템플릿이라는 구조적 패턴을 정의하고 이를 최대 매칭 문제로 전환해 최적 알고리즘으로 해결함으로써 그래프 기반 AML 연구에 해석 가능하고 최적화된 접근을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>레イヤ링 패턴을 나타내는 pass-through 템플릿을 정의하고 거래 그래프에서 탐지한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>탐지 문제를 최대‑카디널리티·최대‑가중치 매칭으로 공식화해 Edmonds 블라섬 알고리즘으로 최적 해결한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Ethereum 데이터에 적용해 283개 인스턴스를 찾았으며, 6개 주소가 미국 제재 대상임을 확인했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>공급망 물류 네트워크에 패스스루 템플릿 탐지를 적용해 빠른 상품 전송이 위조 유통을 나타내는지 식별한다.</span></li>
+            
+            <li><span class="box"></span><span>소셜 미디어 그래프에서 최대‑가중치 매칭을 이용해 급속한 정보 전파 패턴을 찾아 허위 정보 확산을 조기에 탐지한다</span></li>
+            
+            <li><span class="box"></span><span>마이크로서비스 호출 그래프에 해석 가능한 패턴 매칭을 적용해 비정상적인 요청 포워딩을 감지, 보안 위협을 사전에 차단한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">본 논문에서 레이어링 패턴 탐지 문제를 해결하기 위해 사용한 알고리즘은?</div>
+            
+            <div class="q-opt">① Dijkstra's algorithm</div>
+            
+            <div class="q-opt">② Edmonds' blossom algorithm</div>
+            
+            <div class="q-opt">③ Kruskal's algorithm</div>
+            
+            <div class="q-opt">④ Ford-Fulkerson algorithm</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Edmonds' blossom algorithm</div>
+              <div class="why">논문은 탐지 문제를 최대‑카디널리티·최대‑가중치 매칭으로 정의하고, 이를 최적 해결하기 위해 Edmonds' blossom algorithm을 사용한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">왜 pass-through 템플릿이 레이어링 패턴을 나타낸다고 정의되는가?</div>
+            
+            <div class="q-opt">① 엔티티가 자금을 받고 즉시 전달한다</div>
+            
+            <div class="q-opt">② 엔티티가 자금을 장기간 보유한다</div>
+            
+            <div class="q-opt">③ 엔티티가 다수의 입출금을 동시에 수행한다</div>
+            
+            <div class="q-opt">④ 엔티티가 외부 계좌와 연결된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 엔티티가 자금을 받고 즉시 전달한다</div>
+              <div class="why">패스스루 템플릿은 자금을 받은 뒤 빠르게 다른 엔티티로 전달하는 구조로, 레이어링 단계에서 자금 흐름을 은폐하는 핵심 패턴이다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Ethereum</span><span class="tag">stablecoin</span><span class="tag">Edmonds' blossom algorithm</span><span class="tag">pass-through templates</span><span class="tag">U.S. Department of the Treasury</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/lockbank" target="_blank" rel="noopener">사용자를 위해 일부러 어렵게 만드는 경험, 어디까지 괜찮을까?</a>
+        </h2>
+
+        <p class="summary">청소년 행동 데이터를 활용한 기능 설계 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>청소년은 저축 욕구는 크지만 전두엽 발달 미숙으로 충동 억제가 어려워 행동 설계가 필요하다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사용자는 목표 금액 미달 시에도 돈을 인출하지 못하도록 하는 잠금 저금통을 요구했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>잠금 해제 난이도를 주사위, 계좌번호 입력, 친구 승인 등 다양한 아이디어로 설계해 균형을 맞췄다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>피트니스 앱에서 목표 운동량을 달성하기 전까지 주사위 굴리기와 같은 난이도 잠금을 적용해 꾸준한 운동 습관을 유도한다</span></li>
+            
+            <li><span class="box"></span><span>기업 교육 플랫폼에서 다음 학습 모듈 접근을 계좌번호(패스코드) 입력 형태의 잠금으로 제한해 학습 순서를 보장한다</span></li>
+            
+            <li><span class="box"></span><span>소셜 미디어에서 과도한 포스팅을 방지하기 위해 친구 승인 절차를 잠금으로 도입해 사용자의 자제력을 강화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">발달심리학의 이중 시스템 모델에서 충동 조절 기능이 완전히 발달하는 시기는?</div>
+            
+            <div class="q-opt">① 청소년기</div>
+            
+            <div class="q-opt">② 20대 초중반</div>
+            
+            <div class="q-opt">③ 30대</div>
+            
+            <div class="q-opt">④ 어린이기</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 20대 초중반</div>
+              <div class="why">본문에 전두엽은 20대 초중반까지 발달한다고 언급되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">저축 저금통 잠금 해제 아이디어 중 사용자가 직접 입력해야 하는 정보를 요구하는 방법은?</div>
+            
+            <div class="q-opt">① 주사위 굴리기</div>
+            
+            <div class="q-opt">② 계좌번호 입력</div>
+            
+            <div class="q-opt">③ 친구에게 허락 받기</div>
+            
+            <div class="q-opt">④ 무작위 추첨</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 계좌번호 입력</div>
+              <div class="why">본문에 계좌번호를 외워서 입력해야 하는 아이디어가 제시되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">토스뱅크</span><span class="tag">오주연</span><span class="tag">저금통 잠그기</span><span class="tag">발달심리학</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/leave-the-class-path-in-the-rearview-mirror-67a85b15b6be?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">Leave the Class Path in the Rearview Mirror</a>
+        </h2>
+
+        <p class="summary">Java 모듈 CLI 도구로 개발·배포 효율화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>ja는 Java 모듈 기술을 활용해 프로젝트 메타데이터와 의존성을 한 곳에 정의한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>jig는 모듈 버전 해결·컴파일·어셈블리를 수행하고 Maven 저장소와 연동한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>jfmt, jist, jdocserver 등은 각각 코드 포맷팅·심볼 검색·API 문서 서빙을 제공한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>jig의 모듈 버전 해결 방식을 Python 패키지 의존성 관리에 적용해, pyproject.toml에 선언된 버전을 자동으로 해결하고 빌드한다.</span></li>
+            
+            <li><span class="box"></span><span>jist의 소스 인식 심볼 검색을 데이터 레이크의 스키마 파일에 적용해, 스키마 변경 시 빠르게 관련 파이프라인 코드를 찾아낸다.</span></li>
+            
+            <li><span class="box"></span><span>jdocserver와 유사한 로컬 API 문서 서버를 데이터 과학 모델 서빙 API에 배포해, 팀 내 문서 접근성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">ja가 제공하는 주요 기능은 무엇인가?</div>
+            
+            <div class="q-opt">① GUI 기반 IDE 제공</div>
+            
+            <div class="q-opt">② 모듈 메타데이터와 의존성 통합 관리</div>
+            
+            <div class="q-opt">③ 데이터베이스 마이그레이션</div>
+            
+            <div class="q-opt">④ 클라우드 배포 자동화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모듈 메타데이터와 의존성 통합 관리</div>
+              <div class="why">본문에서 ja는 모듈 디스크립터를 프로젝트 전체 설명으로 활용한다는 내용이 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">jig가 수행하지 않는 작업은?</div>
+            
+            <div class="q-opt">① 모듈 버전 해결</div>
+            
+            <div class="q-opt">② 코드 포맷팅</div>
+            
+            <div class="q-opt">③ 컴파일 및 어셈블리</div>
+            
+            <div class="q-opt">④ Maven 저장소와 연동</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 코드 포맷팅</div>
+              <div class="why">jig은 버전 해결·컴파일·어셈블리를 담당하고, 코드 포맷팅은 jfmt이 담당한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">ja</span><span class="tag">jig</span><span class="tag">jfmt</span><span class="tag">jist</span><span class="tag">jdocserver</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://spectrum.ieee.org/llms-for-chip-design" target="_blank" rel="noopener">How OpenAI Used Its Own LLMs to Design Its Jalapeño Chip</a>
+        </h2>
+
+        <p class="summary">LLM으로 칩 설계 가속, DS에 AI 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>OpenAI는 자체 LLM을 활용해 칩 설계 시간을 크게 단축했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Jalapeño 칩은 컴퓨트 다이에 6개의 HBM4 스택과 I/O chiplet을 결합한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI가 하드웨어 설계 파이프라인에 직접 투입돼 향후 설계 효율을 높일 전망이다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 설계 자동화를 FPGA 배치 최적화에 적용해 레이아웃 반복 횟수를 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>LLM을 이용해 데이터 파이프라인 스키마를 자동 생성해 ETL 설계 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>LLM으로 테스트 케이스 초안을 작성해 소프트웨어 QA 프로세스를 가속한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 LLM을 사용하면 칩 설계 시간이 단축되는가?</div>
+            
+            <div class="q-opt">① LLM이 RTL 코드를 빠르게 생성한다</div>
+            
+            <div class="q-opt">② LLM이 실리콘 테스트를 대체한다</div>
+            
+            <div class="q-opt">③ LLM이 컴퓨팅 속도를 높인다</div>
+            
+            <div class="q-opt">④ LLM이 인간 설계자를 없앤다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① LLM이 RTL 코드를 빠르게 생성한다</div>
+              <div class="why">LLM은 설계 규칙과 기존 데이터에 기반해 RTL·하드웨어 설명 코드를 자동으로 생성해 설계 반복을 크게 줄인다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Jalapeño 칩에서 HBM4 스택의 주요 역할은?</div>
+            
+            <div class="q-opt">① 고대역폭 메모리 제공</div>
+            
+            <div class="q-opt">② AI 연산 가속</div>
+            
+            <div class="q-opt">③ 전원 공급</div>
+            
+            <div class="q-opt">④ I/O 관리</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 고대역폭 메모리 제공</div>
+              <div class="why">HBM4 스택은 높은 메모리 대역폭을 제공해 대규모 모델 연산에 필요한 데이터 전송을 지원한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">OpenAI</span><span class="tag">Jalapeño</span><span class="tag">HBM4</span><span class="tag">LLM</span><span class="tag">I/O chiplet</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/d1uja_aukM8" target="_blank" rel="noopener">Why Voice AI Still Needs a Screen | Pavan Muddireddy</a>
+        </h2>
+
+        <p class="summary">음성 주문 시 시각 보조 없으면 인지 부하 급증</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>순수 음성 인터페이스로 주문하면 기억 부담이 커져 어려워진다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>시각 매체는 정보를 빠르게 섭취하고 앞뒤로 확인할 수 있게 해준다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>시각은 행동에 대한 자신감과 증거를 제공한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>음성 명령 기반 물류 픽업 시스템에 화면을 추가해 시각 확인을 제공, 오류 감소와 작업 효율 향상</span></li>
+            
+            <li><span class="box"></span><span>데이터 분석 대시보드에서 음성 입력 시 실시간 텍스트와 차트 미리보기를 화면에 표시해 입력 정확도와 사용자 만족도 향상</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 순수 음성만으로 주문하기가 어려운가?</div>
+            
+            <div class="q-opt">① 메모리 부하가 커서</div>
+            
+            <div class="q-opt">② 시각적 단서가 없어</div>
+            
+            <div class="q-opt">③ 네트워크 지연이 심해서</div>
+            
+            <div class="q-opt">④ 음성 인식 오류가 많아서</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 메모리 부하가 커서</div>
+              <div class="why">텍스트에서는 전체 메뉴를 기억해야 하고 새로운 항목이 빠르게 들어와 기억이 흐려진다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Voice AI</span><span class="tag">audio interface</span><span class="tag">visual medium</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
