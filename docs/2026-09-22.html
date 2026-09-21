@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 22일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 22일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">베이지안 추론</span><span class="concept">불확실성 정량화</span><span class="concept">라벨 불확실성 모델링</span><span class="concept">사용자 조사</span><span class="concept">불안 기반 제품 설계</span><span class="concept">AI 비용 효율성</span><span class="concept">조건부 확률 모델링</span><span class="concept">optimal transport estimation</span><span class="concept">AI 생산성 도구</span><span class="concept">AI 기반 업무 검증</span><span class="concept">코드 자동생성</span><span class="concept">React 성능 최적화</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.21992v1" target="_blank" rel="noopener">Moral Entropy: Auditing Bias and Uncertainty in Moral Judgment</a>
+        </h2>
+
+        <p class="summary">윤리 라벨 불확실성을 베이지안으로 정량화해 편향 감지</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 윤리 라벨링은 의견 차이를 노이즈로 간주해 다수결로 합산했지만, 불확실성을 정량화하지 못했다. 본 논문은 베이지안 후방분포로 라벨 불확실성을 모델링하고, 합의 규칙을 교정된 엔트로피와 비교해 편향을 드러낸다. 이는 컴퓨팅 윤리와 불확실성 정량화 연구 흐름에서 라벨링 단계의 신뢰성을 높이는 새로운 접근이다</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>베이지안 후방분포를 유지하며 엔트로피를 알레아토릭·에피스테믹 불확실성으로 분해하는 Moral Entropy 프레임워크를 제안한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>any-annotator, majority, two‑vote 등 기존 합의 규칙을 교정된 posterior와 비교해 약 30%의 false‑positive 편향을 드러낸다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>세 개 코퍼스·15개 도메인에서 표준 규칙이 true‑positive를 63‑83% 놓치는 등 라벨링 편향을 정량적으로 밝혀낸다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>의료 진단 라벨링에 Moral Entropy를 적용해 환자 사례의 본질적 모호성(aleatoric)과 의사 전문성(epistemic)을 구분, 더 신뢰성 있는 진단 라벨을 만든다.</span></li>
+            
+            <li><span class="box"></span><span>크라우드소싱된 감성 분석 라벨에 엔트로피 기반 감사를 도입해 다수결 편향을 식별하고, 데이터 품질을 향상시킨다.</span></li>
+            
+            <li><span class="box"></span><span>콘텐츠 모더레이션에서 epistemic 불확실성이 높은 항목을 선택해 전문가 검토를 우선시하는 active learning 파이프라인에 적용한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Moral Entropy가 구분하는 불확실성 유형은 무엇인가?</div>
+            
+            <div class="q-opt">① 알레아토릭 불확실성</div>
+            
+            <div class="q-opt">② 에피스테믹 불확실성</div>
+            
+            <div class="q-opt">③ 두 가지 모두</div>
+            
+            <div class="q-opt">④ 없음</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 두 가지 모두</div>
+              <div class="why">프레임워크는 posterior 엔트로피를 알레아토릭(불가피한 의견 차)과 에피스테믹(데이터·주석 부족) 두 종류로 나눈다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">어떤 합의 규칙이 교정된 posterior와 약 30%의 불일치를 보였는가?</div>
+            
+            <div class="q-opt">① any-annotator rule</div>
+            
+            <div class="q-opt">② majority rule</div>
+            
+            <div class="q-opt">③ two-vote rule</div>
+            
+            <div class="q-opt">④ none</div>
+            
+            <div class="q-answer">
+              <div class="correct">① any-annotator rule</div>
+              <div class="why">논문은 any-annotator 규칙이 전체 항목 중 약 30%에서 calibrated posterior와 차이를 보인다고 보고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Moral Entropy</span><span class="tag">Bayesian</span><span class="tag">cross-entropy</span><span class="tag">Brier score</span><span class="tag">MFTC</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/remittance_transfer" target="_blank" rel="noopener">도메인 지식 없는 디자이너가 팀의 기준을 바꾼 방법</a>
+        </h2>
+
+        <p class="summary">수수료보다 불안을 데이터로 파악해 기준 전환</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>수수료가 핵심이라는 기존 가정이 사용자 인터뷰를 통해 불안이 더 큰 문제임을 발견했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>도메인 지식이 부족해도 직접 사용자에게 물어보는 것이 팀 기준을 바꾸는 핵심이었다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>불안을 해소하기 위한 UI/UX 개선이 차별화 포인트가 되었다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>해외송금 사용자의 진행 상황 불안을 해소하기 위한 실시간 트래킹 UI를 다른 금융 서비스(예: 대출 승인)에 적용해 사용자 신뢰를 높인다</span></li>
+            
+            <li><span class="box"></span><span>이커머스에서 반품 절차에 대한 불안을 사용자 인터뷰로 파악하고, 단계별 진행 상황 표시를 도입해 구매 전환율을 개선한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">해외송금 사용자가 가장 크게 느낀 불안은 무엇인가?</div>
+            
+            <div class="q-opt">① 수수료가 비싸다</div>
+            
+            <div class="q-opt">② 입력 오류 가능성</div>
+            
+            <div class="q-opt">③ 송금 진행 상황 파악 불가</div>
+            
+            <div class="q-opt">④ 환율 변동</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 송금 진행 상황 파악 불가</div>
+              <div class="why">본문에서 사용자는 '돈이 어디에 있지?' 등 송금 진행 상황에 대한 불안을 표현했다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">토스뱅크</span><span class="tag">해외송금</span><span class="tag">규제</span><span class="tag">파트너사</span><span class="tag">사용자 인터뷰</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/1S1B4XkFCD8" target="_blank" rel="noopener">Why Information Has a Price in Intelligence - Alexander Mattick</a>
+        </h2>
+
+        <p class="summary">실제 시스템에서 추론 비용을 최소화하는 전략</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>추론 비용이 ML 시스템 실용성의 핵심 제한 요소임을 강조</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>에너지 기반 모델은 이론적으로 가능하지만 실제 계산 비용이 높아 비효율적</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>제약 기반 강화학습은 전문가 지식을 저비용 제약으로 활용하는 방법을 제시</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Monte Carlo</span><span class="tag">GFlowNets</span><span class="tag">energy-based models</span><span class="tag">diffusion</span><span class="tag">constrained MDP</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/nJEtHxXz1ag" target="_blank" rel="noopener">AI시대에도 좋은 개발자가 필요한 이유</a>
+        </h2>
+
+        <p class="summary">AI 활용에도 인간 판단·코드 품질 관리가 필수</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:14</span>
+            
+            <span>AI 활용은 결정권자 지식이 필요함</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:32</span>
+            
+            <span>내부 LM으로 코드 리뷰 자동화 적용</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:02</span>
+            
+            <span>최종 배포는 인간이 승인해야 함</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 데이터 파이프라인 검증: 규칙을 프롬프트로 제공해 파이프라인 단계별 자동 검증을 수행해 오류 탐지 속도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>LLM을 활용한 설계 문서 리뷰: 설계 가이드라인을 LLM에 입력해 문서 일관성을 자동 체크함으로써 리뷰 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>LLM을 이용한 테스트 케이스 자동 생성: 코드와 요구사항을 입력해 적절한 테스트 시나리오를 생성해 테스트 커버리지를 확대한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI를 활용한 코드 리뷰에서 인간이 최종적으로 해야 하는 역할은?</div>
+            
+            <div class="q-opt">① 코드 자동 수정</div>
+            
+            <div class="q-opt">② 최종 승인 및 배포 결정</div>
+            
+            <div class="q-opt">③ LLM 학습 데이터 제공</div>
+            
+            <div class="q-opt">④ 버그 리포트 작성</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 최종 승인 및 배포 결정</div>
+              <div class="why">본문에서는 AI가 코드 리뷰를 수행하지만 최종 승인과 배포는 인간이 해야 한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LLM을 사내 코드 리뷰에 적용할 때 인간 판단이 필요한 이유는?</div>
+            
+            <div class="q-opt">① LLM은 도메인 지식이 부족하기 때문</div>
+            
+            <div class="q-opt">② LLM은 구조만 파악한다</div>
+            
+            <div class="q-opt">③ LLM은 유연성·우아함·확장성을 판단 못한다</div>
+            
+            <div class="q-opt">④ 위 모두</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 위 모두</div>
+              <div class="why">본문에 따르면 LLM은 코드 구조는 파악하지만 도메인 연계된 유연성·우아함·확장성 판단은 인간의 판단이 필요하다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI</span><span class="tag">LLM</span><span class="tag">코드 리뷰</span><span class="tag">프롬프트</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/KI2oWPz6FEQ" target="_blank" rel="noopener">[10분 테코톡] 두부의 React key props</a>
+        </h2>
+
+        <p class="summary">React key props로 UI 렌더링 효율 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>key props는 리스트 아이템을 고유히 식별해 diff 알고리즘을 최적화한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>안정적인 key 선택은 불필요한 재렌더링을 방지해 UI 성능을 높인다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>인덱스를 key로 사용하면 순서 변경 시 버그가 발생할 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">key props</span><span class="tag">우아한테크코스</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

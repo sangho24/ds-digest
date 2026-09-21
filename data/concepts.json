@@ -20,9 +20,9 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-09-22"
     },
     "AI 기반 진단 보조": {
       "aliases": [],
@@ -32,15 +32,15 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 17,
+      "count": 18,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-19"
+      "last_seen": "2026-09-22"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 12,
+      "count": 13,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-20"
+      "last_seen": "2026-09-22"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -86,9 +86,9 @@
     },
     "React 성능 최적화": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-19",
-      "last_seen": "2026-09-19"
+      "last_seen": "2026-09-22"
     },
     "SQL 기반 그래프 쿼리": {
       "aliases": [],
@@ -110,9 +110,9 @@
     },
     "optimal transport estimation": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-10",
-      "last_seen": "2026-09-10"
+      "last_seen": "2026-09-22"
     },
     "강화학습 기반 임베딩 최적화": {
       "aliases": [],
@@ -209,6 +209,12 @@
       "count": 1,
       "first_seen": "2026-09-20",
       "last_seen": "2026-09-20"
+    },
+    "라벨 불확실성 모델링": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-22",
+      "last_seen": "2026-09-22"
     },
     "랭킹 기반 수요 창출": {
       "aliases": [],
@@ -314,9 +320,9 @@
     },
     "베이지안 추론": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-21"
+      "last_seen": "2026-09-22"
     },
     "병렬 처리": {
       "aliases": [],
@@ -324,11 +330,17 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-17"
     },
-    "불확실성 정량화": {
+    "불안 기반 제품 설계": {
       "aliases": [],
       "count": 1,
+      "first_seen": "2026-09-22",
+      "last_seen": "2026-09-22"
+    },
+    "불확실성 정량화": {
+      "aliases": [],
+      "count": 2,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-17"
+      "last_seen": "2026-09-22"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -347,6 +359,12 @@
       "count": 3,
       "first_seen": "2026-09-05",
       "last_seen": "2026-09-18"
+    },
+    "사용자 조사": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-22",
+      "last_seen": "2026-09-22"
     },
     "사회적 전파 모델": {
       "aliases": [],
@@ -536,9 +554,9 @@
     },
     "조건부 확률 모델링": {
       "aliases": [],
-      "count": 9,
+      "count": 10,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-09-22"
     },
     "조직 지식 기반": {
       "aliases": [],
@@ -608,9 +626,9 @@
     },
     "코드 자동생성": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-09-21"
+      "last_seen": "2026-09-22"
     },
     "콘텐츠 큐레이션": {
       "aliases": [],
@@ -721,6 +739,6 @@
       "last_seen": "2026-09-02"
     }
   },
-  "updated_at": "2026-09-21T07:14:44.569963+09:00",
+  "updated_at": "2026-09-22T08:12:53.007725+09:00",
   "version": 1
 }
