@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-20T00:31:13.948926+00:00",
+ "generated_at": "2026-09-21T00:41:47.159796+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -1285,8 +1285,50 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "Qwen",
-   "tracked": 83,
+   "tracked": 86,
    "models": [
+    {
+     "repo_id": "Qwen/Qwen-Image-2.1-PE-I2I",
+     "url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I",
+     "created_at": "2026-09-20T08:46:47+00:00",
+     "last_modified": "2026-09-20T11:59:48+00:00",
+     "weights_at": "2026-09-20T08:46:47+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-20T08:46:47+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
+     "repo_id": "Qwen/Qwen-Image-2.1-PE-T2I",
+     "url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I",
+     "created_at": "2026-09-20T08:45:29+00:00",
+     "last_modified": "2026-09-20T11:59:46+00:00",
+     "weights_at": "2026-09-20T08:45:29+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-20T08:45:29+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
+     "repo_id": "Qwen/Qwen-Image-2.1",
+     "url": "https://huggingface.co/Qwen/Qwen-Image-2.1",
+     "created_at": "2026-09-14T03:47:26+00:00",
+     "last_modified": "2026-09-20T09:41:05+00:00",
+     "weights_at": "2026-09-14T03:47:26+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-14T03:47:26+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "Qwen/Qwen-Drive-1.0-4B",
      "url": "https://huggingface.co/Qwen/Qwen-Drive-1.0-4B",
@@ -1839,48 +1881,6 @@
      "weights_at": "2026-02-24T09:42:42+00:00",
      "has_weights": true,
      "model_card_at": "2026-02-24T09:42:42+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "Qwen/Qwen3.5-27B",
-     "url": "https://huggingface.co/Qwen/Qwen3.5-27B",
-     "created_at": "2026-02-24T09:41:56+00:00",
-     "last_modified": "2026-04-24T02:54:49+00:00",
-     "weights_at": "2026-02-24T09:41:56+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-02-24T09:41:56+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "Qwen/Qwen3.5-35B-A3B",
-     "url": "https://huggingface.co/Qwen/Qwen3.5-35B-A3B",
-     "created_at": "2026-02-24T09:39:25+00:00",
-     "last_modified": "2026-04-24T02:38:38+00:00",
-     "weights_at": "2026-02-24T09:39:25+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-02-24T09:39:25+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "Qwen/Qwen3.5-397B-A17B",
-     "url": "https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
-     "created_at": "2026-02-16T04:55:12+00:00",
-     "last_modified": "2026-04-24T05:51:23+00:00",
-     "weights_at": "2026-02-16T04:55:12+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-02-16T04:55:12+00:00",
      "report_at": null,
      "arxiv_ids": [],
      "license": "apache-2.0",
@@ -6459,6 +6459,75 @@
  ],
  "recent_events": [
   {
+   "org": "qwen",
+   "repo_id": "Qwen/Qwen-Image-2.1-PE-I2I",
+   "transition": "repo_created",
+   "observed_at": "2026-09-21T00:41:47.159796Z",
+   "at": "2026-09-20T08:46:47Z",
+   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-09-20T08:46:47+00:00"
+   }
+  },
+  {
+   "org": "qwen",
+   "repo_id": "Qwen/Qwen-Image-2.1-PE-T2I",
+   "transition": "repo_created",
+   "observed_at": "2026-09-21T00:41:47.159796Z",
+   "at": "2026-09-20T08:45:29Z",
+   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-09-20T08:45:29+00:00"
+   }
+  },
+  {
+   "org": "qwen",
+   "repo_id": "Qwen/Qwen-Image-2.1",
+   "transition": "repo_created",
+   "observed_at": "2026-09-21T00:41:47.159796Z",
+   "at": "2026-09-14T03:47:26Z",
+   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-09-14T03:47:26+00:00"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
    "transition": "report_published",
@@ -7748,80 +7817,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-21T08:57:38Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.15621"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-21T08:57:11Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.15621"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-21T08:56:49Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.15621"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 585,
-  "events": 589
+  "models": 588,
+  "events": 592
  }
 }
