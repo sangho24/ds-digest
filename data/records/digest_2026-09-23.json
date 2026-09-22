@@ -1,0 +1,421 @@
+{
+  "date": "2026-09-23",
+  "generated_at": "2026-09-22T22:51:18.403581",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Critical-State RL: Diagnosing Trainable States for Multi-Turn Tool Use",
+        "url": "https://arxiv.org/abs/2609.24985v1",
+        "published_at": "2026-09-21T17:57:20",
+        "transcript": null,
+        "body": "Multi-turn tool-use failures can hinge on a single model call, yet reward variation alone does not reveal which call would benefit from training. When rewards depend on later interactions, their variation can reflect downstream randomness rather than differences between the current actions. We introduce Critical-State RL to identify trainable states in multi-turn interactions. Given task-defined candidate calls and local rewards, the method assesses whether each reward captures the action's effect on task success and whether improvement over a reference policy is possible. It then uses nested sampling to separate action-dependent reward variation from continuation noise and optimizes the policy at the selected states using contextual-bandit training. Experiments on the Berkeley Function Calling Leaderboard (BFCL) v4 compare training at diagnostic-selected states with training at alternative states. For missing-function tasks, the diagnostic selects the response after the tool becomes available; for missing-argument tasks, it selects the response before the missing argument is supplied. Training the selected responses improves performance, including about 14 percentage points on the missing-function task, while training the alternatives leaves performance flat or worse. We further apply the recipe across models and tasks, including logged repeat-call avoidance and memory management.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "멀티턴도구사용시학습가능한상태를정확히찾아성능향상",
+        "tags": [
+          "Critical-State RL",
+          "Berkeley Function Calling Leaderboard",
+          "contextual-bandit",
+          "nested sampling",
+          "multi-turn tool use"
+        ],
+        "concepts": [
+          "Critical-State 강화학습"
+        ],
+        "key_points": [
+          {
+            "point": "보상 변동만으로는 어느 호출이 학습 필요인지 구분하기 어렵다.",
+            "timestamp": null
+          },
+          {
+            "point": "Critical-State RL은 로컬 보상을 평가하고 nested sampling으로 행동 의존 변동을 분리한다.",
+            "timestamp": null
+          },
+          {
+            "point": "선택된 상태를 contextual-bandit으로 학습하면 베이스라인 대비 최대 14% 성능 향상.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "멀티턴 도구 사용에서 단일 호출 오류가 전체 보상에 섞여 판단이 어려웠던 문제를 해결하기 위해, 이 논문은 로컬 보상과 nested sampling을 결합해 학습 가능한 상태를 진단한다. 이는 도구‑보강 LLM의 on‑policy 강화학습 흐름에 속하며, 기존 전체 보상 기반 튜닝 대비 상태‑레벨 미세조정을 가능하게 한다.",
+        "production_ideas": [
+          "고객지원 챗봇이 외부 지식베이스를 호출할 때 Critical-State 진단으로 학습 대상 API 호출을 선정해 응답 정확도를 높인다.",
+          "자율주행 차량의 경로 계획 단계에서 nested sampling을 이용해 행동에 의한 보상 변동을 분리, 불필요한 재학습을 줄인다."
+        ],
+        "quiz": [
+          {
+            "question": "Critical-State RL이 nested sampling을 사용하는 주요 이유는?",
+            "options": [
+              "전체 작업 성공 확률을 추정하기 위해",
+              "행동 의존 보상 변동을 연속 노이즈와 분리하기 위해",
+              "모델 크기를 늘리기 위해",
+              "합성 데이터를 생성하기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 nested sampling을 통해 현재 행동이 보상에 미치는 영향을 연속적인 랜덤성(노이즈)으로부터 분리해 중요한 상태만을 식별한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "쉼 없이 도는 테스트, 사람이 어디까지 돌봐야 할까요? - 토스닥터(Toss Doctor)",
+        "url": "https://toss.tech/article/toss-doctor",
+        "published_at": "2026-09-22T03:42:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3dea360d-33e3-8031-bb02-c480504d418c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스 앱은 매주 새 버전을 내보냅니다. 그 과정에서 플랫폼별로 5~7개의 RC(Release Candidate, 배포 후보) 빌드가 쌓이고, 빌드가 나올 때마다 누군가는 회원가입부터 로그인, 자산, 송금까지 같은 화면을 손으로 눌러 봅니다. 핵심 기능이 망가지진 않았는지 빠르게 훑는 스모크 테스트죠. 빠지면 안 되는 일이지만, 매번 사람이 반복하기엔 품이 너무 많이 들어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-8009-bcd6-f26d68232bb9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, 토스 QA Platform 팀입니다. 저희는 이 스모크 테스트를 자동화한 토스닥터를 만들어 운영하고 있습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-80ed-9e1c-c8ece60f4662\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스의 기술 컨퍼런스 </span><span class=\"css-1odxvuk\">SLASH</span><span class=\"css-1kxrhf3\">를 기억하시나요? </span><a class=\"css-2yhypk\" href=\"https://toss.im/slash-24/sessions/16\" rel=\"noreferrer noopener\" target=\"_blank\">&#x27;약은 약사에게, 테스트는 토스닥터에게&#x27;</a><span class=\"css-1kxrhf3\">라는 세션으로 소개했던 그 도구가 바로 토스닥터 V1입니다. V1은 제 역할을 했습니다. 하지만 매주 돌리다 보니 불편이 쌓였어요. 테스트를 새로 짜는 데 손이 많이 갔고, 화면이 조금만 바뀌어도 테스트가 우수수 깨졌고, 깨진 뒤엔 &quot;이게 왜 실패했지&quot;를 사람이 하나하나 들여다봐야 했죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-809c-a2cd-f351e37ad028\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 토스닥터 V2에서는 네 가지를 뜯어고쳤습니다. </span><span class=\"css-q3ktjb\">코드를 만드는 법, 화면 속 요소를 찾는 법, 실패를 판단하는 법, 그리고 고치는 법</span><span class=\"css-1kxrhf3\">. 그리고 이 네 가지가 실제 디바이스에서 끊김 없이 이어지도록 실행 환경도 다시 만들었습니다. 오늘은 그 이야기입니다. 그리고 이 V2가 지금 저희가 쓰고 있는 &#x27;토스체커&#x27;의 근간이 됐는데요, 그건 맨 뒤에서 짧게 이야기하겠습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3e3a360d-33e3-8017-94c9-cac1718dfd2a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3dea360d-33e3-8021-9f96-ef2eca590be7\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">코드를 사람이 짜지 않게 됐습니다</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dea360d-33e3-80f6-aadb-cf6574434aaa\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">예전엔 테스트 하나를 만들려면, 화면을 열어 요소를 찾고 클릭·입력·검증을 절차적으로 코드에 옮겨 적어야 했습니다. 이 테스트가 무엇을 검증하는지는 코드 속에 묻혀 있었고, 새 기능이 나올 때마다 같은 작업을 처음부터 반복했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-801d-9fad-e361d5b08e04\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스닥터 V2에서는 테스트를 두 단계로 나눴습니다. 먼저 사람은 &#x27;무엇을 검증할지&#x27;만 적습니다. 절차적인 스텝 대신, Gherkin 문법의 시나리오로요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-802f-a49d-f6feac0b604c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">Given-When-Then은 사람이 읽어도 바로 이해되고, AI가 코드로 옮기기에도 좋은 형식입니다. 그다음 </span><code><span class=\"css-1mjnzsq\">/codegen</span></code><span class=\"css-1kxrhf3\"> 명령이 이 </span><code><span class=\"css-1mjnzsq\">.feature</span></code><span class=\"css-1kxrhf3\"> 파일을 실제 실행 코드로 변환합니다.</span><span class=\"css-1kxrhf3\"> LLM에 Appium MCP를</span><span class=\"css-1kxrhf3\"> 붙여, 실제 디바이스를 보며 요소를 찾아 스텝을 구현합니다. </span><code><span class=\"css-1mjnzsq\">.feature</span></code><span class=\"css-1kxrhf3\">에 남긴 주석은 그대로 구현 가이드가 돼요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-80a6-b58f-f2806a70b191\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">여기서 한 번 부딪힌 게 있는데요. 요소를 찾을 때 화면과 UI 트리를 통째로 AI에 넘겼더니 토큰이 감당이 안 됐습니다. 그래서 요소 탐색을 3단계로 나눠, 필요한 만큼만 찾게 바꿨습니다. 먼저 스크린샷과 화면에 드러난 요소 목록만으로 찾고(전체 UI 트리는 넘기지 않습니다), 안 되면 화면 구조 전체(XML)를 깊게 뒤지고, 그래도 안 되면 사람에게 물어요. 값싼 방법부터, 비싼 방법은 꼭 필요할 때만 찾습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dea360d-33e3-80f6-9831-c4ae4bf72079\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">시나리오는 사람이 쓰고, 코드는 도구가 씁니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"3dea360d-33e3-80c5-8e6e-e29a586466ea\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/fe77eecd-84db-4b30-9efa-8617bab27d52/codegen-flow.png\" /></figure><p class=\"css-14on8x8\" id=\"3dea360d-33e3-80da-b7ae-f78ab7c4e8c3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">가입부터 송금·인증서·자산까지 앱의 핵심 흐름을 폭넓게 덮었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3e3a360d-33e3-8011-aa7b-eac06b83a927\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3dea360d-33e3-8090-bc1e-e5ccdb1ab7ce\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">화면이 바뀌어도, 요소를 스스로 찾습니다</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dea360d-33e3-8010-884f-c246f4c2b6ab\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">코드를 아무리 잘 짜도, 실행 중에 예상 못한 화면이 끼어듭니다. 어제 없던 이벤트 팝업이 뜨고, 버튼 이름이 </span><code><span class=\"css-1mjnzsq\">확인</span></code><span class=\"css-1kxrhf3\">에서 </span><code><span class=\"css-1mjnzsq\">확인하기</span></code><span class=\"css-1kxrhf3\">로 살짝 바뀌고, 심지어 앱 위로 외부 광고 웹페이지가 통째로 덮이기도 합니다",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "테스트 정의와 코드 생성을 분리해 자동화 효율을 높인다",
+        "tags": [
+          "Toss Doctor",
+          "V2",
+          "Gherkin",
+          "Appium MCP",
+          "LLM"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "코드 자동생성",
+          "AI 기반 업무 검증"
+        ],
+        "key_points": [
+          {
+            "point": "V2는 Gherkin 시나리오로 검증 목표만 작성하고, 도구가 코드를 생성한다",
+            "timestamp": null
+          },
+          {
+            "point": "LLM과 Appium MCP를 연계해 .feature 파일을 실행 코드로 변환한다",
+            "timestamp": null
+          },
+          {
+            "point": "요소 탐색을 스크린샷·목록→XML→인간 순으로 3단계로 나눠 토큰 사용을 최소화한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "스크린샷과 가시 요소 목록만으로 웹 UI 테스트 요소를 찾는 3단계 탐색을 적용해 API 호출량을 줄인다",
+          "Gherkin 기반 시나리오를 데이터 파이프라인 검증 스크립트로 변환해 LLM이 자동 코드 생성하도록 하여 데이터 엔지니어링 작업을 가속화한다",
+          "LLM을 활용해 규정 준수 검증 코드를 자동 생성하고, 실패 시 인간 검토를 요청하는 워크플로우를 도입해 데이터 거버넌스 효율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "Toss Doctor V2에서 Gherkin 시나리오를 도입한 주요 이점은?",
+            "options": [
+              "UI 렌더링 속도 향상",
+              "비개발자도 테스트 작성 가능",
+              "앱 용량 감소",
+              "네트워크 지연 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "Gherkin은 비전문가도 읽고 작성할 수 있어 테스트 의도를 사람은 쓰고 코드는 도구가 생성하도록 함"
+          },
+          {
+            "question": "요소 탐색 3단계 중 가장 먼저 시도하는 방법은?",
+            "options": [
+              "전체 UI XML 전송",
+              "스크린샷과 화면에 보이는 요소 목록만 사용",
+              "인간에게 직접 문의",
+              "무작위 추정"
+            ],
+            "answer_index": 1,
+            "explanation": "첫 단계는 화면 스크린샷과 가시 요소 목록만으로 AI가 요소를 찾도록 하여 토큰 사용을 최소화한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Can gzip be a language model?",
+        "url": "https://nathan.rs/posts/gzip-lm/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Can gzip be a language model?\n\nNathan Barry\nJune 14, 2026\n\nA while back I wrote about [language modeling without neural networks](/posts/unbounded-n-gram/), where I generated Shakespeare with an unbounded n-gram model: no weights, no training, just counting. Fortuitously, I came across the paper [Language Modeling is Compression](https://arxiv.org/abs/2309.10668), which mentioned the **compression–prediction equivalence**:\n\n> **every prediction model is inherently a compressor, and all compression algorithms are prediction models**.\n\nThis led to the natural question: *can `gzip` do language modeling?*[1](#fn:1)\nNo neural network, no learned parameters, nothing. Just the compressor that ships with your operating system. You prime it with a corpus, give it a normal text prompt, and it continues that prompt by searching for the byte sequences that compress best. Here’s some real, unedited output after priming it on tiny Shakespeare:\n\n```\ngzipt --corpus data/tinyshakespeare.txt --prompt $'MENENIUS:\\n' --length 200\n```\n\n```\nMENENIUS:\n'Though all at once canq\n\nMARCIUS:\nPray now, nocamest thou to a morsel .\n\nLARTIUS:\nHence, and\nI' the end admire, where G\nagain; and after it ag .\n```\n\nIt turns out, kind of? It’s not exactly coherent text, but it clearly *knows* something about the text. Much more than I expected `gzip` to *know*.[2](#fn:2) So how can a compressor generate this?\n\n## Compression is prediction[#](#compression-is-prediction)\n\nThink about what a compressor does. It spends few bytes on data it “expects” and many bytes on data it doesn’t. If I hand you a file that’s the letter `A` repeated a million times, you can describe it in one sentence. A million random bytes, on the other hand, have no structure to exploit and barely compress at all.\n\nThis is not a coincidence; it’s the core of information theory. The number of bits needed to encode a symbol is $-\\log\\_2 p$, where $p$ is the probability the model assigns to it. High probability means few bits. So any compressor has a probability model hiding inside it, whether or not anyone wrote one down.\n\n`gzip` uses [DEFLATE](https://en.wikipedia.org/wiki/Deflate), which compresses the next bytes by finding matches against the recent text in a 32 KiB sliding window. If a continuation echoes something already in the window, DEFLATE encodes it as a cheap back-reference instead of literal bytes. So:\n\n> A continuation that gzip “expected”, because it echoes text already in its window, compresses to almost nothing.\n\nThat gives us a score. If I have some context and I want to know how good a candidate continuation is, I just measure:\n\n$$\\text{score}(\\text{candidate}) = \\texttt{len(gzip(context + candidate))}$$\n\nThe smaller the compressed length, the more “predicted” the candidate is. To prime the model, I include a corpus in gzip’s window. Any continuation that looks like the corpus compresses small, and any continuation that doesn’t compresses large.\n\n## Generating by beam search[#](#generating-by-beam-search)\n\nScoring is one thing; generating is another. The naive approach of picking the single next byte that compresses best fails badly, and for a subtle reason: gzip only gives an integer byte length (no fractions). Adding one byte often doesn’t change the compressed length at all, so many candidates tie and the signal is buried in quantization noise.\n\nThe fix is to look *ahead* a whole span before committing. `gzipt` runs a [beam search](https://en.wikipedia.org/wiki/Beam_search) over byte sequences. At each step, the current context is:\n\n```\ncorpus window + recent tail of (prompt + generated bytes)\n```\n\nThen `gzipt` tries possible next bytes. Each candidate continuation is scored by compressing `context + candidate` and checking how many bytes the compressed result takes.\n\nThe loop is:\n\n1. **Prompt.** Start with the user’s prompt as the initial text to continue. There is no start token; the prompt bytes are just part of the context gzip sees.\n2. **Context.** Show gzip the corpus window plus the recent tail of the prompt/generated text.\n3. **Search.** Keep the `beam_width` most-compressible partial continuations. Extend each by every byte that occurs in the corpus, score all of them by compressed length, and prune back down to the best `beam_width`. Repeat for `horizon` bytes.\n4. **Commit.** Take the most-compressible full span (or sample among the finalists if `temperature` is positive), append it, and start the loop over.\n\nOne detail that matters is that **only the last `tail` bytes of generated output stay in the scoring context.** DEFLATE codes nearby matches more cheaply than far ones, so if gzip could see its entire history, the cheapest thing to do is often to fall into verbatim loops, repeatedly copying text it just emitted.\n\n  \n  \n\nYou can see the decoding and scoring process in the animation above, which is the same replay shown at the top. The whole thing is one file of pure standard-library Python (just `zlib`). Code’s on [GitHub](https://github.com/n",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "압축기능을 활용해 비신경망 언어 모델링 가능성을 보여줌",
+        "tags": [
+          "gzip",
+          "DEFLATE",
+          "gzipt",
+          "tinyshakespeare",
+          "beam search"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "언어 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "압축 알고리즘은 내부에 확률 모델을 가지고 있어 언어 모델링에 활용될 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "gzip의 DEFLATE는 슬라이딩 윈도우와 백레퍼런스로 다음 바이트를 예측하고, 압축 길이로 점수를 매긴다.",
+            "timestamp": null
+          },
+          {
+            "point": "정수 길이의 양자화 문제를 해결하기 위해 gzipt는 바이트 시퀀스 전체를 평가하는 빔 서치를 사용한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "코드 자동완성에 gzip 기반 압축 점수를 적용해 기존 언어 모델보다 가벼운 후보 선택을 가능하게 한다",
+          "로그 스트림에서 압축 길이가 크게 늘어나는 구간을 이상 징후로 탐지하는 압축 기반 이상 탐지 시스템을 만든다",
+          "유전체 데이터에 gzip을 프라임하고 압축 점수로 DNA 서열을 생성해 기존 시퀀싱 모델의 비용을 절감한다"
+        ],
+        "quiz": [
+          {
+            "question": "gzip을 이용한 언어 모델링에서 정수 길이만 반환되는 것이 문제인 이유는?",
+            "options": [
+              "후보가 동일한 점수를 받아 구분이 어려워진다",
+              "압축 속도가 느려진다",
+              "메모리 사용량이 증가한다",
+              "모델이 과적합한다"
+            ],
+            "answer_index": 0,
+            "explanation": "gzip은 압축 결과 길이를 정수로만 반환하므로 여러 후보가 같은 길이를 가질 수 있어, 점수 차이가 없어 후보를 구별하기 어렵다."
+          },
+          {
+            "question": "gzipt가 빔 서치를 사용하는 주된 이유는?",
+            "options": [
+              "전체 문장을 미리 압축하기 위해",
+              "한 바이트씩 선택하면 양자화 노이즈가 발생하기 때문에",
+              "GPU 가속을 위해",
+              "데이터베이스 인덱스를 만들기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "한 바이트씩 평가하면 압축 길이 변화가 없을 수 있어 양자화 노이즈가 크게 발생한다. 빔 서치를 통해 여러 바이트를 동시에 평가해 더 신뢰성 있는 선택을 가능하게 한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "토스 FE 개발자들의 검증법",
+        "url": "https://youtu.be/YCNcTpcDRf8",
+        "published_at": "2026-09-07T05:37:37",
+        "transcript": "[00:04] AI로 만든 결과물 어떻게 검증하고 있나라는 발표를 해주실 지미님을 좀 모셔보도록 하겠습니다.\n[00:10] 자 준비 되셨나요? 네. 반갑습니다.\n[00:11] 안녕하세요.\n[00:13] 한번 간단하게 설명해 주시면서 발표 좀 시작해 보면 될 것 같은데.\n[00:16] 네. 지금 앞에 발표하신 분들도 많이 언급하셨고, 또 지금 들으시는 분들 또 AI를 사용하고 계신 개발자분들은 되게 많은 고민을 하고 계실 것 같긴 해요.\n[00:26] 저희도 마찬가지고 AI로 되게 많은 결과물들이 만들어지고 있고, 그걸 어떻게 우리가 컨트롤해야 되나 이거에 대한 저희도 고민을 갖고 있어서 거기에 나름에 이제 검증의 방식을 저희는 찾고 있는데 그 그 진행의 과정을 공유해 드리고자 이런 제목을 삼았습니다.\n[00:45] 프런트 AI 팀은 최지민 김예준 이렇게 두 명의 프런트엔드 플랫폼 엔지니어로 구성되어 있는 2인 팀입니다.\n[00:52] 저희 팀은 어 토스 안에 있는 프런트엔드 엔지니어들이 어떻게 하면 더 AI를 편하게 잘 쓸 수 있을까 그거에 대해서 같이 먼저 고민하고 그거에 해결책들을 이곳저곳 뭐 연구하고 시도해보고 하는 좀 그런 연구 조직 혹은 플랫폼 조직이다라고 생각해 주시면 될 것 같아요.\n[01:13] 그래서 종국에는 그게 이제 저희가 만든 그 AI 워크플로우 때문에 이제 다른 분들이 토스팀에 조인하고 싶은 강력한 이유가 되는 것 이것을 목표로 하고 있습니다.\n[01:22] 그래서 지금 뭐 지금 프런트엔드 개발한다라고 하면 많은 분들이 이런 워크플로우를 통하실 것 같아요.\n[01:29] 디자인을 디자이너가 제공해 주든 아니면 클라우드 디자인으로 만들든.\n[01:30] 스펙을 논의할 때도 인벌브 될 수도 있고.\n[01:38] 그 디자인을 분석하고 그걸 내가 이제 어떻게 코드를 짜야 될지 뭐 계획을 하실 수도 있을 것 같고요.\n[01:43] 그리고 이후에는 코드 작성이 있겠죠.\n[01:44] 뭐 로직이 들어갈 수도 있고, 컴포넌트나 UI 개발을 하실 것 같고 그 이후에는 그 기능이 잘 워킹하는지 자체적으로 검증하는 과정을 거치실 것 같아요.\n[01:53] 그리고 뭐 환경에 따라 다르겠지만 알파 환경이 있다면 알파 환경에 먼저 배포를 하게 될 거고 그에 따른 이제 품질 보증을 하겠죠.\n[02:00] 뭐 QA 파트가 따로 있다면 그분들이 검수를 해주실 거고 그게 아니라면 또 이제 뭐 동료분들 아니면은 같이 그래서 인수 테스트라든지 뭐 여러 가지 과정을 거쳐서 라이브에 배포가 나갈 것 같아요.\n[02:12] 거기에서 나오는 버그 혹은 뭐 CS 이런 피드백에 대한 대응을 하겠죠.\n[02:16] 이게 이제 또 똑같이 다시 스펙을 논의하게 되는 그런 워크플로우를 통하게 된다고 저희는 생각하고 있어요.\n[02:21] 그리고 저희도 실제로 그렇게 일을 하고 있고요.\n[02:24] 근데 이제 그 워크플로우에 다 AI들이 되게 많은 부분 인벌브해 주고 또 효율적으로 만들어 주는 부분들이 있어요.\n[02:32] 그래서 토스 안에서도 이제 최소 네 배 이상의 어 결과물들이 나오고 있다.\n[02:37] 그래서 되게 속도나 양은 증가했는데 한편으로 저희가 잃고 있는 게 있다는 생각이 들었어요.\n[02:42] 내가 짜지 않은 코드 혹은 에이전트가 많이 짜준 코드에 대해서 이해를 해야 되고 또 그거를 검증해야 되는 결과적으로 이 결과물을 믿기까지의 시간이 증가하고 있다.\n[02:54] 그래서 어떻게 하면 이 상황을 모면할 수 있을까?\n[02:57] AI를 더 잘 쓰고 싶은데. 그럼 검증의 문제를 어떻게든 부러뜨려야 된다는 생각이 들었고요.\n[03:03] 맞아요. 그래서 어떻게 하면 더 잘 믿을 수 있을까?\n[03:06] 이것의 포인트를 잡고 E2E에 지금은 집중을 하고 있습니다.\n[03:10] 지금 실제로 저희가 돌리고 있는 E2E 테스트 샘플을 가져왔는데요.\n[03:14] 저거는 이제 실제 저희 디바이스팜에 있는 실제 기기에서 돌아가고 있는 화면이고요.\n[03:21] 지금은 이제 애드, 광고를 보고 이제 뭐 포인트를 받는 일반적으로 사람들이 많이 쓰고 있는 그런 퍼널을 실제로 테스트하는 거예요.\n[03:29] 이거는 지금 실제 그 페이지 새로 이제 토스 앱을 외부에 있는 외부 브라우저에서 8초 동안 이제 체류하고 아마 뭐 구경을 해야겠죠.\n[03:38] 구경을 하고 다시 앱으로 돌아오면 인증을 하고 나면 포인트를 수령할 수 있는 굉장히 좀 심플하지만 그래도 많은 분들이 경험하고 또 프런트엔드 개발자 중에 많은 분들이 단순한 퍼널이라고 봤을 때 경험하게 되는 사례라고 생각해요.\n[03:55] 그래서 저희는 저 E2E 테스트를 만들 때 처음에 집중했던 거는 사실 코드베이스로 접근을 했었어요.\n[04:01] 코드에는 결국 뭐 SSOT라고 볼 수 있는 뭐 PRD도 담겨 있고 모든 기획과 실제 제품 자체가 다 담겨 있는 거라서 거기 이제 진실이 있다.\n[04:11] 이 생각으로 그 화면 흐름을 추론하고 거기서 시나리오를 만들고 E2E까지 생성하는 것을 생각했고 그래서 AI가 일단 제일 잘 할 것 같아서 그래서 맡기자라고 했고 이 모든 게 좀 자동화가 될 것 같았어요.\n[04:24] 근데 예 잘 안 됐습니다.\n[04:26] 이게 어 여러 가지가 있을 텐데 저희는 이제 코드에는 모든 것이 다 담겨 있긴 한데 너무 모든 것이 담겨 있는 게 문제인 것 같기도 했어요.\n[04:36] 그래서 무엇이 중요한지는 결국 그 검증하고 싶은 사람 혹은 이 제품을 만든 사람의 의도 아니면 디자이너 그 사람들의 머릿속에 있는 것이 조금 코드에는 바로 드러나지 않는 것 그것이 문제였던 것 같아요.\n[04:49] 그래서 이걸 어떻게 풀어야 될까?\n[04:51] 그래가지고 다시 이제 처음으로 돌아갔죠.\n[04:53] 플랫폼 조직의 고객이라고 하는 분들은 프런트엔드 개발자분들이니까 예 서비스 개발자분들한테 일단 물어보러 갔어요.\n[05:01] 그래서 직접 고객을 찾아간 거죠.\n[05:02] 만나서 이제 이야기를 좀 많이 들어보고 그분들이 하고 있는 워크플로우에 대해서 좀 이야기 들어보고 했을 때는 사실 그때까지만 해도 E2E가 거의 없었어요.\n[05:11] 그래서 E2E가 없는 것 자체가 필요가 없어서 안 만든 건 아닐까 이 생각도 이제 근본적으로 들었었는데 그분들 만나 보니까 E2E가 필요가 없어서 만들지 않은 게 아니라 하고 싶은데 못 하는 거다.\n[05:23] 그러면 그 필요한 E2E의 니즈를 어떻게 해소하고 있냐를 봤을 때는 이제 사람이 손으로 검증을 하고 있었던 거예요.\n[05:31] 아까 이제 프런트엔드 워크플로우를 봤을 때 굉장히 많은 꼭지들이 있었는데 대부분의 이제 그 과정에 AI가 적절히 사용되면서 뭐 뭐 PRD 생성이라든지 디자인 적용이라든지 코드 리뷰라든지 뭐 배포나 이런 것들 굉장히 많이 도와주고 있는데 근데 정작 검증 쪽은 사람이 손으로.\n[05:49] 리소스가 있는 팀은 이제 QA 분들께 맡기기도 하고 없는 팀은 이제 다 같이 모여서 자 저는 됐어요.\n[05:56] 저는 안 돼요.\n[05:57] 이걸 체크하고 계셨던 거죠.\n[05:58] 그래서 어 이거는 풀어야 되는 문제가 맞겠다 이런 생각이 들었고 다시 그래서 그러면 우리가 생각하는 E2E의 모습이 어때야 되냐 이것에 대해서 좀 고민을 하게 됐어요.\n[06:09] 근데 저희는 어쨌든 E2E를 할 거면 이게 되게 큰 산이긴 하지만 날림으로 하지 말자 이 생각이 들어서 뭐 모킹이 날림이라는 의미는 아니지만 최대한 이제 의존성을 없애고 그냥 표면 자체에만 의존하는 거죠.\n[06:22] 그러니까 맞아요.\n[06:23] 실제 유저가 경험하는 것을 그대로 이제 저희 테스트가 체크할 수 있기를 바란다였고요.\n[06:30] 그리고 또 중요한 거는 이게 언제 돌려도 항상 이제 동일한 결과를 얻을 수 있도록 언젠 되고 언젠 안 되는 그런 영역들을 최대한 걷어내기 위한 고민을 했었고 그리고 이 과정에서 최대한 AI를 쓴다.\n[06:42] 그래서 생산과 유지보수에서는 그 비용을 최대한 AI를 써서 줄이겠다.\n[06:48] 그리고 이게 쌓인다고 하면 그 테스트업을 한 환경과 플러스 이제 AI 친화적인 환경이 되고 그 테스트들은 결국 우리가 원래 갖고 싶었는데 못 가졌던 거니까 우리에게 자산이 될 거다 이 생각으로 접근을 했어요.\n[07:01] 그래서 결국에는 이번에는 코드베이스로 해서 한번 실패했으니까 이제 사람 기반으로 접근했습니다.\n[07:06] 이 사람 기반이라는 게 뭐 별건 없고 직접 이제 E2E가 자산이 될 만한 팀을 모색했고요.\n[07:13] 그래서 그분들이 진짜 강력한 니즈를 갖고 있는 팀에 저희가 직접 들어가서 그 작업을 하게 됐던 것 같아요.\n[07:19] 그래서 어 예를 들어서 뭐 얼굴 결제나 뭐 토스 쇼핑 이렇게 저희가 몇 개 나열해 놨는데 한 번의 실수가 되게 뼈아픈 영역.\n[07:27] 그래서 테스트 작성의 난이도가 아무리 높더라도 한 번 실수하면 그게 파급력도 너무 커서 E2E가 만들어지면 자산으로서 되게 어 잘 발휘될 가치를 발현할 수 있는 그런 팀을 그런 영역을 찾았습니다.\n[07:41] 하고 그냥 이제 코드베이스에서 알아서 딸깍으로 만들어지는 것보다 일단은 내가 직접 E2E를 짜는 과정을 거쳤어요.\n[07:49] 그래서 실무자 입장에서 직접 테스트를 짜면서 그분들의 니즈도 저희가 먼저 들었었고 그리고 직접 저희 팀에서 그 E2E를 깨지지 않는 E2E 어떻게 보면 항상 이제 자산이 될 수 있는 E2E를 만들고 해서 어떤 것이 필요할까에 대해서 설계하고 구축하기 시작했습니다.\n[08:07] 네. 그러다 보니까 진짜 다양한 팀들이랑 협업을 할 수밖에 없었고요.\n[08:11] 그리고 테스트업을 한 API가 마련된 것도 있었지만 안 된 것도 꽤나 많았어요.\n[08:15] 그래서 지금 저희가 나열해 놓은 것처럼 뭐 인증과 관련된 다양한 API들과 어떻게 보면 앱 앱에서 동작해야 네이티브 앱에서 동작해야 되는 영역.\n[08:25] 그리고 뭐 단순하게는 어드민에서도 그냥 상품 쇼핑에서 상품을 하나 만드는데 그것이 사실 알파 앱에서 제가 테스트 용으로 만든 상품이 바로 검색이 안 돼요.\n[08:37] 우리가 테스트를 하기 위해서 상품을 만들었는데 그 테스트가 끝날 때까지도 상품이 검색이 안 되는 그런 상황이 있어서 그런 걸 이제 다 찾아다니면서 저희의 필요한 니즈들을 요청드리고 그걸로 API들을 만들어 주시고 또 어떤 도구들을 만들어서 저희가 생각하는 꼭 꼭 뚫어야 되는 영역에 대해서는 계속 작업을 해 왔던 것 같아요.\n[08:57] 예 하면서 사실 위에 이제 뭐 저 네 개뿐 아니라 되게 되게 다양한 도구들을 테스트 가능한 환경을 위해서 요청드려서 이제 만들어 내고.\n[09:05] 사실 서비스 개발자들이 저것만 있었어요 만들었는데라고 했었던 그런 것들이 이제 만들어진 거죠.\n[09:10] 그분들은 이거를 하기에는 또 시간이 꽤나 많이 드니까.\n[09:12] 너무 무거워요 이거 하긴.\n[09:14] 그래서 저희가 먼저 해보기 시작했고요.\n[09:16] 또 플랫폼 개발자의 특성상 이제 똑같은 일을 반복하는 것 자체가 굉장히 또 싫고 어떻게 하면 이제 더 나은 도구가 있을까 이걸 고민하다가 처음에는 저희가 뭐 에뮬레이터라든지 시뮬레이터에다가 그냥 저희의 환경들을 셋업하는 뭐 그런 도구들을 만들었다가 살펴보니까 또 팀 내 토스 안에서 이제 자체 디바이스 팜을 만들고 있는 팀이 계셨어요.\n[09:36] 그래서 그 팀이랑 빨리 협업해 가지고 필요한 니즈들을 또 거기에 부어 드렸고 저희가 편하려고 각종 이제 도구들을 만들게 됐어요.\n[09:44] 뭐 간단하게는 시나리오를 이제 짜려고 해도 그 맥락을 전혀 모르니까 어려우니까 아 이걸 어떻게 하면 편하게 짜지?\n[09:52] 편하게 짜지 생각하다가 QA 분들이 갑자기 거기 이제 뭐 마이그레이션 때문에 전체 QA를 한다고 말씀하셨던 때가 있어요.\n[09:58] 그래서 그때 그냥 키바나 로그 저희 이제 로깅 시스템이라든가 쌓이는데 로그 스택으로 ES MCP를 붙여 가지고 그 QA 분들의 유저 넘버로 그분들의 액션들 로그를 다 일단 끌어온 다음에 그걸로 이제 코드를 제너하는 그런 스킬도 만들어 봤었고.\n[10:15] 그다음에 저기 이제 디바이스 팜에 있는 도구들을 저희는 뭐 어쨌든 API를 통해서 그 디바이스를 조작하는 식인데 어 그 도구들을 계속 이제 저희가 손으로 하다 보니까 너무 귀찮아서 아 이걸 에이전트한테 그냥 맡겨도 될까?\n[10:28] 해서 에이전트가 이 도구를 마음대로 쓸 수 있도록 에이전트 디바이스라는 개념을 뭐 기존에도 있지만 저희 디바이스 팜용으로 만들어서 제공하고 그리고 또 디바이스를 이제 E2E를 짜면서 저희가 필요한 UI라든지 지금 어떻게 돌아가고 있어라는 것들을 뷰 이런 것들은 지금 AI로 너무나도 편하게 짤 수 있으니까 그런 도구들을 계속 만들었던 것 같아요.\n[10:49] 지금 테스트를 이제 작성하는 과정이에요.\n[10:50] 아까 보셨던 그 테스트를 작성하려면 저희 같은 경우에는 지금 이제 그냥 자연어로 나 이거 어디에서 이런 테스트 E2E 테스트 만들고 싶어 하고 디바이스까지 네가 새로운 유저로 로그인해 가지고 나한테 넘겨.\n[11:03] 라고 하면 이제 실제 디바이스에서 어떤 동작을 하고 있고 실제로 혜택 탭에 눌러가고 그 과정에서 디바이스를 조작했던 로그들이 다 뜨고요.\n[11:13] 그리고 뭐 구경하러 가기도 있고 근데 저기 필수 동의 같은 경우에는 제가 직접 클릭하고 그 클릭한 내용을 얘가 인지해서 똑같이.\n[11:21] 시나리오를 자동.\n[11:22] 작업을 하면 요거 기준으로 얘가 만들어주는 거예요.\n[11:24] 그래서 이거 같은 경우에는 시나리오가 없는 상태에서 내가 그냥 거기에 켜줘 그리고 내가 이거 가 눌러 저거 가 이거 눌렀어.\n[11:30] 여기까지 해서 이제 포인트가 작성이 포인트 받는까지 되면 그걸 확인하는 테스트 코드를 짜줘.\n[11:36] 라고 했을 때 아까 마지막 부분에 테스트 코드까지 E2E로 만들어지는 그런 걸 보실 수 있어요.\n[11:41] 그래서 지금 단순하게는 그냥 저희가 그 에이전트한테 나 이거 하고 싶어 가서 실제로 떠 있는 화면 그 에이전트가 조작하고 있는 화면을 보면서 어 그때 요거 눌러 봐.\n[11:52] 아니면 제가 그냥 클릭을 직접 해서 하고 들어가고 들어가고 했던 어떻게 보면 E2E의 시나리오를 직접 그리고 어 여기까지 확인됐어 여기까지 한 거를 E2E 코드로 만들어줘 하면 저희가 사용하고 있는 도구들로 코드 젠까지 해주는 거죠.\n[12:06] 자연어로 좀 시켜 놓고 좀 못하는 거는 직접 손으로도 하면 손으로 한 것까지 다 이렇게 얘가 수집해 가지고 테스트 코드로 만들어 주는.\n[12:14] 맞아요. 근데 이게 무조건 한 방에 되지는 않고요.\n[12:15] 로그를 또 만들어서 덧대고 덧대면서 이제 사실 슬릭하게 진행될 수 있도록까지 간 거고요.\n[12:21] 그러면서 이제 저희는 이제 E2E는 편하게 만들게 좀 된 것 같아요.\n[12:25] 그래서 깨지지 않는 E2E를 고민하고 있어요.\n[12:28] 근데 시작은 뭐 여러분들도 E2E 혹은 뭐 테스트 많이 TDD 많이 시도해 보셨을 거고 끝까지 유지되는 그런 좋은 테스트 혹은 잘 관리되는 테스트를 보기가 되게 어려운 것 같아요.\n[12:39] 결국은 스킵하거나 뭐 지우거나.\n[12:41] 이게 만들자마자 레거시가 되는 게 코드가 코드뿐만 아니라 사실 테스트도 그렇고.\n[12:47] 심지어 이제 제가 만든 테스트가 아니면 더더욱 이거 뭐지?\n[12:50] 으악 몇 번 하다가 일단 예 스킵하게 되는 것 같아요.\n[12:55] 그래서 저희는 어쨌든 이게 자산으로서 E2E를 대하고 있기 때문에 목표를 그냥 깨지지 않는 E2E 어떻게 하면은 이 뭐 CI에서 돌든 어디서 돌든 깨진 E2E를 AI가 스스로 고칠 수 있을까?\n[13:07] 이거에 대한 고민을 했던 것 같아요.\n[13:09] 그래서 또 저희가 만든 도구 중에 얘를 한 번 볼까요.\n[13:13] 테스트가 깨진 거를 어떻게 인지하냐.\n[13:15] 저희는 사실 CI에서 돌리든 로컬에서 돌리든 테스트가 깨지면 이제 저기에 보여지는 지금 리플레이라는 저 파일들이 다 저장되도록 템플 템플 폴더에 다 저장되도록 해 놨어요.\n[13:26] 디바이스팜에서 돌아갔던 내역이 남는 거죠.\n[13:29] 맞아요.\n[13:30] 실제 오른쪽에 있는 건 디바이스 팜에서 실제 녹화했던 영상이고요.\n[13:34] 지금 화면을 보면 클릭해서 실패했는데 클릭을 못 해서 실패했는데 구경하러 가기라는 버튼으로 바뀐 거예요.\n[13:41] 원래는 미션하러 가기였는데.\n[13:42] 그래서 E2E 테스트에는 미션하러 가기가 있었고 걔가 미션하러 가기 미션하러 가기를 찾았는데 못 찾은 거죠.\n[13:49] 못 찾아서 지금 깨진 거고.\n[13:51] 그럼 CI에서 저희가 사실 테스트를 돌리면 그 테스트가 어떻게 깨졌고 뭐가 바뀌어서 깨졌는지를 재현하기도 귀찮고 힘들어서 어떻게 하면 이걸 좀 편하게 우리가 인지할 수 있을까라고 생각해서 저 리플레이라는 도구를 만들었는데 이 도구를 가지고 사실 실패 지점 영상이랑 아까 말씀드린 뭐 디바이스 팜과 결국 API를 호출하는 모든 로그들을 뭐 제이슨 엘로 다 남겨 놨기 때문에 이걸 통해서 저희가 또 이걸 에이전트가 보고 리플레이를 그대로 이제 저장됐으니까 저걸 그냥 줘요.\n[14:21] 주고 야 이거 보고 고쳐 봐.\n[14:24] 영상 주고.\n[14:25] 맞아요.\n[14:25] 영상과 레 로그를 다 주니까 결국 그 스크린 덤프랑 지금 화면에 어떤 것들이 떴고 나는 어떤 요소를 찾고 있고 그리고 그 뭐 어떻게 보면 대표적인 CTA겠죠?\n[14:35] 거기로부터 다음 액션이 이어져야 되는데 그게 변경되지 않았다는 걸 인지하고 이제 스스로 고칠 수 있는 상황이 되더라고요.\n[14:42] 제일 처음에는 이걸 AI가 고치게 해 주려고 만든 건 아니고 저희가 그냥 CI에서 깨졌을 때 이거 나중에 깨지면 사람들이 안 쓸 텐데 어떻게 하면 사실 잘 쓰게 될까?\n[14:52] 를 생각해서 사람을 위한 도구를 만들었더니 좀 저런 것까지 되게 되더라고요.\n[14:56] 사실 CS 들어오는 과정이랑 거의 똑같네요.\n[14:58] 이거 안 되는데요 하고 이렇게 CS 들어오면 그걸 영상 받아다가 저희가 대조 해 가지고 이거 고쳐야겠다 하는.\n[15:04] 재현 재현이 안 되면 사실 개발자 진짜 고치기 힘들잖아.\n[15:07] 그걸 해주는 거네요.\n[15:08] 네. 좋습니다.\n[15:10] 그래서 저희가 뭐 AI를 좀 잘 활용하기 위한 꿀팁이라고 말씀드릴 수 있는 게 앞에서부터 좀 이어진 것 같은데요.\n[15:16] 이제 단순히 컨텍스트를 제공하는 게 아니라 그냥 우리가 사람이 쓰기 좋은 도구를 만들어서 그걸 AI한테 그래 넘겨줬을 때 조금 더 극대화되는 경험들을 했어요.\n[15:26] AI의 능력이.\n[15:27] 원래 에이전트가 할 수 있는 것보다 도구를 줌으로써 훨씬 올마이티해지는 느낌이 들더라고요.\n[15:35] 그래서 저희는 그것들에서 어 AI 이렇게 하면은 진짜 못 할 게 없을 것 같은데 이런 생각에 점점 이제 도달해 지고 있는 것 같아요.\n[15:43] 근데 이렇게 AI에 저희가 집중을 하면서 할수록 또 놓치게 되는 게 뭐 여러 가지가 있겠지만 플랫폼 개발자라서 그런지도 모르겠는데 이게 도구를 개발자들은 만들다 보면 이 내 도구를 너무 사랑하게 되잖아요.\n[15:56] 그래서 막 파다 보니까 너무 또 이제 기술에 매몰되어 있는 건 아닌가 이런 생각이 들어서 이제 뭐 비용이 되게 저렴해지고 코드를 짤 수 있는 게 저렴해져 가고 있더라도 사실 가치가 명확하게 없으면 사람들은 이거는 잘 안 쓸 거라고 생각했었고 그리고 또 몇 팀을 이렇게 만나보고 니즈를 만나보니까 이게 진짜 팀마다 상황마다 니즈가 다 다르더라고요.\n[16:20] 그래서 이게 그냥 모두에게 통용되는 게 아니라 몇몇 사람들에게만이라도 100% 커버해 줄 수 있는 뭐 그런 도구가 필요하겠다라는 생각까지도 이제 하게 됐던 것 같아요.\n[16:29] 그래서 진짜 제품처럼 약간 유저가 필요로 하는 게 뭔지를 먼저 좀 보고 이격이 생기지 않게 최대한.\n[16:34] 네 그렇지 않으면 결국 그분들이 쓰지 않을 거고 쓰지 않으면 저희가 생각하는 방향으로의 트랜스포밍이 될 되기 어려우니까 그래서 이제 본질은 사람에 있다 있다고 생각하게 되고.\n[16:44] 그래서 근데 저희가 지금 이 과정들을 보면 사실 토스에서라서 할 수 있었던 것들이 꽤 많았던 것 같아요.\n[16:52] 최복동 이제 최고의 복지는 아 동료다.\n[16:54] 최고의 복지는 동료다.\n[16:55] 맞아요 맞아요.\n[16:56] 그런데 사실 제가 이게 될까?\n[16:59] 이렇게 생각하면 이미 뭔가 토스가 되게 규격화돼 있고 뭐 사실 로깅 시스템도 저 뭐 많은 팀들을 봤지만 잘 되어 있는 팀들이 잘 없어요.\n[17:08] 근데 저희는 사실 로그 자체도 제품처럼 생각하고 있고 아 디바이스 팜도 우리가 뭐 만들면 우리가 우리 우리의 특화된 무엇이 있으면 되게 편할 텐데 그런 고민들 비슷한 고민들을 하고 있는 분들이 토스 안에서 굉장히 다양한 작업들을 하고 계시니까 혹시 이게 그분들이 혹시 내가 이거 어려워하면 누가 좀 하지 않았을까?\n[17:27] 라는 영역으로 옆을 돌아보면 그분들이 계셨고 그분들한테 요청하면서 계속 이것저것을 살이 붙어 갔던 것 같아요.\n[17:34] 그래서 저희가 저희 둘이서만 했으면 사실 아마 도중에 좀 포기하고 피벗했을 수도 있을 것 같은데.\n[17:41] 꽤 많은 분들이 도와주셨고 또 뭐 필요하다라고 하면은 사실 왜 필요한지 오히려 막 저희가 어 이게 진짜 필요한 게 아니네라고 인지할 수 있을 정도로 뭐 다시 되물어 주시기도.\n[17:51] 주는 건가 필요 없어 보이면 지민이 이거 필요 없는데요.\n[17:53] 이렇게 할 수도 있으니까요.\n[17:55] 맞아요 맞아요.\n[17:55] 그렇게 해 주시기도 하고 그러면서 저도 오히려 이제 요청을 드릴 때 어 어떤 부분이 진짜 우리가 필요하지?\n[18:00] 라고 날카롭게 세워 가지고 요청드릴 수도 있었던 것 같고.\n[18:04] 그리고 뭐 사실 프레임워크 저희는 어떻게 보면 지금은 모바일에 대한 E2E를 주로 하고 있기 때문에 웹 프레임워크 팀이랑 굉장히 긴밀하게 일을 하고 있는데 거기 이제 아 이것 좀 혹시 해 주실 수 있어요?\n[18:14] 이러면 사실 뭐가 더 필요한지 먼저 물어봐 주시고 그런 식으로 계속 이제 더 나은 저희 지금 워크플로우를 만들기 위해서 많은 분들이 지금 도움을 주고 계십니다.\n[18:24] 사실 2인 팀이지만 한 120명 정도.\n[18:27] 아 120 한 200.\n[18:28] 에이전트 1인당 100.\n[18:31] 그래서 저희는 앞으로는 사실 뭐 E2E에서 E2E 만들고 끝날 건 아닐 것 같고요.\n[18:37] 이 지금 만든 기반을 조금 더 단단하게 해서 진짜 흔들리지 않는 안정적인 환경 그리고 테스트 수행 시간도 지금은 뭐 실제 E2E처럼 돌아가기 때문에 어떻게 보면 좀 이 정도까지 걸릴 일인가 싶은 영역도 있어요.\n[18:48] 그래서 그런 부분은 좀 줄이고 싶을 수 있을 것 같고요.\n[18:52] 그리고 상상하는 미래는 뭐 E2E 꼭 E2E만이 아니더라도 그냥 아까 워크플로우를 보여 드렸던 프런트엔드 워크플로우에 대한 것들을 어떻게 하면은 진짜 딸깍의 시대.\n[19:03] 딸깍 시대.\n[19:04] 하지만 믿을 수 있는 딸깍의 시대를 이룰 수 있을까?\n[19:06] 그걸 고민하면서 계속 그래가고 있는 것 같아요.",
+        "body": "#토스 #프론트엔드 #토스채용\n\n2026.08.25 'AI 시대, 토스 FE는 어떻게 일할까' 웨비나 중\nAI 로 만든 결과물을 어떻게 검증하고 있는가? 세션 편집 영상\n\n웨비나 Full 영상 다시보기 https://youtube.com/live/xDVbTlFfu30",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 코드 검증 자동화로 품질·생산성 향상",
+        "tags": [
+          "AI",
+          "E2E",
+          "토스",
+          "디바이스팜",
+          "QA"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI 도입으로 결과물 4배 증가했지만 검증 시간도 늘었다",
+            "timestamp": "02:32"
+          },
+          {
+            "point": "E2E 테스트에 집중해 검증 문제를 해결하고자 함",
+            "timestamp": "03:06"
+          },
+          {
+            "point": "코드에 모든 것이 담겨 있어도 의도와 디자인 의도가 드러나지 않아 검증이 어려웠다",
+            "timestamp": "04:24"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 기반 자동 E2E 테스트 생성 방식을 백엔드 API 검증에 적용해 테스트 커버리지를 높인다",
+          "데이터 파이프라인 검증 요구를 데이터 엔지니어와 인터뷰해 맞춤형 자동 검증 규칙을 만든다",
+          "앱 UI 테스트에서 모킹을 배제하고 실제 디바이스 환경만으로 검증해 환경 의존성을 감소시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 코드만으로 AI가 생성한 테스트가 잘 안 되었는가?",
+            "options": [
+              "코드에 모든 정보가 포함돼 있어 과다",
+              "코드에 의도와 디자이너 머릿속 내용이 드러나지 않음",
+              "AI 모델이 부족",
+              "테스트 환경이 불안정"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 코드에 모든 것이 담겨 있지만 의도와 디자인 의도가 바로 드러나지 않아 검증이 어려웠다고 언급했다."
+          },
+          {
+            "question": "팀이 E2E 테스트 설계 시 강조한 두 가지 원칙은 무엇인가?",
+            "options": [
+              "의존성 최소화와 실제 사용자 경험 재현",
+              "빠른 실행과 높은 커버리지",
+              "자동화와 클라우드 배포",
+              "코드 리뷰와 정적 분석"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 의존성을 없애고 표면(실제 사용자 경험)만 검증하고, 언제 실행해도 동일한 결과를 얻도록 하겠다고 말했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "방해하지 않고, 눈에 띌 수 있을까",
+        "url": "https://toss.tech/article/asset_management",
+        "published_at": "2026-09-22T08:20:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8028-a6eb-cfc7f5cd7fef\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스뱅크 Visual Designer 김현지입니다. 오늘은 </span><span class=\"css-q3ktjb\">자산관리 리포트</span><span class=\"css-1kxrhf3\"> </span><span class=\"css-q3ktjb\">기능</span><span class=\"css-1kxrhf3\">의 클릭률을 3배로 올리기까지의 과정, 그리고 그 안에서 얻은 러닝을 이야기해 보려고 해요.</span></span></span></p><h2 class=\"css-1c1qox8\" id=\"3dfa360d-33e3-80bd-8ffd-e62dd10f7646\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">유용한 추천인데 왜 누르지 않을까</span></span></span></h2><figure class=\"css-of5acw\" id=\"3dfa360d-33e3-808c-9c7b-c67309fc7361\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/b99a23cb-e98b-4a3a-8606-5448defc5455/기존_안.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-jfs1hr\">기존 입출금 영역 하단에 배치된 자산관리 리포트</span></figcaption></figure><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80cb-81f2-f447af262a68\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80e1-90c8-d6bf2d5a9f5f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">자산관리 리포트는 </span><span class=\"css-q3ktjb\">사용자의 자산 상태를 분석해 알맞은 상품이나 서비스를 추천하는 기능</span><span class=\"css-1kxrhf3\">이에요. 토스뱅크 홈의 입출금 영역 아래에 배너로 노출하고 있었는데, 클릭률이 2%에 그쳤어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8075-be27-f86efb8fb83d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">내 상황을 보고 해주는 추천인데, 왜 눌러보지 않을까요? 여러 가설을 세워본 끝에, 토스뱅크 홈에는 정보가 많다 보니 주변 정보와 충분히 구분되지 않아 그냥 지나칠 수 있겠다고 생각했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8099-8d62-e649245e94b9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 </span><span class=\"css-q3ktjb\">리포트가 눈에 잘 띄면서도, 내 상황에 맞는 개인화된 추천이라는 점이 한눈에 느껴지도록 디자인</span><span class=\"css-1kxrhf3\">하는 것을 목표로 잡았어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8063-8dc0-ee8a9bd28021\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-802b-8bee-e22c5ab78ac5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80c2-b028-f7c7b81b745a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><hr class=\"css-1ifza5r\" /><h2 class=\"css-1c1qox8\" id=\"3dfa360d-33e3-80fa-885c-ff321de699bd\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">표현을 바꿔도 화면은 여전히 복잡한 이유</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80ac-a3b7-cc196b047470\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">먼저 표현 방식을 바꿔봤어요. 말을 건네듯 제안하는 말풍선 형태, 사용자의 자산 상태를 먼저 보여준 뒤, 그에 맞는 상품을 차례로 제안하는 방식도 만들어봤죠. 직접 말해주는 것처럼 표현하면 추천이 더 와닿을 것 같았어요.</span></span></span></p><figure class=\"css-of5acw\" id=\"3dfa360d-33e3-8073-87a4-e70363ddb31f\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/ef270a65-de38-4f09-830c-8b104262398c/그렸던_시안5.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-jfs1hr\">그렸던 시안들</span></figcaption></figure><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80b2-aa32-f9a62137d787\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 화면은 여전히 복잡했어요. 저마다의 목적으로 찾아온 화면 사이에 읽을거리를 하나 더 얹는 구조는 달라지지 않았거든요. </span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80fb-9d8f-ea712848a6b5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문제는 계좌 정보와 추천이 같은 자리에서 시선을 나누고 있다는 것이었어요. 계좌는 사용자의 정보이고, 리포트는 저희가 새롭게 건네는 제안이에요. 역할이 다른 둘이 한데 섞여 있다 보니, 리포트도 계좌 정보를 훑어보는 과정에서 함께 지나치기 쉬웠어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-803a-bffe-fa95471b550c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그렇다고 리포트만 무작정 강조할 수도 없었어요. 계좌를 확인하려는 사람에게 리포트가 먼저 보이면, 정작 필요한 정보가 잘 보이지 않을 수 있었어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8003-aa73-e61e5e07749f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">리포트를 발견하게 하면서도, 하려던 일을 방해하지 않는 방법을 찾아야 했어요. 그래서 리포트의 위치 자체를 다시 생각했어요. 계좌 정보와 한자리에서 경쟁하게 하는 대신, 아예 다른 자리에서 보여주면 어떨까 하고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8098-9b80-d16f56a1f904\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80cd-ba61-c7383644281a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80c3-8ec5-c292154e2a22\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><hr class=\"css-1ifza5r\" /><h2 class=\"css-1c1qox8\" id=\"3dfa360d-33e3-8043-b08f-d2a82e4338b5\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-q3ktjb\">툴팁에서 찾은 새로운 영역</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80c1-8088-cf8ffaaf5a0a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "UI 재설계로 개인화 추천 클릭률 3배 상승 전략",
+        "tags": [
+          "토스뱅크",
+          "자산관리 리포트",
+          "말풍선"
+        ],
+        "concepts": [
+          "개인화 추천",
+          "시각적 위계 설계",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "기존 배너 클릭률이 2%에 머물렀다",
+            "timestamp": null
+          },
+          {
+            "point": "말풍선·개인화 강조 UI를 시도했지만 화면 복잡이 지속",
+            "timestamp": null
+          },
+          {
+            "point": "추천과 계좌 정보가 동일 영역에 있어 시선 경쟁 발생, 강조와 방해 사이 트레이드오프 필요",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "말풍선 형태의 개인화 제안을 이커머스 상품 페이지에 적용해 주요 상품 정보와 구분된 맞춤형 할인 정보를 눈에 띄게 제공한다",
+          "재무 대시보드에서 계좌 요약과 투자 제안을 별도 패널로 분리해 사용자가 계좌 정보를 먼저 확인하고 제안을 따로 검토하도록 설계한다",
+          "헬스케어 앱에서 사용자의 현재 건강 상태를 기반으로 맞춤형 팁을 배너 형태로 표시하되, 주요 기록 영역과 시각적으로 구분해 인지 부담을 낮춘다"
+        ],
+        "quiz": [
+          {
+            "question": "기존 자산관리 리포트 배너 클릭률이 낮은 주요 원인은 무엇인가?",
+            "options": [
+              "위치가 눈에 잘 안 띔",
+              "디자인이 복잡함",
+              "사용자 맞춤 부족",
+              "위 세 가지 모두"
+            ],
+            "answer_index": 3,
+            "explanation": "배너가 입출금 영역에 배치돼 주변 정보와 구분되지 않아 눈에 잘 안 띄고, 개인화가 부족해 클릭률이 2%에 머물렀다"
+          },
+          {
+            "question": "디자인을 바꾼 후에도 화면이 복잡했던 이유는?",
+            "options": [
+              "추천과 계좌 정보가 같은 영역에 배치돼 시선 경쟁",
+              "색상이 너무 밝아 주목을 방해",
+              "글씨가 작아 가독성 저하",
+              "이미지 로딩 지연으로 UI가 느려짐"
+            ],
+            "answer_index": 0,
+            "explanation": "추천과 계좌 정보가 동일 자리에서 시선을 나누어 사용자가 리포트를 놓치기 쉬워 화면이 여전히 복잡하게 느껴졌다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "product"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

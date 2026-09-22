@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 23일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 23일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">Critical-State 강화학습</span><span class="concept">AI 생산성 도구</span><span class="concept">코드 자동생성</span><span class="concept">AI 기반 업무 검증</span><span class="concept">조건부 확률 모델링</span><span class="concept">언어 모델링</span><span class="concept">개인화 추천</span><span class="concept">시각적 위계 설계</span><span class="concept">디자인 트레이드오프</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.24985v1" target="_blank" rel="noopener">Critical-State RL: Diagnosing Trainable States for Multi-Turn Tool Use</a>
+        </h2>
+
+        <p class="summary">멀티턴도구사용시학습가능한상태를정확히찾아성능향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>멀티턴 도구 사용에서 단일 호출 오류가 전체 보상에 섞여 판단이 어려웠던 문제를 해결하기 위해, 이 논문은 로컬 보상과 nested sampling을 결합해 학습 가능한 상태를 진단한다. 이는 도구‑보강 LLM의 on‑policy 강화학습 흐름에 속하며, 기존 전체 보상 기반 튜닝 대비 상태‑레벨 미세조정을 가능하게 한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>보상 변동만으로는 어느 호출이 학습 필요인지 구분하기 어렵다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Critical-State RL은 로컬 보상을 평가하고 nested sampling으로 행동 의존 변동을 분리한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>선택된 상태를 contextual-bandit으로 학습하면 베이스라인 대비 최대 14% 성능 향상.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고객지원 챗봇이 외부 지식베이스를 호출할 때 Critical-State 진단으로 학습 대상 API 호출을 선정해 응답 정확도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>자율주행 차량의 경로 계획 단계에서 nested sampling을 이용해 행동에 의한 보상 변동을 분리, 불필요한 재학습을 줄인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Critical-State RL이 nested sampling을 사용하는 주요 이유는?</div>
+            
+            <div class="q-opt">① 전체 작업 성공 확률을 추정하기 위해</div>
+            
+            <div class="q-opt">② 행동 의존 보상 변동을 연속 노이즈와 분리하기 위해</div>
+            
+            <div class="q-opt">③ 모델 크기를 늘리기 위해</div>
+            
+            <div class="q-opt">④ 합성 데이터를 생성하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 행동 의존 보상 변동을 연속 노이즈와 분리하기 위해</div>
+              <div class="why">논문에서는 nested sampling을 통해 현재 행동이 보상에 미치는 영향을 연속적인 랜덤성(노이즈)으로부터 분리해 중요한 상태만을 식별한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Critical-State RL</span><span class="tag">Berkeley Function Calling Leaderboard</span><span class="tag">contextual-bandit</span><span class="tag">nested sampling</span><span class="tag">multi-turn tool use</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/toss-doctor" target="_blank" rel="noopener">쉼 없이 도는 테스트, 사람이 어디까지 돌봐야 할까요? - 토스닥터(Toss Doctor)</a>
+        </h2>
+
+        <p class="summary">테스트 정의와 코드 생성을 분리해 자동화 효율을 높인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>V2는 Gherkin 시나리오로 검증 목표만 작성하고, 도구가 코드를 생성한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM과 Appium MCP를 연계해 .feature 파일을 실행 코드로 변환한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>요소 탐색을 스크린샷·목록→XML→인간 순으로 3단계로 나눠 토큰 사용을 최소화한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>스크린샷과 가시 요소 목록만으로 웹 UI 테스트 요소를 찾는 3단계 탐색을 적용해 API 호출량을 줄인다</span></li>
+            
+            <li><span class="box"></span><span>Gherkin 기반 시나리오를 데이터 파이프라인 검증 스크립트로 변환해 LLM이 자동 코드 생성하도록 하여 데이터 엔지니어링 작업을 가속화한다</span></li>
+            
+            <li><span class="box"></span><span>LLM을 활용해 규정 준수 검증 코드를 자동 생성하고, 실패 시 인간 검토를 요청하는 워크플로우를 도입해 데이터 거버넌스 효율을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Toss Doctor V2에서 Gherkin 시나리오를 도입한 주요 이점은?</div>
+            
+            <div class="q-opt">① UI 렌더링 속도 향상</div>
+            
+            <div class="q-opt">② 비개발자도 테스트 작성 가능</div>
+            
+            <div class="q-opt">③ 앱 용량 감소</div>
+            
+            <div class="q-opt">④ 네트워크 지연 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 비개발자도 테스트 작성 가능</div>
+              <div class="why">Gherkin은 비전문가도 읽고 작성할 수 있어 테스트 의도를 사람은 쓰고 코드는 도구가 생성하도록 함</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">요소 탐색 3단계 중 가장 먼저 시도하는 방법은?</div>
+            
+            <div class="q-opt">① 전체 UI XML 전송</div>
+            
+            <div class="q-opt">② 스크린샷과 화면에 보이는 요소 목록만 사용</div>
+            
+            <div class="q-opt">③ 인간에게 직접 문의</div>
+            
+            <div class="q-opt">④ 무작위 추정</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 스크린샷과 화면에 보이는 요소 목록만 사용</div>
+              <div class="why">첫 단계는 화면 스크린샷과 가시 요소 목록만으로 AI가 요소를 찾도록 하여 토큰 사용을 최소화한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss Doctor</span><span class="tag">V2</span><span class="tag">Gherkin</span><span class="tag">Appium MCP</span><span class="tag">LLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://nathan.rs/posts/gzip-lm/" target="_blank" rel="noopener">Can gzip be a language model?</a>
+        </h2>
+
+        <p class="summary">압축기능을 활용해 비신경망 언어 모델링 가능성을 보여줌</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>압축 알고리즘은 내부에 확률 모델을 가지고 있어 언어 모델링에 활용될 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>gzip의 DEFLATE는 슬라이딩 윈도우와 백레퍼런스로 다음 바이트를 예측하고, 압축 길이로 점수를 매긴다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정수 길이의 양자화 문제를 해결하기 위해 gzipt는 바이트 시퀀스 전체를 평가하는 빔 서치를 사용한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>코드 자동완성에 gzip 기반 압축 점수를 적용해 기존 언어 모델보다 가벼운 후보 선택을 가능하게 한다</span></li>
+            
+            <li><span class="box"></span><span>로그 스트림에서 압축 길이가 크게 늘어나는 구간을 이상 징후로 탐지하는 압축 기반 이상 탐지 시스템을 만든다</span></li>
+            
+            <li><span class="box"></span><span>유전체 데이터에 gzip을 프라임하고 압축 점수로 DNA 서열을 생성해 기존 시퀀싱 모델의 비용을 절감한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">gzip을 이용한 언어 모델링에서 정수 길이만 반환되는 것이 문제인 이유는?</div>
+            
+            <div class="q-opt">① 후보가 동일한 점수를 받아 구분이 어려워진다</div>
+            
+            <div class="q-opt">② 압축 속도가 느려진다</div>
+            
+            <div class="q-opt">③ 메모리 사용량이 증가한다</div>
+            
+            <div class="q-opt">④ 모델이 과적합한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 후보가 동일한 점수를 받아 구분이 어려워진다</div>
+              <div class="why">gzip은 압축 결과 길이를 정수로만 반환하므로 여러 후보가 같은 길이를 가질 수 있어, 점수 차이가 없어 후보를 구별하기 어렵다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">gzipt가 빔 서치를 사용하는 주된 이유는?</div>
+            
+            <div class="q-opt">① 전체 문장을 미리 압축하기 위해</div>
+            
+            <div class="q-opt">② 한 바이트씩 선택하면 양자화 노이즈가 발생하기 때문에</div>
+            
+            <div class="q-opt">③ GPU 가속을 위해</div>
+            
+            <div class="q-opt">④ 데이터베이스 인덱스를 만들기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 한 바이트씩 선택하면 양자화 노이즈가 발생하기 때문에</div>
+              <div class="why">한 바이트씩 평가하면 압축 길이 변화가 없을 수 있어 양자화 노이즈가 크게 발생한다. 빔 서치를 통해 여러 바이트를 동시에 평가해 더 신뢰성 있는 선택을 가능하게 한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">gzip</span><span class="tag">DEFLATE</span><span class="tag">gzipt</span><span class="tag">tinyshakespeare</span><span class="tag">beam search</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/YCNcTpcDRf8" target="_blank" rel="noopener">토스 FE 개발자들의 검증법</a>
+        </h2>
+
+        <p class="summary">AI 코드 검증 자동화로 품질·생산성 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:32</span>
+            
+            <span>AI 도입으로 결과물 4배 증가했지만 검증 시간도 늘었다</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:06</span>
+            
+            <span>E2E 테스트에 집중해 검증 문제를 해결하고자 함</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:24</span>
+            
+            <span>코드에 모든 것이 담겨 있어도 의도와 디자인 의도가 드러나지 않아 검증이 어려웠다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 자동 E2E 테스트 생성 방식을 백엔드 API 검증에 적용해 테스트 커버리지를 높인다</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 검증 요구를 데이터 엔지니어와 인터뷰해 맞춤형 자동 검증 규칙을 만든다</span></li>
+            
+            <li><span class="box"></span><span>앱 UI 테스트에서 모킹을 배제하고 실제 디바이스 환경만으로 검증해 환경 의존성을 감소시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 코드만으로 AI가 생성한 테스트가 잘 안 되었는가?</div>
+            
+            <div class="q-opt">① 코드에 모든 정보가 포함돼 있어 과다</div>
+            
+            <div class="q-opt">② 코드에 의도와 디자이너 머릿속 내용이 드러나지 않음</div>
+            
+            <div class="q-opt">③ AI 모델이 부족</div>
+            
+            <div class="q-opt">④ 테스트 환경이 불안정</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 코드에 의도와 디자이너 머릿속 내용이 드러나지 않음</div>
+              <div class="why">본문에서 코드에 모든 것이 담겨 있지만 의도와 디자인 의도가 바로 드러나지 않아 검증이 어려웠다고 언급했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">팀이 E2E 테스트 설계 시 강조한 두 가지 원칙은 무엇인가?</div>
+            
+            <div class="q-opt">① 의존성 최소화와 실제 사용자 경험 재현</div>
+            
+            <div class="q-opt">② 빠른 실행과 높은 커버리지</div>
+            
+            <div class="q-opt">③ 자동화와 클라우드 배포</div>
+            
+            <div class="q-opt">④ 코드 리뷰와 정적 분석</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 의존성 최소화와 실제 사용자 경험 재현</div>
+              <div class="why">본문에서 의존성을 없애고 표면(실제 사용자 경험)만 검증하고, 언제 실행해도 동일한 결과를 얻도록 하겠다고 말했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI</span><span class="tag">E2E</span><span class="tag">토스</span><span class="tag">디바이스팜</span><span class="tag">QA</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/asset_management" target="_blank" rel="noopener">방해하지 않고, 눈에 띌 수 있을까</a>
+        </h2>
+
+        <p class="summary">UI 재설계로 개인화 추천 클릭률 3배 상승 전략</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 배너 클릭률이 2%에 머물렀다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>말풍선·개인화 강조 UI를 시도했지만 화면 복잡이 지속</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>추천과 계좌 정보가 동일 영역에 있어 시선 경쟁 발생, 강조와 방해 사이 트레이드오프 필요</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>말풍선 형태의 개인화 제안을 이커머스 상품 페이지에 적용해 주요 상품 정보와 구분된 맞춤형 할인 정보를 눈에 띄게 제공한다</span></li>
+            
+            <li><span class="box"></span><span>재무 대시보드에서 계좌 요약과 투자 제안을 별도 패널로 분리해 사용자가 계좌 정보를 먼저 확인하고 제안을 따로 검토하도록 설계한다</span></li>
+            
+            <li><span class="box"></span><span>헬스케어 앱에서 사용자의 현재 건강 상태를 기반으로 맞춤형 팁을 배너 형태로 표시하되, 주요 기록 영역과 시각적으로 구분해 인지 부담을 낮춘다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">기존 자산관리 리포트 배너 클릭률이 낮은 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 위치가 눈에 잘 안 띔</div>
+            
+            <div class="q-opt">② 디자인이 복잡함</div>
+            
+            <div class="q-opt">③ 사용자 맞춤 부족</div>
+            
+            <div class="q-opt">④ 위 세 가지 모두</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 위 세 가지 모두</div>
+              <div class="why">배너가 입출금 영역에 배치돼 주변 정보와 구분되지 않아 눈에 잘 안 띄고, 개인화가 부족해 클릭률이 2%에 머물렀다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">디자인을 바꾼 후에도 화면이 복잡했던 이유는?</div>
+            
+            <div class="q-opt">① 추천과 계좌 정보가 같은 영역에 배치돼 시선 경쟁</div>
+            
+            <div class="q-opt">② 색상이 너무 밝아 주목을 방해</div>
+            
+            <div class="q-opt">③ 글씨가 작아 가독성 저하</div>
+            
+            <div class="q-opt">④ 이미지 로딩 지연으로 UI가 느려짐</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 추천과 계좌 정보가 같은 영역에 배치돼 시선 경쟁</div>
+              <div class="why">추천과 계좌 정보가 동일 자리에서 시선을 나누어 사용자가 리포트를 놓치기 쉬워 화면이 여전히 복잡하게 느껴졌다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">토스뱅크</span><span class="tag">자산관리 리포트</span><span class="tag">말풍선</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
