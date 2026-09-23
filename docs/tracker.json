@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-22T01:22:13.867697+00:00",
+ "generated_at": "2026-09-23T01:05:14.929997+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -836,7 +836,7 @@
      "repo_id": "nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
      "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
      "created_at": "2026-07-29T17:46:48+00:00",
-     "last_modified": "2026-09-12T03:23:44+00:00",
+     "last_modified": "2026-09-22T21:49:01+00:00",
      "weights_at": "2026-07-29T17:46:48+00:00",
      "has_weights": true,
      "model_card_at": "2026-07-29T17:46:48+00:00",
@@ -846,7 +846,8 @@
       "2503.04721",
       "2505.15670",
       "2507.08128",
-      "2604.04847"
+      "2604.04847",
+      "2609.21967"
      ],
      "license": "openmdw-1.1",
      "gated": "false",
@@ -6473,6 +6474,38 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
+   "transition": "report_published",
+   "observed_at": "2026-09-23T01:05:14.929997Z",
+   "at": "2026-09-22T21:49:01Z",
+   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "arxiv_ids": [
+     "2609.21967"
+    ]
+   }
+  },
+  {
+   "org": "openai",
+   "repo_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna",
+   "transition": "announced",
+   "observed_at": "2026-09-23T01:05:14.929997Z",
+   "at": "2026-09-22T18:00:00Z",
+   "source_url": "https://openai.com/index/introducing-gpt-6-sol-and-luna",
+   "method": "official_rss",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "title": "Introducing GPT-6 Sol and Luna"
+   }
+  },
+  {
    "org": "upstage",
    "repo_id": "upstage/solar-pro4-tokenizer",
    "transition": "repo_created",
@@ -7785,57 +7818,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-ASR-1.7B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-28T03:22:40Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.21337"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-ASR-0.6B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-01-28T03:15:39Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-ASR-0.6B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2601.21337"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 589,
-  "events": 593
+  "events": 595
  }
 }
