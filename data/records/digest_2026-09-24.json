@@ -1,0 +1,388 @@
+{
+  "date": "2026-09-24",
+  "generated_at": "2026-09-23T22:54:53.200468",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.IR",
+        "source_key": "arxiv:cs.IR",
+        "source_label": "arXiv:cs.IR",
+        "title": "Knowledge-as-Skill: A Structural Design for Autonomous Knowledge-Base Use by LLM Agents",
+        "url": "https://arxiv.org/abs/2609.25991v1",
+        "published_at": "2026-09-22T10:44:10",
+        "transcript": null,
+        "body": "Retrieval-augmented generation (RAG) gives large language models (LLMs) access to external knowledge, but its conventional retrieve-concatenate-generate pipeline makes retrieval decisions on behalf of the model. As tool use and agent loops become more reliable, an agent can decide whether to retrieve, what to inspect, and when to stop. This shift exposes a new bottleneck: the agent may not know what a knowledge base contains. Traditional knowledge bases expose documents as anonymous text chunks with limited information about scope, purpose, provenance, or relations.\n  We propose Knowledge-as-Skill, an organization scheme that makes a knowledge base discoverable, navigable, and self-descriptive. It has three layers: a discovery layer centered on SKILL.md; a navigation layer with one index.md per directory; and a knowledge layer containing documents with YAML frontmatter for topic, type, provenance, and lifecycle. The design follows the Open Knowledge Format (OKF) and the Skill protocol without modifying the agent framework. We also provide knowledge-as-skill, a pipeline for converting heterogeneous collections of PDFs, Word files, web exports, and notes into this structure.\n  In a preliminary evaluation on the WixQA enterprise customer-support benchmark, our setup obtains 0.889 Factuality and 0.816 Context Recall, compared with reported Corpus2Skill values of 0.767 and 0.708. It obtains slightly lower Faithfulness, lower Context Precision, and more interaction turns. Because the models, prompts, and knowledge-package construction differ, these results are directional cross-work evidence rather than a controlled comparison.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 에이전트가 지식베이스를 스스로 탐색",
+        "tags": [
+          "Retrieval-augmented generation",
+          "LLM",
+          "Knowledge-as-Skill",
+          "WixQA",
+          "YAML"
+        ],
+        "concepts": [
+          "문서 기반 지식 관리",
+          "메타데이터 활용 검색",
+          "AI 기반 문서 구조화"
+        ],
+        "key_points": [
+          {
+            "point": "전통적인 RAG 파이프라인은 모델 대신 검색 결정을 수행해 에이전트의 자율성을 제한한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Knowledge-as-Skill은 SKILL.md, index.md, YAML 메타데이터 문서의 3계층 구조로 지식베이스를 발견·탐색·자기 기술화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "WixQA 벤치마크에서 사실성·컨텍스트 리콜이 기존 Corpus2Skill 대비 크게 향상되었다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "전통적인 RAG는 검색·결합·생성 순서에서 모델이 아닌 파이프라인이 검색을 결정한다는 한계가 있다. 본 논문은 메타데이터와 계층적 문서 구조를 활용해 에이전트가 스스로 지식베이스를 탐색하도록 하는 Knowledge-as-Skill 방식을 제안하며, 이는 LLM 기반 에이전트의 자율 검색 및 활용 연구 흐름에 속한다.",
+        "production_ideas": [
+          "기업 내부 정책 문서를 Knowledge-as-Skill 구조로 정리해 AI 챗봇이 정책을 자동으로 찾아 답변하도록 한다.",
+          "고객 지원 티켓 데이터베이스에 3계층 메타데이터를 적용해 LLM 에이전트가 필요한 티켓을 선택·조회하고 불필요한 조회를 줄인다.",
+          "코드 스니펫 라이브러리에 YAML 앞머리 메타데이터를 넣어 LLM 코드 어시스턴트가 유형·출처에 따라 적절한 스니펫을 탐색하도록 한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 RAG 파이프라인이 에이전트의 검색 결정을 제한하는가?",
+            "options": [
+              "모델이 외부 지식에 접근하지 못한다",
+              "검색·결합·생성 단계가 고정돼 모델이 언제 검색할지 선택 못한다",
+              "모델이 메타데이터를 이해하지 못한다",
+              "에이전트가 프롬프트를 생성하지 못한다"
+            ],
+            "answer_index": 1,
+            "explanation": "RAG는 retrieve‑concatenate‑generate 순서가 고정돼 모델이 스스로 검색 시점이나 중단을 결정할 수 없기 때문에 에이전트의 자율성이 제한된다."
+          },
+          {
+            "question": "Knowledge-as-Skill 구조의 탐색 레이어는 어떤 역할을 하는가?",
+            "options": [
+              "문서 내용 요약 제공",
+              "디렉터리별 index.md 제공",
+              "YAML 메타데이터 정의",
+              "SKILL.md 작성"
+            ],
+            "answer_index": 1,
+            "explanation": "탐색 레이어는 각 디렉터리에 index.md 파일을 두어 해당 디렉터리의 문서들을 탐색할 수 있게 한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "How Deep Learning Finally Cracked Messy Tables - Frank Hutter",
+        "url": "https://youtu.be/72Im-Mm5JKs",
+        "published_at": "2026-09-23T18:06:15",
+        "transcript": null,
+        "body": "Frank Hutter, co-founder of Prior Labs, talks about TabPFN, a tabular foundation model that makes predictions in a single forward pass, and the research behind it.\n\nTabPFN is pre-trained on synthetic datasets drawn from a prior over structural causal models, rather than on real data. At prediction time it takes the whole training table as context and outputs an approximation of the Bayesian posterior predictive distribution, without per-dataset training or hyperparameter search. Frank explains how this grew out of his earlier work on AutoML and neural architecture search, how the priors are built and revised, and why tabular data was hard for deep learning for so long.\n\nThe conversation also covers the TabArena benchmark, how the architecture changed from TabPFN v1 to v3, scaling to larger tables, using the model with coding agents, test-time compute, Google's TabFM, causal inference and interventions, and relational data. At the end, a short update Frank recorded after the interview covers the TabPFN-3.5 release.\n\nTOC:\n00:00 Introduction\n00:44 Welcome and Frank's background\n02:05 Why tabular data was hard for deep learning\n07:50 Why there is little public tabular data\n10:17 Pre-training on synthetic data\n12:52 The TabArena benchmark\n19:28 From AutoML to neural architecture search\n26:34 TabPFN as a learned algorithm\n30:50 Bayesian prediction in one forward pass\n39:37 Scaling to larger tables\n43:47 Why LLMs struggle with large tables\n47:48 Using TabPFN with coding agents\n55:15 Beyond classification and regression\n57:47 Output heads and architecture from v1 to v3\n1:05:29 Test-time compute and adaptation\n1:12:26 Interpolation and extrapolation\n1:13:32 Google's TabFM\n1:16:53 How the priors are designed\n1:18:40 Correlation, causation and interventions\n1:29:06 Causal foundation models\n1:33:21 Language models and numerical data\n1:35:22 Relational and multimodal data\n1:38:31 Use in organisations\n1:46:38 The open research arm\n1:50:21 Update: TabPFN-3.5\n1:52:38 Closing\n\nREFS:\nAdamW (Loshchilov & Hutter)\nhttps://arxiv.org/abs/1711.05101\nSGDR (Loshchilov & Hutter)\nhttps://arxiv.org/abs/1608.03983\nTabNet (Arik & Pfister)\nhttps://arxiv.org/abs/1908.07442\nDeep Sets (Zaheer et al.)\nhttps://arxiv.org/abs/1703.06114\nTabPFN v2, Nature (Hollmann et al., 2025)\nhttps://www.nature.com/articles/s41586-024-08328-6\nTransformers Can Do Bayesian Inference (Müller et al.)\nhttps://arxiv.org/abs/2112.10510\nTabArena (Erickson et al.)\nhttps://arxiv.org/abs/2506.16791\nAutoGluon-Tabular (Erickson et al.)\nhttps://arxiv.org/abs/2003.06505\nBeyond IID: How General Are Tabular Foundation Models, Really?\nhttps://arxiv.org/abs/2606.30410\nNeural Architecture Search: A Survey (Elsken, Metzen & Hutter)\nhttps://arxiv.org/abs/1808.05377\nAuto-WEKA (Thornton et al.)\nhttps://www.cs.ubc.ca/~hutter/papers/AutoWEKA-KDD2013.pdf\nTabPFN v1 (Hollmann et al., 2022)\nhttps://arxiv.org/abs/2207.01848\nTabPFN-3 technical report\nhttps://arxiv.org/abs/2605.13986\nTabPFN-2.5 report\nhttps://arxiv.org/abs/2511.086",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "합성 데이터 사전학습으로 테이블 모델링을 한 번에 해결",
+        "tags": [
+          "TabPFN",
+          "TabArena",
+          "TabFM",
+          "AutoML",
+          "Neural Architecture Search"
+        ],
+        "concepts": [
+          "베이지안 추론",
+          "데이터 기반 벤치마킹",
+          "조건부 확률 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "TabPFN은 구조적 인과 모델에서 생성된 합성 데이터로 사전학습해, 어떤 테이블에도 사전 훈련 없이 베이지안 사후 예측을 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "모델은 전체 훈련 테이블을 컨텍스트로 받아 한 번의 포워드 패스로 posterior predictive distribution을 근사한다.",
+            "timestamp": null
+          },
+          {
+            "point": "TabArena 벤치마크와 v1→v3 아키텍처 개선을 통해 대규모 테이블, 코딩 에이전트 연동, 인과 추론 등 다양한 활용이 가능해졌다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "이 AI는 설명하지 않는다",
+        "url": "https://deepdaiv.stibee.com/p/164",
+        "published_at": "2026-09-22T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/wFVO)\n\n#162 위클리 딥 다이브 | 2026년 9월 23일 에디터 스더리\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 언어 모델이 자동화에 쓰일 때 생기는 한계를 정리했습니다.\n- 문장 대신 선택과 확률을 내놓는 Jev의 동작 방식을 소개했습니다.\n- Jev와 BERT를 비교하며 AI의 역할 분화를 살펴봤습니다.\n\n이 AI는 설명하지 않는다\n\n안녕하세요, 에디터 스더리입니다!    AI에게 일을 시키다 보면, 굳이 이렇게 길게 답할 필요가 있나 싶은 순간이 있습니다. 사실 필요한 것은 몇 가지 선택지 중 하나인데도 언어 모델은 그 선택만 간단히 내놓기보다 질문에 공감하고, 이유를 설명하고, 덧붙일 말까지 챙기며 하나의 답변을 길게 만들어냅니다. 그러면 우리는 그 답변에서 다시 필요한 선택을 골라내야 합니다. 정작 모델이 그 선택을 얼마나 확신하는지는 알기 어렵고요.    그렇다면 처음부터 문장이 아니라, 선택과 그에 대한 확률을 내놓는 모델을 만들면 어떨까요? 최근 이 질문에 답하는 모델이 개발자들 사이에서 큰 주목을 받고 있습니다. 지난 9월 15일 TypeSafe AI가 공개한 [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)입니다. 회사의 공동 창업자 Diogo Almeida는 OpenAI에서 InstructGPT와 RLHF 등 ChatGPT의 기반이 된 연구에 참여했던 연구자인데요. 그는 그 이후로, 대화에서는 이미 사람을 뛰어넘은 언어 모델이 왜 실제 자동화로는 이어지지 못했는지를 고민해 왔다고 합니다. 🤔\n\n말 잘하는 AI가 자동화를 못하는 이유\n\nTypeSafe AI는 기존 언어 모델이 자동화에 쓰일 때 두 가지 한계에 주목합니다.    첫째는 학습 목표입니다. 지금의 채팅 모델은 RLHF(Reinforcement Learning From Human Feedback)처럼 사람이 더 좋다고 평가한 답변을 내도록 학습합니다. 하지만 모델의 판단대로 시스템이 작업을 실행하려면, 답 자체뿐 아니라 그 판단이 얼마나 확실한지도 알 수 있어야 합니다. 예를 들어 두 선택지 사이에서 모델의 판단이 60 대 40으로 갈린다면, 자동화 시스템에서는 그 불확실성 자체가 중요한 정보가 됩니다. 판단이 애매할 때는 자동으로 실행하지 않고 사람에게 넘길 수 있으니까요.    그렇다면 모델에게 확신도(Confidence)를 함께 출력하라고 하면 되지 않을까요? 문제는 그 숫자를 믿기 어렵다는 점입니다. 모델이 ‘확신도 0.9’라고 답하더라도, 그것은 내부의 확률을 그대로 보여주는 것이 아니라 다른 텍스트와 마찬가지로 그럴듯한 다음 토큰을 생성한 결과에 가깝습니다. 그래서 실제보다 높은 값을 말하거나, 같은 질문에도 다른 숫자를 내놓을 수 있습니다.    모델이 실제로 계산한 확률 분포를 살펴봐도 마찬가지입니다. 사람이 선호하는 답을 내도록 사후학습(Post-training)하는 과정 자체가 모델의 확률 분포를 바꿀 수 있기 때문이죠. 사람들은 대체로 망설이는 답보다 명확하고 자신감 있는 답을 더 높게 평가하고, 이런 선호를 최적화하다 보면 모델이 불확실한 상황에서도 한쪽 답에 과도하게 확신을 싣게 됩니다. 이처럼 여러 답의 가능성 중 일부가 지워지고 확률이 한쪽으로 쏠리는 현상을 Mode Dropping이라고 합니다. 실제로 OpenAI는 [GPT-4 기술 보고서](https://arxiv.org/abs/2303.08774)에서 사전학습 모델에 비해 사후학습을 거친 모델의 확률 보정(Calibration)이 나빠지는 현상을 보고했습니다. 즉, 문제는 모델이 애초에 신뢰할 수 있는 확률을 내는 것을 목표로 학습된 것이 아니라는 데 있습니다. 대신 사람이 선호하는 답변의 내용과 스타일에 맞추는 데 집중해 왔죠.    둘째는 출력 형식입니다. 언어 모델은 기본적으로 다음 토큰을 하나씩 예측하며 문자열을 만들어냅니다. 형식이 자유로운 덕분에 설명부터 코드, 표까지 다양한 형태의 출력을 만들 수 있지만, 그만큼 소프트웨어가 결과를 바로 사용하기는 어렵습니다. 물론 구조화된 출력(Structured Outputs)이나 함수 호출을 쓰면 원하는 형식의 값을 받을 수 있습니다. 그러나 내부적으로는 여전히 토큰을 하나씩 순서대로 생성하기 때문에, 답이 길어질수록 느려지고 생성한 토큰만큼 비용이 드는 구조는 그대로입니다.    에이전트를 떠올려 보면 문제는 더 분명해집니다. 에이전트가 수행하는 단계 중 상당수는 긴 답변이 아니라 작은 결정으로 이루어져 있기 때문입니다. 다음에 어떤 도구를 사용할지, 작업을 계속할지 멈출지, 요청을 어느 경로로 보낼지 같은 판단을 수없이 반복하는데, 그때마다 문장을 생성하는 모델을 실행하는 셈입니다. 이러한 순간에 필요한 것은 유창한 말보다 빠르고 믿을 만한 판단이 아닐까요?\n\n말하는 대신 결정하는 모델\n\nJev의 출발점은 단순합니다. 모델에게 무엇을 묻고 어떤 형태로 답할지를 처음부터 정해둡니다. 판단에 필요한 맥락인 State와, 어떤 방식으로 답할지를 정의한 Question을 함께 보내는데요. 질문의 유형은 다음과 같습니다.\n\n💡 Jev의 세 가지 기본 요소  - Choice: 주어진 선택지 중 하나를 고릅니다. 예) 이 문의는 결제·기술·계정 중 어느 팀이 맡아야 할까?\n- Score: 정해둔 기준표에 따라 상태를 채점합니다. 예) 이 요청의 긴급도는 어느 정도인가? → 0=낮음, 1=보통, 2=높음\n- Noul: 어떤 진술이 참일 확률을 0에서 1 사이 값으로 반환합니다. 예) 이 메시지는 환불을 요청하고 있는가? → 0.95\n\n이 질문들에 대한 답은 문장이 아닌, 값과 확률로 돌아옵니다. Choice 질문으로 예를 든다면, Jev는 “이 문의는 결제 팀에서 처리하는 것이 적절해 보입니다” 같은 문장 대신 {결제: 0.6, 기술: 0.4, 계정: 0.0}과 같은 확률 분포를 돌려주는 식입니다. 그다음에 무엇을 할지는 코드가 결정합니다. 확신도가 충분히 높으면 바로 결제 팀으로 보내고, 지금처럼 판단이 갈리면 사람에게 넘기면 됩니다. Jev가 ‘똑똑한 If문(Smart If-statement)’에 비유되는 이유죠.    이 점에서 Jev는 앞서 살펴본 Structured Outputs와도 다릅니다. Structured Outputs가 생성형 언어 모델의 출력을 구조화하는 방식이라면, Jev는 애초에 문장 생성이 아니라 결정 자체를 모델의 기본 과제로 삼습니다. TypeSafe AI는 이러한 모델을 System One Model이라고 부릅니다.\n\n💡 System 1 vs. System 2  2002년 노벨경제학상 수상자인 Daniel Kahneman은 대표 저서 『생각에 관한 생각』(원제: Thinking, Fast and Slow)에서 인간의 사고를 두 가지로 구분합니다. 빠르고 직관적인 System 1과, 느리고 숙고적인 System 2로 구분합니다. TypeSafe AI는 여기서 이름을 빌려, 긴 추론보다 짧고 빠른 판단에 초점을 둔 모델을 System One Model이라고 부릅니다.\n\n이 구조는 속도와 비용에도 영향을 줍니다. 기존 언어 모델이 토큰을 하나씩 순서대로 생성한다면, Jev는 여러 출력을 한 번의 쿼리에서 병렬로 계산합니다. TypeSafe AI가 공개한 평가에서 Jev의 응답 시간은 약 70~500ms 수준이었고, 비교한 언어 모델들은 수 초에서 수백 초가 걸렸습니다. 같은 유형의 작업에서 수십 배 이상 빠른 것이죠. 문자열을 토큰 단위로 생성하지 않는 구조 덕분에 출력에 대해서는 별도의 토큰 요금도 받지 않습니다.\n\n같은 27개 질문을 Jev와 GPT-5.6 Terra에 동시에 보낸 비교. Jev는 각 질문에 확률과 확신도를 함께 돌려주며 0.114초 만에 답했고, GPT-5.6 Terra는 참/거짓과 값만 내놓는 데 8.566초가 걸렸습니다. 비용은 약 171배, 속도는 약 75배 차이가 났습니다.  출처: [Introducing System One Models & Jev, TypeSafe AI Blog](/p/3e3c350295db8082b3dec3f35c342989?pvs=25)  형식이 깨질 걱정도 없습니다. 가능한 답을 미리 정의해두기 때문에, 존재하지 않는 선택지를 새로 만들어내거나 정해둔 스키마를 벗어나는 출력은 구조적으로 막혀 있습니다. TypeSafe AI가 [홈페이지](https://typesafe.ai/)에 ‘Zero Hallucinations’라는 문구를 내건 이유이기도 합니다.\n\nStructured Output 오류율(왼쪽)과 Tool Call 오류율(오른쪽) 비교. 기존 언어 모델에서는 정해진 형식을 벗어나는 오류가 최대 45.5%까지 나타난 반면, Jev는 두 평가 모두 0%를 기록했습니다. 다만 Jev의 0%는 실험적으로 얻은 수치라기보다, 가능한 출력을 미리 제한하는 구조에서 비롯된 값입니다.  출처: [Introducing System One Models & Jev, TypeSafe AI Blog](/p/3e3c350295db8082b3dec3f35c342989?pvs=25)  다만 이 표현은 조금 조심해서 볼 필요가 있습니다. 정해진 형식을 벗어나지 않는 것과 올바른 판단을 내리는 것은 다른 문제이기 때문입니다. Jev 역시 틀린 선택지에 높은 확률을 줄 수 있습니다. 따라서 ‘Zero Hallucinations’는 Jev가 틀리지 않는다는 뜻이라기보다, 자유로운 문자열 생성에서 발생할 수 있는 유형의 할루시네이션을 구조적으로 차단했다는 의미에 가깝습니다.    그렇다면 이제 더 중요한 질문이 남습니다. Jev가 함께 내놓는 확률은 얼마나 믿을 수 있을까요? 앞서 살펴봤듯, 기존 언어 모델은 애초에 자신의 확률이 실제 정확도와 잘 맞도록 학습된 모델이 아닙니다.    이 문제는 [#108에서 다룬 Why Language Models Hallucinate](https://www.deepdaiv.com/newsletter/108)의 문제의식과도 맞닿아 있습니다. 당시 저자들은 ‘모르겠다’고 답하는 것보다 찍어서 맞히는 편이 유리한 평가 체계가 모델의 과신을 부추긴다고 지적했습니다. 그래서 정답만 보상할 것이 아니라, 불확실성을 정직하게 표현하는 것 역시 보상해야 한다고 제안했는데요.    TypeSafe AI는 비슷한 문제의식을 학습 목표 자체에 반영했습니다. RLHF가 ‘사람이 선호하는 응답’을, RLVR(Reinforcement Learning With Verifiable Rewards)이 수학이나 코드처럼 ‘검증 가능한 결과’를 보상한다면, Jev에 사용된 RLCD(Reinforcement Learning For Calibrated Decisions)는 모델이 내놓는 확률이 실제 정확도와 잘 맞도록 학습하는 것을 목표로 합니다. 쉽게 말해 0.8의 확률을 보인 판단들이 실제로도 대략 80% 정도 맞도록 만드는 것입니다.\n\nTypeSafe AI가 정리한 언어 모델의 발전 흐름. BERT 같은 초기 언어 모델에서 사전학습된 대규모 언어 모델로 발전한 뒤, RLHF를 거쳐 채팅 모델이, RLVR을 거쳐 추론 모델이 등장했습니다. TypeSafe AI는 여기에 확률 보정을 목표로 하는 RLCD라는 새로운 갈래를 더했습니다.  출처: [Introducing System One Models & Jev, TypeSafe AI Blog](/p/3e3c350295db8082b3dec3f35c342989?pvs=25)\n\n💡 RLCD(Reinforcement Learning For Calibrated Decisions)란?  RLCD는 모델이 자신의 불확실성을 정직하게 표현하도록 학습하는 것을 목표로 합니다. 이런 학습에 흔히 쓰이는 방법이 Proper Scoring Rule인데요. 틀린 답에 높은 확률을 주면 크게 감점하고, 맞는 답에 지나치게 낮은 확률을 주면 보상을 적게 주는 방식입니다. 그래서 실제로 믿는 만큼의 확률을 말할 때 평균 점수가 가장 높아집니다.    다만 TypeSafe AI는 RLCD의 구체적인 학습 방법을 공개하지 않았기 때문에, Jev가 실제로 이 방식을 쓰는지는 알려지지 않았습니다.\n\n이렇게 확률을 믿을 수 있게 되면, 일의 위험도에 따라 자동 처리 기준을 다르게 둘 수 있습니다. 고객 문의를 담당 팀에 배정하는 일은 확률이 0.7만 넘어도 자동으로 처리하고, 되돌리기 어려운 환불 승인은 0.95를 넘을 때만 처리하는 식이죠. 위험을 얼마나 감수할지를 코드의 숫자 하나로 정하는 것입니다.    그렇다고 Jev가 가장 똑똑한 모델인 것은 아닙니다. TypeSafe AI가 최상위 언어 모델들의 판단을 기준으로 네 가지 실무 워크플로우를 평가한 결과, Jev의 평균 정확도는 67.8%였고 일부 워크플로우에서는 다른 언어 모델보다 눈에 띄게 낮았습니다. 대신 비용은 수백분의 1, 응답 시간은 수십분의 1 수준이었죠. Jev의 강점은 최고의 정답 하나를 내놓는 데 있다기보다, 충분히 좋은 판단을 매우 낮은 비용과 짧은 지연으로 반복하는 데 있습니다.\n\n네 가지 실무 워크플로우에서의 평균 정확도와 비용 비교. 마름모는 판단을 작은 질문으로 쪼갠 워크플로우 방식, 원은 하나의 프롬프트로 처리한 방식입니다. Jev는 가장 높은 정확도를 기록하진 않았지만, 비슷한 정확도의 언어 모델보다 훨씬 낮은 비용으로 동작했습니다.  출처: [Introducing System One Models & Jev, TypeSafe AI Blog](/p/3e3c350295db8082b3dec3f35c342989?pvs=25)  물론 한계도 분명합니다. TypeSafe AI가 직접 공개한 약점 목록에 따르면, Jev는 개수를 세거나 날짜를 비교하는 데 약하고, 여러 단계를 거치는 추론도 잘 하지 못합니다. 입력 안에 심어둔 지시에 판단이 흔들릴 수 있다는 점도 주의해야 합니다.    공개 직후부터 독립적인 평가도 나오기 시작했습니다. 지금까지는 속도와 비용에서는 일관된 강점이 보이지만, 정확도와 확률 보정은 과제에 따라 결과가 엇갈립니다. 아직 평가 규모가 작고 기술 보고서도 공개되지 않은 만큼, Jev의 강점이 어디까지 일반화되는지는 조금 더 지켜볼 필요가 있습니다.\n\nBERT로 돌아간 걸까?\n\nJev에 대한 반응은 뜨거웠습니다. [Vercel은 Jev가 자사 AI Gateway 역사상 첫 24시간 동안 가장 빠르게 채택된 모델이라고 밝혔고](https://vercel.com/blog/ai-gateway-jev-model-launch), 공개 일주일 만에 Jev와 같은 방식으로 동작하는 오픈소스 모델도 여럿 등장했습니다.  이렇게 비슷한 모델들이 빠르게 나올 수 있었던 건, Jev의 방식이 완전히 낯선 것만은 아니기 때문이기도 합니다. 텍스트를 읽고 정해진 선택지 중 하나를 고르는 방식은 생성형 AI 이전에도 널리 쓰였으니까요. 대표적인 예로 문장을 읽고 감정이나 주제를 분류하던 BERT가 있습니다.    흥미롭게도 공개 직후 등장한 오픈소스 모델 [Laya](https://huggingface.co/convaiinnovations/laya)는 실제로 ModernBERT 계열 인코더 위에 Jev와 비슷한 Choice·Score·Noul 인터페이스를 구현했습니다. Jev의 내부 구조는 공개되지 않았지만, 적어도 이런 종류의 결정 모델이 반드시 생성형 LLM 구조를 필요로 하는 것은 아니라는 점을 보여줍니다.    그렇다면 Jev는 정말 과거의 분류 모델로 돌아간 것일까요? 겉모습은 닮았지만 결정적인 차이가 있습니다. BERT로 고객 문의를 분류하려면 레이블 달린 데이터를 모으고, 태스크마다 모델을 파인튜닝해야 했습니다. 선택지가 하나만 바뀌어도 다시 학습해야 했죠. 반면 Jev는 질문과 선택지를 요청할 때마다 자연어로 정의합니다. 추가 학습 없이 새로운 판단 문제를 바로 풀 수 있다는 점에서, 입력만큼은 분명히 지시를 따르는 언어 모델의 유산을 물려받은 것이죠.\n\nJev는 언어 모델을 대체하기 위한 모델이 아닙니다. TypeSafe AI 역시 Jev가 판단하고 분류하는 일에는 맞지만, 글을 쓰거나 대화를 나누는 일에는 맞지 않는다고 설명합니다.    오히려 Jev가 흥미로운 이유는 AI 시스템이 역할에 따라 분화될 가능성을 보여준다는 데 있습니다. 확실한 규칙은 코드가, 규칙으로 정하기 애매한 짧은 판단은 Jev 같은 결정 모델이, 긴 추론과 글쓰기는 생성 모델이 맡는 식입니다.    TypeSafe AI가 공개한 스마트홈 어시스턴트 데모도 이 구조를 보여줍니다. \"집 안의 모든 조명을 꺼줘\"라는 요청이 들어오면 Jev가 요청의 종류와 대상 공간, 기기 종류를 한 번에 판단해 바로 실행하고, 한 문장에 여러 명령이 섞여 있거나 일상적인 대화일 때만 생성형 언어 모델에게 넘깁니다.    저는 Jev가 과거로의 회귀라기보다 나선형 진화에 가깝다고 생각합니다. 정해진 선택지 중 하나를 고른다는 점에서는 BERT가 있던 자리로 돌아온 것처럼 보이지만, 이제는 새로운 질문도 추가 학습 없이 바로 이해하고 판단할 수 있으니까요. 비슷한 자리로 돌아온 듯 보여도, 그 사이 언어 모델이 쌓아온 범용성만큼 한 층 올라선 셈입니다.    모든 일을 말로 풀던 AI가, 이제는 말하지 않아도 되는 자리를 찾아가고 있는지도 모르겠습니다.\n\n[AI 발전을 늦출 수 있을까? 🧐](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/wFVO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/wFVO \"게시하기\")[웹에서 보기](https://stib.ee/wFVO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "자동화에 적합한 확률 선택 모델로 효율성·신뢰성 향상",
+        "tags": [
+          "Jev",
+          "TypeSafe AI",
+          "RLHF",
+          "GPT-5.6 Terra",
+          "Mode Dropping"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "불확실성 정량화",
+          "조건부 확률 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "기존 언어 모델은 문장 생성에 초점이 있어 자동화 시 선택과 확신도를 직접 활용하기 어렵다",
+            "timestamp": null
+          },
+          {
+            "point": "RLHF 기반 모델이 출력하는 확신도는 캘리브레이션 문제가 있어 실제 확률을 반영하지 못한다(Mode Dropping)",
+            "timestamp": null
+          },
+          {
+            "point": "Jev와 같은 System One Model은 선택·확률을 한 번에 병렬 계산해 속도·비용을 크게 절감한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "고객 지원 티켓 라우팅에 선택·확률 모델을 적용해 빠른 팀 배정과 오분배 감소",
+          "A/B 테스트 플랫폼에서 실시간 피처 플래그 결정을 확률 임계값 기반 System One Model로 전환해 자동화 속도 향상",
+          "이상 탐지 시스템에서 경보 발생 여부와 심각도를 확률로 출력해 자동 완화와 인간 검토를 효율적으로 분리"
+        ],
+        "quiz": [
+          {
+            "question": "왜 RLHF로 학습된 언어 모델이 출력하는 '확신도' 값은 신뢰하기 어려운가?",
+            "options": [
+              "모델은 확신도를 직접 계산하지 않고 다음 토큰 예측 확률을 텍스트 형태로 변환한다",
+              "RLHF는 확신도를 고정값으로 학습한다",
+              "모델은 항상 0.5로 출력한다",
+              "확신도는 사후 학습 과정에서 무작위로 조정된다"
+            ],
+            "answer_index": 0,
+            "explanation": "RLHF 모델은 다음 토큰의 확률을 기반으로 텍스트를 생성하므로, 표시되는 '확신도'는 실제 확률이 아니라 토큰 선택 과정의 산출물이며 캘리브레이션이 맞지 않는다."
+          },
+          {
+            "question": "System One Model과 기존 Structured Output 방식의 주요 차이점은?",
+            "options": [
+              "System One Model은 문장을 생성하고 Structured Output은 선택만 제공한다",
+              "System One Model은 처음부터 결정(값·확률) 형태로 출력하고 병렬 계산한다",
+              "Structured Output은 빠르고 비용이 적으며 System One Model은 느리다",
+              "두 방식은 동일하다"
+            ],
+            "answer_index": 1,
+            "explanation": "System One Model은 질문에 대해 선택·확률 등 결정값을 직접 반환하고 한 번의 쿼리에서 병렬로 계산해 속도와 비용을 절감한다, 반면 Structured Output은 생성형 모델이 텍스트를 만든 뒤 구조화하는 과정이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "연 300시간을 아낀 AI 상담 서비스",
+        "url": "https://toss.tech/article/AI_chatbot",
+        "published_at": "2026-09-23T06:39:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8034-a8d8-d47ef31a7577\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8071-822d-d0cd0b36f332\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스뱅크에서 주택담보대출을 디자인하고 있는 Product Designer 김혜미입니다.\n이번 글에서는 전세대출 팀에서 AI 상담 서비스를 디자인했던 과정을 얘기해 보려고 해요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80c7-8c94-fc0c6721c208\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3dfa360d-33e3-80b3-84cb-faeaae2b26ec\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">정보는 충분했지만 확신은 없었다</span></span></span></h2><figure class=\"css-of5acw\" id=\"3e2a360d-33e3-8050-a1f5-c20e09fa2e1f\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/872256fb-c21a-4e4c-8124-f61bb1e16d36/image.png\" /></figure><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80c0-94b1-c020bfb6f18e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">전세대출 팀에서 하는 고민은 대체로 이런 거예요. 플로우를 어떻게 더 쉽게 설계할까, 어떻게 전환율을 높일까. 그런데 그것만으로는 해결하기 어려운 문제가 있었어요. 사용자가 화면을 다 이해하고도 여전히 불안해서 고객센터를 찾는 것이죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-809e-a1a8-d4dc905fd119\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">상담팀에서 사용자들이 서류를 제대로 제출하지 못해 심사가 자꾸 막힌다는 이야기를 전해주셨어요. 그때 처음으로 상담팀에 들어오는 문의 데이터를 직접 찾아봤어요. </span><span class=\"css-q3ktjb\">데이터를 열어보니 서류 제출 방법뿐만 아니라 단순한 정보를 묻는 문의량이 유독 높았어요.</span><span class=\"css-1kxrhf3\"> 이런 문의가 상담 인력을 계속 붙잡다 보니, 정작 심사가 늦어지는 일까지 생기고 있었고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80f7-a42a-cd09d767c357\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">사실 이런 정보는 화면에 이미 쉽게 설명되어 있었어요. </span><span class=\"css-q3ktjb\">그런데도 사용자는 화면에서 답을 찾지 못하고 결국 고객센터를 찾았던 거예요. 그 정보가 내 상황에도 맞는지 확신할 수 없었던 거죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8026-93d6-fc3d2af65810\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 상담으로 들어오는 단순 문의를 제품 안에서 해결할 방법을 찾아보기로 했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8019-a863-dfb807a5d38c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3dfa360d-33e3-804c-a31b-edb25e2a80d5\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">설명은 멈추고 질문받기</span></span></span></h2><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-807f-9ad1-de57ab810a45\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">화면에 있는 정보를 더 잘 보이게 만드는 것만으로는 문제를 해결하기 어렵다고 봤어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8075-95e9-f5ab1f48d3ac\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">사용자는 답을 못 찾는 게 아니었어요. 화면에서 정보를 찾고, 내게 필요한 내용을 골라내고, 그 답이 정말 내 상황에 맞는지 판단하는 것까지 모두 사용자의 몫이었어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8097-b26e-dc0a10dde8a7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">전세대출에서는 이런 과정이 특히 부담스러워요. 집을 구하는 데 필요한 큰돈이 걸려 있기 때문이에요. 조금이라도 확실하지 않으면 ‘아마 맞겠지’ 하고 넘어가기 어렵죠. 결국 사람에게 직접 확인하고 싶어져요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8007-9e27-c23d606c9a15\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 방향을 바꿨어요. </span><span class=\"css-q3ktjb\">화면이 먼저 설명하는 방식이 아니라, 사용자가 자기 말로 묻고 제품이 답하는 방식으로요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80f1-ae91-ee52149e608e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">상담원에게 묻는 것처럼, 사용자가 어떤 말로 질문하더라도 그 뜻을 이해하고 각자의 상황에 맞는 답을 해주는 게 목표였어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-80a7-8fbf-c478752fb099\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">사용자들은 궁금한 건 비슷해도 제각각 말해요. 누군가는 “태아도 자녀로 쳐요?”라고 하고, 누군가는 “임신 중인데 부양가족에 들어가나요?”라고 물어요. 여기에 보증금 규모나 계약 형태, 신청 시점 같은 조건까지 달라지면 답도 달라지고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-806f-a49d-e0dba5149ca5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">결국 사용자의 말을 이해하고, 상황에 맞는 답을 만들어내려면 AI가 필요했어요.</span><span class=\"css-1kxrhf3\"> </span><span class=\"css-q3ktjb\">그래서 머신러닝 팀과 대출 운영팀에 프로젝트를 제안했고, 세 팀이 모여 AI 상담 서비스를 만들기 시작했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8028-a926-ed4951d77862\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">디자이너인 저는 AI가 할 수 있는 것과 없는 것을 화면에 어떻게 풀어낼지 고민했어요. 대출 운영팀은 실제 상담에서 어떤 답을 해야 하는지 알려주었고, 머신러닝 팀은 그 답을 AI가 할 수 있도록 만들었어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-804c-b4ff-f2685037549c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa360d-33e3-8072-93b8-dc5728361385\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3dfa",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 챗봇으로 상담 문의 감소, 업무 효율 300시간 절감",
+        "tags": [
+          "토스뱅크",
+          "전세대출",
+          "AI 상담 서비스",
+          "고객센터"
+        ],
+        "concepts": [
+          "불안 기반 제품 설계",
+          "AI 기반 업무 검증",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "단순 문의가 화면에 정보가 있음에도 불구하고 많이 발생해 상담 인력과 심사 지연을 초래함",
+            "timestamp": null
+          },
+          {
+            "point": "사용자는 정보를 찾는 것이 아니라 자신의 상황에 맞는지 확신하지 못해 직접 질문을 원함",
+            "timestamp": null
+          },
+          {
+            "point": "제품을 설명형에서 질문‑응답형 AI 상담으로 전환해 연 300시간 이상의 상담 업무를 절감함",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "보험 청구 FAQ에 AI 질문‑응답 인터페이스를 도입해 콜센터 문의를 감소시켜 처리 시간을 단축한다",
+          "이커머스 결제 단계에서 AI 기반 실시간 질문‑응답을 제공해 결제 방법에 대한 불확실성을 해소하고 전환율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 화면에 충분한 정보가 있어도 사용자는 고객센터에 문의하게 되는가?",
+            "options": [
+              "정보가 눈에 안 띈다",
+              "사용자는 정보가 자신의 상황에 맞는지 확신하지 못한다",
+              "시스템 오류가 발생한다",
+              "언어 장벽이 있다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 사용자가 화면의 정보를 찾았지만, 그 답이 자신의 상황에 정확히 맞는지 확신하지 못해 직접 확인하고 싶어한다는 점을 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Yes, Jev Is Insane, But There's A Catch",
+        "url": "https://youtu.be/qBBRRsH0rQc",
+        "published_at": "2026-09-22T09:32:13",
+        "transcript": "[00:00] A new AI called Jev is taking the world by storm.\n[00:03] But why get excited for an AI system that can't even write text?\n[00:09] It properly ran over the internet.\n[00:11] So let's try to separate the facts from the hype.\n[00:14] Okay, so it does not write text.\n[00:17] Instead, it makes decisions.\n[00:19] A question and some options go in.\n[00:22] One answer comes out.\n[00:23] Kinda like Who Wants to Be a Millionaire, but you don't wait for the answer.\n[00:27] It pops out instantly.\n[00:29] Up to about 200 times faster than our chatbots today.\n[00:34] That is very useful.\n[00:36] You can also play video games with it.\n[00:38] Hooray!\n[00:39] The question is the world state and the potential answers are the moves you can make.\n[00:45] And if it is extremely fast, it can play things in real time.\n[00:50] But it gets better.\n[00:51] LLMs are relatively slow.\n[00:53] So when you code up something with a super smart AI, everything takes a long time.\n[00:59] But along the way, you also have a few simple decisions too.\n[01:04] Which file do I open?\n[01:06] Which failure matters?\n[01:07] Retry or move on?\n[01:09] And, haha, this is where Jev can help.\n[01:13] Offload these decisions to Jev and it solves them nearly instantly.\n[01:17] In some cases, it can meaningfully speed up a fable-like AI system and even cut down the token usage.\n[01:25] It makes things cheaper and faster.\n[01:28] That is amazing.\n[01:29] Now, there is no research paper, but some of you fellow scholars probably say, okay, this is a classifier.\n[01:36] An idea that dates back around 90 years now.\n[01:40] So, what's new here?\n[01:42] Well, first, there is no official research paper.\n[01:46] There is only a high-level description on the website, but it doesn't stop us fellow scholars from doing our research, does it?\n[01:54] Now, hold on to your papers, fellow scholars.\n[01:57] Come on, this time with more feel.\n[02:01] Hold on to your papers, let's have wisdom roll.\n[02:06] Hold on to your papers.\n[02:09] Science got your soul.\n[02:11] Hold on to your papers.\n[02:14] The future starts tonight.\n[02:17] And here's the one who shows the sparks that gives our dreams alive.\n[02:25] Ha ha.\n[02:26] Now we're talking.\n[02:28] Actual song, by the way.\n[02:29] So, similar ideas have been explored for years and years now.\n[02:35] There are open papers surprisingly close in spirit and we celebrate amazing science and research here.\n[02:42] So, I would like to say a big thank you to the scientists behind these earlier open works.\n[02:48] So, the basic idea in Jev is certainly not new, but Jev also combined three ingredients.\n[02:56] One, a new architecture that is built to make decisions instead of generating tokens.\n[03:03] Two, it evaluates all possible answers all at once instead of one by one.\n[03:09] They call it parallel sampling.\n[03:11] And three, a new training method they call RLCD, where the AI's confidence roughly matches how often it is right.\n[03:20] So, if it says 80% confident, it should be correct about 80 times out of a hundred.\n[03:27] Not always.\n[03:29] Why is that good?\n[03:30] Well, this way, you can actually look at the confidence value and decide when to trust it or fall back to a heavier, smarter model.\n[03:40] Once again, similar ideas have been explored for years now.\n[03:44] But the way this one is put together, it is an incredible combination that gives us a really useful new tool.\n[03:52] Love it.\n[03:53] And you fellow scholars are also pumping out open-source implementations of it as well.\n[03:58] That is open science at its best.\n[04:02] You are amazing.\n[04:04] So, let's be level-headed and separate the facts from the hype.\n[04:08] Is it awesome?\n[04:09] Yes.\n[04:10] One ingredient closer to fast local AI that we will be able to own forever.\n[04:16] Now, is it also heavily amplified by hype and viral marketing?\n[04:21] Yes.\n[04:22] Is it new?\n[04:23] Partly.\n[04:24] Okay, I took a bit longer to make this for you.\n[04:27] That's not great for views.\n[04:29] But I do it to be more concise, look up related papers and see how you fellow scholars use it in practice.\n[04:37] That is a better video for you.\n[04:39] Subscribe and hit the bell for more papers.\n[04:41] I use Lambda to reproduce AI research papers often in minutes.\n[04:46] It's also great to train your own models or fine-tune an existing one.\n[04:51] Run inference or text to image or video, easy peasy.\n[04:55] Running a deep seek chatbot or agent, super fast, super reliable.\n[05:00] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[05:05] I test ideas from the papers I cover and moments later, results.\n[05:10] Love it.\n[05:11] Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 Jev:\nhttps://typesafe.ai/blog/introducing-system-one-models-and-jev\n\nFull song: https://www.youtube.com/watch?v=4RtUJkjrKMI\n\nPrevious papers, implementations, models:\nhttps://huggingface.co/convaiinnovations/laya\nhttps://arxiv.org/abs/2503.23303\nhttps://huggingface.co/DeepMostInnovations/sales-conversion-model-reinf-learning\nhttps://huggingface.co/datasets/DeepMostInnovations/saas-sales-conversations\nhttps://arxiv.org/abs/2510.01237\nhttps://huggingface.co/blog/setfit\nhttps://proceedings.iclr.cc/paper_files/paper/2025/hash/5503a7c69d48a2f86fc00b3dc09de686-Abstract-Conference.html\n\nSources:\nhttps://x.com/alexisgallagher/status/2100312082491322873?s=46\nhttps://x.com/tamarajtran/status/2100694549362553153?s=46\nhttps://x.com/maubaron/status/2100738237237002706?s=46\nhttps://x.com/elvissun/status/2100951347080421409?s=46\nhttps://x.com/completeskeptic/status/2099925684256899543?s=46\nhttps://x.com/completeskeptic/status/2099925685720760404?s=46\nhttps://x.com/filippkowalski/status/2100864984448147770?s=46\nhttps://x.com/egafni/status/2100770895325524242?s=46\nhttps://x.com/mizorewww/status/2101473552956555427\nhttps://x.com/miu21590/status/2101857866378362926?s=46\nhttps://x.com/atomic_chat_hq/status/2102160983409955244?s=46\nhttps://x.com/HugoDuprez/status/2100953089003921543?s=20\nhttps://x.com/heyxviraj/status/2102048070649405592?s=20\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "실시간 의사결정 AI로 파이프라인 속도·비용 절감",
+        "tags": [
+          "Jev",
+          "LLM",
+          "RLCD",
+          "parallel sampling",
+          "confidence"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "병렬 처리",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "현재 챗봇보다 최대 200배 빠른 의사결정 속도",
+            "timestamp": "00:29"
+          },
+          {
+            "point": "간단한 파일 선택·실패 판단 등을 Jev에 오프로드하면 즉시 해결",
+            "timestamp": "01:13"
+          },
+          {
+            "point": "모든 후보 답을 동시에 평가하는 parallel sampling 방식 도입",
+            "timestamp": "03:03"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "하이퍼파라미터 탐색 시 parallel sampling을 적용해 여러 설정을 동시에 평가해 탐색 시간을 단축한다",
+          "데이터 정제 파이프라인에 결정 중심 아키텍처를 도입해 레코드별 최적 클리닝 규칙을 즉시 선택하도록 한다",
+          "RLCD 기반 신뢰도 보정값을 활용해 저신뢰도 결과는 비용이 큰 모델로 대체하는 계층형 추론 시스템을 만든다"
+        ],
+        "quiz": [
+          {
+            "question": "Jev이 confidence 값을 제공하는 주요 목적은 무엇인가?",
+            "options": [
+              "모델이 항상 정답을 보장한다",
+              "신뢰도에 따라 경량 모델 사용 여부를 판단한다",
+              "토큰 생성 속도를 높인다",
+              "모델 크기를 줄인다"
+            ],
+            "answer_index": 1,
+            "explanation": "confidence 값이 실제 정확도와 맞춰지면 사용자는 일정 신뢰도 임계값을 설정해, 낮은 신뢰도일 때는 더 무겁고 정확한 모델로 대체할 수 있다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 24일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 24일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">문서 기반 지식 관리</span><span class="concept">메타데이터 활용 검색</span><span class="concept">AI 기반 문서 구조화</span><span class="concept">베이지안 추론</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">조건부 확률 모델링</span><span class="concept">AI 비용 효율성</span><span class="concept">불확실성 정량화</span><span class="concept">불안 기반 제품 설계</span><span class="concept">AI 기반 업무 검증</span><span class="concept">디자인 트레이드오프</span><span class="concept">병렬 처리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.25991v1" target="_blank" rel="noopener">Knowledge-as-Skill: A Structural Design for Autonomous Knowledge-Base Use by LLM Agents</a>
+        </h2>
+
+        <p class="summary">LLM 에이전트가 지식베이스를 스스로 탐색</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>전통적인 RAG는 검색·결합·생성 순서에서 모델이 아닌 파이프라인이 검색을 결정한다는 한계가 있다. 본 논문은 메타데이터와 계층적 문서 구조를 활용해 에이전트가 스스로 지식베이스를 탐색하도록 하는 Knowledge-as-Skill 방식을 제안하며, 이는 LLM 기반 에이전트의 자율 검색 및 활용 연구 흐름에 속한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전통적인 RAG 파이프라인은 모델 대신 검색 결정을 수행해 에이전트의 자율성을 제한한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Knowledge-as-Skill은 SKILL.md, index.md, YAML 메타데이터 문서의 3계층 구조로 지식베이스를 발견·탐색·자기 기술화한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>WixQA 벤치마크에서 사실성·컨텍스트 리콜이 기존 Corpus2Skill 대비 크게 향상되었다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>기업 내부 정책 문서를 Knowledge-as-Skill 구조로 정리해 AI 챗봇이 정책을 자동으로 찾아 답변하도록 한다.</span></li>
+            
+            <li><span class="box"></span><span>고객 지원 티켓 데이터베이스에 3계층 메타데이터를 적용해 LLM 에이전트가 필요한 티켓을 선택·조회하고 불필요한 조회를 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>코드 스니펫 라이브러리에 YAML 앞머리 메타데이터를 넣어 LLM 코드 어시스턴트가 유형·출처에 따라 적절한 스니펫을 탐색하도록 한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 RAG 파이프라인이 에이전트의 검색 결정을 제한하는가?</div>
+            
+            <div class="q-opt">① 모델이 외부 지식에 접근하지 못한다</div>
+            
+            <div class="q-opt">② 검색·결합·생성 단계가 고정돼 모델이 언제 검색할지 선택 못한다</div>
+            
+            <div class="q-opt">③ 모델이 메타데이터를 이해하지 못한다</div>
+            
+            <div class="q-opt">④ 에이전트가 프롬프트를 생성하지 못한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 검색·결합·생성 단계가 고정돼 모델이 언제 검색할지 선택 못한다</div>
+              <div class="why">RAG는 retrieve‑concatenate‑generate 순서가 고정돼 모델이 스스로 검색 시점이나 중단을 결정할 수 없기 때문에 에이전트의 자율성이 제한된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Knowledge-as-Skill 구조의 탐색 레이어는 어떤 역할을 하는가?</div>
+            
+            <div class="q-opt">① 문서 내용 요약 제공</div>
+            
+            <div class="q-opt">② 디렉터리별 index.md 제공</div>
+            
+            <div class="q-opt">③ YAML 메타데이터 정의</div>
+            
+            <div class="q-opt">④ SKILL.md 작성</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 디렉터리별 index.md 제공</div>
+              <div class="why">탐색 레이어는 각 디렉터리에 index.md 파일을 두어 해당 디렉터리의 문서들을 탐색할 수 있게 한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Retrieval-augmented generation</span><span class="tag">LLM</span><span class="tag">Knowledge-as-Skill</span><span class="tag">WixQA</span><span class="tag">YAML</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/72Im-Mm5JKs" target="_blank" rel="noopener">How Deep Learning Finally Cracked Messy Tables - Frank Hutter</a>
+        </h2>
+
+        <p class="summary">합성 데이터 사전학습으로 테이블 모델링을 한 번에 해결</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TabPFN은 구조적 인과 모델에서 생성된 합성 데이터로 사전학습해, 어떤 테이블에도 사전 훈련 없이 베이지안 사후 예측을 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델은 전체 훈련 테이블을 컨텍스트로 받아 한 번의 포워드 패스로 posterior predictive distribution을 근사한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TabArena 벤치마크와 v1→v3 아키텍처 개선을 통해 대규모 테이블, 코딩 에이전트 연동, 인과 추론 등 다양한 활용이 가능해졌다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">TabPFN</span><span class="tag">TabArena</span><span class="tag">TabFM</span><span class="tag">AutoML</span><span class="tag">Neural Architecture Search</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/164" target="_blank" rel="noopener">이 AI는 설명하지 않는다</a>
+        </h2>
+
+        <p class="summary">자동화에 적합한 확률 선택 모델로 효율성·신뢰성 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 언어 모델은 문장 생성에 초점이 있어 자동화 시 선택과 확신도를 직접 활용하기 어렵다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RLHF 기반 모델이 출력하는 확신도는 캘리브레이션 문제가 있어 실제 확률을 반영하지 못한다(Mode Dropping)</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Jev와 같은 System One Model은 선택·확률을 한 번에 병렬 계산해 속도·비용을 크게 절감한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고객 지원 티켓 라우팅에 선택·확률 모델을 적용해 빠른 팀 배정과 오분배 감소</span></li>
+            
+            <li><span class="box"></span><span>A/B 테스트 플랫폼에서 실시간 피처 플래그 결정을 확률 임계값 기반 System One Model로 전환해 자동화 속도 향상</span></li>
+            
+            <li><span class="box"></span><span>이상 탐지 시스템에서 경보 발생 여부와 심각도를 확률로 출력해 자동 완화와 인간 검토를 효율적으로 분리</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 RLHF로 학습된 언어 모델이 출력하는 '확신도' 값은 신뢰하기 어려운가?</div>
+            
+            <div class="q-opt">① 모델은 확신도를 직접 계산하지 않고 다음 토큰 예측 확률을 텍스트 형태로 변환한다</div>
+            
+            <div class="q-opt">② RLHF는 확신도를 고정값으로 학습한다</div>
+            
+            <div class="q-opt">③ 모델은 항상 0.5로 출력한다</div>
+            
+            <div class="q-opt">④ 확신도는 사후 학습 과정에서 무작위로 조정된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 모델은 확신도를 직접 계산하지 않고 다음 토큰 예측 확률을 텍스트 형태로 변환한다</div>
+              <div class="why">RLHF 모델은 다음 토큰의 확률을 기반으로 텍스트를 생성하므로, 표시되는 '확신도'는 실제 확률이 아니라 토큰 선택 과정의 산출물이며 캘리브레이션이 맞지 않는다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">System One Model과 기존 Structured Output 방식의 주요 차이점은?</div>
+            
+            <div class="q-opt">① System One Model은 문장을 생성하고 Structured Output은 선택만 제공한다</div>
+            
+            <div class="q-opt">② System One Model은 처음부터 결정(값·확률) 형태로 출력하고 병렬 계산한다</div>
+            
+            <div class="q-opt">③ Structured Output은 빠르고 비용이 적으며 System One Model은 느리다</div>
+            
+            <div class="q-opt">④ 두 방식은 동일하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② System One Model은 처음부터 결정(값·확률) 형태로 출력하고 병렬 계산한다</div>
+              <div class="why">System One Model은 질문에 대해 선택·확률 등 결정값을 직접 반환하고 한 번의 쿼리에서 병렬로 계산해 속도와 비용을 절감한다, 반면 Structured Output은 생성형 모델이 텍스트를 만든 뒤 구조화하는 과정이다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Jev</span><span class="tag">TypeSafe AI</span><span class="tag">RLHF</span><span class="tag">GPT-5.6 Terra</span><span class="tag">Mode Dropping</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/AI_chatbot" target="_blank" rel="noopener">연 300시간을 아낀 AI 상담 서비스</a>
+        </h2>
+
+        <p class="summary">AI 챗봇으로 상담 문의 감소, 업무 효율 300시간 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단순 문의가 화면에 정보가 있음에도 불구하고 많이 발생해 상담 인력과 심사 지연을 초래함</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사용자는 정보를 찾는 것이 아니라 자신의 상황에 맞는지 확신하지 못해 직접 질문을 원함</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>제품을 설명형에서 질문‑응답형 AI 상담으로 전환해 연 300시간 이상의 상담 업무를 절감함</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>보험 청구 FAQ에 AI 질문‑응답 인터페이스를 도입해 콜센터 문의를 감소시켜 처리 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>이커머스 결제 단계에서 AI 기반 실시간 질문‑응답을 제공해 결제 방법에 대한 불확실성을 해소하고 전환율을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 화면에 충분한 정보가 있어도 사용자는 고객센터에 문의하게 되는가?</div>
+            
+            <div class="q-opt">① 정보가 눈에 안 띈다</div>
+            
+            <div class="q-opt">② 사용자는 정보가 자신의 상황에 맞는지 확신하지 못한다</div>
+            
+            <div class="q-opt">③ 시스템 오류가 발생한다</div>
+            
+            <div class="q-opt">④ 언어 장벽이 있다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 사용자는 정보가 자신의 상황에 맞는지 확신하지 못한다</div>
+              <div class="why">본문에서는 사용자가 화면의 정보를 찾았지만, 그 답이 자신의 상황에 정확히 맞는지 확신하지 못해 직접 확인하고 싶어한다는 점을 강조한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">토스뱅크</span><span class="tag">전세대출</span><span class="tag">AI 상담 서비스</span><span class="tag">고객센터</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/qBBRRsH0rQc" target="_blank" rel="noopener">Yes, Jev Is Insane, But There's A Catch</a>
+        </h2>
+
+        <p class="summary">실시간 의사결정 AI로 파이프라인 속도·비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:29</span>
+            
+            <span>현재 챗봇보다 최대 200배 빠른 의사결정 속도</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:13</span>
+            
+            <span>간단한 파일 선택·실패 판단 등을 Jev에 오프로드하면 즉시 해결</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:03</span>
+            
+            <span>모든 후보 답을 동시에 평가하는 parallel sampling 방식 도입</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>하이퍼파라미터 탐색 시 parallel sampling을 적용해 여러 설정을 동시에 평가해 탐색 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>데이터 정제 파이프라인에 결정 중심 아키텍처를 도입해 레코드별 최적 클리닝 규칙을 즉시 선택하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>RLCD 기반 신뢰도 보정값을 활용해 저신뢰도 결과는 비용이 큰 모델로 대체하는 계층형 추론 시스템을 만든다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Jev이 confidence 값을 제공하는 주요 목적은 무엇인가?</div>
+            
+            <div class="q-opt">① 모델이 항상 정답을 보장한다</div>
+            
+            <div class="q-opt">② 신뢰도에 따라 경량 모델 사용 여부를 판단한다</div>
+            
+            <div class="q-opt">③ 토큰 생성 속도를 높인다</div>
+            
+            <div class="q-opt">④ 모델 크기를 줄인다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 신뢰도에 따라 경량 모델 사용 여부를 판단한다</div>
+              <div class="why">confidence 값이 실제 정확도와 맞춰지면 사용자는 일정 신뢰도 임계값을 설정해, 낮은 신뢰도일 때는 더 무겁고 정확한 모델로 대체할 수 있다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Jev</span><span class="tag">LLM</span><span class="tag">RLCD</span><span class="tag">parallel sampling</span><span class="tag">confidence</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
