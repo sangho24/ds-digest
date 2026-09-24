@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 25일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 25일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 기반 업무 검증</span><span class="concept">프롬프트 협업</span><span class="concept">AI 생산성 도구</span><span class="concept">멀티모달 표현 학습</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">개발자 경험 개선</span><span class="concept">코드 자동생성</span><span class="concept">AI 비용 효율성</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">번들링 전략</span><span class="concept">플랫폼 협업</span><span class="concept">고객 확보 비용 절감</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">한컴 AI</div>
+
+        <h2 class="title">
+          <a href="https://hai-hancom.stibee.com/p/176" target="_blank" rel="noopener">👋 이력서에 'AI 잘 씀'이라고 써도 될까</a>
+        </h2>
+
+        <p class="summary">AI 활용 실적을 증명하고 채용·평가에 대비하는 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 키워드가 포함된 채용공고가 급증하고, IT 외 다양한 산업에서 요구되고 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기업들이 채용·면접 단계에서 AI 활용 능력 평가를 도입하고 있다 (예: 기아 AI 문제해결, SK하이닉스 AI 에디터, 구글 AI 면접)</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 역량을 공식적으로 인증하는 시험이 등장했으며, 기업 내 성과 평가에도 AI 활용이 반영되고 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 문제해결 평가 방식을 사내 역량 진단 프로그램에 적용해 직원들의 AI 활용 수준을 정량화한다</span></li>
+            
+            <li><span class="box"></span><span>오픈AI 인증 과정을 사내 교육 커리큘럼에 포함해 실무 프로젝트와 연계된 인증 획득을 장려한다</span></li>
+            
+            <li><span class="box"></span><span>AI 에디터 기반 면접 과제를 비기술 직무 채용에 적용해 업무 시나리오 해결 능력을 평가한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">기업들이 AI 역량 평가를 중시하는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① AI 도구가 비용 효율적이기 때문</div>
+            
+            <div class="q-opt">② AI 활용이 직접적인 비즈니스 성과 개선으로 이어지기 때문</div>
+            
+            <div class="q-opt">③ 법적 규제 때문</div>
+            
+            <div class="q-opt">④ 채용 비용 절감을 위해서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② AI 활용이 직접적인 비즈니스 성과 개선으로 이어지기 때문</div>
+              <div class="why">본문에서는 기업이 AI를 얼마나 많이 썼는지가 아니라 AI로 실제 업무를 어떻게 개선했는지를 평가한다는 점을 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">OpenAI가 제공하는 AI Foundations 인증의 주요 목적은 무엇인가?</div>
+            
+            <div class="q-opt">① AI 모델 개발 능력 검증</div>
+            
+            <div class="q-opt">② 실무에서 AI 도구를 효과적으로 활용하는 능력 검증</div>
+            
+            <div class="q-opt">③ AI 윤리 지식 검증</div>
+            
+            <div class="q-opt">④ 프로그래밍 언어 숙련도 검증</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 실무에서 AI 도구를 효과적으로 활용하는 능력 검증</div>
+              <div class="why">본문에 따르면 AI Foundations 과정은 챗GPT 안에서 실제 업무와 유사한 과제를 수행하며 AI 활용법을 익히는 방식이며, 이를 통해 실무 AI 역량을 인증한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">기아</span><span class="tag">SK하이닉스</span><span class="tag">구글</span><span class="tag">오픈AI</span><span class="tag">앤트로픽</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.28473v1" target="_blank" rel="noopener">On the Diffusibility of High-Dimensional Latents</a>
+        </h2>
+
+        <p class="summary">고차원 라텐트의 차원 축소가 생성 효율을 좌우한다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>이미지 생성에서 고차원 라텐트를 직접 다루는 기존 확산 모델은 재구성 품질이 낮은 인코더를 사용해 차원 손실을 감수했다. 최근 연구는 고품질 재구성을 위해 인코더를 파인튜닝했지만, 이는 라텐트의 실질 차원을 낮춰 흐름 매칭의 속도 예측이 비효율적임을 밝혀냈다. 본 논문은 이를 해결하기 위해 x0‑예측을 도입, 신호 매니폴드에 집중함으로써 텍스트‑이미지 생성 성능을 향상시킨다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>프리트레인 비주얼 인코더를 파인튜닝하면 재구성 품질이 회복되지만 라텐트의 실질 차원이 감소한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>고차원 라텐트에서 velocity prediction은 신호 매니폴드 외의 직교 잡음 방향까지 학습해야 해 최적화가 비효율적이다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>x0‑예측(클린 데이터 파라미터화)을 사용하면 학습이 신호 매니폴드에 집중돼 텍스트‑이미지 생성 성능이 일관되게 향상된다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>x0‑예측 방식을 오디오 확산 모델에 적용해 고차원 음향 라텐트의 잡음 방향 학습을 억제하고 음질을 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>파인튜닝된 인코더의 차원 축소 현상을 활용해 비전‑텍스트 멀티모달 검색 시스템에서 매니폴드 기반 인덱싱을 도입, 검색 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>flow matching에서 신호 매니폴드 외 잡음 방향을 제외하는 샘플링 전략을 강화학습 정책 생성에 적용해 학습 안정성을 향상시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 파인튜닝된 인코더를 사용할 때 velocity prediction이 비효율적인가?</div>
+            
+            <div class="q-opt">① 모델이 신호 매니폴드 외의 직교 잡음 방향을 학습해야 하기 때문</div>
+            
+            <div class="q-opt">② 학습 데이터가 부족하기 때문</div>
+            
+            <div class="q-opt">③ 인코더가 과적합되었기 때문</div>
+            
+            <div class="q-opt">④ 옵티마이저가 부적절하기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 모델이 신호 매니폴드 외의 직교 잡음 방향을 학습해야 하기 때문</div>
+              <div class="why">고차원 라텐트에서 velocity prediction은 신호 매니폴드 외의 직교 잡음 방향까지 학습해야 하므로 최적화 효율이 떨어진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">텍스트‑이미지 생성 성능을 일관되게 향상시키는 파라미터화는?</div>
+            
+            <div class="q-opt">① velocity prediction</div>
+            
+            <div class="q-opt">② x0-prediction</div>
+            
+            <div class="q-opt">③ epsilon prediction</div>
+            
+            <div class="q-opt">④ latent scaling</div>
+            
+            <div class="q-answer">
+              <div class="correct">② x0-prediction</div>
+              <div class="why">논문은 x0‑예측이 신호 매니폴드에 집중해 성능을 개선한다는 결과를 제시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Representation Autoencoders</span><span class="tag">diffusion models</span><span class="tag">flow matching</span><span class="tag">x0-prediction</span><span class="tag">text-to-image generation</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/devdotfast/whiteboard" target="_blank" rel="noopener">Show HN: Whiteboard (YC W26) – An open-source IDE for thoughtful software design</a>
+        </h2>
+
+        <p class="summary">AI 에이전트와 협업 설계, 코드 탐색을 한 번에</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Whiteboard는 AI 에이전트와 캔버스를 결합해 시퀀스·ER 다이어그램 등 시각화 요소를 클릭하면 해당 코드로 바로 이동하고 VSCode LSP 지원을 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Rust로 구현한 AST‑aware 시맨틱 diff 뷰어는 큰 함수는 의사코드로 요약하고 테스트·문서 변경은 숨겨 사용자에게 필요한 변화만 보여준다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Decision Log는 에이전트의 트레이스와 요구사항을 연결해 자동 의사결정을 추적·검증하도록 도와주며, Salesforce·Modal 등에서 활용된다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AST‑aware diff 뷰어를 데이터 파이프라인 버전 관리에 적용해 스키마·변환 로직 변경만 요약 표시한다.</span></li>
+            
+            <li><span class="box"></span><span>Decision Log 개념을 AutoML 파이프라인에 도입해 하이퍼파라미터 선택·모델 업데이트 과정을 추적·분석한다.</span></li>
+            
+            <li><span class="box"></span><span>캔버스 기반 에이전트 인터페이스를 협업 노트북에 연결해 데이터 탐색·시각화 과정을 실시간으로 공동 설계한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Whiteboard의 시맨틱 diff 뷰어는 어떤 언어로 구현되었나요?</div>
+            
+            <div class="q-opt">① Python</div>
+            
+            <div class="q-opt">② Rust</div>
+            
+            <div class="q-opt">③ Go</div>
+            
+            <div class="q-opt">④ JavaScript</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Rust</div>
+              <div class="why">본문에 ‘우리는 Rust로 시맨틱, AST‑aware diff 뷰어를 작성했다’라고 명시돼 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Decision Log의 주요 목적은 무엇인가요?</div>
+            
+            <div class="q-opt">① 자동 코드 주석 생성</div>
+            
+            <div class="q-opt">② 에이전트 트레이스를 요구사항에 연결해 자율적 의사결정을 이해</div>
+            
+            <div class="q-opt">③ 컴파일 속도 향상</div>
+            
+            <div class="q-opt">④ UI 테마 시각화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 에이전트 트레이스를 요구사항에 연결해 자율적 의사결정을 이해</div>
+              <div class="why">텍스트에 ‘Decision Log는 에이전트가 스스로 만든 결정을 추적·링크해 요구사항 구현과 연결한다’라고 설명돼 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Whiteboard</span><span class="tag">CodeOSS</span><span class="tag">Rust</span><span class="tag">WASM</span><span class="tag">Claude Code</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://bestmodelforyourbudget.terrydjony.com/" target="_blank" rel="noopener">Best LLM for every budget, updated daily</a>
+        </h2>
+
+        <p class="summary">예산에 맞는 가성비 최고의 LLM 선택 지표 제공</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Value frontier은 더 저렴한 모델이 같은 혹은 더 높은 지능 점수를 갖지 않을 때 해당 모델을 의미한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Blended price는 입력:출력 비율 3:1을 적용한 1M 토큰당 비용이다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>예산 구간별 최고 점수 모델과 그 다음 후보를 보여주는 lookup table을 제공한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>클라우드 컴퓨팅 인스턴스 선택 시 비용 대비 성능 프론티어를 정의해 예산에 맞는 최적 인스턴스를 자동 추천한다.</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 단계별 입력·출력 비용 비율을 블렌딩해 전체 파이프라인 비용 효율성을 평가하고 예산에 맞는 설계 옵션을 선택한다.</span></li>
+            
+            <li><span class="box"></span><span>머신러닝 피처 엔지니어링 기법을 비용·성능 프론티어에 매핑해 제한된 연산 예산 내에서 가장 효과적인 피처 조합을 선택한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Value frontier에 포함되는 모델의 조건은 무엇인가?</div>
+            
+            <div class="q-opt">① 가장 높은 점수를 가진 모델이다</div>
+            
+            <div class="q-opt">② 같은 가격 중 가장 높은 점수를 가진 모델이다</div>
+            
+            <div class="q-opt">③ 더 저렴한 모델이 같은 혹은 더 높은 점수를 갖지 않는다</div>
+            
+            <div class="q-opt">④ 가장 낮은 비용을 가진 모델이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 더 저렴한 모델이 같은 혹은 더 높은 점수를 갖지 않는다</div>
+              <div class="why">Value frontier은 가격이 더 낮은 모델이 동일하거나 더 높은 Intelligence 점수를 갖지 않을 때 해당 모델을 포함한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Blended price per 1M tokens는 어떤 입력·출력 비율을 사용해 계산되는가?</div>
+            
+            <div class="q-opt">① 1:1</div>
+            
+            <div class="q-opt">② 2:1</div>
+            
+            <div class="q-opt">③ 3:1</div>
+            
+            <div class="q-opt">④ 4:1</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 3:1</div>
+              <div class="why">텍스트에 따르면 Blended price는 3:1 입력:출력 비율을 적용해 계산한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Artificial Analysis</span><span class="tag">GitHub</span><span class="tag">LLM</span><span class="tag">bestvaluemodel</span><span class="tag">HackerNews</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/486" target="_blank" rel="noopener">🥤넷플릭스부터 네이버·토스까지 사로잡은 번들링</a>
+        </h2>
+
+        <p class="summary">번들링으로 고객 확보 비용 절감·데이터 시너지</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>OTT·커머스에서 번들링이 확산되는 이유는 고객 확보·콘텐츠·물류 비용이 커져 서로 강점을 연결하면 효율적이기 때문이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>플랫폼이 고객을 보유하고 전문 사업자가 상품·물류 역량을 제공하면 양측이 빠르게 경쟁력을 높일 수 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>번들링으로 매출·접점은 늘려도 고객 관계는 플랫폼에 남을 수 있어, 브랜드는 자체 고객 경험을 함께 만들어야 한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>SaaS 기업이 데이터 파이프라인 서비스를 제공하는 분석 툴과 번들링해 진입 장벽을 낮추고 고객 확보 비용을 절감한다</span></li>
+            
+            <li><span class="box"></span><span>기업용 AI 솔루션 제공자가 모델 호스팅과 컨설팅 서비스를 묶어 판매해 초기 도입 비용을 낮추고 빠른 ROI를 달성한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">번들링이 최근 OTT·커머스에서 확대되는 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 고객 확보 비용 증가</div>
+            
+            <div class="q-opt">② 콘텐츠 공급 과잉</div>
+            
+            <div class="q-opt">③ 물류 비용 감소</div>
+            
+            <div class="q-opt">④ 규제 완화</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 고객 확보 비용 증가</div>
+              <div class="why">본문에서는 고객을 모으고 유지하는 비용이 커지면서 서로 강점을 연결하는 번들링이 효율적이라고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">넷플릭스</span><span class="tag">네이버</span><span class="tag">컬리</span><span class="tag">토스</span><span class="tag">오아시스마켓</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

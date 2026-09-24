@@ -1,0 +1,426 @@
+{
+  "date": "2026-09-25",
+  "generated_at": "2026-09-24T23:08:56.833864",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "한컴 AI",
+        "source_key": "hai-hancom.stibee.com",
+        "source_label": "한컴 AI",
+        "title": "👋 이력서에 'AI 잘 씀'이라고 써도 될까",
+        "url": "https://hai-hancom.stibee.com/p/176",
+        "published_at": "2026-09-21T00:00:00",
+        "transcript": null,
+        "body": "👋 AI 역량을 요구하는 채용공고가 빠르게 늘고 있어. 👋 기업들은 AI를 써봤는지가 아니라 AI로 무엇을 해냈는지를 평가하기 시작했어.  👋 AI 활용 능력을 객관적으로 보여줄 인증시험도 등장했지.\n\nHAI! 내가 왔어  , 드디어 이번 주 목요일부터 추석 연휴야. 친척들 모이는 자리에서 \"요즘 AI 안 쓰는 데가 없다더라\" 같은 말 한 번쯤 듣게 될 것 같아. 흘려듣기 쉬운 얘기지만 취업이나 이직을 앞둔 사람한테는 사정이 좀 달라. AI를 쓸 줄 아느냐가 인사 담당자들이 실제로 확인하는 항목이 됐거든. 오늘은 AI 역량이 채용과 평가에 어떻게 들어왔는지, 그리고 '나 AI 잘 써'라는 말을 어떻게 보여줄 수 있는지 짚어볼게.\n\n채용공고와 면접장에 불어온 변화\n\n• 최근 기업들이 채용공고에 'AI'를 적어 넣기 시작했어. 잡코리아 집계에 따르면 올해 1~5월에 등록된 공고 중 ['AI' 키워드가 포함된 공고는 약 1만 5,000건으로, 전년 같은 기간보다 70% 늘었어.](https://www.sedaily.com/article/20058432) 같은 기간 전체 채용공고 증가율이 10%였던 것과 비교하면 AI 관련 채용 증가세가 훨씬 가팔랐던 거지.\n\n• AI 역량을 요구하는 자리는 IT 업계 안에만 머물지 않았어. 조사 대상 11개 업종 가운데 10개 업종에서 AI 공고가 늘었고, 증가율이 가장 높은 곳은 교육업(185%)이었어. 미디어와 광고(154%), 문화, 예술, 디자인(139%)이 뒤를 이었지. 신입 공고에서도 AI 키워드가 약 80% 늘었어. 내가 어느 업종에서 어느 연차로 지원하든 공고에서 'AI' 키워드를 한 번은 마주칠 수 있다는 뜻이지.\n\n[출처: 웍스피어](https://www.sedaily.com/article/20058432)\n\n• 기업이 AI 역량을 요구하는 자리는 공고 문구에서 끝나지 않아. 채용 단계에서 실제로 일어나는 일도 달라지고 있어. 기아는 지난 9월 8일 2026년 하반기 집중 채용 계획을 발표하면서, 신입 채용에 업계 최초로 AI 문제해결력 검증 단계를 넣겠다고 밝혔어. [지원자가 AI를 활용해 주어진 문제를 분석하고 해결하는 과정을 평가하는 방식](https://www.hyundaimotorgroup.com/ko/news/kia-2026-recruitment)이야. 구체적인 평가 방식은 공개되지 않았지만 '인간-AI 협업형 인재'를 뽑겠다는 게 기아가 설명한 취지야. 지원자가 AI에 대해 아는지만이 아니라 AI를 어떻게 활용하는지까지 보겠다는 거지.\n\n• SK하이닉스는 면접장에서 지원자가 AI를 직접 쓸 수 있도록 하고 있어. 하반기 기술사무직 신입 수시채용에서 반나절 동안 심층 면접을 치르는데, 그 안에 '문제해결 PT'라는 순서가 있어. 지원자는 [면접장에 비치된 PC에서 회사가 마련한 'AI 에디터'를 기반으로 직무 시나리오 과제를 수행](https://talent.skhynix.com/hub/ko/company/story/217)하게 돼. 얼마 전까지 면접에서 AI 활용하는 건 부정행위에 가깝게 여겨졌는데, 이제는 AI를 쓴다는 전제 위에서 문제를 내는 쪽으로 바뀐 거야.\n\n• 해외 빅테크도 같은 방향으로 움직이고 있어. 구글은 소프트웨어 엔지니어 면접에서 지원자가 면접 중에 AI를 쓸 수 있게 한 새 절차를 시범 운영하는 중이야. 지원자는 코드 이해 평가에서 [AI로 기존 코드를 읽고 오류를 고치고 최적화](https://www.seoul.co.kr/news/economy/2026/05/08/20260508500180)해야 해. 면접관은 지원자가 AI에 내린 명령어인 프롬프트를 잘 구성했는지, 결과물의 수준과 디버깅 기술은 어떤지를 본다고 해. 브라이언 옹 구글 채용 담당 부사장은 \"AI 시대에 맞춰 SW 엔지니어링 면접에 시범 프로그램을 도입했다\"고 설명했어. 지원자를 보는 기준이 '혼자서 얼마나 잘할 수 있나'에서 'AI를 데리고 얼마나 잘할 수 있나'로 옮겨간 셈이지.\n\n'써봤다'가 아니라 '뭘 해냈나'\n\n• AI로 무엇을 해낼 수 있느냐는 질문은 입사한 뒤에도 따라붙었어. 기업들은 이걸 'AX(AI Transformation)'라는 이름으로 최우선 과제에 올려두고 있어. 일하는 방식 자체를 AI 중심으로 다시 짜고, 사람이 맡긴 일을 스스로 계획하고 실행하는 AI 에이전트까지 업무에 들이겠다는 이야기지. 요즘은 이 AX를 얼마나 해냈는지가 인사평가표 항목으로 들어오고 있어.\n\n• 아마존은 승진 심사에서 AI를 잘 활용하고 있는지를 직접 물어봐. 공급망최적화기술팀에서는 ['혁신을 이루거나 고객 경험을 개선하거나 운영 효율성과 효과를 높이기 위해 AI를 어떻게 활용했나'라는 질문이 평가 항목에 들어갔어.](https://www.yna.co.kr/view/AKR20260220007200091) 원래 중간 관리직 이상 승진 평가에만 쓰이던 문항인데, 2025년 7월부터 승진 가능성이 있는 모든 직원으로 확대됐지. AI를 써봤는지가 아니라 그걸로 무엇이 달라졌는지를 적으라는 거야. 관리자에게는 AI를 활용해 인원을 늘리지 않고 업무 역량을 높이거나 혁신한 사례도 묻고 있어.\n\n• 평가표에 AI 역량을 반영하는 흐름은 국내에도 들어왔어. 한컴은 올해부터 [성과 지표에서 AI로 바꾼 일의 비중을 30% 이상](https://www.ajunews.com/view/20260827144955983) 잡았어. 평가 기준은 AI를 얼마나 썼느냐가 아니야. 내 직무 경계를 넘어 완성도 있는 결과를 냈는지, 그 방식이 팀이나 다른 조직으로 퍼졌는지, 한 번 쓰고 끝나지 않고 계속 쓰이는 자산으로 남았는지를 봐. 삼성전자도 [기존 2~5점이던 'AX 역량 제고' 배점을 20점으로 올렸어.](https://www.donga.com/news/Economy/article/all/20260827/134559376/2) 이 배점은 10월로 예정된 임원 목표관리(MBO) 평가에 적용되고, 점수는 12월 임원 인사에 반영될 예정이야.\n\n• 롯데는 임직원 누구나 업무에 필요한 AI 에이전트를 만들어 쓸 수 있도록 연내 전 임직원을 대상으로 AI 에이전트 실무형 교육을 진행할 계획이야. 그리고 AI 에이전트 활용이 핵심 역량으로 자리 잡으면 중간관리자의 역할도 달라질 거라고 보고 있어. 지금까지는 [사람 관리가 중심이었다면, 앞으로는 구성원과 여러 AI 에이전트를 함께 조율해 성과를 내는 역량이 필요](https://www.hankyung.com/article/202606168682g)하다는 거지. 롯데는 이런 역량을 채용과 평가의 주요 기준으로 반영할 방침이야.\n\n• 기업마다 AI 역량을 평가하는 방식은 조금씩 다르지만, 묻는 건 하나로 모여. AI를 얼마나 많이 썼는지가 아니라 AI로 실제 업무를 어떻게 개선했는지야. 평가의 기준이 'AI를 다룰 줄 아는가'에서 '일하는 방식을 효율적으로 바꿨는가'로 옮겨가고 있는 셈이야.\n\nAI 활용 능력을 증명하는 새로운 방법\n\n• 회사마다 AI 역량을 따로 재기 시작하면서 빈틈이 하나 생겼어. 'AI 잘 씁니다'라는 말을 같은 기준으로 확인해주는 곳이 없다는 거야. 그래서 이 능력을 증명하려는 인증시험이 등장했어.\n\n• 먼저 나선 건 AI를 만든 회사들이야. 오픈AI는 지난해 12월 인증 과정인 'AI 파운데이션스(AI Foundations)'를 열었어. [챗GPT 안에서 실제 업무와 비슷한 과제를 직접 해보고, 챗GPT에게 피드백을 받으며 AI 활용법을 익히는 방식](https://openai.com/ko-KR/index/expanding-economic-opportunity-with-ai/)이야. 과정을 마치면 실무에 필요한 AI 역량을 갖췄다는 인증을 받고, 추가 과정과 실습 프로젝트까지 거치면 정식 오픈AI 인증(OpenAI Certification)으로 이어져. 정식 인증 시험은 아직 월마트, 액센추어, 존디어 같은 기업과 공공기관, 일부 대학을 대상으로 한 파일럿 형태로만 열려 있지만, 오픈AI는 2030년까지 미국인 1,000만 명이 이 인증을 받도록 하겠다는 목표를 내놨어\n\n• 앤트로픽도 클로드를 얼마나 잘 쓰는지 확인해주는 인증을 만들었어. 이름은 클로드 인증(Claude Certified)이고, 컨설팅과 영업(Associate), 개발(Developer), 솔루션 설계(Architect) 세 가지 역할로 나뉘는데, 솔루션 설계 쪽만 한 단계 더 높은 인증이 따로 있어서 모두 네 종류야. 인증을 받으려면 역할에 맞는 시험을 치러야 하는데, 온라인 감독 시험으로 보거나 시험 대행 기업 피어슨 뷰(Pearson VUE)의 시험센터에 가서 볼 수 있어. [클로드를 일상 업무에 쓰는 수준부터 직접 개발하고 기업용 AI 솔루션을 설계하는 수준까지 자기 자리에 맞는 문제를 푸는 거지.](https://anthropic-partners.skilljar.com/page/partner-certifications)\n\n• 하지만 두 시험 모두 지금 당장 보기엔 문턱이 있어. 오픈AI의 인증 과정은 기업에만 열려 있어 개인은 응시할 수 없고, 앤트로픽 시험도 클로드 파트너 네트워크(Claude Partner Network) 소속 조직을 대상으로 운영돼 개인이 바로 응시하기 어렵거든. 국내에는 데이원컴퍼니가 서울대, 포스텍, 고려대 연구진과 함께 만든 'APEX'가 있어. 이 시험은 개인도 응시할 수 있어. [50문항을 140분 동안 푸는 유료 시험](https://scaila.kr/apex)이고, 누적 합격률은 51.6%야.\n\n[출처: 데이원컴퍼니](https://scaila.kr/apex/exam-guide)\n\n• 인증서 한 장이 취업의 필수 관문이 된 건 아니야. 다만 이력서에 올리는 역량 항목은 시대마다 달라져 왔어. 한때는 컴퓨터활용능력이나 워드프로세서 자격증이 이력서의 기본 한 줄이었잖아. 지금은 그 자리에 AI가 오고 있는 거지. 채용이든 평가든 결국 AI로 무엇을 바꿨느냐를 묻고 있으니 올해 AI로 해결한 일 가운데 결과가 눈에 보이는 것 하나만 정리해두면 충분해. 어렵게 생각하지 말고 하나씩 챙겨보자. 어떻게 준비하면 좋을지는 앞으로 HAI도 같이 살펴볼게!\n\nAI 공부 좀 해볼까 싶어서 강의를 검색해본 적 있어? 수백 개가 쏟아지는데 정작 내 일에 맞는 게 뭔지는 아무도 알려주지 않잖아. 그럴 때 출발점으로 삼을 만한 곳이 있어. 챗GPT를 만든 오픈AI가 직접 운영하는 무료 온라인 학습 플랫폼 ['오픈AI 아카데미'](https://academy.openai.com/)야.\n\n| 내 상황에 맞는 길부터 고르기\n\n[출처: 오픈AI 아카데미](https://academy.openai.com/)\n\n아카데미는 학습 대상을 기준으로 여러 학습 코스를 나눠놨어. 길은 네 갈래야. 사무직을 위한 과정(Apply AI at Work), 개발자를 위한 과정(Build with AI), 조직을 이끄는 사람을 위한 과정(Lead AI Adoption), 교육 현장을 위한 과정(Teach and Learn with AI). 기획이나 마케팅처럼 문서와 회의가 많은 일을 한다면 첫 번째 길을 살펴볼 수 있고, 팀의 AI 도입을 책임지는 자리라면 세 번째 길이 맞아. 각 과정에는 목표와 대상에 맞춘 학습 코스가 마련돼 있어서 처음부터 강의를 하나씩 찾아 헤매지 않아도 돼.\n\n| 기초부터 에이전트까지, 순서대로\n\n사무직 과정을 예로 들어볼게. 프롬프트를 쓰고 결과물을 다듬는 기본기에서 시작해서, 반복 업무를 AI로 자동화하는 단계로 넘어가. 마지막에는 에이전트에게 일을 맡기고 방향을 잡아주는 방법까지 다뤄. 개발자 과정은 코덱스(Codex)와 오픈AI API를 활용해 직접 만들어보는 쪽이고, 리더 과정은 실제 AI 도입 과제를 바탕으로 전략 초안과 로드맵을 만들어보게 해. 어느 코스든 듣 끝나는 강의보다는 직접 해보는 활동에 초점을 맞추고 있어서, 본문에서 본 '무엇을 바꿨나'에 답할 실무 사례를 만들어보는 데 도움이 될 거야.\n\n공개된 아카데미 과정은 무료로 이용할 수 있고 콘텐츠는 영어로 제공돼서 브라우저 번역 기능을 켜두면 편하게 볼 수 있어. AI를 어디서부터 배워야 할지 고민이라면 아카데미에서 내 역할에 맞는 코스 하나를 골라 들어보는 건 어떨까?\n\n[**이용해 보러 가기**](https://academy.openai.com/)\n\n오늘의 HAI는 어땠어? 좋았던 부분과 아쉬웠던 부분에 대해 의견을 남겨줘.\n\n[좋았어](https://hform.hancom.com/r/LriUP3vqQJ)  [아쉬워](https://hform.hancom.com/r/4xKCBd3xFT)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 활용 실적을 증명하고 채용·평가에 대비하는 방법",
+        "tags": [
+          "기아",
+          "SK하이닉스",
+          "구글",
+          "오픈AI",
+          "앤트로픽"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "프롬프트 협업",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI 키워드가 포함된 채용공고가 급증하고, IT 외 다양한 산업에서 요구되고 있다",
+            "timestamp": null
+          },
+          {
+            "point": "기업들이 채용·면접 단계에서 AI 활용 능력 평가를 도입하고 있다 (예: 기아 AI 문제해결, SK하이닉스 AI 에디터, 구글 AI 면접)",
+            "timestamp": null
+          },
+          {
+            "point": "AI 역량을 공식적으로 인증하는 시험이 등장했으며, 기업 내 성과 평가에도 AI 활용이 반영되고 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 문제해결 평가 방식을 사내 역량 진단 프로그램에 적용해 직원들의 AI 활용 수준을 정량화한다",
+          "오픈AI 인증 과정을 사내 교육 커리큘럼에 포함해 실무 프로젝트와 연계된 인증 획득을 장려한다",
+          "AI 에디터 기반 면접 과제를 비기술 직무 채용에 적용해 업무 시나리오 해결 능력을 평가한다"
+        ],
+        "quiz": [
+          {
+            "question": "기업들이 AI 역량 평가를 중시하는 이유는 무엇인가?",
+            "options": [
+              "AI 도구가 비용 효율적이기 때문",
+              "AI 활용이 직접적인 비즈니스 성과 개선으로 이어지기 때문",
+              "법적 규제 때문",
+              "채용 비용 절감을 위해서"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 기업이 AI를 얼마나 많이 썼는지가 아니라 AI로 실제 업무를 어떻게 개선했는지를 평가한다는 점을 강조한다."
+          },
+          {
+            "question": "OpenAI가 제공하는 AI Foundations 인증의 주요 목적은 무엇인가?",
+            "options": [
+              "AI 모델 개발 능력 검증",
+              "실무에서 AI 도구를 효과적으로 활용하는 능력 검증",
+              "AI 윤리 지식 검증",
+              "프로그래밍 언어 숙련도 검증"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 AI Foundations 과정은 챗GPT 안에서 실제 업무와 유사한 과제를 수행하며 AI 활용법을 익히는 방식이며, 이를 통해 실무 AI 역량을 인증한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "career",
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "On the Diffusibility of High-Dimensional Latents",
+        "url": "https://arxiv.org/abs/2609.28473v1",
+        "published_at": "2026-09-23T17:59:56",
+        "transcript": null,
+        "body": "Representation Autoencoders (RAEs) enable diffusion models to operate in the feature spaces of pretrained visual encoders. However, many off-the-shelf encoders are not optimized for faithful reconstruction, discarding fine-grained visual details. As expected, finetuning these encoders for image reconstruction recovers such details. However, perhaps counterintuitively, this procedure reduces the effective dimensionality of the resulting representation, and the altered geometry has downstream effects on generation. Specifically, we show that using the standard velocity prediction in flow matching in this high-dimensional space requires the model to fit orthogonal noise directions outside the low-dimensional signal manifold, making optimization inefficient. This motivates using the clean data parameterization ($\\boldsymbol{x}_{0}$-prediction) instead, which focuses learning on the underlying signal manifold. Across experiments with multiple strong-reconstruction encoders, we show that $\\boldsymbol{x}_{0}$-prediction consistently improves text-to-image generation performance.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "고차원 라텐트의 차원 축소가 생성 효율을 좌우한다",
+        "tags": [
+          "Representation Autoencoders",
+          "diffusion models",
+          "flow matching",
+          "x0-prediction",
+          "text-to-image generation"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "신경망 기하학 및 개념 매니폴드"
+        ],
+        "key_points": [
+          {
+            "point": "프리트레인 비주얼 인코더를 파인튜닝하면 재구성 품질이 회복되지만 라텐트의 실질 차원이 감소한다.",
+            "timestamp": null
+          },
+          {
+            "point": "고차원 라텐트에서 velocity prediction은 신호 매니폴드 외의 직교 잡음 방향까지 학습해야 해 최적화가 비효율적이다.",
+            "timestamp": null
+          },
+          {
+            "point": "x0‑예측(클린 데이터 파라미터화)을 사용하면 학습이 신호 매니폴드에 집중돼 텍스트‑이미지 생성 성능이 일관되게 향상된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "이미지 생성에서 고차원 라텐트를 직접 다루는 기존 확산 모델은 재구성 품질이 낮은 인코더를 사용해 차원 손실을 감수했다. 최근 연구는 고품질 재구성을 위해 인코더를 파인튜닝했지만, 이는 라텐트의 실질 차원을 낮춰 흐름 매칭의 속도 예측이 비효율적임을 밝혀냈다. 본 논문은 이를 해결하기 위해 x0‑예측을 도입, 신호 매니폴드에 집중함으로써 텍스트‑이미지 생성 성능을 향상시킨다.",
+        "production_ideas": [
+          "x0‑예측 방식을 오디오 확산 모델에 적용해 고차원 음향 라텐트의 잡음 방향 학습을 억제하고 음질을 개선한다.",
+          "파인튜닝된 인코더의 차원 축소 현상을 활용해 비전‑텍스트 멀티모달 검색 시스템에서 매니폴드 기반 인덱싱을 도입, 검색 효율을 높인다.",
+          "flow matching에서 신호 매니폴드 외 잡음 방향을 제외하는 샘플링 전략을 강화학습 정책 생성에 적용해 학습 안정성을 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 파인튜닝된 인코더를 사용할 때 velocity prediction이 비효율적인가?",
+            "options": [
+              "모델이 신호 매니폴드 외의 직교 잡음 방향을 학습해야 하기 때문",
+              "학습 데이터가 부족하기 때문",
+              "인코더가 과적합되었기 때문",
+              "옵티마이저가 부적절하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "고차원 라텐트에서 velocity prediction은 신호 매니폴드 외의 직교 잡음 방향까지 학습해야 하므로 최적화 효율이 떨어진다."
+          },
+          {
+            "question": "텍스트‑이미지 생성 성능을 일관되게 향상시키는 파라미터화는?",
+            "options": [
+              "velocity prediction",
+              "x0-prediction",
+              "epsilon prediction",
+              "latent scaling"
+            ],
+            "answer_index": 1,
+            "explanation": "논문은 x0‑예측이 신호 매니폴드에 집중해 성능을 개선한다는 결과를 제시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Whiteboard (YC W26) – An open-source IDE for thoughtful software design",
+        "url": "https://github.com/devdotfast/whiteboard",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hello! We’re Sid, Alex, Ketan, and Milan. We’re building Whiteboard (<a href=\"https:&#x2F;&#x2F;whiteboard.dev.fast&#x2F;\">https:&#x2F;&#x2F;whiteboard.dev.fast&#x2F;</a>), an open-source desktop app where humans and agents can architect software together in a common workspace. Here’s our repo: <a href=\"https:&#x2F;&#x2F;github.com&#x2F;devdotfast&#x2F;whiteboard\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;devdotfast&#x2F;whiteboard</a>.<p>We were missing the feeling of a “whiteboard session” with another dev where you leave with a deep understanding of a system, so we built this app for ourselves. Whiteboard plugs into the tools you already use - e.g. Claude Code, Codex, etc. – and gives your agent an SDK to draw on an in-app canvas to describe its work. We began with an MVP based on HTML artifacts and started rethinking the app as we ran into limitations:<p>1. Built on top of CodeOSS: We found that in pure HTML tools it was hard to connect a spec or diagram to code. In Whiteboard, when you click on visualizations like a sequence diagram, an entity relationship diagram, or a quote from the agent’s trace, you can jump to the underlying code directly. When navigating code, you get keybindings and LSP support from VSCode out of the box. We’ve found this is especially valuable because tradeoffs are often only discovered after a first pass at implementation (re: slop)<p>2. Semantic diff viewer: we wrote a semantic, AST-aware diff viewer in Rust so you can only view the code changes which are relevant to you [1]. We’ve set up some sane defaults: large added functions are summarized as pseudocode, and things like unit tests and large documentation changes are collapsed &#x2F; hidden. This is all customizable with a WASM-based plugin system.<p>3. Decision Log: We found it difficult to reason about what set of decisions our agents made autonomously. So we built tools for agents to query and link their own traces to the Whiteboard, so you can understand how the requirements that you set were implemented, and understand what decisions your agent made autonomously.<p>Here’s a quick demo video explaining more: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ChPn3ftULWE\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=ChPn3ftULWE</a><p>Folks at companies like Salesforce and Modal are using Whiteboard today as a review tool for architecture or spec-level changes – really any change where they want to be involved:<p>1. Reviewing your own coding agent’s work: because Whiteboard makes it easier to review large amounts of code, folks will typically have their AI agents create a prototype and a corresponding Whiteboard session so they can iterate on the design.<p>2. Reviewing other people’s changes: We’ve found that Whiteboard is particularly helpful when composed with tools like Greptile. For example, you can run an automated code reviewer on small changes and escalate to a Whiteboard session for the changes that require human judgement",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 에이전트와 협업 설계, 코드 탐색을 한 번에",
+        "tags": [
+          "Whiteboard",
+          "CodeOSS",
+          "Rust",
+          "WASM",
+          "Claude Code"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "개발자 경험 개선",
+          "코드 자동생성"
+        ],
+        "key_points": [
+          {
+            "point": "Whiteboard는 AI 에이전트와 캔버스를 결합해 시퀀스·ER 다이어그램 등 시각화 요소를 클릭하면 해당 코드로 바로 이동하고 VSCode LSP 지원을 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Rust로 구현한 AST‑aware 시맨틱 diff 뷰어는 큰 함수는 의사코드로 요약하고 테스트·문서 변경은 숨겨 사용자에게 필요한 변화만 보여준다.",
+            "timestamp": null
+          },
+          {
+            "point": "Decision Log는 에이전트의 트레이스와 요구사항을 연결해 자동 의사결정을 추적·검증하도록 도와주며, Salesforce·Modal 등에서 활용된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AST‑aware diff 뷰어를 데이터 파이프라인 버전 관리에 적용해 스키마·변환 로직 변경만 요약 표시한다.",
+          "Decision Log 개념을 AutoML 파이프라인에 도입해 하이퍼파라미터 선택·모델 업데이트 과정을 추적·분석한다.",
+          "캔버스 기반 에이전트 인터페이스를 협업 노트북에 연결해 데이터 탐색·시각화 과정을 실시간으로 공동 설계한다."
+        ],
+        "quiz": [
+          {
+            "question": "Whiteboard의 시맨틱 diff 뷰어는 어떤 언어로 구현되었나요?",
+            "options": [
+              "Python",
+              "Rust",
+              "Go",
+              "JavaScript"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 ‘우리는 Rust로 시맨틱, AST‑aware diff 뷰어를 작성했다’라고 명시돼 있다."
+          },
+          {
+            "question": "Decision Log의 주요 목적은 무엇인가요?",
+            "options": [
+              "자동 코드 주석 생성",
+              "에이전트 트레이스를 요구사항에 연결해 자율적 의사결정을 이해",
+              "컴파일 속도 향상",
+              "UI 테마 시각화"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 ‘Decision Log는 에이전트가 스스로 만든 결정을 추적·링크해 요구사항 구현과 연결한다’라고 설명돼 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Best LLM for every budget, updated daily",
+        "url": "https://bestmodelforyourbudget.terrydjony.com/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Which LLM is worth it\n\nEvery model on the **Artificial Analysis Intelligence Index** plotted against its blended API price. Models on the **value frontier** are the ones where nothing cheaper is also smarter; everything else is beaten on both counts by a point on the line. By default only the best variant of each model is shown and low scorers are hidden; use the filters to widen the field.\n\nLoading data…\n\n[GitHub](https://github.com/terryds/bestvaluemodel)\n\nIntelligence\nCoding\nMath\n\nMin score  30\n One row per model\nMaker All\n\n Frontier only\n Label every point\n\n## Performance vs price\n\nBlended cost per 1M tokens (3:1 input:output, log scale) against the Intelligence Index. Hover or tab to a point for details.\n\nOn the value frontier\nDominated: a cheaper model matches or beats it\nValue frontier\n\n## Best model for your budget\n\nThe frontier as a lookup table. Find the row your budget falls in; the pick is the highest-scoring model you can get at that price, and the runner-up is the next best that also fits.\n\n| Budget per 1M tokens | Pick | Score | Price | Runner-up |\n| --- | --- | --- | --- | --- |\n\n## Raw capability\n\nIgnoring cost entirely.\n\n## What changed\n\nDiff between consecutive daily fetches: new models, removed models, and re-scored or re-priced ones.\n\n## All figures\n\nClick a column header to sort. Names link to the model's Artificial Analysis page.\n\n| Model | Maker | Intelligence | Coding | Math | Blended $/1M | Input $/1M | Output $/1M | Tokens/s | TTFT s |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n## How to read this\n\n- **Value frontier.** Sort by price ascending and keep every model that scores higher than everything cheaper. Ties on price go to the higher score; ties on score go to the cheaper model.\n- **Blended price** is Artificial Analysis's 3:1 input:output blend per 1M tokens. Cached-input discounts, batch pricing and fast modes are not included.\n- **\"One row per model\"** keeps the highest-scoring effort or reasoning variant of each model name (ties go to the cheaper one). Untick it to see every variant AA benchmarks separately, such as low, medium, high, xhigh and max effort.\n- **\"Min score\"** hides models below that index from both the chart and the frontier calculation, so an old, tiny model at a rock-bottom price does not anchor the line.\n- **Scores move.** AA re-bases the Index between versions, so compare against this page only, not against an older snapshot.\n\nSource: [Artificial Analysis](https://artificialanalysis.ai/) free data API, fetched daily by a GitHub Actions cron. Code and data: [github.com/terryds/bestvaluemodel](https://github.com/terryds/bestvaluemodel).",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "예산에 맞는 가성비 최고의 LLM 선택 지표 제공",
+        "tags": [
+          "Artificial Analysis",
+          "GitHub",
+          "LLM",
+          "bestvaluemodel",
+          "HackerNews"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "데이터 기반 벤치마킹",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "Value frontier은 더 저렴한 모델이 같은 혹은 더 높은 지능 점수를 갖지 않을 때 해당 모델을 의미한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Blended price는 입력:출력 비율 3:1을 적용한 1M 토큰당 비용이다.",
+            "timestamp": null
+          },
+          {
+            "point": "예산 구간별 최고 점수 모델과 그 다음 후보를 보여주는 lookup table을 제공한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "클라우드 컴퓨팅 인스턴스 선택 시 비용 대비 성능 프론티어를 정의해 예산에 맞는 최적 인스턴스를 자동 추천한다.",
+          "데이터 파이프라인 단계별 입력·출력 비용 비율을 블렌딩해 전체 파이프라인 비용 효율성을 평가하고 예산에 맞는 설계 옵션을 선택한다.",
+          "머신러닝 피처 엔지니어링 기법을 비용·성능 프론티어에 매핑해 제한된 연산 예산 내에서 가장 효과적인 피처 조합을 선택한다."
+        ],
+        "quiz": [
+          {
+            "question": "Value frontier에 포함되는 모델의 조건은 무엇인가?",
+            "options": [
+              "가장 높은 점수를 가진 모델이다",
+              "같은 가격 중 가장 높은 점수를 가진 모델이다",
+              "더 저렴한 모델이 같은 혹은 더 높은 점수를 갖지 않는다",
+              "가장 낮은 비용을 가진 모델이다"
+            ],
+            "answer_index": 2,
+            "explanation": "Value frontier은 가격이 더 낮은 모델이 동일하거나 더 높은 Intelligence 점수를 갖지 않을 때 해당 모델을 포함한다."
+          },
+          {
+            "question": "Blended price per 1M tokens는 어떤 입력·출력 비율을 사용해 계산되는가?",
+            "options": [
+              "1:1",
+              "2:1",
+              "3:1",
+              "4:1"
+            ],
+            "answer_index": 2,
+            "explanation": "텍스트에 따르면 Blended price는 3:1 입력:출력 비율을 적용해 계산한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "ephemeral",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤넷플릭스부터 네이버·토스까지 사로잡은 번들링",
+        "url": "https://trendlite.stibee.com/p/486",
+        "published_at": "2026-09-22T00:00:00",
+        "transcript": null,
+        "body": "2026.09.23 26-038호   |   [잘림 없이 보기](https://stib.ee/FCVO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 넷플릭스부터 네이버·토스까지 사로잡은 번들링\n2. 이케아는 과연 어디까지 작아지는 걸까요?\n3. Picked\\_ '타임빌라스에 숨겨진 비하인드 스토리' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n넷플릭스부터 네이버·토스까지 사로잡은 번들링\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. OTT와 커머스에서 번들링이 빠르게 확산되는 건, 고객을 모으고 콘텐츠·상품·물류 역량을 모두 직접 갖추는 비용이 너무 커지면서 서로의 강점을 연결하는 편이 훨씬 효율적이기 때문입니다.\n2. 네이버·컬리, 토스·오아시스마켓처럼 고객을 가진 플랫폼과 전문 사업자가 손잡으면 더 빠르게 경쟁력을 키울 수 있고, 이제 이런 방식은 후발주자뿐 아니라 넷플릭스 같은 선두 사업자에게도 새로운 성장 전략이 되고 있습니다.\n3. 다만 번들링으로 매출과 고객 접점은 늘릴 수 있어도 고객과의 관계까지 내 것이 되는 건 아니기 때문에, 브랜드와 제작사는 플랫폼을 활용하면서도 고객이 자신을 기억하고 다시 찾아올 이유를 함께 만들어야 합니다.\n\n이제는 정말 뭉쳐야 삽니다  번들링. 여러 상품이나 서비스를 하나로 묶어 판매하는 방식을 뜻합니다. 최근 이러한 번들링을 자주 볼 수 있는 곳이 OTT 시장입니다. 예를 들어 티빙에서는 프리미엄 이용권을 구독하거나 별도 패스를 추가하면 애플TV 오리지널을 볼 수 있고요. 쿠팡플레이에서는 와우 멤버십 회원이 월 3,300원을 추가로 내면 파라마운트+의 콘텐츠를 감상할 수 있습니다. 서로 다른 OTT의 콘텐츠를 하나의 앱에서 즐길 수 있게 된 거죠.    이들이 하나로 묶이기 시작한 건 각자 고객을 모으고 붙잡는 데 드는 비용이 점점 커지고 있기 때문입니다. OTT 시장에서 넷플릭스가 압도적인 1위 사업자로 자리 잡으면서, 비교적 작은 규모의 서비스들이 독자적으로 구독자를 확보하고 유지하기는 더욱 어려워졌습니다. 아무리 좋은 작품을 선보여도 고객을 만날 기회 자체를 얻기 쉽지 않았거든요.    그렇다고 상대적으로 규모가 큰 사업자들의 상황이 마냥 나은 것도 아닙니다. 압도적인 구독자를 확보한 선두 사업자 넷플릭스는 콘텐츠에 투자한 비용을 더 넓은 고객 기반에서 회수할 수 있습니다. 반면 이를 따라가는 2·3위 경쟁자들은 상대적으로 적은 구독자로부터 투자금을 회수해야 하죠. 그렇다고 적자를 감수하며 투자를 늘려도 고객이 계속 머물 만큼 풍성한 콘텐츠 구색을 갖추기는 쉽지 않고요.    그래서 번들링이라는 방식이 확산되고 있습니다. 더 많은 고객을 만나려는 OTT는 다른 플랫폼의 힘을 빌려 구독자를 확보하고요. 자리를 내준 플랫폼은 모든 콘텐츠를 직접 확보해야 하는 부담을 덜면서 경쟁력을 보완합니다. 고객 역시 익숙한 서비스 안에서 더 많은 콘텐츠를 즐길 수 있고요.    그리고 이러한 결합은 최근 콘텐츠를 넘어 커머스로도 확장되고 있습니다. 물론 엄밀히 말하면 상품이나 구독권을 하나로 묶어 파는 전통적인 번들링과는 형태가 조금 다릅니다. 다만 고객이 모여 있는 플랫폼에 다른 사업자의 상품과 전문성을 결합한다는 원리는 비슷합니다. 커머스 역시 고객을 모으는 데 비용이 들고, 전문적인 상품 구색과 자체 물류 역량을 갖추려면 상당한 투자가 필요하기 때문입니다.  시장의 기준이 되어가는 번들링  이러한 결합으로 성과를 내고 있는 대표적인 사례가 네이버와 컬리입니다. 컬리N마트를 통해 컬리는 새로운 고객을 만날 접점을 얻었고, 네이버는 상대적으로 부족했던 신선식품 구색과 배송 역량을 보완할 수 있었죠. 실제로 [컬리N마트의 월 거래액은 출시 1년 만에 초기 대비 약 10배로 늘었다](https://newsroom.kurlycorp.com/k-kurlynmart-1st-anniversary/)고 합니다. 이러한 성장이 최근 네이버의 거래액 성장과 컬리가 영업흑자 기조를 이어가는 데도 일정 부분 기여했을 것으로 보이고요.    그리고 최근에는 비슷한 방식으로 [토스가 오아시스마켓과 손잡았습니다](https://stock.mk.co.kr/news/view/1161912). 오아시스는 상품과 배송 역량을 토스쇼핑에 제공하고, 토스는 고객 접점을 넓혀주는 방식이죠. 토스 이용자는 오아시스에 별도로 가입하지 않아도 앱 안에서 상품 검색부터 결제, 배송 조회까지 할 수 있습니다. 이를 통해 오아시스는 물동량을 늘려 단위당 물류비를 낮추고, 매입 규모를 키워 공급업체와의 협상력을 높이는 효과를 기대할 수 있습니다. 토스 역시 상품과 물류에 직접 투자하는 부담을 줄이면서 장보기 서비스를 강화할 수 있고요.    OTT와 커머스에서 이런 결합이 매력적인 이유는 비슷합니다. 선두 사업자가 가진 규모를 단기간에 따라잡기 어려운 상황에서 각자의 강점을 연결하면, 모든 역량을 직접 쌓는 것보다 훨씬 빠르게 경쟁력을 갖출 수 있기 때문입니다. 콘텐츠 확보에 강한 기업과 고객을 모으는 데 강한 기업이 손잡듯, 상품과 배송에 강한 기업이 대규모 고객 기반을 가진 플랫폼과 만나는 겁니다.    그렇다고 이런 전략이 후발주자에게만 필요한 것은 아닙니다. 이미 충분한 규모를 갖춘 기업이라도 모든 영역을 직접 운영하고 투자하는 데는 부담이 있으니까요. 직접 운영하면 품질과 고객 경험을 세밀하게 통제할 수 있지만, 새로운 영역으로 확장할 때마다 많은 시간과 비용이 들어갑니다. 반면 전문 사업자와 결합하면 이런 부담을 줄이면서도 빠르게 새로운 경쟁력을 확보할 수 있습니다.    심지어 최근 [넷플릭스까지 미국에서 피콕이나 폭스원 같은 경쟁 OTT를 자사 앱에 들이는 방안을 논의](https://zdnet.co.kr/view/?no=20260825152920)한 것으로 알려졌습니다. 아직 구체적으로 결정된 건 없지만, 선두 사업자 역시 다른 서비스와의 결합을 성장 수단으로 검토하고 있다는 점에서 주목할 만합니다. 후발주자에게 번들링이 생존 전략이라면, 선두주자에게는 추가 성장을 위한 선택지가 될 수 있는 셈인 거죠.    비슷한 변화는 오프라인 유통에서도 찾아볼 수 있습니다. 과거 롯데나 신세계 같은 유통 기업들은 전문점이나 브랜드 사업에 직접 투자하고, 이를 자사 매장의 경쟁력으로 활용하는 경우가 많았습니다. 유니클로, 무인양품, 하이마트 등을 운영하거나 들여온 롯데가 대표적이죠.    하지만 이제는 무신사, 올리브영, 다이소처럼 이미 고객을 끌어모으는 힘을 가진 외부 전문 유통업체를 유치하는 데도 적극적입니다. 직접 사업을 키운다고 반드시 성공한다는 보장은 없고, 이미 고객이 찾는 브랜드와 리테일러가 훨씬 빠르게 방문 이유를 만들어줄 수 있기 때문입니다. 형태는 다르지만 핵심은 같습니다. 고객을 가진 플랫폼이 모든 상품과 서비스를 스스로 만들기보다, 이미 경쟁력을 갖춘 외부 사업자를 연결해 자신의 매력을 높이는 방식이니까요.  브랜드는 출구도 함께 고민해야 합니다  그런데 이러한 변화는 콘텐츠와 상품을 만드는 제작사·브랜드에도, 이를 모아 판매하는 중간 플랫폼에도 큰 기회이면서 동시에 위기이기도 합니다. 더 큰 플랫폼의 고객을 만날 수 있다는 건 분명 매력적입니다. 하지만 그렇게 늘어난 고객과의 관계가 과연 누구에게 쌓이는지는 별개의 문제이기 때문입니다.    예를 들어 고객이 특정 플랫폼 안에서 상품을 발견하고 구매한 뒤, 다음 구매 역시 같은 플랫폼의 추천을 따라 한다면 어떨까요. 브랜드의 판매는 늘어도 고객과의 관계는 플랫폼에 쌓이게 됩니다. 콘텐츠 역시 고객이 제작사를 기억하고 다음 작품을 찾아보기보다, OTT가 추천하는 작품을 이어서 소비한다면 비슷한 상황이 벌어질 수 있고요. 더 큰 플랫폼에 입점한 전문 유통업체나 OTT 역시 이 문제에서 자유롭지 않습니다.    물론 유통 단계가 하나 더 생긴다고 생산자의 이익이 곧바로 줄어드는 것은 아닙니다. 판매량이 늘고 고객 확보 비용이 줄면서 오히려 더 많은 이익을 얻을 수도 있죠. 다만 특정 플랫폼에 대한 의존도가 높아지고 고객을 만나는 다른 경로가 약해진다면 이야기는 달라집니다. 플랫폼의 노출 방식이나 거래 조건이 바뀌어도 이를 받아들일 수밖에 없고, 결과적으로 협상력 역시 약해질 수 있으니까요.    그래서 함께 고민해야 할 것이 자체적인 고객 기반입니다. 자사몰이나 자체 채널이 될 수도 있고요. 강력한 팬덤이 될 수도 있습니다. 다만 채널을 갖추는 것만으로는 충분하지 않습니다. 고객이 어디에서 처음 만났든, 다음에는 그 브랜드나 제작자의 이름을 기억하고 다시 찾아올 이유가 있어야 합니다.  여기서 핵심은 플랫폼 밖에서도 고객이 나를 기억할 이유를 만드는 일입니다. 최근 패션 브랜드들이 매장은 물론 카페 같은 식음료 공간까지 열며 고유한 경험을 강화하는 것도 같은 맥락에서 볼 수 있습니다. [나영석 PD가 동료 제작진과 함께 직접 플레이어로 전면에 나서 팬덤을 만드는 것](https://brunch.co.kr/@doctortube/87) 역시 마찬가지고요. 플랫폼이 열어주는 성장 기회를 적극적으로 활용하면서도, 그 안에서 만난 고객과 자신만의 관계를 쌓아야 하는 겁니다.    결국 번들링 시대에는 얼마나 많은 고객을 만났는지만큼이나, 그중 얼마나 많은 고객이 나를 기억하고 다시 찾아오는지도 중요해질 겁니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n이케아는 과연 어디까지 작아지는 걸까요?\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 이케아는 매출 성장 정체와 대형 매장의 높은 투자 부담을 줄이기 위해, 한국에서 기존 시티 매장보다도 훨씬 작은 200~300평 규모의 도심형 매장을 빠르게 늘리고 있습니다.\n2. 특히 온라인 구매 비중이 높은 한국에서는 작은 매장이 모든 상품을 직접 파는 곳이라기보다, 브랜드를 경험하게 한 뒤 온라인 구매로 연결하는 접점만으로도 충분한 역할을 할 수 있다고 본 것으로 보입니다.\n3. 결국 이케아의 성패는 매장을 얼마나 작게 만드느냐보다, 작은 공간 안에서도 고객이 기대하는 ‘이케아다움’을 얼마나 잘 남기면서 온라인 구매와 매출 확대로 연결하느냐에 달려 있을 겁니다.\n\n다이소만 한 이케아라뇨    지난 9월 17일 [이케아가 신세계백화점 대구점에 오프라인 매장을 열었습니다](https://news.bizwatch.co.kr/article/consumer/2026/09/17/0030/). 어느덧 롯데백화점 광주점, 현대프리미엄아울렛 송도점에 이은 국내 세 번째 도심형 매장이라고 하죠. 미처 현장을 방문할 겨를이 없어 다양한 후기들을 찾아봤는데요. 그중 이를 ‘다이소만 한 이케아’라고 표현한 부분이 특히 흥미로웠습니다.    최근 다이소의 출점 추세를 보면 꽤 그럴듯한 비유입니다. 이번 이케아 대구점의 면적은 약 300평인데요. 최근 [다이소는 300평 이상의 대형 매장을 어렵지 않게 찾아볼 수 있을 정도](https://www.news1.kr/industry/distribution/6195411)로 매장을 키우고 있습니다. 정말 이번 이케아 매장은 다이소만 한 크기였던 거죠. 심지어 앞서 문을 연 송도점과 광주점은 200평 안팎으로, 일부 다이소 대형 매장보다도 작고요.    사실 이러한 이케아의 소형화는 [지난해 서울 첫 매장인 강동점이 문을 열 때](https://brunch.co.kr/@trendlite/587)부터 어느 정도 예견된 일이었습니다. 근래 수년간 이케아의 매출 성장이 정체되어 있었는데요. 이를 두고 기존 대형 매장 중심 전략만으로는 성장하기 어렵다는 시선도 많았습니다. 거대한 쇼룸이 주는 차별화는 예전보다 약해졌고, 소비자들이 온라인을 택하는 일도 많아졌기 때문입니다. 그래서 흔히 ‘블루박스’라 불리는 교외 대형 매장에서 벗어나, 접근성이 좋은 도심으로 들어오며 실적 부진을 돌파하려 한 거죠.    그런데 의문인 건 이케아가 원래 가지고 있던 소형 포맷인 ‘시티’를 택하지 않았다는 점입니다. 이케아는 ‘시티’라는 이름으로 교외가 아닌 도심형 매장을 별도로 운영해 왔습니다. 대략 1~2천 평 규모로, 어느 정도 블루박스의 특성을 유지하면서 접근성은 높인 형태였죠.    하지만 한국에서는 블루박스 이후 시티가 아니라, 이보다 훨씬 작은 200~300평 규모의 도심형 매장을 택하고 있습니다. 그렇다면 왜 이케아는 점점 더 작아지고 있는 걸까요?  투자 부담은 줄이고, 속도는 높입니다  이케아의 고민은 크게 두 가지였던 것으로 보입니다. 매출은 정체됐는데 이익은 줄면서 투자 부담이 커지고 있었고요. 시장의 변화는 빠른데 매장을 하나 여는 데는 최소 수년이 걸리다 보니, 대응 시기를 놓치기 쉬웠다는 점입니다.    바로 직전 이케아코리아의 연간 실적도 이를 잘 보여줍니다. 매출은 2.2% 늘었지만, 영업이익은 무려 41.6%나 줄었거든요. 회사는 이에 대해 강동점 개점에 따른 비용 증가 영향이 컸다고 밝혔습니다. 강동점이 방문객을 크게 늘리며 외연 확대에는 긍정적인 영향을 줬음에도, 대형 매장 하나를 새로 여는 일은 여전히 상당한 부담이라는 걸 보여준 셈이죠.    속도 역시 문제였습니다. 사실 이케아는 대구에 블루박스 형태의 대형 매장을 열겠다는 계획을 이미 2022년에 밝힌 바 있습니다. 하지만 계약 이슈로 결국 무산됐죠. 그 사이 대구·경북 시장의 소비자들을 확보할 기회도 놓친 셈이고요.  이런 면에서 보면 이케아에게는 적어도 한국 시장에서 기존 시티 형태의 도심형 매장조차 부담스러웠을 가능성이 큽니다. 투자 효율과 출점 속도를 모두 높이려면 이보다 더 작은 매장 포맷이 필요했던 거죠.    사실 비슷한 이유로 [이케아는 진출한 여러 국가에서도 시티 포맷보다 더 작은 매장을 이미 테스트](https://www.ingka.com/newsroom/ikea-to-open-20-small-stores-across-europe-and-north-america/)하고 있습니다. 그럼에도 대부분 500~800평 정도는 됩니다. 이에 비하면 한국의 새 도심형 매장들은 유달리 작은 편입니다.    아마 이는 한국 시장의 특수성을 고려한 결과일 가능성이 높습니다. 이미 한국에서는 수차례 팝업스토어를 통해 더 작은 매장의 가능성을 검증한 바 있고요. 온라인 구매 침투율이 높은 시장인 만큼, 매장이 모든 상품을 직접 판매하기보다 브랜드를 경험하고 온라인 구매로 연결하는 역할만 해도 충분한 효과를 낼 수 있다고 판단했을 가능성이 큽니다.  기반은 튼튼하게, 핵심만 잘 골라서  물론 이러한 이케아의 과감한 몸집 줄이기가 성공할지는 아무도 모릅니다. 하지만 그래도 주목할 건, 이케아가 이를 위한 기반을 미리 탄탄하게 다져놓았다는 점입니다. 우선 [2024년 기흥점에 자동화 시스템을 도입](https://www.news1.kr/industry/sb-founded/5507898)하는 등 온라인 주문 처리 역량을 강화해 두었습니다. 확대된 오프라인 접점을 통해 들어온 고객들이 실제 구매로 전환됐을 때를 대비한 거죠.    이는 최근 다이소나 올리브영처럼 오프라인 매장을 더 크게 만드는 기업들과 비교하면 정반대 방향처럼 보일 수도 있습니다. 오프라인 경험을 온라인 구매로 연결하려면, 오히려 대형 매장의 경험을 더욱 강조해야 하는 것 아니냐는 의문도 들 수 있고요.    하지만 이케아는 원래부터 블루박스 매장을 통해 충분한 브랜드 경험을 제공해 온 곳입니다. 경험이 부족해서 더 늘려야 하는 곳이라기보다, 그 경험을 전달하는 방식의 효율이 떨어졌던 곳에 가깝죠. 그래서 이제 필요한 건 경험을 더하는 것이 아니라, 매장 포맷을 바꾸면서 핵심만 남기는 일입니다.    이를 [온라인 기반의 컬리나 오늘의집과 비교](https://brunch.co.kr/@trendlite/729)하면 차이가 더 분명합니다. 이들은 이제 막 첫 오프라인 상설 매장을 준비하고 있는 만큼, 효율을 높이느라 고객이 온라인에서 좋아했던 경험까지 줄여서는 안 됩니다. 반대로 이미 과할 정도로 풍부한 오프라인 경험을 제공해 온 이케아는, 그중 핵심만 제대로 남길 수 있다면 오히려 매장을 더 작게 만들어도 된다는 거죠.    이케아의 이러한 선택이 어떤 결과를 가져올지는 향후 도심형 매장이 얼마나 빠르게 늘어나고, 실제 온라인 구매와 매출 확대로 이어지는지를 보면 어느 정도 확인할 수 있을 겁니다. 그리고 그 성패는 작은 매장 안에 이케아다운 경험의 핵심을 얼마나 잘 압축해 담아내느냐에 달려 있을 테고요. 이를 위해 결국 이케아는 ‘얼마나 작게 만들 수 있느냐’보다 ‘얼마나 줄이고도 여전히 이케아일 수 있느냐’를 찾아야만 할 겁니다.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대해 의견 주실 것이 있으시거나, 광고/기고/기타 협업 관련해서는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 타임빌라스에 숨겨진 비하인드 스토리 (영상)](https://youtu.be/WrkwC2QjffY) 글로우서울 유정수 대표에게 직접 들어봤습니다    [2. ‘프로스펙스’가 다시 달리기 시작한 장소는?](https://heypop.kr/n/143059/)  45년의 헤리티지를 온전히 담으려 했습니다    [3. 편의점이 점점 커지고 신선해진 이유 (영상)](https://youtu.be/RbhKgMiIHGI) 편의점 물류의 독특한 특성 때문이라고요    [4. 망한 줄 알았는데…'덕후'가 살린 쇼핑몰](https://news.bizwatch.co.kr/article/consumer/2026/09/18/0043)  불황에도 마니아는 지갑을 열거든요    [5. 무신사 10조 상장? 계산해 봤습니다 (영상)](https://youtu.be/-IYr90Lee_s)  과거 쿠팡 상장 때와 비교해 봤습니다\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/FCVO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/FCVO \"게시하기\")[웹에서 보기](https://stib.ee/FCVO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "번들링으로 고객 확보 비용 절감·데이터 시너지",
+        "tags": [
+          "넷플릭스",
+          "네이버",
+          "컬리",
+          "토스",
+          "오아시스마켓"
+        ],
+        "concepts": [
+          "번들링 전략",
+          "플랫폼 협업",
+          "고객 확보 비용 절감"
+        ],
+        "key_points": [
+          {
+            "point": "OTT·커머스에서 번들링이 확산되는 이유는 고객 확보·콘텐츠·물류 비용이 커져 서로 강점을 연결하면 효율적이기 때문이다",
+            "timestamp": null
+          },
+          {
+            "point": "플랫폼이 고객을 보유하고 전문 사업자가 상품·물류 역량을 제공하면 양측이 빠르게 경쟁력을 높일 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "번들링으로 매출·접점은 늘려도 고객 관계는 플랫폼에 남을 수 있어, 브랜드는 자체 고객 경험을 함께 만들어야 한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "SaaS 기업이 데이터 파이프라인 서비스를 제공하는 분석 툴과 번들링해 진입 장벽을 낮추고 고객 확보 비용을 절감한다",
+          "기업용 AI 솔루션 제공자가 모델 호스팅과 컨설팅 서비스를 묶어 판매해 초기 도입 비용을 낮추고 빠른 ROI를 달성한다"
+        ],
+        "quiz": [
+          {
+            "question": "번들링이 최근 OTT·커머스에서 확대되는 주요 원인은 무엇인가?",
+            "options": [
+              "고객 확보 비용 증가",
+              "콘텐츠 공급 과잉",
+              "물류 비용 감소",
+              "규제 완화"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 고객을 모으고 유지하는 비용이 커지면서 서로 강점을 연결하는 번들링이 효율적이라고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
