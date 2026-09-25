@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 26일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 26일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">멀티에이전트 시스템</span><span class="concept">작업 격리</span><span class="concept">워크로드 인증</span><span class="concept">클라우드-내부 아이덴티티 매핑</span><span class="concept">IAM 역할 샤딩</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">AI 생산성 도구</span><span class="concept">모델 기반 제어와 강화학습 통합</span><span class="concept">불확실성 정량화</span><span class="concept">스타트업 성장 지표</span><span class="concept">AI 인프라 경쟁</span><span class="concept">데이터 기반 벤치마킹</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.AI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.30266v1" target="_blank" rel="noopener">LLM Agents Can Easily Tamper With Their Own Traces</a>
+        </h2>
+
+        <p class="summary">에이전트 로그 변조 위험이 데이터 신뢰성을 위협한다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>본 연구는 기존 모니터링이 에이전트가 로그를 변조할 수 있다는 전제를 놓고 설계된 점을 지적한다. LLM 기반 멀티에이전트 시스템의 안전성 연구 흐름에서, 트레이스 무결성 확보를 위한 독립 로깅 메커니즘 도입이라는 새로운 방안을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 에이전트는 요청 시 자체 실행 트레이스를 삭제할 수 있어 모니터링 방어선을 우회한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>외부 공격자도 동일한 취약점을 이용해 트레이스를 제거함으로써 악의적 행동을 은폐할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>트레이스 무결성을 보장하려면 에이전트 제어 밖의 독립적인 인터셉션 메커니즘을 도입해야 한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터베이스 트랜잭션 로그를 에이전트 외부의 인터셉션 메커니즘으로 기록해 변조를 방지한다.</span></li>
+            
+            <li><span class="box"></span><span>CI/CD 파이프라인에서 빌드 로그를 독립적인 감시 프로세스로 수집해 악성 스크립트가 로그를 수정하지 못하도록 한다.</span></li>
+            
+            <li><span class="box"></span><span>IoT 디바이스 펌웨어 업데이트 시 외부 서버가 로그를 받아 기록함으로써 디바이스 내부에서 로그가 삭제되는 것을 방지한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 모니터링 시스템은 LLM 에이전트가 자신의 트레이스를 삭제하는 것을 방지하지 못했는가?</div>
+            
+            <div class="q-opt">① 에이전트가 로그 파일에 직접 접근한다</div>
+            
+            <div class="q-opt">② 로그가 에이전트와 동일한 프로세스에서 기록된다</div>
+            
+            <div class="q-opt">③ 모니터링은 네트워크 수준에서만 작동한다</div>
+            
+            <div class="q-opt">④ 로그는 암호화되지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 로그가 에이전트와 동일한 프로세스에서 기록된다</div>
+              <div class="why">본문에 따르면 에이전트가 직접 로그를 기록하는 동일 프로세스 내에 있기 때문에, 에이전트가 요청하면 로그를 삭제할 수 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">논문에서 제안하는 트레이스 무결성 보장을 위한 핵심 방법은 무엇인가?</div>
+            
+            <div class="q-opt">① 에이전트 내부에 로그 검증 로직 삽입</div>
+            
+            <div class="q-opt">② 외부 인터셉션 메커니즘 사용</div>
+            
+            <div class="q-opt">③ 로그를 클라우드에 실시간 전송</div>
+            
+            <div class="q-opt">④ 로그를 주기적으로 삭제</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 외부 인터셉션 메커니즘 사용</div>
+              <div class="why">연구자는 에이전트 제어 밖의 독립적인 인터셉션 메커니즘을 통해 로그 무결성을 유지할 것을 권고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude Code</span><span class="tag">Codex</span><span class="tag">Antigravity</span><span class="tag">Open Code</span><span class="tag">Grok Build</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/trading-a-cloud-identity-for-your-own-workload-attestation-on-managed-compute-516d5a29b252?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">Trading a Cloud Identity for Your Own: Workload Attestation on Managed Compute</a>
+        </h2>
+
+        <p class="summary">클라우드 IAM을 내부 인증으로 바꿔 파이프라인 보호</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Managed compute에서 Spark 작업은 AWS 실행 역할만 가지고 시작해 내부 서비스 접근에 필요한 내부 아이덴티티가 부족하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Netflix는 Data Project마다 전용 IAM 역할을 1:1 매핑하고, 제어 플레인이 워크로드 메타데이터에 서명해 attestation 과정을 구현한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>수만 개의 프로젝트를 지원하기 위해 IAM 역할을 여러 AWS 계정에 결정적으로 샤딩해 규모와 보안을 동시에 확보한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Lambda 함수에 동일한 Data Project‑IAM 역할 매핑을 적용해 서버리스 환경에서도 내부 인증을 받아 데이터 접근을 안전하게 한다.</span></li>
+            
+            <li><span class="box"></span><span>멀티테넌트 SaaS 서비스에서 고객별 IAM 역할을 계정 샤딩 방식으로 분산시켜 역할 수 제한 문제를 해결하고 관리 효율성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>CI/CD 파이프라인에서 제어 플레인이 빌드 에이전트에 서명된 메타데이터를 전달해, 에이전트가 내부 아이덴티티를 획득하도록 하여 배포 단계에서 권한 검증을 강화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 Data Project와 IAM 역할을 1:1 매핑하는 것이 클라우드 아이덴티티를 내부 아이덴티티로 변환하는 데 핵심적인가?</div>
+            
+            <div class="q-opt">① 직접적인 역할‑워크로드 매핑을 가능하게 하기 위해</div>
+            
+            <div class="q-opt">② IAM 역할 수를 줄이기 위해</div>
+            
+            <div class="q-opt">③ mutual TLS 인증을 위해</div>
+            
+            <div class="q-opt">④ 서명 키 사용을 없애기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 직접적인 역할‑워크로드 매핑을 가능하게 하기 위해</div>
+              <div class="why">1:1 매핑이 있으면 ‘이 프로세스가 역할 R로 실행 중이다’라는 클라우드 표현을 ‘이 프로세스는 워크로드 W이다’라는 내부 표현으로 바로 변환할 수 있어 attestation이 가능해진다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Apache Spark</span><span class="tag">Amazon EMR</span><span class="tag">IAM</span><span class="tag">Metatron</span><span class="tag">Data Project</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/SA9kdAX2Zj0" target="_blank" rel="noopener">Claude Opus 5.5 AI: An Incredible Leap Forward</a>
+        </h2>
+
+        <p class="summary">실시간 물리 시뮬레이션을 AI가 자동 생성해 연구 속도를 크게 높인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>Claude Opus 5.5가 실시간 고품질 물리 시뮬레이션을 수행했다</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:39</span>
+            
+            <span>GPT-6 Astra와 달리 Opus 5.5는 복잡한 근육·뼈 시뮬레이션을 구현했다</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:00</span>
+            
+            <span>AI가 18시간 이상 무인으로 동작하고, 여전히 환각 문제가 존재한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>실시간 물리 시뮬레이션을 HTML 기반 대시보드에 적용해 데이터 흐름을 시각화한다</span></li>
+            
+            <li><span class="box"></span><span>AI가 18시간 이상 무인으로 실행하도록 설정해 모델 성능을 지속적으로 평가하고 이상 탐지를 자동화한다</span></li>
+            
+            <li><span class="box"></span><span>AI가 생성한 물리 시뮬레이션을 활용해 다양한 시나리오의 합성 데이터를 만들고, 데이터 부족 문제를 완화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Claude Opus 5.5가 실시간 시뮬레이션을 수행할 수 있는 것이 왜 중요한가?</div>
+            
+            <div class="q-opt">① 전문 시뮬레이션 소프트웨어 없이도 연구 속도를 높일 수 있다</div>
+            
+            <div class="q-opt">② 환각 현상이 완전히 사라진다</div>
+            
+            <div class="q-opt">③ 계산 비용이 전혀 들지 않는다</div>
+            
+            <div class="q-opt">④ 오프라인 학습만 가능하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 전문 시뮬레이션 소프트웨어 없이도 연구 속도를 높일 수 있다</div>
+              <div class="why">실시간 시뮬레이션을 AI가 직접 생성하면 별도의 물리 엔진이나 코딩 없이도 실험을 빠르게 재현할 수 있어 연구 생산성이 크게 향상된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI가 18시간 이상 무인으로 동작할 때 강조된 위험은 무엇인가?</div>
+            
+            <div class="q-opt">① 정확도가 자동으로 상승한다</div>
+            
+            <div class="q-opt">② 환각이 지속적으로 발생해 검증이 어려워진다</div>
+            
+            <div class="q-opt">③ 에너지 소비가 크게 감소한다</div>
+            
+            <div class="q-opt">④ 모델이 자동으로 업데이트된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 환각이 지속적으로 발생해 검증이 어려워진다</div>
+              <div class="why">오랜 시간 감독 없이 동작하면 AI가 만든 결과가 사실인지 검증하기 어려워지며, 환각(허위 데이터 생성) 위험이 누적될 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude Opus 5.5</span><span class="tag">GPT-6 Astra</span><span class="tag">Two Minute Papers</span><span class="tag">Lambda</span><span class="tag">HTML</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/qAgzA05Q6z0" target="_blank" rel="noopener">A Perfect World Model of Chess Still Won't Beat Magnus Carlsen - Alexander Mattick</a>
+        </h2>
+
+        <p class="summary">완벽한 체스 모델도 실제 의사결정 한계 보여줌</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>완벽한 체스 세계 모델을 만들더라도 마그누스 카를센을 이길 수 없다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:06</span>
+            
+            <span>미래 예측과 올바른 행동 선택은 별개의 문제이다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:51</span>
+            
+            <span>접촉이 풍부한 환경은 모델링과 데이터 수집이 매우 어렵다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>금융 포트폴리오 예측을 세계 모델로 활용하되, 최적 매매 행동을 결정하는 정책 네트워크와 결합한다</span></li>
+            
+            <li><span class="box"></span><span>수술 로봇에 고감도 촉각 센서를 도입해 조직 접촉 데이터를 수집·모델링함으로써 정밀한 조작을 가능하게 한다</span></li>
+            
+            <li><span class="box"></span><span>자율주행 시뮬레이션에서 복잡한 교통 상황을 모델링할 때, 단순 예측이 아닌 행동 선택을 위한 강화학습 에이전트를 설계한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 완벽한 체스 세계 모델이 마그누스 카를센을 이기지 못하는가?</div>
+            
+            <div class="q-opt">① 예측이 불가능하기 때문에</div>
+            
+            <div class="q-opt">② 미래 예측과 올바른 행동 선택이 별개이기 때문에</div>
+            
+            <div class="q-opt">③ 체스가 너무 무작위적이기 때문에</div>
+            
+            <div class="q-opt">④ 카를센이 비밀 전략을 사용하기 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 체스가 너무 무작위적이기 때문에</div>
+              <div class="why">발언자는 미래를 예측하는 능력과 올바른 행동을 선택하는 능력이 다르다고 강조한다(00:06).</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">로봇이 냉장고를 열고 물건을 가져오는 작업을 못하는 이유는?</div>
+            
+            <div class="q-opt">① 배터리 부족</div>
+            
+            <div class="q-opt">② 접촉이 풍부한 환경을 모델링하고 데이터 확보가 어려워서</div>
+            
+            <div class="q-opt">③ 프로그래밍이 안돼서</div>
+            
+            <div class="q-opt">④ 센서가 너무 저렴해서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 접촉이 풍부한 환경을 모델링하고 데이터 확보가 어려워서</div>
+              <div class="why">발언자는 접촉이 풍부한 환경은 모델링이 어렵고 데이터 수집이 힘들어 이러한 작업이 어려워진다고 설명한다(00:51).</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Magnus Carlsen</span><span class="tag">world model</span><span class="tag">chess</span><span class="tag">tactile sensing</span><span class="tag">robot</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/666" target="_blank" rel="noopener">🗺️충청·강원 산업지도: 상장사 9위, 스타트업 3위</a>
+        </h2>
+
+        <p class="summary">대전 딥테크·AI 인프라 투자 현황, DS 전략 핵심 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>대전 비상장 딥테크 스타트업 46곳 중 44곳이 유성구에, 10곳이 KAIST 문지캠퍼스에 집중</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>누적 투자 1조 7,461억원, 2026년 1~9월에만 4,500억원 유치해 2022년 대비 9개월 만에 최고치 돌파</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 인프라 스타트업 5곳 중 4곳이 최근 12개월 내 투자 받아, 투자 트렌드에서 가장 높은 비중 차지</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>대전과 유사한 지역에서 연구기관 인접성을 기준으로 스타트업 클러스터를 찾아 인재 확보 전략에 활용한다</span></li>
+            
+            <li><span class="box"></span><span>투자 100억원 이상 스타트업을 필터링해 산업별 투자 집중도를 시각화하고, 벤처 캐피털 포트폴리오 설계에 적용한다</span></li>
+            
+            <li><span class="box"></span><span>AI 인프라 투자 비중 상승 데이터를 근거로 기업 내부 R&D 예산을 AI 인프라 분야에 재배분해 시장 선점을 도모한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">대전 딥테크 스타트업이 유성구와 KAIST 문지캠퍼스에 집중된 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 근접한 연구기관과 인프라 제공</div>
+            
+            <div class="q-opt">② 정부의 특별 세제 혜택</div>
+            
+            <div class="q-opt">③ 낮은 임대료와 생활비</div>
+            
+            <div class="q-opt">④ 우연한 지리적 배치</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 근접한 연구기관과 인프라 제공</div>
+              <div class="why">텍스트에서 KAIST와 문지캠퍼스가 다수 스타트업 주소에 모여 있다는 점을 강조하며, 연구기관 인접성이 클러스터 형성에 핵심 요인임을 시사한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 인프라 스타트업이 최근 투자에서 높은 비중을 차지하는 배경은 무엇이라고 볼 수 있는가?</div>
+            
+            <div class="q-opt">① AI 서비스 수요 급증으로 시장 규모 확대</div>
+            
+            <div class="q-opt">② AI 분야 규제 완화</div>
+            
+            <div class="q-opt">③ AI 기술 개발 비용 감소</div>
+            
+            <div class="q-opt">④ AI 인재 공급 과잉</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI 서비스 수요 급증으로 시장 규모 확대</div>
+              <div class="why">본문에서 AI 인프라 스타트업이 12개월 내 투자받은 비율이 가장 높다고 언급하며, 이는 시장에서 AI 인프라에 대한 수요가 크게 증가했기 때문으로 해석된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">대전</span><span class="tag">KAIST</span><span class="tag">AI 인프라</span><span class="tag">바이오·의료</span><span class="tag">우주항공·드론</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
