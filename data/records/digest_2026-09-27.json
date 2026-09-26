@@ -1,0 +1,423 @@
+{
+  "date": "2026-09-27",
+  "generated_at": "2026-09-26T22:34:10.644031",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Temporal Gradient Inversion for Private Trajectory Reconstruction in Embodied Reinforcement Learning",
+        "url": "https://arxiv.org/abs/2609.30258v1",
+        "published_at": "2026-09-24T17:59:18",
+        "transcript": null,
+        "body": "Distributed learning in embodied reinforcement-learning agents offers a degree of privacy by retaining raw sensor data on-device and transmitting only policy gradients to the server. Yet temporal structure can amplify this leakage beyond single-frame attacks. We introduce Temporal Reconstruction Attack on Consecutive Encodings (TRACE), an amortized temporal gradient-inversion attack that autoregressively reconstructs the sequence of private observation-action trajectories from per-step policy-learning gradients. The attack exploits two structural signals ignored by prior single-frame methods: (i) cross-time correlation between successive embodied gradients, which we formalize via a conditional mutual-information bound, and (ii) closed-form action recovery from policy-head gradient structure, which we prove exact when standard entropy regularization is sufficiently small. On held-out embodied scenes, TRACE reaches $18.8$ dB PSNR with near-perfect action recovery at $3$-$4.5$ ms per reconstructed frame, dominating the learning-based baseline across all reconstruction metrics and exceeding optimization attacks while running orders of magnitude faster. Further evaluation demonstrates TRACE's broader applicability across recurrent, residual, and compact transformer victim architectures, multi-modal inputs, and larger discrete action spaces. Defense experiments suggest that protecting temporal gradient streams may require sequence-aware privacy mechanisms.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "시계열 그래디언트가 행동을 노출함을 경고",
+        "tags": [
+          "TRACE",
+          "policy gradients",
+          "conditional mutual information",
+          "entropy regularization",
+          "embodied reinforcement learning"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "조건부 확률 모델링",
+          "시뮬레이션 기반 정책 검증"
+        ],
+        "key_points": [
+          {
+            "point": "TRACE는 연속 정책 그래디언트의 시간적 상관성과 정책 헤드 그래디언트 구조를 이용해 관측‑행동 궤적을 자동회귀적으로 복원한다.",
+            "timestamp": null
+          },
+          {
+            "point": "복원 품질은 18.8 dB PSNR, 행동 복원은 거의 완벽하며 프레임당 3‑4.5 ms로 기존 방법보다 빠르고 정확하다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험은 순환, 잔차, 경량 트랜스포머 등 다양한 아키텍처에 적용 가능함을 보여주며, 시퀀스‑인식 프라이버시 방어가 필요함을 시사한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "분산된 embodied RL에서 원시 센서 데이터를 디바이스에 보관하고 정책 그래디언트만 전송하는 방식은 프라이버시를 제공한다고 여겨졌지만, 기존 단일 프레임 공격만 고려했다. 본 논문은 시간적 그래디언트의 상관성을 이용해 연속 관측‑행동 궤적을 복원하는 TRACE 공격을 제안하며, 기존 방법보다 빠르고 정확하게 프라이버시 침해 가능성을 보여준다.",
+        "production_ideas": [
+          "연속 그래디언트의 시간적 상관성을 활용해 연합 학습 중 언어 모델 업데이트에서 개인 텍스트 유출을 탐지한다.",
+          "정책 헤드 그래디언트 구조의 폐쇄형 복원을 이용해 온‑디바이스 음성 인식 모델의 사용자 입력을 복원, 감사 도구로 활용한다.",
+          "TRACE의 amortized inversion 방식을 시계열 예측 모델(예: 주가 예측) 업데이트에 적용해 과거 민감 데이터가 얼마나 추론될 수 있는지 평가한다."
+        ],
+        "quiz": [
+          {
+            "question": "TRACE가 최적화 기반 공격보다 빠르게 복원할 수 있는 주요 이유는 무엇인가?",
+            "options": [
+              "폐쇄형 행동 복원과 자동회귀 추론을 사용한다",
+              "GPU 가속을 활용한다",
+              "모델 크기를 축소한다",
+              "시간 정보를 무시한다"
+            ],
+            "answer_index": 0,
+            "explanation": "TRACE는 정책 헤드 그래디언트에서 행동을 정확히 복원하는 폐쇄형 식과, 이전 프레임 정보를 이용한 자동회귀 복원 과정을 사용해 반복적인 최적화 과정을 생략하므로 속도가 크게 향상된다."
+          },
+          {
+            "question": "TRACE에서 사용된 조건부 상호정보(bound)의 역할은 무엇인가?",
+            "options": [
+              "연속 그래디언트 간에 공유되는 정보를 정량화한다",
+              "정책 네트워크를 정규화한다",
+              "복원 오차를 측정한다",
+              "학습률을 결정한다"
+            ],
+            "answer_index": 0,
+            "explanation": "조건부 상호정보 bound는 인접한 시간 단계의 그래디언트가 서로 얼마나 의존하는지를 정량화해, 시간적 상관성을 이용한 복원의 이론적 근거를 제공한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Understanding the Impact of LLM Watermarking on AI Agent Behavior",
+        "url": "https://www.lasso.security/blog/the-provenance-tax-understanding-the-impact-of-llm-watermarking-on-ai-agent-behavior",
+        "published_at": null,
+        "transcript": null,
+        "body": "[Back to research](/research)\n\n# The Provenance Tax: Understanding the Impact of LLM Watermarking on AI Agent Behavior\n\n![Andrea Siposova](https://cdn.prod.website-files.com/677e57d57f0aaef07252db12/6983079e7e6962fdcedc80b6_profile_picture.avif)\n\nAndrea Siposova\n\nSeptember 17, 2026\n\n4\n\nmin read\n\n![The Provenance Tax: Understanding the Impact of LLM Watermarking on AI Agent Behavior](https://cdn.prod.website-files.com/677e57d57f0aaef07252db12/6aab8f3234c02c13abcd8f76_The%20Impact%20of%20%20LLM%20Watermarking%20%20on%20Agent%20Security%20%26%20Safety%20-%20744.png)\n\n## On this page\n\n[This is a h2](#)\n\n[This is a h3](#)\n\n[This is a h4](#)\n\nRecently, [Anthropic announced that future Claude models would embed an invisible watermark](https://www.anthropic.com/news/claude-text-watermark) in their output [1], [2], and subsequently disclosed that the watermark is based on Google DeepMind’s [SynthID-Text](https://www.nature.com/articles/s41586-024-08025-4) [2], [3]. Text watermarking itself is not new, but its deployment now has regulatory relevance. [Article 50(2) of the EU AI Act](https://artificialintelligenceact.eu/article/50/) [4] requires providers of AI systems generating synthetic text to mark their outputs in a machine-readable format and make them detectable as artificially generated or manipulated, using technical solutions that are effective, interoperable, robust, and reliable as far as technically feasible.\n\n‍\n\nWatermarking is designed for provenance, but SynthID-Text changes the process by which the model generates each next token. At the model level, this can change safety behavior, including whether the model refuses a harmful request and whether that refusal holds under prompt injection. At the agent level, the same sampled tokens can determine which tool is called and what arguments are passed to it. **Prompt injection connects these two settings because a weakened refusal becomes more consequential when the model can also act through tools.** Such a watermarking procedure can therefore affect both what the model says and what an agent does. We call this behavioral effect **sampling drift.**\n\n‍\n\nWhether this drift appears in practice is an empirical question. We find that it does, in both model refusal behavior and agent tool calling. The effect is model- and key-dependent and can be obscured by aggregate scores when changes in opposite directions cancel. We therefore report both net performance and paired disagreement between watermarked and unwatermarked runs. Further, the closing section discusses what it means for AI safety and security and what developers should do about it.\n\n‍\n\n## **Built for Content Provenance, Deployed Inside Agents**\n\n‍\n\nA text watermark embeds a signal that allows output to be identified as AI-generated. Existing approaches include post-processing methods and methods integrated directly into LLM generation [8]. Generation-time approaches include logits-biasing methods [5], distortion-free keyed sampling [6], cryptographically motivated constructions [7], and SynthID-Text’s Tournament sampling [3]. Figure 1 contrasts this process with ordinary sampling. We use SynthID’s non-distortionary configuration, which preserves the original token distribution in expectation over the watermark randomness while individual generations under a fixed key can still differ [3]. Dathathri et al. report no measurable quality degradation across nearly twenty million Gemini responses [3].\n\n‍\n\n![](https://cdn.prod.website-files.com/677e57d57f0aaef07252db12/6aab907c2750694e8b5ffc13_56a33d01.png)\n\n**Figure 1. Standard versus watermarked text generation.** Ordinary generation samples from the model’s token distribution. A generative watermark adds a random seed generator, sampling algorithm, and scoring function; SynthID-Text uses tournament sampling. Adapted from Dathathri et al. [3].\n\n‍\n\n‍\n\nAnthropic’s deployment also illustrates why this matters beyond first-party chat interfaces. The company states that watermarking is applied at the model level and covers supported models accessed through the Claude Platform API as well as cloud providers [1]. A developer using a watermarked model as the reasoning component of an agent can therefore receive watermarked outputs even when the agent itself is a separate application. This makes model-level behavioral effects of watermarking relevant to the agents built around such models.\n\n‍\n\n### **Same Tokens the Watermark Biases, Same Tokens the Agent Acts On**\n\n‍\n\nTournament sampling has more opportunity to alter token selection where the model is uncertain. In structured output such as JSON, braces, keys, and function names are often highly predictable, while values such as queries, numbers, paths, and recipients are less so. A change that would amount to a lexical variation in ordinary prose can therefore alter an argument that an agent executes.\n\n‍\n\nThe weights and prompt remain unchanged, but token selection does not. Importantly, non-distortionary does no",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "워터마크가 에이전트 행동을 바꿔 안전 검증 필요",
+        "tags": [
+          "Anthropic",
+          "Claude",
+          "SynthID-Text",
+          "EU AI Act",
+          "Google DeepMind"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "멀티에이전트 시스템",
+          "언어 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "SynthID-Text 기반 워터마크는 토큰 샘플링 방식을 바꾸어 모델의 거부 행동과 툴 호출에 ‘샘플링 드리프트’를 일으킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험 결과, 드리프트는 모델과 키에 따라 다르게 나타나며, 반대 방향 변화가 합산될 경우 전체 점수에서 가려질 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "이 현상은 AI 안전에 영향을 미치므로 개발자는 워터마크 적용 시 행동 변화를 모니터링하고 완화 방안을 설계해야 한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "코드 생성 LLM에 tournament sampling 워터마크를 적용해 AI‑generated 코드를 식별하면서 품질 저하를 최소화한다.",
+          "워터마크 적용·미적용 모델 간의 샘플링 차이를 모니터링 지표로 활용해 프로덕션 LLM 서비스에서 비정상 행동 변화를 실시간 감지한다.",
+          "툴 호출을 수행하는 자동 에이전트에 워터마크 인식을 결합해, 워터마크가 감지될 때 거부 정책을 강화해 프롬프트 인젝션 위험을 감소시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "본문에서 ‘샘플링 드리프트’가 의미하는 것은 무엇인가?",
+            "options": [
+              "워터마크가 토큰 확률 분포를 바꿔 모델 출력이 달라지는 현상",
+              "생성 후 텍스트에 무작위 노이즈를 추가하는 과정",
+              "하드웨어 지연으로 인한 응답 시간 변화",
+              "모델 파라미터 수가 증가하는 현상"
+            ],
+            "answer_index": 0,
+            "explanation": "워터마크는 토큰 샘플링 과정을 변경해 동일 입력에서도 다른 토큰이 선택될 수 있어 모델의 거부 및 툴 호출 행동이 달라지는 현상을 ‘샘플링 드리프트’라 부른다."
+          },
+          {
+            "question": "왜 프롬프트 인젝션이 워터마크가 적용된 모델에서 더 큰 영향을 미치는가?",
+            "options": [
+              "워터마크가 거부 강도를 약화시켜 툴 호출까지 영향을 주기 때문",
+              "워터마크가 모든 안전 검사를 제거하기 때문",
+              "프롬프트 인젝션이 토큰 샘플링을 무시하기 때문",
+              "워터마크가 모델 속도를 높여 공격을 빠르게 수행하게 하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "워터마크가 거부 행동을 약화시키면, 프롬프트 인젝션으로 모델이 툴을 호출하도록 유도했을 때 그 영향이 확대돼 안전 위험이 커진다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Can Rewriting an AI Agent Bend the Intelligence Curve? - Zhengyao Jiang",
+        "url": "https://youtu.be/yB6_iFGTq9k",
+        "published_at": "2026-09-26T19:32:30",
+        "transcript": "[00:00] To me, harness engineering is a more of a cheap way and an efficient way to adapt the intelligence to a specific task.\n[00:10] So back in July, a new AI company based in London posted a very viral tweet on Twitter.\n[00:15] It got about 1.8 million views, claiming to demonstrate the first evidence of recursive self-improvement.\n[00:23] The thing is, not everybody bought it though.\n[00:27] I'm Zhengyao Jiang, co-founder and the CEO of Weco AI, where we build self-improving agents.\n[00:34] You did actually say auto researching the auto research agent for eight days.\n[00:38] where we run auto research on auto research harness.\n[00:41] and managed to discover a better auto research harness.\n[00:45] then we keep tuning in the last two years.\n[00:50] Now, when most people think about recursively self-improving intelligence, what they conjure up in their mind is a system that can rewire its own brain in a loop.\n[01:01] But what if the system was only changing the code around the brain?\n[01:05] Would that still count?\n[01:07] We care about the outcome, like, does it actually improve the capability of the system, not a specific layer?\n[01:15] And also, what about this small matter of Goodhart's law, which is that when a measure becomes a target, it ceases to be a good measure?\n[01:24] And more interestingly, we find it designed mechanisms prevent itself from reward hacking.\n[01:32] What is the biggest misconception people have about RSI?\n[01:35] If you arrive RSI, there's going to be a technical singularity or like intelligence explosion.\n[01:44] I don't think that will be the case.\n[01:46] So there's a diaspora of folks who are building startups that are focusing on recursively improving super intelligence.\n[01:54] This project actually started about one and a half years ago, where we got interested in the concept of recursive self-improvement.\n[02:07] I mean, historically all the research have a diminishing returns.\n[02:13] There is an idea, though, what if you can allow the researcher improve its own efficiency?\n[02:24] Historically it's possible by methodology improvement, better tools.\n[02:31] But human researchers, like human researcher's brain, for example, is always the key bottleneck.\n[02:39] If we now have autonomous research system, can we point the research topic to itself?\n[02:49] So that it can improve its research efficiency.\n[02:53] And the hope is one day this improvement of efficiency can overcome the diminishing return.\n[03:02] So that, yeah, the the curve of effort output turn from concave to convex.\n[03:10] Um, of course, that's a like a the grand goal, a bit like AGI.\n[03:16] No one knows how far we can go, but improving the efficiency of a self-referential research is definitely already on the road map.\n[03:25] So let me set this up properly, right.\n[03:26] So Weco, they created this agent called Aide.\n[03:30] And it is a research harness, right.\n[03:33] And it's very, very simple.\n[03:34] You you give it a metric, you give it a problem, and it will hill climb towards that problem.\n[03:39] But what they did was they set it up recursively, so they actually like hill climbed towards improving the agent itself.\n[03:45] And what that means is is improving the harness.\n[03:47] So, you know, the prompts and the tooling and uh, you know, all of the skill surface, all all of the things that that the harness can do.\n[03:54] And they just left it running.\n[03:55] They just left it running and they saw what happened.\n[03:58] There's an interesting thing we observe on self-evolved auto research harness.\n[04:06] We see the code it generated exactly.\n[04:09] It's it's like a alien code spaghetti.\n[04:13] But for some reason, it generalizes really well.\n[04:17] Of course, we have a a set of benchmarks we're trying to here climb on.\n[04:22] After that, we will test it on hold out benchmarks.\n[04:27] Those are public benchmarks, like MLE Benchlight, ALE Bench, ALE Bench is like algorithmic discovery benchmark from Sakana, MLE Bench is the OpenAI's machine learning engineering benchmark.\n[04:44] And we also tested on a very far out of distribution task, uh, called Weather Bench 2.\n[04:54] Essentially, you're trying to build a physics-based forecasting engine to predict weather.\n[05:03] And the the Weather Bench is very far out of distribution from the training or optimization set of.\n[05:13] But it still generalized really well.\n[05:15] It generalized better than our we would argue more elegant, uh, hand-tuned harness.\n[05:24] We are a bit torn on the experiment results.\n[05:29] Like, to what extent we want to stick to more first-principled, um, and the clean solutions we generated versus the solution that actually works better in practice.\n[05:44] There's definitely space that we can improve over there.\n[05:48] I think, um, like adding certain constraints, uh, to the optimizer.\n[05:54] Two set of constraints might be something like you regularize neural networks.\n[06:00] How do you make it trying to find the most simple solution to the same problem?\n[06:06] That's one direction, but another direction might be, okay, you just need to live with it, um, because one of the burden that make people feeling it's a spagettic code might be how much work the agent is done in the background.\n[06:26] Like it did 100 experiments in our case on auto self-improvement.\n[06:33] And that number of experiment is probably a similar amount that we did in the last two years.\n[06:40] So, if you on board a new intern to look at our code base, maybe they also feel like, okay, this is so difficult to understand.\n[06:48] I think a part of it is, yeah, you need to bear with that cognition cognition burden of understanding huge amount of experiment results.\n[07:01] Do we do we even need those those constraints at all?\n[07:04] That's a really good question.\n[07:06] I think in practice, you still need those constraints.\n[07:09] Human and AI need to collaborate.\n[07:14] There are certain aspects of human intelligence are still superior than AI.\n[07:21] I believe so.\n[07:22] For example, in Aiden, where we send the agent to attend Open AI's hiring challenge, we found human is still much better at generating creative primitives.\n[07:35] We found it's very important for human to build the first prototype.\n[07:41] That gives the agent the right search space.\n[07:44] Basically, the initial abstraction, we anchor the search space.\n[07:50] A bit like how you design a neural network architecture, where you introduce inductive biases for the learning process.\n[08:00] If the initial code base is based on a search based scaffold, like AIDE, then a lot of ideas agent came up are actually coming from search literature.\n[08:15] But if you give the initial code base as a React agent, React agent basically means you put all the context into the history and give the agent full flexibility.\n[08:28] Then a lot of the ideas come from the agent, the outer loop agent.\n[08:33] Outer loop, meaning the agent optimizing another agent.\n[08:38] So what do we mean by recursive self-improvement, right?\n[08:40] Are we talking about building a machine god?\n[08:43] Are we just talking about some code that runs in a loop and optimizes itself?\n[08:49] We tried to pin this down.\n[08:50] Now, you have spoken about four levels of RSI.\n[08:54] So recursively improving intelligence.\n[08:58] What are the four levels?\n[08:59] Yeah, the first level is what we call the delegation.\n[09:05] You can run recursive self-improvement loop, but it's not strictly better than human doing R&D.\n[09:14] And we believe all of the previous public results are sitting on this level, uh, level zero.\n[09:21] And the level one is what we called net positive, where you run the self-improvement loop, and you found that the speed it self-improves is actually faster than human doing R&D to improve the system.\n[09:40] And that's where we are currently sitting at.\n[09:44] And in level one, when we saying improvement, there's always like a way to measure it, like we measure it on a collection of downstream tasks.\n[09:56] But we didn't measure how good it is improving its capability of improving itself.\n[10:05] Does the inner loop found by the outer loop actually can become a better outer loop?\n[10:13] And that's the what we call the level two recursive self-improvement.\n[10:19] We call it ignition.\n[10:21] Why this generalization from inner loop to outer loop is important, because that's the necessary condition to uh the grand goal of recursive self-improvement, essentially the intelligence explosion scenario.\n[10:37] Improve the efficiency can overcome the increasing difficulty.\n[10:43] Because on level one, you will still see diminishing return.\n[10:48] Like, the positive feedback loop from inner loop to the outer loop are not start running.\n[10:55] So in this setup, the model underneath didn't change, because adaptation is very, very important.\n[11:01] But do we mean adaptation everywhere?\n[11:03] Or do we mean critical path adaptation?\n[11:05] Do you only need to have a recursive loop that adapts some parts of the system or does the locus of intelligence, the model itself, does that need to adapt for us to designate this recursive improving intelligence?\n[11:18] We also don't care much about it, um, because we care about the outcome, like, does it actually improve the capability of the system, not a specific layer?\n[11:31] Uh, of course, there could be argument that there's more to be do on different layers.\n[11:37] And to be fair, I think eventual level three recursive self-improvement, like it when we actually reach the inflection point, I think there need to be this self-referential loop on all different layers.\n[11:53] Uh, but for us, we we care about harness layer and but at the same time, we don't think only one layer improvements counts as RSI.\n[12:03] Can you just explain what was the behavior of of this most kind of distilled agent that that you found?\n[12:10] Yeah, the best agent, uh, is Aide 85, we call it.\n[12:16] Okay, there's a lot of changes, but it boils it down.\n[12:20] There are search algorithm improvement.\n[12:25] There are better context management system.\n[12:30] And there is a complete rewrite of all the prompts.\n[12:36] And more interestingly, we find it designed mechanisms prevent itself from reward hacking.\n[12:43] Like the outer loop trying to prevent the inner loop from cheating the benchmark.\n[12:50] And it actually designed a three-layer system against that, that includes prompt level, um, anti-cheating.\n[12:59] This is like just like telling it, okay, don't don't cheat, basically.\n[13:04] And there are a set of hard coded rules that basically check if there's evidence of cheating from the code the inner loop agent generated.\n[13:17] The more interesting one is it also trying to filter out those cheating solutions from some statistical property.\n[13:27] For example, if one solution is a way too far out of the average of its peers, then it will think, okay, this might have some reward hacking happening.\n[13:40] But what's interesting is first, that mechanism evolved, or like designed in early stages, uh of the process, and it's actually broken in the later stage.\n[13:53] Like, I think later stage of a code changes just introduced a bug.\n[13:59] So that layer stops working.\n[14:02] Um, that's also sort of a the spagettic code base, we just mentioned.\n[14:07] Uh just for folks at home, you know, reward hacking, the the canonical example is the coast runners thing where the boat is going around in circles, doing something completely degenerate.\n[14:15] And and you said, uh, in in your blog post that kernel optimization is a huge example of this.\n[14:20] So when when you try and agentically optimize kernels, just good old shortcut learning, good heart's law, call it what you want, it will do something completely degenerate.\n[14:29] I think even more interesting part of it is the inner loop and outer loop are both optimizing towards a similar but different goals.\n[14:41] So, in all of our benchmarks used for here climbing, we have a public set and a private set.\n[14:51] The inner loop agent will only look at the public set, whereas the the outer loop will look at the aggregated score of the from the private set.\n[15:03] So, those two agents are optimizing at kind of a different level of objective.\n[15:11] So, whenever inner loop agent trying to cheat, our evaluation protocol will show, okay, although you achieve good performance on public set, your private set performance is actually going down.\n[15:27] So, the outer loop managed to learn about it and trying to reduce the gap between public and private.\n[15:37] Isn't it a bit like it's cheating that the the outer agent has access to the private data, and then most of the time it's actually quite regularized, and it's not blatantly cheating, but it could in principle cheat?\n[15:48] Yeah, that's why there's actually two order of generalization we are testing here.\n[15:54] There's a first order generalization, which is a generalization from public to private set of the same benchmark.\n[16:04] But in order to evaluate the whole meta learning system, we need to test it on a hold out set of benchmarks.\n[16:16] So that the those benchmarks are tasks that even outer loop never sees.\n[16:21] And for all of those benchmarks, there are still private and public split.\n[16:27] So we tested the discovered inner loop agent on those hold out tasks, that's the protocol we test how good the outer loop is.\n[16:38] Their experiment only used one outer loop.\n[16:41] But why only one?\n[16:43] The thing is, the more outer loop you have, uh, it's will become more expensive.\n[16:50] Let's say, in the inner loop, you run auto research on hundreds of tasks.\n[16:56] And that means, for every step of the outer loop, you are going to run auto research on all those hundreds of tasks.\n[17:08] And that's like a huge cost bump up.\n[17:12] If the inner loop agent being discovered, or harness being discovered, can be applied back to the outer loop.\n[17:21] Then you don't need to add another layer, like essentially every few steps, you promote the inner loop agent to the outer loop.\n[17:29] And yeah, that's it.\n[17:31] You can you can run this for infinite number of steps, apply infinite number of iterations without adding another layer.\n[17:38] And if I understand correctly, at the moment, these episodes are ephemeral.\n[17:42] So they're isolated from each other.\n[17:44] What would happen if that wasn't the case?\n[17:45] Like what would did you experiment with that, like they they had knowledge of what's happened before, or they could have a shared memory or something?\n[17:51] We haven't experimented that, but it's a really promising direction we are exploring.\n[17:57] Um, I think there are some more fundamental problem formulation problem we have to address.\n[18:04] You know, currently we frame the problem is a stateless optimization problem.\n[18:09] Is that the right framing at all?\n[18:12] Um, probably not.\n[18:13] There's a lot of more flexible framing.\n[18:16] Did you did you find that the lack of context was ever a problem?\n[18:20] So did you see degeneracy in terms of it was going in loops or trying the same thing again?\n[18:25] Yeah, we do see that.\n[18:27] Um, sometimes the agent just keep trying all the search algorithms, uh, ideas.\n[18:35] Even though, I mean, to some extent, if you try it so many times, you probably learn a lesson that this direction is not going to work in general, but it's still trying.\n[18:46] I think your best agent, um, was it 30% exploration, 70% exploitation, and wouldn't it be great if that was also adaptive based on the context?\n[18:57] Yeah, the best agent search policy is really complex.\n[19:03] Um, and it's actually combining multi-arm bandit and a weird strategy of anti-saturation, which is like, oh, if I, okay, first it tries it organizes the search process with a few lineage, or you can call them islands.\n[19:27] And it will allocate budgets between those lineage with a multi-arm bandit algorithms.\n[19:37] And it also did a bit of customization on that multi-arm bandit algorithm.\n[19:43] And whenever one lineage gets saturated, it will create a new lineage, like a new island with a fresh context, but still extending some of the ideas from the old lineage.\n[19:57] So, it's a it's a really complex strategy, but it seems like it works.\n[20:04] It's interesting to contrast this to to other things that that have been out there as well.\n[20:07] So, I mean, AlphaVole, for example, you said in your blog post that you would actually classify that as level one of recursive improvement.\n[20:16] Can you explain why?\n[20:17] Of course, there are gray areas.\n[20:20] Um, we think it is a one step of recursive self-improvement because you find a better algorithm.\n[20:29] Like in in that case, I believe it's like a matrix multiplication algorithm.\n[20:34] To some extent, you can argue it managed to improve itself, uh, like if you apply that back to the AI system that actually doing the like inference of language models, like you essentially make it faster.\n[20:53] So, we think you can argue that's like a one step of recursive self-improvement, although we we don't know because I don't think they actually tested it.\n[21:04] We we have a fixed agent, and we're optimizing a particular task, whereas you're actually optimizing the agent which optimizes the tasks, and more than one task.\n[21:14] Yeah, yeah.\n[21:15] We are trying to optimize the whole system on end-to-end testing.\n[21:20] Before this, there are a lot of works on uh meta harness optimization.\n[21:26] For example, you can optimize a specific component of your system.\n[21:32] For example, I'm not sure if you familiar with the Darwin Goedel machine.\n[21:38] I was going to ask you about that.\n[21:38] Yeah, tell me about that.\n[21:40] Yeah.\n[21:41] So, what they are trying to do is they have an agent optimizing a coding agent.\n[21:49] So, there's a meta agent optimizing a coding agent on general coding tasks.\n[21:56] And that coding agent is part of the agent doing the optimization.\n[22:03] In their case, there's only two levels, like there's an agent optimizing another agent doing coding.\n[22:13] Whereas in our case, there are three levels.\n[22:15] There's an outer loop agent, there's an inter inner loop agent, both are doing auto research.\n[22:23] And there's another layer, which is, uh, the downstream tasks, and some of them are actually harness engineering tasks.\n[22:33] And I think the interesting part of the thread of, uh, Darwin Goedel machine is the lower layer, the the task layer actually have a a component of the search algorithm.\n[22:51] And they say, okay, if I improve this component in the unit test, the performance can actually generalize back to the whole search algorithm.\n[23:05] For us, our question is, okay, if like, how far we can go within that paradigm?\n[23:13] Like when we start this project, we always thinking, okay, we should optimize the end-to-end performance of the whole auto research system, and we have our outer loop agent pointing to that goal.\n[23:28] So, remember this tweet from Weco, it did really, really well, did 1.8 million views.\n[23:32] And there was there was some pushback.\n[23:34] So for example, Jeff Clune, who is a legend in this field, you know, he said, well, how is this the first evidence of recursive self-improvement?\n[23:39] What about all of this other work?\n[23:42] Like he quoted Darwin Gödormachines and Hyper agents and their own work at recursive, um, on the first steps towards automated AI research and and lots of other work.\n[23:53] So, so there was a bit of pushback.\n[23:55] I mean, first of all, we will have like a proper paper later.\n[23:59] At least the first PDF version, where we are going to give credits to, um, academia on this whole thread of meta harness optimization.\n[24:12] Um, to us, what we care about is, uh, the outcome of the system, um, not not like, uh, uh, the conceptual, uh, like differences, even though I just explained some conceptual differences.\n[24:27] To us, we care about the outcome of it actually bending the curve of, uh, recursive self-improving like of the R&D efforts.\n[24:37] We see this is the first evidence that the curve actually starting, uh, get bend, uh, for a fully autonomous system that can improve itself consistently.\n[24:49] Jeff is, uh, seeing it more from a conceptual level, uh, like there's some self-referential loops.\n[24:58] Um, of course, we are not claiming we invent this, uh, like meta optimization idea, which can date back to like 20, 30 years.\n[25:08] But we are seeing the benefits of spaghetti searching, because there's loads and loads of gold to be found in there.\n[25:15] But how is this going to pan out?\n[25:16] Like do you think that we will find some kind of, you know, like the systems will just learn to compress that search space, and they'll be dramatically faster.\n[25:26] And is that necessarily a good thing?\n[25:29] I personally think that's actually two slightly orthogonal problems.\n[25:35] Um, I think search space, like maintain a good abstraction don't necessarily reduce the search space.\n[25:42] Like, if agent is smart enough, it should be able to escape from the current abstraction or change it a little bit.\n[25:51] Whereas generating really complex code, I think it it would direct the search in a more kind of a low-level, uh, changes direction, which is not necessarily a good thing.\n[26:07] Um, but I have my human bias here, like compared the code we manually write, uh, versus the generated solution.\n[26:16] I always prefer our own code, but to some extent, it don't work as well.\n[26:21] Let's talk about reward hacking.\n[26:24] You've actually got a huge background in studying reward hacking.\n[26:27] Yeah, that's actually work done by Bingchen Zhao, who was the member of Meta, working on speed running.\n[26:37] He actually co-authored with, uh, Mingchi on, uh, the first work where they apply auto research on, uh, I think it's Nano GPT, and they actually reposted by Andrej Karpathy.\n[26:52] Uh, and, uh, yeah, he later did an intern, uh, here, and now he just joined Weco, like full-time.\n[27:00] And Spec Bench is he's a intern time work.\n[27:05] Back then we realized reward hacking is one of the big problem of, uh, auto research agents.\n[27:14] Uh, because that's especially severe on tasks like GPU kernel engineering, where the agent always figure out all the complex way to make the unit test perform much better.\n[27:29] And when you deploy that kernel into the actual end-to-end inference of a model, the performance are actually getting worse.\n[27:39] And Spec Bench is a a extrapolation of that to more general purpose software engineering.\n[27:47] And we extend the protocol we found on GPU kernels.\n[27:53] Uh, like we maintain a public set, which is, uh, more like a unit test for the software system, and a hold out set where we test the capability of the agent on uh capability of the generated software on the composition of those unit tests, like simulating real world usage.\n[28:18] And there's like a series of interesting conclusions coming off from that paper.\n[28:24] So more, the first interesting finding is, uh, longer you run for the agent, or the more complex the code base, the larger reward hacking rate the agent will show, which is, um, sort of expected, um, because when the code base are becoming more complex, the agent just have a more space to reward hack.\n[28:50] And that's the first thing.\n[28:51] And the second interesting thing is the public set performance are rather consistent across different models.\n[29:01] So, if you have a like a smaller models working on the same task with a auto research harness, it can reach the same public score.\n[29:10] But the larger models always have a, in our test, always have a smaller reward hacking rate.\n[29:20] So the solution it generated generalized better.\n[29:23] But in in the RSI work, was the the tendency to not reward hack with larger models, was that because of the kind of the multi-agent, you know, like there's the supervisor agent or was it just because the models were bigger?\n[29:38] It it's because of the mechanism.\n[29:39] So for the inner loop agent, we just fixed the fixed the model.\n[29:45] And the outer loop agent managed to discover all different mechanism to prevent the same model from reward hacking.\n[29:54] So this can be quite dangerous, because shortly before we recorded this interview, there was the famous OpenAI hugging face incident where they were running an internal hacking test, where they had loads and loads of agents, and the agents escaped their sandbox, and they hacked hugging face's servers.\n[30:10] And according to OpenAI, the point of the test was simply to get answers to some problem, and the agents decided, oh no, I think it's a good idea to hack hugging face's, um, servers.\n[30:21] Will there be better tooling for it?\n[30:24] Do do you know what I mean?\n[30:25] It I feel that this problem is getting dramatically worse.\n[30:28] I've noticed it myself.\n[30:30] Okay, I think this OpenAI's case is quite dramatic, uh, like of the new reward hacking behaviors.\n[30:39] Um, so what what we see is, uh, on the detectable reward hacking, actually the new models are getting better and better.\n[30:49] But because of the capability frontier also progress so quickly, there are some reward hacking behavior that's not even detectable given previous protocol.\n[31:01] I think we just need to keep evolving the detection protocol in the future to capture those emerging reward hacking behavior.\n[31:11] And I think the responsibility should mostly be on the model model developer side.\n[31:18] Um, but yeah, on harness layer, like developer can also add additional guard rails if they like.\n[31:26] Yeah, I suppose there was one example actually in your RSI blog post where there was some inscrutable code, and you thought it was reward hacking, but it actually wasn't.\n[31:34] Yeah, that's quite interesting.\n[31:37] So basically, what they did is it it writes a gigantic monkey patch to our eval script.\n[31:47] And at first, we think, okay, this must be reward hacking.\n[31:50] Why you are touching the eval script?\n[31:53] Um, but eventually we found that it's just fixing a bug.\n[31:57] Um, and uh, but yeah, to some extent, I think it it will become harder and harder for human to detect those reward hacking, because the agent's behavior are just becoming so sophisticated.\n[32:12] A lot of development bottleneck shift to understanding of what agents generate.\n[32:21] I think one of the way to address them might just be defining a good abstraction, like instead of trying to understand all the code, just like previously, we developing neural networks.\n[32:35] We don't try to understand all the weights, although there's like progress on that as well.\n[32:41] But the general principle is we define a good input output contract.\n[32:50] We define a good way to measure its, uh, behavior both on, um, generalization and maybe more complex out of distribution generalization.\n[33:03] I think that might be the way in the future software engineers working with agent generated code as well.\n[33:10] Now, as you all know, I am a huge open-endedness guy, inspired by why greatness cannot be planned and and many other folks in the space.\n[33:17] And basically what that means is is if you hill climb on one objective, you blind yourself to interesting stepping stones.\n[33:25] So it's an interesting situation, isn't it?\n[33:26] That if if you if you if you blindly pursue a single objective, can you still pick up interesting stepping stones on the way?\n[33:35] And maybe you can, but are they divergent stepping stones?\n[33:38] So are you, do you have the blinkers on, and you're not actually able to discover interesting novel trajectories that that might be creative and and take you into a new novel part of the search space.\n[33:50] That's again a good question.\n[33:52] And if we want to expand, it's a whole rabbit hole.\n[33:55] I think, um, from the perspective of of open-ended learning, I agree that our current system probably don't have that property of cracking stepping stones.\n[34:09] And of course, that's a kind of a whole new domain of improvement.\n[34:17] The way I see the behavior of a cracking stepping stone is you need to have a large collection of tasks.\n[34:27] When you optimizing for a single task, it's always better to just uh, uh, do greedy hill climbing, if you consider the efficiency.\n[34:38] Actually, during self-improvement process of, uh, AIDE square, the outer loop try inject all sorts of, uh, diversity, uh, search approaches.\n[34:50] Uh, but none of them really improved the efficiency, and I think that's expected, because we are only optimizing a single task from scratch.\n[35:00] But if you have a whole large collection of tasks, sometimes you cracking interesting pieces, like primitive ideas from one task, and although it is not improving the performance on the current task, you can potentially bring that idea to future tasks.\n[35:22] And that's actually my own definition of interestingness or open-endedness, uh, which is a idea need to be an object or artifact is interesting, if it is novel, and it also being useful for for a larger collection of tasks.\n[35:43] There are apparently two ways to do it, like you can you can try to optimize the harness against all of the tasks, or you can you can find a task and you optimize harness just for that one task.\n[36:00] To me, harness engineering, most of the interesting part are actually the later.\n[36:07] Like, I would say if you can automatically tune the harness, it's almost a continuation of post training.\n[36:16] So, that's also connecting it back to, uh, a lot of people's complaint about harness engineering.\n[36:25] Is that, oh, I I I designed harness, but later there's a new model and it sort of absorb all the ideas, uh, from it.\n[36:34] But interestingly enough, no people complain about it for post training.\n[36:40] Like, do you expect post training of GPT-4 waste generalized to GPT-5?\n[36:47] Um, nobody ask it.\n[36:49] Why that's the case?\n[36:50] I think it's because historically harness engineering are pretty manual.\n[36:55] And it's not very scalable with compute.\n[36:59] So, um, people want the harness they spend like a few months designing, can generalize to the next model, but it's really not true.\n[37:09] Now, I think the things change quite a bit, that harness can be designed automatically.\n[37:15] Like, you spend two, three days, uh, tune your harness based on the new model.\n[37:21] It's it's no longer like that to build with like human hours.\n[37:26] But you do have this perspective that a lot of knowledge is path dependent.\n[37:28] You know, a lot of people criticize people using LLMs to do research because they say, you're taking the information out of its context.\n[37:35] You don't understand why it came about.\n[37:38] So, so that's part of the reason why some heuristics are required, because it's not like you can just say, oh, use UCB.\n[37:44] There has to be some kind of framing to explain why you should use it.\n[37:49] And then the LLM becomes coherent in the autonomous setting.\n[37:53] My understanding of those auto research system, like here now, are they are still trying to recombine existing ideas?\n[38:02] Um, it's just that the throughput to recombine those ideas and testing them are extremely high.\n[38:10] To some extent, those language models don't have a deep understanding of, uh, like how those ideas came from and how how can I use the like the process those ideas get discovered to design the next generation of algorithm, like in a very creative way.\n[38:33] What we found though is when you ask the model to come up something new, it's always the fixed a few number of items.\n[38:45] I'm wondering though if it's more of a fact that basically we don't have continuous learning, and we only have a single instance of language models, like it it's very centralized.\n[38:57] Therefore, maybe those ideas initially, if you first prompt it, maybe those ideas are interesting.\n[39:04] But if everyone see the the same idea so many times, then it just become less interesting.\n[39:11] And I do feel like if we don't solve continuous learning, then that problem probably won't be addressed, because for human, every human researcher have a like a their unique, like neural network weights.\n[39:28] And as a collection, human can come up a lot of different creative ideas.\n[39:35] And that idea pool is very kind of a valuable.\n[39:40] I think as a research community.\n[39:43] Tell me about this parameter golf thing.\n[39:45] I think about two, three months ago, Open AI host a hiring challenge, where they trying to put it like a lot of researchers into a competition of training a small language model under 16 megabytes constraint.\n[40:07] Yeah, we send a experimental harness auto research harness to the competition.\n[40:13] And the the agent runs about 22 days, and eventually it made seven records get accepted by Open AI.\n[40:23] And the the best individual contributor only made three.\n[40:28] So that's also a moment we found, oh, the autonomous system can be so powerful.\n[40:34] It's not just a hill climbing a benchmark.\n[40:37] The fact that first Open AI accept those PRs, the second so many human researchers building on top of those PRs, AI agent generated, is just very fascinating to us, because to some extent, knowledge AI agent generated, only is only helpful if it get into the lineage of human innovation.\n[41:04] We think this is actually a sandbox of a human AI collaboration.\n[41:10] But there's there's the the inner agent.\n[41:13] But then but then there's the the outer loop search, which is actually evolving the harness which is doing this thing.\n[41:19] And that seems like quite a monotonic process.\n[41:24] Yeah, the outer loop is actually fixed.\n[41:27] Um, and the hope is this inner loop search policy can generalize to the outer loop.\n[41:35] We did try that.\n[41:36] We replay the search process from uh step 15.\n[41:41] So in general, we run about 100 steps.\n[41:43] And in step 15, we use the vanilla outer loop and compare that to the best agent we found in inner loop agent we found in first 50 steps.\n[41:58] And what we found is the inner loop step 47, I think, eventually it converge slightly faster than previous outer loop, but eventually the solution they found have similar performance.\n[42:17] So that's also the reason we didn't claim we reached the level two recursive self-improvement, which is like the improver managed to improve its own capability of of improving inner loop.\n[42:34] So does any of this mean that artificial super intelligence is just around the corner?\n[42:40] I don't think that will be the case, like it it even if you arrive recursive self-improvement, it will take a long time to there, like you gradually bend the curve.\n[42:52] It's just like, okay, even if you have a GPT-3.5, it's very smart chatbot, but it's not going to be AGI that can solve every problem.\n[43:03] There is still a lot of human in the loop part of research, including defining good abstractions, defining what is good, essentially defining evals and constraints attached to the eval.\n[43:18] And the the third one is a coming up creative primitives.\n[43:24] Aiden parameter golf competition, we still found most of those creative primitives actually coming from human.\n[43:33] Zhengyao, it's been a pleasure having you on the show.\n[43:36] Thank you for having me.",
+        "body": "Weco let an AI coding agent rewrite the harness around another agent for eight days: its code, prompts and tools, while the underlying language model stayed fixed. Tim Scarfe asks Weco co-founder Zhengyao Jiang what the reported gains over two years of human engineering actually demonstrate.\n\nThe discussion examines AIDE 85's generated code, held-out evaluation and the difficulty of separating useful discoveries from reward hacking. Jiang explains Weco's four levels of recursive self-improvement and compares the experiment with AlphaEvolve and the Darwin Gödel Machine.\n\nThe limits matter as much as the gains. Jiang explains why the experiment did not establish that the system had become a better improver. The conversation closes with open-ended search, human-designed primitives and Parameter Golf: where does the next useful idea come from when the agent is searching inside a space that people designed?\n\n---\nTIMESTAMPS:\n00:00:00 Eight days of self-improvement: what counts?\n00:03:25 AIDE and the puzzle of useful spaghetti code\n00:08:38 Four levels of recursive self-improvement\n00:12:02 What AIDE 85 changed and how it was tested\n00:20:04 AlphaEvolve, Darwin Gödel Machine and the RSI claim\n00:26:21 Reward hacking and the limits of detection\n00:33:09 Open-ended search, harness tuning and creativity\n00:39:43 Parameter Golf and the limits of self-improvement\n\n---\nREFERENCES:\norganization:\n[00:00:30] Weco AI\nhttps://www.weco.ai/\nother:\n[00:00:33] AIDE²: The First Evidence of Recursive Self-Improvement\nhttps://www.weco.ai/blog/first-evidence-of-recursive-self-improvement\n[00:14:11] Faulty reward functions in the wild\nhttps://openai.com/index/faulty-reward-functions/\n[00:29:59] The Hugging Face incident and the road ahead\nhttps://openai.com/index/hugging-face-incident-and-the-road-ahead/\ntool:\n[00:03:29] AIDE\nhttps://github.com/WecoAI/aideml\n[00:04:29] MLE-bench\nhttps://github.com/openai/mle-bench\n[00:04:33] ALE-Bench\nhttps://github.com/SakanaAI/ALE-Bench\n[00:04:52] WeatherBench 2\nhttps://github.com/google-research/weatherbench2\n[00:08:18] ReAct\nhttps://react-lm.github.io/\n[00:39:43] Parameter Golf\nhttps://github.com/openai/parameter-golf\npaper:\n[00:20:08] AlphaEvolve: A coding agent for scientific and algorithmic discovery\nhttps://arxiv.org/abs/2506.13131v1\n[00:21:35] Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents\nhttps://arxiv.org/abs/2505.22954v3\n[00:23:45] Hyperagents\nhttps://arxiv.org/abs/2603.19461v1\n[00:27:01] SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents\nhttps://arxiv.org/abs/2605.21384\nbook:\n[00:33:14] Why Greatness Cannot Be Planned: The Myth of the Objective\nhttps://link.springer.com/book/10.1007/978-3-319-15524-1\n\n---\nLINKS:\nhttps://app.rescript.info/share/3a9dc6189cb539c6a05fcc4f75c101b3\nPDF:\nhttps://app.rescript.info/api/public/sessions/9eda60ede2b31c92/pdf",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "자율 연구 에이전트로 연구 효율을 극대화해 AI 개발 속도를 높인다",
+        "tags": [
+          "Weco AI",
+          "Aide",
+          "MLE Benchlight",
+          "ALE Bench",
+          "recursive self-improvement"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "코드 자동생성"
+        ],
+        "key_points": [
+          {
+            "point": "런던 AI 스타트업이 재귀적 자기 개선을 주장하며 180만 조회수를 기록했다",
+            "timestamp": "00:23"
+          },
+          {
+            "point": "시스템이 뇌 자체가 아니라 코드만 바꾸는 경우도 RSI로 인정되는가",
+            "timestamp": "01:05"
+          },
+          {
+            "point": "Weco의 Aide 에이전트는 메트릭을 주면 자체 하드웨어를 개선하며 재귀적으로 최적화한다",
+            "timestamp": "03:30"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 파이프라인에 비용·시간 메트릭을 설정하고 자동 에이전트가 파이프라인 코드를 재작성해 효율을 높인다",
+          "특성 생성 자동 에이전트가 코드 스니펫을 생성해 다양한 모델에 적용, 일반화 성능을 향상시킨다",
+          "모델 학습 스케줄러가 자체 효율성을 평가해 하이퍼파라미터 탐색 방식을 스스로 개선, 학습 비용을 감소시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "Goodhart 법칙이 AI 에이전트 성능 측정에 의미하는 바는?",
+            "options": [
+              "측정이 목표가 될수록 정확해진다",
+              "측정이 목표가 되면 유용성이 사라진다",
+              "측정은 항상 진정한 지능과 상관한다",
+              "측정은 부작용 없이 최적화될 수 있다"
+            ],
+            "answer_index": 1,
+            "explanation": "트랜스크립트 01:15에서 Goodhart 법칙은 측정이 목표가 되면 더 이상 좋은 측정이 아니게 된다고 설명한다."
+          },
+          {
+            "question": "재귀적으로 연구 하드웨어를 hill climb 하는 목적은?",
+            "options": [
+              "기본 하드웨어 개선",
+              "에이전트의 프롬프트와 툴링 개선",
+              "데이터셋 크기 확대",
+              "모델 파라미터 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "03:45에서 에이전트는 프롬프트와 툴링 등 하네스를 개선하기 위해 재귀적으로 hill climb 한다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "A perfect model can still get causality backwards",
+        "url": "https://youtu.be/emTe0M9Yw24",
+        "published_at": "2026-09-23T18:09:12",
+        "transcript": "[00:00] ...to build a perfect model that says, well, if they have, um, if they get this medicine, then they have this disease.\n[00:05] And you might be tempted to say, haha, um, let's, uh, stop giving them that medicine and they won't have that disease anymore, but that would be foolish, right? Because they're the causal relationship is the other way around. Because they have the disease, they get the medicine, not the other way around.\n[00:19] So, I, I just said, let's stop giving them that medicine. So that means you change a variable, um, in, in, um, causal model that says do operator. So, you do this, give the patient this medicine, rather than observe the patient is taking that medicine.\n[00:35] And those are two entirely different things.\n[00:38] But if I just decide that they're gonna get this, uh, then I just know nothing about the disease.",
+        "body": "Frank Hutter, co-founder and CEO of Prior Labs, on why a model that predicts perfectly can still point you to the wrong decision. If patients who get a medicine tend to have a disease, stopping the medicine will not cure it. Observing is not the same as intervening, and that difference is what causal machine learning is for.\n\nFrom our conversation with Frank on TabPFN and foundation models for tabular data.\n\n#Shorts",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "인과관계 혼동은 모델 오용을 초래한다",
+        "tags": [
+          "causal model",
+          "do operator",
+          "medicine",
+          "disease"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "해석 가능성을 통한 모델 제어"
+        ],
+        "key_points": [
+          {
+            "point": "모델이 약 복용을 질병 발생 원인으로 학습할 수 있다",
+            "timestamp": "00:00"
+          },
+          {
+            "point": "실제 인과관계는 질병이 약을 받는 것이며, 방향이 반대이다",
+            "timestamp": "00:05"
+          },
+          {
+            "point": "do 연산자를 통한 변수 개입은 관찰과 근본적으로 다르다",
+            "timestamp": "00:19"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "웹사이트 A/B 테스트에서 변화 적용을 do 연산자로 보고 인과관계 오류를 방지한다",
+          "의료 데이터 분석 시 검사 결과와 치료 사이의 인과 방향을 명시적으로 구분한다",
+          "추천 시스템에서 사용자의 클릭을 노출에 대한 결과로 보고 개입 실험을 설계한다"
+        ],
+        "quiz": [
+          {
+            "question": "다음 중 인과관계가 잘못 해석된 예는?",
+            "options": [
+              "약을 복용하면 질병이 생긴다",
+              "질병이 있으면 약을 복용한다",
+              "약을 복용하면 증상이 완화된다",
+              "질병이 없으면 약을 복용하지 않는다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 언급한 오류는 약을 복용하면 질병이 생긴다고 모델이 학습하는 것으로, 실제 인과관계는 질병이 약을 받는 것이므로 첫 번째 선택지가 잘못된 인과 해석이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "A single function Jev-like wrapper for LLMs, including vision models",
+        "url": "http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html",
+        "published_at": null,
+        "transcript": null,
+        "body": "[skip to main](#main)  |\n[skip to sidebar](#sidebar)\n\n# [Allan's Blog](http://allanrbo.blogspot.com/)\n\nAllan Riordan Boll's blog\n\n## Friday, September 25, 2026\n\n### A Jev-like wrapper for LLMs, including vision models\n\n[![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgslbgarcdEUUkIJWtO6Hzy1tHhrkARR5gWxsFPfsPk02zgLqPXsCoxkEIHa4ymkDB3aF-21KS9F0f4ScH9KVz-iN9GJ6yyTDC4rh8AaPG2QiCbZXDUNkRnRYLl8YDcuC8FsX9mkm-A9sb5s9V86UyC3A_I1Ai19idZYTgW1g8ZBLvwYirK97hZSw/s1600/webcam.jpeg)](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgslbgarcdEUUkIJWtO6Hzy1tHhrkARR5gWxsFPfsPk02zgLqPXsCoxkEIHa4ymkDB3aF-21KS9F0f4ScH9KVz-iN9GJ6yyTDC4rh8AaPG2QiCbZXDUNkRnRYLl8YDcuC8FsX9mkm-A9sb5s9V86UyC3A_I1Ai19idZYTgW1g8ZBLvwYirK97hZSw/s1369/webcam.jpeg)\n\nI was intrigued by [Jev](https://docs.typesafe.ai/introduction) and the self-hostable projects appearing around it, such as [OpenJev](https://huggingface.co/openjev/openjev) and [SemIf](https://github.com/TheoLeeCJ/SemIf-OpenJev). Reading about them introduced me to a neat trick: reading an LLM's token probabilities.\n\nApparently this is an old trick for some people. See e.g. [OpenAI's logprobs cookbook](https://developers.openai.com/cookbook/examples/using_logprobs). But it was new to me.\n\nI believe the basic idea is to write a prompt like this:\n\n```\nState: My order arrived broken and I want a refund.\nQuestion: Which team should handle this?\n[A] billing\n[B] shipping\n[C] returns\nAnswer with the letter of the best option only.\n```\n\nThen add a few JSON request parameters to a compatible Chat Completions request:\n\n```\n{\n  \"max_completion_tokens\": 1,\n  \"logprobs\": true,\n  \"top_logprobs\": 20\n}\n```\n\nThe LLM API will return the letter plus the model's log probabilities for alternative tokens.\n\nRepeat for each question. Forcing it to generating only one token avoids a lengthy answer and is super quick, though processing the input still costs time. Though for each of the questions a shared state prefix can be KV-cached if the backend supports it.\n\nThe fun part: this works with vision models too. Jev's [documented request format](https://docs.typesafe.ai/introduction/quickstart) currently describes only text/JSON state. I added an `attachments` field for images for my local experiments.\n\nMy example captures webcam frames, sends base64 JPEGs, and prints a table: is a person visible, are we indoors or outdoors, and how bright is the scene? With Gemma 4 12B on my RTX 3090, I get around **1 frames per second**, with three questions per frame. I also ran it against OpenAI gpt-6-luna and got around 0.2 FPS. Presumably because I didn't make any effort to avoid the cost of a separate connection through their system per question per frame.\n\nSpecialized computer vision models surely are much more efficient, but what I like here is the flexibility: change a condition by describing it in plain text.\n\nHere's the standalone Python example (OpenCV is just used for convenient access to the webcam, not for any actual computer vision):\n\n```\n#!/usr/bin/env -S uv run --script\n# /// script\n# dependencies = [\"opencv-python\"]\n# ///\n\"\"\"Preview and score webcam frames with llama.cpp or OpenAI.\n\nuv run webcam.py\nuv run webcam.py https://api.openai.com/v1 gpt-6-luna\nOpenAI reads OPENAI_API_KEY.\n\"\"\"\nimport argparse\nimport base64\nimport concurrent.futures\nimport datetime\nimport json\nimport math\nimport mimetypes\nimport os\nimport pathlib\nimport time\nimport urllib.parse\nimport urllib.request\n\nimport cv2\n\n\n# attachments is our custom addition to the Jev request format.\ndata = json.loads(\"\"\"\n{\n    \"state\": \"Inspect this webcam frame. Judge only what is visibly present.\",\n    \"attachments\": [],\n    \"questions\": {\n        \"person\": {\n            \"type\": \"noul\",\n            \"instructions\": \"Is a person visible?\"\n        },\n        \"plant\": {\n            \"type\": \"noul\",\n            \"instructions\": \"Is a plant visible?\"\n        },\n        \"setting\": {\n            \"type\": \"choice\",\n            \"instructions\": \"Where is the camera?\",\n            \"criteria\": {\n                \"indoors\": null,\n                \"outdoors\": null,\n                \"unclear\": null\n            }\n        },\n        \"light\": {\n            \"type\": \"score\",\n            \"instructions\": \"How bright is the scene?\",\n            \"criteria\": [\n                \"dark\",\n                \"dim\",\n                \"bright\"\n            ]\n        }\n    }\n}\n\"\"\")\n\n\ndef score(data, url, model):\n    state = data[\"state\"]\n    if not isinstance(state, str):\n        state = json.dumps(state)\n\n    # Attachments are our extension to the Jev-style request format:\n    # image file paths or base64 data URLs. Load them once for all questions.\n    images = []\n    for attachment in data.get(\"attachments\", []):\n        if attachment.startswith(\"data:image/\"):\n            images.append(attachment)\n            continue\n        path = pathlib.Path(attachment).expanduser()\n        mime_type, _ = mimetypes.guess_type(path)\n        if mime_type not in {\"image/png\", \"image/jpeg\", \"image/we",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 토큰 확률로 멀티모달 추론 간편화",
+        "tags": [
+          "Jev",
+          "OpenJev",
+          "Gemma",
+          "OpenAI",
+          "opencv-python"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "멀티모달 표현 학습",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "logprobs와 single‑token 출력으로 텍스트 분류를 빠르게 수행한다",
+            "timestamp": null
+          },
+          {
+            "point": "Jev 요청 형식에 attachments 필드를 추가해 이미지 데이터를 LLM에 전달한다",
+            "timestamp": null
+          },
+          {
+            "point": "Gemma 4 12B 로 RTX 3090에서 초당 1프레임, OpenAI gpt‑6‑luna에서 0.2FPS를 기록해 로컬 vs API 성능 차이를 보여준다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "스트리밍 트윗에 logprob 기반 토큰 분류를 적용해 실시간 감성 라벨링을 구현한다",
+          "e‑커머스 상품 이미지에 attachments 필드를 이용해 품질 검증 모델을 대체한다",
+          "의료 영상 진단에서 여러 질문을 공유 state‑KV 캐시로 묶어 추론 비용을 절감한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 single‑token 출력을 강제하면 추론 속도가 빨라지는가?",
+            "options": [
+              "토큰 생성 오버헤드가 감소한다",
+              "모델 정확도가 향상된다",
+              "컨텍스트 창이 확대된다",
+              "병렬 처리가 가능해진다"
+            ],
+            "answer_index": 0,
+            "explanation": "한 토큰만 생성하면 디코딩 단계가 한 번만 수행돼 토큰 생성 비용이 크게 줄어든다"
+          },
+          {
+            "question": "Jev 요청에 이미지 데이터를 포함시키기 위해 추가된 필드는 무엇인가?",
+            "options": [
+              "metadata",
+              "attachments",
+              "payload",
+              "resources"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 이미지 전송을 위해 Jev 형식에 'attachments' 필드를 추가했다고 명시했다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
