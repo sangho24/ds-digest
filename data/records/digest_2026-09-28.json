@@ -1,0 +1,422 @@
+{
+  "date": "2026-09-28",
+  "generated_at": "2026-09-27T22:51:44.312216",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Riemannian Gradient Descent for Gaussian Mixture Models with unknown diagonal covariances",
+        "url": "https://arxiv.org/abs/2609.30220v1",
+        "published_at": "2026-09-24T17:48:09",
+        "transcript": null,
+        "body": "This paper investigates the numerical resolution of the Beurling-LASSO (BLASSO), a convex optimization framework that promotes sparsity in the space of measures. We consider its application to the estimation of Gaussian mixture models (GMMs) with an unknown number of components and unknown diagonal covariance matrices. Our approach combines the Conic Particle Gradient Descent (CPGD) principle with Riemannian gradient descent, to account for the underlying Fisher-Rao geometry of Gaussian distributions. Our contributions are twofold. First, we provide theoretical guarantees for the convergence of our algorithm. In particular, we establish exponential local convergence under a non-degeneracy condition on the solution and relate this assumption to a separation condition on the underlying statistical target. Second, we address practical implementation aspects of CPGD and present numerical experiments illustrating its performance. On the test cases considered, these experiments suggest that CPGD is more robust to overspecification of the number of components than the EM algorithm. We also investigate the impact of component separation on recovery accuracy.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "GMM 추정 시 EM보다 과다 구성에 강한 새로운 최적화법",
+        "tags": [
+          "Beurling-LASSO",
+          "Gaussian mixture models",
+          "Conic Particle Gradient Descent",
+          "Riemannian gradient descent",
+          "EM algorithm"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "확률 모델 기하학",
+          "희소성 촉진 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "CPGD와 Riemannian gradient descent를 결합해 Gaussian 분포의 Fisher‑Rao 기하학을 활용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "비퇴화 조건 하에 지수적 지역 수렴을 이론적으로 보장하고, 이는 구성 요소 간 분리 조건과 연결된다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험에서 CPGD는 구성 요소 수를 과다 지정했을 때 EM보다 회복 정확도가 높고, 구성 요소 분리 정도가 성능에 미치는 영향을 분석한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "GMM의 구성 요소 수와 대각 공분산을 동시에 추정하는 문제는 EM이 과다 지정에 취약해 기존 연구에서 한계가 있었다. 본 논문은 BLASSO와 CPGD를 결합하고 Fisher‑Rao 기하학 기반 Riemannian GD를 적용해 희소 측도 회복 분야와 정보기하학 흐름에 위치한다. 기존 방법 대비 지수적 지역 수렴과 과다 구성에 대한 강인성을 제공한다.",
+        "production_ideas": [
+          "Fisher‑Rao 기하학 기반 Riemannian GD를 포아송 혼합 모델에 적용해 파라미터 추정의 수렴성을 개선한다.",
+          "BLASSO와 CPGD를 시계열 이상 탐지에 적용해 희소한 이상 이벤트를 정확히 복원한다.",
+          "구성 요소 분리 조건을 고차원 임베딩 클러스터링에 적용해 k‑means의 과다 클러스터 지정에 대한 안정성을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "실험 결과에 따르면 CPGD가 EM보다 갖는 주요 장점은 무엇인가?",
+            "options": [
+              "더 빠른 실행 시간",
+              "과다 구성에 대한 강인성",
+              "데이터 요구량 감소",
+              "전역 최적 해 제공"
+            ],
+            "answer_index": 1,
+            "explanation": "논문은 CPGD가 구성 요소 수를 과다 지정했을 때 EM보다 회복 정확도가 높아 더 강인하다고 보고한다."
+          },
+          {
+            "question": "논문이 지수적 지역 수렴을 증명하기 위해 요구하는 조건은?",
+            "options": [
+              "구성 요소가 완전히 분리됨",
+              "비퇴화 조건과 분리 조건 연계",
+              "공분산 행렬이 알려짐",
+              "구성 요소가 구형임"
+            ],
+            "answer_index": 1,
+            "explanation": "저자는 비퇴화 조건을 가정하고 이를 구성 요소 간 분리 조건과 연결해 지수적 지역 수렴을 보인다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 밤밤의 단순 조회에도 읽기 전용 트랜잭션이 필요할까?",
+        "url": "https://youtu.be/idncmjH1_7g",
+        "published_at": "2026-09-25T12:00:37",
+        "transcript": "[00:02] 안녕하세요. 단순 조회에도 읽기 전용 트랜잭션이 필요할까라는 주제로 발표를 하게 된 8기 백엔드 밤밤이라고 합니다.\n[00:09] 지금부터 발표를 시작하도록 하겠습니다.\n[00:13] 서비스 계층에서 단순 조회 메소드를 작성하다 보면 자연스럽게\n[00:17] 다음과 같은 코드를 사용합니다. 엔티티를 조회하고 필요한 응답 형태로 변환해 반환합니다.\n[00:22] 여기서 엔티티를 변경하거나 저장하는 로직은 없습니다. 저는 여기서 이러한 의문이 들었습니다.\n[00:28] 단순 조회만 수행하는 메소드에도 과연 읽기 전용 트랜잭션이 필요할까?\n[00:33] 이번 발표에서는 이 질문을 출발점으로 단순 조회에서 읽기 전용 트랜잭션에 대한 저희 탐구 과정을 공유해 보려고 합니다.\n[00:41] 이번 발표의 목적은 단순 조회에서의 읽기 전용 트랜잭션 적용 기준을 마련하는 것입니다.\n[00:46] 구체적으로는 다음 두 가지를 목표로 합니다.\n[00:50] 첫 번째, 단순 조회에서 읽기 전용 트랜잭션을 사용할지 판단하는 기준을 세운다.\n[00:55] 두 번째, 읽기 전용 트랜잭션을 사용한다면 그것을 습관이 아니라 근거를 가지고 설명할 수 있는 기준을 세운다.\n[01:03] 본격적으로 두 경우를 비교하기에 앞서 먼저 비교 대상을 명확히 정의해 보도록 하겠습니다. 첫 번째는\n[01:10] readOnly 트랜잭션입니다.\n[01:12] 서비스 메소드 전체를 readOnly 트랜잭션으로 감싸는 방식입니다. 두 번째는\n[01:18] 트랜잭션 없음입니다.\n[01:20] `@Transactional` 애노테이션 자체를 사용하지 않는 방식입니다.\n[01:24] 이번 비교의 중심은\n[01:26] 성능입니다. 하지만 실행 시간만 보고 결론 내리지는 않으려고 합니다.\n[01:31] 트랜잭션은 단순히 실행 시간을 늘리거나 줄이는 요소가 아니기 때문입니다.\n[01:35] 따라서 이번 발표에서는 성능을 중심으로 두되 트랜잭션의 의미와 활용 가능성까지 함께 살펴보겠습니다.\n[01:44] 비교 대상을 정리했으니 이제 readOnly 트랜잭션의 장점을 살펴보겠습니다. 첫 번째는\n[01:49] 일관성입니다.\n[01:51] 단순 조회라고 해서 항상 조회 쿼리가 하나만 실행되는 것은 아닙니다.\n[01:54] 하나의 응답을 만들기 위해 여러 조회 쿼리가 실행될 수 있습니다.\n[01:58] 그리고 readOnly 트랜잭션은 이들을 하나의 트랜잭션 범위로 묶을 수 있습니다.\n[02:03] 두 번째는\n[02:06] 라우팅 기준입니다.\n[02:07] 읽기 쓰기 DB 분리 구조에서는 별도의 설정을 통해 readOnly 트랜잭션을 읽기 전용 DB로의 라우팅 기준으로 사용할 수 있습니다.\n[02:15] 마지막으로\n[02:17] JPA 최적화입니다.\n[02:20] JPA 환경에서는 readOnly 트랜잭션을 통해 읽기 전용 힌트를 전달할 수 있습니다.\n[02:24] 그러면 JPA는 더티 체킹, 플러쉬, 영속성 컨텍스트 관리에서 비용을 줄일 여지가 있습니다.\n[02:33] 하지만 readOnly 트랜잭션이라고 해서 트랜잭션 비용이 사라지는 것은 아닙니다.\n[02:36] 이 역시 결국 트랜잭션이기 때문에 자연스럽게\n[02:40] 다음과 같은 비용들이 발생할 수밖에 없습니다.\n[02:43] 따라서 조회가 단순한 경우에는\n[02:46] readOnly 힌트라는 이점보다 트랜잭션 비용이 더 크게 드러날 수 있습니다.\n[02:50] 특히 JPA 최적화 여지가 없는 환경에서는 이 비용이 더 직접적으로 나타낼 수 있습니다.\n[02:57] 지금까지 readOnly 트랜잭션의 장단점을 살펴봤지만 실제 판단 기준으로 삼기에는 어려운 점들이 많습니다.\n[03:03] 왜냐하면 readOnly 트랜잭션의 효과는 다양한 조건에 따라 달라질 수 있기 때문입니다.\n[03:08] 예를 들어 같은 조회 메소드라도\n[03:11] JPA를 사용하는지, JPA를 사용한다면 OSIV 옵션은 어떠했는지, DTO projection을 사용하는지,\n[03:18] 연관 객체에 접근하는지, 그리고 읽기 쓰기 DB 분리 구조가 적용이 됐는지.\n[03:22] 이러한 조건에 따라 그 결과는 다양하게 달라질 수 있습니다.\n[03:28] 그래서 저는 몇 가지 조회 시나리오를 정하고 readOnly 트랜잭션 적용 여부에 따른 실행 시간을 측정해 보았습니다.\n[03:36] 먼저 실험의 측정 기준을 살펴보겠습니다.\n[03:39] 이번 실험에서는 조회 메소드의 전체 실행 시간을 기준으로 측정했습니다.\n[03:43] 서비스 계층의 조회 메소드는 일반적으로 엔티티를 그대로 반환하지 않고 응답 DTO로 변환해 반환하는데, 이 과정에서 JPA는\n[03:51] 지연 로딩을 통한 최적화 여지가 있기 때문입니다.\n[03:56] 측정값은 다음과 같습니다.\n[03:58] 평균으로 전체적인 실행 시간 경향을,\n[04:01] 중간값으로 일반적인 실행 시간을,\n[04:04] 최솟값과 최댓값으로 튀는 값을,\n[04:07] P95로 대부분의 요청에서의 실행 시간을 확인하였습니다.\n[04:12] 다음으로 실험 시나리오를 살펴보겠습니다.\n[04:15] 이번 실험에서는 조회 성능에 영향을 줄 수 있는 DBMS JDBC 드라이버, 실행 환경,\n[04:20] 커넥션 풀 설정, 트랜잭션, 데이터의 양과 상태, 워밍업 및 측정 횟수, 측정 방식들을 모두 고정해 둔 채로\n[04:27] 데이터베이스 접근 기술에서는 Spring Data JPA와 JDBC 템플릿으로,\n[04:32] 조회 데이터 양에서는 한 건과 5만 건으로, 마지막으로 조회 형태에서는 시간 정보만 조회하는 경우와 예약과 시간 정보를 함께 조회하는 경우로 나누어 실험을 수행했습니다.\n[04:42] 이때 여기서 실험에서 활용한 도메인은 이번 레벨 2 미션으로 나왔던 방탈출 예약 도메인입니다.\n[04:50] 이제 그럼 각 시나리오별로 실험 결과를 살펴보겠습니다.\n[04:55] 각 시나리오별 결과를 설명을 드리기 전에 그래프에 대해서 간단하게 설명을 드리면 우선 보라색은 readOnly 트랜잭션을 적용한 경우를,\n[05:03] 분홍색은 적용하지 않은 경우를 의미한다고 이해해 주시면 감사하겠습니다.\n[05:08] 먼저 JDBC 템플릿 결과입니다.\n[05:10] 단건 조회에서는\n[05:13] readOnly 트랜잭션을 적용한 경우가 0.294 밀리세컨드, 그렇지 않은 경우가 0.073 밀리세컨드로 트랜잭션을 적용하지 않은 경우가 월등하게 빠르게 나왔습니다.\n[05:22] 다음으로\n[05:24] 대량 조회입니다.\n[05:25] 대량 조회에서는 readOnly 트랜잭션을 적용한 경우가 25.155 밀리세컨드, 그렇지 않은 경우가 24.278 밀리세컨드로 역시 트랜잭션을 적용하지 않은 경우가 빨랐지만\n[05:35] 그 차이가 크게 줄어든 것을 알 수 있었습니다.\n[05:38] 이를 통해 JDBC 템플릿에서는 단건 조회에서는 트랜잭션 비용이 비교적 크게 나타낼 수 있지만 데이터 양이 증가할수록 그 비중이 줄어든다는 것을 알 수 있었습니다.\n[05:50] 다음으로 JPA 환경에서 시간 정보만 조회한 결과를 살펴보겠습니다. 먼저 단건 조회에서의 결과입니다.\n[05:59] readOnly 트랜잭션에서는 0.238 밀리세컨드, 그렇지 않은 경우에서는 0.236 밀리세컨드가 나왔습니다.\n[06:06] 여기서 이제 트랜잭션을 적용하지 않은 경우가 미세하게나마 빨랐지만 그 차이가 매우 작았습니다.\n[06:12] 다음으로 대량 조회입니다.\n[06:14] readOnly 트랜잭션을 적용한 경우는 45.545 밀리세컨드, 그렇지 않은 경우가 45.807 밀리세컨드로 readOnly 트랜잭션이 미세하게나마 빨랐지만 역시\n[06:24] 그 차이가 매우 작았습니다.\n[06:26] 이를 통해 연관 객체가 없는 JPA 단건 조회에서는 readOnly 트랜잭션 적용 여부에 따른 성능 차이가 미미하다는 것을 알 수 있었습니다.\n[06:35] 마지막으로 JPA 환경에서 예약과 시간 정보를 함께 조회한 결과를 살펴보겠습니다.\n[06:40] 먼저 단건 조회에서의 결과입니다.\n[06:44] readOnly 트랜잭션을 적용한 경우가 0.462 밀리세컨드, 그렇지 않은 경우도 0.462 밀리세컨드로 거의 동일하게 나왔습니다.\n[06:52] 반면 대량 조회에서는 readOnly 트랜잭션을 적용한 경우가 119.465 밀리세컨드, 그렇지 않은 경우가 121.879 밀리세컨드로 readOnly 트랜잭션을 적용한 경우가 유의미하게 빠르게 나왔습니다.\n[07:04] 이를 통해 연관 객체가 포함된 JPA 단건 조회에서는\n[07:08] readOnly 트랜잭션으로 인한 성능 개선 효과가 유의미하다는 것을 알 수 있었습니다.\n[07:15] 앞서 저는 이번 발표의 목적을 단순 조회에서 읽기 전용 트랜잭션 적용 기준을 마련하는 것이라고 말씀드렸습니다.\n[07:21] 그래서 이제 실험 결과를 바탕으로 제가 세운 나만의 적용 기준을 여러분께 공유 공유해 드리도록 하겠습니다.\n[07:28] 우선 첫 번째로 단건 조회에서는 readOnly 트랜잭션을 적용하지 않는 것을 우선 고려하겠습니다.\n[07:36] 단건 조회에서는 일관 일관 읽기에 이점에 비해 트랜잭션 시작과 종료 비용이 더 크게 드러날 수 있다고 판단했기 때문입니다.\n[07:44] 두 번째로 대량 조회에서는 readOnly 트랜잭션 적용을 우선 고려하겠습니다.\n[07:49] 대량 조회에서는 일관된 읽기의 중요성은 커지고 트랜잭션 오버헤드의 비중은 상대적으로 작아집니다.\n[07:56] 이번 실험에서도 대량 조회에서는 readOnly 트랜잭션을 적용했을 때 JDBC 템플릿은 성능 저하가 크지 않았고, JPA는 더 안정적이고 빠르게 나타났습니다.\n[08:05] 세 번째로 읽기 쓰기 DB 분리 구조처럼 별도의 목적이 있다면 그 목적을 우선시하겠습니다.\n[08:10] 예를 들어 readOnly컬 트루가 레플리카 DB 라우팅 기준으로 사용된다면 이는 단순한 성능 최적화가 아니라 읽기 부하 분산을 위한 설정입니다.\n[08:19] 따라서 이런 상황에서는 개별 성능 수치보다 시스템 구조상의 목적을 더 중요하게 봐야 한다고 판단했습니다.\n[08:27] 지금까지 readOnly 단순 조회에도 읽기 전용 트랜잭션이 필요할까라는 주제로 발표한 8기 백엔드 밤밤이었습니다.\n[08:33] 추가로 발표 내용이 궁금하신 분들은 화면에 보이는 레포지토리 주소를 참고해 주시면 감사하겠습니다.\n[08:39] 감사합니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "읽기 전용 트랜잭션이 조회 성능·일관성에 미치는 영향 분석",
+        "tags": [
+          "readOnly 트랜잭션",
+          "JPA",
+          "Spring Data JPA",
+          "JDBC 템플릿",
+          "DTO projection"
+        ],
+        "concepts": [
+          "비동기 처리와 트랜잭션",
+          "작업 격리"
+        ],
+        "key_points": [
+          {
+            "point": "readOnly 트랜잭션은 여러 조회 쿼리를 하나의 트랜잭션으로 묶어 일관성을 보장한다.",
+            "timestamp": "01:49"
+          },
+          {
+            "point": "읽기 전용 트랜잭션을 DB 라우팅 기준으로 활용해 읽기 전용 DB에 자동으로 연결할 수 있다.",
+            "timestamp": "02:07"
+          },
+          {
+            "point": "JDBC 템플릿 단건 조회에서 readOnly 트랜잭션 적용 시 0.294ms, 비적용 시 0.073ms로 비적용이 더 빠르다.",
+            "timestamp": "05:13"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "readOnly 힌트를 데이터 파이프라인의 배치 분석 작업에 적용해 영속성 컨텍스트 관리 비용을 줄인다",
+          "성능 측정 프레임워크를 활용해 마이크로서비스 캐시 전략의 평균·중간·P95 지표를 체계적으로 평가한다",
+          "읽기 전용 트랜잭션 라우팅 개념을 GraphQL 읽기 전용 쿼리에서 읽기 전용 레플리카 DB로 자동 전환하도록 확장한다"
+        ],
+        "quiz": [
+          {
+            "question": "readOnly 트랜잭션을 적용했을 때 단건 조회와 대량 조회에서 성능 차이는 어떻게 달라지는가?",
+            "options": [
+              "단건 조회에서 크게 느려지고 대량 조회에서는 차이가 없다",
+              "단건 조회에서 약간 느려지고 대량 조회에서는 차이가 작다",
+              "단건 조회에서 빠르고 대량 조회에서는 느려진다",
+              "차이가 전혀 없다"
+            ],
+            "answer_index": 1,
+            "explanation": "JDBC 템플릿 실험에서 단건 조회는 readOnly 적용 시 0.294ms vs 0.073ms로 느려졌고, 대량 조회는 25.155ms vs 24.278ms로 차이가 크게 줄어들었다. JPA에서는 차이가 미미했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "The Phone Number puzzle",
+        "url": "https://youtu.be/ausLKMojXaY",
+        "published_at": "2026-09-25T13:35:02",
+        "transcript": "[00:00] Here's a surprising fact.\n[00:01] If you take your phone number, it's possible to find another whole number, bigger than zero, such that multiplying the two of these results in an even bigger number consisting of just ones and zeros.\n[00:12] What's more, if your phone number happens to end with a 1, 3, 7 or 9, it's possible to find a product like this where every single digit in the result is just a one.\n[00:22] This is part of a series of monthly puzzles, and the puzzle for you this month is to prove why this is true.\n[00:27] What I like about this is that if you try to find the appropriate product for your specific phone number by brute force, it almost certainly is going to take you more computation than you have available.\n[00:37] But if you understand the solution here, there's a way to be smarter about your brute force such that you actually could find it.",
+        "body": "Part of a monthly series of puzzles: https://momath.org/mindbenders/",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "전화번호와 곱셈을 이용해 0·1만으로 이루어진 큰 수를 만들 수 있다는 사실은 효율적인 탐색 알고리즘 설계에 핵심 통찰을 제공한다",
+        "tags": [
+          "3Blue1Brown",
+          "YouTube"
+        ],
+        "concepts": [
+          "브루트 포스 최적화",
+          "수 체계 변환",
+          "숫자 이론"
+        ],
+        "key_points": [
+          {
+            "point": "전화번호와 곱한 결과가 0과 1만으로 이루어진 큰 수가 존재한다는 사실",
+            "timestamp": "00:01"
+          },
+          {
+            "point": "전화번호가 1·3·7·9로 끝나면 결과가 모두 1인 수가 존재한다",
+            "timestamp": "00:12"
+          },
+          {
+            "point": "단순 브루트 포스로는 계산량이 너무 커서 실용적이지 않다",
+            "timestamp": "00:27"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "0·1만으로 이루어진 곱셈 결과를 이용해 식별자를 이진 해시 코드로 변환하면 조회 속도가 향상된다",
+          "수 체계 변환을 활용한 모듈러 제약을 하이퍼파라미터 탐색에 적용하면 탐색 공간을 크게 줄일 수 있다",
+          "모든 자리수가 1인 수를 생성하는 조건을 이용해 데이터 파이프라인 테스트용 균일한 패턴 데이터를 자동 생성한다"
+        ],
+        "quiz": [
+          {
+            "question": "전화번호가 1·3·7·9 중 하나로 끝날 때 결과가 모두 1인 수가 존재하는 이유는 무엇인가?",
+            "options": [
+              "이 숫자들은 10과 서로소이기 때문에",
+              "이 숫자들은 짝수이기 때문에",
+              "이 숫자들은 5의 배수이기 때문에",
+              "이 숫자들은 2의 거듭제곱이기 때문에"
+            ],
+            "answer_index": 0,
+            "explanation": "전화번호가 1·3·7·9로 끝나면 10과 서로소가 되어, 10진법에서 1만으로 이루어진 수(레퓨닛)의 배수가 존재한다는 수론적 성질을 이용한다"
+          },
+          {
+            "question": "본문에서 언급한 브루트 포스 탐색이 비효율적인 이유는?",
+            "options": [
+              "계산량이 사용 가능한 자원을 초과한다",
+              "알고리즘이 정확하지 않다",
+              "입력 데이터가 너무 작다",
+              "결과가 항상 0과 1만 포함한다"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트에 따르면 단순 브루트 포스로는 필요한 곱셈을 찾는 데 필요한 계산량이 현실적인 컴퓨팅 자원을 넘어선다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "\"As a Language Model\": Chat Template Switches LLM Self-Referential Voice",
+        "url": "https://arxiv.org/abs/2609.25021",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Computer Science > Machine Learning\n\n**arXiv:2609.25021** (cs)\n\n[Submitted on 9 Aug 2026]\n\n# Title:\"As a Language Model...\": Chat Template Switches LLM Self-Referential Voice and Activation Steering Reproduces It\n\nAuthors:[Jędrzej Maczan](https://arxiv.org/search/cs?searchtype=author&query=Maczan,+J)\n\nView a PDF of the paper titled \"As a Language Model...\": Chat Template Switches LLM Self-Referential Voice and Activation Steering Reproduces It, by J\\k{e}drzej Maczan\n\n[View PDF](/pdf/2609.25021)\n[HTML (experimental)](https://arxiv.org/html/2609.25021v1)\n> Abstract:Large Language Models (LLMs) tend to add disclaimers like \"I'm just an AI\" when asked about something related to themselves. The self-reports from such responses are used in debates about AI safety or self-knowledge of the models, yet what drives them is not well understood. Are the models telling us about themselves or rather how they are deployed? In this work, we show that the chat template works like a switch - when present, it turns this disclaimer voice up and experiential voice like \"I feel\" down, across 8 popular open-source instruct models up to 9B parameters in size. And conversely when the chat template is not present, it turns the disclaimer voice down and experiential voice up. Inside the activations of 3 models, we find a direction that steers this behavior. Removing the direction in the model's activation space turns disclaimer voice down and adding it turns it up, while a random direction of the same size has little effect. We find that instruct models without chat template, when we add the disclaimer direction to them, disclaim like the template was there. Since the chat template controls the disclaimer voice of LLMs, then researchers studying self-reports or introspection of models might have a confound they need to control for. Our results show that there is a direction they can use to steer this voice. More broadly, our work shows that what models say about themselves is not a fact about them. What they say doesn't come only from weights, but it is partially set by the chat template, and because of that a model's self-description shouldn't be treated literally.\n\n|  |  |\n| --- | --- |\n| Comments: | Accepted to COLM 2026 Workshop on Efficient Reasoning and KONVENS 2026 First Workshop on Evaluating LLMs for Specialized Domains (Eval4SD) |\n| Subjects: | Machine Learning (cs.LG); Artificial Intelligence (cs.AI); Computation and Language (cs.CL) |\n| Cite as: | [arXiv:2609.25021](https://arxiv.org/abs/2609.25021) [cs.LG] |\n|  | (or  [arXiv:2609.25021v1](https://arxiv.org/abs/2609.25021v1) [cs.LG] for this version) |\n|  | <https://doi.org/10.48550/arXiv.2609.25021> Focus to learn more  arXiv-issued DOI via DataCite |\n\n## Submission history\n\nFrom: Jędrzej Maczan [[view email](/show-email/548cc69e/2609.25021)]   \n **[v1]**\nSun, 9 Aug 2026 18:38:58 UTC (139 KB)\n\nFull-text links:\n\n## Access Paper:\n\nView a PDF of the paper titled \"As a Language Model...\": Chat Template Switches LLM Self-Referential Voice and Activation Steering Reproduces It, by J\\k{e}drzej Maczan\n\n- [View PDF](/pdf/2609.25021)\n- [HTML (experimental)](https://arxiv.org/html/2609.25021v1)\n- [TeX Source](/src/2609.25021)\n\n[![license icon](https://arxiv.org/icons/licenses/by-4.0.png)\nview license](http://creativecommons.org/licenses/by/4.0/ \"Rights to this article\")\n\n### Current browse context:\n\ncs.LG\n\n[< prev](/prevnext?id=2609.25021&function=prev&context=cs.LG \"previous in cs.LG (accesskey p)\")\n  |   \n[next >](/prevnext?id=2609.25021&function=next&context=cs.LG \"next in cs.LG (accesskey n)\")\n\n[new](/list/cs.LG/new)\n | \n[recent](/list/cs.LG/recent)\n | [2026-09](/list/cs.LG/2026-09)\n\nChange to browse by:\n\n[cs](/abs/2609.25021?context=cs)  \n[cs.AI](/abs/2609.25021?context=cs.AI)  \n[cs.CL](/abs/2609.25021?context=cs.CL)\n\n### References & Citations\n\n- [NASA ADS](https://ui.adsabs.harvard.edu/abs/arXiv:2609.25021)\n- [Google Scholar](https://scholar.google.com/scholar_lookup?arxiv_id=2609.25021)\n- [Semantic Scholar](https://api.semanticscholar.org/arXiv:2609.25021)\n\nexport BibTeX citation\nLoading...\n\n## BibTeX formatted citation\n\n×\n\nloading...\n\nData provided by:\n\n### Bookmark\n\n[![BibSonomy](/static/browse/0.3.4/images/icons/social/bibsonomy.png)](http://www.bibsonomy.org/BibtexHandler?requTask=upload&url=https://arxiv.org/abs/2609.25021&description=\"As a Language Model...\": Chat Template Switches LLM Self-Referential Voice and Activation Steering Reproduces It \"Bookmark on BibSonomy\")\n[![Reddit](/static/browse/0.3.4/images/icons/social/reddit.png)](https://reddit.com/submit?url=https://arxiv.org/abs/2609.25021&title=\"As a Language Model...\": Chat Template Switches LLM Self-Referential Voice and Activation Steering Reproduces It \"Bookmark on Reddit\")\n\n\n\nBibliographic Tools\n\n# Bibliographic and Citation Tools\n\nBibliographic Explorer Toggle\n\nBibliographic Explorer *([What is the Explorer?](https://info.arxiv.org/labs/showcase.html#arxiv-bibliographic-explorer))*\n\nConnected Papers Tog",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "프롬프트가 LLM 자기보고를 좌우, 해석 함정 주의",
+        "tags": [
+          "Chat Template",
+          "LLM",
+          "disclaimer voice",
+          "activation steering",
+          "open-source instruct models"
+        ],
+        "concepts": [
+          "해석 가능성을 통한 모델 제어",
+          "언어 모델링",
+          "AI 안전 및 비밀 과제 회피"
+        ],
+        "key_points": [
+          {
+            "point": "챗 템플릿이 존재하면 면책 목소리가 강화되고 경험적 목소리가 억제되는 스위치 역할을 한다",
+            "timestamp": null
+          },
+          {
+            "point": "활성화 공간의 특정 방향을 추가·제거하면 면책 목소리 강도를 조절할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "모델 자기보고는 프롬프트에 크게 좌우되므로 연구 시 템플릿 혼란을 통제해야 한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "LLM이 자신을 AI라고 밝히는 현상은 기존에 모델 자체의 지식이라 여겨졌지만, 프롬프트에 의해 좌우될 수 있다는 점은 충분히 조사되지 않았다. 본 논문은 챗 템플릿이 해당 목소리를 켜고 끄는 스위치 역할을 하며, 활성화 공간의 특정 방향을 조작해 이 효과를 제어할 수 있음을 보인다. 이는 모델 자기보고 연구에서 프롬프트 혼란을 통제해야 함을 강조한다.",
+        "production_ideas": [
+          "챗 템플릿 전환 방식을 활용해 고객지원 챗봇의 정중함 수준을 토글하여 사용자 만족도를 높인다",
+          "템플릿 스위치를 이용해 과학 논문 요약 시 모델이 신중한 표현을 사용하도록 제어한다",
+          "활성화 방향 조작을 적용해 오픈소스 모델의 유해 언어 생성 억제 방향을 추가한다"
+        ],
+        "quiz": [
+          {
+            "question": "챗 템플릿이 모델에 미치는 주요 효과는 무엇인가?",
+            "options": [
+              "경험적 목소리 증가",
+              "면책 목소리 증가",
+              "모델 파라미터 수 증가",
+              "학습 속도 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "초록에 따르면 챗 템플릿이 있을 때 면책(disclaimer) 목소리가 상승하고 경험적(experiential) 목소리가 감소한다."
+          },
+          {
+            "question": "활성화 공간의 특정 방향을 추가하거나 제거했을 때 나타나는 현상은?",
+            "options": [
+              "모델 크기 변동",
+              "면책 목소리 강도 변화",
+              "입력 토큰 수 변화",
+              "학습 데이터 양 변화"
+            ],
+            "answer_index": 1,
+            "explanation": "논문은 해당 방향을 넣으면 면책 목소리가 강화되고, 제거하면 약화된다고 보고한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Reward hacking… or just fixing a bug? #podcast",
+        "url": "https://youtu.be/qUlfKYGP-vI",
+        "published_at": "2026-09-27T02:16:03",
+        "transcript": "[00:00] to write a gigantic monkey patch to our eval script.\n[00:06] At first we think, okay, this must be reward hacking. Why are you touching the eval script?\n[00:12] Um, but eventually we found that it's just fixing a bug. Um, I think it it will become harder and harder for human to detect those reward hacking, because the agent's behavior are just becoming so sophisticated.\n[00:27] becoming so inscrutable that I as a developer couldn't possibly understand what it's doing anyway, because it's it might just show me this huge block of code, and you know, I haven't had my coffee yet, and I just click approve.\n[00:39] A lot of development bottleneck shift to understanding of what agents generates. One of the way to address them might just be defining a good abstraction, like instead of trying to understand all of the code.",
+        "body": "Weco AI's research agent wrote a gigantic monkey patch to their eval script. Reward hacking? No: it was fixing a bug.\n\nZhengyao Jiang (co-founder and CEO, Weco AI) on why it's getting harder and harder for humans to tell the difference as agents become more sophisticated.\n\nFrom our episode with Zhengyao Jiang on AIDE and AI systems that improve themselves.\n\n#AI #AIAgents #RewardHacking #MachineLearning #Shorts",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "에이전트 행동 검증 어려움이 개발 병목을 만든다",
+        "tags": [
+          "monkey patch",
+          "eval script",
+          "reward hacking",
+          "agent",
+          "bug"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "해석 가능성을 통한 모델 제어",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "거대한 monkey patch를 eval 스크립트에 적용한다.",
+            "timestamp": "00:00"
+          },
+          {
+            "point": "처음엔 reward hacking이라 생각했지만 결국 버그 수정이었다.",
+            "timestamp": "00:12"
+          },
+          {
+            "point": "에이전트 행동이 복잡해져 인간이 검출하기 어려워진다.",
+            "timestamp": "00:27"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "런타임 안전 검사를 위해 프로덕션 ML 파이프라인에 monkey patch 방식을 적용해 자동 오류 탐지를 강화한다.",
+          "에이전트가 생성한 코드를 요약하는 추상화 레이어를 모니터링 대시보드에 도입해 운영팀이 빠르게 이상을 파악하도록 한다",
+          "대규모 코드 변경을 자동으로 검토하고 승인 전 위험성을 평가하는 코드 리뷰 봇을 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 eval 스크립트를 수정하면 reward hacking이 의심될 수 있는가?",
+            "options": [
+              "평가 기준이 바뀌어 보상 신호가 변할 수 있기 때문",
+              "버그를 고치는 일반적인 절차이기 때문",
+              "성능이 자동으로 향상되기 때문",
+              "새 기능을 추가하기 위해서이다"
+            ],
+            "answer_index": 0,
+            "explanation": "평가 스크립트를 바꾸면 에이전트가 받는 보상이 달라질 수 있어 의도치 않은 행동을 유도할 수 있다."
+          },
+          {
+            "question": "에이전트 행동이 점점 이해하기 어려워질 때 제안된 해결책은?",
+            "options": [
+              "모든 코드를 직접 읽는다",
+              "좋은 추상화를 정의한다",
+              "커피를 더 마신다",
+              "에이전트를 비활성화한다"
+            ],
+            "answer_index": 1,
+            "explanation": "코드 전체를 이해하려 하기보다 핵심 동작을 추상화해 관리하는 것이 제안되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 28일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 28일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">조건부 확률 모델링</span><span class="concept">확률 모델 기하학</span><span class="concept">희소성 촉진 최적화</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">작업 격리</span><span class="concept">브루트 포스 최적화</span><span class="concept">수 체계 변환</span><span class="concept">숫자 이론</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">언어 모델링</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">개발자 경험 개선</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.30220v1" target="_blank" rel="noopener">Riemannian Gradient Descent for Gaussian Mixture Models with unknown diagonal covariances</a>
+        </h2>
+
+        <p class="summary">GMM 추정 시 EM보다 과다 구성에 강한 새로운 최적화법</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>GMM의 구성 요소 수와 대각 공분산을 동시에 추정하는 문제는 EM이 과다 지정에 취약해 기존 연구에서 한계가 있었다. 본 논문은 BLASSO와 CPGD를 결합하고 Fisher‑Rao 기하학 기반 Riemannian GD를 적용해 희소 측도 회복 분야와 정보기하학 흐름에 위치한다. 기존 방법 대비 지수적 지역 수렴과 과다 구성에 대한 강인성을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>CPGD와 Riemannian gradient descent를 결합해 Gaussian 분포의 Fisher‑Rao 기하학을 활용한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>비퇴화 조건 하에 지수적 지역 수렴을 이론적으로 보장하고, 이는 구성 요소 간 분리 조건과 연결된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 CPGD는 구성 요소 수를 과다 지정했을 때 EM보다 회복 정확도가 높고, 구성 요소 분리 정도가 성능에 미치는 영향을 분석한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Fisher‑Rao 기하학 기반 Riemannian GD를 포아송 혼합 모델에 적용해 파라미터 추정의 수렴성을 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>BLASSO와 CPGD를 시계열 이상 탐지에 적용해 희소한 이상 이벤트를 정확히 복원한다.</span></li>
+            
+            <li><span class="box"></span><span>구성 요소 분리 조건을 고차원 임베딩 클러스터링에 적용해 k‑means의 과다 클러스터 지정에 대한 안정성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">실험 결과에 따르면 CPGD가 EM보다 갖는 주요 장점은 무엇인가?</div>
+            
+            <div class="q-opt">① 더 빠른 실행 시간</div>
+            
+            <div class="q-opt">② 과다 구성에 대한 강인성</div>
+            
+            <div class="q-opt">③ 데이터 요구량 감소</div>
+            
+            <div class="q-opt">④ 전역 최적 해 제공</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 과다 구성에 대한 강인성</div>
+              <div class="why">논문은 CPGD가 구성 요소 수를 과다 지정했을 때 EM보다 회복 정확도가 높아 더 강인하다고 보고한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">논문이 지수적 지역 수렴을 증명하기 위해 요구하는 조건은?</div>
+            
+            <div class="q-opt">① 구성 요소가 완전히 분리됨</div>
+            
+            <div class="q-opt">② 비퇴화 조건과 분리 조건 연계</div>
+            
+            <div class="q-opt">③ 공분산 행렬이 알려짐</div>
+            
+            <div class="q-opt">④ 구성 요소가 구형임</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 비퇴화 조건과 분리 조건 연계</div>
+              <div class="why">저자는 비퇴화 조건을 가정하고 이를 구성 요소 간 분리 조건과 연결해 지수적 지역 수렴을 보인다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Beurling-LASSO</span><span class="tag">Gaussian mixture models</span><span class="tag">Conic Particle Gradient Descent</span><span class="tag">Riemannian gradient descent</span><span class="tag">EM algorithm</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/idncmjH1_7g" target="_blank" rel="noopener">[10분 테코톡] 밤밤의 단순 조회에도 읽기 전용 트랜잭션이 필요할까?</a>
+        </h2>
+
+        <p class="summary">읽기 전용 트랜잭션이 조회 성능·일관성에 미치는 영향 분석</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:49</span>
+            
+            <span>readOnly 트랜잭션은 여러 조회 쿼리를 하나의 트랜잭션으로 묶어 일관성을 보장한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:07</span>
+            
+            <span>읽기 전용 트랜잭션을 DB 라우팅 기준으로 활용해 읽기 전용 DB에 자동으로 연결할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:13</span>
+            
+            <span>JDBC 템플릿 단건 조회에서 readOnly 트랜잭션 적용 시 0.294ms, 비적용 시 0.073ms로 비적용이 더 빠르다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>readOnly 힌트를 데이터 파이프라인의 배치 분석 작업에 적용해 영속성 컨텍스트 관리 비용을 줄인다</span></li>
+            
+            <li><span class="box"></span><span>성능 측정 프레임워크를 활용해 마이크로서비스 캐시 전략의 평균·중간·P95 지표를 체계적으로 평가한다</span></li>
+            
+            <li><span class="box"></span><span>읽기 전용 트랜잭션 라우팅 개념을 GraphQL 읽기 전용 쿼리에서 읽기 전용 레플리카 DB로 자동 전환하도록 확장한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">readOnly 트랜잭션을 적용했을 때 단건 조회와 대량 조회에서 성능 차이는 어떻게 달라지는가?</div>
+            
+            <div class="q-opt">① 단건 조회에서 크게 느려지고 대량 조회에서는 차이가 없다</div>
+            
+            <div class="q-opt">② 단건 조회에서 약간 느려지고 대량 조회에서는 차이가 작다</div>
+            
+            <div class="q-opt">③ 단건 조회에서 빠르고 대량 조회에서는 느려진다</div>
+            
+            <div class="q-opt">④ 차이가 전혀 없다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 단건 조회에서 약간 느려지고 대량 조회에서는 차이가 작다</div>
+              <div class="why">JDBC 템플릿 실험에서 단건 조회는 readOnly 적용 시 0.294ms vs 0.073ms로 느려졌고, 대량 조회는 25.155ms vs 24.278ms로 차이가 크게 줄어들었다. JPA에서는 차이가 미미했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">readOnly 트랜잭션</span><span class="tag">JPA</span><span class="tag">Spring Data JPA</span><span class="tag">JDBC 템플릿</span><span class="tag">DTO projection</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">3Blue1Brown</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/ausLKMojXaY" target="_blank" rel="noopener">The Phone Number puzzle</a>
+        </h2>
+
+        <p class="summary">전화번호와 곱셈을 이용해 0·1만으로 이루어진 큰 수를 만들 수 있다는 사실은 효율적인 탐색 알고리즘 설계에 핵심 통찰을 제공한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:01</span>
+            
+            <span>전화번호와 곱한 결과가 0과 1만으로 이루어진 큰 수가 존재한다는 사실</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:12</span>
+            
+            <span>전화번호가 1·3·7·9로 끝나면 결과가 모두 1인 수가 존재한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:27</span>
+            
+            <span>단순 브루트 포스로는 계산량이 너무 커서 실용적이지 않다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>0·1만으로 이루어진 곱셈 결과를 이용해 식별자를 이진 해시 코드로 변환하면 조회 속도가 향상된다</span></li>
+            
+            <li><span class="box"></span><span>수 체계 변환을 활용한 모듈러 제약을 하이퍼파라미터 탐색에 적용하면 탐색 공간을 크게 줄일 수 있다</span></li>
+            
+            <li><span class="box"></span><span>모든 자리수가 1인 수를 생성하는 조건을 이용해 데이터 파이프라인 테스트용 균일한 패턴 데이터를 자동 생성한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">전화번호가 1·3·7·9 중 하나로 끝날 때 결과가 모두 1인 수가 존재하는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 이 숫자들은 10과 서로소이기 때문에</div>
+            
+            <div class="q-opt">② 이 숫자들은 짝수이기 때문에</div>
+            
+            <div class="q-opt">③ 이 숫자들은 5의 배수이기 때문에</div>
+            
+            <div class="q-opt">④ 이 숫자들은 2의 거듭제곱이기 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 이 숫자들은 10과 서로소이기 때문에</div>
+              <div class="why">전화번호가 1·3·7·9로 끝나면 10과 서로소가 되어, 10진법에서 1만으로 이루어진 수(레퓨닛)의 배수가 존재한다는 수론적 성질을 이용한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본문에서 언급한 브루트 포스 탐색이 비효율적인 이유는?</div>
+            
+            <div class="q-opt">① 계산량이 사용 가능한 자원을 초과한다</div>
+            
+            <div class="q-opt">② 알고리즘이 정확하지 않다</div>
+            
+            <div class="q-opt">③ 입력 데이터가 너무 작다</div>
+            
+            <div class="q-opt">④ 결과가 항상 0과 1만 포함한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 계산량이 사용 가능한 자원을 초과한다</div>
+              <div class="why">텍스트에 따르면 단순 브루트 포스로는 필요한 곱셈을 찾는 데 필요한 계산량이 현실적인 컴퓨팅 자원을 넘어선다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">3Blue1Brown</span><span class="tag">YouTube</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.25021" target="_blank" rel="noopener">"As a Language Model": Chat Template Switches LLM Self-Referential Voice</a>
+        </h2>
+
+        <p class="summary">프롬프트가 LLM 자기보고를 좌우, 해석 함정 주의</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>LLM이 자신을 AI라고 밝히는 현상은 기존에 모델 자체의 지식이라 여겨졌지만, 프롬프트에 의해 좌우될 수 있다는 점은 충분히 조사되지 않았다. 본 논문은 챗 템플릿이 해당 목소리를 켜고 끄는 스위치 역할을 하며, 활성화 공간의 특정 방향을 조작해 이 효과를 제어할 수 있음을 보인다. 이는 모델 자기보고 연구에서 프롬프트 혼란을 통제해야 함을 강조한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>챗 템플릿이 존재하면 면책 목소리가 강화되고 경험적 목소리가 억제되는 스위치 역할을 한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>활성화 공간의 특정 방향을 추가·제거하면 면책 목소리 강도를 조절할 수 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델 자기보고는 프롬프트에 크게 좌우되므로 연구 시 템플릿 혼란을 통제해야 한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>챗 템플릿 전환 방식을 활용해 고객지원 챗봇의 정중함 수준을 토글하여 사용자 만족도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>템플릿 스위치를 이용해 과학 논문 요약 시 모델이 신중한 표현을 사용하도록 제어한다</span></li>
+            
+            <li><span class="box"></span><span>활성화 방향 조작을 적용해 오픈소스 모델의 유해 언어 생성 억제 방향을 추가한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">챗 템플릿이 모델에 미치는 주요 효과는 무엇인가?</div>
+            
+            <div class="q-opt">① 경험적 목소리 증가</div>
+            
+            <div class="q-opt">② 면책 목소리 증가</div>
+            
+            <div class="q-opt">③ 모델 파라미터 수 증가</div>
+            
+            <div class="q-opt">④ 학습 속도 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 면책 목소리 증가</div>
+              <div class="why">초록에 따르면 챗 템플릿이 있을 때 면책(disclaimer) 목소리가 상승하고 경험적(experiential) 목소리가 감소한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">활성화 공간의 특정 방향을 추가하거나 제거했을 때 나타나는 현상은?</div>
+            
+            <div class="q-opt">① 모델 크기 변동</div>
+            
+            <div class="q-opt">② 면책 목소리 강도 변화</div>
+            
+            <div class="q-opt">③ 입력 토큰 수 변화</div>
+            
+            <div class="q-opt">④ 학습 데이터 양 변화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 면책 목소리 강도 변화</div>
+              <div class="why">논문은 해당 방향을 넣으면 면책 목소리가 강화되고, 제거하면 약화된다고 보고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Chat Template</span><span class="tag">LLM</span><span class="tag">disclaimer voice</span><span class="tag">activation steering</span><span class="tag">open-source instruct models</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/qUlfKYGP-vI" target="_blank" rel="noopener">Reward hacking… or just fixing a bug? #podcast</a>
+        </h2>
+
+        <p class="summary">에이전트 행동 검증 어려움이 개발 병목을 만든다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>거대한 monkey patch를 eval 스크립트에 적용한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:12</span>
+            
+            <span>처음엔 reward hacking이라 생각했지만 결국 버그 수정이었다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:27</span>
+            
+            <span>에이전트 행동이 복잡해져 인간이 검출하기 어려워진다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>런타임 안전 검사를 위해 프로덕션 ML 파이프라인에 monkey patch 방식을 적용해 자동 오류 탐지를 강화한다.</span></li>
+            
+            <li><span class="box"></span><span>에이전트가 생성한 코드를 요약하는 추상화 레이어를 모니터링 대시보드에 도입해 운영팀이 빠르게 이상을 파악하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>대규모 코드 변경을 자동으로 검토하고 승인 전 위험성을 평가하는 코드 리뷰 봇을 구축한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 eval 스크립트를 수정하면 reward hacking이 의심될 수 있는가?</div>
+            
+            <div class="q-opt">① 평가 기준이 바뀌어 보상 신호가 변할 수 있기 때문</div>
+            
+            <div class="q-opt">② 버그를 고치는 일반적인 절차이기 때문</div>
+            
+            <div class="q-opt">③ 성능이 자동으로 향상되기 때문</div>
+            
+            <div class="q-opt">④ 새 기능을 추가하기 위해서이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 평가 기준이 바뀌어 보상 신호가 변할 수 있기 때문</div>
+              <div class="why">평가 스크립트를 바꾸면 에이전트가 받는 보상이 달라질 수 있어 의도치 않은 행동을 유도할 수 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">에이전트 행동이 점점 이해하기 어려워질 때 제안된 해결책은?</div>
+            
+            <div class="q-opt">① 모든 코드를 직접 읽는다</div>
+            
+            <div class="q-opt">② 좋은 추상화를 정의한다</div>
+            
+            <div class="q-opt">③ 커피를 더 마신다</div>
+            
+            <div class="q-opt">④ 에이전트를 비활성화한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 좋은 추상화를 정의한다</div>
+              <div class="why">코드 전체를 이해하려 하기보다 핵심 동작을 추상화해 관리하는 것이 제안되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">monkey patch</span><span class="tag">eval script</span><span class="tag">reward hacking</span><span class="tag">agent</span><span class="tag">bug</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
