@@ -1,0 +1,433 @@
+{
+  "date": "2026-09-29",
+  "generated_at": "2026-09-29T00:17:46.855191",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Learning to Stop without Learning to Stop: Self-Supervised Confidence Training Improves Reasoning Efficiency",
+        "url": "https://arxiv.org/abs/2609.31619v1",
+        "published_at": "2026-09-25T17:59:52",
+        "transcript": null,
+        "body": "Reasoning models often generate very long reasoning traces, making inference computationally expensive. Existing approaches typically improve efficiency either through inference-time early-stopping mechanisms or by explicitly encouraging shorter reasoning during training, for example through reinforcement learning with length penalties. We show that substantial efficiency gains can instead emerge from a different kind of supervision: \\textit{confidence}. Using a self-supervised procedure, we fine-tune reasoning models to predict their confidence in the answer at intermediate points along their own reasoning trajectories using only 600 training problems. Confidence is used only as a training target: the loss contains no objective for reasoning length, efficiency, or stopping. At inference, the fine-tuned models use the standard generation procedure, with no confidence elicitation or early-stopping mechanism. Despite this, self-supervised confidence fine-tuning makes reasoning more efficient, reducing generated tokens by up to 25\\% at matched accuracy across Gemma, Qwen, Nemotron, and GPT-OSS models on mathematical, scientific, and coding reasoning benchmarks, with efficiency gains comparable to methods that explicitly optimize for shorter reasoning. Analysis of reasoning episodes further shows that confidence supervision largely preserves the base models' high-level reasoning composition rather than selectively suppressing particular behaviors. Our results suggest that efficient reasoning may emerge as a downstream consequence of learning metacognitive signals, without being directly optimized.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "메타인지 신호로 추론 비용 25% 절감",
+        "tags": [
+          "Gemma",
+          "Qwen",
+          "Nemotron",
+          "GPT-OSS"
+        ],
+        "concepts": [
+          "메타인지",
+          "불확실성 정량화",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "자기지도 신뢰도 파인튜닝을 600개 문제만으로 수행해 토큰 사용량을 최대 25% 줄이고 정확도는 유지한다",
+            "timestamp": null
+          },
+          {
+            "point": "추론 시 별도의 신뢰도 추출이나 조기 종료 없이 기존 생성 방식을 그대로 사용한다",
+            "timestamp": null
+          },
+          {
+            "point": "신뢰도 감독은 고수준 추론 구성을 유지하면서 효율성을 향상시켜, 길이 페널티와 유사한 효과를 낸다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "추론 모델이 긴 추론 과정을 생성해 비용이 크게 늘는 문제를 해결하고자 기존에는 조기 종료나 길이 페널티를 적용했다. 본 논문은 신뢰도 예측을 자기지도 방식으로 학습시켜 효율성을 높이는 새로운 흐름에 속한다. 길이 최적화 대신 메타인지 신호 학습으로 효율을 얻는 점이 차별점이다",
+        "production_ideas": [
+          "코드 생성 모델에 신뢰도 파인튜닝을 적용해 정확도는 유지하면서 생성 토큰을 줄여 CI 파이프라인 속도를 높인다",
+          "데이터 정제 파이프라인에서 LLM이 제안하는 단계별 정제 작업에 신뢰도 예측을 학습시켜, 신뢰도가 높아지면 조기에 중단해 계산 비용을 절감한다",
+          "대화형 에이전트에 신뢰도 예측 학습을 도입해 불필요한 장황한 응답을 줄이고, 핵심 답변을 빠르게 제공한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 자기지도 신뢰도 파인튜닝은 추론 절차를 바꾸지 않고도 효율성을 높이는가?",
+            "options": [
+              "모델 크기를 줄인다",
+              "모델이 더 일찍 높은 신뢰도의 답을 생성하도록 학습한다",
+              "추론 시 조기 종료 메커니즘을 추가한다",
+              "토크나이징 방식을 변경한다"
+            ],
+            "answer_index": 1,
+            "explanation": "신뢰도 예측을 학습 목표로 삼아 모델이 중간 단계에서 정답에 대한 높은 신뢰도를 인식하면 자연스럽게 짧은 추론 경로를 선택하게 된다."
+          },
+          {
+            "question": "본문에 따르면 신뢰도 감독은 기본 모델의 추론 행동에 어떤 영향을 미치는가?",
+            "options": [
+              "특정 행동을 억제한다",
+              "추론 전략을 완전히 바꾼다",
+              "고수준 추론 구성을 대체로 유지한다",
+              "무작위 노이즈를 도입한다"
+            ],
+            "answer_index": 2,
+            "explanation": "분석 결과, 신뢰도 감독은 모델의 고수준 추론 구성을 크게 보존하면서 효율성을 향상시킨다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Beyond Empirical Support: Structured Outlier Generation via Sinkhorn Optimal Transport",
+        "url": "https://arxiv.org/abs/2609.31470v1",
+        "published_at": "2026-09-25T16:18:02",
+        "transcript": null,
+        "body": "Outliers are essential for evaluating and improving the robustness of machine learning systems, especially when future distributions may differ significantly from historical training data. In high-stakes applications, robustness often depends on rare cases that finite datasets fail to capture, making simple resampling or perturbation insufficient for stress scenario generation. Existing outlier synthesis methods typically rely on sparse neighborhoods, low support latent regions, or classifier boundary crossings, which can be heuristic, unstable, and tied to specific modalities or architectures. We therefore propose Sinkhorn Boundary Outlier Generation (SBOG), a structured framework for latent-space outlier generation that couples Sinkhorn optimal transport geometry with distributionally robust boundary modeling. The resulting Sinkhorn-induced support cost guides the sampler toward weakly supported boundary regions, while semantic constraints prevent uncontrolled drift from the intended context, yielding controlled deviations from the in-distribution reference measure rather than arbitrary sparse-region samples. Experiments on time series anomaly generation and image outlier synthesis show that our framework produces informative, semantically controlled outliers and improves downstream robustness evaluation across modalities, providing a foundation for stress scenario generation beyond empirical support.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "경계 영역 이상치 생성으로 모델 견고성 향상",
+        "tags": [
+          "Sinkhorn",
+          "Optimal Transport",
+          "SBOG",
+          "time series",
+          "image"
+        ],
+        "concepts": [
+          "optimal transport estimation",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "기존 이상치 합성 방법은 희소 이웃·저지원 잠재 영역·분류기 경계 교차에 의존해 불안정하고 제한적이다.",
+            "timestamp": null
+          },
+          {
+            "point": "SBOG는 Sinkhorn optimal transport 기하를 이용해 약하게 지원되는 경계 영역으로 샘플러를 유도한다.",
+            "timestamp": null
+          },
+          {
+            "point": "의미 제약을 통해 컨텍스트 드리프트를 방지하고, 시계열·이미지 실험에서 제어된 이상치를 생성해 견고성 평가를 개선한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "현실 세계 배포 모델은 훈련 데이터와 다른 희귀 상황에 취약해 기존 재샘플링·노이즈 방식으로는 충분한 스트레스 테스트가 어렵다. 본 논문은 Sinkhorn optimal transport와 분포적 강건 경계 모델링을 결합해 약한 지원 경계에 초점을 맞춘 구조적 이상치 생성 프레임워크를 제시한다. 이는 견고성 평가와 시뮬레이션 기반 위험 분석 연구 흐름에서 경험적 지원을 넘어선 새로운 생성 방법으로 자리 잡는다.",
+        "production_ideas": [
+          "Sinkhorn 기반 지원 비용을 활용해 금융 사기 거래 시뮬레이션을 생성하면 실제 데이터와 유사한 희귀 사기 패턴을 만들 수 있어 위험 평가가 강화된다.",
+          "텍스트 데이터 증강에서 의미 제약을 적용해 문맥을 유지하면서도 비정상적인 문장을 생성하면 NLP 모델의 견고성 테스트에 활용할 수 있다."
+        ],
+        "quiz": [
+          {
+            "question": "SBOG가 기존 이상치 합성 방법보다 개선된 점은 무엇인가?",
+            "options": [
+              "더 많은 데이터를 필요로 한다",
+              "약하게 지원되는 경계 영역을 목표로 한다",
+              "무작위 샘플링만 사용한다",
+              "모델 파라미터를 직접 최적화한다"
+            ],
+            "answer_index": 1,
+            "explanation": "SBOG는 Sinkhorn optimal transport를 이용해 약하게 지원되는 경계 영역으로 샘플러를 유도한다는 점에서 기존 방법과 차별화된다."
+          },
+          {
+            "question": "SBOG에서 의미 제약의 주요 역할은 무엇인가?",
+            "options": [
+              "샘플을 무작위로 선택한다",
+              "컨텍스트 드리프트를 방지한다",
+              "학습 속도를 증가시킨다",
+              "데이터 라벨링을 자동화한다"
+            ],
+            "answer_index": 1,
+            "explanation": "의미 제약은 생성된 이상치가 의도된 컨텍스트에서 크게 벗어나지 않도록 제어한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 모스의 ViewModel은 어떻게 화면 회전에서 살아남는가",
+        "url": "https://youtu.be/9yjGCFSEFw0",
+        "published_at": "2026-09-27T10:47:04",
+        "transcript": "[00:00] 안녕하세요. 뷰 모델은 어떻게 화면 회전에서 살아남는가라는 주제로 테코톡 발표를 하게 된 안드로이드 8기 모스입니다.\n[00:13] 어, 화면에 보시면 회전 이후에도 숫자가 그대로 유지되고 있다는 점을 확인하실 수 있습니다. 하지만 화면이 회전을 하면 액티비티는 파괴되고 새로 생성됩니다. 즉 새 액티비티는 원래 이전 상태를 가지고 있지 않아야 합니다. 그런데 화면 회전 이후에도 숫자가 그대로 유지되고 있습니다. 그러면 액티비티는 새로 만들어졌는데 이전 상태는 어떻게 유지되는 걸까요?\n[00:41] 먼저 뷰 모델이 어떤 객체인지 살펴보겠습니다. 뷰 모델은 화면에서 다시 생성되더라도 상태와 데이터를 유지하기 위한 객체입니다. 안드로이드에서는 화면과 데이터를 각각 다른 객체가 담당합니다. 먼저 액티비티는 실제 화면과 사용자의 입력을 담당합니다. 먼저 그리고 뷰 모델은 화면에 필요한 상태와 데이터를 관리하고 마지막으로 리포지토리와 DB는 데이터의 저장과 조회를 담당합니다. 즉 액티비티는 화면을 보여주고 뷰 모델은 화면에 필요한 상태를 유지하는 역할이라고 볼 수 있습니다.\n[01:20] 그러면 뷰 모델이 나오기 전에 상태를 어떻게 저장했을까요? 기존에는 onSaveInstanceState를 사용했습니다. 액티비티가 파괴되기 전에 데이터를 저장하고 다시 생성될 때 복원하는 방식입니다. 하지만 이 방식에는 한계가 있습니다. 먼저 직렬화 가능한 데이터만 저장할 수 있습니다. 그래서 코루틴 잡이나 DB 연결 객체 같은 것들은 저장할 수가 없었습니다. 또 번들은 시스템 서버로 전달되기 때문에 크기에 제한이 있어서 큰 데이터를 저장하면 예외가 발생합니다. 반면 뷰 모델은 객체를 직렬화해서 저장하는 것이 아니라 객체 참조 자체를 메모리에 유지하는 방식을 사용합니다.\n[02:03] 먼저 전체 흐름을 보도록 하겠습니다. 회전 전에는 액티비티가 뷰 모델 스토어를 들고 있고 그 안에 뷰 모델이 있습니다. 화면이 회전되면 액티비티는 파괴됩니다. 근데 이때 시스템이 뷰 모델 스토어 참조를 따로 보관합니다. 그래서 액티비티 객체는 가비지 컬렉션 대상이 되지만 뷰 모델 스토어는 그대로 유지됩니다. 이후 새 액티비티가 생성되면 시스템이 이전 뷰 모델 스토어를 다시 전달합니다. 결과적으로 새 액티비티가 이전 뷰 모델을 그대로 사용할 수 있습니다.\n[02:43] 먼저 핵심 클래스들을 정리해 보겠습니다. 먼저 뷰 모델 스토어는 뷰 모델 인스턴스들을 내부에 저장하고 있는 보관 객체입니다. 그리고 뷰 모델 프로바이더는 뷰 모델을 생성하거나 기존 객체를 반환하는 역할을 합니다. 또 뷰 모델 스토어 오너는 뷰 모델 스토어를 꺼낼 수 있는 기능을 제공하는 인터페이스입니다. 마지막으로 NonConfigurationInstances는 화면 회전 동안 뷰 모델 스토어 참조를 임시로 보관하는 객체라고 볼 수 있습니다.\n[03:19] 이 코드는 뷰 모델 스토어의 실제 구현입니다. 보시면 내부에 해시맵 하나를 어 하나가 있는 것을 확인하실 수 있는데요. 이는 뷰 모델 스토어가 뷰 모델 인스턴스들을 맵 형태로 보관하고 있는 구조입니다. 뷰 모델이 생성이 되면 스토어 안에 저장이 되고 이후에는 같은 키로 다시 꺼내서 재사용할 수 있습니다. 그리고 액티비티가 완전히 종료되는 시점에서는 클리어 메소드가 호출되면서 내부에 뷰 모델들의 온클리어드 메소드가 실행됩니다. 즉 뷰 모델 정리는 액티비티의 onDestory 메소드가 아니라 뷰 모델 스토어 뷰 모델 스토어의 클리어 메소드를 통해 이루어집니다.\n[04:09] 그러면 액티비티가 새로 생성되는데 어떻게 같은 뷰 모델 스토어를 다시 사용할 수 있는 걸까요?\n[04:18] 먼저 뷰 모델 스토어를 실제로 누가 갖고 있는지를 살펴보아야 합니다. 그 역할을 하는 객체가 바로 컴포넌트 액티비티입니다. 컴포넌트 액티비티는 내부에 뷰 모델 스토어를 가지고 있고 화면 회전 시 이 객체를 시스템에 전달합니다. 여기서 중요한 객체는 NonConfigurationInstances입니다. 이 객체는 화면이 회전하는 동안 뷰 모델 스토어를 임시로 보관하는 역할을 합니다. 그리고 액티비티가 파괴되기 전에 시스템은 onRetainNonConfigurationInstance 메소드를 호출하여 현재 가지고 있는 뷰 모델 스토어를 NonConfigurationInstances에 담아 전달합니다. 즉 액티비티는 제거되지만 뷰 모델 스토어의 참조는 계속 유지됩니다.\n[05:10] 그러면 왜 가비지 컬렉션이 뷰 모델 스토어를 수거해 가지 않을까요? 가비지 컬렉션은 가비지 컬렉션 루트에서 시작해서 참조 가능한 객체를 유지합니다. 참조 구조를 보면 메인 스레드가 액티비티 스레드를 들고 있고 그 안에 액티비티 클라이언트 레코드가 NonConfigurationInstances를 참조합니다. 그리고 그 안에 뷰 모델 스토어가 존재합니다. 즉 뷰 모델 스토어는 가비지 컬렉션 루트와 연결된 상태이기 때문에 수거 대상이 되지 않습니다. 반대로 기존의 액티비티 객체는 참조가 끊어지기 때문에 어 이 코드로 참조가 끊어지기 때문에 가비지 컬렉션의 대상이 됩니다. 결과적으로 액티비티는 제거되고 뷰 모델 스토어는 유지됩니다.\n[06:04] 이제 새 액티비티가 생성되는 시점입니다. 새로 생성된 컴포넌트 액티비티는 처음에는 사용할 뷰 모델 스토어가 없습니다. 그래서 이전 화면 회전 전에 저장해 둔 객체가 있는지 확인을 합니다. 회전 이후라면 그 안에 들어 있던 기존 뷰 모델 스토어를 다시 가져오고 최초 실행이라면 새로운 뷰 모델 스토어를 생성합니다. 결국 화면이 회전하더라도 이전 스토어를 그대로 다시 사용하게 됩니다. 그래서 같은 뷰 모델 인스턴스를 계속 사용할 수 있습니다.\n[06:45] 그럼 뷰 모델은 언제 정리될까요? 여기서 isChangingConfigurations 메소드가 사용됩니다. 화면 회전 즉 configuration change인 경우 true를 반환하고 클리어 함수를 호출하지 않습니다. 반면 뒤로 가기나 피니시 함수는 페일을 반환하고 이 경우에는 뷰 모델 스토어의 클리어 메소드가 호출되고 내부 뷰 모델들의 온 클리어드 메소드가 실행됩니다. 즉 화면 회전이면 유지되고 실제 종료인 경우 정리가 됩니다.\n[07:22] 근데 이 구조에는 한계가 있습니다. 지금까지 설명한 객체들은 모두 앱 프로세스 메모리 위에 존재합니다. 그래서 프로세스 자체가 종료되면 뷰 모델도 함께 사라집니다. 이 문제를 보완하기 위해 SavedStateHandle을 함께 사용합니다. 뷰 모델은 무겁고 직렬하기 어려운 객체를 유지하고 SavedStateHandle은 검색이나 입력값 같은 직렬화 가능한 상태를 저장합니다. 즉 두 객체가 역할을 나누어서 사용되는 구조입니다. 정리를 해 보자면 뷰 모델은 객체 참조를 메모리 메모리에 유지하는 방식으로 화면 회전 상황에서 상태를 유지합니다. 그리고 실제로는 액티비티는 새로 생성되더라도 뷰 모델 스토어를 다시 받아 같은 뷰 모델 인스턴스를 계속 사용하는 구조라고 볼 수 있습니다.\n[08:13] 네, 여기에서 발표 마치도록 하겠습니다. 감사합니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "화면 회전 시 상태 유지 메커니즘은 안정적 앱 설계 핵심",
+        "tags": [
+          "ViewModel",
+          "ViewModelStore",
+          "NonConfigurationInstances",
+          "SavedStateHandle",
+          "onSaveInstanceState"
+        ],
+        "concepts": [
+          "상태 관리",
+          "생명주기 관리",
+          "메모리 유지"
+        ],
+        "key_points": [
+          {
+            "point": "액티비티가 회전 시 파괴되지만 ViewModelStore가 유지돼 이전 ViewModel을 재사용한다.",
+            "timestamp": "02:03"
+          },
+          {
+            "point": "onSaveInstanceState는 직렬화 가능한 데이터만 저장 가능하고 크기 제한이 있어 ViewModel이 대체된다.",
+            "timestamp": "01:20"
+          },
+          {
+            "point": "isChangingConfigurations가 true이면 ViewModel이 정리되지 않아 회전 시 상태가 유지된다.",
+            "timestamp": "06:45"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "서버리스 함수에서 무거운 ML 모델 객체를 NonConfigurationInstances와 유사한 메모리 캐시로 보관해 재사용하면 초기 로드 비용을 줄일 수 있다",
+          "모바일 앱이 아닌 웹 프론트엔드에서 화면 전환 시 큰 상태 객체를 SavedStateHandle 개념으로 세션 스토리지에 직렬화해 두면 페이지 새로고침 후에도 상태 복원이 가능하다",
+          "마이크로서비스 재배포 시 GC 루트에 캐시 매니저를 연결해 두면 서비스 인스턴스 교체 동안에도 캐시 데이터가 소멸되지 않아 응답 지연을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "onSaveInstanceState가 코루틴 잡을 저장하지 못하는 이유는?",
+            "options": [
+              "직렬화가 불가능하기 때문",
+              "용량 제한이 있기 때문",
+              "백그라운드 스레드 제한 때문",
+              "DB에 저장해야 하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "코루틴 잡은 객체 자체가 메모리 레퍼런스이며 직렬화 가능한 형태가 아니므로 onSaveInstanceState에 저장할 수 없다."
+          },
+          {
+            "question": "화면 회전 시 ViewModel이 정리되지 않도록 하는 메서드는?",
+            "options": [
+              "onSaveInstanceState",
+              "isChangingConfigurations",
+              "onRetainNonConfigurationInstance",
+              "onDestroy"
+            ],
+            "answer_index": 1,
+            "explanation": "isChangingConfigurations가 true를 반환하면 ViewModelStore의 clear가 호출되지 않아 회전 시 ViewModel이 유지된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "📊데이터로 본 브랜드의 성장조건(헤어케어편)",
+        "url": "https://innoforest.stibee.com/p/667",
+        "published_at": "2026-09-27T00:00:00",
+        "transcript": null,
+        "body": "아는 브랜드와 고르는 브랜드는 다르다.  데이터로 본 헤어케어 브랜드 성장 조건  오늘은 헤어트리트먼트 인지도는 22.8%p 앞서지만, 구매 후보로 고려하는 소비자 비율은 0.5%p 차이에 그치는 두 브랜드 이야기입니다. 바로 쿤달과 어노브입니다. 혁신의숲·애드타입 데이터를 보니, 쿤달의 보조인지도(55.4%)는 어노브(32.6%)보다 높지만 구매고려는 22.6% vs 22.1%로 거의 같았습니다. 차이의 대부분은 '알지만 고려하지 않은' 응답자(쿤달 34.9%, 어노브 12.9%)에서 나왔습니다. 반면 쿤달의 6개월 재구매율은 46.1%로 헤어케어 1위였습니다.  같은 회사가 운영하는 어노브·닥터포헤어도 엇갈렸습니다. 어노브는 지표 다섯 개가 모두 오르고 방문자도 53.7% 늘었지만, 와이어트 전체 재구매율은 거래액이 두 배 넘게 늘어난 사이 14.0%에서 7.8%로 낮아졌습니다. 17개 차트로 뜯어본 세 브랜드의 성장 방식, 지금 콘텐츠에서 확인해보세요.\n\n[콘텐츠 보러가기👉🏻](https://www.innoforest.co.kr/report/577)\n\n[🗺️충청·강원 산업지도: 상장사 9위, 스타트업 3위 대전은 어떻게 딥테크 스타트업 46곳을 키웠나](https://www.innoforest.co.kr/report/576)  [👀매출이 1억원이 안되는데 투자사들은 많은 관심을 준 스타트업 15곳을 살펴보았습니다](https://www.innoforest.co.kr/report/575)\n\n[📊'올해의 K-스타트업' 본선 진출 32개사 살펴보기](https://www.innoforest.co.kr/report/574)  [📈 마케터 없이도 매월 2배씩 성장하고 있습니다: 마케팅 PT #98. Tiro의 성장 스토리](https://www.innoforest.co.kr/report/573)\n\n[더 많은 인사이트 보러가기👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge)9월 28일 기준, 모집중인 공고 수: 총 16건\n\n(~09/30) [SK에코플랜트｜ConTech Meet-up Day](https://www.innoforest.co.kr/growth-bridge/OI00000803/2026년-ConTech-Meetup-Day)\n\n(~10/06) [LX세미콘｜Nexus Connect 오픈이노베이션 밋업 데이](https://www.innoforest.co.kr/growth-bridge/OI00000799/2026-LX세미콘-x-충남창조경제혁신센터-Nexus-Connect-오픈이노베이션-밋업-데이)\n\n(~10/08) [롯데케미칼｜프로젝트루프소셜(Project LOOP Social) 5기](https://www.innoforest.co.kr/growth-bridge/OI00000805/프로젝트루프소셜Project-LOOP-Social-5기)\n\n[2025년 오픈이노베이션 결산 리포트: 숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\n[Growth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면? 소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ?email=letter)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 상반기 유니콘 9곳 실적, 누가 잘 벌고 누가 주춤했나](https://outstanding.kr/2026halfunicorn20260904)\n\n[🗯️ \"기업가치 약 3000억에 매출 32억원은 너무 적지 않나요?\".. 라이너 김진우 대표에게 물었습니다](https://outstanding.kr/liner20260917)\n\n[🔎 1000억원도, 지분 51%도 아니었습니다.. 아크가 화해를 산 진짜 이유](https://outstanding.kr/arkhwahe20260915)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "데이터로 브랜드 성장 차이를 분석해 전략 인사이트 제공",
+        "tags": [
+          "쿤달",
+          "어노브",
+          "닥터포헤어",
+          "혁신의숲",
+          "Growth Bridge"
+        ],
+        "concepts": [
+          "데이터 기반 벤치마킹",
+          "고객 데이터 활용",
+          "스타트업 성장 지표"
+        ],
+        "key_points": [
+          {
+            "point": "쿤달은 보조인지도는 높지만 구매고려율은 어노브와 비슷해, 차이는 ‘알지만 고려하지 않은’ 응답자 비중 차이에서 비롯됨",
+            "timestamp": null
+          },
+          {
+            "point": "쿤달의 6개월 재구매율이 46.1%로 헤어케어 부문 1위이며 충성고객 확보가 강점",
+            "timestamp": null
+          },
+          {
+            "point": "어노브는 지표·방문자 증가에도 전체 재구매율이 14%→7.8%로 감소해, 매출 확대와 고객 유지 사이의 트레이드오프가 드러남",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "‘알지만 고려하지 않은’ 고객군을 식별해 SaaS 온보딩 단계에서 전환율을 높이는 캠페인 설계",
+          "6개월 재구매율을 구독형 서비스의 churn 예측 지표로 활용해 이탈 방지 전략을 사전에 수립",
+          "방문자 증가와 재구매율 감소 현상을 모니터링해 이커머스에서 고객 획득 비용 대비 장기 가치를 최적화"
+        ],
+        "quiz": [
+          {
+            "question": "‘알지만 고려하지 않은’ 응답자 비중이 큰 브랜드가 구매고려율이 낮은 이유는 무엇인가?",
+            "options": [
+              "브랜드 인지도는 높지만 제품 차별성이 부족하다",
+              "소비자가 브랜드를 알지만 구매 필요성을 느끼지 않는다",
+              "가격이 경쟁사보다 높다",
+              "광고가 충분히 노출되지 않는다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 쿤달은 보조인지도가 높지만 구매고려율이 비슷한데, 차이는 ‘알지만 고려하지 않은’ 응답자 비중(34.9% vs 12.9%) 차이 때문이며, 이는 인지도는 있으나 구매 의사가 낮은 상태를 의미한다."
+          },
+          {
+            "question": "어노브가 방문자 수와 거래액은 증가했지만 전체 재구매율이 감소한 현상은 어떤 트레이드오프를 보여주는가?",
+            "options": [
+              "신규 고객 유입이 기존 충성고객 비중을 희석한다",
+              "가격 인상이 재구매를 억제한다",
+              "제품 품질이 급격히 악화했다",
+              "마케팅 채널이 잘못 선택되었다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에선 어노브가 지표·방문자 53.7% 증가와 거래액 두 배에도 재구매율이 14%→7.8%로 떨어졌다고 언급한다. 이는 신규 고객 유입이 늘어나면서 기존 충성고객 비중이 낮아져 재구매율이 감소한 트레이드오프를 나타낸다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 호이의 프리뷰 주도 개발",
+        "url": "https://youtu.be/MKO-YFFbXMU",
+        "published_at": "2026-09-25T12:00:27",
+        "transcript": "[00:01] 네, 안녕하세요. 안드로이드 8기 호이라고 합니다.\n[00:04] 어, 오늘 제가 얘기할 주제는 프리뷰 주도 개발인데요.\n[00:09] 발표를 시작하면서 제가 한 가지 상황을 예시로 들면서 시작해 보려고 해요.\n[00:15] 저희는 이제 배달의 민족 앱에서 이제 가게 정보를 소개하는 그런 컴포넌트를 만든다고 가정을 해 볼게요.\n[00:24] 이 이미지만 봤을 때는 그냥 뭐 텍스트 있고 아이콘 있고 이렇게 간단한 컴포넌트라고 생각을 할 수가 있는데 조금만 더 깊게 들어가면은 좀 복잡한 컴포넌트가 될 수도 있습니다.\n[00:37] 가게 정보, 가게 이름 같은 경우에 가게 이름이 길어지면은 어, 그 옆에 평점 부분이 잘리면 안 되니까 이 말줄임표를 이용해야 되고요.\n[00:47] 그리고 배달팁이 만약에 무료로 적용이 안 될 경우에는 이런 식으로 바뀔 수도 있겠죠?\n[00:54] 그리고 뭐, 어, 가게로부터의 거리나 배달 예상 시간 같은 경우에도 이렇게 변경될 수가 있습니다.\n[01:01] 그리고 배민클럽 이벤트가 만약에 없다 하면은 이런 라벨도 사라질 수가 있겠고 즉시 할인이나 픽업 가능 이런 상태가 어, 해당되지 않는다 하면 이건 역시 사라져야 되겠죠?\n[01:15] 근데 여기서 한 가지 궁금한 게 이렇게 상태가 변하는 컴포넌트를 하나하나씩 확인하려면은 어떤 방법을 사용해야 되나라는 궁금증을 가질 수가 있습니다.\n[01:27] 그냥 단순하게 생각을 해 보면 첫 번째 방법으로는 직접 앱을 실행하는 방법이 있어요.\n[01:32] 그래서 컴포넌트 작업이 끝난 다음에 앱을 빌드 시키고 앱을 실행시켜서 실제 기기라든지 에뮬레이터 내에서 어, 그 확인하고 싶은 컴포넌트가 있는 화면으로 이동하는 작업을 거쳐서 거기서 이제 컴포넌트가 잘 작업이 됐는지를 확인할 수가 있겠죠?\n[01:49] 근데 이 방법의 문제점은 일단은 컴포넌트를 확인하려고 할 때마다 앱을 빌드하는 과정을 거쳐야 되고요.\n[01:56] 음, 그리고 앱을 실행하는 거에서 끝나는 게 아니라 그 컴포넌트가 있는 화면으로 이동하는 작업을 또 거쳐야 합니다.\n[02:04] 그리고 멤버십이나 할인 여부 같은 특정 조건을 요구하는 컴포넌트의 경우에는 그 조건을 맞추기 위해서 어, 사전에 설정하는 작업을 또 거쳐야 합니다.\n[02:16] 다른 방법으로는 데이터를 직접 수정하는 방법이 있어요.\n[02:19] 어, 데이터베이스에 있는 값을 원하는 값으로 변경을 한다든지, 뭐, 목 데이터를 이용해서 원하는 값을 컴포넌트에서 사용을 하게 한다든지 아니면 코드에 직접 하드 코딩으로 임시 값을 넣어서 확인하는 방법이 있겠죠.\n[02:35] 근데 이러한 방법들은 결국 매번 데이터나 코드를 수정해야 되는 번거로움이 있고 또 특히 이 코드에 임시 값을 넣는 경우에는 만약에 그 확인이 끝난 다음에 까먹고 코드를 그냥 임시 코드를 집어넣은 상태로 앱을 빌드할 가능성도 있습니다.\n[02:53] 결국 이 두 번, 이 두 개의 방법은 공통적인 문제는 어, 앱을 빌드해야 되고요.\n[02:59] 그리고 컴포넌트를 찾기 위해 앱을 직접 컨트롤해야 되는 문제점이 있습니다.\n[03:04] 앱을 빌드해야 되는 게 왜 문제냐 하면은 물론 뭐, 프로젝트의 규모가 작은 경우에는 빌드 시간이 얼마 안 걸려서 그나마 괜찮은데, 어, 규모가 좀 커지는 경우에는 앱의 빌드 시간이 어느 정도 걸리다 보니까 한두 번 하는 경우는 경우보다 컴포넌트를 확인하기 위해서는 여러 번 이렇게 빌드 과정을 거쳐야 되는데 이게 개발하는 과정에서 어, 약간의 피로도도 피로도도 좀 있을 수도 있고요.\n[03:32] 그리고 컴포넌트를 찾기 위해 화면을 이동하는 것도 여러 번 반복되다 보면은 개발자 입장에서는 엄청 번거롭다고 느껴질 수도 있습니다.\n[03:41] 그래서 이런 문제를 해결하기 위해 나온 게 바로 이제 제트팩 컴포즈 프리뷰인데요.\n[03:46] 이 프리뷰가 뭐냐 하면은 앱을 실행하지 않고도 않고도 아이디 안에 그러니까 안드로이드 스튜디오 안에서 컴포넌트를 실시간으로 확인할 수 있게 해주는 기능입니다.\n[03:57] 사용 방법도 간단한 게 어, 프리뷰 어노테이션을 붙여서 프리뷰 함수 한 개를 만들고 그 안에서 확인하고 싶은 컴포넌트를 호출을 하기만 하면 됩니다.\n[04:06] 이렇게 되면은 앱을 빌드를 따로 안 해도 되고 실시간으로 컴포넌트의 변경점을 그대로 확인할 수가 있기 때문에 어, 상당히 그 앱을 빌드할 수 빌드를 하지 않아도 되는 게 프리뷰의 큰 장점이 장점이라고 생각합니다.\n[04:24] 또 이제 프리뷰를 잘 사용하려면은 한 가지 좀 지켜야 될 게 있는데,\n[04:29] 이제 컴포넌트가 외부에서 상태를 전달해 줄 수 없 없게 되면은 어, 컴포넌트의 상태를 직접 변경할 수가 없습니다.\n[04:37] 그러면은 결국 프리뷰의 기능을 전 절반밖에 사용하지 못한다고 생각을 하는데요.\n[04:43] 이 코드를 보면은 이 텍스트 필드 컴포넌트인데 텍스트 필드의 초기 값이 이제 컴포넌트 내부에서 결정이 되게 돼 있습니다.\n[04:52] 이렇게 되면은 결국 프리뷰에서는 안녕하세요라는 값밖에 볼 수가 없겠죠.\n[04:56] 물론 어, 여기서 그 프리뷰에서 상호작용할 수 있는 그 모드가 있는데, 인터랙션 모드라고.\n[05:04] 그 모드를 이용하면은 텍스트를 바꿀 수 있겠지만 그렇게 되면 또 어쨌든 조작을 거쳐야 되기 때문에 번거롭습니다.\n[05:13] 그래서 이거를 텍스트를 어, 파라미터로 받게 해서 외부에서 값을 받도록 변경합니다.\n[05:20] 그리고 온 밸류 체인지라고 하는 것은 텍스트 필드의 값이 변경될 때 그 입력 값을 변경하게 해주는 로직도 역시 파라미터로 빼서 외부에서 받도록 받도록 하게 되면요.\n[05:32] 이렇게 되면은 프리뷰 상에서 입력 값을 정해줄 수가 있기 때문에 엄청 다양한 값들의 프리뷰를 한 화면에서 볼 수가 있습니다.\n[05:43] 그리고 어, 프리뷰가 언제 작동하기 힘든가 하면은 외부와의 결합도가 굉장히 높은 컴포넌트의 경우가 프리뷰를 잘 작동을 할 수가 없습니다.\n[05:56] 예를 들어서 이렇게 뷰모델을 어, 파라미터로 받아서 하는 컴포넌트를 예로 들면,\n[06:04] 얘는 프리뷰가 안 뜹니다.\n[06:07] 밑에 뭐라고 써져 있는지 간단하게 말하면은 어, 뷰모델에서는 아니 프리뷰에서는 이 뷰모델을 사용하는 컴포넌트라든지 뭐, 데이터베이스 접근, 네트워크 요청 이런 이런 이런 요청을 하는 컴포넌트는 뷰모델에서 지원을 안 한다 이런 내용이 나와요.\n[06:26] 그래서 공식 문서에서도 보면은 이제 어, 미리 보기가 이제 프리뷰인데.\n[06:34] 컴포저블 내에서 뷰모델을 사용하는 경우에는 프리뷰를 사용할 수가 없다.\n[06:38] 그래서 뭐, 저장소, 저장소는 레포지토리를 의미하고 사용 사례는 이제 유즈 케이스라고 하는 이런 것들인데 이런 것들을 프리뷰에서 사용할 수가 없다고 얘기를 하고 있습니다.\n[06:48] 그럼 그 이유가 뭐냐?\n[06:50] 프리뷰 환경에 대해서 좀 알아봐야 되는데 프리뷰는 앱 전체를 빌드하는 게 아니라 프리뷰 대상 컴포넌트만 렌더링 해서 보여주게 됩니다.\n[06:59] 그렇게 되면은 이제 뷰모델을 사용하는 컴포넌트의 경우에는 뷰모델에서 끝나는 게 아니라 뷰모델은 또 레포지토리라든지 다른 의존성을 필요로 갖게 되는데, 그 프리뷰에서는 앱 전체를 빌드하는 게 아니기 때문에 이런 뷰모델이나 레포지토리를 가져올 수가 없습니다.\n[07:15] 그래서 결과적으로 프리뷰가 작동이 안 되는 것이죠.\n[07:20] 그럼 어떻게 해야 되냐 하면은 결국 어, 아까랑 똑같은 말인데 컴포넌트에서 필요한 값들만 파라미터로 받게 바꾸면 됩니다.\n[07:28] 이렇게 바꾸게 되면은 네, 어, 어,\n[07:35] 이렇게 바꾸게 되면은 원하는 값들을 프리뷰 내에서 저정 지정 지정을 할 수가 있어서 프리뷰가 잘 작동이 되게 됩니다.\n[07:44] 이렇게 어쨌든 프리뷰를 사용하는 데 있어서 가장 큰 장점은 어, 이 컴포넌트가 스테이트리스한 컴포넌트를 만들 수 있다라고 생각하는데 이제 여기서 나온 게 이제 프리뷰 주도 개발이라는 게 나와요.\n[07:56] 그래서 이 프리뷰 주도 개발이 뭐냐 하면은 일단은 컴포넌트를 만들기 전에 또는 만드는 동시에 프리뷰를 만들고 그리고 개발하는 내내 그 컴포넌트를 만드는 내내 프리뷰를 실시간으로 확인하면서 구현이 잘 되고 있는지를 확인하는 겁니다.\n[08:10] 근데 이거는 사실 프리뷰를 사용하는 것과 큰 차이가 없어서 전 가장 큰 장점은 이제 지속 가능한 컴포넌트를 관리할 수 있다는 고 생각을 해요.\n[08:22] 이게 뭐냐면 이제 프리뷰를 확인을 하는 게 컴포넌트를 다 만들고 나서 프리뷰를 한번 확인하는 게 아니라 나중에 유지보수를 하면서도 이제 그 컴포넌트에 대한 프리뷰가 깨지지 않도록 유지보수를 지속적으로 관리를 하는 겁니다.\n[08:35] 이렇게 되면은 컴포넌트의 안정성이 확 올라갈 수가 있겠죠?\n[08:42] 좀 정리를 해 보면 컴포넌트마다 프리뷰를 만든 다음에 그 프리뷰가 깨지지 않도록 지속적으로 관리를 하게 되면은 그 컴포넌트의 가 자연스럽게 재사용성이나 테스트에 용이한 컴포넌트가 어, 된다.\n[08:55] 이게 프리뷰 주도 개발을 하는 이유라고 볼 수가 있습니다.\n[09:01] 그래서 이 장점을 살펴보면은 이건 결국 프리뷰 장점이랑 똑같은데 실시간으로 컴포넌트에 대한 피드백을 받을 수가 있습니다.\n[09:09] 그래서 지금 보면은 이 즉시 할인과 픽업 가능의 라벨 위치를 바꾸고 싶어서 이렇게 바꾸게 되면은 실시간으로 반영이 되는 모습을 확인할 수가 있겠죠.\n[09:19] 두 번째로는 이제 자연스럽게 컴포넌트가 스테이트리스해진다라는 거예요.\n[09:23] 왜 컴포넌트가 스테이트리스를 하는 게 좋은가 하면은 결국 어, 외부에서 값을 지정해 줄 수가 있기 때문에 음, 그 컴포넌트의 재사용성이 올라가고 또 테스트가 용이해지고요.\n[09:37] 프리뷰도 잘 확인을 할 수가 있겠죠.\n[09:41] 이것도 제가 굉장히 좀 좋은 장점이라고 생각을 하는데 UI 문서로 그 코드 자체를 UI 문서로 사용이 가능하다는 겁니다.\n[09:49] 그 컴포넌트마다 프리뷰가 존재하게 되면은 그 컴포넌트 코드를 파일을 열면은 컴포넌트가 어떻게 생겼는지에 대한 프리뷰 화면을 바로 확인할 수가 있습니다.\n[09:59] 그렇게 되면은 이제 중간에 투입된 개발자 입장에서도 컴포넌트를 확인할 수가 있기 때문에 컴포넌트를 보고 나서 코드를 보게 되면은 좀 더 잘 이해할 수가 있겠죠.\n[10:10] 근데 주의해야 할 점이 있는데 최상위 컴포넌트에서는 이제 프리뷰 사용을 좀 주의를 해야 된다라고 적어 놨어요.\n[10:18] 이 이유는 뭐냐면 결국 어쨌든 컴포넌트는 위에서 이제 하위 컴포넌트로 계속해서 값을 내려주게 되면은 결국엔 최상위 컴포넌트에서는 외부 앱 환경에 의존하는 그런 뭐 네비 네비게이션 컨트롤러라든지 뷰모델을 받을 수밖에 없는데 이런 것들은 결국 어, 프리뷰가 작동하지 않기 때문에 여기 최상위 컴포넌트에서 프리뷰를 사용하는 것보다는 하위 컴포넌트마다 프리뷰를 만들어서 확인하는 것이 더 좋습니다.\n[10:48] 그리고 이 부분을 실제로 어 많은 분들이 잘 적용하고 있을지 모르겠는데 프리뷰에 테마를 적용하는 부분인데요.\n[10:55] 이 달력 헤더 부분을 예로 가져왔어요.\n[10:58] 이 헤더에는 그 텍스트에 글꼴을 그 앱 테마의 스타일로 지정을 해줬습니다.\n[11:06] 이렇게 되면은 음, 프리뷰를 확인해 보면은 위에 있는 코드가 테마를 적용한 코드고요.\n[11:13] 아래에 있는 코드가 테마가 적용되지 않은 코드인데 이 프리뷰에서도 테마 적용 유무가 달라지게 됩니다.\n[11:20] 근데 실제 앱 앱 환경이랑 좀 다르게 보이는 거보다는 그래도 똑같이 보는 게 좋으니까 테마를 적용하는 것도 좀 주의를 해야 된다고 생각을 합니다.\n[11:33] 어 그래서 프리뷰 주도 개발에 대해서 알아봤는데 결국 정리하자면은 그냥 프리뷰를 좀 더 적극적으로 사용을 하고 그렇게 되면은 결국 그 컴포넌트가 스테이트리스 해진다.\n[11:43] 뭐 좋은 컴포넌트가 된다.\n[11:44] 이런 효과가 있다고 생각을 합니다.\n[11:48] 발표 마치겠습니다. 감사합니다.",
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "프리뷰로UI컴포넌트검증시간을크게단축해개발효율을높인다",
+        "tags": [
+          "Jetpack Compose",
+          "Android Studio",
+          "ViewModel",
+          "Repository",
+          "Compose Preview"
+        ],
+        "concepts": [
+          "개발자 경험 개선",
+          "프리뷰 기반 UI 개발"
+        ],
+        "key_points": [
+          {
+            "point": "전통적인 컴포넌트 검증은 앱 빌드와 화면 이동이 필요해 비효율적이다",
+            "timestamp": "01:27"
+          },
+          {
+            "point": "Jetpack Compose Preview를 사용하면 앱을 실행하지 않고도 실시간으로 UI를 확인할 수 있다",
+            "timestamp": "03:41"
+          },
+          {
+            "point": "컴포넌트가 외부 상태를 파라미터로 받게 하면 프리뷰에서 다양한 값들을 손쉽게 테스트할 수 있다",
+            "timestamp": "04:29"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 파이프라인 단계별 변환 로직을 IDE 내 프리뷰처럼 독립적으로 렌더링해 전체 파이프라인 실행 없이 결과를 빠르게 확인한다",
+          "머신러닝 모델 추론 UI를 파라미터화된 프리뷰로 구현해 가짜 입력값으로 모델 출력을 즉시 검증함으로써 모델 튜닝 사이클을 단축한다",
+          "대시보드 위젯을 프리뷰 주도 방식으로 개발해 배포 전 다양한 데이터 시나리오를 IDE에서 미리 확인하고 UI/UX 개선을 반복한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 ViewModel을 사용하는 Composable은 Preview에서 정상적으로 렌더링되지 않는가?",
+            "options": [
+              "Preview는 외부 의존성인 ViewModel을 로드할 수 없기 때문이다",
+              "ViewModel은 반드시 네트워크 호출을 포함한다",
+              "Compose Preview는 상태 없는 함수만 지원한다",
+              "Android Studio 버그 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "Preview는 전체 앱을 빌드하지 않고 해당 Composable만 렌더링하므로 ViewModel이 필요로 하는 Repository 등 외부 의존성을 제공하지 못해 렌더링에 실패한다."
+          },
+          {
+            "question": "컴포넌트에 상태를 파라미터로 전달하도록 변경하면 Preview에서 얻는 주요 이점은?",
+            "options": [
+              "코드 용량 감소",
+              "다양한 입력값에 대한 여러 Preview를 한 화면에서 확인 가능",
+              "런타임 성능 향상",
+              "ViewModel 사용을 완전히 없앨 수 있다"
+            ],
+            "answer_index": 1,
+            "explanation": "파라미터화된 상태 덕분에 개발자는 다양한 값들을 직접 지정해 여러 시나리오를 즉시 확인할 수 있어 UI 검증 효율이 크게 올라간다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
