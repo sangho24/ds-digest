@@ -32,33 +32,33 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 21,
+      "count": 22,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-25"
+      "last_seen": "2026-09-30"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 21,
+      "count": 22,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-27"
+      "last_seen": "2026-09-30"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
-      "count": 11,
+      "count": 12,
       "first_seen": "2026-09-04",
-      "last_seen": "2026-09-28"
+      "last_seen": "2026-09-30"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-19"
+      "last_seen": "2026-09-30"
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-26"
+      "last_seen": "2026-09-30"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -95,6 +95,12 @@
       "count": 1,
       "first_seen": "2026-09-12",
       "last_seen": "2026-09-12"
+    },
+    "RPC 인터페이스": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "React 성능 최적화": {
       "aliases": [],
@@ -212,9 +218,9 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 13,
+      "count": 14,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-09-29"
+      "last_seen": "2026-09-30"
     },
     "데이터 사용 투명성": {
       "aliases": [],
@@ -278,9 +284,9 @@
     },
     "멀티에이전트 시스템": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-27"
+      "last_seen": "2026-09-30"
     },
     "멀티프로세싱": {
       "aliases": [],
@@ -293,6 +299,12 @@
       "count": 1,
       "first_seen": "2026-09-29",
       "last_seen": "2026-09-29"
+    },
+    "메타데이터 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "메타데이터 활용 검색": {
       "aliases": [],
@@ -311,6 +323,12 @@
       "count": 4,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-26"
+    },
+    "모델 디스틸레이션": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "모델 복제": {
       "aliases": [],
@@ -353,6 +371,12 @@
       "count": 1,
       "first_seen": "2026-09-04",
       "last_seen": "2026-09-04"
+    },
+    "버전 호환성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "번들링 전략": {
       "aliases": [],
@@ -407,6 +431,18 @@
       "count": 4,
       "first_seen": "2026-09-05",
       "last_seen": "2026-09-28"
+    },
+    "비디오 디퓨전": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
+    },
+    "비판자 오류 보정": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "사용자 조사": {
       "aliases": [],
@@ -464,9 +500,9 @@
     },
     "스케줄링": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-09-30"
     },
     "스타트업 성장 지표": {
       "aliases": [],
@@ -569,6 +605,12 @@
       "count": 1,
       "first_seen": "2026-09-06",
       "last_seen": "2026-09-06"
+    },
+    "자동 악성 코드 생성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-09-30"
     },
     "작업 격리": {
       "aliases": [],
@@ -853,6 +895,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-09-29T09:17:34.322612+09:00",
+  "updated_at": "2026-09-30T08:35:01.630941+09:00",
   "version": 1
 }

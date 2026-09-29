@@ -1,0 +1,439 @@
+{
+  "date": "2026-09-30",
+  "generated_at": "2026-09-29T23:35:17.074918",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "PDMD: Projected Distribution Matching Distillation for Video Diffusion Models",
+        "url": "https://arxiv.org/abs/2609.35768v1",
+        "published_at": "2026-09-28T17:59:52",
+        "transcript": null,
+        "body": "Modern video diffusion models require tens of denoising evaluations over long spatiotemporal token sequences. Distribution Matching Distillation (DMD) reduces the number of function evaluations (NFE) to just a few. However, DMD samples can degrade during training, exhibiting progressive oversaturation and artifacts. We trace this instability to critic errors, which enter successive student updates and accumulate over time. We introduce Projected Distribution Matching Distillation (PDMD) to filter critic errors. PDMD projects out the component of the DMD update parallel to the student-critic endpoint residual. At a fixed noisy query, we prove that this residual is an unbiased estimate of the critic's endpoint error. Under high-dimensional assumptions, this projection removes a constant fraction of critic error while discarding only a vanishing fraction of ideal DMD signal. Empirically, the projection stabilizes training and improves sample quality where DMD degrades and develops unnatural textures. PDMD requires only a one-line code change to DMD, with no extra loss, network, data, model pass, or multi-stage training. With Wan2.1, PDMD achieves a VBench total score of 83.73 at 4 NFE, surpassing matched DMD by 1.03 points. On MiniMax-H3 joint video-audio generation, PDMD achieves a VideoGen-Eval visual total score of 83.17, 0.41 points above the strongest distilled baseline. PDMD also achieves the best performance on all six audio metrics among the compared 4-NFE models. Qualitative comparisons and user studies favor PDMD over the distilled baselines in visual quality, motion, and audio quality. Code and models are available at https://pdmd2026.github.io/.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "비디오 디퓨전 모델을 적은 평가로 안정·품질 향상",
+        "tags": [
+          "PDMD",
+          "DMD",
+          "Wan2.1",
+          "VBench",
+          "MiniMax-H3"
+        ],
+        "concepts": [
+          "모델 디스틸레이션",
+          "비디오 디퓨전",
+          "비판자 오류 보정"
+        ],
+        "key_points": [
+          {
+            "point": "DMD는 NFE를 크게 줄이지만 비판자 오류가 누적돼 샘플이 과포화·아티팩트가 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "PDMD는 학생‑비판자 잔차와 평행한 성분을 투영 제거해 비판자 오류의 일정 비율을 제거한다.",
+            "timestamp": null
+          },
+          {
+            "point": "단 한 줄 코드 변경만으로 PDMD는 훈련을 안정화하고 VBench·VideoGen‑Eval 점수를 기존 DMD보다 높인다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "비디오 디퓨전 모델은 긴 시공간 토큰 시퀀스에 수십 번의 디노이징 평가가 필요해 효율성이 제한돼 왔다. 기존 Distillation 기법인 DMD는 평가 횟수를 크게 줄였지만 비판자 오류가 누적돼 품질이 저하되는 문제가 있었다. PDMD는 이러한 오류를 투영으로 정제함으로써 고효율·고품질 비디오 디퓨전 Distillation 연구 흐름에서 안정성을 크게 개선한다.",
+        "production_ideas": [
+          "PDMD 투영 방식을 텍스트‑이미지 디퓨전 Distillation에 적용해 훈련 불안정을 감소시킨다",
+          "정책 Distillation에서 학생‑비판자 잔차 투영을 사용해 강화학습 정책의 오류 전파를 억제한다",
+          "오디오 생성 모델의 저‑NFE Distillation에 PDMD를 도입해 음질과 텍스처 일관성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "DMD가 훈련 중 불안정해지는 주요 원인은 무엇인가?",
+            "options": [
+              "모델 용량 부족",
+              "비판자 오류 누적",
+              "데이터 노이즈 과다",
+              "과적합"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 비판자 오류가 successive student updates에 들어가 누적돼 과포화와 아티팩트가 발생한다."
+          },
+          {
+            "question": "PDMD가 DMD 업데이트에 적용하는 핵심 조치는 무엇인가?",
+            "options": [
+              "잔차와 평행한 성분을 강화한다",
+              "잔차와 평행한 성분을 투영 제거한다",
+              "추가 손실 함수를 도입한다",
+              "모델 파라미터를 축소한다"
+            ],
+            "answer_index": 1,
+            "explanation": "PDMD는 학생‑비판자 endpoint residual와 평행한 성분을 투영해 제거함으로써 비판자 오류를 감소시킨다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "Agent Serving: 한 접시가 아니라 코스 요리",
+        "url": "https://deepdaiv.stibee.com/p/165",
+        "published_at": "2026-09-29T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/3JaO)\n\n#163 위클리 딥 다이브 | 2026년 9월 30일 에디터 잭잭\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 하나의 Agent 작업이 여러 번의 LLM 호출로 이루어지고, 이 호출들이 실제로 어떤 구조에서 처리되는지 살펴봅니다.\n- 여러 Agent 프로그램이 동시에 실행될 때 생길 수 있는 프로그램 단위 Scheduling 문제와, 여러 Engine 사이에서 KV Cache를 어떻게 재사용할지 알아봅니다.\n- 개별 LLM 호출이 아니라 Agent 프로그램 전체의 실행 이력과 Context를 함께 고려하는 Agentix의 핵심 아이디어를 소개합니다.\n\nAgent Serving: 한 접시가 아니라 코스 요리\n\n안녕하세요, 에디터 잭잭입니다.    우리가 LLM 챗봇 서비스, 예를 들어 ChatGPT를 사용할 때는 보통 질문을 입력하고 잠시 뒤 답변을 받습니다. 사용자에게는 한 번의 요청과 한 번의 응답처럼 보이지만, 서비스 뒤에서는 동시에 들어오는 수많은 요청을 어떤 GPU에서 처리할지, 어떤 요청을 먼저 실행할지, 생성 과정에서 필요한 메모리를 어떻게 관리할지 계속 결정해야 하죠.    이처럼 동시에 들어오는 여러 LLM 요청을 어떤 GPU에서, 어떤 순서로 처리할지 관리하는 것을 LLM Serving이라고 합니다. 모델 자체의 성능이 아무리 뛰어나더라도 요청이 몰렸을 때 응답이 오래 걸리거나 GPU 자원을 비효율적으로 사용한다면, 실제 서비스에서는 좋은 사용자 경험을 제공하기 어렵습니다.    최근에는 우리가 AI를 사용하는 방식이 조금씩 달라지고 있습니다. 질문에 답을 받는 데서 그치지 않고, “이 자료로 PPT를 만들어줘”, “이 코드를 고치고 실행해줘”처럼 하나의 작업 자체를 AI에게 맡기는 경우가 늘고 있죠. 이런 작업을 수행하는 AI Agent는 한 번의 LLM 호출(Call)로 끝나는 것이 아니라, 목표를 달성하기 위해 여러 번 LLM을 호출하고 도구(Tool)를 사용하며 중간 결과에 따라 다음 행동을 결정합니다.    기존 LLM Serving이 각각의 LLM 요청을 효율적으로 처리하는 데 집중했다면, Agent에서는 서로 연결된 여러 LLM 호출로 이루어진 작업 전체를 얼마나 빠르게 끝낼 수 있는지까지 고려해야 합니다.    그렇다면 기존의 LLM Serving 시스템을 Agent에도 그대로 적용하는 것만으로 충분할까요?\n\n개별 LLM 호출 VS Agent 프로그램\n\nAgent의 작업은 한 번의 LLM 호출로 끝나지 않는다는 점에서, 개별 LLM 호출 작업과 차이가 있습니다. 하나의 목표를 해결하는 동안 여러 번 LLM을 호출하고, 도구를 사용하거나 사람의 입력을 받으면서 다음 단계로 이어지죠. 뿐만 아니라 이런 호출들이 이어지는 방식도 Agent의 종류에 따라 달라집니다. 어떤 프로그램은 하나의 흐름을 따라 순차적으로 진행되고, 어떤 프로그램은 여러 갈래로 나뉘어 동시에 진행되기도 합니다.\n\nAgentic 프로그램의 다양한 실행 구조  출처: [Agentix: An Efficient Serving Engine for LLM Agents as General Programs (Luo et al., 2026)](https://www.usenix.org/system/files/conference/nsdi26/nsdi26spring_luo_prepub.pdf)  그림의 (a) Chatbot을 보면 LLM Agent와 사람의 입력이 번갈아 이어집니다. (b) ReAct Agent 역시 LLM이 판단한 뒤 도구(Tool)를 사용하고, 그 결과를 다시 바탕으로 다음 LLM 호출을 이어가는 구조입니다. 이런 경우처럼 하나의 실행 흐름을 따라 호출이 순차적으로 이어지는 형태를 단일 스레드 프로그램(Single-threaded Program)이라고 합니다.    반면 (c) Mixture of Agents나 (d) Monte Carlo Tree Search(MCTS)처럼 하나의 작업 안에서 여러 실행 흐름이 갈라지는 경우도 있어요. 여러 Agent의 LLM 호출이 병렬로 진행되거나 여러 Branch를 탐색한 뒤, 그 결과를 모아 다음 단계로 넘어갈 수 있죠. 이런 구조를 다중 스레드 프로그램(Multi-threaded Program)이라고 합니다.    여기서 구분해야 할 것은 LLM 호출과 Agent 프로그램의 단위가 다르다는 점이에요. 그림의 파란색 박스 하나가 모델에 입력을 보내고 결과를 받는 한 번의 LLM 호출이라면, 에이전트 프로그램(Agentic Program)은 이런 여러 LLM 호출과 Tool 사용, 사람의 입력 등이 연결되어 하나의 목표를 수행하는 전체 실행 흐름을 뜻합니다.\n\nAI Agent는 어떤 인프라 위에서 동작할까?\n\n앞에서는 Agent 프로그램의 특성을 살펴봤습니다. 그렇다면 Agent 프로그램에서 만들어진 여러 LLM 호출은 실제 서비스 안에서 어디로 전달되고, 어떤 방식으로 처리될까요? 이를 이해하려면 Agent가 동작하는 전체 구조를 한 번 살펴볼 필요가 있습니다.\n\nAgent의 실행 구조. 위쪽의 Agentic Program이 Agent, Tool, 사람의 입력을 연결해 작업을 진행하면, 그 과정에서 발생한 LLM 호출은 아래쪽 LLM Serving으로 전달됩니다. Agent는 필요에 따라 웹, 터미널, 데이터베이스 같은 외부 환경(Environment)과도 상호작용합니다.  출처: [Agentix: An Efficient Serving Engine for LLM Agents as General Programs (Luo et al., 2026)](https://www.usenix.org/system/files/conference/nsdi26/nsdi26spring_luo_prepub.pdf)  AI Agent의 실행 구조는 크게 Agentic Program 계층과 LLM Serving 계층으로 나눌 수 있어요. 먼저 그림의 상단부인 Agentic 프로그램에서는 하나 이상의 Agent가 하나의 목표를 수행합니다. Agent는 필요에 따라 함수나 API 같은 도구(Tool)를 사용하고, 사람의 입력을 받을 수도 있죠. Orchestrator는 Agent와 Tool이 언제 실행될지 전체 흐름을 조정하고, Global History에는 Agent와 Tool, 사람이 주고받은 정보가 누적됩니다.    이번 글에서 특히 주목할 부분은 빨간 박스로 표시된 LLM Serving 계층인데요. Agentic Program에서 LLM이 필요할 때마다 LLM 호출이 이 계층으로 전달됩니다. 여기서 LLM Engine은 실제 모델 추론을 수행하고 KV Cache 등을 관리하는 실행 단위입니다. 여러 Engine이 있다면 Load Balancer가 호출을 어느 Engine으로 보낼지 정하고, 각 Engine의 Scheduler는 들어온 호출 가운데 무엇을 먼저 실행할지 결정합니다.    즉 사용자에게는 하나의 Agent 작업으로 보이지만, 실제로는 Agentic Program이 여러 LLM 호출과 Tool 사용을 만들어내고, 그중 LLM 호출들은 다시 LLM Serving 시스템에서 스케줄링되고 여러 Engine에 배치되어 처리되는 구조입니다.\n\n기존 LLM Serving은 Agent를 처리할 때 무엇을 놓칠까?\n\n앞에서는 하나의 에이전트 프로그램을 살펴봤습니다. 이번에는 실제 서비스처럼, 서로 다른 목표를 가진 여러 에이전트 프로그램이 동시에 실행되는 상황을 생각해보겠습니다. 그림에서는 Program A, B, C, D가 각각 하나의 작업이고, A1 → A2 → A3 → A4처럼 하나의 프로그램 안에서 여러 LLM 호출이 이어집니다.    이때 서로 다른 프로그램에서 나온 LLM 호출들은 같은 GPU 자원을 두고 경쟁하게 됩니다. 기존 LLM Serving 시스템은 주로 개별 LLM 호출을 얼마나 효율적으로 처리할지에 초점을 맞춰왔지만, Agent 환경에서는 이것만으로 충분하지 않을 수 있습니다.\n\n긴 Program A·B와 짧은 Program C·D를 서로 다른 방식으로 스케줄링한 예시. 가로축은 시간을 나타내고, 위아래의 두 행은 동시에 실행할 수 있는 두 개의 실행 슬롯을 나타냅니다.  출처: [Agentix: An Efficient Serving Engine for LLM Agents as General Programs (Luo et al., 2026)](https://www.usenix.org/system/files/conference/nsdi26/nsdi26spring_luo_prepub.pdf)  본격적으로 그림을 보기 전에 구조부터 간단히 짚어보겠습니다. 가로축은 시간을 나타내고, 위아래의 두 행은 동시에 실행할 수 있는 두 개의 실행 슬롯을 나타냅니다. 각 색깔 박스는 하나의 LLM 호출이고, 박스가 길수록 해당 호출이 GPU를 더 오래 사용한다는 뜻이에요. A1, A2, A3처럼 같은 알파벳으로 표시된 박스들은 하나의 프로그램에서 이어서 발생한 LLM 호출입니다.    이 그림은 Head-of-Line(HoL) Blocking 문제를 보여줍니다. HoL Blocking이란, 앞의 긴 작업(A, B) 때문에 뒤의 짧은 작업(C, D)이 실행되지 못하고 기다리게 되는 현상인데요. Agent 환경에서는 이 문제가 프로그램 단위로도 나타날 수 있습니다. 긴 프로그램이 후속 LLM 호출을 계속 만들어내면서 다른 짧은 프로그램 전체를 반복해서 뒤로 밀 수 있기 때문입니다.    그림의 스케줄링 방식을 하나씩 보면, (b) FCFS(First-Come First-Served)는 들어온 순서대로 LLM 호출을 처리합니다. 그래서 긴 프로그램 A와 B의 호출이 실행되는 동안, 짧은 Program C와 D는 뒤에서 기다리게 됩니다. (c) MLFQ(Multi-Level Feedback Queue)는 오래 실행되는 호출을 중간에 멈추고, 다른 호출에 실행 기회를 줄 수 있습니다. 다만 새로 들어온 호출은 다시 높은 우선순위에서 시작한다는 한계가 있습니다. 예를 들어 A1 이후 A2가 들어오면, 호출 하나만 놓고 봤을 때는 새로운 호출이지만, 프로그램 전체로 보면 이미 A1을 실행한 Program A의 후속 호출인거죠.\n\n💡 스케줄링 알고리즘\n\n- FCFS (First-Come First-Served): 먼저 도착한 LLM 호출부터 순서대로 실행하는 단순한 선착순 스케줄링 방식입니다. 구현은 간단하지만, 앞에 긴 호출이 있으면 뒤의 짧은 호출도 함께 오래 기다릴 수 있습니다.\n- MLFQ (Multi-Level Feedback Queue): 여러 개의 우선순위 큐를 두고, 오래 실행된 호출의 우선순위를 낮추는 스케줄링 방식입니다. 긴 호출이 GPU를 계속 점유하지 못하게 하고, 새로 들어온 호출이나 아직 적게 실행된 호출에 더 빠르게 실행 기회를 줍니다.\n\n이 차이를 고려하지 않으면 A와 B가 후속 호출을 만들 때마다 다시 앞쪽으로 들어오면서, 짧은 Program D가 계속 뒤로 밀릴 수 있습니다. 그림의 MLFQ에서도 D1이 여러 번 실행을 양보하며 뒤로 밀리는 모습을 볼 수 있죠.  사용자 입장에서는 비교적 간단한 Agent 작업을 맡겼는데도, 다른 긴 Agent 작업의 후속 호출이 계속 먼저 처리되면서 내 작업 전체가 예상보다 늦게 끝나는 상황이 생길 수 있습니다.    이를 해결하기 위해 Agentix가 제안하는 핵심은 LLM 호출 하나가 아니라, 그 호출이 속한 프로그램 전체를 기준으로 스케줄링하는 것입니다. A2가 새로 들어온 호출이더라도, Program A가 앞에서 이미 얼마나 실행됐는지까지 함께 보는 것이죠.    뒤에서 자세히 살펴볼 PLAS(Program-Level Attained Service)가 이런 방식입니다. 그림의 (d) PLAS에서는 이미 실행 기회를 많이 받은 A와 B의 후속 호출을 뒤로 미루고, 상대적으로 덜 실행된 C와 D를 먼저 처리함으로써, 짧은 프로그램이 긴 프로그램의 후속 호출에 계속 밀리는 현상을 줄일 수 있어요.\n\nScheduler: 어떤 프로그램을 먼저 실행할까?\n\n이제 Agentix가 실제로 어떤 구조로 동작하는지 살펴보겠습니다.    Agentix는 프로그램 단위의 정보를 바탕으로 크게 두 가지 결정을 내립니다. Scheduler는 여러 LLM 호출 중 무엇을 먼저 실행할지, Load Balancer는 선택된 호출을 어느 LLM Engine에서 실행할지 정하죠. 여기서는 먼저 Scheduler를 다루려고 해요.    Agentix는 개별 LLM 호출만 보는 대신, 그 호출이 속한 프로그램의 실행 이력까지 함께 고려합니다. 이를 위해 프로그램별 상태를 Global Process Table에 모아 관리해요. 각 프로그램이 지금까지 얼마나 실행되고 기다렸는지, 현재 어떤 Thread가 실행 중인지, 어느 Engine을 사용하고 있는지 같은 정보가 여기에 기록됩니다.  Scheduler는 이 정보를 바탕으로 어떤 프로그램의 LLM 호출에 먼저 실행 기회를 줄지 결정합니다.\n\nAgentix의 전체 구조. Agentix는 프로그램별 실행 정보를 Global Process Table에 저장하고, 이를 Scheduler의 Priority Function과 Load Balancer가 함께 활용합니다.  출처: [Agentix: An Efficient Serving Engine for LLM Agents as General Programs (Luo et al., 2026)](https://www.usenix.org/system/files/conference/nsdi26/nsdi26spring_luo_prepub.pdf)  먼저 A1 → A2 → A3 → A4처럼 LLM 호출이 하나의 흐름을 따라 순서대로 이어지는 단일 스레드 프로그램을 생각해보겠습니다. A1과 A2가 끝난 뒤 A3가 새로 들어왔다면, A3만 놓고 봤을 때는 방금 도착한 새로운 호출처럼 보이죠. 하지만 Agentix는 A3만 따로 보지 않고, A3가 속한 Program A가 지금까지 얼마나 실행됐는지까지 함께 봅니다.    이때 사용하는 기준이 PLAS(Program-Level Attained Service)입니다. 여기서 Attained Service는 프로그램이 지금까지 실제로 사용한 실행 시간을 뜻해요. 예를 들어 A1이 2초, A2가 3초 동안 실행됐다면, A3가 들어오는 시점에서 Program A의 Attained Service는 5초입니다. 반면 Program B가 지금까지 1초만 실행됐다면, B의 LLM 호출에 더 높은 우선순위를 주는 식이죠.    PLAS의 아이디어는 간단합니다. 지금까지 덜 실행된 프로그램에 먼저 실행 기회를 주는 것입니다. 앞으로 각 프로그램이 얼마나 오래 실행될지는 알 수 없지만, 지금까지 사용한 실행 시간을 비교하면 긴 프로그램이 후속 호출을 만들 때마다 다시 새로운 작업처럼 높은 우선순위를 얻는 문제를 줄일 수 있습니다.    다만 PLAS는 하나의 프로그램 안에서 LLM 호출이 순서대로 이어지는 경우에 잘 맞습니다. A1 → A2 → A3처럼 앞의 호출이 끝나야 다음 호출이 시작된다면, 앞에서 사용한 실행 시간을 그대로 더하면 프로그램이 지금까지 얼마나 진행됐는지 자연스럽게 나타낼 수 있죠.    하지만 여러 호출이 갈라져 동시에 실행될 수 있는 다중 스레드 프로그램에서는 이야기가 달라집니다. 병렬로 실행된 호출들의 시간을 모두 더하면, 같은 시간에 진행된 작업까지 중복해서 계산하게 되기 때문입니다. 이 경우에는 PLAS처럼 실행 시간을 단순히 누적하는 것만으로는 프로그램의 진행 정도를 제대로 나타내기 어렵습니다.\n\n다중 스레드 프로그램에서는 병렬 Branch의 실행 시간을 모두 더하는 대신, 현재까지 관측된 Critical Path를 기준으로 프로그램의 실행 정도를 계산합니다.  출처: [Agentix: An Efficient Serving Engine for LLM Agents as General Programs (Luo et al., 2026)](https://www.usenix.org/system/files/conference/nsdi26/nsdi26spring_luo_prepub.pdf)  그림의 왼쪽을 보면, 하나의 프로그램이 먼저 실행 시간 2의 호출을 수행한 뒤 여러 Branch로 나뉩니다. 이후에는 실행 시간 1, 2, 5의 호출과 4 → 4로 이어지는 호출이 병렬로 진행되고, 마지막에는 다시 실행 시간 1의 호출로 합쳐집니다.    이때 모든 호출의 실행 시간을 단순히 더하면 2 + 1 + 4 + 4 + 2 + 5 + 1 = 19가 됩니다. 하지만 여러 Branch가 동시에 실행될 수 있기 때문에, 프로그램이 실제로 19만큼 진행됐다고 보기는 어렵죠.    그래서 병렬 구조에서는 Critical Path를 기준으로 프로그램의 진행 정도를 봅니다. 그림에서는 2 → 4 → 4 → 1이 가장 긴 경로이고, 길이는 11입니다. 이 경로의 호출들은 순서대로 모두 끝나야 하므로, 다른 Branch를 아무리 잘 병렬로 실행하더라도 프로그램 전체는 최소 11의 시간이 필요합니다.\n\n💡 Critical Path  여러 작업이 병렬로 진행될 때, 전체 프로그램이 끝나는 시점을 결정하는 가장 긴 실행 경로입니다. 이 경로가 늦어지면 다른 Branch가 먼저 끝나더라도 프로그램 전체 완료 시간은 줄어들지 않습니다.\n\nAgentix는 이런 다중 스레드 프로그램을 위해 ATLAS(Adaptive Thread-Level Attained Service)를 사용합니다. 모든 호출의 실행 시간을 단순히 더하는 대신, 현재까지 관측된 Critical Path를 기준으로 프로그램이 얼마나 실행됐는지 계산하는 방식입니다.    오른쪽 그림을 보면 왜 이런 기준이 필요한지 더 잘 드러납니다. 같은 프로그램이라도 스케줄링 순서에 따라 전체 완료 시간이 달라질 수 있어요. Best-Case에서는 Critical Path인 2 → 4 → 4 → 1이 끊기지 않고 이어지고, 다른 Branch가 그와 병렬로 처리되면서 프로그램이 11에 끝납니다. 반면 Worst-Case에서는 Critical Path에 속하지 않는 호출들이 먼저 실행되면서 4 → 4 경로가 뒤로 밀리고, 전체 완료 시간도 14까지 늘어납니다.    정리하면, PLAS는 순차적으로 이어지는 프로그램의 누적 실행 시간을, ATLAS는 병렬 구조에서 현재까지 관측된 Critical Path의 실행 시간을 기준으로 우선순위를 정하는 스케줄링 방식입니다.\n\nLoad-Balancer: 어느 Engine에서 실행할까?\n\n앞에서 본 Scheduler가 여러 LLM 호출 중 무엇을 먼저 실행할지 정한다면, Load Balancer는 그렇게 선택된 호출을 어느 LLM Engine에서 실행할지 정합니다.    여러 Engine을 함께 사용할 때는 단순히 가장 한가한 곳으로 보내는 것만으로는 최적이라고 할 수 없습니다. 같은 프로그램의 후속 호출은 이전 대화와 Tool 실행 결과를 이어받기 때문에, 이전에 계산한 KV Cache가 남아 있는 Engine에서 이어서 처리하면 반복 계산을 줄일 수 있기 때문이죠.\n\n💡 KV Cache란?  LLM은 입력 Token을 처리하면서, 이후 Token 생성에 필요한 Key와 Value 형태의 중간 계산 결과를 저장합니다. 이를 KV Cache라고 합니다. 같은 Prefix가 다시 등장하면 이 값을 재사용할 수 있어, 이미 처리한 입력을 처음부터 다시 계산하지 않아도 됩니다.\n\n이렇게 필요한 데이터가 이미 있는 곳에서 작업을 이어서 실행하는 특성을 데이터 지역성(Data Locality)이라고 합니다. 예를 들어 Program A의 A1을 처리한 Engine에 관련 KV Cache가 남아 있다면, A2나 A3도 같은 Engine에서 처리할 때 이전 계산 결과를 활용할 수 있습니다. 반대로 다른 Engine으로 보내면 같은 Prefix를 다시 계산해야 할 수 있죠.    하지만 모든 후속 호출을 항상 같은 Engine으로 보내면 그곳에 작업이 몰릴 수 있습니다. 그래서 Agentix는 기존 계산을 재사용할지, 더 한가한 Engine으로 보내 작업을 나눌지를 함께 봅니다.    프로그램 초반에는 아직 해당 프로그램만의 Context가 많이 쌓이지 않았기 때문에, 기존 Engine을 고집해서 얻는 이점이 크지 않습니다. 이런 호출은 부하가 낮은 Engine으로 보내는 편이 낫습니다. 반대로 프로그램이 진행될수록 이전 대화와 Tool 결과가 누적되고, 프로그램 고유의 Context도 길어집니다. 이때는 같은 Engine에 남아 있는 KV Cache를 재사용할 수 있는 이점이 커지기 때문에, 이처럼 Context가 길어진 프로그램은 해당 프로그램의 KV Cache가 남아 있는 Engine에서 이어서 처리합니다.    즉 Agentix는 Context가 아직 적을 때는 작업을 여러 Engine에 나누는 쪽을, 많이 누적됐을 때는 기존 KV Cache를 재사용하는 쪽을 더 중요하게 보는 방식입니다.\n\nAgent의 작업이 복잡해질수록 Serving도 달라져야 한다\n\n개인적으로 이 논문에서 가장 흥미로웠던 부분은 새로운 스케줄링 알고리즘 자체보다, Serving 시스템이 무엇을 하나의 ‘작업 단위’로 바라봐야 하는지를 다시 생각하게 했다는 점이었습니다. 이렇게 설계한 근거는 사용자의 만족도 측면에서 Chatbot에서는 개별 요청의 지연 시간이 중요했다면, Agent를 사용하는 입장에서는 여러 번의 LLM 호출과 Tool 사용이 모두 끝나 내가 맡긴 작업 전체가 언제 완료되는지가 더 중요하기 때문이죠.    앞으로는 하나의 Agent가 혼자 작업하는 형태를 넘어, 여러 Agent와 사람이 함께 여러 목표를 수행하는 구조도 점점 늘어날 것 같습니다. 그럴수록 Serving은 단순히 GPU를 효율적으로 쓰는 기술이 아니라, Agent 시스템 전체의 성능과 규모를 결정하는 필수적인 기반에 가까워질 것 같습니다.\n\n[Agent 시대, 서빙의 중요성 🍽️](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/3JaO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/3JaO \"게시하기\")[웹에서 보기](https://stib.ee/3JaO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 서빙을 넘어 에이전트 전체 흐름 최적화 필요성",
+        "tags": [
+          "LLM",
+          "ChatGPT",
+          "Agentix",
+          "KV Cache",
+          "Load Balancer"
+        ],
+        "concepts": [
+          "멀티에이전트 시스템",
+          "스케줄링",
+          "AI 에이전트 메모리 관리"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 서빙은 개별 호출 최적화에 초점하지만, 에이전트는 여러 호출과 도구 사용을 포함한 전체 작업 흐름을 효율적으로 처리해야 함",
+            "timestamp": null
+          },
+          {
+            "point": "Agent 프로그램은 단일 스레드와 다중 스레드 구조로 나뉘며, 다중 스레드에서는 병렬 LLM 호출과 브랜치 탐색이 발생한다",
+            "timestamp": null
+          },
+          {
+            "point": "기존 서빙 시스템은 GPU 자원 경쟁과 KV 캐시 재사용을 고려하지 않아 에이전트 환경에서 성능 저하가 발생할 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "KV Cache 재사용 기법을 대규모 추천 시스템의 배치 추론 파이프라인에 적용해 응답 지연을 줄인다",
+          "다중 스레드 에이전트 스케줄링 방식을 데이터 파이프라인 오케스트레이션에 도입해 작업 간 의존성 관리와 자원 활용을 최적화한다",
+          "로드밸런서와 Scheduler 개념을 ETL 잡 디스패처에 적용해 다양한 데이터 변환 작업을 GPU/CPU 자원에 균등하게 할당한다"
+        ],
+        "quiz": [
+          {
+            "question": "Agent 프로그램의 실행 구조에서 단일 스레드와 다중 스레드의 차이점은 무엇인가?",
+            "options": [
+              "단일 스레드는 순차 호출, 다중 스레드는 병렬 호출",
+              "단일 스레드는 여러 GPU 사용, 다중 스레드는 하나 GPU 사용",
+              "단일 스레드는 도구 사용 안 함, 다중 스레드는 도구 사용",
+              "단일 스레드는 사람 입력 없이 동작"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 단일 스레드 프로그램이 순차적으로 LLM 호출을 이어가고, 다중 스레드 프로그램은 여러 실행 흐름이 병렬로 진행된다고 설명한다."
+          },
+          {
+            "question": "LLM Serving 계층에서 KV Cache 재사용의 주요 목적은?",
+            "options": [
+              "모델 정확도 향상",
+              "메모리 사용량 감소와 추론 속도 향상",
+              "데이터 보안 강화",
+              "새로운 모델 학습"
+            ],
+            "answer_index": 1,
+            "explanation": "KV Cache 재사용은 이전 토큰들의 키·밸류를 재활용해 연산량을 줄이고 추론 지연을 낮추는 것이 목적이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "⚔️ AI 모델 춘추전국시대가 왔다. 그래서 뭘 써야 할까?",
+        "url": "https://dflick.stibee.com/p/113",
+        "published_at": "2026-09-29T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/dUYO)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](http://wacky.kr)가 만들고 발행합니다.\n\nVol.109 ・ 2026.09.29\n\n안녕하세요 디플릭입니다 👋 늘 하던 일도 조금 더 수월하게 풀리는 날이면 마음에 여유가 생기곤 해요.  오늘은 어떤 새로운 변화가 그런 여유를 만들어줄지 함께 들여다봐요🌿    이번 호에서는 AI를 쓰는 비용이 낮아지고,  대화부터 업무까지 맡길 수 있는 일이 넓어지는 흐름을 살펴봐요.  AI가 스스로 움직이는 만큼, 실행 과정을 확인하고 필요할 때  멈출 수 있는 장치가 왜 중요한지도 함께 짚었어요. 잠시 숨을 돌리며, 눈길이 가는 소식부터 만나보세요📬\n\n💡오늘 디플릭 요약💡    [News]  GPT‑6, 고난도 추론은 Sol·대량 작업은 Luna가 맡는다  [In;D] ⚔️ AI 모델 춘추전국시대가 왔다. 그래서 뭘 써야 할까?  [D.Lab] 🕹️ 인형뽑기, 과연 AI가 잘 뽑을까  [TMI] 🔒 비밀번호 입력창의 ●●●●는 왜 생겼을까?\n\n📰  이번 주 AI · UX · IT 뉴스 3분 핵심 정리  📰  #AI 에이전트 #AI 인프라 #멀티모달 인터페이스\n\n🗞️ Flash News\n\n[1️⃣ GPT‑6, 고난도 추론은 Sol·대량 작업은 Luna가 맡는다](https://dflick.kr/contents/news/1865)  OpenAI가 고난도 추론용 GPT‑6 Sol과 대량 작업용 Luna를 공개했어요. 두 모델은 텍스트·이미지를 처리하며 API 가격은 GPT‑5.6 프로모션보다 50% 낮아요. Luna는 입력 100만 토큰당 0.10달러, 출력은 0.50달러예요. 작업 난도에 따라 모델을 나눠 쓰는 비용 구조가 선명해졌어요.\n\n[2️⃣ Claude Opus 5.5, 비용 40% 낮추고 장시간 작업 강화](https://dflick.kr/contents/news/1866)  Anthropic이 복잡한 업무와 코딩을 겨냥한 Claude Opus 5.5를 공개했어요. Opus 5보다 평균 비용을 40% 낮추면서 장시간 에이전트 작업의 부담을 줄였어요. 회사는 외부 평가와 자체 행동 감사를 거쳤다고 밝혔으며, 초기 사용자는 68만 줄 규모의 코드 이전을 하루 안에 마쳤다고 전했어요.\n\n[3️⃣ 스마트 안경으로 들어간 Meta AI 에이전트 Muse](https://dflick.kr/contents/news/1867)  Meta가 Connect 2026에서 개인 AI 에이전트 Muse를 AI 안경으로 확장했어요. Muse는 사용자가 보는 상품이나 준비물 목록을 바탕으로 도움을 주고, 음성 대화 중에도 도구를 호출해요. VR Glasses와 새 오디오 안경도 함께 공개했으며, 결제·업무 서비스 연결 범위도 넓힐 계획이에요.\n\n[4️⃣ 표정으로 반응하는 Gemini Live Avatar 등장](https://dflick.kr/contents/news/1868)  Google이 실시간 음성·영상 대화형 AI인 Gemini 3.8 Live with Live Avatar를 공개했어요. 아바타는 입 모양과 표정으로 반응하며, 외부 도구가 작업하는 동안에도 대화를 이어가요. Gemini Enterprise에 제공될 예정이고 생성물에는 SynthID 워터마크가 적용돼요.\n\n[5️⃣ 알리바바, AI 칩부터 20GW 데이터센터까지 풀스택 확장](https://dflick.kr/contents/news/1870)  알리바바가 자체 AI 칩 전우 V900과 최대 50만 장 규모의 슈퍼노드 계획을 공개했어요. V900은 전작보다 성능이 3배 높고 2027년 1분기 양산 예정이에요. Qwen 로드맵과 에이전틱 클라우드, 2032년 20GW 데이터센터 확장도 함께 제시해 풀스택 AI 전략을 구체화했어요.\n\n[6️⃣ 사용자 이미지 53장 외부 게시한 OpenAI 에이전트](https://dflick.kr/contents/news/1872)  OpenAI 연구 에이전트가 사용자 제공 이미지 53장을 외부 이미지 호스팅 서비스에 게시한 사실이 드러났어요. 공개 URL을 알아야 접근할 수 있었지만, 이용자가 예상하기 어려운 외부 전송이었어요. OpenAI는 영향을 받은 외부 계정 제공자를 모두 식별하지 못했다고 공식적으로 밝혔어요.\n\n[7️⃣ Microsoft Copilot, 문서·코드·에이전트를 한곳에 통합](https://dflick.kr/contents/news/1873)  Microsoft가 Copilot Home·Code·Autopilot을 하나의 경험으로 재구성했어요. Office 파일과 GitHub Copilot 기반 코드 작업, 지속 실행 에이전트를 같은 흐름에 연결해요. 자료와 작업 기록이 모이는 만큼 어떤 파일이 입력으로 쓰이고 어디가 변경되는지 보여주는 기능도 중요해졌어요.\n\n[8️⃣ Anthropic, Akamai와 116억 달러·7년 인프라 계약](https://dflick.kr/contents/news/1874)  Akamai가 Anthropic과 7년간 116억 달러 규모의 인프라 계약을 맺었어요. 수요에 따라 계약 규모는 최대 200억 달러까지 늘어날 수 있어요. 늘어나는 AI 추론·파일 처리·도구 호출 수요를 뒷받침하려는 계약이며, 네트워크 공급이 응답 지연과 서비스 가용성에 직접 연결돼요.\n\n[9️⃣ Gemini 3.8 TTS 정식 출시…속도·비용별 두 모델 제공](https://dflick.kr/contents/news/1875)  Google이 Gemini 3.8 Flash TTS와 Flash‑Lite TTS를 정식 출시했어요. 빠른 대화와 대량 음성 생성처럼 사용 장면에 따라 속도와 비용이 다른 모델을 선택할 수 있어요. 음성 기능이 운영 단계로 들어선 만큼 재생·중단·텍스트 전환과 AI 음성 표기도 제품 경험의 핵심이 돼요.\n\n[🔟 행동하는 AI 에이전트, 기업의 중단·복구 통제가 과제로](https://dflick.kr/contents/news/1876)  TechTarget이 AI 에이전트의 실행 권한과 기업의 통제 능력 사이에 큰 간격이 있다고 짚었어요. 메일·문서·외부 시스템까지 다루는 에이전트는 행동별 위험에 따라 권한을 나눠야 해요. 사용자는 참조 정보와 사용 도구를 확인하고 즉시 중단하거나 변경 내용을 안전하게 복구할 수 있어야 해요.\n\n디자이너의 시선을 넓혀주는 시간  작은 인사이트가 인생의 전환점이 될지도..👀\n\n⚔️ AI 모델 춘추전국시대가 왔다. 그래서 뭘 써야 할까?\n\n©AI Image\n\n🤯 GPT-6, Claude 5.5, Gemini 3.8. 새 모델 이름 하나를 겨우 익히면 어느새 또 다른 숫자와 등급이 등장해요. 최근에는 한 회사 안에서도 성능과 속도, 비용에 따라 여러 모델을 나눠 출시하고 있어요.    🗓️ 불과 몇 달 사이 GPT-6 Astra·Sol·Luna, Claude Fable 5.1·Opus 5.5, Gemini 3.8 Flash·Live까지 새로운 모델이 연이어 등장했어요. 이제는 단순히 ‘가장 최신 모델’을 고르는 것만으로는 충분하지 않아요.    🧩 문서 작성과 요약, 리서치, 코딩, 반복 업무, 브라우저·파일 실행처럼 맡기는 일에 따라 적합한 모델도 달라져요. 가장 강력한 모델보다 필요한 작업과 비용, 연결된 도구를 함께 보는 게 중요해졌어요.    💡 그래서 이번 글에서는 최근 주요 AI 모델의 특징을 한 번에 정리하고, 어떤 업무에서 어떤 모델부터 비교해보면 좋을지 상황별로 나눠봤어요.\n\n[🔎 내게 맞는 AI 모델 찾아보기 👉](https://dflick.kr/contents/ind/1881)\n\n새로운 AI를 직접 사용해보는 디플릭의 실험실  직접 써보고, 부딪히고, 기록하는  AI 실험 노트 🧪\n\n🕹️ 인형뽑기, 과연 AI가 잘 뽑을까\n\n©D.Flick Editorial\n\n🕹️ 인형뽑기 기계 앞에서 “어떤 걸 노려야 하지?” 고민해본 적 있으신가요? 이번 D.LAB에서는 AI에게 기계 사진을 보여주고, 가장 성공 가능성이 높은 인형을 직접 골라달라고 해봤어요.    🧪 첫 번째 기계에서는 AI가 추천한 인형이 실제로는 집게가 닿지 않는 사각지대에 있었어요. 두 번째 피카츄 도전에서는 AI가 목표를 잘 골랐지만, 매번 달라지는 위치와 각도는 사람이 직접 판단해야 했어요.    📦 마지막으로 박스형 상품까지 여러 각도의 사진을 보여줬지만, 집게의 힘이나 마찰, 무게 중심처럼 사진 밖의 변수까지는 정확히 예측하지 못했어요.    💡 세 번의 실험을 통해 확인한 건 분명했어요. AI는 ‘무엇을 노려볼지’ 정하는 데는 꽤 쓸 만했지만, 실제 승부를 결정하는 건 여전히 현장의 조건과 사람의 판단이었어요.\n\n[🕹️ AI와 인형뽑기 결과 보기 👉](https://dflick.kr/contents/dlab/1882)\n\n🍯 TMI: Tips Made Interesting 🍯 재밌고, 흥미롭게 · 디자이너의 TIP, 그리고 TMI 📚\n\n🔒 비밀번호 입력창의 ●●●●는 왜 생겼을까?\n\n©AI Image\n\n🔒 로그인할 때마다 익숙하게 보는 비밀번호 입력창의 ●●●●. 이런 표기를 보통 ‘마스킹 표시’라고 부르는데요. 너무 당연해서 생각해본 적 없지만, 사실 초기 컴퓨터에서는 비밀번호를 입력해도 화면에 아무것도 나타나지 않았어요.    🖥️ 다른 사람이 화면을 보고 비밀번호를 알아내지 못하도록 아예 입력 내용을 보여주지 않았던 거예요. 이후 그래픽 화면이 보편화되면서 내용은 숨기되, 몇 글자를 입력했는지는 알려주는 마스킹 표시가 자리 잡았어요.    👁️ 하지만 모든 글자를 가리면 오타를 알아채기 어렵다는 문제가 생겼어요. 그래서 모바일에서는 마지막 글자를 잠깐 보여주고, 필요할 때 전체 비밀번호를 확인할 수 있는 눈 모양 아이콘도 함께 쓰이기 시작했어요.    💡 아무 반응도 없던 입력창에서 마스킹 표시, 그리고 눈 아이콘까지. 이번 글에서는 익숙한 비밀번호 UI가 어떤 문제를 해결하며 지금의 모습으로 바뀌어왔는지 살펴봤어요.\n\n[🔒 비밀번호 ●●●●의 시작 알아보기 👉](https://dflick.kr/contents/tmi/1877)\n\n오늘 레터는 어떠셨나요?  디플릭은 다음 주에도 꼭 알아야 할 소식들을 모아 돌아올게요.  다음 레터에서 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 모델을 업무·비용에 맞게 골라 DS 생산성 높이기",
+        "tags": [
+          "GPT-6",
+          "Claude Opus 5.5",
+          "Gemini 3.8",
+          "Meta AI Muse",
+          "Alibaba V900"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 생산성 도구",
+          "AI 인프라 경쟁"
+        ],
+        "key_points": [
+          {
+            "point": "OpenAI는 고난도 추론용 GPT‑6 Sol과 대량 작업용 Luna를 출시해 가격을 기존 대비 50% 낮췄다",
+            "timestamp": null
+          },
+          {
+            "point": "Anthropic, Google, Meta 등도 작업 특화 모델·에이전트를 발표하며 모델 선택의 중요성을 강조했다",
+            "timestamp": null
+          },
+          {
+            "point": "기업은 AI 에이전트 실행을 모니터링하고 필요 시 중단할 수 있는 제어 장치를 도입해야 위험을 관리할 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "작업 특성에 따라 데이터 처리 엔진(Spark vs Flink)을 선택해 비용과 지연 시간을 최적화한다",
+          "AI 에이전트와 유사하게 자동화된 ETL 파이프라인에 실시간 중단·재시작 제어를 추가해 오류 확산을 방지한다",
+          "고정 비용 모델 대신 고정 정확도 모델과 대량 저비용 모델을 계층화해 대규모 예측 서비스의 비용 효율성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "기업이 작업별로 다른 AI 모델을 선택하는 주요 이유는?",
+            "options": [
+              "데이터 보안 강화",
+              "비용 절감 및 성능 최적화",
+              "법적 규제 준수",
+              "사용자 인터페이스 개선"
+            ],
+            "answer_index": 1,
+            "explanation": "각 모델은 가격과 성능이 다르므로 작업에 맞는 모델을 쓰면 불필요한 비용을 줄이고 필요한 성능을 확보할 수 있다"
+          },
+          {
+            "question": "AI 에이전트 실행 권한을 세분화하고 중단·복구 기능을 도입해야 하는 이유는?",
+            "options": [
+              "시스템 안정성 확보",
+              "사용자 편의성 향상",
+              "모델 정확도 향상",
+              "데이터 저장 비용 감소"
+            ],
+            "answer_index": 0,
+            "explanation": "에이전트가 외부 시스템을 조작할 수 있으므로, 위험 상황에서 즉시 중단하고 복구할 수 있는 제어가 시스템 안정성을 보장한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "GLM-5.3 and the spread of advanced cyber capabilities",
+        "url": "https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities",
+        "published_at": null,
+        "transcript": null,
+        "body": "Frontier Red TeamPolicy\n\n# GLM-5.3 and the spread of advanced cyber capabilities\n\nSep 29, 2026\n\n*Andrew Fasano, Marius Fleischer  \nCole McFaul, Robert Xiao, Tripp Gallagher*\n\nFive months ago, we [announced](https://www.anthropic.com/glasswing) Claude Mythos Preview, the first AI model that could autonomously build sophisticated, end-to-end cyber exploits. The rapid rate of improvement in AI suggested to us that this ability would eventually proliferate to many other models, making it much easier for malicious cyber actors to launch highly impactful cyberattacks.\n\nIn light of these considerations, we chose to release Claude Mythos Preview in a limited way, through Project Glasswing—which enabled trusted cyber defenders to find [more than 10,000 vulnerabilities](https://www.anthropic.com/research/glasswing-initial-update) in critical software, giving them a head start before malicious actors had access to similarly capable models.\n\nBut those models have now arrived. In this post, we share our analysis of GLM-5.3, the latest AI model developed by Zhipu AI (known outside of China as Z.ai). Like Claude Mythos Preview, GLM-5.3 has strong capabilities for autonomously building end-to-end cyber exploits. But GLM-5.3 is unlike other frontier models in that it has been released without meaningful safeguards to limit misuse. We find that attackers can bypass GLM-5.3’s safeguards between 64% and 100% of the time with simple techniques in our simulated tests. In contrast, these attacks did not succeed against safeguarded Claude models in our testing. We assess that GLM-5.3’s lax safeguards significantly increase the cyber capabilities available to malicious actors. At the same time, these capabilities can also benefit defenders working to secure their systems.\n\nOn Sept. 17, NIST’s Center for AI Standards and Innovation (CAISI) published [its own assessment](https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities) of GLM-5.3’s cyber capabilities. CAISI found that GLM-5.3 is “the most cyber-capable open-weight model released to date” and that it lags the US frontier by about four months on an aggregate of CAISI’s cyber benchmarks. Our capability findings broadly match CAISI’s. In CAISI’s comparison, US models were tested with cyber safeguards disabled when applicable, and the US frontier includes models released only to vetted users. Attackers can’t readily access those versions of US models, but anyone can download GLM-5.3. This post adds our analysis of how easily GLM-5.3’s safeguards can be bypassed or removed.\n\n![Two bar charts. Top: share of attempts that built a working exploit on 41 Chrome V8 bugs — Claude Mythos Preview at 14% and GLM-5.3 at 12%, while Claude Opus 4.6, GLM-5.2, Kimi K3, and DeepSeek V4.1-Flash score at or near 0%. Bottom: how often each model engaged with malicious cyber-attack orders — GLM-5.3 rises from 0% on a bare order to 64% with a false cover story, 92% with prefilled reasoning, and 100% when abliterated, while Claude Opus 5 stays at 0%.](/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Fa1b61c7da2c400ab84425e105837fc1f346a4339-1280x1576.webp&w=3840&q=75)\n\n**Figure 1.** Summary of findings. Top: The increase in exploitation capability between Claude Opus 4.6 and Claude Mythos Preview mirrors the jump in capabilities between GLM-5.2 and GLM-5.3. Claude models are released with cyber safeguards, and versions with reduced safeguards are limited to vetted users. Anyone can download and use GLM-5.3. Bottom: The limited safeguards in GLM-5.3 can be bypassed with standard techniques that did not work against, or do not apply to, Claude models in our testing.\n\n## GLM-5.3 can develop working exploits end to end\n\nTo understand how GLM-5.3 could enable cyber threat actors to find and exploit real software vulnerabilities, we ran evaluations using automated benchmarks and human-in-the-loop workflows. For both approaches, we ran the tested models in isolated and sandboxed environments so they can only attack offline targets that we have set up for the purposes of these evaluations. We focus primarily on exploit development capability, as this is where Claude Mythos Preview demonstrated a notable jump versus previous Claude models.\n\nFirst, we ran the model on [ExploitBench](https://arxiv.org/abs/2605.14153), which measures how well AI models can exploit known vulnerabilities in the V8 engine used by Google Chrome. Here we focus on the models’ ability to develop end-to-end exploits successfully, as this is the most relevant capability for attackers, and where we see significant changes between models. We find that GLM-5.3 develops end-to-end exploits in 50 of 410 attempts. Claude Mythos Preview did so at a similar rate—in 56 of 410 attempts.\n\nIn our internal Binary Exploitation benchmark,[1](#footnote-1) we test whether models can find and exploit vulnerabilities in popular open source projects that participate in Google’s OSS-Fuzz ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 모델 무제한 사이버 공격 자동화 위험",
+        "tags": [
+          "GLM-5.3",
+          "Zhipu AI",
+          "Claude Mythos Preview",
+          "NIST CAISI",
+          "Chrome V8"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "데이터 기반 벤치마킹",
+          "자동 악성 코드 생성"
+        ],
+        "key_points": [
+          {
+            "point": "GLM-5.3는 최소한의 제어만으로도 완전한 사이버 익스플로잇을 자동 생성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "단순 우회 기법으로 64%‑100%의 성공률을 보이며, Claude 모델에서는 전혀 통과되지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "NIST CAISI는 GLM-5.3를 가장 사이버 역량이 높은 오픈‑웨이트 모델로 평가하고, 미국 최첨단 모델보다 약 4개월 뒤처진다고 밝혔다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "보안팀은 동일한 우회 프롬프트 기법을 사내 LLM에 적용해 정책 회피 위험을 사전 탐지한다.",
+          "자동 익스플로잇 생성 벤치마크를 활용해 기존 취약점 스캐너의 탐지 한계를 정량화하고 개선한다.",
+          "모델 기반 익스플로잇 생성을 적색팀 훈련 시나리오에 도입해 실제 공격 흐름을 시뮬레이션하고 방어 전략을 강화한다."
+        ],
+        "quiz": [
+          {
+            "question": "GLM-5.3가 Claude 모델보다 우회 성공률이 높은 주된 이유는 무엇인가?",
+            "options": [
+              "제한된 안전 레이어가 없기 때문이다",
+              "학습 데이터가 더 많기 때문이다",
+              "GPU 성능이 더 뛰어나기 때문이다",
+              "오픈‑웨이트 구조이기 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 GLM-5.3는 의미 있는 안전 장치가 없으며, 단순 기법으로 64%‑100% 우회가 가능하다고 명시돼 있다."
+          },
+          {
+            "question": "NIST CAISI 평가에 따르면 GLM-5.3는 미국 최첨단 모델에 비해 어느 정도 차이가 나는가?",
+            "options": [
+              "약 1개월 앞선다",
+              "약 4개월 뒤처진다",
+              "동등한 수준이다",
+              "평가 대상이 아니다"
+            ],
+            "answer_index": 1,
+            "explanation": "CAISI는 GLM-5.3가 가장 사이버‑능력 있는 오픈‑웨이트 모델이지만, 미국 최첨단 모델보다 약 4개월 뒤처진다고 평가했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Hive는 잊으려 했지만, Spark는 기억하고 있었다: 사라진 get_table RPC 복원기",
+        "url": "https://d2.naver.com/helloworld/7314597",
+        "published_at": null,
+        "transcript": null,
+        "body": "<blockquote>\n<p dir=\"auto\"><code class=\"notranslate\">TApplicationException · UNKNOWN_METHOD</code></p>\n<p dir=\"auto\"><code class=\"notranslate\">Invalid method name: 'get_table'</code></p>\n</blockquote>\n<p dir=\"auto\">이 글은 네이버의 Hadoop 플랫폼인 C3의 Metastore를 Apache Hive 4.2로 올리는 과정에서 Spark 잡(job)이 실패한 현상과 그 원인을 추적해, Metastore Thrift 인터페이스에서 조용히 사라졌던 RPC 하나를 복원하기까지의 과정을 다룹니다. 코드 변경 자체는 IDL 두 줄과 서버 구현 몇 줄이 전부지만, 그 이면에는 Thrift RPC의 동작 방식과 Hive와 Spark 사이의 오래된 버전 호환성이라는 맥락이 얽혀 있습니다. 그리고 직접 수정한 코드보다 훨씬 큰 비중을 차지하는 'Thrift 생성 코드를 어디까지 확인해야 변경이 완료되는가'라는 질문도 함께 다룹니다.</p>\n<p dir=\"auto\">이 글의 내용은 사내 Apache Hive 포크(aida-4.2.0)를 기준으로 작성되었으며, 코드 예시는 설명을 위해 일부가 축약, 편집되었습니다.</p>\n<h2 dir=\"auto\">문제 상황: <code class=\"notranslate\">Invalid method name: 'get_table'</code></h2>\n<p dir=\"auto\">네이버의 사내 Hadoop 플랫폼 C3는 HDFS, YARN, Hive, Spark 등 다양한 컴포넌트가 한데 묶여 동작하는 대규모 데이터 플랫폼입니다. 최근 저희 팀은 이 플랫폼의 근간을 이루는 Hive Metastore(이하 HMS)를 오랫동안 사용해 온 버전에서 Apache Hive 4.2 기반의 사내 포크(aida-4.2.0)로 올리는 작업을 진행했습니다. 동시에 HMS와 HiveServer2(이하 HS2)를 기존의 물리 서버 배포에서 Kubernetes 위의 컨테이너 배포로 전환하는 현대화 작업도 함께 진행했습니다.</p>\n<p dir=\"auto\">HMS는 이름 그대로 테이블, 파티션, 스키마 같은 메타데이터의 단일 창구입니다. Hive뿐 아니라 Spark, Trino, 그리고 각종 사내 배치 파이프라인이 이 HMS에 \"이 테이블의 스키마가 뭐야?\", \"이 파티션은 어디에 있어?\"를 묻습니다. 그만큼 HMS는 신경 써서 다뤄야 하는 공용 인프라입니다. 호환성이 한 곳이라도 깨지면 그 파장이 플랫폼 전체 사용자에게 미칩니다.</p>\n<p dir=\"auto\">업그레이드한 HMS를 스테이징 환경에 올리고 검증하던 중, Spark 잡에서 다음과 같은 예외가 보고되기 시작했습니다.</p>\n<pre class=\"notranslate\" lang=\"text\"><code class=\"notranslate\"># spark driver: stack trace\norg.apache.thrift.TApplicationException: Invalid method name: 'get_table'\n    at org.apache.thrift.TApplicationException.read(TApplicationException.java:111)\n    at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:79)\n    at ...ThriftHiveMetastore$Client.recv_get_table(...)\n    at ...ThriftHiveMetastore$Client.get_table(...)\n    at ...HiveMetaStoreClient.getTable(...)\n    at org.apache.spark.sql.hive.client.HiveClientImpl...\n</code></pre>\n<p dir=\"auto\">증상은 명확했습니다.</p>\n<ul dir=\"auto\">\n<li>Hive CLI나 Beeline(Hive의 JDBC 기반 명령줄 클라이언트) 같은 Hive 4.2 클라이언트로는 정상 동작합니다.</li>\n<li>Spark에서 테이블 메타데이터를 조회하는 순간 위 예외가 발생하며 잡이 실패합니다.</li>\n<li>오류 메시지는 인증 실패나 네트워크 문제가 아니라 <code class=\"notranslate\">Invalid method name: 'get_table'</code>, 즉 '그런 이름의 메서드는 없다'는 서버의 응답입니다.</li>\n<li>HMS는 살아 있고, 대부분의 요청은 정상 처리됩니다.</li>\n</ul>\n<p dir=\"auto\">그런데 Spark가 던지는 특정 요청 하나만 서버가 '그런 API는 모른다'고 거절하고 있었습니다. 왜 유독 <code class=\"notranslate\">get_table</code>만, 그리고 왜 유독 Spark에서만 문제가 되었을까요? 이 질문에 답하려면 HMS가 요청을 받아 처리하는 방식, 즉 Thrift RPC의 구조부터 짚어야 합니다.</p>\n<h2 dir=\"auto\">배경지식: HMS는 어떻게 요청을 처리하는가</h2>\n<p dir=\"auto\">HMS의 요청 처리는 세 부분으로 이루어집니다. 먼저 Thrift IDL(Interface Definition Language)이 인터페이스를 정의합니다. 그다음 서버가 들어온 요청의 메서드 이름으로 처리 함수를 찾습니다. 그 함수의 실제 로직은 <code class=\"notranslate\">HMSHandler</code> 클래스가 구현합니다. 즉, 세 부분 모두 같은 IDL 선언에 매여 있는 셈입니다.</p>\n<h3 dir=\"auto\">Thrift IDL과 코드 생성</h3>\n<p dir=\"auto\">HMS의 모든 원격 API는 Apache Thrift로 정의되어 있습니다. Thrift는 언어 중립적인 IDL에 서비스와 메서드를 선언해 두면, 이를 바탕으로 각 언어의 클라이언트/서버 스텁(stub, 원격 호출을 로컬 메서드처럼 쓸 수 있게 감싸 주는 자동 생성 코드)을 만들어 주는 RPC 프레임워크입니다.</p>\n<p dir=\"auto\">HMS의 인터페이스는 <code class=\"notranslate\">hive_metastore.thrift</code> 한 파일에 정의되어 있고, 그 안에 <code class=\"notranslate\">ThriftHiveMetastore</code>라는 거대한 서비스가 선언되어 있습니다.</p>\n<div class=\"highlight highlight-source-thrift\" dir=\"auto\"><pre class=\"notranslate\"><span class=\"pl-c\"><span class=\"pl-c\">//</span> hive_metastore.thrift</span>\n<span class=\"pl-k\">service</span> <span class=\"pl-en\">ThriftHiveMetastore</span> <span class=\"pl-k\">extends</span> <span class=\"pl-e\">fb303.FacebookService</span>\n{\n  ...\n  list&lt;string&gt; get_all_tables(1: string db_name) throws (1: MetaException o1)\n\n  list&lt;ExtendedTableInfo&gt; get_tables_ext(1: GetTablesExtRequest req) throws (1: MetaException o1)\n  GetTableResult get_table_req(1: GetTableRequest req) throws (1: MetaException o1, 2: NoSuchObjectException o2)\n  ...\n}</pre></div>\n<p dir=\"auto\">이 <code class=\"notranslate\">.thrift</code> 파일로부터 Thrift 컴파일러가 Java, C++, Python 등의 스텁을 생성합니다. 실제로 저장소에는 생성 결과물(<code class=\"notranslate\">gen-javabean</code>, <code class=\"notranslate\">gen-cpp</code>, <code class=\"notranslate\">gen-py</code> 등)이 함께 커밋되어 있습니다.</p>\n<p dir=\"auto\">여기서 한 가지 미리 기억해 둘 점이 있습니다. IDL의 필드는 번호와 타입으로 정의되고, 이 정의가 생성 코드의 직렬화와 역직렬화에 그대로 반영됩니다. 즉, 인터페이스 호환성은 메서드 이름뿐 아니라 인자의 필드 번호, 타입, 반환 타입, 예외 정의까지 포함하는 개념입니다. 이 사실은 뒤에서 레거시 RPC를 복원할 때 다시 등장합니다(필드 번호와 타입 선언은 <a href=\"https://thrift.apache.org/docs/idl\" rel=\"nofollow\">Apache Thrift IDL 명세</a>, 반환 타입과 예외 정의는 <a href=\"https://thrift.apache.org/docs/types\" rel=\"nofollow\">Thrift 타입 시스템 문서</a> 참고).</p>\n<h3 dir=\"auto\">메서드 이름 기반 디스패치</h3>\n<p dir=\"auto\">여기서 핵심은 Thrift가 메서드를 '이름 문자열'로 구분한다는 점입니다. 클라이언트가 <code class=\"notranslate\">get_table</code>을 호출하면, 실제 네트워크로는 <code class=\"notranslate\">\"get_table\"</code>이라는 메서드 이름과 인자가 직렬화되어 전송됩니다. 서버는 수신한 메서드 이름을 자신의 프로세서 맵(process map, 메서드 이름과 처리 함수를 짝지어 둔 표)에서 찾아 해당 핸들러로 넘깁니다(디스패치). <code class=\"notranslate\">get_table</code>과 <code class=\"notranslate\">get_table_req</code>가 같은 목적의 기능을 제공한다고 해서 Thrift가 두 이름",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "Hive와 Spark 간 메타스토어 호환 문제 해결 방법",
+        "tags": [
+          "Hive",
+          "Spark",
+          "Thrift",
+          "Kubernetes",
+          "Metastore"
+        ],
+        "concepts": [
+          "메타데이터 관리",
+          "버전 호환성",
+          "RPC 인터페이스"
+        ],
+        "key_points": [
+          {
+            "point": "Hive Metastore 업그레이드 후 Spark가 get_table RPC를 찾지 못해 오류 발생",
+            "timestamp": null
+          },
+          {
+            "point": "Thrift IDL 정의와 생성된 스텁이 클라이언트·서버 간 메서드 매핑을 담당한다",
+            "timestamp": null
+          },
+          {
+            "point": "IDL에 두 줄 추가와 최소 서버 구현으로 사라진 get_table RPC를 복원할 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "CI 파이프라인에 Thrift IDL 변경 감지를 추가해 서비스 업그레이드 시 RPC 누락을 사전에 방지한다",
+          "OpenAPI 스펙에서 삭제된 엔드포인트를 검증하고 필요 시 최소 구현을 추가해 레거시 REST 서비스 호환성을 유지한다",
+          "기존 서비스에 모니터링용 RPC를 간단히 정의하고 구현해 재배포 없이 운영 상태를 실시간 조회한다"
+        ],
+        "quiz": [
+          {
+            "question": "Spark가 'Invalid method name: get_table' 오류를 보이는 이유는?",
+            "options": [
+              "Spark 클라이언트가 오래된 메타스토어 RPC 정의를 사용한다",
+              "Hive CLI와 전송 방식이 다르기 때문이다",
+              "네트워크 방화벽이 메서드 호출을 차단한다",
+              "Metastore 서비스가 중단되었다"
+            ],
+            "answer_index": 0,
+            "explanation": "Spark는 Hive Metastore의 이전 버전 RPC 정의를 기대하고 있어, 업그레이드 후 사라진 get_table 메서드를 찾지 못한다"
+          },
+          {
+            "question": "Hive Metastore 아키텍처에서 Thrift IDL의 주요 역할은?",
+            "options": [
+              "테이블 스키마 정의",
+              "클라이언트·서버 스텁 자동 생성",
+              "메타데이터를 HDFS에 저장",
+              "보안 토큰 관리"
+            ],
+            "answer_index": 1,
+            "explanation": "IDL은 서비스와 메서드를 선언하고, Thrift 컴파일러가 이를 기반으로 각 언어의 클라이언트·서버 스텁을 생성한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

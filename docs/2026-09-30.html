@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 09월 30일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 09월 30일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모델 디스틸레이션</span><span class="concept">비디오 디퓨전</span><span class="concept">비판자 오류 보정</span><span class="concept">멀티에이전트 시스템</span><span class="concept">스케줄링</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 생산성 도구</span><span class="concept">AI 인프라 경쟁</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">자동 악성 코드 생성</span><span class="concept">메타데이터 관리</span><span class="concept">버전 호환성</span><span class="concept">RPC 인터페이스</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2609.35768v1" target="_blank" rel="noopener">PDMD: Projected Distribution Matching Distillation for Video Diffusion Models</a>
+        </h2>
+
+        <p class="summary">비디오 디퓨전 모델을 적은 평가로 안정·품질 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>비디오 디퓨전 모델은 긴 시공간 토큰 시퀀스에 수십 번의 디노이징 평가가 필요해 효율성이 제한돼 왔다. 기존 Distillation 기법인 DMD는 평가 횟수를 크게 줄였지만 비판자 오류가 누적돼 품질이 저하되는 문제가 있었다. PDMD는 이러한 오류를 투영으로 정제함으로써 고효율·고품질 비디오 디퓨전 Distillation 연구 흐름에서 안정성을 크게 개선한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>DMD는 NFE를 크게 줄이지만 비판자 오류가 누적돼 샘플이 과포화·아티팩트가 발생한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>PDMD는 학생‑비판자 잔차와 평행한 성분을 투영 제거해 비판자 오류의 일정 비율을 제거한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단 한 줄 코드 변경만으로 PDMD는 훈련을 안정화하고 VBench·VideoGen‑Eval 점수를 기존 DMD보다 높인다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>PDMD 투영 방식을 텍스트‑이미지 디퓨전 Distillation에 적용해 훈련 불안정을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>정책 Distillation에서 학생‑비판자 잔차 투영을 사용해 강화학습 정책의 오류 전파를 억제한다</span></li>
+            
+            <li><span class="box"></span><span>오디오 생성 모델의 저‑NFE Distillation에 PDMD를 도입해 음질과 텍스처 일관성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">DMD가 훈련 중 불안정해지는 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 용량 부족</div>
+            
+            <div class="q-opt">② 비판자 오류 누적</div>
+            
+            <div class="q-opt">③ 데이터 노이즈 과다</div>
+            
+            <div class="q-opt">④ 과적합</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 비판자 오류 누적</div>
+              <div class="why">본문에 따르면 비판자 오류가 successive student updates에 들어가 누적돼 과포화와 아티팩트가 발생한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">PDMD가 DMD 업데이트에 적용하는 핵심 조치는 무엇인가?</div>
+            
+            <div class="q-opt">① 잔차와 평행한 성분을 강화한다</div>
+            
+            <div class="q-opt">② 잔차와 평행한 성분을 투영 제거한다</div>
+            
+            <div class="q-opt">③ 추가 손실 함수를 도입한다</div>
+            
+            <div class="q-opt">④ 모델 파라미터를 축소한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 잔차와 평행한 성분을 투영 제거한다</div>
+              <div class="why">PDMD는 학생‑비판자 endpoint residual와 평행한 성분을 투영해 제거함으로써 비판자 오류를 감소시킨다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">PDMD</span><span class="tag">DMD</span><span class="tag">Wan2.1</span><span class="tag">VBench</span><span class="tag">MiniMax-H3</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/165" target="_blank" rel="noopener">Agent Serving: 한 접시가 아니라 코스 요리</a>
+        </h2>
+
+        <p class="summary">LLM 서빙을 넘어 에이전트 전체 흐름 최적화 필요성</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 서빙은 개별 호출 최적화에 초점하지만, 에이전트는 여러 호출과 도구 사용을 포함한 전체 작업 흐름을 효율적으로 처리해야 함</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Agent 프로그램은 단일 스레드와 다중 스레드 구조로 나뉘며, 다중 스레드에서는 병렬 LLM 호출과 브랜치 탐색이 발생한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 서빙 시스템은 GPU 자원 경쟁과 KV 캐시 재사용을 고려하지 않아 에이전트 환경에서 성능 저하가 발생할 수 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>KV Cache 재사용 기법을 대규모 추천 시스템의 배치 추론 파이프라인에 적용해 응답 지연을 줄인다</span></li>
+            
+            <li><span class="box"></span><span>다중 스레드 에이전트 스케줄링 방식을 데이터 파이프라인 오케스트레이션에 도입해 작업 간 의존성 관리와 자원 활용을 최적화한다</span></li>
+            
+            <li><span class="box"></span><span>로드밸런서와 Scheduler 개념을 ETL 잡 디스패처에 적용해 다양한 데이터 변환 작업을 GPU/CPU 자원에 균등하게 할당한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Agent 프로그램의 실행 구조에서 단일 스레드와 다중 스레드의 차이점은 무엇인가?</div>
+            
+            <div class="q-opt">① 단일 스레드는 순차 호출, 다중 스레드는 병렬 호출</div>
+            
+            <div class="q-opt">② 단일 스레드는 여러 GPU 사용, 다중 스레드는 하나 GPU 사용</div>
+            
+            <div class="q-opt">③ 단일 스레드는 도구 사용 안 함, 다중 스레드는 도구 사용</div>
+            
+            <div class="q-opt">④ 단일 스레드는 사람 입력 없이 동작</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 단일 스레드는 순차 호출, 다중 스레드는 병렬 호출</div>
+              <div class="why">본문에서는 단일 스레드 프로그램이 순차적으로 LLM 호출을 이어가고, 다중 스레드 프로그램은 여러 실행 흐름이 병렬로 진행된다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LLM Serving 계층에서 KV Cache 재사용의 주요 목적은?</div>
+            
+            <div class="q-opt">① 모델 정확도 향상</div>
+            
+            <div class="q-opt">② 메모리 사용량 감소와 추론 속도 향상</div>
+            
+            <div class="q-opt">③ 데이터 보안 강화</div>
+            
+            <div class="q-opt">④ 새로운 모델 학습</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 메모리 사용량 감소와 추론 속도 향상</div>
+              <div class="why">KV Cache 재사용은 이전 토큰들의 키·밸류를 재활용해 연산량을 줄이고 추론 지연을 낮추는 것이 목적이다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LLM</span><span class="tag">ChatGPT</span><span class="tag">Agentix</span><span class="tag">KV Cache</span><span class="tag">Load Balancer</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">디플릭</div>
+
+        <h2 class="title">
+          <a href="https://dflick.stibee.com/p/113" target="_blank" rel="noopener">⚔️ AI 모델 춘추전국시대가 왔다. 그래서 뭘 써야 할까?</a>
+        </h2>
+
+        <p class="summary">AI 모델을 업무·비용에 맞게 골라 DS 생산성 높이기</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>OpenAI는 고난도 추론용 GPT‑6 Sol과 대량 작업용 Luna를 출시해 가격을 기존 대비 50% 낮췄다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Anthropic, Google, Meta 등도 작업 특화 모델·에이전트를 발표하며 모델 선택의 중요성을 강조했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기업은 AI 에이전트 실행을 모니터링하고 필요 시 중단할 수 있는 제어 장치를 도입해야 위험을 관리할 수 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>작업 특성에 따라 데이터 처리 엔진(Spark vs Flink)을 선택해 비용과 지연 시간을 최적화한다</span></li>
+            
+            <li><span class="box"></span><span>AI 에이전트와 유사하게 자동화된 ETL 파이프라인에 실시간 중단·재시작 제어를 추가해 오류 확산을 방지한다</span></li>
+            
+            <li><span class="box"></span><span>고정 비용 모델 대신 고정 정확도 모델과 대량 저비용 모델을 계층화해 대규모 예측 서비스의 비용 효율성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">기업이 작업별로 다른 AI 모델을 선택하는 주요 이유는?</div>
+            
+            <div class="q-opt">① 데이터 보안 강화</div>
+            
+            <div class="q-opt">② 비용 절감 및 성능 최적화</div>
+            
+            <div class="q-opt">③ 법적 규제 준수</div>
+            
+            <div class="q-opt">④ 사용자 인터페이스 개선</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 비용 절감 및 성능 최적화</div>
+              <div class="why">각 모델은 가격과 성능이 다르므로 작업에 맞는 모델을 쓰면 불필요한 비용을 줄이고 필요한 성능을 확보할 수 있다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 에이전트 실행 권한을 세분화하고 중단·복구 기능을 도입해야 하는 이유는?</div>
+            
+            <div class="q-opt">① 시스템 안정성 확보</div>
+            
+            <div class="q-opt">② 사용자 편의성 향상</div>
+            
+            <div class="q-opt">③ 모델 정확도 향상</div>
+            
+            <div class="q-opt">④ 데이터 저장 비용 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 시스템 안정성 확보</div>
+              <div class="why">에이전트가 외부 시스템을 조작할 수 있으므로, 위험 상황에서 즉시 중단하고 복구할 수 있는 제어가 시스템 안정성을 보장한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GPT-6</span><span class="tag">Claude Opus 5.5</span><span class="tag">Gemini 3.8</span><span class="tag">Meta AI Muse</span><span class="tag">Alibaba V900</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities" target="_blank" rel="noopener">GLM-5.3 and the spread of advanced cyber capabilities</a>
+        </h2>
+
+        <p class="summary">AI 모델 무제한 사이버 공격 자동화 위험</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GLM-5.3는 최소한의 제어만으로도 완전한 사이버 익스플로잇을 자동 생성한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단순 우회 기법으로 64%‑100%의 성공률을 보이며, Claude 모델에서는 전혀 통과되지 않는다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NIST CAISI는 GLM-5.3를 가장 사이버 역량이 높은 오픈‑웨이트 모델로 평가하고, 미국 최첨단 모델보다 약 4개월 뒤처진다고 밝혔다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>보안팀은 동일한 우회 프롬프트 기법을 사내 LLM에 적용해 정책 회피 위험을 사전 탐지한다.</span></li>
+            
+            <li><span class="box"></span><span>자동 익스플로잇 생성 벤치마크를 활용해 기존 취약점 스캐너의 탐지 한계를 정량화하고 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 기반 익스플로잇 생성을 적색팀 훈련 시나리오에 도입해 실제 공격 흐름을 시뮬레이션하고 방어 전략을 강화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">GLM-5.3가 Claude 모델보다 우회 성공률이 높은 주된 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 제한된 안전 레이어가 없기 때문이다</div>
+            
+            <div class="q-opt">② 학습 데이터가 더 많기 때문이다</div>
+            
+            <div class="q-opt">③ GPU 성능이 더 뛰어나기 때문이다</div>
+            
+            <div class="q-opt">④ 오픈‑웨이트 구조이기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 제한된 안전 레이어가 없기 때문이다</div>
+              <div class="why">본문에 따르면 GLM-5.3는 의미 있는 안전 장치가 없으며, 단순 기법으로 64%‑100% 우회가 가능하다고 명시돼 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">NIST CAISI 평가에 따르면 GLM-5.3는 미국 최첨단 모델에 비해 어느 정도 차이가 나는가?</div>
+            
+            <div class="q-opt">① 약 1개월 앞선다</div>
+            
+            <div class="q-opt">② 약 4개월 뒤처진다</div>
+            
+            <div class="q-opt">③ 동등한 수준이다</div>
+            
+            <div class="q-opt">④ 평가 대상이 아니다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 약 4개월 뒤처진다</div>
+              <div class="why">CAISI는 GLM-5.3가 가장 사이버‑능력 있는 오픈‑웨이트 모델이지만, 미국 최첨단 모델보다 약 4개월 뒤처진다고 평가했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GLM-5.3</span><span class="tag">Zhipu AI</span><span class="tag">Claude Mythos Preview</span><span class="tag">NIST CAISI</span><span class="tag">Chrome V8</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/7314597" target="_blank" rel="noopener">Hive는 잊으려 했지만, Spark는 기억하고 있었다: 사라진 get_table RPC 복원기</a>
+        </h2>
+
+        <p class="summary">Hive와 Spark 간 메타스토어 호환 문제 해결 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Hive Metastore 업그레이드 후 Spark가 get_table RPC를 찾지 못해 오류 발생</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Thrift IDL 정의와 생성된 스텁이 클라이언트·서버 간 메서드 매핑을 담당한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>IDL에 두 줄 추가와 최소 서버 구현으로 사라진 get_table RPC를 복원할 수 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>CI 파이프라인에 Thrift IDL 변경 감지를 추가해 서비스 업그레이드 시 RPC 누락을 사전에 방지한다</span></li>
+            
+            <li><span class="box"></span><span>OpenAPI 스펙에서 삭제된 엔드포인트를 검증하고 필요 시 최소 구현을 추가해 레거시 REST 서비스 호환성을 유지한다</span></li>
+            
+            <li><span class="box"></span><span>기존 서비스에 모니터링용 RPC를 간단히 정의하고 구현해 재배포 없이 운영 상태를 실시간 조회한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Spark가 'Invalid method name: get_table' 오류를 보이는 이유는?</div>
+            
+            <div class="q-opt">① Spark 클라이언트가 오래된 메타스토어 RPC 정의를 사용한다</div>
+            
+            <div class="q-opt">② Hive CLI와 전송 방식이 다르기 때문이다</div>
+            
+            <div class="q-opt">③ 네트워크 방화벽이 메서드 호출을 차단한다</div>
+            
+            <div class="q-opt">④ Metastore 서비스가 중단되었다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Spark 클라이언트가 오래된 메타스토어 RPC 정의를 사용한다</div>
+              <div class="why">Spark는 Hive Metastore의 이전 버전 RPC 정의를 기대하고 있어, 업그레이드 후 사라진 get_table 메서드를 찾지 못한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Hive Metastore 아키텍처에서 Thrift IDL의 주요 역할은?</div>
+            
+            <div class="q-opt">① 테이블 스키마 정의</div>
+            
+            <div class="q-opt">② 클라이언트·서버 스텁 자동 생성</div>
+            
+            <div class="q-opt">③ 메타데이터를 HDFS에 저장</div>
+            
+            <div class="q-opt">④ 보안 토큰 관리</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 클라이언트·서버 스텁 자동 생성</div>
+              <div class="why">IDL은 서비스와 메서드를 선언하고, Thrift 컴파일러가 이를 기반으로 각 언어의 클라이언트·서버 스텁을 생성한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Hive</span><span class="tag">Spark</span><span class="tag">Thrift</span><span class="tag">Kubernetes</span><span class="tag">Metastore</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
