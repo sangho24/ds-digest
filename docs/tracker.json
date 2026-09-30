@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-09-29T02:25:53.527106+00:00",
+ "generated_at": "2026-09-30T01:45:58.684189+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -6480,6 +6480,21 @@
  ],
  "recent_events": [
   {
+   "org": "openai",
+   "repo_id": "https://openai.com/index/introducing-gpt-6-1-sol",
+   "transition": "announced",
+   "observed_at": "2026-09-30T01:45:58.684189Z",
+   "at": "2026-09-29T10:00:00Z",
+   "source_url": "https://openai.com/index/introducing-gpt-6-1-sol",
+   "method": "official_rss",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "title": "Introducing GPT-6.1 Sol"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4",
    "transition": "repo_created",
@@ -7823,34 +7838,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3-Coder-Next-GGUF",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-02-02T05:40:51Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3-Coder-Next-GGUF",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2309.00071"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 593,
-  "events": 599
+  "events": 600
  }
 }
