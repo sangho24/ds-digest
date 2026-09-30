@@ -1,0 +1,399 @@
+{
+  "date": "2026-10-01",
+  "generated_at": "2026-09-30T23:40:39.557171",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CV",
+        "source_key": "arxiv:cs.CV",
+        "source_label": "arXiv:cs.CV",
+        "title": "Point2Part: Unified 3D Partitioning from Point Prompts",
+        "url": "https://arxiv.org/abs/2609.38180v1",
+        "published_at": "2026-09-29T17:59:58",
+        "transcript": null,
+        "body": "Existing 3D part decomposition methods do not necessarily partition the original shape into non-overlapping parts that collectively cover the entire shape, allowing overlaps or gaps that hinder downstream part-level applications. We instead formulate part decomposition as a joint partitioning of the entire shape, where the predicted parts are non-overlapping and jointly recover the entire shape. Our key insight is that part decomposition should consider all desired parts jointly, rather than modeling each part independently. To this end, we develop a promptable model for 3D part decomposition from images or meshes. Users can specify desired parts through 3D point prompts for controllable decomposition. Given one point prompt per desired part, our model produces the corresponding parts as a complete partition of the entire shape. We build on a pretrained 3D generation model and first obtain a shape latent from either an input image or mesh. We then introduce a prompt encoder that maps each 3D point prompt to a part token while attending to the shape latent. To decode the desired parts, we propose a novel part decoder jointly scoring the entire shape against all part tokens in a coarse-to-fine manner, assigning every position within the shape volume to exactly one part. We perform part decomposition in this shared shape latent space, enabling a unified model for image-to-part generation, mesh-to-part generation, and part segmentation. Our method outperforms existing works on all part-quality metrics across all three tasks, and improves compatibility among parts by an order of magnitude over previous SOTA methods. Code and models will be released.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "비중첩 3D 파트 분할로 downstream 활용 강화",
+        "tags": [
+          "Point2Part",
+          "3D generation model",
+          "prompt encoder",
+          "part decoder"
+        ],
+        "concepts": [
+          "프롬프트 협업",
+          "멀티모달 표현 학습",
+          "모듈형 신경망 구조"
+        ],
+        "key_points": [
+          {
+            "point": "기존 3D 파트 분해는 겹침·공백이 있어 downstream 파트‑레벨 애플리케이션에 제약이 있었으며, 본 논문은 전체 형태를 비중첩·완전 커버하는 파트 분할을 목표로 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "사용자는 원하는 파트를 3D 점 프롬프트 하나씩 제시하고, 모델은 모든 파트를 공동으로 디코딩해 형태 내 각 위치를 정확히 하나의 파트에 할당한다.",
+            "timestamp": null
+          },
+          {
+            "point": "이미지·메시 입력을 동일한 shape latent 공간에 매핑하고, 프롬프트 인코더와 공동 파트 디코더를 활용해 이미지→파트, 메시→파트, 파트 세그멘테이션을 모두 수행해 기존 방법 대비 품질·호환성을 크게 향상시킨다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 3D 파트 분해는 파트 간 겹침이나 빈 공간이 발생해 downstream 활용에 제한이 있었고, 각 파트를 독립적으로 모델링했다. 본 연구는 멀티모달(이미지·메시) 입력을 하나의 latent에 통합하고, 점 프롬프트 기반의 공동 파트 디코더로 전체 형태를 비중첩하게 분할한다는 점에서 3D 형태 분할·생성 연구 흐름의 새로운 단계이며, 전체 파트의 일관성을 보장한다.",
+        "production_ideas": [
+          "점 프롬프트 기반 공동 파티셔닝을 2D 이미지 세그멘테이션에 적용해 의료 영상에서 클릭 하나로 비중첩 영역을 정의하고 정확한 픽셀 할당을 가능하게 한다",
+          "프롬프트 인코더와 공동 디코더를 로봇 장면 이해에 활용해 물체별 점 프롬프트를 입력으로 받아 전체 장면을 일관된 객체 파티션으로 변환, 조작 계획의 신뢰성을 높인다",
+          "음성 신호의 시간‑주파수 포인트 프롬프트를 사용해 공동 스코어링 디코더를 적용하면 각 TF 셀을 하나의 소스에 할당해 비중첩 오디오 소스 분리를 구현한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 3D 파트 분해 방법이 downstream 파트‑레벨 애플리케이션에 문제를 일으키는가?",
+            "options": [
+              "파트가 겹치거나 빈 공간이 남아 전체 형태를 완전히 커버하지 않기 때문",
+              "파트 수가 고정돼 유연성이 부족하기 때문",
+              "입력이 이미지만 지원돼 제한적이기 때문",
+              "학습 데이터가 부족하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 기존 방법은 겹침이나 공백이 있어 전체 형태를 완전히 커버하지 못한다는 문제가 언급되어 있다."
+          },
+          {
+            "question": "본 논문에서 파트 디코더가 수행하는 핵심 역할은 무엇인가?",
+            "options": [
+              "각 파트 토큰을 개별적으로 디코딩한다",
+              "전체 형태를 모든 파트 토큰에 대해 공동 스코어링해 각 위치를 하나의 파트에 할당한다",
+              "프롬프트를 이미지로 변환한다",
+              "파트 토큰을 생성한다"
+            ],
+            "answer_index": 1,
+            "explanation": "파트 디코더는 전체 shape volume를 모든 파트 토큰과 공동으로 스코어링해 각 위치를 정확히 하나의 파트에 할당한다는 것이 논문의 핵심 설명이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Why Deep Learning Failed on Tables for a Decade - Frank Hutter",
+        "url": "https://youtu.be/tQ3nMI-anxU",
+        "published_at": "2026-09-29T09:50:26",
+        "transcript": "[00:00] tabular data is, is very dirty and, um, I, I think that's one of the reasons that deep learning took so long to, to actually do well for it.\n[00:10] 2019 TabNet by, by Google was, was really hyped, uh, thousands of citations, uh, yeah, the, the new thing for tabular data and it just doesn't work, it doesn't generalize to new data sets.\n[00:21] Like you can have an image net that is just all basically cover all kinds of different, um, images in the world and learn on that one data set.\n[00:31] But what you need for tabular data is actually a whole lot of different, um, tables because if you have one table from medicine and then you have another table from insurance, there's just nothing you can learn in terms of the, um, the individual rows, um, from one can't tell you anything about the other one.\n[00:52] But what you can do and where you can do the transfers on the levels of, of these patterns. On that level, uh, using in-context learning, you can actually transfer across different data sets and that, that's why, um, yeah, with in-context learning we finally saw this breakthrough for tabular data.",
+        "body": "Frank Hutter, co-founder of Prior Labs, on why deep learning struggled with tabular data for a decade: tables are messy and heterogeneous, hyped models like TabNet did not generalise to new datasets, and there was no ImageNet of tables. The breakthrough came from learning to transfer at the level of patterns across many different tables; TabPFN-3.5 now tops the TabArena benchmark.\n\nFull interview on MLST: https://www.youtube.com/watch?v=72Im-Mm5JKs\n\nReferences:\nTabNet (Arik & Pfister): https://arxiv.org/abs/1908.07442\nTabPFN-3.5 Technical Report: https://arxiv.org/abs/2609.17895\n\n#Shorts",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "표형 데이터 딥러닝 일반화 어려움, 인컨텍스트가 해법",
+        "tags": [
+          "TabNet",
+          "Google",
+          "in-context learning",
+          "ImageNet",
+          "Deep Learning"
+        ],
+        "concepts": [
+          "데이터 일반화",
+          "전이 학습",
+          "인컨텍스트 학습"
+        ],
+        "key_points": [
+          {
+            "point": "Tabular data is dirty, causing deep learning delay",
+            "timestamp": "00:00"
+          },
+          {
+            "point": "TabNet was hyped but fails to generalize to new datasets",
+            "timestamp": "00:10"
+          },
+          {
+            "point": "Transfer across tables works at pattern level via in-context learning",
+            "timestamp": "00:31"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "다양한 센서 데이터에 인컨텍스트 학습을 적용해 재학습 없이 시계열 예측 정확도 향상",
+          "다른 제품 카탈로그 간 패턴 수준 전이 학습을 활용해 추천 시스템의 도메인 적응을 빠르게 수행",
+          "다양한 이질적 테이블을 모아 기반 모델을 사전학습시켜 자동 데이터 정제 파이프라인 구축에 활용"
+        ],
+        "quiz": [
+          {
+            "question": "왜 TabNet은 새로운 테이블 데이터에 일반화되지 못한다고 언급되었나요?",
+            "options": [
+              "과도한 파라미터 수",
+              "학습에 사용된 테이블이 충분히 다양하지 않음",
+              "이미지 전용 아키텍처 사용",
+              "인컨텍스트 학습이 적용되지 않음"
+            ],
+            "answer_index": 1,
+            "explanation": "발언에서는 하나의 테이블만으로는 다른 도메인(예: 의료 vs 보험) 정보를 전달할 수 없으며, 다양한 테이블이 필요하다고 강조했기 때문에 일반화 실패는 데이터 다양성 부족 때문이다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Launch HN: Magnitude (YC S25) – Self-optimizing inference engine for agents",
+        "url": "https://github.com/magnitudedev/magnitude",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hey HN, Anders and Tom here. We&#x27;re building Magnitude, an inference engine for agents that optimizes itself to run as fast as possible on your hardware. It works on Mac, Linux, and Windows on any hardware and is up to 2x faster than llama.cpp.<p>We&#x27;re both software engineers and previously built an open source browser agent to 4k+ GH stars and 100k+ downloads. We increasingly wanted to run it on local models, but found that no inference engine worked for our use case.<p>Inference engines today all make a performance tradeoff. They are either:<p>- Built for batched inference on datacenter hardware at the cost of single-session performance (vLLM, SGLang)\n- Designed for broad compatibility instead of optimizing for specific hardware (llama.cpp, Ollama)\n- Specialized for specific hardware or models but lacking engine completeness (oMLX, ds4)<p>Plus none of them are designed for running agents locally. Sessions are long, several often run at once, and you still want to use your computer for other things.<p>Magnitude is built for maximum performance on your hardware and running local agents:<p>- On-device compilation and tuning: Kernels are written with flexible parameters that are tuned on your actual device before the model runs. This gives you broad hardware compatibility with the same performance ceiling as hardware-specific kernels.<p>- Focus on best architectures: We write our tunable, highly efficient kernels for the most popular open-weights families. This allows us to achieve and surpass the performance of hardware or model specialized engines, without forcing ourselves to over-generalize at the cost of performance.<p>- Dynamic memory allocation: Magnitude reserves only enough memory up front to hold model weights. As your agent sessions grow, the memory heap dynamically increases, and frees itself when agents stop. Your hardware can still be used for other stuff while agents run.<p>- Hybrid paged attention: We borrow the best ideas from engines like SGLang to allow concurrent sessions to share prefix caches, but optimize placement for memory-adjacency so single-session performance doesn&#x27;t suffer.<p>Magnitude is fully open source (Apache 2.0). We built it in Rust, including a custom GPU kernel runtime and autotuner. We take inspiration from the best innovations in inference from academics (e.g. FlashAttention, FlashInfer, TurboQuant) as well as other engines (e.g. SGLang radix attention) to reach the performance ceiling.<p>Benchmarked against llama.cpp with Qwen 3.6 35B A3B (4 bit), 64k context, no speculative decoding:<p>Metal (Mac M4 Pro 48 GB)\n- 92% faster decode (30 tok&#x2F;s → 57 tok&#x2F;s)\n- 9% faster prefill (466 tok&#x2F;s → 507 tok&#x2F;s)\n- 28% less per-agent memory usage<p>CUDA (DGX Spark)\n- 19% faster decode (49 tok&#x2F;s → 58 tok&#x2F;s)\n- 23% faster prefill (2,033 tok&#x2F;s → 2,507 tok&#x2F;s)\n- 27% less per-agent memory usage<p>Magnitude ships as a desktop app that you can easily connect with whatever agents y",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "로컬 LLM 에이전트 2배 가속 자체 최적화 엔진",
+        "tags": [
+          "Magnitude",
+          "llama.cpp",
+          "vLLM",
+          "FlashAttention",
+          "CUDA"
+        ],
+        "concepts": [
+          "AI 인프라 경쟁",
+          "멀티에이전트 시스템",
+          "AI 비용 효율성"
+        ],
+        "key_points": [
+          {
+            "point": "온‑디바이스 컴파일과 자동 튜닝으로 하드웨어에 맞는 커널을 생성해 llama.cpp 대비 최대 2배 빠른 추론을 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "동적 메모리 할당과 하이브리드 페이지드 어텐션으로 여러 에이전트 세션을 동시에 실행하면서도 메모리 사용량과 단일 세션 성능을 최적화한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Rust 기반 커스텀 GPU 커널 런타임과 FlashAttention·TurboQuant 등 최신 기법을 활용해 오픈소스(Apache 2.0)로 제공한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "온‑디바이스 컴파일·자동 튜닝 방식을 ETL 파이프라인에 적용해 서버별 CPU 최적화를 수행한다.",
+          "동적 메모리 할당 전략을 스트리밍 데이터 분석에서 활성 윈도우 버퍼에만 메모리를 할당하도록 활용한다.",
+          "하이브리드 페이지드 어텐션 개념을 사용자 세션 임베딩을 공유하는 추천 시스템에 적용해 다중 사용자 처리량을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "Magnitude가 여러 에이전트 세션을 동시에 지원하면서도 단일 세션 성능을 유지하기 위해 사용하는 핵심 기술은?",
+            "options": [
+              "고정 메모리 풀",
+              "하이브리드 페이지드 어텐션",
+              "모델 압축",
+              "정적 커널"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 'Hybrid paged attention'을 도입해 접두 캐시를 공유하면서 메모리 인접성을 최적화해 단일 세션 성능 저하를 방지한다는 설명이 있다."
+          },
+          {
+            "question": "Magnitude가 하드웨어 별 최적 성능을 달성하기 위해 수행하는 단계는?",
+            "options": [
+              "사전 정의된 커널 사용",
+              "클라우드 기반 자동 튜닝",
+              "실제 디바이스에서 파라미터 튜닝",
+              "CPU 전용 연산"
+            ],
+            "answer_index": 2,
+            "explanation": "텍스트에 'Kernels are written with flexible parameters that are tuned on your actual device before the model runs' 라고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "당근 동네걷기 위에서 동시에 쏟아지는 오버레이들을 우아하게 제어하기",
+        "url": "https://medium.com/daangn/%EB%8B%B9%EA%B7%BC-%EB%8F%99%EB%84%A4%EA%B1%B7%EA%B8%B0-%EC%9C%84%EC%97%90%EC%84%9C-%EB%8F%99%EC%8B%9C%EC%97%90-%EC%8F%9F%EC%95%84%EC%A7%80%EB%8A%94-%EC%98%A4%EB%B2%84%EB%A0%88%EC%9D%B4%EB%93%A4%EC%9D%84-%EC%9A%B0%EC%95%84%ED%95%98%EA%B2%8C-%EC%A0%9C%EC%96%B4%ED%95%98%EA%B8%B0-097551289b2a?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-09-30T03:32:44",
+        "transcript": null,
+        "body": "<figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*_41vp2UXyAElE82Vy22kSA.jpeg\" /></figure><h3>들어가며</h3><p>안녕하세요. 당근 로컬비즈니스실 동네걷기팀에서 FE 인턴으로 일하고 있는 카멜(진나영)이에요. 당근 <strong>동네걷기</strong>는 걸음 수를 기록하고 보상을 제공하는 서비스예요. 그런데 모달, 바텀시트, OS 권한 팝업이 각기 다른 조건에서 열리다 보니, <strong>한 화면에 여러 UI가 겹쳐 나타나는 문제</strong>가 있었어요.</p><p>이 글은 제가 이 복잡도를 어떻게 풀었는지에 대한 기록이에요. 다만 “이렇게 만들었습니다” 보다는, 어떻게 문제를 정의하고 고민하며 해결해나갔는지 서술해보려고 해요.</p><p><strong>이런 분들이 읽으면 재미있을 것 같아요</strong></p><ul><li>한 화면에 오버레이를 띄우는 조건이 계속 늘어나서 onClose 체이닝이 감당이 안 되기 시작한 분</li><li>웹뷰-네이티브 환경에서 <strong>웹뷰가 제어할 수 없는 OS 팝업</strong>까지 같은 흐름으로 다루고 싶은 분</li><li>비동기 스케쥴링에 대한 이해가 실무에 어떻게 활용될 수 있을지 궁금한 분</li></ul><p><strong>나올 키워드들</strong></p><p>문제 재정의 · 추상화 단위(데이터 vs 함수) · Promise deferred 패턴 · ES2024 Promise.withResolvers · 실행 컨텍스트와 렉시컬 환경 · Job(ECMAScript의 비동기 작업 단위) · queueMicrotask</p><h3>1. 동네걷기 홈은 오버레이가 참 많아요</h3><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/800/1*QgAY5Z2f59CV6N_yd2EFSg.gif\" /></figure><p>동네걷기 홈은 도메인 요구사항 대부분이 모달, 바텀시트 같은 오버레이로 나타나는 화면이에요. 페이지에 들어가자마자 뜰 수 있는 것만 적어볼게요.</p><ul><li>OS 신체활동 권한 팝업 (<strong>네이티브가 띄워요. 웹뷰가 제어할 수 없어요</strong>)</li><li>신체 활동 권한 안내 (웹뷰 UI)</li><li>앱 알림 설정 유도 (웹뷰 UI)</li><li>온보딩 가이드 (코치마크 → 0걸음 보상 → 획득 애니메이션)</li><li>걸음 수 알림 모달</li><li>연속 방문 모달</li><li>그때그때 추가/제거되는 프로모션 오버레이들</li></ul><p>문제는 이 오버레이 컴포넌트들이 <strong>서로의 존재를 전혀 모른 채 독립적으로 마운트되고, 각자의 조건을 보고 발화한다</strong>(스스로 뜨려고 함)는 거였어요. 이 오버레이들은 유저가 눌러서 뜨지 않아요. 웹뷰 바깥 맥락(앱버전, 네이티브 권한 상태, 서버 응답, 정책 조건 등)이 충족되면 스스로 발화해요.</p><p>그런데 사용자에게는 반드시 <strong>한 번에 하나씩, 앞의 오버레이가 닫힌 다음에</strong> 그 다음 오버레이가 보여야 하잖아요. 모달과 바텀시트, 토스트가 한꺼번에 뜨면 사용자는 무엇부터 확인해야 할지 혼란스러우니까요.</p><p>이전까지의 해법은 컴포넌트끼리 직접 연결하는 거였어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/0*ryKZqBWB8Wa8q_Sm.png\" /></figure><p>이 구조의 비용은 꽤 분명했어요.</p><ul><li><strong>각 컴포넌트가 “자기 다음에 뭐가 와야 하는지”를 알아야 해요.</strong> 오버레이 하나가 다른 오버레이의 존재를 알고 있어야 순서가 성립하니까요.</li><li>onClose, onAnimateEnd 핸들러가 prop으로 계속 뚫려요.</li><li>새 이벤트성 오버레이가 중간에 끼어들면 <strong>체인을 끊고 다시 이어야 해요.</strong> 기후캠페인처럼 한시적 프로모션이 붙을 때마다 전체 분기와 prop 핸들러를 손대야 했어요.</li><li>도메인 로직 사이에 맥락을 알기 어려운 분기 조건이 섞여요. 그리고 이게 QA 사각지대가 돼요. 발화 조건 조합의 경우의 수만큼 순서가 깨질 수 있으니까요.</li><li>가장 큰 문제는 플래그였어요. 서로의 비동기 데이터가 준비됐는지, 조건을 평가했는지 등을 알리기 위한 플래그가 하나 둘 늘었고, 흐름은 점점 읽기 어려워졌어요.</li></ul><h3>2. 근데 진짜 골치는 웹뷰 밖에 있었어요</h3><p>여기에 문제는 하나 더 있었어요. 동네걷기는 웹뷰라서, 유저의 걸음 수를 가져오려면 네이티브 브릿지를 통해야 해요. 그런데 이 호출은 <strong>OS 시스템 권한 팝업을 띄워요.</strong></p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/819/1*PQrFCw-ks-uEIXXVCqtcUA.png\" /></figure><pre>await bridge.getStepCount({})<br />// 권한을 처음 요청할 때면 OS가 시스템 팝업을 띄우고,<br />// 사용자가 응답할 때까지 이 Promise는 pending</pre><p>이 팝업은 웹뷰가 띄우는 게 아니에요. 그래서 웹뷰가 닫을 수도, 지금 떠 있는지 조회할 수도 없어요. 웹뷰가 알 수 있는 유일한 신호는 <strong>브릿지가 돌려준 Promise가 팝업이 떠있는 동안은 pending이라는 사실</strong> 하나뿐이었어요.</p><p>즉 “지금 화면 위에 뭔가 떠 있다”를 표현할 수 있는 채널이 Promise의 상태밖에 없었던 거예요.</p><p>이 쯤에서 “오버레이 복잡도는 overlay-kit 같은 기존 라이브러리를 쓰면 되는 거 아닌가?”라고 궁금하실 수 있을 것 같아요. 하지만 이런 라이브러리가 푸는 건 “어떻게 띄울지”예요. 저희 문제는 ‘오버레이를 지금 띄워도 되는지’였어요.</p><ul><li>open() 호출 순서가 그대로 노출 순서가 돼요. 그런데 우리는 그 호출 순서가 곧 서버 응답 도착 순서라 매번 달랐어요. 라이브러리를 깔아도 “지금 떠도 되나”를 판단하는 플래그는 그대로 남아요.</li><li>웹뷰 밖 오버레이를 웹뷰는 알 수 없어요. 걸음수 세기 브릿지가 띄우는 OS 권한 팝업은 React 트리 밖이라 어떤 오버레이 라이브러리도 그 pending을 알 수 없었어요.</li><li>순서는 도메인 정책이라 라이브러리 밖에 남아요. “권한 결손은 진행 중인 걸 밀어낸다” 같은 건 어떤 라이브러리도 대신 정해주지 않아요.</li></ul><h3>3. 처음엔 “오버레이를 한 곳에 등록하자” 였어요</h3><p><strong>눈에 보이는 문제가 오버레이니까, 오버레이를 한 곳에 등록해서 제어하자.</strong></p><p>처음엔 ebay/nice-modal-react처럼 컴포넌트를 전역에 register해두고 호출처는 id로 부르되, 거기 없는 우선순위 큐잉을 얹는 형태를 생각했어요. 그렇게 버디한테 공유했던 멘탈 모델은 이랬어요.</p><blockquote><em>오버레이는 우체국 창구처럼 줄을 서요. 한 번에 한 명만 창구에 있고, 다음 사람은 앞 사람이 끝나야 들어와요. </em><strong><em>VIP는 새치기할 수 있고, VIP가 오면 지금 창구에 있는 사람은 즉시 자리를 비워요.</em></strong></blockquote><p>처음 그린 설계는 지극히 자연스러운 생각의 흐름이었어요.</p><p>그리고 이 비유는 결국 최종 설계까지 그대로 남았지만, <strong>줄을 서는 대상</strong>은 완전히 바뀌게 돼요.</p><h3>4. 버디가 기존 설계의 트레이드오프를 짚어줬어요</h3><p>설계 리뷰에서 돌아온 피드백은 이거였어요.<br /><strong>도메인과 강하게 결합된 오버레이가 전역 레이어로 끌어올려지면 응집도가 깨진다.</strong></p><p>이 피드백을 계속 곱씹어보니, register 방식의 매력이었던 “한눈에 보는 제어”에는 구체적으로 이런 비용이 붙어있었어요.</p><ul><li><strong>로직과 UI가 서로 다른 곳에 정의돼요.</strong> 호출처는 register만 하고 실제 렌더는 전역 호스트에서 일어나요. 오버레이 하나를 이해하려면 호출처 / 렌더 맵 / 정책 카탈로그 세 곳을 따라가야 흐름이 보여요.</li><li><strong>도메인 로직이 전역 state로 흘러가요.</strong> 호출처가 navigation이나 보상 처리 함수를 payload에 담아 등록하면, 그 클로저가 전역 state에 보관된 채 호스트에서 호출돼요. 호출처가 언마운트되거나 리렌더돼도 클로저는 <strong>등록 시점 스냅샷 그대로</strong> 살아남아요.</li><li><strong>변경 영향 범위가 커져요.</strong> 새 오버레이 하나 추가하려면 호출처, 렌더 맵, 정책 카탈로그를 다 건드려야 해요.</li></ul><p>그러니까 “한눈에 보는 제어”는 <strong>여러 도메인 맥락이 전역 레이어로 올라와 섞이는 비용</strong>을 치르고 사는 거였어요. 그러고 나니 제가 문제를 보는 시각 자체에 찜찜함이 남았어요.</p><p><em>애초에 내가 문제를 너무 좁게 정의한 건 아닐까?</em></p><h3>5. 문제 재정의</h3><p>문제 정의 자체에 대한 의심은 들었지만 그렇다고 쉽게 추상화가 되지는 않았어요. 그래서 의식적으로 큰 맥락을 보려고, 하루를 통째로 마인드맵 그리는 데 썼어요. 모든 생각에 의문을 달고, 그 의문에 다시 생각을 다는 식으로요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*MSFWLjpkvwR8qz4nNyG_iA.png\" /></figure><p>그렇게 한참을 째려보다가 도달한 재정의는 이거였어요.</p><blockquote><strong>‘복잡도의 본질은 오버레이가 아니라, 여기저기서 제멋대로 시작되는 비동기 작업이었구",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "비동기 패턴으로 UI 오버레이 흐름 정리",
+        "tags": [
+          "Promise",
+          "ES2024",
+          "Promise.withResolvers",
+          "queueMicrotask",
+          "React"
+        ],
+        "concepts": [
+          "비동기 처리와 트랜잭션",
+          "스케줄링",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "다양한 오버레이가 독립적으로 마운트돼 겹치는 문제를 전역 레지스트리와 우선순위 큐로 중앙 제어한다.",
+            "timestamp": null
+          },
+          {
+            "point": "OS 권한 팝업 같은 웹뷰 밖 UI는 브릿지 Promise의 pending 상태를 신호로 활용해 비동기 흐름에 통합한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Promise.withResolvers와 queueMicrotask을 이용해 오버레이 표시를 순차적으로 스케줄링하고, VIP 오버레이는 즉시 선점한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데스크톱 앱에서 하드웨어 권한 요청 팝업을 Promise pending 상태로 감지해 UI 흐름을 매끄럽게 만든다.",
+          "SaaS 대시보드의 알림 배너를 전역 큐로 관리해 한 번에 하나만 표시하고, 긴급 알림은 즉시 선점하도록 한다.",
+          "스트리밍 파이프라인의 데이터 적재 작업을 deferred Promise로 순차 실행시켜 작업 충돌을 방지한다."
+        ],
+        "quiz": [
+          {
+            "question": "OS 권한 팝업을 감지하기 위해 사용된 메커니즘은 무엇인가?",
+            "options": [
+              "브릿지 함수의 반환값을 직접 검사",
+              "Promise가 pending 상태인 것을 확인",
+              "네이티브 콜백 이벤트 리스너 사용",
+              "타이머 기반 폴링"
+            ],
+            "answer_index": 1,
+            "explanation": "브릿지 호출이 반환한 Promise가 pending 상태인 동안 OS 팝업이 떠 있음을 알 수 있다."
+          },
+          {
+            "question": "오버레이를 개별 컴포넌트가 직접 연결하는 방식의 주요 문제는?",
+            "options": [
+              "렌더링 성능 저하",
+              "컴포넌트 간 결합도 증가와 체인 관리 복잡성",
+              "네트워크 호출 증가",
+              "CSS 충돌 발생"
+            ],
+            "answer_index": 1,
+            "explanation": "각 오버레이가 다음에 무엇이 와야 하는지 알아야 하므로 결합도가 높아지고, 새로운 오버레이가 중간에 끼면 체인을 다시 이어야 한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "AI Can Write the Proof. Who Checks It? — Leonardo de Moura",
+        "url": "https://youtu.be/ZpQFebTK75A",
+        "published_at": "2026-09-29T22:38:34",
+        "transcript": null,
+        "body": "Leonardo de Moura created Lean and co-created Z3. \n\n---\nThis episode is sponsored by Parallel.\nParallel, where agents find answers: web search, extraction and deep research APIs built for AI agents.\nStart free with the Parallel MCP server and $5 of credits every month: https://parallel.ai/mlst?utm_source=creator&amp;utm_medium=podcast&amp;utm_content=MLST\n---\n\nTim Scarfe talks with Leo about how Lean escaped its original audience, why dependent types and Mathlib made it useful to working mathematicians, and what happens when formal verification leaves the lab. De Moura explains the small trusted kernel and independent checkers, and gives his account of the recent Collatz incident, in which a purported proof was accepted by both Lean's official kernel and Nanoda, apparently by exploiting a different bug in each.\n\nThe conversation then turns to AI-produced proofs and software. Claude agents rebuild zlib in Lean and the result is verified, yet the example exposes the loophole at the centre of the show: a proof only certifies the specification humans chose to write. De Moura describes proof search as a game, separates formal competence from mathematical understanding, and asks what authorship means when models can generate proofs at scale.\n\nThe closing argument puts human responsibility upstream: choosing definitions, judging abstractions, curating Mathlib, inspecting certificates, and deciding which problems deserve effort. He also reflects on Lean's future beyond its founder and gives a practical starting point for new users.\n\n---\nTIMESTAMPS:\n00:00:00 Cold open: the green checkmark can lie\n00:00:59 Cathedral or bazaar: who controls Lean's core?\n00:04:55 Why Lean's core stays small and protected\n00:08:07 The Slack purge, Brandolini's law and the Lean FRO\n00:11:12 The Collatz exploit: two kernels, two bugs\n00:16:44 More kernels, reward hacking and safety by transparency\n00:21:04 Sponsor: Parallel\n00:21:59 Kim Morrison, Claude and the zlib proof\n00:25:25 Can we specify complex systems?\n00:28:04 Specs change: proofs are cheaper to redo with AI\n00:31:27 From Lean 1 to Lean 4\n00:34:57 Dependent types in plain terms\n00:37:25 Lean 4's extensibility and Mathlib's growth\n00:41:44 Mathlib as infrastructure: Formal Frontiers\n00:44:15 Creativity, abstraction and nut-sniping\n00:48:46 Breadcrumbs, not learning: what AI agents lack\n00:53:03 Competence without comprehension, and verified guardrails\n00:56:21 Is the human still the author?\n01:01:44 AlphaProof, LLMs and why certificates still matter\n01:06:38 What's next for Lean, and its legacy\n01:11:42 How to start learning Lean\n\n---\nREFERENCES:\ntool:\n[00:00:48] Lean\nhttps://lean-lang.org/\n[00:01:24] Mathlib\nhttps://github.com/leanprover-community/mathlib4\n[00:12:09] nanoda_lib\nhttps://github.com/ammkrn/nanoda_lib\n[00:12:19] CollatzLean\nhttps://github.com/xrchz/CollatzLean/blob/a79357462a33d2a6babd4cf6c8d8bcd25425d653/README.md\n[00:13:06] Lean issue 14576\nhttps://github.com/leanprover/lean4/issues/14576\n[00:13:21] Le",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI가 만든 증명 검증의 한계와 인간 역할 강조",
+        "tags": [
+          "Lean",
+          "Mathlib",
+          "Z3",
+          "Claude",
+          "Parallel"
+        ],
+        "concepts": [
+          "AI 기반 수학 증명",
+          "AI 안전 및 비밀 과제 회피"
+        ],
+        "key_points": [
+          {
+            "point": "Lean의 작은 신뢰 커널과 독립 검증기가 존재하지만 Collatz 사건처럼 버그가 허위 증명을 통과시킬 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "Claude 같은 AI 에이전트가 zlib을 Lean으로 재구현해 검증 가능하지만, 검증은 인간이 정의한 사양만 확인한다는 한계가 있다",
+            "timestamp": null
+          },
+          {
+            "point": "AI가 대규모로 증명을 생성하더라도 정의 선택, 추상화 판단, Mathlib 관리 등 인간의 사전·사후 작업이 필수적이다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
