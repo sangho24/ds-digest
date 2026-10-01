@@ -26,15 +26,15 @@
     },
     "AI 기반 진단 보조": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-17"
+      "last_seen": "2026-10-02"
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 23,
+      "count": 24,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-02"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -50,9 +50,9 @@
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
-      "count": 5,
+      "count": 7,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-30"
+      "last_seen": "2026-10-02"
     },
     "AI 인프라 경쟁": {
       "aliases": [],
@@ -92,9 +92,9 @@
     },
     "RESTful API 설계": {
       "aliases": [],
-      "count": 1,
+      "count": 3,
       "first_seen": "2026-09-12",
-      "last_seen": "2026-09-12"
+      "last_seen": "2026-10-02"
     },
     "RPC 인터페이스": {
       "aliases": [],
@@ -146,9 +146,9 @@
     },
     "개인화 추천": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-23",
-      "last_seen": "2026-09-23"
+      "last_seen": "2026-10-02"
     },
     "고객 데이터 활용": {
       "aliases": [],
@@ -248,9 +248,9 @@
     },
     "디자인 트레이드오프": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-23",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-02"
     },
     "라벨 불확실성 모델링": {
       "aliases": [],
@@ -278,9 +278,9 @@
     },
     "멀티모달 표현 학습": {
       "aliases": [],
-      "count": 12,
+      "count": 13,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-02"
     },
     "멀티스케일 샘플링": {
       "aliases": [],
@@ -290,9 +290,9 @@
     },
     "멀티에이전트 시스템": {
       "aliases": [],
-      "count": 10,
+      "count": 12,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-02"
     },
     "멀티프로세싱": {
       "aliases": [],
@@ -410,9 +410,9 @@
     },
     "불확실성 정량화": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-29"
+      "last_seen": "2026-10-02"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -518,9 +518,9 @@
     },
     "스트림 파이프라인": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-10-02"
     },
     "시각적 위계 설계": {
       "aliases": [],
@@ -539,6 +539,12 @@
       "count": 3,
       "first_seen": "2026-09-03",
       "last_seen": "2026-09-25"
+    },
+    "신뢰성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-02",
+      "last_seen": "2026-10-02"
     },
     "실험 설계": {
       "aliases": [],
@@ -560,9 +566,9 @@
     },
     "오프라인-온라인 연계 전략": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-10-02"
     },
     "온-폴리시 학습": {
       "aliases": [],
@@ -913,6 +919,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-01T08:40:28.228693+09:00",
+  "updated_at": "2026-10-02T08:50:44.508504+09:00",
   "version": 1
 }

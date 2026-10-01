@@ -1,0 +1,411 @@
+{
+  "date": "2026-10-02",
+  "generated_at": "2026-10-01T23:50:56.631875",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Ranking-Aware Prompt Optimization for Multimodal Clinical Diagnosis",
+        "url": "https://arxiv.org/abs/2609.40361v1",
+        "published_at": "2026-09-30T17:59:56",
+        "transcript": null,
+        "body": "Multimodal large language models (MLLMs) are rapidly advancing clinical diagnosis, yet their adaptation pipelines remain anchored to accuracy-based objectives. Clinical data are heavily class-imbalanced: a constant-majority predictor can score above 90% accuracy while being clinically useless. We therefore evaluate and optimize for AUROC, a threshold-free score that ranks positives above negatives and is invariant to class balance. We focus on prompt optimization in MLLMs. Reflective methods such as GEPA use a binary scores matrix with one row per evaluation instance and one column per candidate prompt; cells record per-instance correctness, so the column average is accuracy and drives candidate selection. We introduce pair-level Pareto prompt evolution (Ranking-PE), which replaces each correctness row with a pairwise-ordering row over (positive, negative) instance pairs: the cell is 1 if the candidate scores the positive higher than the paired negative. The column average then equals empirical AUROC (by the Wilcoxon-Mann-Whitney identity). We apply this swap at all three layers the prompt evolution search reads from - the scores matrix that decides Pareto dominance, the per-example feedback to the reflection LM, and final candidate selection - at no extra model calls and with no surrogate loss. Across three diseases on MIMIC, accuracy-based prompt evolution can degrade ranking; Ranking-PE reverses this, beating the accuracy-based recipe by +5.8 AUROC pp on fine-tuned Qwen3-VL-8B and +16.2 pp on MedGemma-4B. Ablations examine each design component and show that a medical-grade visual backbone - via vision-encoder-tuned SFT or medical pretraining - is a prerequisite that prompt search cannot replace - our recipe extends reflective prompt evolution from text-only data to multimodal clinical decision-making.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "AUROC 기반 프롬프트 최적화로 진단 성능 개선",
+        "tags": [
+          "MIMIC",
+          "Qwen3-VL-8B",
+          "MedGemma-4B",
+          "GEPA",
+          "Ranking-PE"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "AI 기반 진단 보조",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "클래스 불균형으로 정확도가 오해를 일으키므로 AUROC를 순위 기반 평가 지표로 채택한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Ranking-PE는 정답 행을 (양성,음성) 쌍의 순위 행으로 바꾸어 평균이 경험적 AUROC와 동일하게 만든다.",
+            "timestamp": null
+          },
+          {
+            "point": "Ranking-PE 적용 시 Qwen3-VL-8B와 MedGemma-4B에서 각각 +5.8·+16.2 AUROC 포인트 향상하고, 의료용 비주얼 백본이 필수임을 확인했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "임상 데이터의 심각한 클래스 불균형을 해결하기 위해 기존 정확도 기반 프롬프트 최적화가 한계에 부딪힌 상황에서, 본 논문은 순위 기반 AUROC 최적화를 위한 Ranking-PE를 제안한다. 이는 반영형 프롬프트 진화에 AUROC를 직접 연결함으로써 멀티모달 임상 진단 파이프라인의 평가와 검색을 재정의한다.",
+        "production_ideas": [
+          "추천 시스템에서 NDCG 향상을 위해 정확도 기반 프롬프트 튜닝 대신 Ranking-PE를 적용해 쌍별 순위 피드백을 활용한다",
+          "사기 탐지와 같이 양성 비율이 극히 낮은 도메인에 Ranking-PE를 도입해 AUROC 중심의 프롬프트/특징 탐색을 수행한다",
+          "멀티모달 감성 분석에서 중립·부정 클래스 구분을 개선하기 위해 정확도 기반 튜닝을 Ranking-PE로 교체해 순위 기반 평가를 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 임상 데이터에서 AUROC가 정확도보다 평가에 더 적합한가?",
+            "options": [
+              "AUROC는 클래스 비율에 영향을 받지 않는다",
+              "AUROC는 임계값을 필요로 한다",
+              "정확도는 양성 예측을 강조한다",
+              "AUROC는 모델 복잡도를 측정한다"
+            ],
+            "answer_index": 0,
+            "explanation": "AUROC는 모든 가능한 임계값에 대한 TPR과 FPR을 고려해 순위를 평가하므로 클래스 불균형에 무관하게 모델의 구별 능력을 측정한다."
+          },
+          {
+            "question": "Ranking-PE가 기존 GEPA의 점수 행렬을 어떻게 바꾸는가?",
+            "options": [
+              "각 인스턴스에 대한 이진 정답을 유지한다",
+              "긍정·음성 쌍에 대한 순위 여부를 기록한다",
+              "평균 손실을 계산한다",
+              "샘플 가중치를 적용한다"
+            ],
+            "answer_index": 1,
+            "explanation": "Ranking-PE는 각 행을 (양성,음성) 인스턴스 쌍에 대해 후보가 양성을 더 높게 점수했는지를 1/0으로 기록해, 열 평균이 경험적 AUROC가 되도록 만든다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "추천 후보는 많을수록 좋을까? TopK를 최적화해 전환율을 높인 방법",
+        "url": "https://toss.tech/article/53545",
+        "published_at": "2026-10-01T01:26:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8079-b5f9-c499f1bc61c6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스 Commerce Personalization Team에서 토스 쇼핑의 추천 시스템을 만들고 있는 ML Engineer 구국원입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-80d9-bb85-d5dfbcd4c212\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">추천 시스템은 흔히 더 좋은 모델을 만드는 문제로 보입니다. 하지만 실제 서비스를 운영하다 보면 모델 바깥에도 성능을 좌우하는 중요한 결정이 많아요. 각 추천 모델에서 상품을 몇 개씩 가져올 것인지 정하는 </span><span class=\"css-q3ktjb\">TopK</span><span class=\"css-1kxrhf3\">도 그중 하나입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-800a-b233-f40ad4a7ce10\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">저희는 여러 리트리벌(Retrieval) 모델의 TopK를 경험적으로 정해 왔습니다. 새로운 리트리벌 모델이 생길 때마다 후보 수는 조금씩 늘었고, 어느새 랭커(Ranker)가 평가해야 할 상품과 광고 유효성 검사량도 함께 커졌어요. 그렇다고 모든 리트리벌 모델의 후보를 같은 비율로 줄이면 가치 있는 상품까지 잃을 수 있었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8074-8933-c338210f9fdc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 글에서는 이 문제를 조합 최적화 문제로 바꿔 풀고, 온라인 실험으로 검증한 과정을 소개할게요. 결론부터 말하면 </span><span class=\"css-q3ktjb\">전체 후보 수를 약 절반으로 줄이면서 User CVR(User Conversion Rate)은 7.55%, 사용자당 주문 수는 10.13% 높일 수 있었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8038-bafb-fc37e21c12f2\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h3 class=\"css-1feg9au\" id=\"3eaa360d-33e3-8068-95c2-d29573ac3cba\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">TopK가 커질수록 추천이 좋아질까요?</span></span></span></h3><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-80e5-afb2-c34a8f697bd4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스 쇼핑의 추천 시스템은 크게 Retrieval, Ranking 단계로 이루어져 있어요.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3eaa360d-33e3-8086-b99f-e6172f9b9f12\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3eaa360d-33e3-8017-a012-f1cf874ee1c6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Retrieval</span><span class=\"css-1kxrhf3\">은 수많은 상품 중 사용자가 좋아할 만한 후보를 빠르게 가져옵니다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3eaa360d-33e3-80ba-95b8-ccc3a68af8fc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">Ranking</span><span class=\"css-1kxrhf3\">은 가져온 후보마다 클릭이나 구매 가능성을 예측해 순서를 정합니다.</span></span></span></li></ul></div></aside><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8001-8891-d755f45670bc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">TopK의 K는 각 리트리벌 모델이 다음 단계로 넘기는 상품 수예요. 예를 들어 구매 이력을 보는 모델에서 500개, 최근 클릭을 보는 모델에서 200개를 가져오면 두 모델의 TopK 합은 700개가 됩니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8015-9c51-ccabe59c90a6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">후보가 많으면 좋은 상품을 놓칠 가능성은 줄어듭니다. 하지만 공짜는 아니에요. Ranking 단계가 평가할 상품이 많아지고, 광고 상품의 유효성을 확인하는 비용도 늘어납니다. 따라서 피드를 만드는 데 총 소요 시간이 증가하여 응답 시간이 길어질 수 있고, 점수가 낮은 후보가 뒤 단계까지 살아남을 가능성도 커져요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-80fd-965b-db67105999a2\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">당시 TopK는 주로 각 모델을 담당하는 ML Engineer의 경험에 따라 정했습니다. 개별 모델만 보면 합리적인 값이어도 여러 리트리벌 모델의 후보를 합치면 전체 후보 수가 계속 커지는 구조였어요. 더 어려운 점은 모든 리트리벌 모델이 같은 가치를 만들지 않는다는 것이었습니다. 어떤 모델은 상위 수백 개까지 구매 가능성이 높지만, 다른 모델은 상위 몇십 개 이후 가치가 빠르게 낮아졌어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-809a-b0d5-cdc42ef0d034\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 질문을 바꿨습니다.</span></span></span></p><blockquote class=\"css-2sk6rv\" id=\"3eaa360d-33e3-8053-92e1-c93858fc43ee\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">모든 리트리벌 모델의 TopK를 똑같이 줄이지 않고, 전체 후보 수라는 예산 안에서 가치가 높은 모델에 더 많은 TopK를 배정할 수 없을까?</span></span></span></blockquote><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-807f-a1cb-d55194b6815d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h3 class=\"css-1feg9au\" id=\"3eaa360d-33e3-809b-869c-f536330abcf5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">TopK 배정을 배낭 문제로 바꿔보기</span></span></span></h3><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-807d-b769-d656c8ae81da\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 문제는 </span><span class=\"css-q3ktjb\">배낭 문제(Knapsack Problem)</span><span class=\"css-1kxrhf3\">와 닮았습니다. 무게 제한이 있는 배낭에 물건을 담되, 물건 가치의 합을 가장 크게 만드는 조합을 찾는 문제예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3eaa360d-33e3-8094-bbdc-dface10ed6a1\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">추천 시스템에 대입하면 이렇게 볼 수 있습니다.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3eaa360d-33e3-804e-8451-df1f46c344d7\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3eaa360d-33e3-80f4-a375-c7f4a0043",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "추천 후보 수를 최적화해 전환율을 크게 향상시킬 수 있다",
+        "tags": [
+          "Toss",
+          "TopK",
+          "Retrieval",
+          "Ranking",
+          "User CVR"
+        ],
+        "concepts": [
+          "개인화 추천",
+          "디자인 트레이드오프",
+          "오프라인-온라인 연계 전략"
+        ],
+        "key_points": [
+          {
+            "point": "TopK를 무작정 늘리면 후보는 많아지지만 랭킹 비용·지연이 증가해 전환율이 떨어질 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "전체 후보 예산 안에서 가치가 높은 Retrieval 모델에 더 많은 TopK를 배정하면 후보 수를 절반 줄이면서 CVR 7.55%·주문수 10.13% 향상 가능",
+            "timestamp": null
+          },
+          {
+            "point": "이를 위해 모델별 TopK를 조합 최적화 문제로 정의하고 온라인 A/B 테스트로 검증했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "뉴스 피드에서 기사·동영상·광고 등 여러 콘텐츠 소스에 제한된 슬롯을 가치 기반으로 배정해 사용자 참여를 높인다",
+          "채용 플랫폼에서 스킬 매칭·위치·기업 인기 등 다양한 검색 모델에 가중된 TopK를 할당해 지원 전환율을 개선한다",
+          "이커머스 검색에서 카테고리별 전환 가치를 고려해 노출 슬롯을 배분해 클릭률과 구매 전환을 동시에 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 TopK를 단순히 늘리는 것이 항상 좋은 전략이 아닌가?",
+            "options": [
+              "후보가 많아지면 랭킹 비용·지연이 증가한다",
+              "모델 정확도가 자동으로 높아진다",
+              "광고 비용이 감소한다",
+              "사용자 만족도가 무조건 상승한다"
+            ],
+            "answer_index": 0,
+            "explanation": "후보 수가 늘면 랭킹 단계에서 평가해야 할 아이템이 많아져 처리 비용과 응답 지연이 증가하고, 낮은 품질의 후보가 뒤 단계까지 살아남을 가능성이 커진다."
+          },
+          {
+            "question": "이 글에서 제시한 최적화 접근법의 핵심은 무엇인가?",
+            "options": [
+              "모든 모델에 동일한 TopK를 적용한다",
+              "전체 후보 예산 안에서 가치 높은 모델에 더 많은 TopK를 배정한다",
+              "랭킹 모델을 교체한다",
+              "광고 비중을 늘린다"
+            ],
+            "answer_index": 1,
+            "explanation": "전체 후보 수라는 예산을 정하고, 각 Retrieval 모델의 기여 가치를 평가해 가치가 높은 모델에 더 많은 TopK를 할당함으로써 효율을 높였다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "토스증권 AI 서비스를 지탱하는 백엔드 엔지니어링",
+        "url": "https://youtu.be/lfyKfUFf-sk",
+        "published_at": "2026-10-01T06:00:46",
+        "transcript": "[00:00] 안녕하세요. 토스 증권 AI 유저 저니 사일로에서 백엔드 엔지니어로 일하고 있는 임효섭이라고 합니다.\n[00:06] 오늘은 AI 제품을 지탱하는 백엔드 엔지니어링이라는 주제로 저희가 AI 제품을 만들며 마주한 문제들과 그걸 어떻게 풀었는지 사례 중심으로 말씀드리겠습니다.\n[00:17] 본론에 앞서 25년 상반기에 저희 팀에 무슨 일이 있었는지 잠깐 말씀드리겠습니다.\n[00:23] 당시 LLM 성능이 빠르게 좋아지면서 업계 전반이 뜨거웠고, 성역처럼 여겨지던 금융권도 규제 샌드박스를 통해 생성형 AI를 서비스에 쓸 수 있게 되었습니다.\n[00:35] 토스증권도 AI 대항해 시대의 첫 항해를 시작했고 그 시작이 해외 기업 어닝콜을 실시간 번역하는 어닝콜 서비스였습니다.\n[00:45] 대여 서명히 3.5개월 만에 최대한 빠르게 런칭하였고, 이 경험을 발판 삼아 저희 팀은 AI를 제품에 쓰는 일에 더욱 속도를 냈습니다.\n[00:55] 어닝콜은 성공적으로 런칭했지만 그 뒤에 알게 된 불편한 진실이 있습니다.\n[01:01] AI를 활용한 서비스 컴포넌트는 저희가 만들던 전통적인 컴포넌트와 성질이 달랐습니다.\n[01:07] 이를 다섯 가지 정도로 추려봤는데요.\n[01:10] 첫 번째, 비결정성. 같은 입력에 다른 출력이 나옵니다. 재시도가 멱등하지 않고, 테스트가 이퀄스로 끝나지 않습니다.\n[01:18] 두 번째, 레이턴시 분포입니다. P99가 기본 초단위입니다. 타임아웃 설계가 곧 UX 설계가 됩니다.\n[01:26] 세 번째, 부분 실패. 응답은 200 OK인데, 내용이 틀린 실패가 존재합니다.\n[01:33] 네 번째, 비용의 선형 증가입니다. 사용량에 비용이 비례하니 성능을 위한 스케일 아웃이 무조건 답이 될 수 없습니다.\n[01:42] 마지막으로 정답이 없는 SLO인데요. 가용성은 200 OK냐, 500이냐로 명확한데 추론 품질은 측정 장치를 직접 만들어야 합니다.\n[01:52] 장치가 없으면 며칠 뒤 CS로 저희가 마주하게 되겠죠.\n[01:56] 이 다섯 가지가 기존 백엔드의 기본 가정을 하나씩 무너뜨렸습니다.\n[02:01] 앞에서 보신 특성들은 결국 서비스 품질을 떨어뜨리는 원인입니다.\n[02:06] 이 부분을 어떻게 풀까 팀원들과 고민한 끝에 내린 결론은 다음과 같았습니다.\n[02:11] 올드 스쿨인 ISO 25010의 주 품질 특성을 지키는 전략과 크게 다르지 않다입니다.\n[02:17] 보시는 표가 앞서 말씀드린 특성을 25010의 품질 특성에 연결한 것입니다.\n[02:22] 비결정성과 부분 실패처럼 장애로 이어지는 것들은 신뢰성, 고르지 않은 레이턴시와 늘어나는 비용은 효율성으로 연결됩니다.\n[02:31] 정답이 없는 SLO는 100% 해결이 어렵다고 판단했지만 지금은 유지 보수성 쪽에서 접근하고 있습니다.\n[02:39] 결국 어려워 보이던 문제도 나누어 보면 방향은 있었습니다.\n[02:43] 이제 저희가 실제로 노력했던 사례들을 말씀드려 볼게요.\n[02:46] 앞서 나온 어닝콜과 이후 개발한 AI 시그널 두 제품에서 가져왔습니다.\n[02:51] 어닝콜과 AI 시그널 두 제품 모두 생성형 AI를 핵심 엔진으로 사용하는 제품입니다.\n[02:59] 첫 번째 사례는 효율성에 해당하는 어닝콜의 이벤트 스트리밍 아키텍처입니다.\n[03:04] 개발 당시 저희는 해외 어닝콜 데이터를 갖고 있지 않았기 때문에 외부 업체와 계약해 받았습니다.\n[03:11] 오디오 스트리밍과 그에 매핑되는 스크립트 텍스트 두 가지였는데, 스크립트가 영어라 실시간 번역과 요약이 필요했습니다.\n[03:19] 첫 번째 문제는 이 스크립트가 S3의 제이슨엘 파일로 실시간 업데이트되는 형태였다는 점입니다.\n[03:26] 이걸 어떻게 가져와서 번역 요약하고 사용자에게 전달할 것인가가 문제였습니다.\n[03:32] 저희는 어닝콜이 시작되면 서버 모듈 하나가 스크립트를 폴링에 수집하고 카프카로 번역과 요약을 처리한 뒤 NATS와 SSE로 클라이언트에 브로드캐스팅하는 구조를 택했습니다.\n[03:45] 이 전략에서 노린 건 두 가지입니다.\n[03:47] 하나는 어닝콜 하나당 추론 라인을 단일화해 비용을 최소화하는 것입니다.\n[03:52] 사용자가 몇 명이든 추론은 한 번만 하면 되니까요.\n[03:56] 다른 하나는 저지연입니다.\n[03:58] 번역과 요약 자체는 초 단위로 걸리기 때문에 추론 이후 전달 과정만큼은 지연을 최대한 줄여야 했습니다.\n[04:06] 번역 요약의 품질은 모델과 선우 처리 모델에 위임하고 저희는 이 전달 구조를 책임지는 것으로 어닝콜 제품이 완성되었습니다.\n[04:14] 두 번째 사례도 효율성이고 같은 어닝콜 제품입니다.\n[04:19] 런칭 후 운영하면서 알게 된 건 사용자가 번역과 요약을 꽤 많이 기다린다는 점이었습니다.\n[04:25] 원인은 스크립트 구조였어요.\n[04:27] 텍스트가 문장이 아니라 문단 단위로 들어오는데 문단 전체를 통째로 추론하다 보니 토큰이 커서 추론 시간이 오래 걸렸습니다.\n[04:35] 그래서 스크립트 폴링 서버 안에 문단 나누기 컴포넌트를 만들었습니다.\n[04:40] 벤더가 준 스크립트를 더 짧게 자르고 순서를 보장해 모델에 전달했습니다.\n[04:45] 이로 인해 추론 시간이 줄어들게 되었고 사용자 경험도 훨씬 매끄러워졌습니다.\n[04:51] 세 번째도 효율성인데, 앞 두 사례가 시간 효율성이라면 이번엔 자원 효율성 쪽입니다.\n[04:58] AI 시그널의 메인 화면은 특정 시점에 발행된 리즈닝 목록의 랭킹을 적용한 TOP30과 연관 종목 그래프로 이루어집니다.\n[05:07] 여기서 발견된 숫자 두 개가 문제였습니다.\n[05:10] 랭킹 대상 리즈닝 목록이 최대 2,000개, 이 화면이 노출되는 지면의 트래픽이 최대 2,000 TPS입니다.\n[05:17] 여기서 문제 두 가지가 파생되는데요.\n[05:20] 하나는 매 요청마다 랭킹용 리즈닝 목록을 조회하면 데이터베이스에 부하가 걸린다는 점.\n[05:27] 다른 하나는 응답이 그래프 형태에 LLM 생성 텍스트까지 포함해 2KB가 넘는다는 점이었습니다.\n[05:34] 그래서 다음과 같이 해결해 보았습니다.\n[05:37] 첫 번째, 리즈닝을 만드는 AI 워크플로우 단에서 데이터베이스와 캐시에 동시 적재하고 데이터베이스는 폴백으로만 사용하는 것입니다.\n[05:46] 두 번째는 랭킹이 적용된 그래프 데이터는 생성의 CPU를 많이 사용하기 때문에 재조회를 대비해 캐싱하되 크기를 고려해 Zstandard로 압축하였습니다.\n[05:57] 네 번째 사례는 신뢰성입니다.\n[06:00] 번역 요약 추론이 실패했을 때 복구 이야기인데요.\n[06:04] 어닝콜은 오디오 스트리밍과 텍스트가 맞물려 돌아가기 때문에 번역이나 요약 하나가 빠지면 사용자 경험이 바로 무너지게 됩니다.\n[06:12] 사실상 99.99% 이상 성공해야 하는 핵심 기능이죠.\n[06:17] 그런데 초기 런칭 때는 여기까지 고려하지는 못했는데요.\n[06:21] 이후 같은 시간에 여러 어닝콜이 동시에 열리면서 모델 추론에 부하가 걸렸고 종종 타임아웃이 발생하는 걸 목격했습니다.\n[06:30] 이벤트 스트리밍에서 실패 복구는 전통적으로 DLQ, 데드 레터 큐를 통한 재시도가 첫 번째 선택지입니다.\n[06:37] 저희도 다르지 않았고 그림처럼 DLQ를 먼저 적용했습니다.\n[06:42] 그리고 DLQ 재시도마저 실패할 경우를 대비해 동일할 품질을 낼 수 있는 폴백 모델을 준비하여 적용하였습니다.\n[06:50] 이 부분에서 말씀드리고 싶은 건 파이프라인 안에서 AI 모델을 외부 노드처럼 바라보는 순간 이렇게 예전부터 익숙했던 전략이 그대로 적용된다는 점입니다.\n[07:00] 다섯 번째 사례는 유지 보수성에 해당하는 제품을 진단하는 도구 이야기입니다.\n[07:06] 시스템에 AI 모델이라는 새 식구가 들어오면서 기존 모니터링이 답하지 못하는 질문이 생겼습니다.\n[07:13] 서버가 살아있는지 응답이 200 OK인지까지는 볼 수 있었지만 어닝콜이 진행되는 동안 번역과 요약이 실제로 몇 퍼센트나 성공하고 실패하는지 볼 수 있는 방법이 없었습니다.\n[07:26] 어닝콜은 실시간 제품이라 진행 중에 못 찾으면 그대로 끝납니다.\n[07:31] 이 부분은 당연히 다음날 CS로 알게 되는 상황이었죠.\n[07:35] 그래서 네 가지를 보기로 했습니다.\n[07:37] 추론 성공률, 시스템 응답 상태, 인프라 상태, 그리고 어떤 오류가 났는지입니다.\n[07:44] 왼쪽 렬 두 가지가 번역 요약 리포트 분석 각각의 성공률이고 오른쪽 위는 실제로 몇 명이 보고 있는지를 나타내는 SSE 커넥션 수입니다.\n[07:54] 추론이 잘돼도 커넥션이 끊기면 사용자에게 아무것도 도달하지 못하니까요.\n[07:59] 오른쪽 아래는 실패 시 오는 알랏을 보여드리고 있습니다.\n[08:04] 결국 저희가 원래 하던 일과 크게 다르지 않았습니다.\n[08:08] 지표를 정의하고 대시보드를 만들고 임계치를 넣으면 알림을 받는 것, 관측 대상에 AI 모델이 추가됐을 뿐입니다.\n[08:16] 다만 하나만 정확히 짚고 넘어가자면 이 성공률은 실패하지 않았다는 뜻이지 좋은 결과가 나왔다는 뜻은 아닙니다.\n[08:25] 여섯 번째도 유지 보수성인데, 앞이 상태를 보는 것이었다면 이번엔 본 다음 바꾸는 것입니다.\n[08:32] AI 워크플로우를 운영하면서 알게 된 건 제품 품질을 결정하는 게 코드보다 조건값인 경우가 많다는 점입니다.\n[08:39] AI 시그널에서 어떤 뉴스를 시그널 후보로 볼지 판단하는 키워드 목록이 그렇고 아래쪽 이상 탐지 임계값도 마찬가지입니다.\n[08:47] 문제는 이 값들의 정답을 처음부터는 알 수 없다는 점이었습니다.\n[08:52] 운영하면서 사용자 반응을 보고 찾아갈 수밖에 없죠.\n[08:56] 그런데 이 값들을 코드에 상수화하게 되면 값 하나 바꾸는 데 배포가 필요하고 증권 도메인에서는 장중 배포가 자유롭지 않습니다.\n[09:06] 시장이 가장 크게 움직여서 조건을 조정해야 하는 순간이 정확히 그 시간인데도요.\n[09:12] 그래서 저희는 이 조건들을 다이나믹 컨피그로 빼두었습니다.\n[09:16] 어드민에서 바꾸면 재배포 없이 해당 설정값이 바로 반영됩니다.\n[09:20] 앞 사례의 대시보드로 보고 여기서 조정하고 다시 결과를 보는 순환이 만들어졌습니다.\n[09:26] 이것 역시 저희가 기존 서비스에서 이미 사용하던 방법들이었습니다.\n[09:31] 여기까지가 저희가 AI 제품을 만들며 마주한 문제들과 그걸 푼 방법들이었습니다.\n[09:37] 그런데 여섯 개를 쭉 늘어놓고 보니 한 가지가 눈에 들어옵니다.\n[09:41] 하나같이 저희가 원래 알고 있던 방법이었다는 건데요.\n[09:45] 이벤트 스트리밍, DLQ, 캐싱, 압축, 모니터링, 다이나믹 컨피그. 사실상 새로 배운 기술은 거의 없었습니다.\n[09:54] 그래서 저희는 이 방법들로 AI 제품을 안정적으로 만들 수 있다는 자신감을 얻었습니다.\n[10:00] 그런데 제품을 계속 만들다 보니 확보한 자신감만으론 풀리지 않는 문제가 다음에 기다리고 있었습니다.\n[10:07] 이번엔 기술의 문제가 아니었습니다.\n[10:10] 대부분의 IT 회사들처럼 토스증권의 서버 엔지니어도 AI가 만든 변화의 한가운데 서 있습니다.\n[10:16] 예전에는 직무와 숙련도가 경계를 만들어 줬는데 지금은 그 숙련도 장벽을 AI가 낮추고 있습니다.\n[10:24] 디자이너가 직접 동작하는 시제품을 만들고 엔지니어가 화면 흐름과 카피를 손대는 일이 훨씬 많아졌어요.\n[10:31] 디자인을 할 줄 안다, 코딩을 할 줄 안다는 것만으로는 더 이상 차별점이 되지 않습니다.\n[10:37] 그러다 보니 조직도 바뀝니다.\n[10:39] 기존 도메인 조직 외에 AI 제품과 인프라를 전담하는 조직이 새로 생겼고 직군을 넘나들며 일하니 기술 스택과 언어도 넘나들어야 합니다.\n[10:49] 이 변화에 적응하는 것만도 벅찬데 문제가 두 가지 더 있었습니다.\n[10:54] 첫 번째, 해야 하는 일이 늘었습니다.\n[10:57] 오른쪽 아래 네 개는 저희가 원래 하던 일입니다.\n[11:00] 여기에 AI 워크플로우와 에이전트 개발, 모델을 위한 데이터 수집과 정제가 얹혔습니다.\n[11:06] 두 번째, 새로운 현상들이 관측됩니다.\n[11:09] 제품 출시는 빨라지는데 기존 직군의 인력난은 만성적입니다.\n[11:13] 그러다 보니 직군 경계에서 병목이 생깁니다.\n[11:17] 익숙하지 않은 스택에 도전하다 보니 안정화 기간도 길어지는 추세이고요.\n[11:22] 정리하면 제품 하나하나의 품질은 지켜낼 수 있게 됐지만 제품을 만들어내는 속도 자체가 막히기 시작한 겁니다.\n[11:30] 이건 기술을 하나 더 배운다고 풀리는 문제는 아니었어요.\n[11:33] 그럼 앞으로 우리는 어떤 모습이어야 할까요?\n[11:36] 참고할 만한 관점이 하나 있어서 가져와 봤습니다.\n[11:39] 클로드 코드 팀을 관찰한 글인데 엔지니어링 프로덕트 디자인의 경계가 녹아내리면서 직무 대신 다섯 가지 일하는 방식이 남는다는 이야기입니다.\n[11:49] 그런데 이 목록을 보면서 좀 이상한 기분이 들었는데요.\n[11:53] 오늘 앞에서 말씀드린 사례들이 여기 그대로 있었습니다.\n[11:56] 이벤트 아키텍처를 설계하고 DLQ와 폴백을 실패를 복구한 건 빌더입니다.\n[12:02] 문단을 더 잘게 쪼개 레이턴시를 줄이고 그래프 데이터를 압축한 건 스위퍼고요.\n[12:06] 모니터링 대시보드를 만들고 다이나믹 컨피그로 실시간 조정 가능성을 확보한 건 메인테이너입니다.\n[12:13] 즉 저희는 이 다섯 가지 프레임을 알고 시작한 게 아니라 문제를 풀다 보니 이미 세 칸을 채우고 있었던 것과 동일하죠.\n[12:20] 그런데 아직 두 칸이 남아 있죠.\n[12:23] 프로토타이퍼와 그로워입니다.\n[12:25] 새로운 아이디어를 직접 만들어 보고 AI 워크플로우를 반복 개선해서 시장 적합성을 높이는 일.\n[12:31] 이건 아직 저희 서버 엔지니어가 충분히 하고 있다라고 말씀드리긴 어렵습니다.\n[12:36] 이 두 칸을 채울 수 있느냐가 저희 토스증권 서버 엔지니어가 현재 풀고 있는 문제입니다.\n[12:42] 문제를 확인했으니 저희가 실제로 바꾸고 있는 것들을 말씀드려 볼게요. 세 가지입니다.\n[12:48] 첫 번째, ML 지식 의존도가 낮은 LLM 애플리케이션과 워크플로우 컴포넌트는 서버 엔지니어가 최대한 직접 개발하려고 합니다.\n[12:56] 이게 모든 걸 다 하겠다는 뜻은 아니에요.\n[12:59] 모델 성능을 끌어올리는 일은 여전히 ML 엔지니어의 영역이라 생각하고요.\n[13:03] 다만 프롬프트를 조합하고 도구를 붙이고 흐름을 제어하는 수준이라면 저희가 만드는 게 훨씬 더 빠르다고 판단했습니다.\n[13:11] 그래서 AI 에코시스템을 풍부하게 갖추고 있는 파이썬 기반 스택을 학습하고 적용하는 단계에 있습니다.\n[13:18] 일반적으로 많이 알고 계시는 랭체인, 랭그래프 같은 것들이요.\n[13:22] 그런데 프레임워크를 익히는 것보다 어려운 게 따로 있었습니다.\n[13:26] 이미 갖고 있는 배포 파이프라인, 모니터링, 사내 인증 체계에 이 스택을 어떻게 녹여 넣을 것인가.\n[13:33] 그래서 공통 라이브러리와 모니터링 도구를 함께 준비하고 있습니다.\n[13:38] 이전 챕터에서 보신 사례들과 결국 연결되는 이야기입니다.\n[13:42] 둘째, 제품 프로토타이핑 단계부터 서버 엔지니어가 참여하려 노력합니다.\n[13:48] 기존에는 워크플로우가 어느 정도 만들어진 뒤에 이걸 서빙해 주세요로 요구 사항이 넘어왔습니다.\n[13:54] 그러면 이미 정해진 구조 위에 레이턴시를 줄여야 하니 설계 선택지가 매우 좁았어요.\n[14:00] 아까 그 문단 나누기 컴포넌트도 더 앞에서 개입했더라면 처음부터 아마 다르게 설계했을 것 같습니다.\n[14:06] 앞장에서 말씀드린 병목이 실제로 줄어드는 지점이 여기라고 봅니다.\n[14:11] 마지막으로 시스템 매트릭을 넘어 생성 데이터의 품질까지 함께 관측하려고 합니다.\n[14:17] 앞에서 다섯 가지 특성 중 정답이 없는 SLO 하나만 남겨뒀던 걸 기억하실지 모르겠습니다.\n[14:23] 저희가 지금 현재 그 문제를 붙잡고 있는데요.\n[14:26] 추론이 성공하고 했는지는 볼 수 있게 됐지만 그 결과가 좋은지는 아직 시스템이 답하지 못하고 있습니다.\n[14:33] 랭퓨즈로 추론 과정을 추적하고 품질 지표를 정의해 개선 프로세스로 연결하는 작업을 준비 중입니다.\n[14:41] 아직 진행 중인 일이고 오늘 답을 가지고 오진 못했습니다.\n[14:45] 정리해 보겠습니다.\n[14:47] 첫 번째, AI 제품의 특성을 분석해서 기존 소프트웨어 품질 요소에 연결했습니다.\n[14:53] 아까 말씀드린 대로 새로운 기술은 거의 없었어요.\n[14:56] AI 모델을 파이프라인 안에 외부 노드로 바라보는 순간에 익숙한 전략들이 다시 유효해집니다.\n[15:03] 두 번째, 제품의 현황에 알 수 있는 도구는 필수적입니다.\n[15:07] 기존의 매트릭에 더해 생성된 데이터의 품질까지 볼 수 있어야 합니다.\n[15:12] 마지막으로 역할을 구분하기보다 새로운 방법을 고민하는 쪽이 낫다고 생각합니다.\n[15:18] 오늘 주제는 백엔드 엔지니어링이었지만 말씀드린 일들 중 상당수는 이건 내 일인가를 따지지 않았기 때문에 할 수 있었습니다.\n[15:27] 저희도 아직은 두 칸이 비어있고 그걸 채우는 중입니다.\n[15:31] 제가 준비한 발표는 여기까지입니다.\n[15:34] AI 제품을 만드는 백엔드 엔지니어가 어떻게 일하면 좋을까 궁금하셨던 분들께 조금이라도 답이 되었으면 좋겠습니다.\n[15:41] 감사합니다.",
+        "body": "#토스 #토스증권 #서버 \n\n실시간 어닝콜 등 토스증권의 AI 서비스를 지탱하는\n백엔드 엔지니어링 이야기를 영상으로 만나보세요",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 서비스 백엔드 비결정성·지연·비용 해결",
+        "tags": [
+          "LLM",
+          "Kafka",
+          "NATS",
+          "Zstandard",
+          "DLQ"
+        ],
+        "concepts": [
+          "스트림 파이프라인",
+          "AI 비용 효율성",
+          "신뢰성"
+        ],
+        "key_points": [
+          {
+            "point": "비결정성: 같은 입력에 다른 출력, 재시도 멱등성 없음",
+            "timestamp": "01:10"
+          },
+          {
+            "point": "이벤트 스트리밍 아키텍처(Kafka→NATS→SSE)로 추론 비용 최소화 및 지연 감소",
+            "timestamp": "03:32"
+          },
+          {
+            "point": "DLQ 재시도 후 폴백 모델 적용으로 추론 실패 복구",
+            "timestamp": "06:00"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "실시간 추천 서비스에서 세션당 한 번만 모델 추론하도록 스트리밍 파이프라인을 도입해 비용과 지연을 줄인다",
+          "법률 문서 요약에서 긴 텍스트를 문단 단위로 쪼개어 추론함으로써 토큰 수를 감소시켜 응답 속도를 개선한다",
+          "의료 영상 AI 파이프라인에 DLQ와 경량 폴백 모델을 적용해 타임아웃 시에도 서비스 가용성을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "AI 서비스 백엔드에서 비결정성이 문제로 떠오르는 이유는?",
+            "options": [
+              "입력이 동일해도 출력이 달라 재시도 시 멱등성 보장 못함",
+              "모델이 항상 동일한 결과를 내기 때문",
+              "네트워크 지연이 일정하기 때문",
+              "비용이 고정돼 있기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "01:10에 비결정성으로 같은 입력에 다른 출력이 나와 재시도 멱등성이 깨진다고 언급됨"
+          },
+          {
+            "question": "타임아웃 발생 시 서비스 복구를 위해 토스증권이 선택한 두 단계는?",
+            "options": [
+              "DLQ 재시도 후 폴백 모델 적용",
+              "즉시 사용자에게 오류 반환",
+              "모델 재학습",
+              "캐시 무시"
+            ],
+            "answer_index": 0,
+            "explanation": "06:00에 DLQ를 적용하고 재시도 실패 시 폴백 모델을 사용한다는 내용이 설명됨"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "data-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "에이전트, 개념부터 같이 정리해봐요 - 워크플로우 · 하네스 · Context/Memory · MCP/A2A",
+        "url": "https://d2.naver.com/helloworld/8118359",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-10807bd9-2b05-4f8d-af75-34f07c7f764d\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-0b924002-3201-48c5-ab00-faf61d83c1bb\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-7a9382d6-5347-4638-b4b6-36622991f93a\" style=\"color: #000000; background-color: #ffffff;\"><b>네이버 사내 Tech Meetup에서 발표되었던 인기 세션을 공유합니다. </b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-c22e8796-e558-473b-b48d-0a00a2b17b65\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-37f01143-81b5-4e56-ae78-36fa93ff9634\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-586f7a53-785c-42ad-abcf-36ab94fd0e89\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-370213d2-e808-49a9-8b32-90e0c7cd37bc\" style=\"color: #000000; background-color: #ffffff;\">에이전트를 개발하다 보면 같은 개념을 서로 다른 뜻으로 쓰고 있어서 논의가 겉도는 경험, 한 번쯤 해보셨을 것 같습니다. </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-e6a05880-308a-4fac-8b14-850eb86d0662\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-df573023-1c84-4a83-adbf-056457cbd8b0\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-5d5f1240-c57d-4466-9793-5ce55c5e782a\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-79974942-2218-4737-aebc-dbae6511338e\" style=\"color: #000000; background-color: #ffffff;\">  &quot;이거 에이전트인가요?&quot; &quot;하네스를 만들어야죠&quot; — 그런데 하네스가 정확히 무엇인가요? </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-3c3b53a5-ed7d-4a94-804c-45cbce5a6110\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-d02600d4-3182-4593-9bc4-d7935a64575e\" style=\"color: #000000; background-color: #ffffff;\">  &quot;Context 에 넣어두면 되죠&quot; </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-4cf2087a-5b0b-4166-a5d2-d91661c6f71a\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-a77e281c-4d6e-4ca0-8a33-8a5dfdb1a1dc\" style=\"color: #000000; background-color: #ffffff;\">  &quot;그건 Memory 아닌가요?&quot; </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-085c9111-9e6f-4171-a17b-5e972072fb50\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-d78fcff7-50e9-4bc5-9344-3d2fe26c8a55\" style=\"color: #000000; background-color: #ffffff;\">  &quot;그건 MCP 인가요 A2A 인가요? 기존 REST API 랑 뭐가 다른가요?&quot; </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-c1a7175f-31df-442f-bb04-8e4672346e16\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-30b1c32c-64ae-4c13-9faf-fd9ecd84c6b6\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b3a8e3b4-fa2c-426b-b01f-62445ffae6eb\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-7c121807-f746-4276-964f-f5bb82578fa8\" style=\"color: #000000; background-color: #ffffff;\">사실 이 개념들은 사외에서도 정리가 덜 된 것들입니다. </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-3170df74-dc13-405d-846d-ad6d0c945049\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-22584411-e453-4c16-973e-779abe564100\" style=\"color: #000000; background-color: #ffffff;\">그래서 원문(Anthropic · OpenAI · MCP · A2A 스펙 등)을 다시 읽고,  실제로 실물들을 확인해보며 정리해본 내용을 공유합니다.</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-13092155-96c4-4ab8-bc6b-21c23fa300c1\"><span class=\"se-fs-fs15 se-ff-nanumsquare  se-style-unset \" id=\"SE-1cdf6188-84fc-44b9-8b6f-04da8631042f\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oglink se-l-large_image\" id=\"SE-9c271ef1-b98d-41fe-9aac-51e2ec87faba\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-large_image se-section-align-center\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a class=\"se-ogl",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "에이전트 개발 시 용어 정리를 통해 설계·협업 효율을 높이는 방법을 제시",
+        "tags": [
+          "네이버",
+          "에이전트",
+          "하네스",
+          "MCP",
+          "A2A"
+        ],
+        "concepts": [
+          "멀티에이전트 시스템",
+          "AI 에이전트 메모리 관리",
+          "RESTful API 설계"
+        ],
+        "key_points": [
+          {
+            "point": "에이전트 관련 용어가 서로 다르게 사용돼 논의가 혼란스러울 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "‘하네스’, ‘Context/Memory’, ‘MCP/A2A’ 등 핵심 개념을 명확히 정의해야 한다",
+            "timestamp": null
+          },
+          {
+            "point": "이러한 개념은 기존 REST API와 차별화된 설계·연동 방식을 요구한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "하네스 개념을 데이터 파이프라인 모듈화에 적용해 ETL 단계별 연결을 표준화한다",
+          "Context·Memory 패턴을 추천 시스템에 도입해 사용자 세션 정보를 마이크로서비스 간에 지속한다",
+          "MCP·A2A 통신 방식을 다중 서비스 데이터 검증 파이프라인에 활용해 REST 대비 지연 시간을 감소시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "다음 중 에이전트 개발 시 혼동될 수 있는 용어가 아닌 것은?",
+            "options": [
+              "하네스",
+              "Context",
+              "Memory",
+              "Docker"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에서는 하네스, Context, Memory, MCP/A2A 등 용어 혼동을 언급하지만 Docker는 언급되지 않는다."
+          },
+          {
+            "question": "본문에서 ‘Memory’와 가장 관련이 깊은 개념은?",
+            "options": [
+              "Context",
+              "하네스",
+              "MCP",
+              "A2A"
+            ],
+            "answer_index": 0,
+            "explanation": "‘Memory’에 대해 ‘Context에 넣어두면 된다’는 설명이 있어 Context와 가장 연관된다."
+          }
+        ],
+        "skip_reason": "구체적인 구현 방법이 제시되지 않아 바로 적용하기 어려움",
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "에이전트, 개념부터 같이 정리해봐요",
+        "url": "https://youtu.be/UjvgpPG1XTU",
+        "published_at": "2026-09-30T01:21:10",
+        "transcript": null,
+        "body": "네이버 사내 Tech Meetup에서 발표되었던 인기 세션을 공유합니다.\n\n에이전트를 개발하다 보면 같은 개념을 서로 다른 뜻으로 쓰고 있어서 논의가 겉도는 경험, 한 번쯤 해보셨을 것 같습니다.\n\n\"이거 에이전트인가요?\"\n\"하네스를 만들어야죠\" — 그런데 하네스가 정확히 무엇인가요?\n\"Context 에 넣어두면 되죠\" / \"그건 Memory 아닌가요?\"\n\"그건 MCP 인가요 A2A 인가요? 기존 REST API 랑 뭐가 다른가요?\"\n\n사실 이 개념들은 사외에서도 정리가 덜 된 것들입니다.\n그래서 제가 원문(Anthropic · OpenAI · MCP · A2A 스펙 등)을 다시 읽고, 실제로 실물들을 확인해보며 정리해본 내용을 공유합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "에이전트 개념 정리로 구현 혼란 방지",
+        "tags": [
+          "Anthropic",
+          "OpenAI",
+          "MCP",
+          "A2A",
+          "REST API"
+        ],
+        "concepts": [
+          "AI 에이전트 메모리 관리",
+          "멀티에이전트 시스템",
+          "RESTful API 설계"
+        ],
+        "key_points": [
+          {
+            "point": "에이전트·하네스·컨텍스트·메모리·MCP·A2A 등 용어 정의가 혼란스러움",
+            "timestamp": null
+          },
+          {
+            "point": "Anthropic·OpenAI·MCP·A2A 스펙을 직접 검토하고 실제 구현을 확인함",
+            "timestamp": null
+          },
+          {
+            "point": "정리된 개념을 공유해 개발팀 간 용어 통일과 구현 효율성을 높임",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
