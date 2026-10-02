@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 03일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 03일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">데이터 기반 벤치마킹</span><span class="concept">AI 기반 업무 검증</span><span class="concept">모델 파인튜닝</span><span class="concept">음성 에이전트 자연스러움</span><span class="concept">AI 비용 효율성</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 인프라 경쟁</span><span class="concept">기술 부채 관리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CL</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.02206v1" target="_blank" rel="noopener">KaliBench: A Fine-Grained Benchmark for Cybersecurity Tool Use on Kali Linux with Runtime-Free Verifiable Rewards</a>
+        </h2>
+
+        <p class="summary">CLI 기반 보안 도구 자동화 평가로 모델 실용성 판단</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>LLM을 사이버 보안 워크플로에 적용하려면 정확한 CLI 명령 생성이 필수인데, 기존 평가는 지식 수준이나 엔드‑투‑엔드 에이전트만 평가했다. 본 연구는 자연어‑CLI 변환을 정량화하고, 검증 가능한 보상을 제공해 보안 도구 사용 능력 평가와 모델 튜닝을 동시에 가능하게 하는 새로운 벤치마크 흐름을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>KaliBench는 8,504개의 질의‑명령 쌍과 1,642개의 도구를 아우르는 정밀 NL‑to‑CLI 벤치마크를 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 검증, 샌드박스 실행, 인간 피드백을 결합한 다단계 검증 파이프라인으로 명령의 의미와 실행 가능성을 보장한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>오픈‑weight 모델은 42% 이하의 정확도에 머물지만, 지도학습·강화학습으로 8B 모델을 685B MoE 수준으로 끌어올렸다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>NL‑to‑SQL 생성에 동일한 다단계 검증 파이프라인을 적용해 쿼리 문법 오류를 사전에 차단한다</span></li>
+            
+            <li><span class="box"></span><span>API 호출 자동 생성 시 별칭‑인식 평가와 샌드박스 실행을 도입해 실서비스 적용 안전성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 정의(Airflow DAG)에서 런타임‑프리 검증 보상을 활용해 모델이 올바른 작업 흐름을 설계하도록 학습한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">다단계 검증 파이프라인에 포함되지 않은 요소는?</div>
+            
+            <div class="q-opt">① LLM 기반 검증</div>
+            
+            <div class="q-opt">② 샌드박스 터미널 실행</div>
+            
+            <div class="q-opt">③ 인간‑인‑루프 정제</div>
+            
+            <div class="q-opt">④ 자동 코드 압축</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 자동 코드 압축</div>
+              <div class="why">논문에서는 LLM 검증, 샌드박스 실행, 인간‑인‑루프 정제를 핵심 단계로 제시한다. 자동 코드 압축은 언급되지 않는다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">기존 LLM 사이버 보안 평가가 부족한 점은?</div>
+            
+            <div class="q-opt">① 엔드‑투‑엔드 에이전트 태스크에 집중</div>
+            
+            <div class="q-opt">② 지식 기반 평가에만 초점</div>
+            
+            <div class="q-opt">③ 실행 가능한 CLI 명령 생성 평가 부족</div>
+            
+            <div class="q-opt">④ 런타임 성능 측정에 집중</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 실행 가능한 CLI 명령 생성 평가 부족</div>
+              <div class="why">본문은 기존 평가가 지식 기반이나 엔드‑투‑엔드 태스크에 머물며, 실제 실행 가능한 CLI 명령 생성 평가가 부족하다고 지적한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">KaliBench</span><span class="tag">Kali Linux</span><span class="tag">LLM</span><span class="tag">CLI</span><span class="tag">MoE</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/MVRb03jb6Wg" target="_blank" rel="noopener">The most natural voice agent was a French voice speaking English</a>
+        </h2>
+
+        <p class="summary">억양이 자연스러움·신뢰에 미치는 영향</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:07</span>
+            
+            <span>지역 억양(뉴캐슬)으로 인간 상담원 인식이 강화된다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:35</span>
+            
+            <span>프랑스 억양을 섞은 영어가 가장 자연스럽게 느껴진다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:42</span>
+            
+            <span>완벽하지 않은 발음이 현실감을 높인다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>프랑스 억양을 섞은 영어 TTS를 고객지원 챗봇에 적용해 사용자 만족도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>영국·호주 등 각 국가별 지역 방언 음성을 가상 비서에 적용해 신뢰성을 강화한다</span></li>
+            
+            <li><span class="box"></span><span>AI 오디오북에서 의도적으로 소량의 발음 오류를 삽입해 인간 친화적인 내레이션을 만든다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 초기 영어 음성 에이전트가 자연스럽지 못했는가?</div>
+            
+            <div class="q-opt">① 프랑스 억양이 불완전함을 실제감 있게 만들기 때문</div>
+            
+            <div class="q-opt">② 프랑스어 화자가 발음이 더 정확하기 때문</div>
+            
+            <div class="q-opt">③ 영어 데이터가 부족했기 때문</div>
+            
+            <div class="q-opt">④ 프랑스 음성의 품질이 높았기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 프랑스 억양이 불완전함을 실제감 있게 만들기 때문</div>
+              <div class="why">본문에 따르면 프랑스 억양이 섞인 영어가 불완전함 때문에 더 현실적으로 느껴졌다고 언급된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">영국 소비자들이 선호한 지역 목소리는 무엇인가?</div>
+            
+            <div class="q-opt">① 런던</div>
+            
+            <div class="q-opt">② 맨체스터</div>
+            
+            <div class="q-opt">③ 뉴캐슬</div>
+            
+            <div class="q-opt">④ 버밍엄</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 뉴캐슬</div>
+              <div class="why">자막에 00:07에서 뉴캐슬 목소리가 선호된다고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">New Castle</span><span class="tag">French voice</span><span class="tag">English</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/-aaRwyKwx3E" target="_blank" rel="noopener">[토스] Slash Live | AI/ML Engineering</a>
+        </h2>
+
+        <p class="summary">AI 도입으로 업무 효율·데이터 기반 의사결정 강화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:09</span>
+            
+            <span>AI는 반복·규칙 업무와 대규모 데이터 분석·예측에 활용된다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:41</span>
+            
+            <span>AI 도입 시 업무 효율성·비용 절감·생산성 향상 등 실질적 효과를 기대할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:12</span>
+            
+            <span>AI 도입을 위해 목표 설정·업무 선정·데이터 수집·모델 개발·시스템 통합 순으로 준비한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI가 계약서 초안을 자동 검토하도록 적용해 변호사는 핵심 조항 협상에 집중한다.</span></li>
+            
+            <li><span class="box"></span><span>AI 기반 예측 유지보수를 병원 의료기기 관리에 도입해 고장 예방과 운영 효율성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>AI 챗봇을 사내 IT 헬프데스크에 적용해 직원들의 문의 처리 시간을 줄이고 지원 인력을 효율화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI 도입 시 기대할 수 있는 효과로 옳지 않은 것은?</div>
+            
+            <div class="q-opt">① 업무 효율성 향상</div>
+            
+            <div class="q-opt">② 비용 절감</div>
+            
+            <div class="q-opt">③ 데이터 품질 저하</div>
+            
+            <div class="q-opt">④ 생산성 증대</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 데이터 품질 저하</div>
+              <div class="why">본문에서는 AI 도입이 데이터 품질 확보와 윤리적 고려를 필요로 하지만, 데이터 품질 저하를 기대 효과로 제시하지 않는다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 도입 준비 단계에 포함되지 않는 항목은?</div>
+            
+            <div class="q-opt">① 기업 목표 설정</div>
+            
+            <div class="q-opt">② 데이터 수집·정제</div>
+            
+            <div class="q-opt">③ 모델 개발·학습</div>
+            
+            <div class="q-opt">④ 무조건 외부 솔루션 구매</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 무조건 외부 솔루션 구매</div>
+              <div class="why">본문은 목표 설정, 데이터 수집·정제, 모델 개발·학습을 단계로 제시하고 외부 솔루션을 무조건 구매하는 것은 언급되지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">챗봇</span><span class="tag">스마트 팩토리</span><span class="tag">신용 평가 시스템</span><span class="tag">개인화된 상품 추천</span><span class="tag">예측 유지보수</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://wagtail.org/blog/one-month-on-glm-53-flash/" target="_blank" rel="noopener">One month coding with GLM 5.3 Flash</a>
+        </h2>
+
+        <p class="summary">한 달간 GLM 5.3 사용 비용·인프라 교훈 제공</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>첫 반달은 GLM 5.3 Flash만 사용해 $68, 4kWh, 365g 탄소로 비용 효율적이었다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>후반에 다른 모델로 전환하면서 1B 토큰, $150, 5kWh 추가 비용이 발생해 모델 선택과 에이전트 패턴 관리 필요성을 깨달았다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>인프라 용량 제한과 성능 저하로 대체 모델(DeepSeek V4.1 Flash, Qwen 3.8 Flash) 사용이 불가피했으며, 폭넓은 모델 벤치마크가 중요함을 확인했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AgentsView와 같은 토큰 사용 대시보드를 데이터 파이프라인에 적용해 실시간 비용과 에너지 소비를 모니터링한다.</span></li>
+            
+            <li><span class="box"></span><span>한 달 동안 단일 모델에 집중하고 비용 한도를 설정해 추천 시스템에서 가장 비용 효율적인 LLM을 찾는다.</span></li>
+            
+            <li><span class="box"></span><span>정확도·비용·에너지 사용을 축으로 파레토 프론티어를 그려 엣지 디바이스에 적합한 경량 모델을 선정한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">팀이 2개월 차에 GLM 5.3 Flash에서 다른 모델로 전환한 주요 이유는?</div>
+            
+            <div class="q-opt">① 모델 토큰 할당량이 초과돼서</div>
+            
+            <div class="q-opt">② 인프라 용량 제한으로 성능 저하가 발생해</div>
+            
+            <div class="q-opt">③ GLM 5.3 Flash의 토큰당 비용이 급증해</div>
+            
+            <div class="q-opt">④ 라이선스 제한이 걸려서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 인프라 용량 제한으로 성능 저하가 발생해</div>
+              <div class="why">본문에 인프라 가용성 문제와 성능 저하가 언급돼, 용량 제한 때문에 다른 모델로 전환했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">프로토타입 개발 시 모델 선택에 대해 팀이 얻은 교훈은?</div>
+            
+            <div class="q-opt">① 가장 최신 모델을 무조건 선택한다</div>
+            
+            <div class="q-opt">② 모델 선택은 비용·에너지 소비에 직접 영향을 미친다</div>
+            
+            <div class="q-opt">③ 에너지 소비는 모델 선택과 무관하다</div>
+            
+            <div class="q-opt">④ 여러 모델을 동시에 쓰면 전체 비용이 감소한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모델 선택은 비용·에너지 소비에 직접 영향을 미친다</div>
+              <div class="why">‘잘못된 모델 선택으로 450M 토큰, $150, 5kWh 추가 비용’이라는 사례를 들어 비용·에너지 영향을 강조했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GLM 5.3 Flash</span><span class="tag">AgentsView</span><span class="tag">DeepSeek V4.1 Flash</span><span class="tag">Qwen 3.8 Flash</span><span class="tag">Wagtail</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/VoAPg8Fj6-c" target="_blank" rel="noopener">How a Voice Agent Learns the Rhythm of Conversation — Shawn Wen</a>
+        </h2>
+
+        <p class="summary">음성 에이전트는 시간·톤 고려가 핵심</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>음성 에이전트는 응답 전에 턴테이킹 신호를 예측해 대화 흐름을 맞춘다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실제 잡음이 섞인 콜 데이터와 합성 잡음으로 학습해 노이즈에 강인하게 만든다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>지연 시간 관리와 신뢰 유지 위해 에이전트가 생각하는 동안 행동을 설계하고, 기업은 하네스와 감사 가능한 전사본을 소유한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">PolyAI</span><span class="tag">Dialog-RSN-1</span><span class="tag">Wispr Flow</span><span class="tag">Retrieval-augmented generation</span><span class="tag">Cocktail party effect</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

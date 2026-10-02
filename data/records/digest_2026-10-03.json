@@ -1,0 +1,405 @@
+{
+  "date": "2026-10-03",
+  "generated_at": "2026-10-02T23:38:51.667926",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "KaliBench: A Fine-Grained Benchmark for Cybersecurity Tool Use on Kali Linux with Runtime-Free Verifiable Rewards",
+        "url": "https://arxiv.org/abs/2610.02206v1",
+        "published_at": "2026-10-01T17:59:55",
+        "transcript": null,
+        "body": "LLMs are increasingly applied to cybersecurity workflows, where they are expected to translate analysts' intent into tool invocations. However, existing evaluations focus on knowledge-based assessments or end-to-end agentic tasks, and do not directly measure LLMs' ability to generate executable commands for real-world cybersecurity tools. This gap is critical because cybersecurity operations rely on strict command-line interfaces (CLIs), where minor syntax errors, incorrect flag--value bindings, or argument misordering can invalidate execution. We introduce KaliBench, a fine-grained benchmark and dataset for natural-language--to--CLI translation on Kali Linux, comprising 8,504 query--command pairs spanning 1,642 tools across 23 capability dimensions and 5 security phases. KaliBench is constructed via a manuscript-grounded pipeline with deterministic canonicalization and alias-aware evaluation, enabling precise and reproducible assessment of tool selection and argument construction. To ensure both semantic correctness and practical executability, we develop a multi-stage verification pipeline that combines LLM-based validation, sandboxed terminal execution, and human-in-the-loop refinement. Building on these fine-grained, deterministic signals, KaliBench further enables runtime-free verifiable rewards for training. Across three evaluation modes and 24 configurations of general-purpose and security-focused open-weight models, no open-weight model exceeds 42% exact-command accuracy in the unrestricted setting, highlighting the difficulty of accurate CLI-based cybersecurity tool use without explicit tool hints. We further show that supervised fine-tuning and reinforcement learning with verifiable rewards derived from KaliBench significantly improve an 8B model and achieve performance comparable to a 685B MoE model.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "CLI 기반 보안 도구 자동화 평가로 모델 실용성 판단",
+        "tags": [
+          "KaliBench",
+          "Kali Linux",
+          "LLM",
+          "CLI",
+          "MoE"
+        ],
+        "concepts": [
+          "데이터 기반 벤치마킹",
+          "AI 기반 업무 검증",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "KaliBench는 8,504개의 질의‑명령 쌍과 1,642개의 도구를 아우르는 정밀 NL‑to‑CLI 벤치마크를 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "LLM 검증, 샌드박스 실행, 인간 피드백을 결합한 다단계 검증 파이프라인으로 명령의 의미와 실행 가능성을 보장한다.",
+            "timestamp": null
+          },
+          {
+            "point": "오픈‑weight 모델은 42% 이하의 정확도에 머물지만, 지도학습·강화학습으로 8B 모델을 685B MoE 수준으로 끌어올렸다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "LLM을 사이버 보안 워크플로에 적용하려면 정확한 CLI 명령 생성이 필수인데, 기존 평가는 지식 수준이나 엔드‑투‑엔드 에이전트만 평가했다. 본 연구는 자연어‑CLI 변환을 정량화하고, 검증 가능한 보상을 제공해 보안 도구 사용 능력 평가와 모델 튜닝을 동시에 가능하게 하는 새로운 벤치마크 흐름을 제시한다.",
+        "production_ideas": [
+          "NL‑to‑SQL 생성에 동일한 다단계 검증 파이프라인을 적용해 쿼리 문법 오류를 사전에 차단한다",
+          "API 호출 자동 생성 시 별칭‑인식 평가와 샌드박스 실행을 도입해 실서비스 적용 안전성을 높인다",
+          "데이터 파이프라인 정의(Airflow DAG)에서 런타임‑프리 검증 보상을 활용해 모델이 올바른 작업 흐름을 설계하도록 학습한다"
+        ],
+        "quiz": [
+          {
+            "question": "다단계 검증 파이프라인에 포함되지 않은 요소는?",
+            "options": [
+              "LLM 기반 검증",
+              "샌드박스 터미널 실행",
+              "인간‑인‑루프 정제",
+              "자동 코드 압축"
+            ],
+            "answer_index": 3,
+            "explanation": "논문에서는 LLM 검증, 샌드박스 실행, 인간‑인‑루프 정제를 핵심 단계로 제시한다. 자동 코드 압축은 언급되지 않는다."
+          },
+          {
+            "question": "기존 LLM 사이버 보안 평가가 부족한 점은?",
+            "options": [
+              "엔드‑투‑엔드 에이전트 태스크에 집중",
+              "지식 기반 평가에만 초점",
+              "실행 가능한 CLI 명령 생성 평가 부족",
+              "런타임 성능 측정에 집중"
+            ],
+            "answer_index": 2,
+            "explanation": "본문은 기존 평가가 지식 기반이나 엔드‑투‑엔드 태스크에 머물며, 실제 실행 가능한 CLI 명령 생성 평가가 부족하다고 지적한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "The most natural voice agent was a French voice speaking English",
+        "url": "https://youtu.be/MVRb03jb6Wg",
+        "published_at": "2026-10-01T20:09:15",
+        "transcript": "[00:00] We found the majority success is that you don't want it to be generic voices, you want it to be a little bit of regional take.\n[00:07] In UK for example, a lot of the contact center or a lot of consumers like the New Castle voice, for obvious reasons because a lot of the agents are from there.\n[00:18] So when they hear the New Castle voice, they know it's a human agent. I can actually say my problem to them and they can solve it for me.\n[00:25] The funny thing is that in the early stage of us shipping those voice agents, we found that all the English voice was actually not natural enough.\n[00:35] The most natural voice is a French voice, and then you force the French voice to speak in English.\n[00:42] So it take a little bit of French accent. Is the imperfectness of that voice make it real.",
+        "body": "Shawn Wen of PolyAI on why voice agents should not sound generic. A regional flavour reads as human, and the most natural early voice agent was a French voice speaking English.\n\nTaken from our full interview with Shawn Wen (PolyAI) on Machine Learning Street Talk.\n\nSubscribe for more conversations with the people building AI: https://www.youtube.com/@MachineLearningStreetTalk\n\n#Shorts #VoiceAI #AI #PolyAI",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "억양이 자연스러움·신뢰에 미치는 영향",
+        "tags": [
+          "New Castle",
+          "French voice",
+          "English"
+        ],
+        "concepts": [
+          "음성 에이전트 자연스러움"
+        ],
+        "key_points": [
+          {
+            "point": "지역 억양(뉴캐슬)으로 인간 상담원 인식이 강화된다",
+            "timestamp": "00:07"
+          },
+          {
+            "point": "프랑스 억양을 섞은 영어가 가장 자연스럽게 느껴진다",
+            "timestamp": "00:35"
+          },
+          {
+            "point": "완벽하지 않은 발음이 현실감을 높인다",
+            "timestamp": "00:42"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "프랑스 억양을 섞은 영어 TTS를 고객지원 챗봇에 적용해 사용자 만족도를 높인다",
+          "영국·호주 등 각 국가별 지역 방언 음성을 가상 비서에 적용해 신뢰성을 강화한다",
+          "AI 오디오북에서 의도적으로 소량의 발음 오류를 삽입해 인간 친화적인 내레이션을 만든다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 초기 영어 음성 에이전트가 자연스럽지 못했는가?",
+            "options": [
+              "프랑스 억양이 불완전함을 실제감 있게 만들기 때문",
+              "프랑스어 화자가 발음이 더 정확하기 때문",
+              "영어 데이터가 부족했기 때문",
+              "프랑스 음성의 품질이 높았기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 프랑스 억양이 섞인 영어가 불완전함 때문에 더 현실적으로 느껴졌다고 언급된다."
+          },
+          {
+            "question": "영국 소비자들이 선호한 지역 목소리는 무엇인가?",
+            "options": [
+              "런던",
+              "맨체스터",
+              "뉴캐슬",
+              "버밍엄"
+            ],
+            "answer_index": 2,
+            "explanation": "자막에 00:07에서 뉴캐슬 목소리가 선호된다고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "[토스] Slash Live | AI/ML Engineering",
+        "url": "https://youtu.be/-aaRwyKwx3E",
+        "published_at": "2026-10-02T07:44:47",
+        "transcript": "[00:00] 안녕하세요. 세모 컨설팅 박성원 대표입니다.\n[00:02] 오늘은 인공지능이 업무에 어떻게 활용되는지, 제가 몇 가지 질문에 답변드리는 시간을 갖도록 하겠습니다.\n[00:09] 첫 번째 질문입니다. AI는 어떤 업무에 활용될 수 있나요? AI는 반복적이고 규칙적인 업무, 그리고 대량의 데이터를 분석하고 예측하는 업무에 활용될 수 있습니다.\n[00:23] 예를 들어서 고객센터 챗봇, 금융 사기 탐지, 의료 영상 분석, 제조 분야에서는 스마트 팩토리, 품질 관리 등에 활용될 수 있습니다.\n[00:37] 두 번째 질문입니다. AI를 도입하면 어떤 효과를 볼 수 있나요?\n[00:41] AI를 도입하면 업무 효율성 향상, 비용 절감, 생산성 증대, 그리고 데이터 기반의 의사 결정 지원 등의 효과를 볼 수 있습니다.\n[00:54] 예를 들어서 AI 챗봇을 도입하면 고객 응대 시간을 단축하고, 상담사의 업무 부담을 줄여서 업무 효율성을 향상시킬 수 있습니다.\n[01:07] 세 번째 질문입니다. AI 도입을 위한 준비 단계는 무엇인가요?\n[01:12] AI 도입을 위해서는 먼저 기업의 목표와 전략을 명확히 설정해야 합니다.\n[01:19] 그다음에는 AI를 적용할 업무를 선정하고, 필요한 데이터를 수집하고 정제해야 합니다.\n[01:28] 그리고 나서 AI 모델을 개발하고 학습시켜서 시스템에 통합하는 과정을 거쳐야 합니다.\n[01:36] 네 번째 질문입니다. AI 도입 시 주의할 점은 무엇인가요?\n[01:40] AI 도입 시에는 데이터 품질 확보, 보안, 개인 정보 보호, 그리고 윤리적인 문제를 고려해야 합니다.\n[01:51] 그리고 AI 모델의 성능을 지속적으로 모니터링하고, 개선하는 노력이 필요합니다.\n[01:58] 다섯 번째 질문입니다. AI 도입 사례는 어떤 것이 있을까요?\n[02:02] AI는 다양한 산업 분야에서 이미 성공적으로 활용되고 있습니다.\n[02:07] 예를 들어서 금융권에서는 AI 기반의 신용 평가 시스템, 보험 사기 탐지 시스템 등이 있고요.\n[02:16] 유통 분야에서는 개인화된 상품 추천, 재고 관리 등에 활용될 수 있습니다.\n[02:24] 의료 분야에서는 질병 진단 보조, 신약 개발 등에 활용될 수 있습니다.\n[02:30] 그리고 제조 분야에서는 스마트 팩토리, 품질 관리, 예측 유지보수 등에 활용되고 있습니다.\n[02:40] 여섯 번째 질문입니다. AI 시대에 필요한 역량은 무엇인가요?\n[02:45] AI 시대에는 데이터 분석 능력, 문제 해결 능력, 창의적인 사고, 그리고 협업 능력이 중요합니다.\n[02:56] 특히 AI는 도구일 뿐이라는 인식을 가지고, 인간 고유의 가치를 발휘하는 데 집중해야 합니다.\n[03:05] 일곱 번째 질문입니다. AI 시대에 기업은 어떻게 변화해야 할까요?\n[03:10] AI 시대에 기업은 데이터 기반의 의사 결정 문화를 구축하고, AI 기술을 업무 프로세스에 통합해야 합니다.\n[03:20] 그리고 직원들의 AI 역량을 강화하고, 변화에 유연하게 대응하는 조직 문화를 만들어야 합니다.\n[03:30] 여덟 번째 질문입니다. AI와 인간의 협력 방안은 무엇인가요?\n[03:36] AI는 반복적이고 단순한 업무를 대신하고, 인간은 복잡한 문제 해결, 창의적인 사고, 그리고 의사 결정에 집중함으로써 시너지를 낼 수 있습니다.\n[03:50] 예를 들어서 의료 분야에서는 AI가 환자 데이터를 분석해서 진단을 보조하고, 의사는 최종 진단과 치료 계획 수립에 집중할 수 있습니다.\n[04:02] 아홉 번째 질문입니다. AI의 미래 전망은 어떤가요?\n[04:06] AI 기술은 빠르게 발전하고 있으며, 우리의 삶과 업무 방식에 더욱 큰 영향을 미칠 것입니다.\n[04:14] 미래에는 AI가 인간의 지능을 보완하고 확장하는 역할을 하면서, 새로운 가치와 기회를 창출할 것으로 기대됩니다.\n[04:25] 마지막 열 번째 질문입니다. AI 시대를 준비하는 우리에게 필요한 자세는 무엇인가요?\n[04:31] AI 시대를 준비하는 우리에게는 지속적인 학습, 변화에 대한 긍정적인 태도, 그리고 인간 중심적인 사고가 필요합니다.\n[04:43] 감사합니다.",
+        "body": "토스의 기술을 만나는 시간, SLASH Live\nEp. 1 - AI/ML Engineering\n2026. 10. 14 (수) 19:00 ~ 20:00 | Youtube Live\n\nSession List\n1. 전화 너머, 사람 같은 AI 목소리\n토스 AI Engineer 허담\n: 파인튜닝만으로는 넘을 수 없었던 한국어 TTS 자연스러움의 한계가 어디서 오는지, 모델의 자세한 구조까지 파고들어 찾은 답과 토스 AI 상담 콜에 적용한 과정을 공유합니다.\n\n2. 커널부터 엔진까지, 토스의 서빙 엔지니어링\n토스 AI Platform Engineer 정택현\n: 자체 추론 엔진과 GPU 커널 개발부터 대규모 트래픽 제어까지, 토스가 다양한 AI 서비스의 SLA를 보장하기 위해 확보해 온 엔지니어링 사례를 소개합니다.\n\n3. 추천 파운데이션 모델 초석 놓기\n토스 ML Engineer 박재휘\n:수 천 개의 ML 모델이 필요한 토스에서 체급을 키운 encoder들이 엔지니어링 효율과 비즈니스 효과를 모두 챙기는 이야기를 들려드립니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 도입으로 업무 효율·데이터 기반 의사결정 강화",
+        "tags": [
+          "챗봇",
+          "스마트 팩토리",
+          "신용 평가 시스템",
+          "개인화된 상품 추천",
+          "예측 유지보수"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "AI는 반복·규칙 업무와 대규모 데이터 분석·예측에 활용된다.",
+            "timestamp": "00:09"
+          },
+          {
+            "point": "AI 도입 시 업무 효율성·비용 절감·생산성 향상 등 실질적 효과를 기대할 수 있다.",
+            "timestamp": "00:41"
+          },
+          {
+            "point": "AI 도입을 위해 목표 설정·업무 선정·데이터 수집·모델 개발·시스템 통합 순으로 준비한다.",
+            "timestamp": "01:12"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI가 계약서 초안을 자동 검토하도록 적용해 변호사는 핵심 조항 협상에 집중한다.",
+          "AI 기반 예측 유지보수를 병원 의료기기 관리에 도입해 고장 예방과 운영 효율성을 높인다.",
+          "AI 챗봇을 사내 IT 헬프데스크에 적용해 직원들의 문의 처리 시간을 줄이고 지원 인력을 효율화한다."
+        ],
+        "quiz": [
+          {
+            "question": "AI 도입 시 기대할 수 있는 효과로 옳지 않은 것은?",
+            "options": [
+              "업무 효율성 향상",
+              "비용 절감",
+              "데이터 품질 저하",
+              "생산성 증대"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에서는 AI 도입이 데이터 품질 확보와 윤리적 고려를 필요로 하지만, 데이터 품질 저하를 기대 효과로 제시하지 않는다."
+          },
+          {
+            "question": "AI 도입 준비 단계에 포함되지 않는 항목은?",
+            "options": [
+              "기업 목표 설정",
+              "데이터 수집·정제",
+              "모델 개발·학습",
+              "무조건 외부 솔루션 구매"
+            ],
+            "answer_index": 3,
+            "explanation": "본문은 목표 설정, 데이터 수집·정제, 모델 개발·학습을 단계로 제시하고 외부 솔루션을 무조건 구매하는 것은 언급되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "One month coding with GLM 5.3 Flash",
+        "url": "https://wagtail.org/blog/one-month-on-glm-53-flash/",
+        "published_at": null,
+        "transcript": null,
+        "body": "2 Oct 2026\n\n# One month on GLM 5.3 Flash\n\n## 2B tokens later, 🤖 task failed successfully\n\n- ![Thibaud Colas](https://media.wagtail.org/images/portrait-thibaud-1280x1280.2e16d0ba.fill-90x90.png)\n\n  Thibaud Colas\n\n  Wagtail core team\n\nSetting a challenge to spend the [whole of September on only one efficient open model](/blog/open-models-only-adoption-challenge/) felt like a great idea at the time. Turns out not so much in practice. 2B tokens later, here’s how it went.\n\n## Where tokens went this month\n\nHere’s the tokens distribution according to AgentsView, one of our [Agentic engineering recommendations](/ai/agentic-engineering-recommendations/) to keep tabs on AI usage:\n\n![Screenshot of AgentsView tokens usage for September 2026 over 2B tokens](https://media.wagtail.org/images/agentsview_tokens_september_2026.width-950.png)\n\nZooming in on the models split specifically:\n\n![Tree map of agents token usage over September 2026, with half going to GLM 5.3 Flash](https://media.wagtail.org/images/agentsview_septembermodels_split.width-800.png)\n\nThe goal was to spend the whole month on GLM 5.3 Flash pictured in teal. Here’s what went well:\n\n- Successfully spent the first half of the month on just that model.\n- That model’s usage was well within our budget ($68, about 4kWh of energy use / 365 grams of carbon emissions).\n\nThe second half of the month didn’t go so well, with 1B tokens going to other models.\n\n## Unexpected hurdles\n\n### The cost of vibe coding\n\nWe’re pretty transparent that our [experimental Wagtail MCP server is a vibe-coded prototype](/blog/experiments-with-mcp-in-wagtail/). Vibe coding isn’t quite what we normally aspire to, but for a prototype it’s spot on. Unfortunately there are still consequences to it. I chose the 'wrong' model for the prototype, and we spent 450M tokens / $150 / 5kWh of energy use almost overnight. The MCP server itself works well and we now have a great demo of the capabilities, so it’s not for nothing:\n\nNonetheless, it’s a good reminder to be careful with model selection and with agentic patterns. We could have achieved similar results for most likely 5x less cost with not that much more effort. Lessons learned! We need to budget for this, and be more careful. Could have seen it coming, but now we know.\n\n### Infrastructure woes\n\nAnother unexpected hurdle was infrastructure availability issues. We’ve written extensively about [comparing inference providers](/blog/comparing-open-weight-ai-models-and-providers/). Our choices work really most of the times, but it turns out they’re very popular, and do not have the same capacity as the big labs who hoard all the GPUs. We noted degradation with the performance of GLM 5.3 Flash in particular, most likely because of it being [so high up](/blog/open-models-only-adoption-challenge/) the Pareto frontier of relevant models for our work.\n\n![Scatter plot of AI models, with the drawn pareto frontier, GLM 5.3 Flash in the top left](https://media.wagtail.org/images/pareto_frontier_September_2026.width-800.png)\n\nThis meant having to switch to other similar models (DeepSeek V4.1 Flash, Qwen 3.8 Flash). Which is very simple to do, but nonetheless unexpected!\n\n### The cost of experimentation and R&D\n\nLast but not least, beyond using one model for day-to-day engineering, it felt essential to keep experimenting with a wide range of models, keeping up with what providers are releasing. This is particularly essential as we start to benchmark models’ performance on Wagtail tasks, where we need data across a wide range of models. Sneak peek of our benchmark:\n\n![Data table of 14 AI models reporting their accuracy as a percentage, energy use in Wh, Cost in $. Top of the table is DeepSeek V4.1 Flash with 95% accuracy and 14.9Wh energy use, $0.09 per task](https://media.wagtail.org/images/benchmark_wagtail_tasks_energy_use.width-800.png)\n\nIt’s much easier to guide people towards leaner options with this kind of concrete data. And for us to make those options even more viable with agent skills, or [our new CLI prototype](/blog/prototyping-a-cli-for-wagtail/), which is intended to work well with agents.\n\n## Takeways and what to do next\n\nSo technically this challenge was a failure. Only 50% usage on the target model, 1B out of 2B tokens. About 35 kWh of energy use instead of 10. But we did learn a lot, which is crucial for the current moment. Reflecting on this for October, here’s what will make it work:\n\n1. **Constant, local usage measurement and reporting**. Looking not just at tokens but also energy use and spend, and ideally how well this all leads to concrete positive outcomes.\n2. **Budgeting for experimentation, not just day-to-day tasks**. Making more concerted decisions about which prototypes are worth building, and how.\n3. **Better prompt selection and multi-agent techniques**. Orchestrator vs. scout vs. implementer vs. reviewer agents. Bounded goals. Not rocket science but certainly one more thing to learn.\n4. **Keep pushing for more efficient techni",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "한 달간 GLM 5.3 사용 비용·인프라 교훈 제공",
+        "tags": [
+          "GLM 5.3 Flash",
+          "AgentsView",
+          "DeepSeek V4.1 Flash",
+          "Qwen 3.8 Flash",
+          "Wagtail"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 인프라 경쟁",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "첫 반달은 GLM 5.3 Flash만 사용해 $68, 4kWh, 365g 탄소로 비용 효율적이었다.",
+            "timestamp": null
+          },
+          {
+            "point": "후반에 다른 모델로 전환하면서 1B 토큰, $150, 5kWh 추가 비용이 발생해 모델 선택과 에이전트 패턴 관리 필요성을 깨달았다.",
+            "timestamp": null
+          },
+          {
+            "point": "인프라 용량 제한과 성능 저하로 대체 모델(DeepSeek V4.1 Flash, Qwen 3.8 Flash) 사용이 불가피했으며, 폭넓은 모델 벤치마크가 중요함을 확인했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AgentsView와 같은 토큰 사용 대시보드를 데이터 파이프라인에 적용해 실시간 비용과 에너지 소비를 모니터링한다.",
+          "한 달 동안 단일 모델에 집중하고 비용 한도를 설정해 추천 시스템에서 가장 비용 효율적인 LLM을 찾는다.",
+          "정확도·비용·에너지 사용을 축으로 파레토 프론티어를 그려 엣지 디바이스에 적합한 경량 모델을 선정한다."
+        ],
+        "quiz": [
+          {
+            "question": "팀이 2개월 차에 GLM 5.3 Flash에서 다른 모델로 전환한 주요 이유는?",
+            "options": [
+              "모델 토큰 할당량이 초과돼서",
+              "인프라 용량 제한으로 성능 저하가 발생해",
+              "GLM 5.3 Flash의 토큰당 비용이 급증해",
+              "라이선스 제한이 걸려서"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 인프라 가용성 문제와 성능 저하가 언급돼, 용량 제한 때문에 다른 모델로 전환했다."
+          },
+          {
+            "question": "프로토타입 개발 시 모델 선택에 대해 팀이 얻은 교훈은?",
+            "options": [
+              "가장 최신 모델을 무조건 선택한다",
+              "모델 선택은 비용·에너지 소비에 직접 영향을 미친다",
+              "에너지 소비는 모델 선택과 무관하다",
+              "여러 모델을 동시에 쓰면 전체 비용이 감소한다"
+            ],
+            "answer_index": 1,
+            "explanation": "‘잘못된 모델 선택으로 450M 토큰, $150, 5kWh 추가 비용’이라는 사례를 들어 비용·에너지 영향을 강조했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "How a Voice Agent Learns the Rhythm of Conversation — Shawn Wen",
+        "url": "https://youtu.be/VoAPg8Fj6-c",
+        "published_at": "2026-10-01T20:00:18",
+        "transcript": null,
+        "body": "Tsung-Hsien (Shawn) Wen, CTO of PolyAI, tells Tim Scarfe why voice agents are harder than text agents. Voice adds time, and a good conversation depends on adapting to the person on the line, not just on reasoning to the best answer. Shawn describes an audio-native model (Dialog-RSN-1) that first predicts a turn-taking signal, then replies in text with citations, and writes the transcript last so enterprises can audit it.\n\nAlong the way: training on real, noisy calls with synthetic noise added, and why over-cleaned audio made the new model worse. Latency, and what a voice agent should do while it thinks. Why a voice with a hint of regional accent beats a generic one. Why public benchmarks fall short for voice, why enterprises want to own their agent harness, and whether behaviour belongs in the harness or in the weights.\n\nThe last stretch is about working with agents: cognitive debt, the shift from producing content to checking it, Wispr Flow, building tools that agents can use, and whether slop is in the eye of the reader.\n\nThis episode was produced in partnership with PolyAI.\nhttps://poly.ai \n\nCHAPTERS\n0:00 Why voice agents are harder than text\n4:27 What enterprises want, and why PolyAI built its own model\n9:04 How an audio-native voice model works\n15:21 Training data, spectrograms and synthetic noise\n20:36 The cocktail party problem and the future of turn-taking\n25:21 Latency, adaptive reasoning and keeping callers' trust\n31:33 Voices, personality and the uncanny valley\n36:32 How do you benchmark a voice agent?\n42:00 Harness engineering and owning the intelligence\n45:09 Well-specified problems and auditable agents\n49:46 Weight adaptation and cognitive debt\n56:31 Agents at work: Wispr Flow, voice and tool building\n1:02:50 The next decade of voice, and what counts as slop\n\nREFERENCES\nThe Bitter Lesson: http://www.incompleteideas.net/IncIdeas/BitterLesson.html  [9:05]\nRetrieval-augmented generation: https://arxiv.org/abs/2005.11401  [13:23]\nMel scale: https://en.wikipedia.org/wiki/Mel_scale  [17:16]\nVictor Zue: https://en.wikipedia.org/wiki/Victor_Zue  [17:45]\nCocktail party effect: https://en.wikipedia.org/wiki/Cocktail_party_effect  [20:39]\nSpeaker diarisation: https://en.wikipedia.org/wiki/Speaker_diarisation  [21:16]",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "음성 에이전트는 시간·톤 고려가 핵심",
+        "tags": [
+          "PolyAI",
+          "Dialog-RSN-1",
+          "Wispr Flow",
+          "Retrieval-augmented generation",
+          "Cocktail party effect"
+        ],
+        "concepts": [
+          "데이터 기반 벤치마킹",
+          "기술 부채 관리",
+          "AI 기반 업무 검증"
+        ],
+        "key_points": [
+          {
+            "point": "음성 에이전트는 응답 전에 턴테이킹 신호를 예측해 대화 흐름을 맞춘다",
+            "timestamp": null
+          },
+          {
+            "point": "실제 잡음이 섞인 콜 데이터와 합성 잡음으로 학습해 노이즈에 강인하게 만든다",
+            "timestamp": null
+          },
+          {
+            "point": "지연 시간 관리와 신뢰 유지 위해 에이전트가 생각하는 동안 행동을 설계하고, 기업은 하네스와 감사 가능한 전사본을 소유한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

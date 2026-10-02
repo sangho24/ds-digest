@@ -20,9 +20,9 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 11,
+      "count": 13,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-25"
+      "last_seen": "2026-10-03"
     },
     "AI 기반 진단 보조": {
       "aliases": [],
@@ -32,9 +32,9 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 24,
+      "count": 26,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-02"
+      "last_seen": "2026-10-03"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -56,9 +56,15 @@
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 10,
+      "count": 11,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-03"
+    },
+    "AI와 인간 협업": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-03",
+      "last_seen": "2026-10-03"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -188,9 +194,9 @@
     },
     "기술 부채 관리": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-09-18"
+      "last_seen": "2026-10-03"
     },
     "기술 작가의 제품 소유권": {
       "aliases": [],
@@ -218,9 +224,9 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 14,
+      "count": 17,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-09-30"
+      "last_seen": "2026-10-03"
     },
     "데이터 사용 투명성": {
       "aliases": [],
@@ -344,9 +350,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-09-29"
+      "last_seen": "2026-10-03"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -593,6 +599,12 @@
       "count": 1,
       "first_seen": "2026-09-11",
       "last_seen": "2026-09-11"
+    },
+    "음성 에이전트 자연스러움": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-03",
+      "last_seen": "2026-10-03"
     },
     "인지 면역": {
       "aliases": [],
@@ -919,6 +931,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-02T08:50:44.508504+09:00",
+  "updated_at": "2026-10-03T08:38:37.433768+09:00",
   "version": 1
 }
