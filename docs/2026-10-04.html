@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 04일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 04일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">오프라인-온라인 연계 전략</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">프롬프트 협업</span><span class="concept">베이지안 추론</span><span class="concept">멀티스케일 샘플링</span><span class="concept">불확실성 정량화</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">스케줄링</span><span class="concept">모듈형 신경망 구조</span><span class="concept">스타트업 성장 지표</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">브랜드 포지셔닝</span><span class="concept">트렌드 수명주기 관리</span><span class="concept">고객 접점 확대</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.AI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.02204v1" target="_blank" rel="noopener">Reconstruct, Practice, Go Real: Guided Self-Improvement for Embodied Agents</a>
+        </h2>
+
+        <p class="summary">로봇 스킬 자동 개선으로 데이터 라벨링 비용 크게 절감</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>다양한 조작 작업에 로봇이 신뢰성을 갖추려면 인간이 스킬 설계·보상·인식 통합에 많은 비용을 들여야 했다. 기존 연구는 모델 가중치를 업데이트하거나 수작업으로 스킬을 만들었다. 본 논문은 오프라인 데이터에서 능력을 추출하고 시뮬레이션에서 자동 연습·피드백을 통해 프롬프트와 상징적 스킬을 지속적으로 개선하는 방식을 제안해, LLM 기반 로봇 제어 연구 흐름에서 자동 자기 개선을 실현한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RPG는 모델 가중치를 바꾸지 않고 15 라운드 연습으로 작업 성공률을 28.6%→95%로 끌어올렸다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>오프라인 데이터에서 능력을 추출하고 시뮬레이션 연습·피드백으로 새로운 상징적 스킬과 시스템 프롬프트를 자동 생성·수정한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>멀티모달 LLM이 최종 프롬프트와 스킬 라이브러리를 사용해 실제 로봇 제어를 조정, 30개 물리 실험 모두 성공했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>자동차 주행 로그에서 추출한 운전 능력을 기반으로 시뮬레이션 연습 시나리오를 생성해, 모델 가중치 업데이트 없이 주행 정책을 자동 개선한다</span></li>
+            
+            <li><span class="box"></span><span>공정 시뮬레이터와 센서 영상으로 오류를 진단하고, 새로운 제어 스킬과 작업 지시 프롬프트를 자동 생성해 생산 라인의 자동 튜닝에 활용한다</span></li>
+            
+            <li><span class="box"></span><span>다양한 모듈에 대한 테스트 케이스 변형을 교차 평가해, 검증된 변화를 테스트 라이브러리에 통합함으로써 회귀 테스트 효율을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">RPG가 모델 가중치를 업데이트하지 않고 성능을 향상시킬 수 있는 핵심 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① LLM 프롬프트와 상징적 스킬 라이브러리를 활용한다</div>
+            
+            <div class="q-opt">② 강화학습으로 가중치를 미세조정한다</div>
+            
+            <div class="q-opt">③ 각 라운드마다 모델을 새로 학습한다</div>
+            
+            <div class="q-opt">④ 하드웨어를 교체한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① LLM 프롬프트와 상징적 스킬 라이브러리를 활용한다</div>
+              <div class="why">본문에 따르면 RPG는 시스템 프롬프트와 재사용 가능한 상징적 스킬을 수정·추가함으로써 개선하며, 모델 가중치는 고정된 상태로 유지한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">연습 단계에서 특권 시뮬레이터 상태가 수행되는 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 실패 원인 진단을 위한 정확한 피드백 제공</div>
+            
+            <div class="q-opt">② 무작위 행동 생성</div>
+            
+            <div class="q-opt">③ 실제 로봇 센서를 대체</div>
+            
+            <div class="q-opt">④ LLM을 학습시키는 데이터 제공</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 실패 원인 진단을 위한 정확한 피드백 제공</div>
+              <div class="why">RPG는 특권 시뮬레이터 상태와 실행 피드백을 이용해 실패를 진단하고 스킬·프롬프트를 개선한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">RPG</span><span class="tag">ASPIRE</span><span class="tag">CaP-Agent0</span><span class="tag">GPT-6 Astra Pro</span><span class="tag">multimodal LLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.02158v1" target="_blank" rel="noopener">Muon meets Tamed Langevin: Momentum Preconditioning beyond Convex and gradient-Lipschitz Potentials</a>
+        </h2>
+
+        <p class="summary">비볼록·비Lipschitz 잠재함수에서도 안정적인 샘플링 제공</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 언더다임드 Langevin 방법은 잠재함수의 볼록성 및 gradient‑Lipschitz 조건을 필요로 해 비볼록·비Lipschitz 경우 적용이 어려웠다. 본 논문은 비정규(비제곱) 운동 에너지를 도입해 모멘텀 전처리를 수행함으로써 이러한 제한을 넘어선 샘플링 알고리즘을 제시하고, 수렴 및 안정성을 이론적으로 보장한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>비볼록·비Lipschitz 잠재함수에서도 Gibbs 샘플링을 위한 새로운 언더다임드 Langevin 시스템을 제안</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>비정규적 운동 에너지의 gradient가 모멘텀을 스펙트럼적으로 완화해 안정성을 제공</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Euler‑Maruyama 이산화가 시간에 대해 균일한 모멘트 경계를 유지해 수정 없이도 안정적인 알고리즘을 보장</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>비볼록 손실을 가진 딥러닝 모델의 베이지안 사후 샘플링에 모멘텀 전처리를 적용해 그래디언트 클리핑 없이 안정성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>보상 구조가 비부드러운 강화학습 환경에서 정책 업데이트를 안정화하기 위해 Euler‑Maruyama 기반 균일 모멘트 경계 이산화를 활용한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 행렬 분해 문제의 Hamiltonian Monte Carlo에 스펙트럼 완화 모멘텀을 도입해 단계 크기 튜닝 부담을 감소시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">제안된 Langevin 시스템에서 운동 에너지의 gradient는 어떤 역할을 하나요?</div>
+            
+            <div class="q-opt">① 마찰 역할을 한다</div>
+            
+            <div class="q-opt">② 모멘텀을 스펙트럼적으로 완화한다</div>
+            
+            <div class="q-opt">③ 잠재함수 gradient를 수정한다</div>
+            
+            <div class="q-opt">④ 시간 단계 크기를 결정한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모멘텀을 스펙트럼적으로 완화한다</div>
+              <div class="why">초록에 ‘gradient of the kinetic energy acts as a smooth spectral taming of the momentum’이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Euler‑Maruyama 이산화에 대해 강조된 장점은 무엇인가요?</div>
+            
+            <div class="q-opt">① 수렴 속도가 빠르다</div>
+            
+            <div class="q-opt">② 잠재함수 gradient를 수정해야 한다</div>
+            
+            <div class="q-opt">③ 시간에 대해 균일한 모멘트 경계를 유지한다</div>
+            
+            <div class="q-opt">④ 정확한 샘플링을 보장한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 시간에 대해 균일한 모멘트 경계를 유지한다</div>
+              <div class="why">본문에 ‘Euler‑Maruyama discretization admits moment bounds that are uniform in time’이라고 적혀 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Gibbs distribution</span><span class="tag">Langevin dynamics</span><span class="tag">Euler-Maruyama</span><span class="tag">momentum preconditioning</span><span class="tag">matrix space</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DC</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.01950v1" target="_blank" rel="noopener">MoE-CORE: Coordinated Expert Offloading and Residency for Memory-Constrained MoE Inference</a>
+        </h2>
+
+        <p class="summary">제한된 메모리에서도 MoE 추론 속도를 크게 높인다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>MoE 모델은 전문가 활성화로 연산을 절감하지만 전문가 가중치가 메모리를 초과한다는 문제가 있다. 기존 연구는 오프로드만으로 호스트‑디바이스 전송 비용을 간과했으며, MoE-CORE는 오프로드와 상주를 동시에 스케줄링해 메모리 제한 하에서 추론 속도를 크게 개선한다. 이는 메모리 제약 환경에서 MoE 서빙을 실용화하는 새로운 시스템 설계 흐름에 해당한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>MoE-CORE는 프리필 단계에서 교대로 버퍼에 전문가 레이어를 적재하고 디코드 시 교차 레이어 프리패칭을 활용해 호스트‑디바이스 전송을 최소화한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>비균등 레이어 캐시 용량, 도메인 기반 초기화, 라우팅 히스토리 기반 교체를 결합해 vLLM Prefetch 대비 10배 가량 빠른 토큰당 시간(TPOT)을 기록한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>84 GB NPU 메모리 제한 하에서 전문가 대체와 깊이 2의 다중 토큰 예측(MTP)을 적용해 21.5 ms TPOT을 달성한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>비디오 인코딩 파이프라인에서 교차 레이어 프리패칭을 적용해 메모리 대역폭 사용을 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템 엣지 추론에서 라우팅 히스토리 기반 교체 정책을 사용해 캐시 적중률을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 임베딩 테이블을 교대로 버퍼에 적재해 제한된 GPU 메모리 내에서 온라인 광고 입찰 모델을 실행한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">MoE-CORE가 추론 속도를 크게 개선한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 전문가 레이어를 완전 오프로드만 함</div>
+            
+            <div class="q-opt">② 비균등 레이어 캐시와 라우팅 히스토리 기반 교체</div>
+            
+            <div class="q-opt">③ 모델 압축을 통한 파라미터 감소</div>
+            
+            <div class="q-opt">④ 입력 토큰 수 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 비균등 레이어 캐시와 라우팅 히스토리 기반 교체</div>
+              <div class="why">비균등 레이어 캐시 용량과 라우팅 히스토리 기반 교체를 결합해 전송 비용을 최소화하고 효율적인 캐시 관리가 속도 향상의 핵심이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">MoE-CORE가 다중 토큰 예측(MTP)에서 depth 2를 사용한 목적은?</div>
+            
+            <div class="q-opt">① 메모리 사용량 감소</div>
+            
+            <div class="q-opt">② 추론 정확도 향상</div>
+            
+            <div class="q-opt">③ 토큰당 처리 시간 감소</div>
+            
+            <div class="q-opt">④ 라우터 복잡도 증가</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 토큰당 처리 시간 감소</div>
+              <div class="why">깊이 2의 MTP는 한 번에 여러 토큰을 예측해 토큰당 처리 시간을 줄이는 데 기여한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">MoE-CORE</span><span class="tag">DeepSeek-V4-Flash-W4A8</span><span class="tag">GLM-5.2-W4A8C8</span><span class="tag">vLLM Prefetch</span><span class="tag">NPU</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/669" target="_blank" rel="noopener">📈올해 직원이 늘어난 스타트업 5,064곳의 공통점은?</a>
+        </h2>
+
+        <p class="summary">스타트업 인력 확대 패턴 분석, 성장 지표 활용</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>2026년 1~7월 스타트업 입사자는 13만 8,555명으로 전년 대비 2.65% 증가했으며, 퇴사자는 6.24% 증가해 입사보다 빠르게 늘었다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전체 11,598개 기업 중 5,064개(≈44%)가 7개월 만에 인력 규모를 12.8% 확대했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>인력 규모가 크게 늘어난 기업은 업력·재무·투자에서 공통점을 보였지만, 가장 빠른 성장 기업이 직원 유지율이 가장 높지는 않았다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고용 데이터 분석 방식을 SaaS 제품의 고객 이탈 예측 모델에 적용해, 성장 단계별 이탈 위험을 조기에 감지한다.</span></li>
+            
+            <li><span class="box"></span><span>투자·재무 지표와 인력 확대 패턴을 연계해 스타트업 투자 포트폴리오의 성장 가능성을 정량화한다.</span></li>
+            
+            <li><span class="box"></span><span>빠른 인력 확대가 직원 유지율과 역관계임을 활용해, 채용 속도를 조절하고 조직 안정성을 우선시하는 인사 정책을 설계한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">인력 규모가 가장 빨리 늘어난 기업이 직원 유지율이 가장 높지 않은 현상은 무엇을 시사하는가?</div>
+            
+            <div class="q-opt">① 성장 속도가 조직 문화 정착을 방해한다</div>
+            
+            <div class="q-opt">② 재무 건전성이 낮아 직원이 떠난다</div>
+            
+            <div class="q-opt">③ 투자 규모가 작아 인재 확보가 어려워진다</div>
+            
+            <div class="q-opt">④ 업력이 짧아 경험이 부족하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 성장 속도가 조직 문화 정착을 방해한다</div>
+              <div class="why">본문은 빠른 인력 확대와 높은 유지율이 반드시 연결되지 않음을 강조한다. 이는 급격한 성장으로 조직 문화·프로세스 정착이 어려워 직원 이탈이 늘어날 수 있음을 시사한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">혁신의숲</span><span class="tag">인사이트 콘텐츠</span><span class="tag">스타트업</span><span class="tag">고용 데이터</span><span class="tag">인력 규모</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/488" target="_blank" rel="noopener">🥤한국 7대 에스프레소바는 다 어디로 갔을까?</a>
+        </h2>
+
+        <p class="summary">트렌드 데이터를 활용해 브랜드 지속성을 평가하고 전략을 설계하는 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>“전국 7대 에스프레소바” 타이틀은 공식 순위가 아니라 브랜딩 수단으로 효과적이었다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>트렌드가 사라진 뒤에도 매장들은 전문성 강화, 메뉴 확장, 업종 전환 등으로 생존 전략을 달리했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>지속 가능한 브랜드가 되려면 대표성 확보, 다각적 자산 구축, 접근성·점포 확대가 필요하다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>‘전국 7대’와 같은 ‘Top N’ 타이틀을 SaaS 제품에 적용해 신뢰성을 강조하고 초기 체험자를 유입한다</span></li>
+            
+            <li><span class="box"></span><span>구글 검색량 변화를 모니터링해 신흥 기술 트렌드의 피크 시점을 포착하고, 해당 시점에 기능 개발을 집중한다</span></li>
+            
+            <li><span class="box"></span><span>수요가 감소한 기존 서비스를 새로운 서비스 라인(예: 데이터 분석 패키지)으로 전환해 고객 유지와 매출 다변화를 꾀한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">짹짹커피가 ‘전국 7대 에스프레소바’ 타이틀을 지속적으로 활용한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 공식 순위이기 때문에</div>
+            
+            <div class="q-opt">② 고객에게 방문 동기를 명확히 제공하기 위해</div>
+            
+            <div class="q-opt">③ 법적 요구사항을 충족하기 위해</div>
+            
+            <div class="q-opt">④ 운영 비용을 절감하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 고객에게 방문 동기를 명확히 제공하기 위해</div>
+              <div class="why">본문에서 짹짹커피는 이 타이틀이 매장을 처음 접하는 사람에게 방문 이유를 제공하는 효과적인 브랜딩 수단이라고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">트렌드가 식은 뒤에도 살아남은 에스프레소바들이 공통적으로 취한 전략은 무엇인가?</div>
+            
+            <div class="q-opt">① 전문성을 강화하거나 새로운 메뉴·경험을 추가했다</div>
+            
+            <div class="q-opt">② 가격을 대폭 인상했다</div>
+            
+            <div class="q-opt">③ 전혀 변화를 주지 않았다</div>
+            
+            <div class="q-opt">④ 모든 매장을 폐쇄했다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 전문성을 강화하거나 새로운 메뉴·경험을 추가했다</div>
+              <div class="why">본문에 따르면 다수 매장은 전문성 강화, 베이커리·공간 경험 추가 등으로 차별화하고 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">짹짹커피</span><span class="tag">여성동아</span><span class="tag">바렌나</span><span class="tag">오이트</span><span class="tag">프랭크커핀바</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
