@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 05일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 05일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 비용 효율성</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">병렬 처리</span><span class="concept">semantic query processing</span><span class="concept">typed decision models</span><span class="concept">semantic join pruning</span><span class="concept">위협 시나리오 도출</span><span class="concept">탐지 가시성 확보</span><span class="concept">보안 협업</span><span class="concept">의존성 주입</span><span class="concept">빈 스코프</span><span class="concept">객체 생명주기 관리</span><span class="concept">레거시 시스템 리팩터링</span><span class="concept">데이터 일반화</span><span class="concept">기술 부채 관리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.02057v1" target="_blank" rel="noopener">Optimizing Effective Training Time for Large-Scale Recommendation Systems</a>
+        </h2>
+
+        <p class="summary">추천 모델 학습에서 비활성 시간 줄여 비용·시간 절감</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>대규모 추천 시스템 학습에서는 라이프사이클 오버헤드가 GPU 활용을 크게 제한해 효율적인 학습이 어려웠다. 기존 연구는 주로 모델·알고리즘 개선에 초점을 맞추었지만, 인프라·운영 단계의 손실을 체계적으로 측정·최적화한 사례는 부족했다. 본 논문은 플릿 규모의 오버헤드 분석과 스택 전반에 걸친 최적화를 제시해 시스템‑레벨 효율성 연구 흐름에 새로운 실증적 기여를 한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>라이프사이클 오버헤드가 가속기 용량을 소모해 실제 학습에 사용되는 시간은 전체 벽시계 시간의 50‑60%에 불과했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>통신 제거·파이프라인 겹침·동적 형태 처리·자동 튜닝 가지치기·재사용 가능한 PyTorch 2 컴파일 캐시·비동기 체크포인팅·독립 모델 배포·복구 비용 감소 등 전 스택 최적화를 적용해 평균 15.5%·최대 85%까지 ETT%를 개선했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이 최적화들을 전 파이프라인에 배포한 뒤 전체 플릿의 ETT%가 약 80%에서 90% 이상으로 상승했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>비동기 체크포인팅을 대규모 언어 모델 파인튜닝에 적용해 I/O 지연을 가려 GPU 활용도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>재사용 가능한 컴파일 캐시를 배치 추론 서비스에 도입해 모델 로드 시 초기 지연을 줄이고 전체 응답 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>데이터 전처리 파이프라인에서 초기화 단계와 데이터 로딩을 겹쳐 실행해 전체 작업 시간과 자원 대기 시간을 감소시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 추천 모델 학습에서 전체 벽시계 시간의 절반 이하만이 새로운 데이터에 대한 학습에 사용되었는가?</div>
+            
+            <div class="q-opt">① GPU 성능 부족</div>
+            
+            <div class="q-opt">② 라이프사이클 오버헤드</div>
+            
+            <div class="q-opt">③ 모델 정확도 낮음</div>
+            
+            <div class="q-opt">④ 데이터 전처리 비용</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 라이프사이클 오버헤드</div>
+              <div class="why">본문에 따르면 라이프사이클 오버헤드가 가속기 용량을 소모해 실제 학습에 사용되는 시간이 제한된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">다음 중 ETT% 향상을 위해 제안된 최적화가 아닌 것은?</div>
+            
+            <div class="q-opt">① 통신 제거</div>
+            
+            <div class="q-opt">② 파이프라인 겹침</div>
+            
+            <div class="q-opt">③ 모델 압축</div>
+            
+            <div class="q-opt">④ 비동기 체크포인팅</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 모델 압축</div>
+              <div class="why">본문에 언급된 최적화는 통신 제거, 파이프라인 겹침, 비동기 체크포인팅 등이며 모델 압축은 포함되지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">PyTorch 2</span><span class="tag">GPU</span><span class="tag">ETT%</span><span class="tag">asynchronous checkpointing</span><span class="tag">dynamic-shape handling</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DB</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.02046v1" target="_blank" rel="noopener">Prune First, Decide Fast: Scalable Semantic Query Processing with JEVDB</a>
+        </h2>
+
+        <p class="summary">LLM 비용·지연 최소화한 대규모 의미 쿼리 엔진</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 의미 데이터베이스는 관계 결정에 LLM을 직접 호출해 높은 지연·비용 문제에 직면했다. JEVDB는 관계형 DB의 세미조인 기법과 경량 결정 모델을 결합해 후보를 크게 줄이고, 필요 시에만 LLM을 사용한다. 이는 의미 쿼리 처리에서 비용 효율성을 크게 향상시키는 새로운 연구 흐름이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>JEVDB는 빠른 타입 결정 모델을 사용해 의미 필터·조인·분류·랭킹을 수행하고, 불확실한 경우에만 생성형 LLM으로 에스컬레이션해 지연과 비용을 크게 낮춘다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정확한 Yannakakis‑style 세미조인과 Semantic Bloom Filters를 결합해 후보 쌍을 사전 필터링, 평균 87.4%를 제거한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SemBench·Shelob 벤치마크에서 JEVDB‑Flash는 모든 쿼리에서 최저 지연시간을 기록하고, 평균 F1 95.7‑97.5%와 모델 에스컬레이션 55.2% 감소를 달성했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Semantic Bloom Filters를 대규모 전자상거래 추천 시스템의 벡터 검색 전 단계에 적용해 비용이 많이 드는 신경망 재순위화를 크게 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>타입 결정 모델을 스트리밍 로그 분석에 도입해 명확한 이벤트는 즉시 처리하고, 모호한 경우에만 전체 LLM 분석으로 에스컬레이션해 처리 비용을 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>Yannakakis‑style 세미조인 축소를 그래프 데이터베이스의 엣지 탐색 전 단계에 적용해 임베딩 기반 유사도 계산 전에 후보를 필터링, 쿼리 응답 속도를 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">JEVDB가 의미 조인 작업을 줄이기 위해 사용하는 두 가지 주요 기술은 무엇인가?</div>
+            
+            <div class="q-opt">① 정확한 Yannakakis‑style 세미조인과 Semantic Bloom Filters</div>
+            
+            <div class="q-opt">② 트랜스포머 기반 인코더와 파인튜닝</div>
+            
+            <div class="q-opt">③ 그래프 신경망과 샘플링</div>
+            
+            <div class="q-opt">④ 히스토그램 기반 인덱스와 캐시</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 정확한 Yannakakis‑style 세미조인과 Semantic Bloom Filters</div>
+              <div class="why">논문에서는 JEVDB가 정확한 Yannakakis‑style 세미조인 축소와 Semantic Bloom Filters를 결합해 후보 쌍을 사전 필터링한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">JEVDB‑Flash가 SemBench 평가에서 달성한 주요 성과는 무엇인가?</div>
+            
+            <div class="q-opt">① 모든 쿼리에서 최저 지연시간과 대부분에서 최저 비용</div>
+            
+            <div class="q-opt">② 가장 높은 정확도와 가장 높은 비용</div>
+            
+            <div class="q-opt">③ 평균 지연시간이 가장 높음</div>
+            
+            <div class="q-opt">④ 비용은 높지만 정확도는 최고</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 모든 쿼리에서 최저 지연시간과 대부분에서 최저 비용</div>
+              <div class="why">평가 결과 JEVDB‑Flash는 21개 쿼리 모두에서 최저 지연시간을 기록하고, 19개에서 최저 비용을 달성했으며, 답변 품질도 경쟁력을 유지했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">JEVDB</span><span class="tag">Semantic Bloom Filters</span><span class="tag">Yannakakis semijoin</span><span class="tag">SemBench</span><span class="tag">Shelob</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/kzPH_QcuJvQ" target="_blank" rel="noopener">토스 레드팀 vs 블루팀, 서로를 속여봤습니다</a>
+        </h2>
+
+        <p class="summary">레드·블루 협업으로 데이터 유출 탐지 강화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:18</span>
+            
+            <span>레드팀은 공격자 시점에서 시나리오를 만들고 실제로 실행해 보안 강도를 평가한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:44</span>
+            
+            <span>레드팀은 취약점 파고들기, 블루팀은 정상 신호 중 이상 탐지라는 서로 다른 사고방식이 필요하다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:06</span>
+            
+            <span>퍼플 티밍은 레드와 블루가 동시에 협업해 공격·방어를 실시간으로 검증하고 탐지 가시성을 확보한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 파이프라인에 퍼플 티밍을 적용해 데이터 엔지니어가 합성 이상치를 주입하고 품질 모니터링 팀이 실시간 탐지하도록 하여 검증 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>머신러닝 모델 모니터링에 탐지 가시성 확보 방식을 도입해 데이터 드리프트·성능 저하 단계별 탐지 범위를 시각화하고 blind spot을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>프라이버시 준수를 위해 내부 데이터 유출 시나리오를 시뮬레이션해 감사 로그와 알림 체계를 검증, 실제 인사이드 위협에 대비한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">퍼플 티밍이 기존 레드팀·블루팀 별도 수행보다 효과적인 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 공격·방어를 동시에 검증해 즉시 피드백을 얻을 수 있다</div>
+            
+            <div class="q-opt">② 작업량을 절감한다</div>
+            
+            <div class="q-opt">③ 시나리오 계획이 필요 없게 된다</div>
+            
+            <div class="q-opt">④ 공격만 집중한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 공격·방어를 동시에 검증해 즉시 피드백을 얻을 수 있다</div>
+              <div class="why">03:06의 설명에서 퍼플 티밍은 레드와 블루가 같은 시간에 협업해 공격·방어를 실시간으로 검증한다고 언급한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">스피커가 공격이 차단됐다는 결과만으로는 충분하지 않다고 말한 이유는?</div>
+            
+            <div class="q-opt">① 차단은 운에 좌우될 수 있다</div>
+            
+            <div class="q-opt">② 차단만으로는 비용이 많이 든다</div>
+            
+            <div class="q-opt">③ 차단이 실제 공격을 탐지했는지 알 수 없기 때문이다</div>
+            
+            <div class="q-opt">④ 차단은 팀 간 협업을 방해한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 차단이 실제 공격을 탐지했는지 알 수 없기 때문이다</div>
+              <div class="why">06:15에서 차단된 결과가 운에 의존할 수 있으며, 실제로 탐지되지 않은 공격이 더 위험하다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">레드팀</span><span class="tag">블루팀</span><span class="tag">퍼플 티밍</span><span class="tag">CTF</span><span class="tag">시나리오</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/QMPrXjsRRhY" target="_blank" rel="noopener">[10분 테코톡] 러키의 Spring Bean은 누가, 어떻게 관리할까?</a>
+        </h2>
+
+        <p class="summary">Spring Bean 스코프와 싱글톤·프로토타입 차이</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:26</span>
+            
+            <span>Spring 컨테이너는 빈을 생성·주입·생명주기 관리하는 IoC 컨테이너이다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:13</span>
+            
+            <span>싱글톤 스코프는 컨테이너당 하나의 인스턴스만 생성해 재사용한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:21</span>
+            
+            <span>프로토타입 스코프는 요청 시마다 새로운 빈을 생성해 메모리·CPU 비용이 증가한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>IoC 컨테이너 개념을 데이터 파이프라인 단계에 적용해 컴포넌트 자동 연결과 생명주기 관리를 구현한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 서빙 서비스에서 싱글톤 스코프를 사용해 무상태 추론 엔진을 공유하고, 프로토타입 스코프를 사용해 요청별 전처리 객체를 생성해 상태 격리를 유지한다.</span></li>
+            
+            <li><span class="box"></span><span>분산 작업 스케줄러에서 리소스 풀을 싱글톤 빈으로 관리하고, 각 작업에 필요한 임시 자원을 프로토타입 빈으로 제공해 자원 낭비를 최소화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">프로토타입 스코프 빈을 매 요청마다 새로 생성하면 발생할 수 있는 주요 단점은 무엇인가?</div>
+            
+            <div class="q-opt">① 객체 재사용으로 메모리 절감</div>
+            
+            <div class="q-opt">② 객체 생성 비용 증가와 GC 빈도 상승</div>
+            
+            <div class="q-opt">③ 싱글톤 충돌 발생</div>
+            
+            <div class="q-opt">④ 애플리케이션 시작 시간 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 객체 생성 비용 증가와 GC 빈도 상승</div>
+              <div class="why">본문 05:21에서 프로토타입 빈이 매 요청마다 생성돼 메모리 사용량과 가비지 컬렉션 빈도가 증가해 CPU 사용량과 응답 시간이 악화된다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Spring</span><span class="tag">IoC</span><span class="tag">Bean</span><span class="tag">Singleton</span><span class="tag">Prototype</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/CU4OTU03EXI" target="_blank" rel="noopener">체결부터 잔고까지 0.03초, 통합원장 서버 개발</a>
+        </h2>
+
+        <p class="summary">분산 원장 데이터를 통합해 조회 지연과 복잡성을 크게 줄인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:26</span>
+            
+            <span>이 화면 하나를 그리는 데 네 개의 데이터 소스가 필요했다</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:22</span>
+            
+            <span>모으는 이유는 크게 두 가지로 성능과 복잡도이다</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:46</span>
+            
+            <span>모든 데이터를 한 곳에 담아 조인 가능하며 원장에서 바뀐 건 1초에서 3초 안에 반영돼야 한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>통합 조회 모델을 도입해 전자상거래 주문 페이지에서 재고·가격·사용자·배송 정보를 한 번에 조회해 결제 지연을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>CDC를 활용해 마이크로서비스별 고객 데이터를 실시간으로 중앙 분석 웨어하우스로 복제해 대시보드 최신성을 확보한다</span></li>
+            
+            <li><span class="box"></span><span>다중 서비스 로그를 단일 스키마로 집계해 로그 파싱 및 유지보수 비용을 N+4 구조로 단순화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 별도의 원장들이 시장 개시 시점에 조회 지연을 초래했는가?</div>
+            
+            <div class="q-opt">① 각 원장이 별도 DB에 있어 병렬 호출이 필요했기 때문</div>
+            
+            <div class="q-opt">② 모든 조회 트래픽이 동일한 Oracle 원장에 집중됐기 때문</div>
+            
+            <div class="q-opt">③ 원장마다 스키마가 달라 변환 비용이 높았기 때문</div>
+            
+            <div class="q-opt">④ 네트워크 지연이 가장 큰 원인이었기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모든 조회 트래픽이 동일한 Oracle 원장에 집중됐기 때문</div>
+              <div class="why">본문에 따르면 주문·잔고·수익률 조회 트래픽이 전부 같은 Oracle 원장에 몰려 성능 병목이 발생했다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss 증권</span><span class="tag">MSA</span><span class="tag">CDC</span><span class="tag">Debezium</span><span class="tag">Oracle</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

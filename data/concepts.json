@@ -32,9 +32,9 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 26,
+      "count": 27,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-03"
+      "last_seen": "2026-10-05"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -138,6 +138,24 @@
       "first_seen": "2026-09-10",
       "last_seen": "2026-09-29"
     },
+    "semantic join pruning": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
+    },
+    "semantic query processing": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
+    },
+    "typed decision models": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
+    },
     "강화학습 기반 임베딩 최적화": {
       "aliases": [],
       "count": 1,
@@ -155,6 +173,12 @@
       "count": 2,
       "first_seen": "2026-09-23",
       "last_seen": "2026-10-02"
+    },
+    "객체 생명주기 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
     },
     "고객 데이터 활용": {
       "aliases": [],
@@ -200,9 +224,9 @@
     },
     "기술 부채 관리": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-03"
+      "last_seen": "2026-10-05"
     },
     "기술 작가의 제품 소유권": {
       "aliases": [],
@@ -242,9 +266,9 @@
     },
     "데이터 일반화": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-05"
     },
     "데이터 접근 계약": {
       "aliases": [],
@@ -278,9 +302,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-09-06"
+      "last_seen": "2026-10-05"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -410,9 +434,15 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-24"
+      "last_seen": "2026-10-05"
+    },
+    "보안 협업": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
     },
     "불안 기반 제품 설계": {
       "aliases": [],
@@ -452,9 +482,9 @@
     },
     "비동기 처리와 트랜잭션": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-10-01"
+      "last_seen": "2026-10-05"
     },
     "비디오 디퓨전": {
       "aliases": [],
@@ -467,6 +497,12 @@
       "count": 1,
       "first_seen": "2026-09-30",
       "last_seen": "2026-09-30"
+    },
+    "빈 스코프": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
     },
     "사용자 조사": {
       "aliases": [],
@@ -606,6 +642,12 @@
       "first_seen": "2026-09-26",
       "last_seen": "2026-09-26"
     },
+    "위협 시나리오 도출": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
+    },
     "유체 역학 기본 원리": {
       "aliases": [],
       "count": 1,
@@ -617,6 +659,12 @@
       "count": 1,
       "first_seen": "2026-10-03",
       "last_seen": "2026-10-03"
+    },
+    "의존성 주입": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
     },
     "인지 면역": {
       "aliases": [],
@@ -828,6 +876,12 @@
       "first_seen": "2026-09-06",
       "last_seen": "2026-09-06"
     },
+    "탐지 가시성 확보": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-05",
+      "last_seen": "2026-10-05"
+    },
     "텍스트 워터마킹": {
       "aliases": [],
       "count": 1,
@@ -949,6 +1003,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-04T07:43:28.285165+09:00",
+  "updated_at": "2026-10-05T07:46:03.856016+09:00",
   "version": 1
 }
