@@ -32,15 +32,15 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 27,
+      "count": 28,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-06"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 22,
+      "count": 23,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-09-30"
+      "last_seen": "2026-10-06"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -56,9 +56,9 @@
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 11,
+      "count": 13,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-03"
+      "last_seen": "2026-10-06"
     },
     "AI와 인간 협업": {
       "aliases": [],
@@ -140,15 +140,15 @@
     },
     "semantic join pruning": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-10-05",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-06"
     },
     "semantic query processing": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-10-05",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-06"
     },
     "typed decision models": {
       "aliases": [],
@@ -302,9 +302,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-06"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -341,6 +341,12 @@
       "count": 1,
       "first_seen": "2026-09-29",
       "last_seen": "2026-09-29"
+    },
+    "메타 커뮤니케이션": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-06"
     },
     "메타데이터 관리": {
       "aliases": [],
@@ -380,9 +386,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-10-03"
+      "last_seen": "2026-10-06"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -398,9 +404,9 @@
     },
     "문서 기반 지식 관리": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-09-24"
+      "last_seen": "2026-10-06"
     },
     "문서화": {
       "aliases": [],
@@ -491,6 +497,12 @@
       "count": 1,
       "first_seen": "2026-09-30",
       "last_seen": "2026-09-30"
+    },
+    "비언어적 의사소통": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-06"
     },
     "비판자 오류 보정": {
       "aliases": [],
@@ -822,6 +834,12 @@
       "first_seen": "2026-09-15",
       "last_seen": "2026-09-15"
     },
+    "커뮤니케이션 채널 변화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-06"
+    },
     "컨셉 기반 재랭킹": {
       "aliases": [],
       "count": 1,
@@ -956,9 +974,9 @@
     },
     "해석 가능성을 통한 모델 제어": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-03",
-      "last_seen": "2026-09-28"
+      "last_seen": "2026-10-06"
     },
     "행동 설계": {
       "aliases": [],
@@ -1003,6 +1021,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-05T07:46:03.856016+09:00",
+  "updated_at": "2026-10-06T10:13:02.279171+09:00",
   "version": 1
 }

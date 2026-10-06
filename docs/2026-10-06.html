@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 06일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 06일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">semantic query processing</span><span class="concept">semantic join pruning</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">모델 파인튜닝</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 인프라 경쟁</span><span class="concept">AI 생산성 도구</span><span class="concept">메타 커뮤니케이션</span><span class="concept">비언어적 의사소통</span><span class="concept">커뮤니케이션 채널 변화</span><span class="concept">레거시 시스템 리팩터링</span><span class="concept">문서 기반 지식 관리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DB</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.03524v1" target="_blank" rel="noopener">From Benchmarks to Production: A Text-to-SQL System for Complex Financial Data</a>
+        </h2>
+
+        <p class="summary">금융 DB Text‑SQL로 실서비스 성능 급상승</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 Text‑SQL 연구는 Spider·BIRD와 같이 스키마가 얕고 값이 가독성 있는 벤치마크에 초점을 맞추어 왔으며, 금융 실서비스에서는 키가 정수형인 불투명한 스키마와 다중 조인으로 성능이 50% 이하로 떨어졌다. 본 논문은 이러한 격차를 메우기 위해 도메인 특화 lookup 에이전트, 템플릿 검색, 외래키 기반 스키마 프루닝을 결합한 FLINT을 제안하며, 이는 LLM 기반 Text‑SQL 연구에서 실제 운영 데이터베이스 적용 단계로 나아가는 사례이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>일반 Text‑SQL 모델은 인간이 읽을 수 있는 값과 얕은 스키마에 최적화돼 금융 실서비스에서 불투명한 정수 키와 다중 조인 때문에 50% 이하 성능을 보인다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>FLINT은 (1) 자연어 개념을 질문별 제약으로 변환하는 lookup 에이전트, (2) 전문가가 만든 템플릿을 임베딩 기반으로 검색, (3) 외래키 체인으로 스키마를 프루닝하는 schema linking을 결합한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>359개의 실제 금융 질의에 대한 평가에서 FLINT은 동일 LLM 기반 베이스라인을 능가했으며, 실제 서비스에 배포돼 운영 중이다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>제품 ID가 숫자로 저장된 전자상거래 카탈로그에 lookup 에이전트를 도입해 사용자 질의를 해당 ID 제약으로 변환하면 검색 정확도가 향상된다.</span></li>
+            
+            <li><span class="box"></span><span>의료 데이터베이스에서 임상 질의에 맞는 템플릿을 임베딩 기반으로 검색해 자동 SQL 생성에 활용하면 의사들의 데이터 접근 속도가 빨라진다.</span></li>
+            
+            <li><span class="box"></span><span>보안 로그의 복잡한 스키마에서 외래키 체인을 따라 필요한 테이블만 선택하도록 스키마 링크를 적용하면 분석 쿼리의 복잡도가 감소한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">일반 Text‑SQL 시스템이 금융 실서비스에서 낮은 성능을 보이는 이유는?</div>
+            
+            <div class="q-opt">① 스키마가 얕고 값이 인간 친화적이기 때문</div>
+            
+            <div class="q-opt">② 개념이 불투명한 정수 키로 저장돼 다중 조인 필요</div>
+            
+            <div class="q-opt">③ LLM이 최신이 아니어서</div>
+            
+            <div class="q-opt">④ GPU 자원이 부족해서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 개념이 불투명한 정수 키로 저장돼 다중 조인 필요</div>
+              <div class="why">본문에 따르면 금융 DB는 개념이 정수 키로 저장되고 여러 조인이 필요해 일반 시스템이 50% 이하 성능을 보인다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">FLINT의 schema linking 구성 요소는 무엇을 수행하는가?</div>
+            
+            <div class="q-opt">① 컬럼명을 문자열 유사도로 매칭한다</div>
+            
+            <div class="q-opt">② 외래키 체인을 따라 스키마를 프루닝한다</div>
+            
+            <div class="q-opt">③ 자연어 설명을 생성한다</div>
+            
+            <div class="q-opt">④ 쿼리를 벡터로 임베딩한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 외래키 체인을 따라 스키마를 프루닝한다</div>
+              <div class="why">논문에서는 schema linking이 외래키 체인을 따라 관련 테이블만 남겨 스키마를 축소한다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">FLINT</span><span class="tag">LLM</span><span class="tag">Spider</span><span class="tag">BIRD</span><span class="tag">embedding-based retrieval</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CL</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.03695v1" target="_blank" rel="noopener">Language Models that Play Chess and Explain Their Moves</a>
+        </h2>
+
+        <p class="summary">침묵형 체스 엔진에 설명 능력을 부여해 모델 효율성을 높인다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 체스 엔진은 뛰어난 실력을 보이지만 설명을 제공하지 못하고, LLM은 설명은 가능하지만 실력이 약했다. 본 논문은 고성능 체스 엔코더와 인스트럭션‑튜닝된 LM을 교차‑어텐션으로 결합하고, Bellman‑유사 반복 증류로 설명과 성능을 동시에 향상시킨다. 이는 제한된 파라미터로 설명 가능한 게임 AI를 구현하는 새로운 연구 흐름이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Queen은 침묵형 체스 엔코더와 인스트럭션‑튜닝된 LM을 교차‑어텐션으로 결합해 그랜드마스터 수준의 플레이와 움직임 설명을 동시에 제공한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Bellman‑유사 반복 증류 과정을 7회 적용해 설명을 정제하고 Elo를 900점 이상 상승시켰다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>4 B 파라미터만으로도 기존 최첨단 모델을 능가하는 실력과 GPT‑5.6‑Sol 수준의 설명 일관성을 달성했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>자율주행 분야에서 LiDAR 인코더와 LM을 교차‑어텐션으로 결합해 주행 결정에 대한 자연어 설명을 생성, 안전 감시를 강화한다</span></li>
+            
+            <li><span class="box"></span><span>로봇 조작에서 상위 후보 그립 후 상태를 분석해 언어 설명으로 증류하는 반복 증류를 적용해 성능과 해석 가능성을 동시에 향상시킨다</span></li>
+            
+            <li><span class="box"></span><span>정적 분석 인코더에서 디버깅 개념을 QA 커리큘럼으로 추출하고 이를 코드 어시스턴트 LM에 증류해 오류 수정 이유를 명확히 제시한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Queen 모델에서 반복 증류 알고리즘의 주요 목적은 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 크기를 늘리기 위해</div>
+            
+            <div class="q-opt">② 설명 품질과 플레이 실력을 동시에 향상시키기 위해</div>
+            
+            <div class="q-opt">③ 체스 엔코더를 대체하기 위해</div>
+            
+            <div class="q-opt">④ 무작위 수를 생성하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 설명 품질과 플레이 실력을 동시에 향상시키기 위해</div>
+              <div class="why">본문은 반복 증류가 설명을 정제하고 Elo를 900점 이상 상승시켜 성능과 설명을 동시에 개선한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Queen 아키텍처가 체스 엔코더와 언어 모델을 결합하는 방식은?</div>
+            
+            <div class="q-opt">① 출력을 단순 연결한다</div>
+            
+            <div class="q-opt">② 인코더‑디코더 구조에서 교차‑어텐션을 사용한다</div>
+            
+            <div class="q-opt">③ 공유 임베딩 레이어를 사용한다</div>
+            
+            <div class="q-opt">④ 보상 설계로 강화학습을 적용한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 인코더‑디코더 구조에서 교차‑어텐션을 사용한다</div>
+              <div class="why">논문은 교차‑어텐션을 통해 침묵형 체스 엔코더와 인스트럭션‑튜닝된 LM을 통합한다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Queen</span><span class="tag">cross-attention</span><span class="tag">Bellman update</span><span class="tag">GPT-5.6-Sol</span><span class="tag">Elo</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/ZHVNTTKu9fU" target="_blank" rel="noopener">The Billion Dollar AI Advantage Is Disappearing</a>
+        </h2>
+
+        <p class="summary">고성능 AI를 저비용 노트북에서 직접 활용 가능해짐</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:25</span>
+            
+            <span>Opus 5.5는 기존 AI 대비 약 2.5배 저렴하면서 품질을 비슷하게 유지</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:38</span>
+            
+            <span>Sonnet 5.5는 Fable 대비 약 5배 저렴해 파라미터 규모도 작음</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:24</span>
+            
+            <span>앞으로 고성능 AI를 일반 노트북이나 휴대폰에서도 구동 가능할 전망</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>작은 규모의 LLM을 내부 데이터 라벨링 파이프라인에 적용해 비용을 절감하면서 라벨 품질을 유지한다</span></li>
+            
+            <li><span class="box"></span><span>Lambda의 온디맨드 GPU 인스턴스를 활용해 시계열 예측 모델의 하이퍼파라미터 탐색을 빠르게 수행한다</span></li>
+            
+            <li><span class="box"></span><span>AVBD 물리 시뮬레이션 코드를 단일 HTML 파일로 포팅해 엔지니어링 교육용 인터랙티브 데모를 웹에서 제공한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 최신 AI 모델은 파라미터 수보다 훈련 방법에 따라 비용 효율성이 달라지는가?</div>
+            
+            <div class="q-opt">① 파라미터 수가 직접 비용을 결정한다</div>
+            
+            <div class="q-opt">② 효율적인 훈련 기법이 연산량을 줄인다</div>
+            
+            <div class="q-opt">③ 하드웨어 가격이 지속적으로 하락한다</div>
+            
+            <div class="q-opt">④ 데이터 양이 감소한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 효율적인 훈련 기법이 연산량을 줄인다</div>
+              <div class="why">영상에서는 'It's in how well you train your parameters'라고 언급하며 훈련 효율이 비용에 핵심이라고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Lambda 플랫폼을 사용하면 연구자가 얻는 주요 이점은?</div>
+            
+            <div class="q-opt">① 자동 데이터 라벨링</div>
+            
+            <div class="q-opt">② 고성능 GPU를 온디맨드로 제공</div>
+            
+            <div class="q-opt">③ 모델을 자동으로 배포</div>
+            
+            <div class="q-opt">④ 코드 자동 생성</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 고성능 GPU를 온디맨드로 제공</div>
+              <div class="why">본문에서 Lambda가 강력한 Nvidia GPU를 제공해 실험을 빠르게 수행할 수 있다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Sonnet 5.5</span><span class="tag">AVBD</span><span class="tag">Fable</span><span class="tag">Opus 5.5</span><span class="tag">Lambda</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/YRVpwBvECfc" target="_blank" rel="noopener">[ifkakao2021] 커뮤니케이션, 선물하기</a>
+        </h2>
+
+        <p class="summary">커뮤니케이션 변화가 데이터 해석에 핵심</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:56</span>
+            
+            <span>전화기 발명으로 시공간 제약을 극복, 실시간 커뮤니케이션 가능</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:23</span>
+            
+            <span>대화에서 비언어적 요소가 의사결정에 차지하는 비중이 높음</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:40</span>
+            
+            <span>카카오톡 선물하기는 비대면 상황에서 감정 전달을 보완하는 메타 커뮤니케이션 도구</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>이모티콘 사용 빈도를 감정 분석 지표로 활용해 고객 지원 티켓의 감성 분류 정확도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>카카오톡 선물하기의 태그 데이터를 활용해 사용자의 선물 목적을 추론하고 맞춤형 상품 추천에 적용한다</span></li>
+            
+            <li><span class="box"></span><span>비언어적 의사소통 요소를 영상 회의 녹화에서 음성 톤·표정 인식으로 추출해 회의 요약에 감정 흐름을 반영한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">심리학자 메라비언이 말한 대화에서 말 내용이 차지하는 비중은?</div>
+            
+            <div class="q-opt">① 7%</div>
+            
+            <div class="q-opt">② 38%</div>
+            
+            <div class="q-opt">③ 55%</div>
+            
+            <div class="q-opt">④ 100%</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 7%</div>
+              <div class="why">본문 03:23에 따르면 메라비언은 말 내용이 차지하는 비중을 7%라고 제시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">아리스토텔레스</span><span class="tag">알렉산더 그레이엄 벨</span><span class="tag">카카오톡</span><span class="tag">카카오프렌즈</span><span class="tag">이모티콘</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">한컴 AI</div>
+
+        <h2 class="title">
+          <a href="https://hai-hancom.stibee.com/p/178" target="_blank" rel="noopener">👋 한글날에 다시 보는 '한글'</a>
+        </h2>
+
+        <p class="summary">한글 문서 누적 데이터가 AI 학습·주권에 핵심</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>한글 프로그램은 초성·중성·종성 조합 방식으로 1만 1,172자를 모두 지원해 한국어 문서 표준을 구축했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>1998년 MS 투자 협상 위기에서 사용자와 기업이 ‘한글’을 지키며 소프트웨어 독립성을 확보했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>HWPX 개방형 포맷을 통해 문서가 AI가 읽을 수 있게 구조화돼 AI 주권과 데이터 활용에 기여한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>한글의 초·중·종성 조합 방식을 다른 조합형 문자 체계에 적용해 효율적인 문자 인코딩을 설계한다</span></li>
+            
+            <li><span class="box"></span><span>HWPX와 같은 이름표 기반 개방형 포맷을 기업 내부 문서 파이프라인에 도입해 메타데이터를 명시적으로 노출, AI 모델이 구조를 쉽게 학습하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>‘한글’ 구출 운동처럼 사용자·커뮤니티가 핵심 오픈소스 ML 툴의 유지·운영을 직접 지원해 벤더 락인 위험을 감소시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 1987년 KS 완성형 표준만으로는 일부 한글 글자를 쓸 수 없었나요?</div>
+            
+            <div class="q-opt">① 자주 쓰는 2,350자만 포함했기 때문</div>
+            
+            <div class="q-opt">② Unicode를 사용했기 때문</div>
+            
+            <div class="q-opt">③ 글자를 이미지로 저장했기 때문</div>
+            
+            <div class="q-opt">④ 전용 폰트를 요구했기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 자주 쓰는 2,350자만 포함했기 때문</div>
+              <div class="why">KS 완성형은 자주 쓰는 2,350자만 정의했기 때문에 ‘똠’, ‘펲’ 같은 드문 조합은 번호가 없어 쓸 수 없었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">HWPX 형식이 AI가 문서를 읽기 쉽게 만드는 핵심 메커니즘은 무엇인가요?</div>
+            
+            <div class="q-opt">① 문서를 암호화된 바이너리로 저장한다</div>
+            
+            <div class="q-opt">② 내용과 구조를 구분하는 이름표(태그)로 저장한다</div>
+            
+            <div class="q-opt">③ 텍스트를 손실 압축한다</div>
+            
+            <div class="q-opt">④ AI 모델을 파일에 내장한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 내용과 구조를 구분하는 이름표(태그)로 저장한다</div>
+              <div class="why">HWPX는 각 요소에 이름표를 붙여 구조와 내용을 명확히 구분하므로 비‑한글 프로그램이나 AI가 문서 구조를 파악하기 쉽다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">한글</span><span class="tag">KS 완성형</span><span class="tag">HWPX</span><span class="tag">한컴</span><span class="tag">LibreOffice</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
