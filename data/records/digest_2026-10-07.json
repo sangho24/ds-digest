@@ -1,0 +1,398 @@
+{
+  "date": "2026-10-07",
+  "generated_at": "2026-10-06T23:37:46.844475",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "Recursive Video In-Context Learning for Agentic Robot",
+        "url": "https://arxiv.org/abs/2610.06843v1",
+        "published_at": "2026-10-05T17:59:11",
+        "transcript": null,
+        "body": "LLM agents that orchestrate frozen vision-language-action (VLA) policies improve across episodes through text memory, which records what the agent did but not how the task is done. A demonstration video shows it, but fits poorly into an agent's context. The full video slows every turn, fixed keyframes lose the contact detail that decides whether a grasp holds, and what the agent needs shifts from the task's structure while planning to the frames around each contact. We introduce Recursive Video In-Context Learning (RV-ICL), a training-free method that turns a demonstration into a hierarchy the agent navigates rather than a prompt it receives. The hierarchy is built from the sub-events of the demonstration, such as grasps and releases. Its levels grow finer, from keyframes of the whole task to phases, moments and short clips, and are exposed through read-only tools. The agent reads the coarse levels before planning. During execution it re-enters the hierarchy whenever a step needs more detail and loads only the clip of its current sub-goal. One demonstration per task is enough. Built on RPent, RV-ICL raises success from 92.6% to 96.5% on LIBERO-PRO and from 86.7% to 95.8% on LIBERO-Plus.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "영상 계층화로 로봇 학습 효율·성공률 크게 향상",
+        "tags": [
+          "RV-ICL",
+          "RPent",
+          "LIBERO-PRO",
+          "LIBERO-Plus",
+          "VLA"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "AI 에이전트 메모리 관리"
+        ],
+        "key_points": [
+          {
+            "point": "RV-ICL는 단일 시연 영상을 계층 구조로 변환해 에이전트가 탐색하도록 하여 전체 영상을 로드하지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "계층은 전체 키프레임→단계→순간→짧은 클립 순으로 세분화되며, 실행 중 필요 시 현재 하위 목표의 클립만 로드한다.",
+            "timestamp": null
+          },
+          {
+            "point": "이 방법으로 LIBERO-PRO 성공률이 92.6%→96.5%, LIBERO-Plus가 86.7%→95.8%로 향상된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "LLM 기반 로봇 에이전트는 텍스트 메모리만으로는 세밀한 시각 정보를 전달하기 어려워 기존에는 전체 시연 영상을 프롬프트에 넣어 비효율적이었다. RV-ICL는 시연 영상을 계층화해 필요 시 세부 클립을 읽어들이는 훈련‑무료 접근으로, 멀티모달 인‑컨텍스트 학습과 재귀적 작업 분해 흐름에 속한다. 기존 방법 대비 메모리·연산 효율과 성공률을 동시에 끌어올렸다.",
+        "production_ideas": [
+          "자율주행 시뮬레이션에서 전체 경로는 키프레임으로, 복잡한 차선 변경은 짧은 클립으로 제공해 실시간 의사결정 지연을 감소한다.",
+          "산업용 조립 로봇에 시연 영상을 단계·클립 계층으로 구성해 현재 조립 단계에 맞는 짧은 클립만 로드함으로써 메모리 사용량을 줄이고 오류율을 낮춘다.",
+          "의료 AI 어시스턴트가 수술 시연 영상을 단계·클립으로 구조화해, 질문 시 해당 단계의 짧은 클립을 제공해 실시간 가이드 정확성을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "RV-ICL가 만든 계층 구조에서 가장 거친 수준에서 가장 세밀한 수준까지의 순서는?",
+            "options": [
+              "키프레임 → 단계 → 순간 → 짧은 클립",
+              "짧은 클립 → 순간 → 단계 → 키프레임",
+              "단계 → 키프레임 → 순간 → 짧은 클립",
+              "키프레임 → 순간 → 단계 → 짧은 클립"
+            ],
+            "answer_index": 0,
+            "explanation": "논문에서는 전체 작업의 키프레임을 최상위로 하고, 그 아래 단계(phase), 순간(moment), 최하위에 짧은 클립 순으로 계층을 만든다고 설명한다."
+          },
+          {
+            "question": "RV-ICL가 성공률을 높이는 핵심 메커니즘은?",
+            "options": [
+              "추가 학습 데이터를 사용한다",
+              "각 단계마다 전체 영상을 로드한다",
+              "필요 시 계층에 재진입해 현재 하위 목표의 클립만 로드한다",
+              "더 큰 LLM을 적용한다"
+            ],
+            "answer_index": 2,
+            "explanation": "핵심은 에이전트가 계획 단계에서 거친 레벨을 읽고, 실행 중 세부가 필요하면 계층에 재진입해 해당 클립만 로드함으로써 효율과 정확성을 동시에 개선한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "Beyond synthetic testing: Capturing and replaying real database workloads at Airbnb",
+        "url": "https://medium.com/airbnb-engineering/beyond-synthetic-testing-capturing-and-replaying-real-database-workloads-at-airbnb-cea7ee9b1ab2?source=rss----53c7c27702d5---4",
+        "published_at": "2026-10-06T17:01:04",
+        "transcript": null,
+        "body": "<h4>How we capture real production database traffic at Airbnb and replay it offline to load-test, plan capacity, and de-risk upgrades.</h4><figure><img alt=\"Three hikers wearing backpacks walk away from the camera along a coastal trail through low green shrubs, heading toward large smooth granite boulders on a rocky beach, with the ocean and distant mountains visible under a cloudy sky.\" src=\"https://cdn-images-1.medium.com/max/1024/1*iYpaqy9OLoB92atnd-0cEA.png\" /></figure><p><strong>By:</strong> <a href=\"https://www.linkedin.com/in/zuofeiw/\">Zuofei Wang</a>, <a href=\"https://www.linkedin.com/in/erluo-li/\">Erluo Li</a></p><h3>Introduction</h3><p>At Airbnb, MySQL-compatible databases are a critical backbone of our online database infrastructure: a fleet of hundreds of clusters supporting thousands of use cases at millions of queries per second (QPS). Operating databases at scale brings hard problems, including sizing clusters for future growth, keeping behavior consistent across version upgrades and migrations, and reproducing production incidents well enough to debug them. This post describes the database traffic capture and replay system we built to help us tackle them.</p><h3>Challenges and motivation</h3><p>A complex database operation such as Airbnb’s requires a number of supporting systems, and one of them is a way to capture database queries and replay them. This is needed for error recovery, governance, quality assurance testing and product improvement efforts.</p><p>Previously, Airbnb’s system for database query capture and replay was fragmented. Each language binding used its own logging framework to emit query traces to Kafka, which were then processed per use case and replayed by a custom replayer.</p><figure><img alt=\"Architecture diagram showing three application types — Java apps (JDBC, jooq), Python apps (sqlalchemy, pymysql), and Ruby apps (ActiveRecord, mysql2) — each paired with a corresponding query logger (Java Query Logger, Python Query Logger, Ruby Query Logger). All three loggers feed into a central Kafka topic that collects query traces, which then flows into a Legacy Query Replayer.\" src=\"https://cdn-images-1.medium.com/max/1024/1*NwEE8F6fNi-4SIJaINLSKQ.png\" /><figcaption><em>Legacy Query Capture and Replay System</em></figcaption></figure><p>This system was borrowed from our observability pipeline. It worked as a fast initial solution, but over time, we found that it fell short of what we needed. Capturing queries client-side and per language carried a heavy maintenance burden whose ownership was ambiguous, and it scaled poorly across our service-oriented architecture (SOA). Most importantly, it lacked enough information to convey a complete picture of each transaction. As a result, it couldn’t accurately replay transactions, which made it impossible to verify that the same queries return the same results on the new database.</p><p>To close these gaps, we set out to build a system for query capture and replay, with three goals:</p><ul><li><strong>Load testing with real production traffic.</strong> Synthetic benchmarks such as sysbench don’t capture the full spectrum of production queries. By replaying captured traffic at production rates, or at higher multiples to model forecast growth, we can right-size clusters: upscaling those with insufficient headroom for growth and downscaling over-provisioned ones.</li><li><strong>Query compatibility across upgrades and migrations.</strong> Subtle behavior differences (such as differences between MySQL 5.7 and 8.0, or between “official” MySQL and a MySQL-compatible engine) can break applications. By replaying the same traffic against two targets and comparing results, we surface incompatibilities before production migrations.</li><li><strong>Performance debugging.</strong> MySQL provides performance_schema digests for diagnostics, but these are abstracts of actual queries and don’t contain enough information to reproduce a problem. Capturing complete SQL statements with their transactional context lets us replay problematic workloads offline, both to investigate incidents and to validate fixes before they ship.</li></ul><p>To meet these goals, we needed a single, client-agnostic capture point that needs no application changes. We built it on top of <a href=\"https://proxysql.com/\">ProxySQL</a>, an open-source proxy that understands the MySQL wire protocol and already sits between our applications and databases.</p><h3>System architecture overview</h3><p>All database traffic already flows through a ProxySQL deployment, which makes it a natural place to capture queries. The query capture and replay system has three components, all built in-house: a Log Mover that collects the query logs, a Log Processor that turns them into replayable, per-cluster datasets, and a Log Replayer that runs captured traffic against target databases.</p><p>Because captured queries can contain personal data, the pipeline treats them exactly as we treat production data",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "실제 DB 트래픽 재현으로 성능·마이그 위험 감소",
+        "tags": [
+          "MySQL",
+          "Kafka",
+          "sysbench",
+          "Airbnb",
+          "JDBC"
+        ],
+        "concepts": [
+          "데이터 트래픽 캡처와 재생",
+          "실제 트래픽 기반 로드 테스트",
+          "버전 업그레이드 호환성 검증"
+        ],
+        "key_points": [
+          {
+            "point": "기존 시스템은 언어별 로그를 Kafka에 보내는 방식으로 유지보수 부담이 크고 트랜잭션 전체 정보를 놓쳐 정확한 재생이 어려웠다.",
+            "timestamp": null
+          },
+          {
+            "point": "새 시스템은 실프로덕션 트래픽을 그대로 재생해 클러스터 용량을 정확히 예측하고, 업그레이드·마이그레이션 시 호환성을 검증한다.",
+            "timestamp": null
+          },
+          {
+            "point": "완전한 SQL 문과 실행 컨텍스트를 캡처해 두 대상 DB에 동일하게 재생함으로써 성능 디버깅과 결과 일관성을 확보한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "언어별 DB 쿼리 캡처 방식을 HTTP 요청 로그 캡처·재생으로 확장해 마이크로서비스 버전 교체 시 실제 트래픽 기반 성능 테스트를 수행한다.",
+          "캡처된 DB 워크로드 데이터를 활용해 쿼리 지연 예측 모델을 학습시켜 사전 용량 계획에 활용한다.",
+          "데이터 파이프라인의 CDC 이벤트를 Kafka에 저장하고 오프라인으로 재생해 새로운 변환 로직의 정확성을 검증한다."
+        ],
+        "quiz": [
+          {
+            "question": "기존 언어별 로그 기반 캡처 시스템이 확장에 어려웠던 주요 이유는 무엇인가?",
+            "options": [
+              "유지보수 부담이 크고 트랜잭션 전체 정보를 놓쳤기 때문이다",
+              "트래픽 양이 적어 데이터가 부족했기 때문이다",
+              "로그가 암호화돼 있어 분석이 불가능했기 때문이다",
+              "Kafka가 해당 시점에 지원되지 않았기 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 기존 시스템이 언어별 로그를 사용해 트랜잭션 전체 정보를 충분히 담지 못하고, 유지보수 주체가 모호해 확장에 한계가 있었다고 설명한다."
+          },
+          {
+            "question": "새 시스템이 목표로 삼은 세 가지 중 포함되지 않은 것은?",
+            "options": [
+              "로드 테스트 with real traffic",
+              "버전 업그레이드 호환성 검증",
+              "성능 디버깅",
+              "실시간 모니터링"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 제시된 목표는 로드 테스트, 업그레이드·마이그레이션 호환성 검증, 성능 디버깅이며, 실시간 모니터링은 언급되지 않았다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "Aurora MySQL 인덱스 DDL이 Reader 버퍼풀을 비운다?",
+        "url": "https://medium.com/daangn/aurora-mysql-%EC%9D%B8%EB%8D%B1%EC%8A%A4-ddl%EC%9D%B4-reader-%EB%B2%84%ED%8D%BC%ED%92%80%EC%9D%84-%EB%B9%84%EC%9A%B4%EB%8B%A4-16c6328dea50?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-10-06T10:41:52",
+        "transcript": null,
+        "body": "<h4>미사용 인덱스를 정리하다 만난 Aurora 엔진 결함, 그리고 3.14 릴리즈까지</h4><p>안녕하세요. 당근 DB팀에서 근무하고 있는 Eden(이든)이에요. 당근 DB팀에서는 Aurora MySQL / Aurora PostgreSQL 및 MongoDB 를 운영하고 있어요. 이번에 Aurora MySQL 을 운영하며 경험했던 이슈를 소개해 드리려고 해요.</p><p>“인덱스를 INVISIBLE 로 바꾸는 건 메타데이터만 건드리는 작업이니까 DB 에 부하를 주지 않는다.” DBA 라면 누구나 이렇게 말할 거예요. 저도 그랬고요. 그런데 Aurora MySQL 에서는 이 문장이 반쪽만 맞았어요. Writer 는 정말 아무 일도 없었지만, Reader 에서는 버퍼풀이 통째로 무효화되면서 CPU 와 ReadIOPS 가 동시에 튀었거든요.</p><p>오늘은 미사용 인덱스를 정리하다가 이 현상을 발견하고, 버퍼풀 안에서 무슨 일이 벌어지는지 직접 들여다보고, DDL 종류별로 재현해서 AWS 에 리포트하고, 결국 엔진 결함으로 확인되어 다음 릴리즈에 fix 가 실리기까지의 과정을 정리해 보려고 해요. Aurora MySQL 을 운영하는 분들께 실질적인 도움이 되면 좋겠어요.</p><h3>Aurora 는 Reader 의 캐시를 어떻게 동기화할까</h3><p>먼저 배경부터 짧게 짚고 갈게요. Aurora 는 인스턴스와 스토리지가 분리되어 있어요. Writer 는 데이터 페이지를 스토리지에 쓰지 않고 redo 로그만 보내고, 스토리지 계층이 그 로그로 페이지를 만들어요. Reader 는 같은 스토리지를 바라보지만 자기만의 버퍼풀을 갖고 있고요. Writer 가 어떤 페이지를 바꾸면 그 redo 로그가 Reader 에게 전달되고, Reader 는 버퍼풀에 그 페이지가 있으면 갱신해요.</p><p>이 구조에서 제가 알고 있는 규칙은 이랬어요.</p><ul><li>DDL 중에서 COPY 또는 rebuild 를 동반하는 INPLACE 알고리즘이 사용되는 경우(컬럼 타입 변경, NOT NULL 변경 등)에는 내부적으로 새 테이블을 만들어 데이터를 옮기고 옛 테이블을 지워요. InnoDB 에서는 tablespace 가 새로 생기는 것이라 (SPACE id 가 바뀜), Reader 가 갖고 있던 옛 tablespace 의 캐시 페이지는 전부 의미가 없어져요. <strong>즉 Reader 버퍼풀에서 해당 테이블의 캐시된 페이지는 소멸하게 돼요.</strong></li><li>DDL 중에서 INSTANT 또는 rebuild 없는 INPLACE 알고리즘이 사용되는 경우에는 기존 테이블의 데이터·인덱스 페이지를 손대지 않아요. 인덱스 INVISIBLE 이나 컬럼 DEFAULT 변경처럼 데이터 딕셔너리만 고치거나, CREATE INDEX 처럼 새 B-tree 를 하나 더 만들 뿐이에요. <strong>그래서 Reader 버퍼풀에서 해당 테이블의 캐시된 페이지는 그대로 유지돼야 해요.</strong></li></ul><p>두 번째 줄이 오늘 이야기의 전제이자, 깨진 가정이에요.</p><h3>발단: 미사용 인덱스 6개</h3><p>당근의 한 서비스는 Aurora MySQL 3.10.x 클러스터를 Writer 1대 + Reader 3대로 운영하고 있어요. 이 클러스터에는 인덱스가 20개 넘게 달린 테이블이 있었어요. 인덱스가 많으면 쓰기 비용이 늘고, 옵티마이저가 실제 쿼리 실행에 사용되지 않는 인덱스까지 평가하느라 실행 계획을 세우는 비용도 커져요. 그래서 안 쓰는 인덱스를 정리하기로 했어요.</p><p>미사용 판정은 performance_schema.table_io_waits_summary_by_index_usage 를 썼어요. 이 테이블은 인스턴스가 시작된 이후 인덱스별 읽기/쓰기 횟수를 누적하니까, 일주일 간격으로 두 번 스냅샷을 떠서 그 사이에 count_read 가 늘지 않은 인덱스를 골라냈어요.</p><pre>SELECT object_name, index_name, count_star, count_read, count_write<br />FROM performance_schema.table_io_waits_summary_by_index_usage<br />WHERE object_name = 'store_reviews';</pre><p>(여기서 한 가지 팁. 이 조회는 반드시 모든 노드에서 해야 해요. 노드별로 쿼리 패턴이 완전히 달라서, Writer 에서 count_read = 0 인 인덱스가 특정 Reader 에서는 많이 사용될 수 있거든요. 4개 노드 × 2주 동안 스냅샷 모두에서 읽기가 0 인 인덱스 6개를 최종 후보로 골랐어요.)</p><p>바로 DROP 하지는 않았어요. 인덱스를 INVISIBLE 로 바꿔서 옵티마이저가 못 보게 만든 뒤 며칠 관찰하고, 문제가 없으면 DROP 하는 절차로 진행하려고 했어요. INVISIBLE 은 인덱스 자체는 그대로 두니까 무언가 잘못되면 VISIBLE 로 즉시 되돌릴 수 있어요. 메타데이터만 바꾸는 작업이니 부담 없이, 인덱스 하나씩 텀을 두고 실행했어요.</p><pre>ALTER TABLE store_reviews ALTER INDEX idx_sentiment_store_id_score_created_at INVISIBLE;<br />ALTER TABLE store_reviews ALTER INDEX idx_store_id_score_created_at INVISIBLE;<br />ALTER TABLE store_reviews ALTER INDEX idx_region_id_score_category_id INVISIBLE;</pre><h3>현상: Writer 는 조용한데 Reader 만 튄다</h3><p>CloudWatch 를 보니 ALTER INDEX INVISIBLE 세 번에 Reader 스파이크 세 번이 정확히 1:1 로 대응하고 있었어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*b-XNWJOgCA51ULmy04joow.png\" /><figcaption>그림 1. INVISIBLE 3회에 1:1 로 대응하는 Reader 의 CPU · ReadIOPS 스파이크 (Reader 3대 중 1대)</figcaption></figure><p>Reader 3대가 동시에 튀었어요.</p><ul><li>ReadIOPS 는 평소 수백에서 3.1K 로 올라갔어요.</li><li>CPU 는 30% 에서 50~60% 로 올라갔어요.</li><li>BufferCacheHitRatio 는 순간적으로 떨어졌어요.</li></ul><p>같은 시각 Writer 는 ReadIOPS / CPU / BufferCacheHitRatio 모두 <strong>평소와 같았어요</strong>.</p><p>BufferCacheHitRatio 가 떨어지고 ReadIOPS 가 튄다는 건, <strong>버퍼풀에서 데이터 페이지가 순간적으로 사라져 스토리지에서 다시 읽어 오는 상황</strong>이 아닐까 의심했어요.</p><p>그래서 INDEX INVISIBLE DDL 직전과 직후에 Reader 에서 인덱스별 캐시 페이지 수가 변경되는 게 있는지 확인해 봤어요.</p><pre>SELECT INDEX_NAME, COUNT(*) AS pages, ROUND(COUNT(*) * 16 / 1024) AS size_mb<br />FROM information_schema.INNODB_BUFFER_PAGE<br />WHERE TABLE_NAME LIKE '%store_reviews%'<br />GROUP BY INDEX_NAME<br />ORDER BY pages DESC;</pre><p>(위 쿼리를 할 때 주의할 점이 하나 있어요. 이 뷰는 버퍼풀 전체를 훑기 때문에 버퍼풀이 큰 인스턴스에서는 조회 자체가 수 초 걸리고 부하도 줘요. 운영 중에 습관처럼 돌리는 쿼리는 아니에요. 공식 문서도 <a href=\"https://dev.mysql.com/doc/refman/8.0/en/information-schema-innodb-buffer-page-table.html\">운영 시스템에서는 성능 영향을 확인한 뒤에만 조회하라고</a> 경고해요.)</p><pre>-- DDL 직전<br />INDEX_NAME                                       pages  size_mb<br />---------------------------------------------------------------<br />PRIMARY                                         252527     3946<br />idx_author_id_visibility_score                   33963      531<br />idx_author_id_created_at_product_id_visibility   33456      523<br />idx_author_id_product_id_created_at              30904      483<br />…<br />합계                                             511866     7998<br /> <br />-- DDL 직후<br />INDEX_NAME                                       pages  size_mb<br />---------------------------------------------------------------<br />PRIMARY                                         252656     3948<br />idx_author_id_visibility_score                   33965      531<br />idx_author_id_created_at_product_id_visibility   33464      523<br />idx_author_id_product_id_created_at              30916      483<br />…<br />합계 ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "Aurora 버퍼가 인덱스 INVISIBLE 때 비워짐",
+        "tags": [
+          "Aurora MySQL",
+          "INVISIBLE",
+          "performance_schema",
+          "CloudWatch",
+          "INNODB_BUFFER_PAGE"
+        ],
+        "concepts": [
+          "레거시 시스템 리팩터링",
+          "메타데이터 활용 검색"
+        ],
+        "key_points": [
+          {
+            "point": "Aurora Reader는 인덱스 INVISIBLE DDL 시에 버퍼풀 캐시가 전부 무효화돼 CPU와 ReadIOPS 급증을 일으킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "DDL 종류에 따라 Reader 캐시 영향이 다르며, INPLACE rebuild(예: 컬럼 타입 변경) 시에는 캐시가 소멸하지만 INSTANT/INPLACE without rebuild는 유지돼야 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "인덱스 사용 여부 판단은 performance_schema.table_io_waits_summary_by_index_usage 를 활용하고, 인덱스를 INVISIBLE 로 전환해 테스트 후 DROP 하는 절차가 안전하다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "performance_schema 기반 사용량 분석을 PostgreSQL의 pg_stat_user_indexes와 결합해 오래된 물리적 뷰를 안전하게 비활성화하고 단계적으로 삭제한다.",
+          "인덱스를 INVISIBLE 로 전환하는 방식을 다른 DBMS(예: Oracle)에서 스키마 변경 전 기능 플래그로 활용해 서비스 중단 없이 구조 변경을 검증한다.",
+          "Reader‑Writer 구조를 가진 분산 DB에서 DDL 후 BufferPool 히트율을 모니터링해 캐시 무효화 패턴을 조기에 감지하고 자동 롤백 정책을 적용한다."
+        ],
+        "quiz": [
+          {
+            "question": "Aurora Reader에서 인덱스 INVISIBLE 로 전환했을 때 CPU·ReadIOPS가 급증하는 주된 원인은?",
+            "options": [
+              "Reader 버퍼풀의 해당 테이블 캐시 페이지가 전부 소멸한다",
+              "Writer가 페이지를 재작성한다",
+              "Invisible 인덱스가 전체 테이블 스캔을 유발한다",
+              "CloudWatch 지표가 오작동한다"
+            ],
+            "answer_index": 0,
+            "explanation": "Reader는 자체 버퍼풀을 가지고 있으며, INVISIBLE DDL 시 내부적으로 캐시된 페이지를 무효화해 스토리지에서 다시 읽게 되므로 CPU와 I/O가 급증한다."
+          },
+          {
+            "question": "사용되지 않는 인덱스를 찾기 위해 본문에서 사용한 쿼리는?",
+            "options": [
+              "SELECT * FROM information_schema.tables;",
+              "SELECT object_name, index_name, count_star FROM performance_schema.table_io_waits_summary_by_index_usage;",
+              "SHOW INDEX FROM 테이블;",
+              "EXPLAIN SELECT ..."
+            ],
+            "answer_index": 1,
+            "explanation": "performance_schema.table_io_waits_summary_by_index_usage 테이블은 인덱스별 읽기·쓰기 횟수를 제공해 사용량이 0인 인덱스를 식별할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 8,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "한 문장으로 앱을 테스트하기까지",
+        "url": "https://medium.com/daangn/%ED%95%9C-%EB%AC%B8%EC%9E%A5%EC%9C%BC%EB%A1%9C-%EC%95%B1%EC%9D%84-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0%EA%B9%8C%EC%A7%80-5340546886b5?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-10-06T02:55:29",
+        "transcript": null,
+        "body": "<figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*kstF51DHjmjLF7HzQqvCYQ.png\" /></figure><p>안녕하세요! 당근 모바일실에서 Test Automation Engineer로 일하고 있는 Lily예요.</p><p>모바일실은 여러 팀이 당근 앱을 더 빠르고 안정적으로 만들 수 있게 그 바탕이 되는 플랫폼을 만드는 곳이에요. 그 안에서 저는 테스트 자동화를 맡고 있어요. 실제 기기에서 테스트를 실행할 수 있는 기반을 만들고, 매일 안정적으로 돌아가도록 다듬고 있어요. 각 팀이 직접 품질을 확인할 수 있게 하는 게 목표예요.</p><p>이 글에서는 QAHub를 만들면서 풀었던 문제들을 이야기해보려고 해요. 한 문장으로 시작한 요청이 실제 기기에서 돌아가는 테스트가 되기까지의 과정이에요.</p><h3>한눈에 보는 QAHub</h3><p>QAHub는 테스트를 <strong>만들고, 관리하고, 실행하는</strong> 전 과정을 담고 있어요.</p><p>처음에는 흩어진 테스트 기록을 한곳에 모으는 것부터 시작했어요. 그다음에는 QA가 아니어도 테스트를 실행할 수 있게 만들었고요. 지금은 AI가 테스트를 만들고 실행하는 데까지 확장하고 있어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*wG_KCojtI-kkO-OTOKwesw.png\" /><figcaption>QAHub 대시보드</figcaption></figure><h3>한 문장에서 실제 기기 실행까지</h3><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*pnSPRbKJPlgQW1Os_9cWKw.png\" /></figure><p>QAHub에서는 이 한 문장으로 테스트를 시작할 수 있어요.</p><p>사용자가 한 문장을 입력하면 AI가 먼저 테스트 Flow를 만들어요. 그다음 실제 기기에서 앱을 직접 조작해 테스트해요.</p><p>당근은 목적조직마다 QA를 따로 두지 않고, 각 팀이 직접 테스트하고 배포해요. 그래서 AI Tests는 누구나 쉽게 테스트를 만들고 실행할 수 있게 하는 데 초점을 맞췄어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*IPc9Ig-7ARQztrVnC2EUxQ.png\" /></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*cmH2PLtyWj4GnelE3V2ReA.png\" /></figure><p>Flow 안에는 코드 스텝과 AI 스텝이 함께 들어갈 수 있어요. 로그인이나 딥링크처럼 이미 정해진 동작은 코드로 실행하고, 화면을 보고 판단해야 하는 일은 AI가 맡아요. 탭, 입력 같은 기본 동작부터 이미지 매칭, 푸시 알림 열기, 로그 이벤트 검증까지, 스텝을 직접 골라 Flow를 만들 수도 있어요. 채팅처럼 상대가 있어야 하는 기능은 기기 두 대로 테스트해요.</p><p>만든 Flow는 저장해 다시 실행할 수 있고, 반복 검증이 필요하면 정식 리그레션 테스트로 편입해요.</p><p>물론 처음부터 한 문장만 입력하면 테스트가 돌아갔던 건 아니에요. 흩어진 테스트 기록과 케이스를 한곳에 모으고, 실제 기기를 제어하고, AI가 테스트를 끝까지 수행할 수 있는 실행 환경을 갖춰야 했죠.</p><p>이제 이 과제들을 어떻게 풀었는지, QAHub의 테스트 기록과 자동화 기반, AI 실행 구조를 차례로 소개해볼게요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*7K5oZp-uwbafXzsFVm_NsA.png\" /></figure><h3>테스트 데이터의 중앙화</h3><p>처음부터 AI 테스트를 만들 생각은 아니었어요. 가장 먼저 한 일은 여기저기 흩어져 있던 테스트 기록을 한곳에 모으는 것이었어요. 외부 툴, 노션, 구글 시트에 따로 있던 것들이요. 지금은 22개 프로젝트, 2,000개 이상의 테스트케이스가 이 위에서 관리되고 있어요.</p><p>기록을 한곳에 모은 다음에는 테스트를 만드는 과정에도 AI를 활용하기 시작했어요. 같은 기능을 테스트해도 작성자마다 적는 방식이 달랐어요. 어떤 케이스는 아주 자세했고, 어떤 케이스는 한두 줄뿐이었죠. 읽고 관리하는 데 시간이 꽤 들었어요.</p><p>그래서 만든 것이 Test Copilot이에요. 기획 문서와 GitHub 코드를 분석하고, 사람이 분석 결과를 검수하면 테스트 설계·테스트케이스·BDD 시나리오를 생성해요. 형식은 자연스럽게 통일되고, 놓치기 쉬운 테스트 범위도 함께 확인할 수 있게 됐어요.</p><p>이걸 만들면서 테스트케이스를 어떻게 써야 하는지도 다시 보게 됐어요. AI가 클릭 순서를 만들고 실행까지 할 수 있다면, 사람이 더 명확히 적어야 할 건 “어떤 순서로 누르는가(How)”보다 “무엇이 지켜져야 하는가(What)”라고 생각해요.</p><p>지금은 클릭 순서를 나열하기보다, 제품과 기능이 반드시 보장해야 할 것을 테스트 명세에 적고 있어요.</p><h3>자동화 실행 환경의 표준화</h3><p>QAHub 이전에도 코드 기반 자동화 테스트는 있었어요. 자동화 테스트가 있다고 해서 누구나 바로 실행할 수 있는 건 아니었어요. 어떤 저장소를 열어야 하는지, 어떤 스크립트를 골라야 하는지, 어떤 빌드와 기기를 써야 하는지 아는 사람만 실행할 수 있었어요.</p><p>그래서 QAHub에서 누구나 테스트를 돌릴 수 있게 만들었어요. 저장소나 스크립트를 몰라도, 버튼 몇 번이면 돼요. 시나리오를 고르고 플랫폼(Android·iOS·Web), 빌드 타입, 로케일(KR·JP·CA·US)을 선택하면 실제 기기에서 테스트가 실행돼요.</p><p>결과는 테스트케이스 단위로 QAHub에 쌓이고, 실패한 케이스에는 스텝별 스크린샷과 레코딩 영상이 함께 남아요.</p><p>이 테스트들은 매일 아침 최신 빌드에서 자동으로 실행되고, 필요할 때는 버튼 하나로 다시 실행할 수 있어요.</p><h3>Self-healing 기반 실행 안정화</h3><p>갑자기 뜨는 팝업이나 바뀐 Selector 때문에 테스트가 멈추면, 제품에 문제가 있는지 확인하기 어려워요. Selector는 화면에서 버튼 같은 요소를 찾는 주소예요. 앱 코드가 바뀌면 이 주소도 달라질 수 있어요.</p><p>팝업이 생길 때마다 코드를 추가하고, Selector가 바뀔 때마다 수정하기엔 손이 너무 많이 가요. 팝업은 계속 새로 생기고 나라마다 문구도 다르니까요. 매번 사람이 고치지 않아도 테스트를 이어갈 수 있게, 처음부터 Self-healing을 넣었어요.</p><p>복구는 막힌 이유에 따라 세 가지로 나뉘어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*CbVCO5Uo_jVLpeKAANee8Q.png\" /></figure><p>Selector Healing은 버튼 이름이 바뀌거나, 겉모습은 그대로여도 앱 코드가 달라져 기존 Selector로 요소를 찾지 못할 때 동작해요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*TJZHnBGPOcnwuhaCBRC1Sg.png\" /></figure><p>직전 스텝도 함께 보내요. “방금 글쓰기 화면에 들어왔다”는 걸 알면 AI가 찾아야 할 요소를 더 정확히 짚을 수 있거든요.</p><p>화면에 보이는 글자로 찾기 때문에 언어가 달라도 괜찮아요. 코드에는 ‘제목’이라고 적혀 있어도 일본어 화면에서는 ‘タイトル’를 찾아요.</p><p>복구에 성공하면 “실패한 Selector → 추천 Selector”가 슬랙으로 와요. 테스트는 먼저 실행을 이어가고, 나중에 사람이 추천된 Selector를 코드에 반영할 수 있어요.</p><p>Popup Healing은 동작할 때마다 화면을 다시 확인해요. 동네 인증처럼 테스트가 거쳐야 하는 화면은 닫지 않고 진행해요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*IURdVt5nul5tqIImlmCniQ.png\" /></figure><p>실제 사례를 하나 볼게요. ‘나의 당근’ 탭을 열려는데 시스템 권한 창이 화면을 가리고 있었어요. AI가 ‘허용’을 눌러 창을 넘기고, 화면에 보이는 ‘나의 당근’ 글자로 탭을 다시 찾아 테스트를 끝까지 통과시켰어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*uNgfW30VizpBemH4EfVtUw.png\" /></figure><p>복구했다고 그냥 통과시키지는 않아요. AI가 버튼을 대신 눌렀다면 다음 화면이 기대와 맞는지 다시 확인하고, 다르면 실패로 기록해요. 스텝마다 Self-healing을 쓸지 말지도 코드에서 정할 수 있어요.</p><p>테스트는 한 달에 3,000건 넘게 실행돼요. 8월에는 실행 중 복구가 필요했던 테스트 가운데 90% 넘게는 사람의 개입 없이 끝까지 통과했어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*XUIHb07EYcSD6ScPaLWZog.png\" /><figcaption>8월 복구 후 통과율</figcaption></figure><p>여기까지 만들고 나니, 다음 고민은 코드만으로 자동화하기 어려웠던 영역까지 어떻게 가져올 것인가였어요.</p><h3>코드 기반 자동화와 AI의 결합</h3><p>기존에는 Appium과 Selenium으로 모바일 앱과 웹을 자동화해 왔어요. 정해진 동작을 반복하는 테스트는 코드로 빠르고 안정적으로 실행할 수 있었어요. 다만 화면을 보고 판단해야 하는 동작은 구현과 유지보수에 드는 비용이 커서 자동화하기 어려웠어요.</p><p>화면을 보고 판단해야 하는",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "AI 테스트 자동화와 셀프힐링으로 QA 효율 상승",
+        "tags": [
+          "QAHub",
+          "Test Copilot",
+          "Self-healing",
+          "Selector Healing",
+          "Popup Healing"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "QAHub가 22개 프로젝트·2000개 이상의 테스트케이스를 한곳에 중앙화했다",
+            "timestamp": null
+          },
+          {
+            "point": "한 문장 입력으로 AI가 테스트 Flow를 생성하고 코드·AI 스텝을 혼합해 실행한다",
+            "timestamp": null
+          },
+          {
+            "point": "셀프힐링 메커니즘(Selector Healing, Popup Healing)으로 UI 변화에 자동 복구한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI가 자연어로 정의된 데이터 파이프라인 검증 절차를 자동 생성해 데이터 엔지니어링 효율을 높인다",
+          "셀프힐링 셀렉터 복구 로직을 웹 크롤러에 적용해 사이트 레이아웃 변경 시 자동 적응하도록 만든다",
+          "중앙화된 테스트 레코드 저장소를 머신러닝 모델 모니터링 대시보드와 연동해 이상 탐지와 회귀 테스트를 자동화한다"
+        ],
+        "quiz": [
+          {
+            "question": "QAHub에서 셀프힐링이 적용되는 유형이 아닌 것은?",
+            "options": [
+              "Selector Healing",
+              "Popup Healing",
+              "Network Healing",
+              "UI Element Healing"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 언급된 셀프힐링은 Selector Healing과 Popup Healing 두 종류이며, Network Healing은 소개되지 않았다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 벤지의 코드를 짜기 전에 해야 할 일",
+        "url": "https://youtu.be/o9xdxwsc_XU",
+        "published_at": "2026-09-25T12:00:22",
+        "transcript": null,
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.\n\n00:00 무작정 구현하기 전에 던져야 할 질문\n02:28 문제 해결의 프레임워크: 더블 다이아몬드\n03:43 첫 번째 다이아몬드: 문제 정의 단계와 에어비앤비 사례\n07:26 두 번째 다이아몬드: 해결책 검증의 중요성\n08:17 실전 프로젝트 적용\n12:01 AI 시대 개발자의 본질\n12:42 마무리",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "문제 정의·검증으로 효율적인 개발을 유도",
+        "tags": [
+          "Airbnb",
+          "Double Diamond",
+          "우아한테크코스",
+          "우아한테크"
+        ],
+        "concepts": [
+          "문제 정의",
+          "해결책 검증",
+          "Double Diamond 프레임워크"
+        ],
+        "key_points": [
+          {
+            "point": "구현 전에 반드시 질문을 던져 문제를 명확히 정의한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Double Diamond 프레임워크로 문제 정의와 해결책 검증을 단계별로 진행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "검증된 해결책을 실전 프로젝트에 적용해 AI 시대 개발자의 역할을 재고한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

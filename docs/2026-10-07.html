@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 07일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 07일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">멀티모달 표현 학습</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">데이터 트래픽 캡처와 재생</span><span class="concept">실제 트래픽 기반 로드 테스트</span><span class="concept">버전 업그레이드 호환성 검증</span><span class="concept">레거시 시스템 리팩터링</span><span class="concept">메타데이터 활용 검색</span><span class="concept">AI 생산성 도구</span><span class="concept">개발자 경험 개선</span><span class="concept">문제 정의</span><span class="concept">해결책 검증</span><span class="concept">Double Diamond 프레임워크</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CL</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.06843v1" target="_blank" rel="noopener">Recursive Video In-Context Learning for Agentic Robot</a>
+        </h2>
+
+        <p class="summary">영상 계층화로 로봇 학습 효율·성공률 크게 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>LLM 기반 로봇 에이전트는 텍스트 메모리만으로는 세밀한 시각 정보를 전달하기 어려워 기존에는 전체 시연 영상을 프롬프트에 넣어 비효율적이었다. RV-ICL는 시연 영상을 계층화해 필요 시 세부 클립을 읽어들이는 훈련‑무료 접근으로, 멀티모달 인‑컨텍스트 학습과 재귀적 작업 분해 흐름에 속한다. 기존 방법 대비 메모리·연산 효율과 성공률을 동시에 끌어올렸다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RV-ICL는 단일 시연 영상을 계층 구조로 변환해 에이전트가 탐색하도록 하여 전체 영상을 로드하지 않는다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>계층은 전체 키프레임→단계→순간→짧은 클립 순으로 세분화되며, 실행 중 필요 시 현재 하위 목표의 클립만 로드한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이 방법으로 LIBERO-PRO 성공률이 92.6%→96.5%, LIBERO-Plus가 86.7%→95.8%로 향상된다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>자율주행 시뮬레이션에서 전체 경로는 키프레임으로, 복잡한 차선 변경은 짧은 클립으로 제공해 실시간 의사결정 지연을 감소한다.</span></li>
+            
+            <li><span class="box"></span><span>산업용 조립 로봇에 시연 영상을 단계·클립 계층으로 구성해 현재 조립 단계에 맞는 짧은 클립만 로드함으로써 메모리 사용량을 줄이고 오류율을 낮춘다.</span></li>
+            
+            <li><span class="box"></span><span>의료 AI 어시스턴트가 수술 시연 영상을 단계·클립으로 구조화해, 질문 시 해당 단계의 짧은 클립을 제공해 실시간 가이드 정확성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">RV-ICL가 만든 계층 구조에서 가장 거친 수준에서 가장 세밀한 수준까지의 순서는?</div>
+            
+            <div class="q-opt">① 키프레임 → 단계 → 순간 → 짧은 클립</div>
+            
+            <div class="q-opt">② 짧은 클립 → 순간 → 단계 → 키프레임</div>
+            
+            <div class="q-opt">③ 단계 → 키프레임 → 순간 → 짧은 클립</div>
+            
+            <div class="q-opt">④ 키프레임 → 순간 → 단계 → 짧은 클립</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 키프레임 → 단계 → 순간 → 짧은 클립</div>
+              <div class="why">논문에서는 전체 작업의 키프레임을 최상위로 하고, 그 아래 단계(phase), 순간(moment), 최하위에 짧은 클립 순으로 계층을 만든다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">RV-ICL가 성공률을 높이는 핵심 메커니즘은?</div>
+            
+            <div class="q-opt">① 추가 학습 데이터를 사용한다</div>
+            
+            <div class="q-opt">② 각 단계마다 전체 영상을 로드한다</div>
+            
+            <div class="q-opt">③ 필요 시 계층에 재진입해 현재 하위 목표의 클립만 로드한다</div>
+            
+            <div class="q-opt">④ 더 큰 LLM을 적용한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 필요 시 계층에 재진입해 현재 하위 목표의 클립만 로드한다</div>
+              <div class="why">핵심은 에이전트가 계획 단계에서 거친 레벨을 읽고, 실행 중 세부가 필요하면 계층에 재진입해 해당 클립만 로드함으로써 효율과 정확성을 동시에 개선한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">RV-ICL</span><span class="tag">RPent</span><span class="tag">LIBERO-PRO</span><span class="tag">LIBERO-Plus</span><span class="tag">VLA</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">The Airbnb Tech Blog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/airbnb-engineering/beyond-synthetic-testing-capturing-and-replaying-real-database-workloads-at-airbnb-cea7ee9b1ab2?source=rss----53c7c27702d5---4" target="_blank" rel="noopener">Beyond synthetic testing: Capturing and replaying real database workloads at Airbnb</a>
+        </h2>
+
+        <p class="summary">실제 DB 트래픽 재현으로 성능·마이그 위험 감소</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 시스템은 언어별 로그를 Kafka에 보내는 방식으로 유지보수 부담이 크고 트랜잭션 전체 정보를 놓쳐 정확한 재생이 어려웠다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>새 시스템은 실프로덕션 트래픽을 그대로 재생해 클러스터 용량을 정확히 예측하고, 업그레이드·마이그레이션 시 호환성을 검증한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>완전한 SQL 문과 실행 컨텍스트를 캡처해 두 대상 DB에 동일하게 재생함으로써 성능 디버깅과 결과 일관성을 확보한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>언어별 DB 쿼리 캡처 방식을 HTTP 요청 로그 캡처·재생으로 확장해 마이크로서비스 버전 교체 시 실제 트래픽 기반 성능 테스트를 수행한다.</span></li>
+            
+            <li><span class="box"></span><span>캡처된 DB 워크로드 데이터를 활용해 쿼리 지연 예측 모델을 학습시켜 사전 용량 계획에 활용한다.</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인의 CDC 이벤트를 Kafka에 저장하고 오프라인으로 재생해 새로운 변환 로직의 정확성을 검증한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">기존 언어별 로그 기반 캡처 시스템이 확장에 어려웠던 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 유지보수 부담이 크고 트랜잭션 전체 정보를 놓쳤기 때문이다</div>
+            
+            <div class="q-opt">② 트래픽 양이 적어 데이터가 부족했기 때문이다</div>
+            
+            <div class="q-opt">③ 로그가 암호화돼 있어 분석이 불가능했기 때문이다</div>
+            
+            <div class="q-opt">④ Kafka가 해당 시점에 지원되지 않았기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 유지보수 부담이 크고 트랜잭션 전체 정보를 놓쳤기 때문이다</div>
+              <div class="why">본문에서는 기존 시스템이 언어별 로그를 사용해 트랜잭션 전체 정보를 충분히 담지 못하고, 유지보수 주체가 모호해 확장에 한계가 있었다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">새 시스템이 목표로 삼은 세 가지 중 포함되지 않은 것은?</div>
+            
+            <div class="q-opt">① 로드 테스트 with real traffic</div>
+            
+            <div class="q-opt">② 버전 업그레이드 호환성 검증</div>
+            
+            <div class="q-opt">③ 성능 디버깅</div>
+            
+            <div class="q-opt">④ 실시간 모니터링</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 실시간 모니터링</div>
+              <div class="why">본문에 제시된 목표는 로드 테스트, 업그레이드·마이그레이션 호환성 검증, 성능 디버깅이며, 실시간 모니터링은 언급되지 않았다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">MySQL</span><span class="tag">Kafka</span><span class="tag">sysbench</span><span class="tag">Airbnb</span><span class="tag">JDBC</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">당근 기술 블로그 - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/daangn/aurora-mysql-%EC%9D%B8%EB%8D%B1%EC%8A%A4-ddl%EC%9D%B4-reader-%EB%B2%84%ED%8D%BC%ED%92%80%EC%9D%84-%EB%B9%84%EC%9A%B4%EB%8B%A4-16c6328dea50?source=rss----4505f82a2dbd---4" target="_blank" rel="noopener">Aurora MySQL 인덱스 DDL이 Reader 버퍼풀을 비운다?</a>
+        </h2>
+
+        <p class="summary">Aurora 버퍼가 인덱스 INVISIBLE 때 비워짐</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Aurora Reader는 인덱스 INVISIBLE DDL 시에 버퍼풀 캐시가 전부 무효화돼 CPU와 ReadIOPS 급증을 일으킨다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>DDL 종류에 따라 Reader 캐시 영향이 다르며, INPLACE rebuild(예: 컬럼 타입 변경) 시에는 캐시가 소멸하지만 INSTANT/INPLACE without rebuild는 유지돼야 한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>인덱스 사용 여부 판단은 performance_schema.table_io_waits_summary_by_index_usage 를 활용하고, 인덱스를 INVISIBLE 로 전환해 테스트 후 DROP 하는 절차가 안전하다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>performance_schema 기반 사용량 분석을 PostgreSQL의 pg_stat_user_indexes와 결합해 오래된 물리적 뷰를 안전하게 비활성화하고 단계적으로 삭제한다.</span></li>
+            
+            <li><span class="box"></span><span>인덱스를 INVISIBLE 로 전환하는 방식을 다른 DBMS(예: Oracle)에서 스키마 변경 전 기능 플래그로 활용해 서비스 중단 없이 구조 변경을 검증한다.</span></li>
+            
+            <li><span class="box"></span><span>Reader‑Writer 구조를 가진 분산 DB에서 DDL 후 BufferPool 히트율을 모니터링해 캐시 무효화 패턴을 조기에 감지하고 자동 롤백 정책을 적용한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Aurora Reader에서 인덱스 INVISIBLE 로 전환했을 때 CPU·ReadIOPS가 급증하는 주된 원인은?</div>
+            
+            <div class="q-opt">① Reader 버퍼풀의 해당 테이블 캐시 페이지가 전부 소멸한다</div>
+            
+            <div class="q-opt">② Writer가 페이지를 재작성한다</div>
+            
+            <div class="q-opt">③ Invisible 인덱스가 전체 테이블 스캔을 유발한다</div>
+            
+            <div class="q-opt">④ CloudWatch 지표가 오작동한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Reader 버퍼풀의 해당 테이블 캐시 페이지가 전부 소멸한다</div>
+              <div class="why">Reader는 자체 버퍼풀을 가지고 있으며, INVISIBLE DDL 시 내부적으로 캐시된 페이지를 무효화해 스토리지에서 다시 읽게 되므로 CPU와 I/O가 급증한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">사용되지 않는 인덱스를 찾기 위해 본문에서 사용한 쿼리는?</div>
+            
+            <div class="q-opt">① SELECT * FROM information_schema.tables;</div>
+            
+            <div class="q-opt">② SELECT object_name, index_name, count_star FROM performance_schema.table_io_waits_summary_by_index_usage;</div>
+            
+            <div class="q-opt">③ SHOW INDEX FROM 테이블;</div>
+            
+            <div class="q-opt">④ EXPLAIN SELECT ...</div>
+            
+            <div class="q-answer">
+              <div class="correct">② SELECT object_name, index_name, count_star FROM performance_schema.table_io_waits_summary_by_index_usage;</div>
+              <div class="why">performance_schema.table_io_waits_summary_by_index_usage 테이블은 인덱스별 읽기·쓰기 횟수를 제공해 사용량이 0인 인덱스를 식별할 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Aurora MySQL</span><span class="tag">INVISIBLE</span><span class="tag">performance_schema</span><span class="tag">CloudWatch</span><span class="tag">INNODB_BUFFER_PAGE</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">당근 기술 블로그 - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/daangn/%ED%95%9C-%EB%AC%B8%EC%9E%A5%EC%9C%BC%EB%A1%9C-%EC%95%B1%EC%9D%84-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0%EA%B9%8C%EC%A7%80-5340546886b5?source=rss----4505f82a2dbd---4" target="_blank" rel="noopener">한 문장으로 앱을 테스트하기까지</a>
+        </h2>
+
+        <p class="summary">AI 테스트 자동화와 셀프힐링으로 QA 효율 상승</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>QAHub가 22개 프로젝트·2000개 이상의 테스트케이스를 한곳에 중앙화했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>한 문장 입력으로 AI가 테스트 Flow를 생성하고 코드·AI 스텝을 혼합해 실행한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>셀프힐링 메커니즘(Selector Healing, Popup Healing)으로 UI 변화에 자동 복구한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI가 자연어로 정의된 데이터 파이프라인 검증 절차를 자동 생성해 데이터 엔지니어링 효율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>셀프힐링 셀렉터 복구 로직을 웹 크롤러에 적용해 사이트 레이아웃 변경 시 자동 적응하도록 만든다</span></li>
+            
+            <li><span class="box"></span><span>중앙화된 테스트 레코드 저장소를 머신러닝 모델 모니터링 대시보드와 연동해 이상 탐지와 회귀 테스트를 자동화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">QAHub에서 셀프힐링이 적용되는 유형이 아닌 것은?</div>
+            
+            <div class="q-opt">① Selector Healing</div>
+            
+            <div class="q-opt">② Popup Healing</div>
+            
+            <div class="q-opt">③ Network Healing</div>
+            
+            <div class="q-opt">④ UI Element Healing</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ Network Healing</div>
+              <div class="why">본문에 언급된 셀프힐링은 Selector Healing과 Popup Healing 두 종류이며, Network Healing은 소개되지 않았다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">QAHub</span><span class="tag">Test Copilot</span><span class="tag">Self-healing</span><span class="tag">Selector Healing</span><span class="tag">Popup Healing</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/o9xdxwsc_XU" target="_blank" rel="noopener">[10분 테코톡] 벤지의 코드를 짜기 전에 해야 할 일</a>
+        </h2>
+
+        <p class="summary">문제 정의·검증으로 효율적인 개발을 유도</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>구현 전에 반드시 질문을 던져 문제를 명확히 정의한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Double Diamond 프레임워크로 문제 정의와 해결책 검증을 단계별로 진행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>검증된 해결책을 실전 프로젝트에 적용해 AI 시대 개발자의 역할을 재고한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Airbnb</span><span class="tag">Double Diamond</span><span class="tag">우아한테크코스</span><span class="tag">우아한테크</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
