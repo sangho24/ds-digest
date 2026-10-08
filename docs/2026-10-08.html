@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 08일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 08일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">오프라인-온라인 연계 전략</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">모델 파인튜닝</span><span class="concept">유전체 변이 예측</span><span class="concept">맞춤형 의료</span><span class="concept">유전체 해석</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">언어 모델링</span><span class="concept">AI 기반 수학 증명</span><span class="concept">AI 비용 효율성</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">프롬프트 협업</span><span class="concept">고객 데이터 활용</span><span class="concept">고객 접점 확대</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.08789v1" target="_blank" rel="noopener">QF3: Fast Flow RL with Filtered Q-Gradients</a>
+        </h2>
+
+        <p class="summary">오프라인 RL로 흐름 정책을 빠르게 학습·전이 가능해 로봇 개발 효율을 크게 높인다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 데모 기반 흐름 정책은 강화학습으로 개선이 필요했지만 온‑폴리시 방법인 FPO++은 학습 속도가 느렸다. QF3는 오프‑폴리시 흐름 RL의 첫 사례로, 인간형 로봇 보행을 스크래치로 학습하고 하드웨어에 바로 전이하며, 기존 대비 10배 빠른 학습 효율을 제공한다</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>QF3는 흐름 매칭과 필터링된 비평가 기울기를 결합한 온라인 오프라인 RL 알고리즘이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>비평가 기울기는 재생 버퍼의 행동과 가까운 차원에만 적용해 신뢰성을 확보한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>FPO++ 대비 10배 빠른 학습 속도와 제로샷 하드웨어 전이, ABC‑Sim·Robomimic 파인튜닝 성공을 보여준다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>필터링된 비평가 기울기 방식을 대규모 언어 모델 파인튜닝에 적용해, 기존 데이터와 유사한 토큰에만 업데이트함으로써 망각을 방지한다</span></li>
+            
+            <li><span class="box"></span><span>하나‑스텝 정책 예측을 이용해 가치 기울기를 역전파하는 방식을 자율주행 시뮬레이션에 도입해, 위험 상황에서 정책 업데이트의 안정성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>금융 트레이딩 봇에 흐름 매칭과 필터링된 Q‑그라디언트를 적용해, 과거 거래와 유사한 포지션에만 학습을 집중시켜 변동성에 대한 안정성을 강화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">QF3에서 비평가 기울기를 재생 행동과 가까운 차원에만 적용하는 주요 목적은?</div>
+            
+            <div class="q-opt">① 계산 비용 감소</div>
+            
+            <div class="q-opt">② 기울기 신뢰성 확보</div>
+            
+            <div class="q-opt">③ 탐색 범위 확대</div>
+            
+            <div class="q-opt">④ 네트워크 구조 단순화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 기울기 신뢰성 확보</div>
+              <div class="why">본문은 신뢰성이 높은 영역에서만 업데이트하도록 한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">QF3가 FPO++에 비해 보여주는 주요 이점은?</div>
+            
+            <div class="q-opt">① 최종 성능 향상</div>
+            
+            <div class="q-opt">② 벽시계 시간 10배 가속</div>
+            
+            <div class="q-opt">③ 이미지 입력 지원</div>
+            
+            <div class="q-opt">④ 메모리 사용량 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 벽시계 시간 10배 가속</div>
+              <div class="why">초록에 10배 벽시계 속도 향상이 언급되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">QF3</span><span class="tag">FPO++</span><span class="tag">ABC-Sim</span><span class="tag">Robomimic</span><span class="tag">humanoid locomotion</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/Wkaw03p3BrM" target="_blank" rel="noopener">DeepMind's New AI Just Cracked The Code Of Life</a>
+        </h2>
+
+        <p class="summary">유전체 변이 예측 모델은 맞춤 의료와 질병 위험 분석에 핵심 데이터 과학 기법을 제공한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:00</span>
+            
+            <span>AlphaGenome은 유전체 변이를 예측하는 머신러닝 모델이다</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:23</span>
+            
+            <span>모든 사람은 3 십억 문자 규모의 유전체 레시피를 가지고 있으며, 그 변이가 의미하는 바를 이해하려는 것이 목표다</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:52</span>
+            
+            <span>돌연변이의 영향은 물질적일 수도, 아닐 수도 있으며, 겸상 적혈구 빈혈은 잘 알려진 사례다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AlphaGenome의 변이 예측 프레임워크를 소프트웨어 코드 변경에 적용해, 특정 코드 라인의 수정이 시스템 성능이나 버그 발생 가능성에 미치는 영향을 사전에 예측한다.</span></li>
+            
+            <li><span class="box"></span><span>유전체 변이 예측 모델을 식품 배양 공정의 유전적 변형에 활용해, 특정 미생물 유전자가 발효 효율에 미치는 영향을 예측하고 최적 배양 조건을 제시한다.</span></li>
+            
+            <li><span class="box"></span><span>유전체 기반 맞춤 의료 접근을 금융 데이터에 빌려와, 고객의 행동 패턴 변이를 모델링해 신용 위험 변동을 사전에 평가한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AlphaGenome이 단일 문자 변이가 미치는 영향을 예측하려는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 단백질 서열을 직접 결정하기 위해</div>
+            
+            <div class="q-opt">② 세포 특성 및 질병 위험을 이해하기 위해</div>
+            
+            <div class="q-opt">③ 유전체를 직접 편집하기 위해</div>
+            
+            <div class="q-opt">④ 진화 역사를 추적하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 세포 특성 및 질병 위험을 이해하기 위해</div>
+              <div class="why">대본에서 AlphaGenome은 한 문자 변화가 세포 특성 및 유기체에 미치는 영향을 밝혀내려 한다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">대화에서 언급된, 결과가 잘 알려진 돌연변이 사례는 무엇인가?</div>
+            
+            <div class="q-opt">① BRCA1 변이</div>
+            
+            <div class="q-opt">② 겸상 적혈구 빈혈 변이</div>
+            
+            <div class="q-opt">③ 유당 불내성 변이</div>
+            
+            <div class="q-opt">④ 키와 관련된 SNP</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 겸상 적혈구 빈혈 변이</div>
+              <div class="why">대본에서 겸상 적혈구 빈혈은 특정 변이가 원인이며, 그 결과가 잘 이해된 사례로 언급된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AlphaGenome</span><span class="tag">DeepMind</span><span class="tag">Human Genome Project</span><span class="tag">sickle cell anemia</span><span class="tag">genome</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/166" target="_blank" rel="noopener">AI의 추론 과정을 역추적하는 법</a>
+        </h2>
+
+        <p class="summary">숨은 추론을 복원해 모델을 탈취할 수 있음</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>요약만으로도 Trace Inversion을 통해 전체 추론을 복원해 모델을 탈취할 수 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Trace Inversion은 약한 Surrogate Model과 Inversion Model을 이용해 요약·답만으로 전체 추론을 합성하고 학생 모델을 학습한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 복원된 추론을 사용하면 요약만 학습했을 때보다 성능이 크게 향상돼 추론 은폐만으로는 방어가 불가능함을 보여준다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>요약 로그만 제공되는 데이터 파이프라인에서 Trace Inversion 방식을 적용해 누락된 중간 처리 단계들을 재구성해 디버깅 효율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>API 호출 패턴을 모니터링해 적대적 증류 시도를 탐지하고 자동 차단 정책을 적용한다</span></li>
+            
+            <li><span class="box"></span><span>요약된 최종 예측만 있는 저리소스 도메인에서 Surrogate·Inversion 모델을 활용해 합성된 추론을 생성, 라벨링 비용을 절감한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Trace Inversion은 어떤 단계로 구성되는가?</div>
+            
+            <div class="q-opt">① Stage 1: Surrogate 모델로 전체 추론 생성·요약 매칭, Stage 2: 대상 모델에서 요약·답 획득, Stage 3: 합성 추론으로 학생 모델 학습</div>
+            
+            <div class="q-opt">② Stage 1: 대상 모델에서 요약·답 획득, Stage 2: Surrogate 모델로 전체 추론 생성, Stage 3: 요약만 사용해 학생 모델 학습</div>
+            
+            <div class="q-opt">③ Stage 1: Inversion 모델을 직접 훈련, Stage 2: 요약 없이 전체 답만 사용, Stage 3: 학생 모델에 직접 적용</div>
+            
+            <div class="q-opt">④ Stage 1: 데이터 수집, Stage 2: 모델 압축, Stage 3: 배포</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Stage 1: Surrogate 모델로 전체 추론 생성·요약 매칭, Stage 2: 대상 모델에서 요약·답 획득, Stage 3: 합성 추론으로 학생 모델 학습</div>
+              <div class="why">논문에 제시된 Trace Inversion은 (1) 약한 Surrogate 모델로 전체 추론을 얻고 Inversion 모델을 학습, (2) 대상 모델에서 요약·답을 받아 Inversion 모델에 입력, (3) 합성된 추론을 학생 모델 학습에 활용하는 3단계이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실험 결과, 복원된 추론을 사용했을 때 학생 모델의 성능은 어떻게 변했는가?</div>
+            
+            <div class="q-opt">① 성능이 감소했다</div>
+            
+            <div class="q-opt">② 변화가 없었다</div>
+            
+            <div class="q-opt">③ 16.4%에서 48.3%로 크게 상승했다</div>
+            
+            <div class="q-opt">④ 소폭 상승했다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 16.4%에서 48.3%로 크게 상승했다</div>
+              <div class="why">논문에서는 요약만 학습한 Llama-3.1-8B가 16.4%였던 반면, 복원된 추론을 학습했을 때 48.3%까지 상승했다고 보고했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Adversarial Distillation</span><span class="tag">Trace Inversion</span><span class="tag">OpenAI</span><span class="tag">GPT-5.4 mini</span><span class="tag">DeepSeek-R1</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://fiveminutesforward.com/post/2026-10-04-telegraph-test/" target="_blank" rel="noopener">Write Like It's 1866: LLMs Relearn Telegraphese</a>
+        </h2>
+
+        <p class="summary">LLM 토큰 비용 절감 기법 검증, 비용 효율성 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델에 telegraphese 작성을 지시하면 토큰 사용량이 40‑49% 감소하면서도 정보 손실이 없음을 확인했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>역사적 압축 방식인 codebook은 약 10% 절감, cablese는 훨씬 큰 절감 효과를 보였다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Telegraph Test 벤치마크를 통해 다양한 모델군의 압축·복원 성능을 정량화했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>엣지 디바이스에서 로그를 telegraphese 형태로 생성해 전송량을 줄이고 배터리 소모를 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>반복적인 비즈니스 이메일 템플릿에 codebook 교체를 적용해 LLM API 호출당 토큰 비용을 절감한다</span></li>
+            
+            <li><span class="box"></span><span>법률 문서 요약에 Telegraph Test 방식을 활용해 핵심 사실을 유지하면서 토큰 사용량을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 cablese 방식이 codebook 방식보다 더 큰 토큰 절감을 달성할 수 있는가?</div>
+            
+            <div class="q-opt">① 불필요한 관사와 충전어를 제거한다</div>
+            
+            <div class="q-opt">② 전체 구문을 단일 코드 단어로 교체한다</div>
+            
+            <div class="q-opt">③ 사전 학습된 압축 모델을 사용한다</div>
+            
+            <div class="q-opt">④ 바이트 수준 압축을 수행한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 불필요한 관사와 충전어를 제거한다</div>
+              <div class="why">cablese는 문장에서 관사·충전어 등을 생략하고 핵심 사실만 남겨 토큰 수를 크게 줄인다. codebook은 기존 구문을 사전에 정의된 코드 단어로 대체할 뿐, 이미 작성된 단어를 없앨 수 없기 때문이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LLM API 비용 청구에서 가장 직접적인 비용 요소는 무엇인가?</div>
+            
+            <div class="q-opt">① API 호출 횟수</div>
+            
+            <div class="q-opt">② 사용된 토큰 수</div>
+            
+            <div class="q-opt">③ 연산 시간</div>
+            
+            <div class="q-opt">④ 저장된 데이터 양</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 사용된 토큰 수</div>
+              <div class="why">LLM 서비스는 토큰 단위로 과금한다. 이는 텔레그래프가 단어당 비용을 부과했던 방식과 직접적으로 유사하다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LLM</span><span class="tag">Telegraph Test</span><span class="tag">codebooks</span><span class="tag">cablese</span><span class="tag">GitHub</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/490" target="_blank" rel="noopener">🥤롯데하이마트, 시간 좀 내주오 수리할 게 있소</a>
+        </h2>
+
+        <p class="summary">수리 서비스로 고객 데이터를 확보해 구매 전후 행동을 예측·최적화할 수 있다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>가전은 구매 주기가 길어 고객 접점이 적어 기존에는 구매 순간에 집중했지만, 이제는 사후·사전 서비스가 필요하다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>롯데하이마트는 브랜드·제품 무관 2년 5만원 구독형 수리 서비스 ‘가전수리 올케어’를 도입해 고객과 지속적 관계를 형성한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이러한 서비스는 고객 사용 데이터 확보와 교체 수요 예측을 가능하게 하며, 규모가 커질수록 운영 효율과 새로운 비즈니스 기회가 확대된다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>오피스 가구 시장에 구매 전부터 유지보수 구독 서비스를 도입해 기업 고객의 초기 계약을 확보하고 장기적인 서비스 매출을 창출한다</span></li>
+            
+            <li><span class="box"></span><span>의료 장비 분야에 브랜드 무관 통합 수리 계약을 제공해 다양한 제조사 제품을 한 플랫폼에서 관리함으로써 사용 데이터와 유지보수 효율성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>수리 구독 서비스에서 축적된 고객 사용 데이터를 활용해 이커머스 재고 예측 모델에 적용, 교체 수요를 사전에 파악해 재고 부족과 과잉을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">롯데하이마트가 구매 전부터 고객을 붙잡는 전략을 선택한 주요 이유는?</div>
+            
+            <div class="q-opt">① 제품 라인업 확대</div>
+            
+            <div class="q-opt">② 온라인 경쟁 심화</div>
+            
+            <div class="q-opt">③ 제조사와의 가격 협상</div>
+            
+            <div class="q-opt">④ 물류 비용 절감</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 온라인 경쟁 심화</div>
+              <div class="why">본문에서 온라인·오프라인 선택지가 많아졌고, 단순히 매장을 기다리는 것만으로는 부족해졌다고 언급한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">수리 구독 서비스가 고객과의 관계를 장기화하는 핵심 메커니즘은?</div>
+            
+            <div class="q-opt">① 저렴한 가격</div>
+            
+            <div class="q-opt">② 브랜드·제품 무관 서비스 제공</div>
+            
+            <div class="q-opt">③ 광고 노출 증가</div>
+            
+            <div class="q-opt">④ 포인트 적립</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 브랜드·제품 무관 서비스 제공</div>
+              <div class="why">서비스가 구매한 제품에 국한되지 않고 모든 브랜드를 포괄한다는 점이 고객을 지속적으로 연결시키는 요소로 강조된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">롯데하이마트</span><span class="tag">삼성전자</span><span class="tag">LG전자</span><span class="tag">가전수리 올케어</span><span class="tag">제네시스</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

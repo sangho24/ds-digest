@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-08",
+  "generated_at": "2026-10-08T00:09:13.629594",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "QF3: Fast Flow RL with Filtered Q-Gradients",
+        "url": "https://arxiv.org/abs/2610.08789v1",
+        "published_at": "2026-10-06T17:59:34",
+        "transcript": null,
+        "body": "Flow policies have become a standard policy class for learning robot behaviors from demonstrations, but reinforcement learning is still critical for improving pre-trained flow policies or learning them from scratch through interaction. We introduce QF3 (Fast Flow RL with Filtered Q-Gradients), an online off-policy RL algorithm that trains a flow policy with flow matching plus the critic's action gradient, backpropagated through a one-step prediction of the flow's output. To keep updates where the critic and this prediction are reliable, QF3 applies the critic gradient only to action dimensions that stay near the replay action. To our knowledge, QF3 is the first off-policy flow RL method to train humanoid locomotion policies from scratch and transfer them zero-shot to hardware. Paired with a high-throughput off-policy training recipe, it trains humanoid locomotion and motion-tracking policies with a 10x wall-clock speedup over FPO++, a recent on-policy flow RL method. We further apply QF3 to fine-tune pretrained flow-based manipulation policies on both ABC-Sim and Robomimic tasks. These results suggest that QF3 can both learn robot policies from scratch and refine those acquired from demonstrations. Website: https://qf3-rl.github.io/",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "오프라인 RL로 흐름 정책을 빠르게 학습·전이 가능해 로봇 개발 효율을 크게 높인다",
+        "tags": [
+          "QF3",
+          "FPO++",
+          "ABC-Sim",
+          "Robomimic",
+          "humanoid locomotion"
+        ],
+        "concepts": [
+          "오프라인-온라인 연계 전략",
+          "시뮬레이션 기반 정책 검증",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "QF3는 흐름 매칭과 필터링된 비평가 기울기를 결합한 온라인 오프라인 RL 알고리즘이다",
+            "timestamp": null
+          },
+          {
+            "point": "비평가 기울기는 재생 버퍼의 행동과 가까운 차원에만 적용해 신뢰성을 확보한다",
+            "timestamp": null
+          },
+          {
+            "point": "FPO++ 대비 10배 빠른 학습 속도와 제로샷 하드웨어 전이, ABC‑Sim·Robomimic 파인튜닝 성공을 보여준다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 데모 기반 흐름 정책은 강화학습으로 개선이 필요했지만 온‑폴리시 방법인 FPO++은 학습 속도가 느렸다. QF3는 오프‑폴리시 흐름 RL의 첫 사례로, 인간형 로봇 보행을 스크래치로 학습하고 하드웨어에 바로 전이하며, 기존 대비 10배 빠른 학습 효율을 제공한다",
+        "production_ideas": [
+          "필터링된 비평가 기울기 방식을 대규모 언어 모델 파인튜닝에 적용해, 기존 데이터와 유사한 토큰에만 업데이트함으로써 망각을 방지한다",
+          "하나‑스텝 정책 예측을 이용해 가치 기울기를 역전파하는 방식을 자율주행 시뮬레이션에 도입해, 위험 상황에서 정책 업데이트의 안정성을 높인다",
+          "금융 트레이딩 봇에 흐름 매칭과 필터링된 Q‑그라디언트를 적용해, 과거 거래와 유사한 포지션에만 학습을 집중시켜 변동성에 대한 안정성을 강화한다"
+        ],
+        "quiz": [
+          {
+            "question": "QF3에서 비평가 기울기를 재생 행동과 가까운 차원에만 적용하는 주요 목적은?",
+            "options": [
+              "계산 비용 감소",
+              "기울기 신뢰성 확보",
+              "탐색 범위 확대",
+              "네트워크 구조 단순화"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 신뢰성이 높은 영역에서만 업데이트하도록 한다고 명시한다."
+          },
+          {
+            "question": "QF3가 FPO++에 비해 보여주는 주요 이점은?",
+            "options": [
+              "최종 성능 향상",
+              "벽시계 시간 10배 가속",
+              "이미지 입력 지원",
+              "메모리 사용량 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "초록에 10배 벽시계 속도 향상이 언급되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "DeepMind's New AI Just Cracked The Code Of Life",
+        "url": "https://youtu.be/Wkaw03p3BrM",
+        "published_at": "2026-10-07T13:29:33",
+        "transcript": "[00:45] Good to see you, Pushmeet. Look, this is really challenging for me because this is very much outside my field of expertise, if I have any at all. As always, I come here today as a student to learn from you. What is AlphaGenome?\n\n[01:00] AlphaGenome is a machine learning model which makes predictions about variation in the genome. So our genome, uh, not just the human genome, but, uh, genome is basically the recipe of life. Uh, what it is, it's essentially a code. In the case of humans, it's a code which has three billion characters.\n\n[01:27] And if one of those characters changes, what would be the effect on the actual cell properties? What will be the effect on the organism? These are the things that AlphaGenome is trying to sort of uncover.\n\n[01:43] And if you are the person on the street, what could AlphaGenome change eventually about medicine or their life?\n\n[01:50] Everyone, sort of is affected by what happens at the genomics level. Uh, the genome is the recipe of life. It has both the ingredient section, which says which proteins are expressed, and the sort of mixing section, which sort of talks about gene regulation, when do these proteins get expressed, where do they get expressed, and in what quantity. And all of that information is encoded in this recipe of life.\n\n[02:23] Every single person on the planet has a recipe. I have a recipe, you have a recipe, the person on the street has a recipe. All of our recipes, while they are similar, there are some changes. But what do these changes actually mean? What are the implications of these changes? That's what we have been trying to sort of understand for many, many years, if not decades.\n\n[02:50] With the Human Genome Project, for the first time we were able to read the entire recipe book, at least for one human sort of genome. Uh, but now we are trying to figure out how do we decipher it or understand what actually happens. If you make a change in one particular character, what are the consequences of it? Will it cause a specific disease? Will it basically be connected to high susceptibility for some kind of problematic issue like maybe having a high body mass index or having more susceptibility to certain cancers? All of these things are can be decoded in some sense by better understanding of the variations that happen in the genome.\n\n[03:42] That is incredible. And I really wanted to ask this because my problem, every now and then I try to read medical papers. It's not my field of expertise, but I I I'm a student. I just try to learn. And my problem is that whenever I read about, I don't know, any kind of medicine, my problem is that every person is different.\n\n[04:04] Yeah.\n\n[04:05] And I go to the barber and the barber says that he never saw two heads that are the same.\n\n[04:10] Yeah.\n\n[04:11] And I read a paper on muscle hypertrophy, like like bodybuilding paper. How to build muscle? And they have a bunch of people carefully selected. Same age, same height, same build. They get the same diet. They do the same training. And one guy gets incredibly muscular, they do the measurements. Some others get a bit of muscle. One poor guy didn't get any muscle at all. And there was one who I think lost muscle. Like, it's crazy how how different we are. I'm thinking that that is it possible that that we could finally be one step closer to understanding how how everyone is a bit different and what that means?\n\n[04:52] Yeah, exactly. I think so this understanding or deciphering this code of life, what are the consequences? Sometimes those consequences might not mean anything, right? Like sometimes the changes are like they are not that material. Sometimes they are very material sort of consequences, which are very well understood, right? For example, sickle cell anemia. There is one particular sort of mutation, which causes sort of sickle cell anemia, and we understand what happens there. But most of the things that sort of you care about these days, uh, require are sort of polygenic, in the sense that there are multiple sort of mutations that are acting on that are causing that particular incident or that that particular phenomenon. And in some sense, what AlphaGenome tries to do is tries to figure out like what happens at especially at a single sort of mutation variation level, uh, at the molecular sort of phenotypes. Now, how do those molecular phenotypes then affect the the property of the whole organism or in in the case of humans, the what the human sort of feels, like the susceptibility to specific disease, that's something that will still need to be sort of connected and uh, and research will need to be sort of done on that.\n\n[06:16] My understanding is that before we dive deeper, AlphaGenome is free for all of us forever for non-commercial use.\n\n[06:23] Yes, exactly. So for as we have sort of done for many of our scientific models, whether it's AlphaFold 1, AlphaFold 2, uh, AlphaGenome, we have made it accessible to the entire scientific community for academic sort of use, uh, for them to sort of use it for their own sort of research, fine tune it, uh, sort of, and the model weights are available.\n\n[06:50] Are these true, and please explain. The genome is the instruction manual for cells.\n\n[06:56] Absolutely. I think the, uh, the genome as I was saying, it's like a recipe book. Uh, it has both the coding part of the genome, which is like the ingredient section of the recipe book, which says, uh, what are the proteins that will need to be synthesized. So the human proteome has 20,000 proteins. So our genome sort of encodes these 20,000 sort of proteins, and there could be variations in those 20,000 proteins. And then there's the non-coding part, which is the which is sort of which ex looks at how are these proteins sort of mixed? How are these proteins sort of expressed? Where are they expressed? And in what quantity? And that part is basically the dark part of the genome, which is much less well understood, because it sort of talks about the regulation of, uh, of genes and, uh, protein expression. Um, and so, I think what AlphaGenome is trying to do is trying to sort of, uh, sort of decipher and inform this whole this whole sort of space.\n\n[08:00] Uh, I also have a question, and I was thinking that maybe only you can answer this question. So I'm I'm really curious about this. This is trained on human and mouse genomes.\n\n[08:11] Yes.\n\n[08:12] And what I would love to know is that you train it on the human genome, it has some amount of knowledge and and and quality of of results. Then you train it on the mouse genome too. After that, does it get better at the human part?\n\n[08:29] Yeah. And so this, I think really, I mean, you have sort of, uh, sort of seen this in many different sort of places. In machine learning, neural networks try to fit to the data. And, uh, if you just give it the human data, uh, the neural network has this susceptibility that it can memorize or sort of, uh, think about, uh, the mechanisms that only work in the case of the human genome. But by training it, by forcing it forcing the model to explain the same effects in the context of the the mouse genome, we are asking the the model to think broader and think about general sort of principles that can explain both these different types of variations. And that really helps in not only model generalization, but also making the model sort of learn about sort of what really matters and what's really happening at the physiological level, uh, sort of in those molecular phenotypes.\n\n[09:33] I've seen it in another Google DeepMind paper, that was the Sema project, which played a bunch of video games. And I I really found it stunning that you play a video game, you have some score on it. And after playing a bunch of other video games, you get better at this game. And it seems like maybe the same phenomenon that that but that sounds like intelligence to me, right? You you you apply the knowledge from other things to to this thing.\n\n[09:59] Yeah. And I think that's transfer learning in action where you are able to extract concepts from things which are related, but are different problems, and it helps you become better. Right? So if you sort of, uh, solve your maths problems and then solve your physics problems, but just getting better on maths helps you get better on physics.\n\n[10:22] My understanding is that the big advance here was that previous models were either too zoomed in and short-sighted or they looked from far away but at a low resolution. Now, this one can do both.\n\n[10:38] Yes.\n\n[10:39] True or false?\n\n[10:40] This is true. So when we started on this journey of going after this extremely ambitious challenge of deciphering the genome, um, there were a lot of technical challenges. Uh, our genome, as I just mentioned, is three billion sort of, uh, base pairs, ATCG. Right? Uh, sort of a very long sort of sequence. And if you want to understand what is the effect of a particular sort of variation, you need to look at a broad sort of, uh, an expanded, uh, neighborhood around that, uh, that variant, because it can affect sort of, uh, things which are quite far off because of 3D interactions and so on. It's not that a particular sort of base pair only affects, uh, what's happens in its neighborhood, like the neighborhood could be very large. So earlier sort of variations of the model, so we had a model called Enformer, which preceded AlphaGenome, where both the context window in which we were looking at, uh, the neighborhood was, uh, sort of smaller, as well as the resolution at which we were trying to analyze the genome was much coarser. Right? We were not looking at what's happening at the base pair level. We were sort of looking at sort of a large number of sort of base pairs taken together. And we were not looking at 1 million base pair window, we were looking at a smaller sort of window. What AlphaGenome tries to do and is the first model to achieve that, is to operate at the base pair resolution and have this very large window, and, uh, and that allows it to not only make sort of prediction at a lot of precision, which require a lot of precision, but also, uh, sort of make predictions which involve reasoning about a much larger set of, uh, things that are happening in the neighborhood of, uh, that variant.\n\n[12:44] I saw that it is so dominant. It matched or beat the strongest comparison model in 25 out of 26 variant effect benchmarks. I think only AlphaFold did I hear like this kind of dominance that is absolutely incredible. Now, what I'd like to ask you, when you saw that it first started working, what did it feel like?\n\n[13:07] Yeah, so I think one thing that, uh, we were, we have been working on this problem for a long time, as with many of our scientific challenges. Uh, it is, these are incredibly hard problems, um, and require innovation in many different things, like data and a sort of, uh, coming up with the better architecture, coming up with sort of new ideas on training and so forth. When we started seeing these results, we knew, uh, that we were in a different phase. And, uh, part of it was expected because we had done all the hard work of enabling training to happen at that resolution, which had never been sort of done before. But to get it right, and to actually show that, uh, the original hypothesis that we had gone in with, that if you increase the resolution, if you increase the context window, if you regularize the training properly, then neural networks will sort of, uh, show show the right results. And so that was really rewarding, uh, to see for the whole team.\n\n[14:17] Was there a phase of suspicion, like it it it can't be right, you know, maybe maybe we we tested on the training set or or something.\n\n[14:26] Yeah, so I think this is where we have our team sort of very, very cautious scientists. So there is a lot of work that the team does on sort of, uh, on metrics and evaluation. And so when the results came in, there is, you so you there is a genuine sort of, uh, uh, sort of expectation that you are you're going to check it again to make sure that everything is working properly and these are sort of valid results. But we had a lot of confidence in our metrics that we had set them set them correctly, because it was not something that we have been doing for the last three months, like it's it has been a project for the last almost four, five years or more.\n\n[15:08] What is AlphaGenome Atlas?\n\n[15:10] So AlphaGenome Atlas is essentially a sort of a dictionary of what happens when you have variation in the genome. So now I told you about AlphaGenome. What AlphaGenome does is it looks at your genome, and you can ask it the question, if I change this base pair or this character in your genome from A to a T or T to a C, what would be the consequence? And that's very helpful. But suppose you wanted to understand the effects of all variations. Now, all variations, there are a lot of variations, because like, there are three billion base pairs, and all of them can be changed three sort of times, right? A could be changed into a T or a C or a G, right? So there are nine billion possible single nucleotide variations that you can study. And for every single one of them, there's a lot of data that you can sort of, uh, that you can extract as to what will be its effect at the molecular level, at, uh, the effect on splicing, the effect on sort of gene expression, and and so forth.\n\n[16:20] What AlphaGenome Atlas does, it basically precomputes all of this. It basically looks at what happens for all these variations, and makes this massive dataset, a petabyte size sort of dataset, and makes it available to the scientific community.\n\n[16:39] That's unbelievable. It feels like this AlphaFold moment where the inference of time of folding became, you know, so quick that at some point, Damis just said that, you know, let's fold all the proteins. Like Atlas sounds like that for the genome.\n\n[16:54] Exactly. So I mean, for for Alpha AlphaFold, we had, um, we made the predictions for structures of 250 million proteins. Almost all the proteins that were known at that sort of time. But even the AlphaFold database, which has now been used, uh, by more than 4 million users across 190 countries, Alpha in terms of its actual size, AlphaGenome Atlas is 30 times the size of AlphaFold database. So the scale at which, uh, AlphaGenome, uh, can produce this the the detailed information about the effect of variation is unprecedented.\n\n[17:37] All this from 1 megabase of DNA sequence.\n\n[17:40] Yeah, so with with a 1 million sort of, uh, base pair window, uh, in in context.\n\n[17:46] For mutations that affect gene activity, there is a fairly strong correlation between the predicted and the observed effect size. I saw in the paper that row is about 0.5.\n\n[17:58] But but that's stunning. That's that's incredible. And, uh, my understanding is also that this doesn't just predict whether a mutation matters, but often gets the magnitude of the effect roughly correct, too. Is that fair to say?\n\n[18:15] Yes, absolutely. And I think what we did with, uh, especially AlphaGenome Atlas, is we came up with, um, a new way to sort of help scientists sort of look at the data and explore this mass amount of data. So, the AlphaGenome Variant Impact score, or the AVI score is sort of carefully sort of calibrated to say, if the score is high, that means that there is, uh, that particular variant is a variant that you should really think about and analyze, uh, sort of carefully. Um, and if the AVI score is low, you can, there is high confidence that it will not have a dramatic impact on various different sort of phenotypes.\n\n[19:06] So to me, this sounds like one of those root-node problems where you you solve this problem and then it's the applications can grow out of it in so many directions. I check AlphaFold every now and then, which was one of these root-node problems. And in the first couple years, I could actually look through the papers that that used it, and I tried to understand what they do. Now, there is so much that's built on top of AlphaFold that it's completely hopeless to for for any of us to understand all of it. Does it look like AlphaGenome is going to be the same?\n\n[19:42] Yeah, I think AlphaGenome, with AlphaGenome, we are trying to solve that root node problem of deciphering the genome, right? And and as you sort of mentioned, it it is really truly a root node problems node problem in terms of its implications. So not only does it have implications for understanding sort of diseases better, it also has implications for how would you treat diseases? Uh, what are the sort of key things that you need to sort of understand about biology, and what are the places where you can sort of control expression, or what what variations sort of control expression of certain sort of proteins, which are relevant in that disease pathway. But it's not just, uh, applicable for, um, understanding, uh, diseases and human health. Uh, it has implications that go beyond in broader sort of biology. So, in fact, uh, sort of now we are seeing a lot of interest in use of generative AI in synthetic biology. And again, when you are sort of synthesizing sort of, uh, new organisms or new sort of proteins, like what are the properties that we should be sort of thinking of, right? Uh, like you would have seen, uh, DNA language models like Evo, uh, sort of come up, and and people using them to sample different genomes to, uh, to solve different types of problems. And again, AlphaGenome gives you sort of a lens by which you can study the properties of those genomes. And so, uh, the implications of this model and its future sort of variations, which we are working on, I think will be, uh, sort of in the same way, uh, very broad.\n\n[21:34] I feel like I've been dropped into a science fiction movie. Like, we we could only dream of of having technology like this when I was a child. That's I think that's unbelievable.\n\n[21:44] How do we know that it learned mechanisms, not just correlations? Like usually that's the that's the problem with many of these papers, that the difficult part is actually proving the connection between the two. That's almost impossible in many cases.\n\n[21:58] Yeah. So I think that's a very good question. I think and that has been one of the sort of challenges, right, when you are looking in computational biology that you don't want just to learn all the statistical correlations. You want to have, uh, the model, you want the model to be able to sort of understand the actual sort of causal sort of links that happen in, uh, that make the predictions possible. And, uh, if you think about it like in AlphaGenome, how that has sort of encoded, one is that is in terms of the properties that it predicts. It predicts properties at the molecular sort of level. So, you can really see when it makes a prediction about a particular variation, about say splice sites or splicing or gene expression. So those are very sort of, uh, those are predictions which are which can be explained biophysically, right? Rather than sort of correlationally that oh, this variation happened, basically causes that particular sort of disease. But this AlphaGenome is not saying that. It's it basically actually telling you what is happening at the cellular sort of level. And then in terms of validating, uh, what we have seen is actually when you make take these predictions and actually try to validate them in the lab, we see that those predictions make sense. And you can make novel sort of findings of, uh, of variation and and importance of certain variants.\n\n[23:33] Essentially, because the whole thing is based in physics, this is what essentially helps in terms of verification.\n\n[23:39] Yeah, I think the the tasks are more physically require it to reason about the physics. Now, how the model is doing it, that's something that we we are still sort of looking at and interpreting. But, uh, the the the tasks that it is being asked to solve are grounded in physics.\n\n[24:00] Now, you have this incredibly sophisticated learning algorithm in AlphaGenome. And then, in the paper, on top of it, you have this tiny, super simple layer of lasso regularization. And I I found that really amusing. I imagined this almost like a a Formula 1 engine you invented, and it has a a little bicycle bell on top.\n\n[24:24] Yeah, I I think the this sort of shows the the power of the representation, right? What you want models like AlphaGenome to exhibit is sort of a a fundamental understanding of what they are, um, what they are seeing, or how they are perceiving the DNA sequence. So in in some sense, most of the work should be done by the model in terms of the feature representation, and then the sort of the final sort of predictor on top should take a very simple sort of form. Yeah, almost trivial form, because most of the work has happened at the representation sort of layer.\n\n[25:01] What's the next step?\n\n[25:02] So there are so many things that, uh, we are working on, which is like with AlphaGenome, the the story does not end here. Like, there is a lot that we need to do to improve AlphaGenome to make it even more better, uh, in terms of its understanding of the genome. Um, if you look at genomics and biology, biology sort of has a lot of different contexts. For example, different cells behave differently. Right? So, uh, making sort of AlphaGenome more sort of aware of the context in which it needs to make these predictions is one thing that we are sort of trying to work on. Um, expanding the amount of data that AlphaGenome can be trained on, so that it can, uh, sort of become much more accurate about different kinds of properties. Connecting these molecular phenotypes that AlphaGenome, uh, is able to sort of produce, and, uh, showing and, uh, showing their connections and impact on properties at the organism sort of, at the human sort of level, right? The propensity to disease and so on. How do we sort of facilitate that work? All these things are a sort of directions that the team is now looking at.\n\n[26:23] There's so much going on. I don't want to get greedy, but I just wanted to hear about the next steps. Like what what are you building on on top of this. That's that's awesome. You use Gemini with your son to explore science questions, like how airplanes generate thrust. Has Gemini ever explained something to your son better than you could? So where you said, oh man, that's that's way better than what I would have said.\n\n[26:49] Yeah, so I I think it's it's not, uh, only the ability of these models in explaining concepts, but also by using different analogies and so on. But also the ability of these models to actually, uh, show the theory in action. So I was, uh, a few sort of weeks back, uh, I was trying to sort of explain to my son like what happens in a wind tunnel when sort of, uh, engineers are designing, uh, sort of, uh, say, um, airplane sort of parts. And what are the effects and how do they do these stimulations? And, uh, we we asked that, uh, Gemini to explain it. And it it, in fact, it created a simulation. And where sort of you could actually play around with different parameters and see what how the airflow sort of changes. Now, it was not completely accurate, but, uh, but it was a very good demonstration of what is possible, right? Uh, uh, and like and creating these visual artifacts that help, uh, someone understand the concept.\n\n[28:06] We are living in an incredible time, because I I also remember when I first wrought my Navier-Stokes physics simulation for for fluids. I remember when I first looked at the theory, and I thought, I'm never going to understand this. This is this is never happening. And it took months and months of studying and and trying, and now I I understand a very little about it, but at at least a a basic simulator I can I can write. And you just here you just enter a prompt and you just got a simulation by the way on the side. Yeah. Because the because the intelligence is so incredible that it it can do this sort of thing. Like like just make up a wind tunnel test and and you can probably run in real time. You can see the streamlines. And as that's unbelievable. And it's only going to get better.\n\n[28:55] Now, I think we had about a 1 million X AI speed up in the last 10 years, if you factor in everything, it's not just hardware, it's if you factor in, I don't know, transformers, how much better the implementations got, the engineering, the everything. Let's say we got a 1 million X in the last 10 years. If in the next 10 years, we have another 1 million X. What could we do?\n\n[29:23] There are so many open scientific challenges that are beyond our current capabilities. Simulating even a cell, creating a virtual cell. Imagine the consequences of that, right? Like we would, if you can completely sort of really understand the workings of a cell, that will have amazing consequences for the fight against diseases like cancer or synthetic biology and so forth. Now, imagine not and that's we are talking about a cell, right? Imagine sort of simulating an organism. That will be that is the power that can come from that understanding and that capability. But there's so many things, um, about the world that we still are scratching the surface on. Sort of understanding long-term climate, for instance. Uh, what are going to be the consequences of certain, uh, sort of actions on long-term sort of climate, uh, sort of coming up with new material types that can help us sort of store energy, sort of transform energy in different forms in a much more efficient manner, understanding biology at, uh, from first principles to being able to truly design novel function for tackling some of the challenges that we are seeing, both in human health as well as sort of in agriculture and many other things that the world is facing. There are so many sort of, um, problems that can be unlocked with that progress.\n\n[31:02] That was fantastic. Usually I ask this question, people, and I see that it kind of breaks their brain too, because 1 million X like 10 years ago, like 2016, we had no idea what what we could do today. And and it's it's it's so exciting to think that, okay, it's if you add another 10 years, what would we be capable of? And everyone is thinking so small, but but this one, this one was really good.\n\n[31:26] Nature is extremely sophisticated. Right? Sort of we are and and really, I think there's a lot to look forward to in terms of understanding the world. I mean, understanding, we are talking about understanding cells, understanding our own brain, like is another sort of challenge. What is actually happening, uh, in, uh, sort of materials? Why are they exhibiting certain properties? We even sort of properties that we have seen, uh, forget about new types of properties, but properties that we have already seen, like superconductivity. We don't have a complete theory about superconductivity, right? We have one sort of narrow theory of superconductivity. Imagine the new properties that we are yet to sort of explore or, uh, sort of really crisply understand why these phenomena happen and the ability to be able to design those objects.\n\n[32:22] Fantastic. Pushmeet, every time we meet, I learn so much. And you know what the best part is? I will go home, and I edit these videos together myself. So I'm going to watch it like five or six more times. And I guarantee you that every listen, there's going to be something new that I learn. So this was amazing. Thank you so much. Thank you. I use Lambda to reproduce AI research papers, often in minutes. It's also great to train your own models or fine-tune an existing one. Run inference or text-to-image or video easy peasy. Running a deepseek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments. I test ideas from the papers I cover, and moments later, results. Love it. Seriously, try it out now at lambda.ai/papers (or click the link in the description).",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\nThank you Google DeepMind for the invite.\n\n📝 AlphaGenome Atlas is available here:\nhttps://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/\nhttps://blog.google/innovation-and-ai/models-and-research/google-deepmind/alphagenome-atlas/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "유전체 변이 예측 모델은 맞춤 의료와 질병 위험 분석에 핵심 데이터 과학 기법을 제공한다",
+        "tags": [
+          "AlphaGenome",
+          "DeepMind",
+          "Human Genome Project",
+          "sickle cell anemia",
+          "genome"
+        ],
+        "concepts": [
+          "유전체 변이 예측",
+          "맞춤형 의료",
+          "유전체 해석"
+        ],
+        "key_points": [
+          {
+            "point": "AlphaGenome은 유전체 변이를 예측하는 머신러닝 모델이다",
+            "timestamp": "01:00"
+          },
+          {
+            "point": "모든 사람은 3 십억 문자 규모의 유전체 레시피를 가지고 있으며, 그 변이가 의미하는 바를 이해하려는 것이 목표다",
+            "timestamp": "02:23"
+          },
+          {
+            "point": "돌연변이의 영향은 물질적일 수도, 아닐 수도 있으며, 겸상 적혈구 빈혈은 잘 알려진 사례다",
+            "timestamp": "04:52"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AlphaGenome의 변이 예측 프레임워크를 소프트웨어 코드 변경에 적용해, 특정 코드 라인의 수정이 시스템 성능이나 버그 발생 가능성에 미치는 영향을 사전에 예측한다.",
+          "유전체 변이 예측 모델을 식품 배양 공정의 유전적 변형에 활용해, 특정 미생물 유전자가 발효 효율에 미치는 영향을 예측하고 최적 배양 조건을 제시한다.",
+          "유전체 기반 맞춤 의료 접근을 금융 데이터에 빌려와, 고객의 행동 패턴 변이를 모델링해 신용 위험 변동을 사전에 평가한다."
+        ],
+        "quiz": [
+          {
+            "question": "AlphaGenome이 단일 문자 변이가 미치는 영향을 예측하려는 주요 이유는 무엇인가?",
+            "options": [
+              "단백질 서열을 직접 결정하기 위해",
+              "세포 특성 및 질병 위험을 이해하기 위해",
+              "유전체를 직접 편집하기 위해",
+              "진화 역사를 추적하기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "대본에서 AlphaGenome은 한 문자 변화가 세포 특성 및 유기체에 미치는 영향을 밝혀내려 한다고 설명한다."
+          },
+          {
+            "question": "대화에서 언급된, 결과가 잘 알려진 돌연변이 사례는 무엇인가?",
+            "options": [
+              "BRCA1 변이",
+              "겸상 적혈구 빈혈 변이",
+              "유당 불내성 변이",
+              "키와 관련된 SNP"
+            ],
+            "answer_index": 1,
+            "explanation": "대본에서 겸상 적혈구 빈혈은 특정 변이가 원인이며, 그 결과가 잘 이해된 사례로 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "AI의 추론 과정을 역추적하는 법",
+        "url": "https://deepdaiv.stibee.com/p/166",
+        "published_at": "2026-10-06T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안보이시나요?](https://stib.ee/mSgO)\n\n#164 위클리 딥 다이브 | 2026년 10월 7일 에디터 영이\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 적대적 증류(Adversarial Distillation)를 소개했습니다.\n- 요약과 답만으로 추론을 되살리는 Trace Inversion의 원리를 요약했습니다.\n- 강화학습으로 쉽게 무력화되는 증류 방어의 한계와 대안을 정리했습니다.\n\nAI의 추론 과정을 역추적하는 법\n\n안녕하세요, 에디터 영이입니다 :)    7월의 어느 날, OpenAI의 모니터링 시스템에 수상한 패턴이 잡혔습니다. 4,000명이 넘는 사용자가 이틀 동안 요청 16,000건을 보낸 것이었는데요. 이들 모두 단순한 질문이 아닌, 모델에게 겉으로 드러나지 않는 내부 추론 과정을 보여달라는 요청이었습니다.    OpenAI에 따르면 이런 수상한 요청은 7월 1일 소규모로 시작해 24일과 25일에 급증했고, 추가 조사에서 15,000명이 넘는 사용자에게서 같은 패턴을 찾아냈다고 합니다. OpenAI는 이 사건의 중심에는 Kimi 개발사인 Moonshot AI와 연관된 개인들이 있다고 판단했습니다. 이들이 노린 건 숨겨진 추론, 즉 모델이 답을 내기까지 거치는 내부의 사고 기록입니다. 이 기록이 새어 나가면 최종 답변에서 빠진 정보가 드러나고, 다른 누군가가 그 모델의 능력을 베끼기 위해 학습하는 데 쓸 수 있습니다. OpenAI는 이런 행위를 [적대적 증류(Adversarial Distillation)](https://openai.com/ko-KR/index/disrupting-a-coordinated-model-distillation-campaign/)라고 설명했습니다.    공격자의 수법은 흥미롭습니다. 서버에 침입하는 방식도, 암호를 해독하는 것도 아니기 때문입니다. 추론 모델 API는 숨겨진 추론을 사용자에게 보여주지 않는 대신, 암호화한 덩어리로 만들어 답변과 함께 돌려줍니다. 공격자들은 한 대화에서 받은 이 덩어리를 복사해 다른 대화에 붙여 넣고, 모델에게 내용을 풀어서 그대로 적어 달라고 했습니다.    OpenAI는 해당 경로를 막았고, 16,000건이라는 숫자도 추출 시도일 뿐 모두 성공했다는 뜻은 아니라고 밝혔습니다. 하지만 추론을 숨기는 것만으로 적대적 증류를 막을 수 있을까요?\n\n요약만으로 추론을 되살릴 수 있을까?\n\n추론 모델(Reasoning Model)은 최종 답을 내기 전에 여러 단계의 추론 과정을 거칩니다. 이 추론 과정은 다른 모델을 학습할 때 매우 좋은 답지가 됩니다. 만약, ChatGPT와 같은 모델을 모사하고 싶다면 ChatGPT가 추론하는 과정, 즉 그 모델이 생성하는 모든 텍스트를 재학습시키면 됩니다. 이런 과정을 일종의 ‘증류(Distillation)’라고 합니다. 큰 교사 모델(ChatGPT)의 출력으로 작은 학생 모델(Student Model)을 학습시키는 형태이기 때문이죠. 이때 최종 답만 학습할 때보다 추론 과정까지 함께 학습할 때 학생 모델의 추론 능력이 훨씬 크게 향상됩니다. 그래서 자사 모델의 추론으로 다른 모델을 학습시키지 못하도록, OpenAI, Google, Anthropic은 API를 호출하더라도 전체 추론 대신 짧게 정리한 Reasoning Summary와 최종 답만 사용자에게 보여줍니다. 요약만으로는 다른 모델이 추론 능력을 베껴 갈 수 없으리라는 가정이죠.    Cornell Tech 연구진의 논문 [<How to Steal Reasoning Without Reasoning Traces> (Zhang et al., 2026)](https://arxiv.org/abs/2603.07267)는 이 가정을 정면으로 반박합니다. 연구진은 Reasoning Summary와 최종 답만으로 전체 추론을 거꾸로 복원하는 공격 방식인 Trace Inversion을 제안했습니다.    Trace Inversion은 크게 세 단계로 이루어집니다.  (Stage 1) 먼저 공격자는 자신이 가진 약한 추론 모델인 Surrogate Model에게 공개된 문제들을 풀게 해 전체 추론을 얻습니다. 이 추론을 상용 모델의 요약과 비슷한 형식으로 줄이면 “요약과 전체 추론” 쌍이 만들어지는데, 이 쌍으로 요약을 보고 전체 추론을 복원하는 Inversion Model을 학습합니다.  (Stage 2) 다음으로 공격 대상인 상용 모델에 질문을 보내 요약과 최종 답을 받고, 이를 Inversion Model에 넣어 전체 추론을 합성합니다.  (Stage 3) 마지막으로 이렇게 합성한 추론으로 학생 모델을 학습합니다. 여기서 중요한 점은 합성한 추론이 상용 모델의 실제 추론과 같을 필요가 없다는 것입니다. 최종 답과 논리적으로 맞아떨어지고, 학생 모델을 잘 가르칠 수만 있으면 충분합니다.\n\nTrace Inversion의 세 단계. Surrogate Model로 Inversion Model을 학습하고(Stage 1), 상용 모델의 Reasoning Summary와 최종 답으로 전체 추론을 복원한 뒤(Stage 2), 이를 학생 모델 학습에 사용한다(Stage 3).  출처: [<How to Steal Reasoning Without Reasoning Traces> (Zhang et al., 2026)](https://arxiv.org/abs/2603.07267)  예를 들어 GPT-5.4 mini에 벡터 연산 문제를 하나 입력하는 상황을 가정해보겠습니다. 돌아온 요약은 \"먼저 ka + b를 계산하고, 그다음 a − 3b를 계산한 뒤, 두 벡터가 비례한다는 식을 세워 풀겠다\" 정도로 짧습니다. 계산 과정은 거의 없고, 어떤 순서로 접근했는지만 담겨 있죠. Inversion Model은 이 요약과 최종 답을 바탕으로 \"두 벡터가 같은 방향이거나 반대 방향이라면 하나가 다른 하나의 스칼라배여야 한다\"는 판단부터 성분별 비례식, 부호에 대한 검산까지 이어지는 긴 추론을 다시 써 냅니다. 요약에 적힌 순서를 뼈대로 삼아, 빠진 단계를 채워 넣는 셈입니다.\n\nGPT-5.4 mini가 반환한 질문, Reasoning Summary, 최종 답과 Trace Inversion으로 복원한 전체 추론.  출처: [<How to Steal Reasoning Without Reasoning Traces> (Zhang et al., 2026)](https://arxiv.org/abs/2603.07267)  그렇다면 이렇게 복원한 추론으로 실제로 학생 모델을 가르칠 수 있을까요? 연구진은 1.5B 크기의 작은 모델을 Surrogate Model로 사용하여 GPT-5.4 mini를 공격했습니다. GPT-5.4 mini의 요약과 답을 그대로 학습한 Llama-3.1-8B는 수학 벤치마크 MATH500에서 16.4%에 그쳤지만, 같은 요약을 Inversion Model로 복원한 추론을 학습하자 48.3%까지 올라갔습니다. 요약을 그대로 학습하면 오히려 답만 학습할 때보다 성능이 떨어지는 경우도 있었습니다. 요약 자체는 학습 데이터로 쓸모가 없지만, 복원을 거치면 쓸모 있는 답지가 되는 것입니다. GPT-5.4 mini에 1만 개의 질문을 보내는 데 든 비용은 173.28달러였고, 복원과 학습 과정에서는 GPT-5.4 mini를 전혀 사용하지 않았습니다.    더 흥미로운 결과도 있습니다. 공격 대상과 Surrogate Model을 모두 DeepSeek-R1으로 설정한 실험에서는, 복원한 추론으로 학습한 학생 모델이 R1의 실제 추론으로 학습한 학생 모델보다 높은 점수를 받기도 했습니다. R1의 실제 추론에는 시도했다가 포기한 접근이나 되돌아가는 과정이 그대로 남아 있지만, 최종 답을 알고 복원한 추론은 정답을 향해 곧장 나아가기 때문입니다. 연구진은 공격자가 노출된 추론과 상관없이 최종 출력만 복원하면 되기 때문에, 추론을 감추는 것만으로는 능력 탈취를 막을 수 없다고 결론짓습니다.\n\n독을 탄 추론도 강화학습 앞에서는 소용없다\n\n그렇다면 추론을 숨기는 대신, 보여주되 배우기 어렵게 만들면 어떨까요? 이런 아이디어에서 나온 방어 기법이 [<Antidistillation Sampling> (Savani et al., 2025)](https://arxiv.org/abs/2504.13146)입니다. 교사 모델이 추론을 생성할 때 다음 토큰을 고르는 확률을 의도적으로 살짝 비틀어 교사 모델의 성능은 최대한 유지하면서도 그 추론을 학습한 학생 모델의 성능은 떨어지도록 만드는 방식이죠. 겉보기에는 멀쩡하지만 학습 데이터로 쓰면 해가 되는, Reasoning 과정에 독을 푸는 셈입니다.    University of Oxford와 ELLIS Institute Tübingen 연구진의 논문 [<Distillation Defenses Easily Break After Reinforcement Learning> (Javaheri et al., 2026)](https://arxiv.org/abs/2609.35699)은 이 방식이 정말 효과적인지 의문을 제기합니다. 지금까지의 연구는 학계든 기업의 자체 평가든, 학생 모델을 증류한 직후의 성능만 보고 방어의 효과를 판단했습니다. 공격자가 증류 이후에는 아무런 추가 학습도 하지 않는다고 암묵적으로 가정한 것이죠. 이와 달리, 연구진은 실제 공격자라면 증류 뒤에 강화학습까지 진행할 것이라고 생각했습니다.\n\n증류 뒤 강화학습으로 이어지는 증류 공격의 파이프라인.  출처: [<Distillation Defenses Easily Break After Reinforcement Learning> (Javaheri et al., 2026)](https://arxiv.org/abs/2609.35699)  실제로 연구진이 같은 문제들로 증류만 한 모델, 강화학습만 한 모델, 증류 후 강화학습까지 한 모델을 비교해 보니, 거의 모든 경우에 강화학습이 증류보다 나았고 둘을 함께 쓴 모델이 가장 좋은 성능을 냈습니다. 증류는 학생 모델이 풀 수 있는 문제의 범위를 넓혀 주고, 강화학습은 그 범위 안에서 정답을 더 안정적으로 내도록 다듬어 주기 때문입니다. 최고의 모델을 원하는 공격자라면 증류에서 멈출 이유가 없다는 것입니다.    이 조건에서 Antidistillation Sampling을 다시 평가하자 결과가 달라졌습니다. 연구진은 독의 강도를 세 단계로 나눴는데, 가장 약한 단계조차 교사 모델 자신의 성능을 10% 떨어뜨렸습니다. 실제 서비스라면 이 정도 손해도 감수하기 어려운 수준입니다. 증류 직후에는 의도대로 Poisoned Reasoning으로 학습한 학생 모델의 성능이 떨어졌습니다. 하지만 강화학습을 거치자, 약하거나 중간 정도의 독을 탄 추론으로 학습한 학생 모델은 독이 없는 추론으로 학습한 학생 모델과 거의 같은 성능을 회복했습니다. 독을 탄 추론도 강화학습의 출발점으로는 여전히 쓸모가 있었던 것입니다. 가장 강한 독은 강화학습 뒤에도 효과가 남았지만, 이는 교사 모델 자체가 제대로 된 답을 내지 못할 만큼 망가졌기 때문이었습니다. 다른 모델 조합에서는 약한 독의 효과가 일부 남기도 했지만, 그 경우에도 교사 모델의 성능을 10% 넘게 희생해야 했습니다.\n\n독의 강도별 학생 모델(Qwen2.5-0.5B) 성능. 증류 직후 벌어졌던 차이가 강화학습 이후 대부분 사라진다.  출처: [<Distillation Defenses Easily Break After Reinforcement Learning> (Javaheri et al., 2026)](https://arxiv.org/abs/2609.35699)  연구진은 한 발 더 나아가, 실제 상용 모델들이 쓰고 있는 방어법인 추론 요약도 같은 방식으로 실험했습니다. 이번에는 앞서 소개한 Trace Inversion보다 훨씬 단순한 공격을 사용했는데요. Trace Inversion은 요약을 전체 추론으로 복원하는 Inversion Model을 따로 학습해야 했지만, 이 공격에는 그런 과정이 없습니다. 대신 연구진은 이미 공개된 소형 모델인 Llama-3.2-3B-Instruct를 그대로 가져와, 요약을 전체 풀이로 늘리는 역할을 맡겼습니다. 연구진은 이 모델을 Expander라고 이름 붙였습니다.    Expander는 문제, 상용 모델의 요약, 그리고 최종 답을 전달받고, “이 요약을 바탕으로 처음 이 문제를 푸는 것처럼 자연스러운 풀이를 써 달라”는 요청을 받습니다. 이때 중간 계산 결과와 최종 답은 요약에 적힌 것과 반드시 같아야 하고, 요약을 참고했다는 티를 내서도 안 된다는 조건이 붙습니다. 수학 문제를 처음부터 혼자 푸는 것보다 핵심 단계를 힌트로 받고 푸는 편이 훨씬 쉬운 것처럼, 작은 모델이라도 요약이라는 뼈대만 있으면 그럴듯한 전체 풀이를 써 낼 수 있다는 것이 연구진의 생각입니다.\n\n별도의 학습 없이, 기존 소형 모델(Expander)로 요약과 최종 답을 전체 추론으로 늘리는 공격 방식.  출처: [<Distillation Defenses Easily Break After Reinforcement Learning> (Javaheri et al., 2026)](https://arxiv.org/abs/2609.35699)  연구진은 Expander가 요약을 늘린 풀이로 학습한 학생 모델과, 숨겨진 전체 추론으로 학습한 학생 모델을 비교했습니다. 증류 직후에는 전체 추론으로 배운 학생 모델이 확실히 앞섰습니다. 요약만 보여주는 방어가 제 역할을 하는 것처럼 보였죠. 하지만 강화학습을 거치자 그 차이는 거의 사라졌습니다. Claude Sonnet 4.6과 GPT-5 mini의 실제 요약으로 실험했을 때도 결과는 같았습니다.    연구진은 이를 바탕으로, 대략적인 추론을 복원할 수 있을 만큼의 정보가 새어 나가는 한 어떤 방어도 효과를 내기 어렵다고 결론을 내렸습니다. 다만 연산 자원의 한계로 3B 이하의 소형 학생 모델과 수학 문제에서만 실험했고, 안전상의 이유로 각 기업의 최상위 모델은 공격 대상에서 제외했다는 점은 염두에 둘 필요가 있습니다.\n\n질문 하나로는 알 수 없는 것\n\n두 논문의 결론을 종합하면, 어떤 방식을 사용하든 개별 답변 단위의 방어로는 증류 공격을 막기 어렵습니다. [<Distillation Defenses Easily Break After Reinforcement Learning>](https://arxiv.org/abs/2609.35699) 연구진은 그 이유를 이중 용도에서 찾습니다. 어떤 정리의 증명 과정을 묻는 연구자와, 똑같은 질문으로 자기 모델의 학습 데이터를 모으는 공격자는 질문 하나만 봐서는 구분할 수 없습니다. 공격을 막겠다고 증명 단계를 빼 버리면 연구자도 똑같이 손해를 보죠. 연구진은 경쟁이 치열한 상황에서 사용자들이 방어는 철저하지만 쓰기 불편한 모델보다, 방어력은 떨어져도 더 좋은 모델을 고를 가능성이 높다는 점도 함께 지적합니다.    그래서 연구진은 대안으로 요청 묶음 단위의 방어, 즉 Batch-Level Defense에 주목합니다. 질문 하나로는 공격인지 알 수 없지만, 서로 연관된 질문 여러 개를 함께 보면 이야기가 달라질 수 있다는 것입니다. 수많은 계정이 비슷한 형식의 수학 문제를 쏟아내고 있다면, 질문 하나하나는 평범해 보여도 묶어서 보면 데이터를 모으는 패턴이 드러나는 식이죠. 연구진은 이런 방어가 증류뿐 아니라 상용 모델을 다른 모델의 학습 보상 신호로 활용하거나, 수많은 질문으로 탈옥 방법을 자동으로 찾아내는 공격에도 대응할 수 있다고 봅니다.    뉴스레터의 도입부에서 언급한 OpenAI의 사례가 좋은 예시입니다. OpenAI가 이번 활동을 알아챈 단서는 개별 요청의 내용이 아니라, 4,000명이 넘는 사용자가 이틀 사이 같은 추출 패턴으로 요청을 보냈다는 사실이었습니다. 추가 조사에서도 15,000명이 넘는 사용자 집단 전반에서 관련 프롬프트 패턴을 찾아냈고요. 대응 역시 계정과 네트워크 단위로 이루어졌습니다. 부정 계정을 차단하거나 제한하고, 가입과 인프라 통제를 강화했으며, 관련 네트워크에 대한 모니터링을 넓혔습니다. 여기에 다른 사용자의 암호화된 추론을 다시 보내 내용을 복원하던 경로를 막고, 추론이 노출될 수 있는 출력을 전송 전에 잡아내는 검사도 추가했습니다.    다만 지금의 방어는 공격을 실시간으로 막기보다 공격의 흔적을 파악하는 수준에 가깝고, 공격자들이 여러 지역에서 여러 계정을 쓰기 때문에 연관된 질문을 찾아내는 일 자체가 쉽지 않다고 덧붙입니다. 7월 1일에 시작된 공격이 7월 28일이 되어서야 완전히 차단되었다는 점을 보면 알 수 있죠. 또한 OpenAI가 이번에 막았다고 밝힌 것은 암호화된 추론을 되살리는 특정 경로이고, 요약과 답만으로 추론을 되살리는 공격은 그와는 별개의 문제로 남아있습니다.\n\nAnthropic 역시 올해 2월, 여러 경쟁 개발사가 Claude와 대화를 주고 받으며 그 답변을 자사 모델 학습에 사용하려 했다는 [의혹](https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks)을 제기한 바 있습니다. 결국 상용 모델은 사용자에게 충분히 쓸모 있는 정보를 내놓을수록, 그만큼 베껴 갈 것도 많아지는 처지에 놓여 있습니다. 정보를 덜 주면 지킬 수는 있겠지만, 그만큼 쓸모없는 모델이 되겠죠.    그리고 이건 AI 모델만의 고민도 아닙니다. 지난해 SNS를 가득 채운 지브리풍 이미지를 기억하시나요? 미야자키 하야오가 수십 년에 걸쳐 쌓아 온 그림체는 AI가 흉내 낸 이미지로 순식간에 퍼져 나갔습니다. 그 그림체가 어떤 고민과 과정을 거쳐 만들어졌는지와 상관없이, 세상에 내놓은 결과물만으로 충분했던 것이죠. 무언가를 보여주는 순간 그것은 누군가가 배우고 흉내 낼 수 있는 재료가 됩니다. 어디까지 보여주고, 어디까지 감춰야 할까요. 사람이든 모델이든, 무언가를 만들어 내놓는 존재라면 쉽게 답을 내기 어려운 고민일 것 같습니다.\n\n[상용 모델, 어디까지 보여줘도 될까요? 🤔](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/mSgO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/mSgO \"게시하기\")[웹에서 보기](https://stib.ee/mSgO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "숨은 추론을 복원해 모델을 탈취할 수 있음",
+        "tags": [
+          "Adversarial Distillation",
+          "Trace Inversion",
+          "OpenAI",
+          "GPT-5.4 mini",
+          "DeepSeek-R1"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "언어 모델링",
+          "AI 기반 수학 증명"
+        ],
+        "key_points": [
+          {
+            "point": "요약만으로도 Trace Inversion을 통해 전체 추론을 복원해 모델을 탈취할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "Trace Inversion은 약한 Surrogate Model과 Inversion Model을 이용해 요약·답만으로 전체 추론을 합성하고 학생 모델을 학습한다",
+            "timestamp": null
+          },
+          {
+            "point": "실험에서 복원된 추론을 사용하면 요약만 학습했을 때보다 성능이 크게 향상돼 추론 은폐만으로는 방어가 불가능함을 보여준다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "요약 로그만 제공되는 데이터 파이프라인에서 Trace Inversion 방식을 적용해 누락된 중간 처리 단계들을 재구성해 디버깅 효율을 높인다",
+          "API 호출 패턴을 모니터링해 적대적 증류 시도를 탐지하고 자동 차단 정책을 적용한다",
+          "요약된 최종 예측만 있는 저리소스 도메인에서 Surrogate·Inversion 모델을 활용해 합성된 추론을 생성, 라벨링 비용을 절감한다"
+        ],
+        "quiz": [
+          {
+            "question": "Trace Inversion은 어떤 단계로 구성되는가?",
+            "options": [
+              "Stage 1: Surrogate 모델로 전체 추론 생성·요약 매칭, Stage 2: 대상 모델에서 요약·답 획득, Stage 3: 합성 추론으로 학생 모델 학습",
+              "Stage 1: 대상 모델에서 요약·답 획득, Stage 2: Surrogate 모델로 전체 추론 생성, Stage 3: 요약만 사용해 학생 모델 학습",
+              "Stage 1: Inversion 모델을 직접 훈련, Stage 2: 요약 없이 전체 답만 사용, Stage 3: 학생 모델에 직접 적용",
+              "Stage 1: 데이터 수집, Stage 2: 모델 압축, Stage 3: 배포"
+            ],
+            "answer_index": 0,
+            "explanation": "논문에 제시된 Trace Inversion은 (1) 약한 Surrogate 모델로 전체 추론을 얻고 Inversion 모델을 학습, (2) 대상 모델에서 요약·답을 받아 Inversion 모델에 입력, (3) 합성된 추론을 학생 모델 학습에 활용하는 3단계이다."
+          },
+          {
+            "question": "실험 결과, 복원된 추론을 사용했을 때 학생 모델의 성능은 어떻게 변했는가?",
+            "options": [
+              "성능이 감소했다",
+              "변화가 없었다",
+              "16.4%에서 48.3%로 크게 상승했다",
+              "소폭 상승했다"
+            ],
+            "answer_index": 2,
+            "explanation": "논문에서는 요약만 학습한 Llama-3.1-8B가 16.4%였던 반면, 복원된 추론을 학습했을 때 48.3%까지 상승했다고 보고했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Write Like It's 1866: LLMs Relearn Telegraphese",
+        "url": "https://fiveminutesforward.com/post/2026-10-04-telegraph-test/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[Home](https://fiveminutesforward.com/) » [Posts](https://fiveminutesforward.com/post/)\n\n# Write Like It's 1866: LLMs Relearn Telegraphese\n\nInstructed to answer in cablese — the telegraph operators' compressed dialect, models elicit 40–49% fewer billed output tokens on the API's meter, and models across four families still recover the information at full fidelity. The Telegraph Test benchmark measures how well models compress using this technique as well as how much information they can retreive from it afterward.\n\nOctober 4, 2026 · 12 min · 2386 words · Travis Smith\n\n![Same information, 160 years apart: 11 words at 10 cents each vs. 1,847 tokens of “you’re absolutely right”](/images/telegraph-test/telegraph-meme-1866-vs-2026.jpg)\n\n*Everything below is reproducible — harness, frozen ledgers, one-click notebook: [github.com/Travis42/telegraph-test](https://github.com/Travis42/telegraph-test).*\n\n## The Telegraph era, where every word was metered[#](#the-telegraph-era-where-every-word-was-metered)\n\nIn 1866, sending a message across the new transatlantic cable cost [$100 — for ten words](https://thehistorypress.co.uk/article/the-atlantic-telegraph-cable-communicating-across-the-sea/)1$10 a word, ten-word minimum, [roughly $2,600 in today’s money](https://www.pingdom.com/blog/transatlantic-cable-handled-8-words-a-minute-in-1866/).\n. That’s real money today; it was serious money then. Telegraph companies charged **per word**, and an entire industry grew out of that price structure.\n\n![The Great Eastern laying the first successful Atlantic cable (oil painting, National Maritime Museum, public domain). The link that charged $10 a word — and taught a generation of correspondents to write in cablese.](/images/telegraph-test/great-eastern-atlantic-cable.jpg)\n\nThe Great Eastern laying the first successful Atlantic cable (oil painting, National Maritime Museum, public domain). The link that charged $10 a word — and taught a generation of correspondents to write in cablese.\n\nTwo compression strategies emerged, and they map onto two very different technologies:\n\n**Codebooks.** Publishers sold massive commercial code dictionaries — Bentley’s ABC Telegraphic Code ran to a thousand pages mapping entire business phrases to single code words.\n\n```\nOTTER\n```\n\n…might mean\n\n```\n*steamship arrived, cargo intact, remit balance.*\n```\n\nFirms could cut a 40-word negotiation to a 6-word coded exchange. The codebook is a *substitution* technology: the message exists in full prose, and a dictionary renames chunks of it.\n\n![A page from the ABC Telegraphic Code: whole phrases mapped to single code words (public domain, via Wikimedia Commons)](/images/telegraph-test/abc-code-page.jpg)\n\n**Cablese.** The operators and correspondents evolved a written format like:\n\n```\n\"ARRIVE TUESDAY BRING FUNDS STOP CONFIRM WIFE SAILS FRIDAY.\"\n```\n\nThis disciplined style saved words without losing meaning, and it was emergent from the cost of the medium.\n\nOver time, this format faded as new technologies like the telephone, fax, email, made the per-word cost premium collapse. Telegraphese kind of survives wherever metering in terms of cost or just the time it takes to tap out a message is still onerous: 160-character SMS begat a whole new abbreviation culture; early Twitter did it again.\n\nWell guess what?\n\n## Tokens are metered words again[#](#tokens-are-metered-words-again)\n\nAn LLM API bill is a telegraph bill. You pay per token.\n\nSo we ran both strategies from ye olden days against modern models:\n\n### The Codebook: take existing text, substitute code words from a fixed dictionary.[#](#the-codebook-take-existing-text-substitute-code-words-from-a-fixed-dictionary)\n\nResult: about 10% savings. Most prose isn’t dictionary-shaped, and the substitution can’t remove words the author already wrote — it can only rename them.\n\n### Cablese[#](#cablese)\n\nInstruct the model, “Write a complete record in telegraphese; drop articles and filler; abbreviate; keep every fact, number, and proper noun verbatim — in lowercase, not all caps.”\n\nNumbers from a 50-passage, ~1,300-question benchmark:\n\n**Cross-family matrix** (readers = foreign models answering from GLM-5.3-Flash’s records; writers = GLM-5.3-Flash answering from theirs)2Savings shown use the lowercase instruction, on each provider’s own meter. Without that word, models write cablese in ALL CAPS and the styling costs 14–19 points: gemma 25.0%, qwen 29.8%, GLM 33.9%. \\*gpt-5-mini cannot disable reasoning, and compression makes it think — its writes bill about double plain. The one family where this technique does not pay.\n:\n\n| Model | Role | plaintext acc | cablese acc | **recovery ratio** (1.00 = plaintext control) | token savings |\n| --- | --- | --- | --- | --- | --- |\n| gemma-4-31b | reader | 70.9% | 77.5% | **1.09** | — |\n| qwen3.8-27b | reader | 72.3% | 79.4% | **1.10** | — |\n| nemotron-3-120b | reader | 76.1% | 76.7% | **1.01** | — |\n| gemma-4-26b | reader | 71.8% | 76.9% | **1.07** | — |\n| gemma-4-31b | writer | —",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 토큰 비용 절감 기법 검증, 비용 효율성 향상",
+        "tags": [
+          "LLM",
+          "Telegraph Test",
+          "codebooks",
+          "cablese",
+          "GitHub"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "데이터 기반 벤치마킹",
+          "프롬프트 협업"
+        ],
+        "key_points": [
+          {
+            "point": "모델에 telegraphese 작성을 지시하면 토큰 사용량이 40‑49% 감소하면서도 정보 손실이 없음을 확인했다",
+            "timestamp": null
+          },
+          {
+            "point": "역사적 압축 방식인 codebook은 약 10% 절감, cablese는 훨씬 큰 절감 효과를 보였다",
+            "timestamp": null
+          },
+          {
+            "point": "Telegraph Test 벤치마크를 통해 다양한 모델군의 압축·복원 성능을 정량화했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "엣지 디바이스에서 로그를 telegraphese 형태로 생성해 전송량을 줄이고 배터리 소모를 감소시킨다",
+          "반복적인 비즈니스 이메일 템플릿에 codebook 교체를 적용해 LLM API 호출당 토큰 비용을 절감한다",
+          "법률 문서 요약에 Telegraph Test 방식을 활용해 핵심 사실을 유지하면서 토큰 사용량을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 cablese 방식이 codebook 방식보다 더 큰 토큰 절감을 달성할 수 있는가?",
+            "options": [
+              "불필요한 관사와 충전어를 제거한다",
+              "전체 구문을 단일 코드 단어로 교체한다",
+              "사전 학습된 압축 모델을 사용한다",
+              "바이트 수준 압축을 수행한다"
+            ],
+            "answer_index": 0,
+            "explanation": "cablese는 문장에서 관사·충전어 등을 생략하고 핵심 사실만 남겨 토큰 수를 크게 줄인다. codebook은 기존 구문을 사전에 정의된 코드 단어로 대체할 뿐, 이미 작성된 단어를 없앨 수 없기 때문이다."
+          },
+          {
+            "question": "LLM API 비용 청구에서 가장 직접적인 비용 요소는 무엇인가?",
+            "options": [
+              "API 호출 횟수",
+              "사용된 토큰 수",
+              "연산 시간",
+              "저장된 데이터 양"
+            ],
+            "answer_index": 1,
+            "explanation": "LLM 서비스는 토큰 단위로 과금한다. 이는 텔레그래프가 단어당 비용을 부과했던 방식과 직접적으로 유사하다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤롯데하이마트, 시간 좀 내주오 수리할 게 있소",
+        "url": "https://trendlite.stibee.com/p/490",
+        "published_at": "2026-10-06T00:00:00",
+        "transcript": null,
+        "body": "2026.10.07 26-040호   |   [잘림 없이 보기](https://stib.ee/3NgO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 롯데하이마트, 시간 좀 내주오 수리할 게 있소\n2. 이것은 오프뷰티 50호점을 열기까지의 이야기\n3. Picked\\_ '일본 다이소 복합 출점 전략' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n롯데하이마트, 시간 좀 내주오 수리할 게 있소\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 가전은 한 번 사면 오래 쓰기 때문에, 예전에는 결혼이나 이사처럼 구매가 필요한 순간만 잘 잡으면 됐지만 이제는 그때까지 기다리는 것만으로는 부족해졌습니다.\n2. 그래서 롯데하이마트는 어디서 산 제품이든 수리해 주는 서비스를 내놓고, 가전을 사기 전부터 고객과 관계를 만들어 다음 구매까지 이어가려 하고 있습니다.\n3. 다만 수리만으로는 고객을 오래 붙잡기 어려운 만큼, 앞으로는 다시 찾고 싶을 만한 경험까지 더해 관계를 더 오래 이어가는 것이 중요할 겁니다.\n\n내줄 때까지 기다릴 수 없었습니다  “시간 좀 내주오, 갈 데가 있소.”    한때 귀에 익도록 들었던 롯데하이마트 CM송입니다. 결혼이나 이사를 앞두고 가전을 장만해야 할 때면 일단 하이마트부터 가보라는 메시지를 꽤 직관적으로 전달했는데요. 실제로 가전 판매에서는 이렇게 구매가 필요한 순간 가장 먼저 떠오르는 곳이 되는 것이 무엇보다 중요하던 시기가 있었습니다. 가전이라는 상품이 상당히 독특한 특성을 가지고 있기 때문입니다.    우리는 가전제품을 매일 씁니다. 하지만 정작 새로 사는 일은 드물죠. 냉장고는 하루에도 몇 번씩 문을 열지만, 한번 사면 수년간 바꾸지 않습니다. 소비자는 매일 사용하는 상품이지만, 기업 입장에서는 같은 고객을 다시 만날 기회가 매우 적은 셈입니다.    그래서 과거 가전업계의 중요한 과제는 이런 ‘결정적인 순간’을 먼저 붙잡는 것이었습니다. 결혼이나 이사처럼 가전 구매가 필요한 상황이 생겼을 때 가장 먼저 떠오르는 브랜드와 매장이 되는 거죠. 하이마트 역시 다양한 브랜드의 가전을 한 곳에서 비교하고 살 수 있다는 장점을 앞세워 이런 수요를 성공적으로 끌어왔습니다.    하지만 이제는 소비자가 가전을 살 수 있는 곳이 너무 많아졌습니다. 제조사 직영점부터 백화점까지 선택지가 늘어났고요. 무엇보다 접근성이 좋고 가격 비교까지 쉬운 온라인이 빠르게 성장했습니다. 이제 결혼하거나 이사하는 고객이 알아서 매장을 찾아오기를 기다리는 것만으로는 부족해진 겁니다.    그래서 최근 가전업계는 아예 다른 방법을 택하고 있습니다. 고객이 제품을 사고 나면 관계가 끝나는 것이 아니라, 구매 이후에도 계속 만날 이유를 만드는 겁니다. 최근 [삼성전자와 LG전자가 구독 서비스를 확대하는 것](https://www.hankyung.com/article/202609289105g)도 같은 맥락입니다. 단순히 비싼 제품의 구매 부담을 나눠주는 데 그치지 않고, 설치와 AS에 케어 서비스까지 더해 고객과 만나는 기간을 늘리고 있죠. 서비스 역시 고객의 상황과 필요에 맞춰 점점 세분화하고 있고요. LG전자는 관련 매출을 이미 조 단위로 키웠고, 삼성전자 역시 1조 원 돌파를 눈앞에 두고 있습니다.    롯데하이마트는 이러한 구독 경쟁에서도 후발주자였습니다. 그래서 조금 더 색다른 방법을 꺼내 들었습니다. 다른 곳들이 구매 이후까지 고객과의 관계를 이어가려 한다면, 롯데하이마트는 아예 구매하기 전부터 고객을 붙잡기로 한 겁니다.  상황이 아니라 사람을 붙잡습니다  [롯데하이마트는 최근 ‘가전수리 올케어’를 출시](https://biz.heraldcorp.com/article/10889741)했습니다. 2년간 5만 원을 내면 냉장고와 세탁기, TV부터 청소기와 커피머신, 노트북까지 총 34종의 가전에 대해 연간 100만 원 한도 내에서 수리비를 지원받을 수 있는데요. 더욱 흥미로운 건 롯데하이마트에서 산 제품이 아니어도 되고, 브랜드 역시 상관없다는 점입니다.    이렇게 하면 고객이 언젠가 가전을 교체해야 할 때 롯데하이마트를 다시 떠올릴 가능성도 높아집니다. 수리 서비스를 제공하는 과정에서 고객이 어떤 제품을 쓰고 있는지 알게 되고요. 이를 통해 향후 어떤 교체 수요가 생길지 이해할 단서도 얻을 수 있습니다. 무엇보다 구매가 없는 기간에도 관계를 이어갈 수 있게 됩니다. 가전의 교체 주기를 줄이기는 어렵지만, 고객과 만나는 간격은 줄일 수 있게 된 거죠.    이런 방식은 제조사와도 차별화됩니다. 삼성전자나 LG전자 같은 제조사는 기본적으로 자사 제품을 중심으로 서비스를 제공할 수밖에 없습니다. 반면 롯데하이마트는 여러 브랜드를 한꺼번에 다룰 수 있죠. 규모가 작은 업체가 비슷한 서비스를 만들기에는 수리망과 운영 인프라를 갖추는 부담도 크고요.    이처럼 과거의 가전 업체가 결혼과 이사라는 ‘상황’을 선점하려 했다면, 이제는 그 상황이 지나간 뒤에도 사람 자체와 관계를 이어가려 하고 있습니다. 고객과의 관계를 확보하면 사업의 범위도 자연스럽게 넓어질 수 있는데요. 롯데하이마트 역시 이번 서비스를 잘 안착시킨다면 단순히 가전을 파는 곳을 넘어, 여러 브랜드의 제품을 관리하는 생활 가전 서비스 기업으로 확장할 수 있을 겁니다. 새로운 사업 기회도 그만큼 늘어날 수 있고요.    그래서 앞으로 중요한 건 얼마나 많은 이용자를 확보하느냐일 겁니다. 일정 규모 이상의 고객이 모이면 수리와 관리 서비스를 더 효율적으로 운영할 여지가 커지고, 쌓이는 이용 경험과 데이터 역시 경쟁력이 될 수 있으니까요. 반대로 충분한 이용자를 확보하지 못하면 서비스 운영 비용만 늘어날 수도 있습니다. 결국 이번 시도가 새로운 성장 동력이 되려면, 고객과의 관계를 넓히는 것만큼 그 관계를 지속 가능하게 운영하는 능력도 함께 갖춰야 할 겁니다.  관계를 더 풍성하게 만들어야 합니다  그렇기에 앞으로는 고객과 만나는 기회를 늘리는 것과 함께, 고객이 계속 머물고 싶을 만한 이유도 더 많이 만들어야 합니다. 물론 수리와 관리 같은 서비스는 분명 고객과의 접점을 늘려줍니다. 하지만 어디까지나 문제가 생겼거나 관리가 필요할 때 찾는 기능적인 관계에 가깝습니다. 더 싸거나 편리한 서비스가 등장한다면 얼마든지 다른 곳으로 이동할 수도 있고요.  때문에 최근 기업들은 고객과의 관계를 조금 더 감성적인 영역으로 넓히려 하고 있습니다. 특히 가전과 마찬가지로 가격이 높고 구매 주기가 긴 자동차 업계가 조금 더 발 빠르게 움직이고 있는데요. [제네시스가 최상위 모델 고객을 위해 신라호텔에 별도의 라운지를 운영하는 것](https://www.mt.co.kr/industry/2026/10/04/2026100216132844893)도 이런 맥락에서 볼 수 있습니다. 이곳에서는 차량을 판매하지 않습니다. 대신 식사와 차, 위스키, 음악 등을 경험할 수 있는 공간을 제공하며 고객에게 브랜드를 다시 만날 또 다른 이유를 만들어주죠. 제네시스 역시 이러한 경험을 통해 고객의 만족과 브랜드에 대한 애정을 높이는 것을 목표로 한다고 설명합니다.  기업 입장에서 생각해 보면 충분히 합리적입니다. 이미 비싼 제품을 한 번 구매했다는 건 앞으로 다시 고객이 될 가능성도 그만큼 높다는 뜻이니까요. 그렇다면 다음 구매까지 아무 관계도 맺지 않고 기다리는 것보다, 그사이에 서비스를 제공하고 새로운 경험을 만들면서 브랜드와 계속 연결되는 편이 유리할 겁니다. 롯데하이마트 역시 이런 감성적인 접점까지 함께 늘려간다면 케어 서비스 이용자를 확보하는 데 그치지 않고, 장기적으로는 고객의 선호와 재방문 가능성을 높이는 데까지 나아갈 수 있을 거고요.  더욱 주목할 점은 이러한 변화가 가전과 자동차에만 국한되지 않는다는 겁니다. 백화점이 VIP 고객을 위한 별도의 라운지와 문화 프로그램을 강화하는 것 역시 비슷한 방향입니다. 많이 구매하는 고객에게 단순히 더 큰 할인을 제공하는 데 그치지 않고, ‘이곳의 고객으로 계속 남아 있을 이유’를 만들어주는 거죠.  특히 가격이 높고 구매 주기가 긴 상품일수록 이런 접근은 더욱 중요해질 수 있습니다. 제품 하나를 더 파는 것만큼이나, 어렵게 확보한 고객이 다음 구매까지 떠나지 않도록 만드는 것이 중요하기 때문입니다. 결국 고객과 오래 관계를 이어가려면 만나는 횟수를 늘리는 데 그치지 않고, 그 만남 자체를 더 풍성하게 만들어야 할 겁니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n이것은 오프뷰티 50호점을 열기까지의 이야기\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 오프뷰티가 약 1년 반 만에 48개 매장까지 빠르게 늘린 건, 올리브영처럼 고객 접점을 넓히고 이를 더 많은 상품을 확보하는 기반으로 삼기 위해서였습니다. 다만 그 방법은 사뭇 달랐습니다.\n2. 직영점 중심으로 매장을 빠르게 늘린 올리브영과 달리, 오프뷰티는 대리점 방식을 택해 본사의 부담을 낮췄고, 상품 수와 체험 요소를 줄이는 등 굳이 하지 않아도 될 일을 덜어내면서도 확장 속도를 높였습니다.\n3. 다만 50호점 이후에도 성장을 이어가려면, 매장이 늘어나는 만큼 고객이 사고 싶은 상품을 꾸준히 확보하고, 점주와 브랜드까지 함께 만족시키는 운영 능력을 갖춰야 할 겁니다.\n\n과거 승부를 가른 건 매장 수였습니다    오프뷰티가 [연내 50호점 돌파를 눈앞에 두고 있다](https://www.hankyung.com/article/2026100537141)고 합니다. 오프뷰티는 올리브영이 주도하는 뷰티 시장에 새롭게 뛰어든 곳 중 하나인데요. 지난해 5월 첫 매장을 연 뒤 약 1년 반 만에 전국 48개 매장을 확보했습니다. 올해 9월 기준 21개 매장을 운영하는 시코르보다도 많은 숫자죠. 올리브영과의 격차는 여전히 크지만, 새로 등장한 뷰티 편집숍 가운데서는 가장 빠르게 매장을 늘린 편입니다.    사실 올해 초에는 연내 100개 매장을 열겠다는 목표까지 내놓았습니다. 비록 처음 목표에는 미치지 못했지만, 그만큼 오프뷰티가 매장 확대를 중요하게 보고 있다는 뜻일 텐데요. 이는 올리브영의 성장 과정과도 닮아 있습니다. 올리브영이 경쟁자들을 앞설 수 있었던 중요한 이유 중 하나도 전국 곳곳에 매장을 빠르게 늘렸기 때문이거든요.    매장이 많아지면 고객이 제품을 만날 기회도 함께 늘어납니다. 브랜드 입장에서는 소비자가 직접 제품을 보고 써볼 수 있는 판매 공간이자 광고 공간이 늘어나는 셈이죠. 가까운 곳에서 쉽게 제품을 경험할 수 있다는 점에서 다른 경쟁자들이 따라오기 어려운 차이를 만든 겁니다. 덕분에 이제 올리브영은 화장품 브랜드의 성장을 좌우할 만큼 중요한 판매처가 됐습니다.    하지만 올리브영의 영향력이 너무 커진 만큼 다른 판매처가 필요한 이유도 커졌습니다. 브랜드 입장에서 올리브영 입점은 여전히 큰 기회지만, 들어가는 것 자체가 쉽지 않습니다. 어렵게 입점하더라도 한정된 매대와 고객의 관심을 놓고 수많은 상품과 다시 경쟁해야 하고요. 작은 브랜드에는 새로운 판매 기회가 필요했고, 팔리지 않고 남은 재고를 소화할 다른 길도 필요해졌습니다.    오프뷰티는 바로 그 틈을 노린 곳 중 하나입니다. 특히 브랜드가 가진 재고를 할인해 판매하는 ‘뷰티 아웃렛’ 역할에 집중했죠. 그리고 이런 사업에서도 매장 수는 중요합니다. 매장이 많아야 더 많은 상품을 팔 수 있고, 그래야 브랜드에도 더 많은 물량을 한꺼번에 가져오겠다고 제안할 수 있기 때문입니다. 결국 빠르게 매장을 늘리는 일은 고객을 더 많이 만나기 위한 전략이면서, 동시에 더 많은 상품을 확보하기 위한 방법이기도 한 셈입니다.  직영점·가맹점이 아닌 대리점을 택한 건  여기서 흥미로운 점은 오프뷰티가 올리브영과는 다른 방식으로 매장을 늘리고 있다는 겁니다. 올리브영도 가맹점을 운영하지만, 기본적으로는 직영점 중심입니다. 지난해 말 기준 전체 1,380여 개 매장 가운데 직영점 비중이 약 84%에 달했죠. 본사가 직접 돈을 투자하고 매장을 운영하는 방식이 사업의 중심인 겁니다. 경쟁자보다 훨씬 많은 매장을 만들고 시장을 선점할 수 있었던 것도 그만큼 꾸준히 투자해 왔기 때문이고요.    반면 [오프뷰티는 직영점이나 가맹점보다 대리점을 중심으로 확장](https://www.thebell.co.kr/front/newsview.asp?key=202604141425360840101382)하고 있습니다. 우선 대리점은 패션업계에서 출발한 오프뷰티에게 익숙한 방식이기도 합니다. 여기에 가맹사업은 원칙적으로 첫 직영점을 연 뒤 1년이 지나야 본격적으로 시작할 수 있다는 점도 고려했을 겁니다. 무엇보다 중요한 건 빠르게 매장을 늘리는 일이었으니까요.    다만 개별 매장을 여는 속도만 놓고 보면 직영점이 가장 유리할 수 있습니다. 본사가 충분한 자본만 투입할 수 있다면 점주를 모집할 필요도 없고, 기존 대리점이나 가맹점과의 상권 중복도 비교적 덜 고려하면서 원하는 지역에 매장을 낼 수 있기 때문이죠. 반면 대리점이나 가맹점은 운영할 점주를 먼저 찾아야 하고 기존 점포와의 이해관계도 고려해야 해, 매장 하나를 여는 과정 자체는 오히려 더 까다로울 수 있습니다.    대신 직영점은 매장을 늘릴수록 본사의 부담도 함께 커집니다. 보증금과 인테리어, 운영비를 직접 부담해야 하고, 매장이 잘되지 않았을 때의 위험도 모두 떠안아야 하니까요. 반면 대리점을 활용하면 이런 자본 부담과 운영 위험을 나눌 수 있습니다. 오프뷰티는 가장 빠른 방식인 직영점에 막대한 자본을 투입하기보다, 대리점 방식으로 부담을 낮추면서도 전체적으로 충분한 확장 속도를 확보하는 쪽을 택한 것으로 보입니다.    여기에 시장 상황도 나쁘지 않았습니다. 올리브영의 성공으로 뷰티 매장에 대한 관심은 커졌지만, 올리브영은 직영점 중심으로 매장을 늘리고 있습니다. 건물주나 창업 희망자 입장에서는 뷰티 매장을 열고 싶어도 선택지가 많지 않은 셈이죠. 이런 상황에서 오프뷰티에는 대리점 문의가 꾸준히 들어오고 있고, 오히려 좋은 조건을 골라 매장을 낼 수 있을 정도라고 합니다.    매장을 여는 사람의 부담도 낮췄습니다. 별도의 가맹비를 받지 않고, 인테리어와 집기에도 마진을 붙이지 않는 조건을 내걸었는데요. 매장을 열어주는 과정에서 돈을 벌기보다, 문을 연 대리점에 상품을 계속 공급하면서 수익을 내는 데 집중한 겁니다. 본사가 어디에서 돈을 벌지 명확히 정한 셈이죠. 덕분에 매장을 내는 사람의 초기 부담도 줄었고, 더 빠르게 점포를 늘릴 수 있는 기반도 만들어졌습니다.    이런 방식이 가능한 데에는 오프뷰티가 매장에서 해야 할 일을 비교적 단순하게 잡았다는 점도 중요합니다. 올리브영은 주요 상권의 매장을 크게 만들면서 제품을 직접 써보고 비교하거나, 브랜드를 경험할 수 있는 요소를 강화하고 있습니다. 여기에 매장과 별도의 물류 거점을 연결해 오늘드림 배송까지 운영하고 있고요. 단순히 상품을 파는 데 그치지 않고 체험과 배송까지 함께 관리해야 하니, 본사가 직접 운영할 필요성도 커집니다.    반면 오프뷰티가 앞세운 강점은 할인 가격입니다. 모든 상품과 체험 요소를 갖추기보다 고객이 가격 매력을 느낄 수 있는 상품을 골라 파는 데 집중했죠. 매장당 취급 상품도 1,000개 안팎으로, 다른 경쟁자보다 훨씬 적다고 합니다. 상품 수가 적으면 매장 운영도 단순해지고 재고 관리도 쉬워집니다. 본사가 직접 모든 매장을 세세하게 챙기지 않아도 되는 구조를 만든 셈입니다.    온라인에 대한 접근도 같은 방향입니다. 오프뷰티는 오프라인 판매를 중심으로 운영하면서, 할인 가격이 온라인 가격 비교에 그대로 노출되는 부담을 줄일 수 있다는 점을 브랜드에 제안했습니다. 근거리 배송 역시 직접 시스템을 만들기보다 기존 배달 플랫폼을 활용하는 방식을 택했고요. 올리브영이 잘하는 것을 모두 따라잡으려 하기보다, 굳이 하지 않아도 될 일을 덜어내고 자신들이 잘할 수 있는 상품 공급에 집중하면서 매장을 빠르게 늘릴 수 있는 구조를 만든 겁니다.  운영이 미래를 결정할 겁니다    오프뷰티는 앞으로도 매장과 판매 접점을 계속 늘려갈 겁니다. 최근에는 대형 약국 10여 곳에 별도 매대를 마련하는 방식까지 시도하고 있는데요. 단독 매장이 없는 지역에서도 고객을 만날 수 있는 방법입니다. 하지만 이처럼 매장 수가 늘고 확장 방식도 다양해질수록, 장기적인 성패를 가를 운영 능력은 더욱 중요해질 겁니다. 기본적으로 오프뷰티의 사업은 브랜드와 점주, 고객 등 다양한 이해관계자 사이를 잘 조율해야 하기 때문이죠.    우선 브랜드와의 관계를 잘 유지해 고객이 좋아할 만한 상품을 꾸준히 확보해야 합니다. 특히 재고 상품은 같은 제품을 같은 조건으로 계속 공급받기 어려울 수 있습니다. 잘 팔리던 상품이 소진됐을 때 이를 대신할 상품을 빠르게 찾아내는 능력도 필요하죠. 매장이 늘어날수록 고객이 다시 찾고 싶을 만한 상품을 계속 채워 넣는 일이 중요해지는 겁니다.    본사와 점주의 이해관계를 맞추는 일도 중요합니다. 점주가 본사에서 상품을 사 오는 구조라면, 본사가 얼마나 많이 공급했는지만 볼 게 아니라 그 상품이 실제 매장에서 얼마나 잘 팔리는지도 함께 살펴야 합니다. 본사의 매출이 늘더라도 점포에 팔리지 않는 재고가 쌓이면 점주의 수익은 줄고, 추가로 상품을 들여올 여력도 떨어질 수 있으니까요. 결국 매장별 판매 속도를 살피고, 상품 구성과 공급량을 적절하게 맞춰가는 일이 함께 따라와야 합니다.    기회는 분명 있습니다. 다양한 브랜드와 상품이 쏟아지는 시장에서는 정상가로 팔지 못한 재고를 소화할 다른 경로도 필요하니까요. 오프뷰티는 공식 입점 안내에서도 과잉재고부터 사용기한이 임박한 재고까지 다루고, 상품을 직접 사들이거나 판매 후 정산하는 등 여러 거래 방식을 제안하고 있습니다. 다만 재고가 많다는 것과 고객이 사고 싶은 재고가 많다는 것은 전혀 다른 이야기입니다. 결국 필요한 건 많은 물량을 확보하는 능력을 넘어, 그중에서 실제로 팔릴 상품을 골라내는 힘일 겁니다.    그렇기에 운영 능력을 넘어서는 무리한 확장은 오히려 독이 될 수 있습니다. 진열된 상품이 더 이상 매력적이지 않거나, 다른 곳과 비교해 가격 경쟁력이 떨어진다고 느끼는 순간 고객은 발길을 돌릴 테니까요. 그렇게 되면 빠르게 늘린 매장 수가 오히려 본사와 점주 모두에게 부담으로 돌아올 수도 있습니다.    결국 중요한 건 경쟁자보다 빠르게 움직이면서도, 상품과 재고를 안정적으로 관리할 수 있는 속도를 지키는 일일 겁니다. 어느 오프뷰티 매장을 가더라도 탐낼 만한 상품이 좋은 가격에 놓여 있고, 매장을 나서는 고객들의 손에 쇼핑백이 묵직하게 들려 있다면 50호점을 넘어 100호점, 200호점까지도 충분히 갈 수 있을 겁니다. 반대로 사람은 많아도 계산대가 한산하거나, 아예 고객의 발길마저 끊긴다면 빠른 확장은 오래 이어지기 어렵겠죠. 따라서 고객에게는 사고 싶은 상품을, 점주에게는 계속 운영할 이유를, 브랜드에는 상품을 맡길 이유를 만들어줘야 할 텐데요. 오프뷰티가 이 어려운 균형을 얼마나 잘 맞춰갈 수 있을지 궁금해집니다.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대해 의견 주실 것이 있으시거나, 광고/기고/기타 협업 관련해서는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 일본 다이소, 3개 브랜드를 자꾸 엮는 이유](https://www.retailtalk.co.kr/Strategy/?idx=174188657&bmode=view) '100엔 숍' 이미지를 벗어나기 위해서입니다    [2. 출연자의 첫 팬이 되는 제작사, 솔파스튜디오](https://the-edit.co.kr/88525)  리센느를 띄운 '안원잘부'를 만든 바로 그곳    [3. 이제 패션 브랜드는 콘텐츠로 경쟁합니다](https://oncuration.com/패션-브랜드-콘텐츠/) 이야기가 남으면, 브랜드도 함께 남거든요    [4. 모모스커피 20% vs 스타벅스 5%](https://brunch.co.kr/@choicepark/78)  두 브랜드의 이익률 차이를 만든 것은    [5. 코스(COS) 가방이 SNS에서 바이럴 된 건](https://newneek.co/@gosum_beat/article/46771)  SPA 브랜드지만 프리미엄을 지향합니다\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/3NgO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/3NgO \"게시하기\")[웹에서 보기](https://stib.ee/3NgO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "수리 서비스로 고객 데이터를 확보해 구매 전후 행동을 예측·최적화할 수 있다",
+        "tags": [
+          "롯데하이마트",
+          "삼성전자",
+          "LG전자",
+          "가전수리 올케어",
+          "제네시스"
+        ],
+        "concepts": [
+          "고객 데이터 활용",
+          "오프라인-온라인 연계 전략",
+          "고객 접점 확대"
+        ],
+        "key_points": [
+          {
+            "point": "가전은 구매 주기가 길어 고객 접점이 적어 기존에는 구매 순간에 집중했지만, 이제는 사후·사전 서비스가 필요하다",
+            "timestamp": null
+          },
+          {
+            "point": "롯데하이마트는 브랜드·제품 무관 2년 5만원 구독형 수리 서비스 ‘가전수리 올케어’를 도입해 고객과 지속적 관계를 형성한다",
+            "timestamp": null
+          },
+          {
+            "point": "이러한 서비스는 고객 사용 데이터 확보와 교체 수요 예측을 가능하게 하며, 규모가 커질수록 운영 효율과 새로운 비즈니스 기회가 확대된다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "오피스 가구 시장에 구매 전부터 유지보수 구독 서비스를 도입해 기업 고객의 초기 계약을 확보하고 장기적인 서비스 매출을 창출한다",
+          "의료 장비 분야에 브랜드 무관 통합 수리 계약을 제공해 다양한 제조사 제품을 한 플랫폼에서 관리함으로써 사용 데이터와 유지보수 효율성을 높인다",
+          "수리 구독 서비스에서 축적된 고객 사용 데이터를 활용해 이커머스 재고 예측 모델에 적용, 교체 수요를 사전에 파악해 재고 부족과 과잉을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "롯데하이마트가 구매 전부터 고객을 붙잡는 전략을 선택한 주요 이유는?",
+            "options": [
+              "제품 라인업 확대",
+              "온라인 경쟁 심화",
+              "제조사와의 가격 협상",
+              "물류 비용 절감"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 온라인·오프라인 선택지가 많아졌고, 단순히 매장을 기다리는 것만으로는 부족해졌다고 언급한다."
+          },
+          {
+            "question": "수리 구독 서비스가 고객과의 관계를 장기화하는 핵심 메커니즘은?",
+            "options": [
+              "저렴한 가격",
+              "브랜드·제품 무관 서비스 제공",
+              "광고 노출 증가",
+              "포인트 적립"
+            ],
+            "answer_index": 1,
+            "explanation": "서비스가 구매한 제품에 국한되지 않고 모든 브랜드를 포괄한다는 점이 고객을 지속적으로 연결시키는 요소로 강조된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business",
+          "data-eng"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
