@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-07T01:54:55.611437+00:00",
+ "generated_at": "2026-10-08T02:22:42.193654+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -657,7 +657,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 57,
+   "tracked": 58,
    "models": [
     {
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4",
@@ -2544,8 +2544,40 @@
    "kind": "weights-open",
    "priority": 2,
    "hf_org": "allenai",
-   "tracked": 48,
+   "tracked": 50,
    "models": [
+    {
+     "repo_id": "allenai/Bolmo-1B-Stage1",
+     "url": "https://huggingface.co/allenai/Bolmo-1B-Stage1",
+     "created_at": "2026-08-26T13:16:56+00:00",
+     "last_modified": "2026-08-28T10:23:40+00:00",
+     "weights_at": "2026-08-26T13:16:56+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-08-26T13:16:56+00:00",
+     "report_at": "2026-08-26T13:16:56+00:00",
+     "arxiv_ids": [
+      "2512.15586"
+     ],
+     "license": "apache-2.0",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "allenai/Bolmo-7B-Stage1",
+     "url": "https://huggingface.co/allenai/Bolmo-7B-Stage1",
+     "created_at": "2026-08-26T13:12:59+00:00",
+     "last_modified": "2026-08-28T10:23:42+00:00",
+     "weights_at": "2026-08-26T13:12:59+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-08-26T13:12:59+00:00",
+     "report_at": "2026-08-26T13:12:59+00:00",
+     "arxiv_ids": [
+      "2512.15586"
+     ],
+     "license": "apache-2.0",
+     "gated": "false",
+     "derivative": "finetune"
+    },
     {
      "repo_id": "allenai/OlmoEarth-v1_2-Base",
      "url": "https://huggingface.co/allenai/OlmoEarth-v1_2-Base",
@@ -2990,7 +3022,7 @@
      "repo_id": "allenai/Bolmo-7B",
      "url": "https://huggingface.co/allenai/Bolmo-7B",
      "created_at": "2025-12-13T14:25:25+00:00",
-     "last_modified": "2026-06-17T08:16:03+00:00",
+     "last_modified": "2026-10-07T14:40:28+00:00",
      "weights_at": "2025-12-13T14:25:25+00:00",
      "has_weights": true,
      "model_card_at": "2025-12-13T14:25:25+00:00",
@@ -3038,7 +3070,7 @@
      "repo_id": "allenai/Bolmo-1B",
      "url": "https://huggingface.co/allenai/Bolmo-1B",
      "created_at": "2025-12-10T10:06:38+00:00",
-     "last_modified": "2026-06-17T08:14:56+00:00",
+     "last_modified": "2026-10-07T14:40:47+00:00",
      "weights_at": "2025-12-10T10:06:38+00:00",
      "has_weights": true,
      "model_card_at": "2025-12-10T10:06:38+00:00",
@@ -3137,38 +3169,6 @@
      "has_weights": true,
      "model_card_at": "2025-11-18T01:22:27+00:00",
      "report_at": "2025-11-18T01:22:27+00:00",
-     "arxiv_ids": [
-      "2512.13961"
-     ],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "allenai/Olmo-3-7B-RL-Zero-Code",
-     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-Code",
-     "created_at": "2025-11-17T17:36:01+00:00",
-     "last_modified": "2026-06-25T21:41:48+00:00",
-     "weights_at": "2025-11-17T17:36:01+00:00",
-     "has_weights": true,
-     "model_card_at": "2025-11-17T17:36:01+00:00",
-     "report_at": "2025-11-17T17:36:01+00:00",
-     "arxiv_ids": [
-      "2512.13961"
-     ],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "allenai/Olmo-3-7B-RL-Zero-General",
-     "url": "https://huggingface.co/allenai/Olmo-3-7B-RL-Zero-General",
-     "created_at": "2025-11-17T17:36:01+00:00",
-     "last_modified": "2026-06-25T21:41:55+00:00",
-     "weights_at": "2025-11-17T17:36:01+00:00",
-     "has_weights": true,
-     "model_card_at": "2025-11-17T17:36:01+00:00",
-     "report_at": "2025-11-17T17:36:01+00:00",
      "arxiv_ids": [
       "2512.13961"
      ],
@@ -6480,6 +6480,100 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/Cosmos-Embed1-448p-anomaly-detection",
+   "transition": "repo_created",
+   "observed_at": "2026-10-08T02:22:42.193654Z",
+   "at": "2026-10-08T00:29:47Z",
+   "source_url": "https://huggingface.co/nvidia/Cosmos-Embed1-448p-anomaly-detection",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2505.19877"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-03-10T00:33:17+00:00"
+   }
+  },
+  {
+   "org": "allenai",
+   "repo_id": "allenai/Bolmo-1B-Stage1",
+   "transition": "repo_created",
+   "observed_at": "2026-10-08T02:22:42.193654Z",
+   "at": "2026-08-26T13:16:56Z",
+   "source_url": "https://huggingface.co/allenai/Bolmo-1B-Stage1",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": true,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2512.15586"
+    ],
+    "license": "apache-2.0",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "allenai/OLMo-2-0425-1B"
+    ],
+    "surfaced": false,
+    "created_at": "2026-08-26T13:16:56+00:00"
+   }
+  },
+  {
+   "org": "allenai",
+   "repo_id": "allenai/Bolmo-7B-Stage1",
+   "transition": "repo_created",
+   "observed_at": "2026-10-08T02:22:42.193654Z",
+   "at": "2026-08-26T13:12:59Z",
+   "source_url": "https://huggingface.co/allenai/Bolmo-7B-Stage1",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": true,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2512.15586"
+    ],
+    "license": "apache-2.0",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "allenai/Olmo-3-1025-7B"
+    ],
+    "surfaced": false,
+    "created_at": "2026-08-26T13:12:59+00:00"
+   }
+  },
+  {
+   "org": "openai",
+   "repo_id": "https://openai.com/index/gpt-6-for-everyone",
+   "transition": "announced",
+   "observed_at": "2026-10-08T02:22:42.193654Z",
+   "at": "2026-10-07T00:00:00Z",
+   "source_url": "https://openai.com/index/gpt-6-for-everyone",
+   "method": "official_rss",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "title": "GPT-6 and Intelligent UI for everyone"
+   }
+  },
+  {
    "org": "google-open",
    "repo_id": "google/embeddinggemma-2",
    "transition": "repo_created",
@@ -7761,95 +7855,11 @@
      "Qwen/Qwen3.5-9B-Base"
     ]
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3.5-9B-Base",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-02-26T16:20:10Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B-Base",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3.5-122B-A10B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-02-24T09:43:37Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3.5-122B-A10B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3.5-35B-A3B-Base",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-02-24T09:42:42Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3.5-35B-A3B-Base",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen3.5-27B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-02-24T09:41:56Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen3.5-27B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": []
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 595,
-  "events": 602
+  "models": 598,
+  "events": 606
  }
 }
