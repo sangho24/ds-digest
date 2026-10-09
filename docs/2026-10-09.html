@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 09일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 09일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 기반 수학 증명</span><span class="concept">온-폴리시 학습</span><span class="concept">모델 파인튜닝</span><span class="concept">멀티프로세싱</span><span class="concept">병렬 처리</span><span class="concept">작업 격리</span><span class="concept">AI 비용 효율성</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">LLM 기반 코드 변환</span><span class="concept">개발자 경험 개선</span><span class="concept">코드 자동생성</span><span class="concept">AI 기반 업무 검증</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.10536v1" target="_blank" rel="noopener">Decoupling Exploration from Optimization in RLVR</a>
+        </h2>
+
+        <p class="summary">탐색과 최적화를 분리해 RLVR 효율을 크게 높인다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>RLVR은 기존 학습된 언어 모델에 검증 가능한 보상을 부여해 새로운 추론 전략을 발견하려는 시도였지만, 강한 새로움 보너스가 모델 품질을 저하시켜 회복이 어려웠다. ExpDis는 탐색과 최적화를 별도 정책으로 분리해 탐색을 공격적으로 확대하면서도 학생 정책의 품질을 유지한다는 점에서 강화학습 기반 언어 모델 연구 흐름에 새로운 접근을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Exploration-Distillation (ExpDis) 프레임워크를 제안해 탐색과 최적화를 분리한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>탐색 정책에 새로움 보너스를 주고, 올바른 궤적을 필터링한 뒤 학생 정책에 증류한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>동일 시간 예산에서 DAPO보다 성능·다양성 모두 향상되고 pass@$k$ 스케일링이 개선된다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>추천 시스템에서 탐색 정책에 새로움 보너스를 주어 다양한 아이템을 탐색하고, 검증된 궤적을 학생 추천 모델에 증류해 다양성과 정확성을 동시에 높인다</span></li>
+            
+            <li><span class="box"></span><span>자율주행 시뮬레이션에서 탐색 정책으로 희귀 교통 상황을 생성하고 안전성을 필터링한 뒤, 메인 주행 정책에 증류해 예외 상황 대응 능력을 강화한다</span></li>
+            
+            <li><span class="box"></span><span>코드 생성 모델에 탐색 정책을 적용해 비전형적인 코드 패턴을 탐색하고, 올바른 결과만을 추출해 최종 코드 생성 모델에 증류해 생성 다양성을 확대한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">ExpDis 프레임워크가 기존 RLVR에 새로움 보너스를 직접 적용하는 방식보다 갖는 주요 장점은?</div>
+            
+            <div class="q-opt">① 탐색을 공격적으로 확대해도 학생 정책이 손상되지 않는다</div>
+            
+            <div class="q-opt">② 계산 비용이 크게 감소한다</div>
+            
+            <div class="q-opt">③ 모델 크기가 줄어든다</div>
+            
+            <div class="q-opt">④ 검증 보상이 필요 없어진다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 탐색을 공격적으로 확대해도 학생 정책이 손상되지 않는다</div>
+              <div class="why">ExpDis는 탐색과 최적화를 분리해 탐색 보너스를 사용해도 학생 정책에 직접적인 손상이 없도록 설계되었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">ExpDis에서 탐색 정책이 만든 궤적은 학생 정책에 증류되기 전에 어떤 과정을 거치는가?</div>
+            
+            <div class="q-opt">① 그대로 사용한다</div>
+            
+            <div class="q-opt">② 정확성과 품질을 기준으로 필터링한다</div>
+            
+            <div class="q-opt">③ 무작위로 샘플링한다</div>
+            
+            <div class="q-opt">④ 노이즈를 추가한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 정확성과 품질을 기준으로 필터링한다</div>
+              <div class="why">텍스트에 따르면 탐색 정책의 궤적은 올바름과 품질을 검증한 뒤에 학생 정책에 증류된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">RLVR</span><span class="tag">Exploration-Distillation</span><span class="tag">ExpDis</span><span class="tag">DAPO</span><span class="tag">pass@$k$</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/4149925" target="_blank" rel="noopener">Python의 GC가 멀티프로세싱과 만나면 생기는 일 - Python과 Airflow, 그리고 관련된 문제 해결기 2편</a>
+        </h2>
+
+        <p class="summary">Airflow 멀티프로세스 GC 메모리 누수 해결</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>fork 방식으로 생성된 worker가 부모 메모리를 상속하고 COW가 기대대로 동작하지 않아 메모리 증가가 발생한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Memray를 활용해 불필요한 모듈 import와 SSL context 반복 생성이라는 힙 누수 원인을 찾아 Airflow 3.1.2에서 패치되었다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Memray가 포착하지 못하는 메모리 증가는 PSS·USS 상승으로 나타나며, 이는 GC와 fork 결합 시 페이지 공유와 해제 지연 때문이다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Memray 프로파일링을 활용해 Spark executor와 같이 장시간 실행되는 프로세스에서 GC와 fork 결합 시 발생하는 숨은 메모리 증가를 탐지한다</span></li>
+            
+            <li><span class="box"></span><span>서버리스 함수 환경에서 불필요한 무거운 모듈 import를 제한해 cold start 시 메모리 오버헤드를 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>Kubernetes 파드의 건강 체크에 RSS뿐 아니라 PSS·USS를 포함시켜 OOM 발생 전 자동 재시작을 구현한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">fork된 Airflow worker의 RSS는 거의 변하지 않지만 PSS·USS가 상승하는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 힙 누수 때문에</div>
+            
+            <div class="q-opt">② GC가 공유 페이지를 즉시 해제하지 않아 페이지 사용량이 누적되기 때문에</div>
+            
+            <div class="q-opt">③ 네트워크 트래픽 증가 때문에</div>
+            
+            <div class="q-opt">④ CPU 스로틀링 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">② GC가 공유 페이지를 즉시 해제하지 않아 페이지 사용량이 누적되기 때문에</div>
+              <div class="why">GC가 fork된 프로세스와 공유된 메모리 페이지를 즉시 반환하지 않아 PSS·USS가 증가하지만 RSS는 크게 변하지 않는다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본문에서 힙 누수 원인을 찾아낸 도구는 무엇인가?</div>
+            
+            <div class="q-opt">① top</div>
+            
+            <div class="q-opt">② smem</div>
+            
+            <div class="q-opt">③ Memray</div>
+            
+            <div class="q-opt">④ valgrind</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ Memray</div>
+              <div class="why">저자들은 Memray를 사용해 flamegraph를 분석하고 두 가지 힙 누수 문제를 발견했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Airflow</span><span class="tag">CeleryExecutor</span><span class="tag">Memray</span><span class="tag">Kubernetes</span><span class="tag">MySQL</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/SamsungLabs/LittleBit" target="_blank" rel="noopener">Sub-1-Bit LLM Compression via Latent Factorization</a>
+        </h2>
+
+        <p class="summary">LLM을 0.1비트로 압축해 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Latent factorization과 이진 스케일링으로 1비트 이하 압축을 구현한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LittleBit-2는 Joint-ITQ 초기화로 잠재 기하학을 정렬해 정확도 향상, 추론 오버헤드 없음</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>다양한 LLM(OPT, Llama, Gemma 등)과 QAT, SmoothSign, residual factorization을 지원한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Joint-ITQ 초기화를 추천 시스템의 임베딩 레이어에 적용해 서브-1비트 압축으로 실시간 추천 속도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>Latent factorization과 이진 스케일을 사용해 비전 트랜스포머를 엣지 디바이스용 초소형 모델로 변환한다</span></li>
+            
+            <li><span class="box"></span><span>SmoothSign 기반 QAT를 음성 인식 모델에 도입해 메모리 사용량을 크게 줄이면서 정확도 유지한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">LittleBit-2에서 Joint-ITQ 초기화가 수행하는 주요 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 학습 시간 단축</div>
+            
+            <div class="q-opt">② 잠재 요인을 이진 하이퍼큐브에 정렬</div>
+            
+            <div class="q-opt">③ 모델 크기 증가</div>
+            
+            <div class="q-opt">④ SVD 대체</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 잠재 요인을 이진 하이퍼큐브에 정렬</div>
+              <div class="why">Joint-ITQ는 SVD로 얻은 잠재 요인을 이진 하이퍼큐브와 정렬해 양자화 전 초기화를 개선한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LittleBit-2 초기화를 활성화하려면 어떤 명령줄 옵션을 사용해야 하는가?</div>
+            
+            <div class="q-opt">① --use_itq</div>
+            
+            <div class="q-opt">② --enable_jitq</div>
+            
+            <div class="q-opt">③ --latent_align</div>
+            
+            <div class="q-opt">④ --quantize</div>
+            
+            <div class="q-answer">
+              <div class="correct">① --use_itq</div>
+              <div class="why">문서에 따르면 '--use_itq' 플래그를 True로 설정하면 Joint-ITQ 초기화를 사용할 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LittleBit</span><span class="tag">Joint-ITQ</span><span class="tag">SVD</span><span class="tag">QAT</span><span class="tag">transformers</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/pingdotgg/ts-rust" target="_blank" rel="noopener">Port of the TypeScript compiler, checker and lsp to Rust, by LLM</a>
+        </h2>
+
+        <p class="summary">LLM으로 TS 컴파일러를 Rust에 이식, 비용·성능 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM을 활용해 TypeScript 컴파일러를 Rust로 포팅했으며, 전체 토큰 비용은 약 $24k(오퍼스)에서 $420k(다른 모델)까지 소요됨.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>포팅된 ts-rust는 기존 Go 기반 컴파일러와 100% 호환성을 목표로 하며, WASM에서 고성능 타입 체크가 가능하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Opus 5.5 모델이 기존 GPT 모델보다 10배 빠르게 작업을 완료했으며, 비용 대비 효율성이 높다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM을 이용해 기존 Python 데이터 파이프라인을 Rust로 이식해 실행 속도를 10배 향상한다.</span></li>
+            
+            <li><span class="box"></span><span>Opus 모델을 활용해 대규모 SQL 쿼리 최적화 스크립트를 자동 생성해 데이터 엔지니어링 작업 시간을 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>컴파일러에 Effect와 같은 정적 분석 플러그인을 통합해 데이터 모델 스키마 검증을 자동화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Opus 5.5 모델이 다른 LLM에 비해 포팅 작업에서 효율적이었던 이유는?</div>
+            
+            <div class="q-opt">① 더 적은 토큰 사용으로 빠른 진행</div>
+            
+            <div class="q-opt">② 더 높은 정확도로 코드 품질 향상</div>
+            
+            <div class="q-opt">③ 사전 학습 데이터가 최신</div>
+            
+            <div class="q-opt">④ GPU 사용량이 적음</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 더 적은 토큰 사용으로 빠른 진행</div>
+              <div class="why">본문에 따르면 Opus 5.5는 10시간 만에 v0를 만들었으며, 토큰 사용량이 기존 모델의 1/10 수준으로 비용·시간 모두 크게 절감했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">ts‑rust가 WASM에서 제공하는 주요 장점은?</div>
+            
+            <div class="q-opt">① 브라우저 내에서 타입 검사 가능</div>
+            
+            <div class="q-opt">② 서버 비용 절감</div>
+            
+            <div class="q-opt">③ 자동 메모리 관리</div>
+            
+            <div class="q-opt">④ 코드 난독화</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 브라우저 내에서 타입 검사 가능</div>
+              <div class="why">WASM 지원으로 ts‑rust는 웹 환경에서도 고성능 타입 체크를 수행할 수 있어, 브라우저 기반 개발 도구에 활용 가능하다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TypeScript</span><span class="tag">Rust</span><span class="tag">LLM</span><span class="tag">Claude</span><span class="tag">Effect</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/LfUgsSUdaX8" target="_blank" rel="noopener">Game of Thrones: Turing Edition | Akarsh Kumar on Core War</a>
+        </h2>
+
+        <p class="summary">LLM으로 코어워 프로그램 진화, 탐색 효율 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:02</span>
+            
+            <span>LLM을 사용해 서로 경쟁하는 작은 어셈블리 프로그램을 진화시키고자 함</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:13</span>
+            
+            <span>프로그램 앞에 잘못된 연산을 삽입해 상대 프로그램을 중단시킴</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:46</span>
+            
+            <span>문제의 일부를 해결하면 지수 탐색을 선형 탐색으로 전환할 수 있음</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 진화 탐색을 활용해 하이퍼파라미터 조합을 빠르게 탐색하고, 검증 단계에서 간단한 성능 프록시를 사용해 탐색을 선형화한다</span></li>
+            
+            <li><span class="box"></span><span>LLM이 생성한 데이터 정제 스크립트를 검증기로 평가해 데이터 품질을 개선함으로써 정제 스크립트 탐색 비용을 크게 줄인다</span></li>
+            
+            <li><span class="box"></span><span>LLM이 테스트 케이스 생성 로직을 진화시키고, 커버리지를 검증해 테스트 조합의 폭발적 증가를 효율적으로 관리한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Core War 프로그램에 무효 연산을 삽입하는 목적은 무엇인가?</div>
+            
+            <div class="q-opt">① 프로그램을 중단시키기 위해</div>
+            
+            <div class="q-opt">② 실행 속도를 높이기 위해</div>
+            
+            <div class="q-opt">③ 코드를 암호화하기 위해</div>
+            
+            <div class="q-opt">④ 성능을 로그하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 프로그램을 중단시키기 위해</div>
+              <div class="why">무효 연산을 삽입하면 상대 프로그램이 충돌하여 실행이 중단된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">연구자는 부분적인 퍼즐 해결이 탐색 문제에 어떤 영향을 미친다고 말했는가?</div>
+            
+            <div class="q-opt">① 지수 탐색을 선형 탐색으로 바꾼다</div>
+            
+            <div class="q-opt">② 탐색을 더 어렵게 만든다</div>
+            
+            <div class="q-opt">③ 영향이 없다</div>
+            
+            <div class="q-opt">④ 이차 탐색으로 전환한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 지수 탐색을 선형 탐색으로 바꾼다</div>
+              <div class="why">한 부분을 해결하고 나머지를 탐색하면 전체 탐색 복잡도가 지수에서 선형으로 감소한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LLM</span><span class="tag">Core War</span><span class="tag">assembly</span><span class="tag">Game of Thrones</span><span class="tag">verifier</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

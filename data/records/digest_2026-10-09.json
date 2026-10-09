@@ -1,0 +1,440 @@
+{
+  "date": "2026-10-09",
+  "generated_at": "2026-10-09T00:18:32.073290",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Decoupling Exploration from Optimization in RLVR",
+        "url": "https://arxiv.org/abs/2610.10536v1",
+        "published_at": "2026-10-07T17:59:26",
+        "transcript": null,
+        "body": "Modern language models undergo reinforcement learning with verifiable rewards (RLVR) on top of already-trained checkpoints. A key promise of RLVR is the discovery of new reasoning strategies. In principle, a model can sample novel ideas absent from its prior training data. In practice, however, augmenting RLVR with strong novelty incentives has seen limited success and can degrade model quality. Because verifiable rewards supervise only a narrow slice of the model's knowledge and behavior, such degradations are difficult to recover from. Instead, we decouple exploration from optimization in a framework we call Exploration-Distillation (ExpDis). We train one or more explorer policies with a novelty bonus in the reward, filter their trajectories for correctness and quality, and distill them into a separate student policy. The student policy is then trained without a novelty bonus. We repeat the above procedure for several rounds, alternating between exploration and optimization. This decoupling allows us to aggressively scale exploration without degrading the student policy. Across seven mathematical reasoning benchmarks and two model families, ExpDis outperforms DAPO at the same wall-clock budget. Moreover, we observe improved pass@$k$ scaling, indicating that ExpDis produces models that generate more diverse correct solutions.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "탐색과 최적화를 분리해 RLVR 효율을 크게 높인다",
+        "tags": [
+          "RLVR",
+          "Exploration-Distillation",
+          "ExpDis",
+          "DAPO",
+          "pass@$k$"
+        ],
+        "concepts": [
+          "AI 기반 수학 증명",
+          "온-폴리시 학습",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "Exploration-Distillation (ExpDis) 프레임워크를 제안해 탐색과 최적화를 분리한다",
+            "timestamp": null
+          },
+          {
+            "point": "탐색 정책에 새로움 보너스를 주고, 올바른 궤적을 필터링한 뒤 학생 정책에 증류한다",
+            "timestamp": null
+          },
+          {
+            "point": "동일 시간 예산에서 DAPO보다 성능·다양성 모두 향상되고 pass@$k$ 스케일링이 개선된다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "RLVR은 기존 학습된 언어 모델에 검증 가능한 보상을 부여해 새로운 추론 전략을 발견하려는 시도였지만, 강한 새로움 보너스가 모델 품질을 저하시켜 회복이 어려웠다. ExpDis는 탐색과 최적화를 별도 정책으로 분리해 탐색을 공격적으로 확대하면서도 학생 정책의 품질을 유지한다는 점에서 강화학습 기반 언어 모델 연구 흐름에 새로운 접근을 제공한다.",
+        "production_ideas": [
+          "추천 시스템에서 탐색 정책에 새로움 보너스를 주어 다양한 아이템을 탐색하고, 검증된 궤적을 학생 추천 모델에 증류해 다양성과 정확성을 동시에 높인다",
+          "자율주행 시뮬레이션에서 탐색 정책으로 희귀 교통 상황을 생성하고 안전성을 필터링한 뒤, 메인 주행 정책에 증류해 예외 상황 대응 능력을 강화한다",
+          "코드 생성 모델에 탐색 정책을 적용해 비전형적인 코드 패턴을 탐색하고, 올바른 결과만을 추출해 최종 코드 생성 모델에 증류해 생성 다양성을 확대한다"
+        ],
+        "quiz": [
+          {
+            "question": "ExpDis 프레임워크가 기존 RLVR에 새로움 보너스를 직접 적용하는 방식보다 갖는 주요 장점은?",
+            "options": [
+              "탐색을 공격적으로 확대해도 학생 정책이 손상되지 않는다",
+              "계산 비용이 크게 감소한다",
+              "모델 크기가 줄어든다",
+              "검증 보상이 필요 없어진다"
+            ],
+            "answer_index": 0,
+            "explanation": "ExpDis는 탐색과 최적화를 분리해 탐색 보너스를 사용해도 학생 정책에 직접적인 손상이 없도록 설계되었다."
+          },
+          {
+            "question": "ExpDis에서 탐색 정책이 만든 궤적은 학생 정책에 증류되기 전에 어떤 과정을 거치는가?",
+            "options": [
+              "그대로 사용한다",
+              "정확성과 품질을 기준으로 필터링한다",
+              "무작위로 샘플링한다",
+              "노이즈를 추가한다"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 따르면 탐색 정책의 궤적은 올바름과 품질을 검증한 뒤에 학생 정책에 증류된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Python의 GC가 멀티프로세싱과 만나면 생기는 일 - Python과 Airflow, 그리고 관련된 문제 해결기 2편",
+        "url": "https://d2.naver.com/helloworld/4149925",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p dir=\"auto\"><a href=\"https://d2.naver.com/helloworld/4452165\" rel=\"nofollow\">Python의 멀티프로세싱과 Airflow의 task 동작 방식 - Python과 Airflow, 그리고 관련된 문제 해결기 1편</a>에서는 Airflow가 task를 실행할 때 요구되는 병렬성과 격리성을 살펴보고, 이를 만족하기 위해 Airflow가 task마다 만들었다 버리는 단기 프로세스와 만들어 두고 재사용하는 장기 프로세스를 모두 fork 방식으로 생성한다는 점을 확인했습니다. fork는 생성 속도와 메모리 효율 모두에서 spawn을 크게 앞섰지만, 두 가지 한계가 따라온다는 점도 언급했습니다. 부모의 자원을 그대로 승계한다는 점과, Python에서는 Copy-on-Write(COW)가 기대만큼 동작하지 않는다는 점입니다.</p>\n<p dir=\"auto\">이번 글에서는 이 두 한계가 저희 PoC(Proof of Concept) 환경에서 실제로 어떤 문제로 나타났는지부터 시작합니다. 두 문제는 worker 프로세스의 메모리가 계속 늘어나는 현상과, MySQL 환경에서 dag-processor가 간헐적으로 재시작되는 현상이었습니다. 겉으로는 전혀 다른 두 증상이었지만, 파고들면 결국 Python의 GC가 fork와 만나면서 생기는 문제라는 공통점이 있습니다. 원인을 추적해 해결하고 Airflow에 기여하기까지의 과정을 자세히 다룹니다.</p>\n<h2 dir=\"auto\">PoC 과정에서 발견한 두 가지 문제</h2>\n<h3 dir=\"auto\">문제 1: worker 프로세스의 메모리가 계속 증가한다</h3>\n<p dir=\"auto\">Airflow 3.1 계열을 CeleryExecutor로 PoC하면서 처음 눈에 띈 것은 worker 컨테이너의 메모리 사용량이 시간이 지날수록 늘어나는 현상이었습니다.</p>\n<p dir=\"auto\">CeleryExecutor는 worker 컨테이너 안에 fork로 만든 worker 프로세스를 여러 개 두고 workload를 처리합니다. 1편의 \"Airflow의 task 수행 모델\"에서 본 것처럼 Airflow 3의 LocalExecutor도 scheduler 프로세스 안에서 worker 프로세스를 fork로 만들어 재사용하는 같은 구조입니다. Airflow 메이저 버전업 초기라 메모리 증가 리포트도 많이 올라와 있어 LocalExecutor부터 조사했습니다.</p>\n<h4 dir=\"auto\">Memray로 찾은 두 가지 문제</h4>\n<p dir=\"auto\">Python 프로세스의 메모리 증가를 볼 때 자주 사용하는 도구는 <a href=\"https://bloomberg.github.io/memray/\" rel=\"nofollow\">Memray</a>입니다. 힙(heap) 할당을 호출 스택 단위로 추적하여 UI로 보여 주기 때문에 어느 코드가 메모리를 잡고 있는지 쉽게 확인할 수 있습니다. worker 프로세스 하나를 Memray로 추적한 결과 두 가지 문제를 확인했습니다.</p>\n<p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202609-%EB%8F%84%EC%A0%95%EC%9A%B0%2Ffiles%2Ffig-01-memray-flamegraph.png\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"worker 프로세스의 Memray flamegraph\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202609-%EB%8F%84%EC%A0%95%EC%9A%B0%2Ffiles%2Ffig-01-memray-flamegraph.png\" /></a></p>\n<p dir=\"auto\">첫째, secrets masker가 타입 확인을 위해 <code class=\"notranslate\">kubernetes.client</code> 전체를 import하고 있었습니다. worker가 task를 실행하는 데 필요 없는 모듈인데, worker당 약 32MB, worker 32개면 1GB 가까이 차지했습니다.</p>\n<p dir=\"auto\">둘째, Task SDK client가 SSL context를 반복 생성하는 누수가 있었습니다. 첫째 문제를 걷어낸 뒤에도 worker 하나가 30분 만에 8MB에서 23MB로 늘었고, 이후로도 멈추지 않았습니다.</p>\n<p dir=\"auto\">두 문제는 전형적인 힙 낭비와 누수였고, Airflow에 <a href=\"https://github.com/apache/airflow/issues/56641\" rel=\"nofollow\">이슈</a>로 정리해 올린 뒤 3.1.2에서 해결되었습니다.</p>\n<blockquote>\n<p dir=\"auto\">이 과정에서 Memray가 매우 유용했기 때문에, 코드 수정 없이 주요 컴포넌트를 Memray 추적 아래 실행할 수 있는 <a href=\"https://github.com/apache/airflow/pull/56821\" rel=\"nofollow\">기능</a>과 <a href=\"https://airflow.apache.org/docs/apache-airflow/stable/howto/memory-profiling.html\" rel=\"nofollow\">Memory Profiling with Memray</a> 문서를 Airflow에 추가했습니다.</p>\n</blockquote>\n<h4 dir=\"auto\">Memray에 보이지 않는 증가</h4>\n<p dir=\"auto\">두 문제를 고친 뒤에도 worker의 메모리 사용량은 여전히 올랐습니다. 문제는 이 증가가 Memray에 잡히지 않았다는 점입니다. 즉, worker 자체가 새로 할당한 메모리는 별로 없는데 메모리 사용량은 늘어나고 있었습니다.</p>\n<p dir=\"auto\">그래서 1편에서 정리한 지표로 돌아갔습니다. 각 프로세스의 PSS, USS를 smem으로 확인했더니 특이한 점이 보였습니다. 생성 직후 20~30MB 수준이던 PSS가 서서히 오르다가, 어느 순간 100MB 이상으로 올라가 내려오지 않습니다. 1~2시간 정도면 대부분의 worker가 이 상태에 도달했습니다.</p>\n<pre class=\"notranslate\" lang=\"text\"><code class=\"notranslate\">  PID  Command                          USS(before)  USS(after)  PSS(before)  PSS(after)  RSS(before)  RSS(after)\n    7  /usr/python/bin/python3.12            106716      287896       116419      297592       196144      375492\n   38  airflow worker -- LocalExec            23280       98988        35810      102606       162572      169284\n   39  airflow worker -- LocalExec            23640       98724        36138      102342       162640      169024\n   50  airflow worker -- LocalExec            23844       99820        36625      103441       163992      170120\n   53  airflow worker -- LocalExec            23756       99840        36545      103460       163928      170136\n</code></pre>\n<p dir=\"auto\">worker의 RSS는 거의 변하지 않는데 PSS와 USS만 오른다면, 프로세스가 건드리는 페이지의 총량은 그대로인 채 그중 부모와 공유하던 페이지가 자기만의 복사본으로 바뀌고 있다는 뜻입니다. <code class=\"notranslate\">pmap</code> 명령으로 주소 영역별 PSS를 비교해 보면, 부모와 같은 주소를 가진 매핑에서 PSS가 늘어나는 것이 확인되었습니다. 자식 프로세스에서 어떤 쓰기가 일어나 COW가 발생한 것으로 추측할 수 있습니다.</p>\n<p dir=\"auto\"><a id=\"user-content-ch1-2\"></a></p>\n<h3 dir=\"auto\">문제 2: MySQL 환경에서 dag-processor가 간헐적으로 재시작된다</h3>\n<p dir=\"auto\">두 번째 증상은 전혀 다른 컴포넌트에서, 전혀 다른 모습으로 나타났습니다. 메타데이터 DB로 MySQL을 쓰는 환경에서 dag-processor Pod가 불규칙하게 재시작되는 것입니다. 로그에는 다음과 같은 예외가 남았습니다.</p>\n<pre class=\"notranslate\" lang=\"text\"><code class=\"notranslate\">sqlalchemy.exc.OperationalError: (MySQLdb.OperationalError)\n(2013, 'Lost connection to server during query')\n[SQL: SELECT dag_priority_parsing_request.id, ...]\n</code></pre>\n<p dir=\"auto\">dag-processor의 메인 루프가 우선 파싱 요청을 조회하는 도중 MySQL 커넥션이 끊긴 것입니다. 이 지점은 재시도나 예외 처리로 감싸여 있지 않아 프로세스가 그대로 종료됩니다. 같은 시각에 다른 쿼리들도 비슷한 예외를 내고 있었는데, 그 쿼리들은 재시도 로직에 걸려 컨테이너가 재시작되지 않았을 뿐 원인은 같아 보였습니다.</p>\n<p dir=\"auto\">MySQL 쪽 general log를 확인해 보니, 문제가 발생한 시각에 그 커넥션으로 <code class=\"notranslate\">Quit",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "Airflow 멀티프로세스 GC 메모리 누수 해결",
+        "tags": [
+          "Airflow",
+          "CeleryExecutor",
+          "Memray",
+          "Kubernetes",
+          "MySQL"
+        ],
+        "concepts": [
+          "멀티프로세싱",
+          "병렬 처리",
+          "작업 격리"
+        ],
+        "key_points": [
+          {
+            "point": "fork 방식으로 생성된 worker가 부모 메모리를 상속하고 COW가 기대대로 동작하지 않아 메모리 증가가 발생한다",
+            "timestamp": null
+          },
+          {
+            "point": "Memray를 활용해 불필요한 모듈 import와 SSL context 반복 생성이라는 힙 누수 원인을 찾아 Airflow 3.1.2에서 패치되었다",
+            "timestamp": null
+          },
+          {
+            "point": "Memray가 포착하지 못하는 메모리 증가는 PSS·USS 상승으로 나타나며, 이는 GC와 fork 결합 시 페이지 공유와 해제 지연 때문이다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Memray 프로파일링을 활용해 Spark executor와 같이 장시간 실행되는 프로세스에서 GC와 fork 결합 시 발생하는 숨은 메모리 증가를 탐지한다",
+          "서버리스 함수 환경에서 불필요한 무거운 모듈 import를 제한해 cold start 시 메모리 오버헤드를 감소시킨다",
+          "Kubernetes 파드의 건강 체크에 RSS뿐 아니라 PSS·USS를 포함시켜 OOM 발생 전 자동 재시작을 구현한다"
+        ],
+        "quiz": [
+          {
+            "question": "fork된 Airflow worker의 RSS는 거의 변하지 않지만 PSS·USS가 상승하는 이유는 무엇인가?",
+            "options": [
+              "힙 누수 때문에",
+              "GC가 공유 페이지를 즉시 해제하지 않아 페이지 사용량이 누적되기 때문에",
+              "네트워크 트래픽 증가 때문에",
+              "CPU 스로틀링 때문에"
+            ],
+            "answer_index": 1,
+            "explanation": "GC가 fork된 프로세스와 공유된 메모리 페이지를 즉시 반환하지 않아 PSS·USS가 증가하지만 RSS는 크게 변하지 않는다."
+          },
+          {
+            "question": "본문에서 힙 누수 원인을 찾아낸 도구는 무엇인가?",
+            "options": [
+              "top",
+              "smem",
+              "Memray",
+              "valgrind"
+            ],
+            "answer_index": 2,
+            "explanation": "저자들은 Memray를 사용해 flamegraph를 분석하고 두 가지 힙 누수 문제를 발견했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "data-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Sub-1-Bit LLM Compression via Latent Factorization",
+        "url": "https://github.com/SamsungLabs/LittleBit",
+        "published_at": null,
+        "transcript": null,
+        "body": "# The LittleBit Project\n\n### Sub-1-Bit LLM Compression via Latent Factorization\n\nOfficial implementation of **LittleBit** (NeurIPS 2025) and **LittleBit-2** (ICML 2026).\n\n---\n\n## Papers\n\n**LittleBit-2: Maximizing the Spectral Energy Gain in Sub-1-Bit LLMs via Latent Geometry Alignment** *(ICML 2026)*  \nBanseok Lee, Youngmin Kim  \n[![arXiv](https://camo.githubusercontent.com/c275c7e9d1fe1a78b43630e8126fb20a896f582a898e6606178712c4b963aff6/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f61725869762d323630332e30303034322d6233316231622e737667)](https://arxiv.org/abs/2603.00042)\n[![ICML](https://camo.githubusercontent.com/e561ace74dd64468ad60d77f93230aa4f8836556608be3ca38a60841c76c5ca8/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f49434d4c2d323032362d626c75652e737667)](https://icml.cc/)\n\n**LittleBit: Ultra Low-Bit Quantization via Latent Factorization** *(NeurIPS 2025)*  \nBanseok Lee\\*, Dongkyu Kim\\*, Youngcheon You, Youngmin Kim  \n[![arXiv](https://camo.githubusercontent.com/1cecca8e8303bcfe42d659c0680a67f07727826f979a26b326c97821cf0bdb50/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f61725869762d323530362e31333737312d6233316231622e737667)](https://arxiv.org/abs/2506.13771)\n[![NeurIPS](https://camo.githubusercontent.com/e93d24927785b8f59b7191e3fd697267b36437bbf5bccf395b214f91e26c5c8e/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4e6575724950532d323032352d626c75652e737667)](https://neurips.cc/)\n\n---\n\n## Abstract\n\n**LittleBit** compresses large language models into the sub-1-bit regime by factorizing each dense weight matrix into low-rank latent factors, binarizing those factors, and restoring magnitude information through lightweight learned scales. This enables extreme compression, including the 0.1 bits-per-weight setting, while preserving the original model architecture at inference time.\n\n**LittleBit-2** improves this recipe by addressing latent geometry misalignment in the initialization stage. It applies Internal Latent Rotation with Joint Iterative Quantization (Joint-ITQ), aligning the SVD-derived latent factors with the binary hypercube before QAT. LittleBit-2 initialization is available as an opt-in (`--use_itq`) and produces no additional inference overhead.\n\n---\n\n## Highlights\n\n- **Sub-1-bit compression:** Designed for 1.0 to 0.1 bits per weight.\n- **LittleBit-2 opt-in:** Enable Joint-ITQ initialization with `--use_itq` for improved latent geometry alignment.\n- **No inference-time change:** LittleBit-2 modifies initialization only; the deployed factorized layer remains the same.\n- **QAT-friendly:** Supports Quantization-Aware Training with SmoothSign and optional residual factorization.\n\n## Supported Models\n\nThe codebase currently supports:\n\n- OPT\n- Llama and Llama 2/3\n- Phi-4\n- Qwen2.5 and QwQ\n- Gemma 2 and Gemma 3\n- Qwen3\n\n---\n\n## Installation\n\nWe recommend Python 3.12.\n\n```\nconda create -n littlebit python=3.12\nconda activate littlebit\n\n# Install CUDA toolkit. Adjust the CUDA version if needed.\nconda install nvidia/label/cuda-12.4.1::cuda-toolkit -c nvidia/label/cuda-12.4.1\n\n# Install PyTorch.\npip install torch==2.8.0+cu124 torchvision==0.23.0+cu124 torchaudio==2.8.0+cu124 --index-url https://download.pytorch.org/whl/cu124\n\n# Install dependencies.\npip install -r requirements.txt\n```\n\nImportant\n\nFor reproducing the paper results, use `transformers` 4.51.x. Newer `transformers` releases may change model internals or evaluation behavior.\n\n```\npip install \"transformers==4.51.*\"\n```\n\n---\n\n## Usage\n\n### Training\n\nTrain a model with Quantization-Aware Training. By default, `LittleBitLinear` uses the original SVD-only initialization. To enable LittleBit-2 (Joint-ITQ), pass `--use_itq True`.\n\n**Single GPU**\n\n```\nCUDA_VISIBLE_DEVICES=0 python -m main \\\n    --model_id meta-llama/Llama-2-7b-hf \\\n    --dataset c4_wiki \\\n    --save_dir ./outputs/Llama-2-7b-LittleBit-2 \\\n    --num_train_epochs 5.0 \\\n    --per_device_train_batch_size 4 \\\n    --lr 4e-05 \\\n    --warmup_ratio 0.02 \\\n    --report wandb \\\n    --quant_func SmoothSign \\\n    --quant_mod LittleBitLinear \\\n    --residual True \\\n    --eff_bit 1.0 \\\n    --kv_factor 1.0 \\\n    --min_split_dim 8 \\\n    --l2l_loss_scale 10.0\n\n# Opt-in to LittleBit-2 initialization\n# --use_itq True\n```\n\n**Multi-GPU with DeepSpeed**\n\n```\ndeepspeed --num_gpus=4 main.py \\\n    --model_id meta-llama/Llama-2-7b-hf \\\n    --dataset c4_wiki \\\n    --save_dir ./outputs/Llama-2-7b-LittleBit-2 \\\n    --ds_config_path configs/zero3.json \\\n    --num_train_epochs 5.0 \\\n    --per_device_train_batch_size 4 \\\n    --lr 4e-05 \\\n    --report wandb \\\n    --quant_func SmoothSign \\\n    --quant_mod LittleBitLinear \\\n    --residual True \\\n    --eff_bit 1.0 \\\n    --kv_factor 1.0 \\\n    --min_split_dim 8\n```\n\n### Evaluation\n\nEvaluate a local checkpoint or a model hosted on the Hugging Face Hub.\n\n```\n# From a local directory\nCUDA_VISIBLE_DEVICES=0 python eval.py \\\n    --model_id ./outputs/Llama-2-7b-LittleBit-2 \\\n    --seqlen 2048 \\\n    --ppl_task wikitext2,c4 \\\n    -",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM을 0.1비트로 압축해 비용 절감",
+        "tags": [
+          "LittleBit",
+          "Joint-ITQ",
+          "SVD",
+          "QAT",
+          "transformers"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "신경망 기하학 및 개념 매니폴드",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "Latent factorization과 이진 스케일링으로 1비트 이하 압축을 구현한다",
+            "timestamp": null
+          },
+          {
+            "point": "LittleBit-2는 Joint-ITQ 초기화로 잠재 기하학을 정렬해 정확도 향상, 추론 오버헤드 없음",
+            "timestamp": null
+          },
+          {
+            "point": "다양한 LLM(OPT, Llama, Gemma 등)과 QAT, SmoothSign, residual factorization을 지원한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Joint-ITQ 초기화를 추천 시스템의 임베딩 레이어에 적용해 서브-1비트 압축으로 실시간 추천 속도를 높인다",
+          "Latent factorization과 이진 스케일을 사용해 비전 트랜스포머를 엣지 디바이스용 초소형 모델로 변환한다",
+          "SmoothSign 기반 QAT를 음성 인식 모델에 도입해 메모리 사용량을 크게 줄이면서 정확도 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "LittleBit-2에서 Joint-ITQ 초기화가 수행하는 주요 역할은 무엇인가?",
+            "options": [
+              "학습 시간 단축",
+              "잠재 요인을 이진 하이퍼큐브에 정렬",
+              "모델 크기 증가",
+              "SVD 대체"
+            ],
+            "answer_index": 1,
+            "explanation": "Joint-ITQ는 SVD로 얻은 잠재 요인을 이진 하이퍼큐브와 정렬해 양자화 전 초기화를 개선한다."
+          },
+          {
+            "question": "LittleBit-2 초기화를 활성화하려면 어떤 명령줄 옵션을 사용해야 하는가?",
+            "options": [
+              "--use_itq",
+              "--enable_jitq",
+              "--latent_align",
+              "--quantize"
+            ],
+            "answer_index": 0,
+            "explanation": "문서에 따르면 '--use_itq' 플래그를 True로 설정하면 Joint-ITQ 초기화를 사용할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Port of the TypeScript compiler, checker and lsp to Rust, by LLM",
+        "url": "https://github.com/pingdotgg/ts-rust",
+        "published_at": null,
+        "transcript": null,
+        "body": "# ts-rust (aka tsc-rs)\n\nI wanted to see if LLMs could port the TypeScript compiler, checker and lsp to Rust. Turns out they can.\n\nIt [cost over $420,000](#how-did-this-go) in tokens to do it, but you could probably have done it for ~$20k (see below)\n\n## Motivations\n\n- Test model capabilities\n- Make a fast TypeScript type checker\n- Make a ts checker that can work in WASM with high performance\n- Memes\n\n## Warnings\n\n**This is an early release.** It has 100% compatibility in every real world project we have\ntested. It should work as a drop in\nreplacement for the vast majority of apps. See [Known problems](#known-problems).\n\nAlso worth mentioning: I've never read a line of this code.\n\n## Install\n\nBe warned, I have no idea if this will actually work.\n\n```\nnpm install -D tsc-rs\nnpx tsc-rs -p tsconfig.json\n```\n\n## How did this go?\n\nI used a lot of OpenAI models to try and complete this port. In total I did **over $400,000 in API priced tokens with GPT-5.6 Sol and GPT 6 Astra**. They wrote over 1.3m lines of Rust over multiple months of /goal loops and never got past like 84% compat.\n\nWhen I saw how little my Claude Code limits were burning, I figured it'd be fun to throw Opus 5.5 at this. It had a working v0 in 10 hours.\n\nI assumed it kept using the code the Codex models wrote. I was wrong. **Opus 5.5 started from scratch. It got further than Astra in 1/10th the time.**\n\nI let it keep going, and it definitely did. Total token spend was **~$24,047 of API spend over 2 weeks**. I was using my Claude accounts, and it worked out to somewhere between **925% and 983% of my $200 plan weekly limits**.\n\nExpensive, for sure, but not that bad considering how much work has went into typescript-go.\n\n# \"The Slop Line\"\n\nEverything below this was written by my LLMs, not me.\n\n## What actually is this?\n\nts-rust is a direct port of Microsoft's native TypeScript compiler, which is written in Go\n([microsoft/TypeScript](https://github.com/microsoft/TypeScript), formerly\n[typescript-go](https://github.com/microsoft/typescript-go)). It keeps Go's algorithms and\nbehavior and has the same command line (`tsc`), language server and API.\n\n## Install\n\n```\nnpm install -D tsc-rs\nnpx tsc-rs -p tsconfig.json\n```\n\n`tsc-rs` takes the same options as `tsc`. The npm package is `tsc-rs` so that it does not clash\nwith the `typescript` package. Each [release](https://github.com/pingdotgg/ts-rust/releases) also\nhas a standalone archive per platform: the `tsc` binary with the lib files next to it.\n\nPlatforms: Linux x64 (static, any distribution) and macOS arm64. Windows and Linux arm64 are not\navailable yet.\n\nTo use it in VS Code, see the [npm package README](/pingdotgg/ts-rust/blob/main/npm/tsc-rs-readme.md#vs-code).\n\n## Effect diagnostics\n\n`tsc-rs` has the [Effect](https://effect.website) language service diagnostics built in (codes\n377xxx), so an Effect project needs no second compiler. They come from the same check as the\nTypeScript diagnostics, and the language server shows them too. They run only when the tsconfig has\nthe plugin, as with `@effect/language-service`:\n\n```\n{ \"compilerOptions\": { \"plugins\": [{ \"name\": \"@effect/language-service\" }] } }\n```\n\nThe rules, options and `@effect-diagnostics` comments are a port of\n[Effect-TS/tsgo](https://github.com/Effect-TS/tsgo) 0.46.1. The editor features of the language\nservice (quick fixes, refactors, hover, completions) are not ported.\n\n## Status\n\nThe port is pinned to one upstream revision, microsoft/TypeScript\n[`673a5f17d713`](https://github.com/microsoft/TypeScript/commit/673a5f17d713bdc8c7185f18a9c11e3c4ac5d781)\n(2026-09-29, TypeScript 7.1.0-dev; [UPSTREAM.md](/pingdotgg/ts-rust/blob/main/UPSTREAM.md)), and compared with Go at that\nrevision. To compare, use `typescript@7.1.0-dev.20260929.1`, not 7.0.x or\n`@typescript/native-preview`. A difference that this build also shows is upstream behavior, and it\ngoes away when the port moves to a newer pin.\n\n- **Same results.** TanStack Query core and Hono check with diagnostics identical to Go's. All\n  181,711 ported Go tests pass. The language server and API answers match Go on the oracle test\n  sets.\n- **Faster.** On 60 open-source projects, type checking takes about half of Go's time (geometric\n  mean). The preview packages are built in CI without PGO and BOLT, so they are slower than that\n  measured build.\n- **Real projects.** On 120 open-source repos, the command-line output differs from Go's only in\n  the problems below and where Go's own output changes from run to run.\n\n## Benchmark: T3 Code\n\nFull type check of [T3 Code](https://github.com/pingdotgg/t3code), compared with `tsc` 6, `tsc` 7\nand the new `bun check` in Bun. T3 Code uses Effect, so there are two cases: without the Effect\ndiagnostics and with them. Each time is the sum for the five T3 Code projects. Lower is faster.\n\n**Without Effect diagnostics**\n\n| Checker | Time | vs `tsc` 6 | vs `tsc` 7 |  |\n| --- | --- | --- | --- | --- |\n| `bun check` | 4.07s | 15.4× | 3.95× faster | `█` |\n| `tsc-rs` | 7.2",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM으로 TS 컴파일러를 Rust에 이식, 비용·성능 인사이트",
+        "tags": [
+          "TypeScript",
+          "Rust",
+          "LLM",
+          "Claude",
+          "Effect"
+        ],
+        "concepts": [
+          "LLM 기반 코드 변환",
+          "AI 비용 효율성",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "LLM을 활용해 TypeScript 컴파일러를 Rust로 포팅했으며, 전체 토큰 비용은 약 $24k(오퍼스)에서 $420k(다른 모델)까지 소요됨.",
+            "timestamp": null
+          },
+          {
+            "point": "포팅된 ts-rust는 기존 Go 기반 컴파일러와 100% 호환성을 목표로 하며, WASM에서 고성능 타입 체크가 가능하다.",
+            "timestamp": null
+          },
+          {
+            "point": "Opus 5.5 모델이 기존 GPT 모델보다 10배 빠르게 작업을 완료했으며, 비용 대비 효율성이 높다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "LLM을 이용해 기존 Python 데이터 파이프라인을 Rust로 이식해 실행 속도를 10배 향상한다.",
+          "Opus 모델을 활용해 대규모 SQL 쿼리 최적화 스크립트를 자동 생성해 데이터 엔지니어링 작업 시간을 절감한다.",
+          "컴파일러에 Effect와 같은 정적 분석 플러그인을 통합해 데이터 모델 스키마 검증을 자동화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Opus 5.5 모델이 다른 LLM에 비해 포팅 작업에서 효율적이었던 이유는?",
+            "options": [
+              "더 적은 토큰 사용으로 빠른 진행",
+              "더 높은 정확도로 코드 품질 향상",
+              "사전 학습 데이터가 최신",
+              "GPU 사용량이 적음"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 Opus 5.5는 10시간 만에 v0를 만들었으며, 토큰 사용량이 기존 모델의 1/10 수준으로 비용·시간 모두 크게 절감했다."
+          },
+          {
+            "question": "ts‑rust가 WASM에서 제공하는 주요 장점은?",
+            "options": [
+              "브라우저 내에서 타입 검사 가능",
+              "서버 비용 절감",
+              "자동 메모리 관리",
+              "코드 난독화"
+            ],
+            "answer_index": 0,
+            "explanation": "WASM 지원으로 ts‑rust는 웹 환경에서도 고성능 타입 체크를 수행할 수 있어, 브라우저 기반 개발 도구에 활용 가능하다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "Game of Thrones: Turing Edition | Akarsh Kumar on Core War",
+        "url": "https://youtu.be/LfUgsSUdaX8",
+        "published_at": "2026-10-08T10:30:08",
+        "transcript": "[00:00] Evolution is anything but random.\n[00:02] We wanted to see what would happen if you used LLMs to evolve um basically small little assembly programs that compete against each other.\n[00:11] It's called Core War.\n[00:13] What my program needs to do in order to do that is it needs to basically inject an invalid operation in front of your program's execution thread.\n[00:23] And when it does that, it's gonna halt your program by crashing your program.\n[00:26] And can we create like this open-ended evolutionary arms race of programs from this.\n[00:31] It's like Game of Thrones Turing edition.\n[00:34] Yeah, yeah, exactly.\n[00:35] The LLM is not good at red code.\n[00:37] If you just try to zero shot this language, it's terrible, but if you do this evolution and you have this verifier, it turns out to be really good.\n[00:46] Because if you solve like even one part of a puzzle, and you hang on to that and you search for the other ones, you can turn your exponential search problem into a linear search problem.",
+        "body": "Akarsh Kumar wanted to see what would happen if you used LLMs to evolve small assembly programs that compete against each other. It's called Core War.\n\nIn his words: \"If you just try to zero-shot this language, it's terrible. But if you do this evolution and you have this verifier, it turns out to be really good.\"\n\nFull conversation with Akarsh on Machine Learning Street Talk.\n\n#Shorts #ArtificialLife #MachineLearning",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM으로 코어워 프로그램 진화, 탐색 효율 향상",
+        "tags": [
+          "LLM",
+          "Core War",
+          "assembly",
+          "Game of Thrones",
+          "verifier"
+        ],
+        "concepts": [
+          "코드 자동생성",
+          "AI 기반 업무 검증",
+          "멀티프로세싱"
+        ],
+        "key_points": [
+          {
+            "point": "LLM을 사용해 서로 경쟁하는 작은 어셈블리 프로그램을 진화시키고자 함",
+            "timestamp": "00:02"
+          },
+          {
+            "point": "프로그램 앞에 잘못된 연산을 삽입해 상대 프로그램을 중단시킴",
+            "timestamp": "00:13"
+          },
+          {
+            "point": "문제의 일부를 해결하면 지수 탐색을 선형 탐색으로 전환할 수 있음",
+            "timestamp": "00:46"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "LLM 기반 진화 탐색을 활용해 하이퍼파라미터 조합을 빠르게 탐색하고, 검증 단계에서 간단한 성능 프록시를 사용해 탐색을 선형화한다",
+          "LLM이 생성한 데이터 정제 스크립트를 검증기로 평가해 데이터 품질을 개선함으로써 정제 스크립트 탐색 비용을 크게 줄인다",
+          "LLM이 테스트 케이스 생성 로직을 진화시키고, 커버리지를 검증해 테스트 조합의 폭발적 증가를 효율적으로 관리한다"
+        ],
+        "quiz": [
+          {
+            "question": "Core War 프로그램에 무효 연산을 삽입하는 목적은 무엇인가?",
+            "options": [
+              "프로그램을 중단시키기 위해",
+              "실행 속도를 높이기 위해",
+              "코드를 암호화하기 위해",
+              "성능을 로그하기 위해"
+            ],
+            "answer_index": 0,
+            "explanation": "무효 연산을 삽입하면 상대 프로그램이 충돌하여 실행이 중단된다."
+          },
+          {
+            "question": "연구자는 부분적인 퍼즐 해결이 탐색 문제에 어떤 영향을 미친다고 말했는가?",
+            "options": [
+              "지수 탐색을 선형 탐색으로 바꾼다",
+              "탐색을 더 어렵게 만든다",
+              "영향이 없다",
+              "이차 탐색으로 전환한다"
+            ],
+            "answer_index": 0,
+            "explanation": "한 부분을 해결하고 나머지를 탐색하면 전체 탐색 복잡도가 지수에서 선형으로 감소한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
