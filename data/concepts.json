@@ -120,6 +120,12 @@
       "first_seen": "2026-09-19",
       "last_seen": "2026-09-22"
     },
+    "Root Cause Analysis": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
+    },
     "SQL 기반 그래프 쿼리": {
       "aliases": [],
       "count": 1,
@@ -152,9 +158,9 @@
     },
     "semantic query processing": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-10-05",
-      "last_seen": "2026-10-06"
+      "last_seen": "2026-10-10"
     },
     "typed decision models": {
       "aliases": [],
@@ -170,9 +176,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 12,
+      "count": 14,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-10-09"
+      "last_seen": "2026-10-10"
     },
     "개인화 추천": {
       "aliases": [],
@@ -296,9 +302,9 @@
     },
     "디자인 트레이드오프": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-23",
-      "last_seen": "2026-10-02"
+      "last_seen": "2026-10-10"
     },
     "라벨 불확실성 모델링": {
       "aliases": [],
@@ -374,9 +380,9 @@
     },
     "메타데이터 활용 검색": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-07"
+      "last_seen": "2026-10-10"
     },
     "메타인지": {
       "aliases": [],
@@ -416,9 +422,9 @@
     },
     "문서 검색 자동화": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-09-19"
+      "last_seen": "2026-10-10"
     },
     "문서 기반 지식 관리": {
       "aliases": [],
@@ -612,6 +618,12 @@
       "first_seen": "2026-08-31",
       "last_seen": "2026-10-04"
     },
+    "스트리밍 파이프라인": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
+    },
     "스트림 파이프라인": {
       "aliases": [],
       "count": 4,
@@ -756,11 +768,23 @@
       "first_seen": "2026-09-06",
       "last_seen": "2026-09-06"
     },
+    "자동 데이터 수집": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
+    },
     "자동 악성 코드 생성": {
       "aliases": [],
       "count": 1,
       "first_seen": "2026-09-30",
       "last_seen": "2026-09-30"
+    },
+    "자율성과 정렬 균형": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
     },
     "작업 격리": {
       "aliases": [],
@@ -834,6 +858,12 @@
       "first_seen": "2026-09-14",
       "last_seen": "2026-09-14"
     },
+    "제품 개발 라이프사이클": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
+    },
     "조건부 확률 모델링": {
       "aliases": [],
       "count": 17,
@@ -881,6 +911,12 @@
       "count": 1,
       "first_seen": "2026-09-15",
       "last_seen": "2026-09-15"
+    },
+    "추상 구문 트리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
     },
     "커뮤니케이션 채널 변화": {
       "aliases": [],
@@ -965,6 +1001,12 @@
       "count": 1,
       "first_seen": "2026-09-11",
       "last_seen": "2026-09-11"
+    },
+    "통합 개발 생태계": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10"
     },
     "트랜잭션 관리": {
       "aliases": [],
@@ -1075,6 +1117,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-09T09:18:16.496567+09:00",
+  "updated_at": "2026-10-10T08:47:31.489738+09:00",
   "version": 1
 }
