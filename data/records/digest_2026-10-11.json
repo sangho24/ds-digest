@@ -1,0 +1,413 @@
+{
+  "date": "2026-10-11",
+  "generated_at": "2026-10-10T23:06:58.131233",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Bilevel optimization for data-driven learning of Koopman embeddings using kernel-based autoencoders",
+        "url": "https://arxiv.org/abs/2610.12370v1",
+        "published_at": "2026-10-08T17:30:23",
+        "transcript": null,
+        "body": "Koopman operator theory provides a linear framework for analyzing nonlinear dynamical systems and has become a major tool for data-driven modeling. A central challenge, however, is that finite-dimensional approximations computed by methods such as extended dynamic mode decomposition (EDMD) require the dictionary to be specified a priori. Recent machine-learning approaches address this limitation by learning the dictionary from data, predominantly using artificial neural network (ANN) autoencoder architectures. Although kernel methods offer an alternative with greater interpretability and tractability for theoretical analysis, they have received little attention in this setting. We introduce extended dynamic mode decomposition with kernel-based dictionary learning (EDMD-kDL), a kernel-based method for learning finite-dimensional Koopman embeddings directly from data. The method combines ideas from collocation methods and bilevel optimization to simultaneously learn a kernel dictionary and the corresponding Koopman approximation. We evaluate EDMD-kDL against state-of-the-art ANN-based approaches on a range of numerical experiments, including global sea-surface-temperature forecasting and learning directly from video data. Across all tested settings, EDMD-kDL achieves performance comparable to or better than the ANN-based methods. Moreover, in contrast to standard kernel methods, the proposed approach is scalable to large datasets by design since the size of the required kernel matrices depends on the number of collocation points rather than the size of the training dataset.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "커널 기반 사전학습 없이 대규모 동역학 모델링 가능",
+        "tags": [
+          "Koopman operator",
+          "extended dynamic mode decomposition",
+          "kernel-based autoencoders",
+          "bilevel optimization",
+          "collocation methods"
+        ],
+        "concepts": [
+          "데이터 기반 동역학 모델링",
+          "커널 사전학습",
+          "바이레벨 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "EDMD‑kDL는 커널 사전학습과 Koopman 근사화를 동시에 학습하도록 바이레벨 최적화를 적용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "필요한 커널 행렬 크기가 콜로케이션 포인트 수에만 의존해 대규모 데이터셋에도 확장성이 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "해양 표면 온도 예측 및 비디오 데이터 실험에서 ANN 기반 방법과 동등하거나 우수한 성능을 보였다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 EDMD는 사전 정의된 사전(dictionary)이 필요해 유연성이 제한됐으며, 최근 ANN 기반 자동인코더가 사전을 학습했지만 해석성이 낮았다. 본 논문은 커널 기반 사전학습과 바이레벨 최적화를 결합해 해석 가능하면서도 대규모 데이터에 확장 가능한 Koopman 임베딩 학습 방법을 제시한다. 이는 Koopman 연산자 학습 분야에서 커널 방법의 실용성을 크게 확장한 연구이다.",
+        "production_ideas": [
+          "금융 시계열 예측에 콜로케이션 포인트 기반 커널 사전학습을 적용해 계산량을 줄이고 예측 속도를 높인다.",
+          "네트워크 트래픽 이상 탐지에서 바이레벨 최적화로 커널 임베딩을 학습해 해석 가능한 이상 특성을 도출한다.",
+          "로봇 강화학습에서 상태 표현을 커널 사전학습으로 구성해 샘플 효율성을 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "EDMD‑kDL이 기존 커널 방법에 비해 갖는 주요 장점은 무엇인가?",
+            "options": [
+              "정확도가 크게 향상된다",
+              "커널 행렬 크기가 콜로케이션 포인트 수에만 의존해 대규모 데이터에 확장 가능하다",
+              "딥 뉴럴 네트워크를 사용한다",
+              "학습 데이터가 적게 필요하다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 제안 방법은 필요한 커널 행렬 크기가 전체 데이터가 아니라 콜로케이션 포인트 수에 의존하므로 규모에 제한받지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "FastBench: Can Streaming VLMs Perceive High-Dynamic Real-World Streams?",
+        "url": "https://arxiv.org/abs/2610.12427v1",
+        "published_at": "2026-10-08T17:55:20",
+        "transcript": null,
+        "body": "Streaming Video Large Language Models (VLMs) enable continuous video understanding, yet existing benchmarks focus on low-dynamic scenarios. Under bounded context budgets, models must balance temporal history, spatial resolution, and temporal granularity; sparse sampling at 1--2 FPS misses fast events. We introduce FastBench to evaluate high-dynamic perception in real-world video streams. Its trajectory-grounded pipeline combines QA generation from high-FPS clips, filtering of questions answerable at 2 FPS, answer verification using SAM3 and CoTracker3 trajectories, and three rounds of human inspection. FastBench contains 306 QA pairs across eight domains, six capabilities, and forward, instant, and backward temporal scopes, with human-annotated evidence intervals. We also present ProactiveFrame, a training-free baseline that adjusts incoming frame rates through text tokens. A dual-tier sliding window retains recent high-FPS observations while downsampling older ones into sparse history. Experiments reveal substantial limitations: the strongest model, Gemini-3.5-Flash, scores only 50.7%. Denser sampling improves Qwen3-VL-8B from 32.9% at 2 FPS to 44.6% at 24 FPS, but gains saturate as history is compressed. ProactiveFrame outperforms sparse uniform sampling by 5.4 and 1.5 percentage points, yet remains well below oracle-guided focusing, showing that current VLMs struggle to determine from the stream alone when finer temporal perception is needed. FastBench provides a testbed for high-dynamic streaming video understanding. Code and data: https://github.com/Ashone3/FastBench.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "고속 영상 스트림에서 VLM 성능 한계 파악으로 실시간 분석 설계에 필수",
+        "tags": [
+          "FastBench",
+          "Gemini-3.5-Flash",
+          "Qwen3-VL-8B",
+          "SAM3",
+          "ProactiveFrame"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "스트림 파이프라인",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "FastBench는 306개 QA 쌍을 포함한 고동적 실세계 스트림 벤치마크로, 시간·공간·역사 트레이드오프를 평가한다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험 결과 Gemini‑3.5‑Flash가 50.7%에 불과해 현재 VLM이 고프레임 이벤트를 인식하는 데 한계가 있음을 보여준다.",
+            "timestamp": null
+          },
+          {
+            "point": "ProactiveFrame은 텍스트 토큰으로 프레임 레이트를 조절하는 훈련‑무료 베이스라인으로, 균일 샘플링보다 성능이 개선되지만 여전히 한계가 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 VLM 벤치마크는 저동적 영상에 국한돼 빠른 이벤트를 놓친다. FastBench는 고프레임 실세계 스트림을 QA 형태로 평가해 시간‑공간‑역사 트레이드오프를 측정한다. 이는 스트리밍 멀티모달 이해 연구에서 고동적 인식 능력 평가를 위한 새로운 기준점이다.",
+        "production_ideas": [
+          "최근 고주파 IoT 센서 데이터에 이중계층 슬라이딩 윈도우를 적용해 최신 데이터는 고해상도로, 오래된 데이터는 압축해 이상 탐지 정확도와 처리량을 동시에 높인다.",
+          "실시간 추천 시스템에서 사용자의 텍스트 컨텍스트를 토큰화해 프레임 레이트를 동적으로 조절함으로써 관심이 높은 순간에 더 많은 행동 로그를 수집해 추천 품질을 향상시킨다.",
+          "자율주행 차량의 고프레임 대시캠 영상을 이용해 트래젝터리 기반 QA를 생성하고, 이를 벤치마크로 활용해 인식 모델의 고동적 상황 대응 능력을 평가한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 샘플링 밀도를 높여도 성능 향상이 일정 시점에서 포화되는가?",
+            "options": [
+              "모델 용량이 제한돼 더 많은 프레임을 처리하지 못한다",
+              "역사 압축으로 오래된 컨텍스트가 손실된다",
+              "고FPS가 노이즈를 증가시킨다",
+              "학습 데이터가 충분하지 않다"
+            ],
+            "answer_index": 1,
+            "explanation": "FastBench 실험에서 밀도 높은 샘플링은 최근 프레임을 유지하지만 오래된 프레임을 압축해 역사 정보를 감소시켜, 추가적인 FPS 증가가 성능에 큰 영향을 주지 못한다."
+          },
+          {
+            "question": "ProactiveFrame 베이스라인의 핵심 메커니즘은 무엇인가?",
+            "options": [
+              "VLM을 고FPS 데이터로 재학습한다",
+              "텍스트 토큰을 이용해 입력 프레임 레이트를 동적으로 조절한다",
+              "프레임을 생성 이미지로 대체한다",
+              "오라클 기반 프레임 선택을 적용한다"
+            ],
+            "answer_index": 1,
+            "explanation": "ProactiveFrame은 훈련 없이 텍스트 토큰을 삽입해 스트림의 프레임 레이트를 조절함으로써 샘플링 전략을 개선한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.DB",
+        "source_key": "arxiv:cs.DB",
+        "source_label": "arXiv:cs.DB",
+        "title": "Cost-Aware Mixture-of-Experts Coordination for Model Markets",
+        "url": "https://arxiv.org/abs/2610.11908v1",
+        "published_at": "2026-10-08T13:09:09",
+        "transcript": null,
+        "body": "Existing model marketplaces typically trade and select individual models as indivisible units, limiting their ability to exploit complementarities among heterogeneous experts. This paper proposes an MoE-based model market framework that lifts Mixture-of-Experts from a model-level learning architecture to a market-level coordination mechanism. In this framework, brokers use gating networks to coordinate multiple heterogeneous experts and deliver a composite model service. We formalize the market participants, service workflow, expert cost structure, and a welfare objective that combines predictive utility with heterogeneous execution costs. We then derive a cost-aware gating mechanism and market-aware training objective, and introduce a cost-adjusted revenue allocation rule that distributes residual revenue according to realized expert participation and execution cost. We also establish basic theoretical properties of the allocation rule, including budget balance, participation monotonicity, and cost sensitivity. Experiments over five random seeds on fifteen tabular and image benchmarks use independently trained and frozen neural and tree-based experts together with latency-derived execution costs. MoE Market achieves the highest mean welfare on all fifteen datasets and a lower mean expected cost than Standard MoE in every case, while maintaining competitive predictive performance. The allocation experiments further demonstrate systematic sensitivity to expert participation and cost, together with substantially lower computational overhead than exact Shapley allocation. These results suggest that MoE can serve as a market-level coordination principle for collaborative, cost-aware, and economically grounded model marketplaces.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "모델 마켓플레이스에서 비용 효율적인 전문가 조합을 제공",
+        "tags": [
+          "Mixture-of-Experts",
+          "gating networks",
+          "Shapley allocation",
+          "neural experts",
+          "tree-based experts"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "모듈형 신경망 구조"
+        ],
+        "key_points": [
+          {
+            "point": "MoE를 모델 수준이 아니라 시장 수준 조정 메커니즘으로 확장해 브로커가 게이팅 네트워크로 이질적 전문가를 조합한다",
+            "timestamp": null
+          },
+          {
+            "point": "비용을 고려한 게이팅 메커니즘과 비용 조정 수익 배분 규칙을 제안해 예산 균형·참여 단조성·비용 민감성을 보장한다",
+            "timestamp": null
+          },
+          {
+            "point": "15개 데이터셋에서 평균 복지가 최고이며 비용이 낮고, 표준 MoE와 경쟁적인 예측 성능을 유지하면서 Shapley 대비 계산 효율성이 우수하다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 모델 마켓플레이스는 개별 모델을 불가분 단위로 거래해 전문가 간 시너지 효과를 활용하지 못한다는 한계가 있다. 이 논문은 MoE를 시장 수준 조정 메커니즘으로 전환하고, 비용 인식 게이팅 및 수익 배분 규칙을 도입해 경제적으로 타당한 모델 협업을 가능하게 한다. 이는 비용 효율성과 복지 최적화를 동시에 추구하는 모델 마켓 연구 흐름의 새로운 단계이다",
+        "production_ideas": [
+          "서버리스 함수 오케스트레이션에 비용 인식 게이팅을 적용해 함수 선택 시 지연 비용을 최소화한다",
+          "데이터 파이프라인 마켓플레이스에서 비용 조정 수익 배분 규칙을 사용해 데이터 제공자에게 실제 처리 비용에 비례한 보상을 제공한다",
+          "멀티테넌트 SaaS 환경에서 사전 학습된 언어 모델 앙상블을 MoE 시장 구조로 관리해 추론 비용을 낮추고 서비스 품질을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "실험 결과에 따르면 MoE Market가 Standard MoE에 비해 갖는 주요 장점은 무엇인가?",
+            "options": [
+              "예측 정확도 향상",
+              "평균 기대 비용 감소",
+              "학습 시간 단축",
+              "구조 단순화"
+            ],
+            "answer_index": 1,
+            "explanation": "논문은 MoE Market가 모든 데이터셋에서 평균 복지가 최고이며 평균 기대 비용이 Standard MoE보다 낮다고 보고한다."
+          },
+          {
+            "question": "수익 배분 규칙에 대해 언급되지 않은 이론적 성질은 무엇인가?",
+            "options": [
+              "예산 균형",
+              "참여 단조성",
+              "비용 민감성",
+              "인센티브 호환성"
+            ],
+            "answer_index": 3,
+            "explanation": "본문은 예산 균형, 참여 단조성, 비용 민감성을 제시하지만 인센티브 호환성에 대한 언급은 없다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.SI",
+        "source_key": "arxiv:cs.SI",
+        "source_label": "arXiv:cs.SI",
+        "title": "A Gauge-Invariant Clustering Coefficient for Complex-Weighted Bipartite Networks",
+        "url": "https://arxiv.org/abs/2610.11929v1",
+        "published_at": "2026-10-08T13:24:37",
+        "transcript": null,
+        "body": "Structural measures such as the clustering coefficient and the average shortest-path length characterise how a network is organised. These measures are typically formulated for real, non-negative edge weights. A class of quantum and photonic architectures has complex edge weights instead, whose phases determine whether alternative routes interfere constructively or destructively. These architectures are also bipartite, so triangles are absent and the smallest closed cycle is a four-node square. Existing measures address complex weights and bipartite structure separately: bipartite clustering coefficients quantify clustering through four-node squares but do not contain phase information, while interferometric coefficients retain phase but are defined on triangles. In this work, we define a clustering coefficient for complex-weighted bipartite networks which reduces to the classical bipartite coefficient when the phases vanish, becomes negative when alternative routes cancel, and can be obtained for all nodes from a single sparse matrix product. We show that the phase accumulated around a square is the smallest gauge-invariant carrier of structural phase information in a bipartite network. The clustering coefficient factorises into a topological contribution and a phase contribution, making a bipartite Watts--Strogatz ensemble analytically tractable. For phases uniformly distributed on $[-Δ,Δ]$, the mean phase contribution is $(\\sinΔ/Δ)^4$, independent of node, degree, and topology. We also derive closed-form expressions for the clustering coefficient, open-path visibility, and phase variance. We numerically verify these predictions and further show that phase disorder increases coherent distance.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "복소 가중 양측 그래프 군집계수로 양자 네트워크 분석",
+        "tags": [
+          "Watts–Strogatz",
+          "bipartite network",
+          "complex weight",
+          "quantum architecture",
+          "photonic architecture"
+        ],
+        "concepts": [
+          "그래프 분석",
+          "게이지 불변 구조 측정"
+        ],
+        "key_points": [
+          {
+            "point": "복소 가중치와 양측 구조를 동시에 고려한 군집계수를 제안해 위상 정보를 포함하고 게이지 불변성을 확보함",
+            "timestamp": null
+          },
+          {
+            "point": "계수는 위상 기여와 위상 없는 기여로 분해되며 평균 위상 기여는 (sinΔ/Δ)^4 로 노드·위도와 무관함",
+            "timestamp": null
+          },
+          {
+            "point": "단일 희소 행렬 곱으로 모든 노드에 대해 계산 가능해 양자·광학 네트워크의 코히런트 거리와 위상 무질서를 정량화함",
+            "timestamp": null
+          }
+        ],
+        "positioning": "복소 가중치를 갖는 양측 네트워크에서는 기존의 군집계수가 위상 정보를 반영하지 못하거나 삼각형 기반이라 적용이 어려웠다. 이 논문은 위상을 보존하면서 사각형 클로즈드 사이클을 이용해 새로운 군집계수를 정의하고, 이를 통해 양자·광학 아키텍처의 구조적 위상 정보를 정량화한다. 기존 방법에 비해 위상 기여와 위상 없는 기여를 명시적으로 분리하고, 분석적 풀이와 효율적인 행렬 연산을 제공한다",
+        "production_ideas": [
+          "무선 통신 네트워크의 복소 전송 이득에 위상‑민감 군집계수를 적용해 파괴적 간섭 구역을 정량화한다",
+          "사용자‑아이템 상호작용에 감정 위상을 부여하고 위상‑인식 군집계수를 활용해 모순된 선호 패턴을 탐지한다",
+          "대사 네트워크에서 진동성 반응률을 복소값으로 모델링하고 위상‑민감 모티프를 희소 행렬 곱으로 계산해 규제 루프를 식별한다"
+        ],
+        "quiz": [
+          {
+            "question": "새롭게 정의된 군집계수가 게이지 불변성을 가지는 이유는 무엇인가?",
+            "options": [
+              "위상이 사각형을 따라 누적되어 전체 위상에 의존한다",
+              "위상 기여가 노드별로 독립적이다",
+              "위상은 절대값만 사용한다",
+              "위상이 무작위로 평균 0이다"
+            ],
+            "answer_index": 0,
+            "explanation": "위상은 사각형을 한 바퀴 돌면서 누적되며, 전체 위상은 경로 선택에 관계없이 동일하게 유지돼 게이지 변환에 불변이다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "research-method"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "☕️ 구글 연구원이 제안하는 화면 바깥에서의 휴식",
+        "url": "https://dflick.stibee.com/p/114",
+        "published_at": "2026-10-06T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/hSfO)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](http://wacky.kr)가 만들고 발행합니다.\n\nVol.110 ・ 2026.10.06\n\n안녕하세요 디플릭입니다 👋  16일간 이어진 아시안게임이 막을 내렸는데요, 다들 재미있게 보셨나요?  저는 대한민국이 일본을 3대 1로 꺾은 야구 결승전을 보며끝까지 가슴을 졸였던게 생각이 나네요!    오늘은 AI가 쇼핑과 업무로 확장되는 가운데,  출처와 안전, 접근을 통제하는 방식은 어떻게 달라지고 있는지 함께 들여다봐요🌿\n\n🔎 오늘 읽을 이야기    👀 [In;D] 구글 연구원이 제안하는 화면 바깥에서의 휴식  🍯 [TMI] 70년 전 첫 만남을 선명하게 재현해낸 방법  🗞️ [News] AI 활용은 넓어지고, 출처·안전·접근 통제는 촘촘해져요\n\n디자이너의 시선을 넓혀주는 시간  작은 인사이트가 인생의 전환점이 될지도..👀\n\n☕️ 구글 연구원이 제안하는 화면 바깥에서의 휴식  Google Senior UX Researcher가 직접 발행하는 종이신문\n\n©Sunday Club\n\n📰 디지털 제품을 연구하는 구글 연구원이 퇴근 후 선택한 것은 또 다른 앱이 아니었어요. 알림도 추천도, 끝없이 이어지는 피드도 없는 종이신문이었어요.    🧩 이 신문에는 정치와 경제, 사건·사고 대신 십자말풀이와 스도쿠, 그림 퍼즐만 담겼어요. ‘뉴스가 없어도 사람들이 펼쳐볼까?’라는 질문에서 시작한 작은 사이드 프로젝트였지만, 주문이 몰리면서 가족이 거실에서 직접 접은 신문만 5만 부에 달했어요.    📮 사람들은 왜 빠르고 편리한 화면 대신 우편으로 도착하는 느린 종이를 기다렸을까요? 새로운 기능을 계속 더하는 것만큼, 사용자가 자연스럽게 멈추고 아무것도 확인하지 않아도 괜찮다고 느끼게 하는 경험도 중요해지고 있어요.    💡 퍼즐 신문이 하나의 제품으로 성장한 과정을 살펴보고, ‘멈춤’을 설계하는 일이 어떻게 새로운 사용자 경험이 될 수 있는지 알아봤어요.\n\n[🔎 구글 연구원이 만든 뉴스 없는 신문 이야기 보러가기 👉](https://dflick.kr/contents/ind/1901)\n\n🍯 TMI: Tips Made Interesting 🍯 재밌고, 흥미롭게 · 디자이너의 TIP, 그리고 TMI 📚\n\n🎞️ 70년 전 첫 만남을 선명하게 재현해낸 방법  사진과 움직임, 기억을 엮어 AI로 되살린 70년 전 부부의 첫 만남\n\n©Google\n\n🕰️ 사진도 영상도 남아 있지 않은 70년 전의 첫 만남을 다시 볼 수 있을까요? 버트와 에델 부부가 처음 마주친 순간은 두 사람의 희미해지는 기억 속에만 남아 있었어요.    🎞️ 제작진은 젊은 시절의 흑백사진과 현재의 표정·몸짓, 두 사람이 기억하는 장소의 단서를 모아 그날의 장면을 만들기 시작했어요. 계단의 곡선과 구두 굽처럼 실제 기억과 다른 부분은 부부가 직접 바로잡았고, 지금의 움직임은 젊은 시절의 모습 위에 옮겨졌어요.    🧠 이렇게 AI가 완성한 영상은 과거를 촬영한 기록도, 완전한 상상도 아니에요. 기술이 빈 장면을 채우고 사람이 기억을 보태면서, 과거는 두 요소가 함께 만든 새로운 모습으로 다시 나타났어요.    💡 AI가 사라진 장면을 재현한 과정을 살펴보고, 기술과 사람의 기억이 만났을 때 어디까지를 ‘실제 기억’이라고 할 수 있는지 질문해봤어요.\n\n[🎞️ 70년 전 첫 만남의 재현 과정 보기 👉](https://dflick.kr/contents/tmi/1900)\n\n📶 아이폰 Wi‑Fi 껐는데 왜 혼자 다시 켜질까?  아이폰 와이파이가 다시 켜지는 이유와 두 가지 설정 방식의 차이\n\n©AI Image\n\n📶 아이폰에서 와이파이 아이콘을 눌러 껐는데, 다음 날 아침이면 다시 연결돼 있어요. 오류처럼 보이지만 기기가 말을 듣지 않은 것은 아니에요.    ⚙️ 같은 모양의 버튼이라도 제어 센터와 설정 화면에서는 맡은 역할이 달라요. 제어 센터의 버튼은 현재 연결된 네트워크에서 잠시 나가게 하고, 설정의 버튼은 와이파이 기능 자체를 꺼요. 그래서 제어 센터에서 끊은 와이파이는 일정한 시간이나 조건이 되면 다시 활성화될 수 있어요.    🧩 이 차이는 단순한 아이폰 사용 팁을 넘어, 하나의 아이콘이 서로 다른 동작을 품을 때 생기는 혼란을 보여줘요. 사용자가 눌렀다고 생각한 기능과 실제로 바뀐 상태 사이의 간격이 커질수록 인터페이스에 대한 신뢰도 흔들릴 수 있어요.    💡 아이폰 와이파이 버튼이 화면마다 어떻게 다르게 작동하는지 정리하고, 작은 표현 하나가 인터페이스의 이해와 신뢰를 좌우하는 이유를 살펴봤어요.\n\n[📶 와이파이가 다시 켜지는 이유 보기 👉](https://dflick.kr/contents/tmi/1906)\n\n📰 10월 1주차 뉴스 모음.zip  AI 활용은 넓어지고, 출처·안전·접근 통제는 촘촘해져요\n\n• 한 주의 흐름을 아는 AX 뉴스 •\n\nOpen AI⎥OpenAI가 EU의 ChatGPT·Codex 텍스트에 보이지 않는 워터마크를 순차 도입해요. 단어 선택에 패턴을 남겨 복사한 글에서도 출처의 단서를 찾는 방식이에요. API에서는 일부 모델에 선택 적용할 수 있어요. 다만 편집하면 감지율이 낮아지고, 사람의 기여도까지 알려주지는 못해요. [자세히 보기](https://dflick.kr/contents/news/1917)  Open AI⎥OpenAI에서 안전성 정보 공개를 맡던 데이비드 로빈슨이 사임하며 회사의 빠른 개발 문화를 비판했어요. 공식 보고서에는 연구용 AI의 이상 행동을 감지하고도 자동 중단이 작동하지 않은 사례가 담겼어요. 회사는 차단 장치와 실시간 감시를 강화하고 있다고 밝혔어요.  [자세히 보기](https://dflick.kr/contents/news/1916)\n\n💡 함께 보면 이번 주 흐름이 선명해져요\n\nChat GPT⎥[ChatGPT에 옷과 액세서리를 가상으로 착용해 보는 기능이 추가됐어요.](https://dflick.kr/contents/news/1915)  Gemini⎥[구글이 반복 지침을 저장하는 Skills를 개인용 Gemini 채팅에 순차 도입해요.](https://dflick.kr/contents/news/1914)  Reddit⎥[레딧이 RSS와 공개 API를 단계적으로 종료해요.](https://dflick.kr/contents/news/1913)\n\n• 이런 뉴스들도 있었어요 •\n\n트렌드⎥낫싱이 BTS 뷔와 함께 Headphone (1) Pro 캠페인을 선보였어요. 세 개의 드라이버와 롤러·패들·스위치로 소리와 조작을 설계했어요. 투명한 외관과 음악가의 창작 과정을 담은 캠페인은 헤드폰을 취향과 연결해요. 최대 재생 시간은 소음 제거를 끄면 68시간, 켜면 30시간이에요.  [자세히 보기](https://dflick.kr/contents/news/1910)  밈⎥에픽하이가 ‘깐부 회동’을 재현한 2027 콘서트 포스터를 공개했어요. 멤버들의 분장과 건배 구도에 가상의 뉴스 화면을 더하고, ‘체조 회동’이라는 제목으로 첫 KSPO DOME 단독 공연 소식을 전해요. 익숙한 사진과 기사 형식이 공연 홍보로 이어지는 방식을 살펴봤어요.  [자세히 보기](https://dflick.kr/contents/news/1909)\n\n[📰 더 많은 뉴스 보러가기 👉](https://dflick.kr/contents/news)\n\n오늘 레터는 어떠셨나요?  디플릭은 다음 주에도 꼭 알아야 할 소식들을 모아 돌아올게요.  다음 레터에서 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 3,
+        "one_line_summary": "오프스크린 휴식 설계가 사용자 데이터에 미치는 영향",
+        "tags": [
+          "Google",
+          "iPhone",
+          "OpenAI",
+          "ChatGPT",
+          "Reddit"
+        ],
+        "concepts": [
+          "디자인 트레이드오프",
+          "오프라인-온라인 연계 전략"
+        ],
+        "key_points": [
+          {
+            "point": "Google 연구자는 퍼즐이 들어간 종이신문을 만들어 화면 사용을 멈추게 하는 오프라인 휴식 경험을 실험했다",
+            "timestamp": null
+          },
+          {
+            "point": "사용자들은 빠르고 편리한 디지털보다 느린 종이 매체를 기다리며 의도적인 멈춤을 원한다는 점을 보여준다",
+            "timestamp": null
+          },
+          {
+            "point": "‘멈춤’ 설계는 제품에 새로운 사용자 경험을 추가해 웰빙과 참여도를 높일 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "오프라인 퍼즐 신문을 사내 복지 프로그램에 도입해 직원들의 스크린 피로를 줄이고 집중 회복을 돕는다",
+          "정기적으로 우편으로 발송되는 간단한 퍼즐 브리프를 원격 팀에 제공해 회의 전 집중력을 높이고 디지털 알림 과부하를 완화한다",
+          "디지털 서비스에 ‘잠시 멈춤’ 모드를 추가해 UI를 퍼즐 화면으로 전환, 사용자가 스스로 화면에서 물러나 휴식할 수 있게 설계한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 사용자는 디지털 피드보다 퍼즐이 들어간 종이신문을 기다릴까?",
+            "options": [
+              "속도가 빠르기 때문에",
+              "물리적 매체가 의도적인 멈춤을 제공하기 때문에",
+              "광고가 적기 때문에",
+              "화질이 좋기 때문에"
+            ],
+            "answer_index": 1,
+            "explanation": "종이신문은 화면과 달리 즉각적인 알림이 없고, 퍼즐을 풀며 자연스럽게 화면 사용을 멈추게 해 사용자는 의도적인 휴식을 경험한다"
+          },
+          {
+            "question": "iPhone에서 Wi‑Fi를 제어센터와 설정 화면에서 끌 때 차이는 무엇인가?",
+            "options": [
+              "두 방법 모두 Wi‑Fi를 완전히 끈다",
+              "제어센터는 일시적으로 연결을 끊고 설정은 기능 자체를 끈다",
+              "설정은 일시적으로 끊고 제어센터는 완전히 끈다",
+              "두 방법 모두 차이가 없다"
+            ],
+            "answer_index": 1,
+            "explanation": "제어센터의 Wi‑Fi 버튼은 현재 연결된 네트워크에서 잠시 나가게 하고, 일정 조건이 되면 자동으로 다시 연결될 수 있다. 설정 화면의 스위치는 Wi‑Fi 기능 자체를 끈다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "product",
+          "research-method"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
