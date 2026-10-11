@@ -1,300 +1,300 @@
 {
   "contract_version": 1,
-  "date": "2026-10-11",
-  "generated_at": "2026-10-11T08:06:58.127163+09:00",
+  "date": "2026-10-12",
+  "generated_at": "2026-10-12T08:17:36.405280+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-11.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-12.html",
   "items": [
     {
-      "id": "0af9c3392530",
-      "title": "Bilevel optimization for data-driven learning of Koopman embeddings using kernel-based autoencoders",
-      "url": "https://arxiv.org/abs/2610.12370v1",
+      "id": "0e54b0170c84",
+      "title": "TestPrism: Rethinking Test Evaluation Beyond a Single Reference",
+      "url": "https://arxiv.org/abs/2610.12289v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.SE"
+      },
+      "published_at": "2026-10-08T16:44:39",
+      "summary": "테스트 평가에 다중 정답을 반영해 LLM 코딩 품질을 정확히 측정",
+      "positioning": "LLM 코딩 에이전트가 테스트를 자동 생성하는 상황에서 기존 평가는 단일 정답에만 의존해 한계가 있었다. 본 논문은 다중 구현을 고려한 평가 지표와 대규모 벤치마크를 제시해 LLM 테스트 품질 측정 연구 흐름에 새로운 기준을 제공한다.",
+      "tags": [
+        "TestPrism",
+        "Joint Success Function",
+        "TestHelix",
+        "LLM",
+        "arXiv"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "단일 레퍼런스 기반 테스트 평가는 품질을 과대평가하므로 다중 정답을 고려해야 함",
+          "timestamp": null
+        },
+        {
+          "point": "TestPrism 데이터셋은 300개 과제와 3000개 구현(유효/무효 50:50)을 제공하고 Joint Success Function을 새 메트릭으로 제시",
+          "timestamp": null
+        },
+        {
+          "point": "TestHelix는 이질적 테스트·수정 쌍 생성·피어 교차 검증·재귀적 자기 개선을 통해 Joint Success Function을 8~9% 향상",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Joint Success Function 개념을 ETL 파이프라인의 데이터 변환 검증 스크립트에 적용해 다양한 올바른 변환을 모두 허용하고 오류 변환을 차단한다",
+        "TestHelix의 이질적 합성·피어 교차 검증 방식을 웹 UI 테스트 케이스 자동 생성에 활용해 다양한 사용자 흐름을 포괄하고 테스트 누락을 줄인다",
+        "재귀적 자기 개선 루프를 컨테이너 이미지 보안 테스트 생성에 적용해 초기 테스트가 놓친 취약점을 점진적으로 탐지·보완한다"
+      ],
+      "quiz": [
+        {
+          "question": "Joint Success Function이 만족해야 하는 조건은 무엇인가?",
+          "options": [
+            "초기 프로그램 상태에서 실패하고, 모든 유효 후보를 통과시키며, 모든 무효 후보를 차단한다",
+            "초기 상태를 통과하고, 유효 후보를 차단하며, 무효 후보를 통과한다",
+            "초기 상태를 무시하고, 유효·무효 후보 모두를 통과한다",
+            "초기 상태에서 성공하고, 유효 후보를 차단하고, 무효 후보를 통과한다"
+          ],
+          "answer_index": 0,
+          "explanation": "Joint Success Function은 테스트가 초기 상태에서 실패하고, 올바른 구현은 모두 통과시키며, 잘못된 구현은 모두 차단해야 한다는 세 조건을 정의한다"
+        }
+      ]
+    },
+    {
+      "id": "42eaf7bf3fd7",
+      "title": "Closing the Horizon Gap in Policy Optimization for Adversarial MDPs",
+      "url": "https://arxiv.org/abs/2610.12362v1",
       "source": {
         "type": "rss",
         "name": "arXiv:stat.ML"
       },
-      "published_at": "2026-10-08T17:30:23",
-      "summary": "커널 기반 사전학습 없이 대규모 동역학 모델링 가능",
-      "positioning": "기존 EDMD는 사전 정의된 사전(dictionary)이 필요해 유연성이 제한됐으며, 최근 ANN 기반 자동인코더가 사전을 학습했지만 해석성이 낮았다. 본 논문은 커널 기반 사전학습과 바이레벨 최적화를 결합해 해석 가능하면서도 대규모 데이터에 확장 가능한 Koopman 임베딩 학습 방법을 제시한다. 이는 Koopman 연산자 학습 분야에서 커널 방법의 실용성을 크게 확장한 연구이다.",
+      "published_at": "2026-10-08T17:26:55",
+      "summary": "정책 최적화 시 시간 지평 의존성을 크게 낮춰 실시간 RL 효율성을 높임",
+      "positioning": "온라인 에피소드형 탭ular MDP에서 적대적 손실과 밴딧 피드백을 다루는 기존 정책 최적화는 점유‑측정 기반 방법보다 시간 지평 H에 대해 1배 더 큰 regret을 보였다. 본 논문은 정규화 Q‑함수를 이용해 모든 state‑action에 대한 업데이트를 동시에 제어함으로써 그 차이를 없애고, 알려진·미지 전이 모두에서 최선의 regret 한계에 도달한다. 이는 정책 최적화가 점유‑측정 기반과 동등한 이론적 성능을 갖게 하는 중요한 전환점이다",
       "tags": [
-        "Koopman operator",
-        "extended dynamic mode decomposition",
-        "kernel-based autoencoders",
-        "bilevel optimization",
-        "collocation methods"
+        "Markov decision processes",
+        "adversarial losses",
+        "bandit feedback",
+        "regularized Q-functions",
+        "linear-mixture MDPs"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "EDMD‑kDL는 커널 사전학습과 Koopman 근사화를 동시에 학습하도록 바이레벨 최적화를 적용한다.",
+          "point": "정규화된 Q‑함수를 도입해 모든 state‑action 쌍에 대한 업데이트를 공동으로 안정화함으로써 기존 정책 최적화의 H 배 차이를 해소한다",
           "timestamp": null
         },
         {
-          "point": "필요한 커널 행렬 크기가 콜로케이션 포인트 수에만 의존해 대규모 데이터셋에도 확장성이 있다.",
+          "point": "알려진 전이에서는 O~(sqrt(H·S·(H+A)·T)), 알려지지 않은 전이에서는 O~(H·S·sqrt(A·T))의 고확률 regret 상한을 달성한다",
           "timestamp": null
         },
         {
-          "point": "해양 표면 온도 예측 및 비디오 데이터 실험에서 ANN 기반 방법과 동등하거나 우수한 성능을 보였다.",
+          "point": "이 방법을 적대적 선형‑혼합 MDP에도 확장해 동일한 지평 개선을 제공한다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "금융 시계열 예측에 콜로케이션 포인트 기반 커널 사전학습을 적용해 계산량을 줄이고 예측 속도를 높인다.",
-        "네트워크 트래픽 이상 탐지에서 바이레벨 최적화로 커널 임베딩을 학습해 해석 가능한 이상 특성을 도출한다.",
-        "로봇 강화학습에서 상태 표현을 커널 사전학습으로 구성해 샘플 효율성을 향상시킨다."
+        "정규화 Q‑함수 기반 안정화 기법을 멀티에이전트 추천 시스템에 적용해 장기 사용자 행동 예측 시 지평 의존성을 감소시킨다",
+        "오프라인 배치 RL에서 정규화 Q‑함수를 사용해 정책 업데이트의 변동성을 줄여 데이터 분포 변화에 대한 견고성을 높인다",
+        "금융 포트폴리오 최적화에서 적대적 손실을 시장 충격으로 모델링하고 정규화 Q‑함수 기법을 적용해 장기 투자 전략의 regret을 최소화한다"
       ],
       "quiz": [
         {
-          "question": "EDMD‑kDL이 기존 커널 방법에 비해 갖는 주요 장점은 무엇인가?",
+          "question": "정규화된 Q‑함수를 사용하면 정책 최적화에서 시간 지평(H) 의존성을 줄일 수 있는 주된 이유는?",
           "options": [
-            "정확도가 크게 향상된다",
-            "커널 행렬 크기가 콜로케이션 포인트 수에만 의존해 대규모 데이터에 확장 가능하다",
-            "딥 뉴럴 네트워크를 사용한다",
-            "학습 데이터가 적게 필요하다"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 따르면 제안 방법은 필요한 커널 행렬 크기가 전체 데이터가 아니라 콜로케이션 포인트 수에 의존하므로 규모에 제한받지 않는다."
-        }
-      ]
-    },
-    {
-      "id": "52a84ad22799",
-      "title": "FastBench: Can Streaming VLMs Perceive High-Dynamic Real-World Streams?",
-      "url": "https://arxiv.org/abs/2610.12427v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.CL"
-      },
-      "published_at": "2026-10-08T17:55:20",
-      "summary": "고속 영상 스트림에서 VLM 성능 한계 파악으로 실시간 분석 설계에 필수",
-      "positioning": "기존 VLM 벤치마크는 저동적 영상에 국한돼 빠른 이벤트를 놓친다. FastBench는 고프레임 실세계 스트림을 QA 형태로 평가해 시간‑공간‑역사 트레이드오프를 측정한다. 이는 스트리밍 멀티모달 이해 연구에서 고동적 인식 능력 평가를 위한 새로운 기준점이다.",
-      "tags": [
-        "FastBench",
-        "Gemini-3.5-Flash",
-        "Qwen3-VL-8B",
-        "SAM3",
-        "ProactiveFrame"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "FastBench는 306개 QA 쌍을 포함한 고동적 실세계 스트림 벤치마크로, 시간·공간·역사 트레이드오프를 평가한다.",
-          "timestamp": null
-        },
-        {
-          "point": "실험 결과 Gemini‑3.5‑Flash가 50.7%에 불과해 현재 VLM이 고프레임 이벤트를 인식하는 데 한계가 있음을 보여준다.",
-          "timestamp": null
-        },
-        {
-          "point": "ProactiveFrame은 텍스트 토큰으로 프레임 레이트를 조절하는 훈련‑무료 베이스라인으로, 균일 샘플링보다 성능이 개선되지만 여전히 한계가 있다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "최근 고주파 IoT 센서 데이터에 이중계층 슬라이딩 윈도우를 적용해 최신 데이터는 고해상도로, 오래된 데이터는 압축해 이상 탐지 정확도와 처리량을 동시에 높인다.",
-        "실시간 추천 시스템에서 사용자의 텍스트 컨텍스트를 토큰화해 프레임 레이트를 동적으로 조절함으로써 관심이 높은 순간에 더 많은 행동 로그를 수집해 추천 품질을 향상시킨다.",
-        "자율주행 차량의 고프레임 대시캠 영상을 이용해 트래젝터리 기반 QA를 생성하고, 이를 벤치마크로 활용해 인식 모델의 고동적 상황 대응 능력을 평가한다."
-      ],
-      "quiz": [
-        {
-          "question": "왜 샘플링 밀도를 높여도 성능 향상이 일정 시점에서 포화되는가?",
-          "options": [
-            "모델 용량이 제한돼 더 많은 프레임을 처리하지 못한다",
-            "역사 압축으로 오래된 컨텍스트가 손실된다",
-            "고FPS가 노이즈를 증가시킨다",
-            "학습 데이터가 충분하지 않다"
-          ],
-          "answer_index": 1,
-          "explanation": "FastBench 실험에서 밀도 높은 샘플링은 최근 프레임을 유지하지만 오래된 프레임을 압축해 역사 정보를 감소시켜, 추가적인 FPS 증가가 성능에 큰 영향을 주지 못한다."
-        },
-        {
-          "question": "ProactiveFrame 베이스라인의 핵심 메커니즘은 무엇인가?",
-          "options": [
-            "VLM을 고FPS 데이터로 재학습한다",
-            "텍스트 토큰을 이용해 입력 프레임 레이트를 동적으로 조절한다",
-            "프레임을 생성 이미지로 대체한다",
-            "오라클 기반 프레임 선택을 적용한다"
-          ],
-          "answer_index": 1,
-          "explanation": "ProactiveFrame은 훈련 없이 텍스트 토큰을 삽입해 스트림의 프레임 레이트를 조절함으로써 샘플링 전략을 개선한다."
-        }
-      ]
-    },
-    {
-      "id": "cbc777fc6d72",
-      "title": "Cost-Aware Mixture-of-Experts Coordination for Model Markets",
-      "url": "https://arxiv.org/abs/2610.11908v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.DB"
-      },
-      "published_at": "2026-10-08T13:09:09",
-      "summary": "모델 마켓플레이스에서 비용 효율적인 전문가 조합을 제공",
-      "positioning": "기존 모델 마켓플레이스는 개별 모델을 불가분 단위로 거래해 전문가 간 시너지 효과를 활용하지 못한다는 한계가 있다. 이 논문은 MoE를 시장 수준 조정 메커니즘으로 전환하고, 비용 인식 게이팅 및 수익 배분 규칙을 도입해 경제적으로 타당한 모델 협업을 가능하게 한다. 이는 비용 효율성과 복지 최적화를 동시에 추구하는 모델 마켓 연구 흐름의 새로운 단계이다",
-      "tags": [
-        "Mixture-of-Experts",
-        "gating networks",
-        "Shapley allocation",
-        "neural experts",
-        "tree-based experts"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "MoE를 모델 수준이 아니라 시장 수준 조정 메커니즘으로 확장해 브로커가 게이팅 네트워크로 이질적 전문가를 조합한다",
-          "timestamp": null
-        },
-        {
-          "point": "비용을 고려한 게이팅 메커니즘과 비용 조정 수익 배분 규칙을 제안해 예산 균형·참여 단조성·비용 민감성을 보장한다",
-          "timestamp": null
-        },
-        {
-          "point": "15개 데이터셋에서 평균 복지가 최고이며 비용이 낮고, 표준 MoE와 경쟁적인 예측 성능을 유지하면서 Shapley 대비 계산 효율성이 우수하다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "서버리스 함수 오케스트레이션에 비용 인식 게이팅을 적용해 함수 선택 시 지연 비용을 최소화한다",
-        "데이터 파이프라인 마켓플레이스에서 비용 조정 수익 배분 규칙을 사용해 데이터 제공자에게 실제 처리 비용에 비례한 보상을 제공한다",
-        "멀티테넌트 SaaS 환경에서 사전 학습된 언어 모델 앙상블을 MoE 시장 구조로 관리해 추론 비용을 낮추고 서비스 품질을 유지한다"
-      ],
-      "quiz": [
-        {
-          "question": "실험 결과에 따르면 MoE Market가 Standard MoE에 비해 갖는 주요 장점은 무엇인가?",
-          "options": [
-            "예측 정확도 향상",
-            "평균 기대 비용 감소",
-            "학습 시간 단축",
-            "구조 단순화"
-          ],
-          "answer_index": 1,
-          "explanation": "논문은 MoE Market가 모든 데이터셋에서 평균 복지가 최고이며 평균 기대 비용이 Standard MoE보다 낮다고 보고한다."
-        },
-        {
-          "question": "수익 배분 규칙에 대해 언급되지 않은 이론적 성질은 무엇인가?",
-          "options": [
-            "예산 균형",
-            "참여 단조성",
-            "비용 민감성",
-            "인센티브 호환성"
-          ],
-          "answer_index": 3,
-          "explanation": "본문은 예산 균형, 참여 단조성, 비용 민감성을 제시하지만 인센티브 호환성에 대한 언급은 없다."
-        }
-      ]
-    },
-    {
-      "id": "b370c3798743",
-      "title": "A Gauge-Invariant Clustering Coefficient for Complex-Weighted Bipartite Networks",
-      "url": "https://arxiv.org/abs/2610.11929v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.SI"
-      },
-      "published_at": "2026-10-08T13:24:37",
-      "summary": "복소 가중 양측 그래프 군집계수로 양자 네트워크 분석",
-      "positioning": "복소 가중치를 갖는 양측 네트워크에서는 기존의 군집계수가 위상 정보를 반영하지 못하거나 삼각형 기반이라 적용이 어려웠다. 이 논문은 위상을 보존하면서 사각형 클로즈드 사이클을 이용해 새로운 군집계수를 정의하고, 이를 통해 양자·광학 아키텍처의 구조적 위상 정보를 정량화한다. 기존 방법에 비해 위상 기여와 위상 없는 기여를 명시적으로 분리하고, 분석적 풀이와 효율적인 행렬 연산을 제공한다",
-      "tags": [
-        "Watts–Strogatz",
-        "bipartite network",
-        "complex weight",
-        "quantum architecture",
-        "photonic architecture"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "복소 가중치와 양측 구조를 동시에 고려한 군집계수를 제안해 위상 정보를 포함하고 게이지 불변성을 확보함",
-          "timestamp": null
-        },
-        {
-          "point": "계수는 위상 기여와 위상 없는 기여로 분해되며 평균 위상 기여는 (sinΔ/Δ)^4 로 노드·위도와 무관함",
-          "timestamp": null
-        },
-        {
-          "point": "단일 희소 행렬 곱으로 모든 노드에 대해 계산 가능해 양자·광학 네트워크의 코히런트 거리와 위상 무질서를 정량화함",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "무선 통신 네트워크의 복소 전송 이득에 위상‑민감 군집계수를 적용해 파괴적 간섭 구역을 정량화한다",
-        "사용자‑아이템 상호작용에 감정 위상을 부여하고 위상‑인식 군집계수를 활용해 모순된 선호 패턴을 탐지한다",
-        "대사 네트워크에서 진동성 반응률을 복소값으로 모델링하고 위상‑민감 모티프를 희소 행렬 곱으로 계산해 규제 루프를 식별한다"
-      ],
-      "quiz": [
-        {
-          "question": "새롭게 정의된 군집계수가 게이지 불변성을 가지는 이유는 무엇인가?",
-          "options": [
-            "위상이 사각형을 따라 누적되어 전체 위상에 의존한다",
-            "위상 기여가 노드별로 독립적이다",
-            "위상은 절대값만 사용한다",
-            "위상이 무작위로 평균 0이다"
+            "모든 state‑action 쌍에 대해 업데이트를 공동으로 안정화하기 때문",
+            "탐색 범위를 확대하기 때문",
+            "보상 스케일을 고정하기 때문",
+            "정책 파라미터 수를 감소시키기 때문"
           ],
           "answer_index": 0,
-          "explanation": "위상은 사각형을 한 바퀴 돌면서 누적되며, 전체 위상은 경로 선택에 관계없이 동일하게 유지돼 게이지 변환에 불변이다"
+          "explanation": "정규화 Q‑함수는 업데이트를 전체 state‑action 공간에 걸쳐 동시에 제어해 변동성을 낮추고, 기존에 각 상태별로 독립적으로 진행되던 업데이트에서 발생하던 H 배의 추가 regret을 제거한다"
         }
       ]
     },
     {
-      "id": "6e76322b4bb4",
-      "title": "☕️ 구글 연구원이 제안하는 화면 바깥에서의 휴식",
-      "url": "https://dflick.stibee.com/p/114",
+      "id": "b3b0d96e3f7d",
+      "title": "On the estimation and validity of AI time horizons---a statistical look at the METR plot",
+      "url": "https://arxiv.org/abs/2610.12466v1",
       "source": {
-        "type": "newsletter",
-        "name": "디플릭"
+        "type": "rss",
+        "name": "arXiv:cs.AI"
       },
-      "published_at": "2026-10-06T00:00:00",
-      "summary": "오프스크린 휴식 설계가 사용자 데이터에 미치는 영향",
-      "positioning": null,
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "AI 능력, 인간 시간으로 직관화해 벤치마크 설계",
+      "positioning": "기존 METR은 AI 난이도가 인간 시간 로그에 선형적으로 의존한다는 가정에 기반했으나, 실제 데이터에서 비선형성을 보인다. 본 논문은 스플라인과 아이템 반응 이론을 도입해 이를 완화하고, 보다 정확한 시간 지평 추정치와 진단 플롯을 제공함으로써 AI 능력 측정 연구 흐름에서 타당성 평가 방법을 확장한다.",
       "tags": [
-        "Google",
-        "iPhone",
-        "OpenAI",
-        "ChatGPT",
-        "Reddit"
+        "METR",
+        "spline",
+        "item-response theory",
+        "proper scoring rules",
+        "diagnostic plots"
       ],
-      "relevance": 3,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "Google 연구자는 퍼즐이 들어간 종이신문을 만들어 화면 사용을 멈추게 하는 오프라인 휴식 경험을 실험했다",
+          "point": "METR 50% 시간 지평은 AI 능력을 인간 작업 시간으로 해석 가능하게 한다.",
           "timestamp": null
         },
         {
-          "point": "사용자들은 빠르고 편리한 디지털보다 느린 종이 매체를 기다리며 의도적인 멈춤을 원한다는 점을 보여준다",
+          "point": "스플라인과 아이템 반응 이론을 사용해 AI 난이도와 인간 시간의 비선형 관계를 밝혀냈다.",
           "timestamp": null
         },
         {
-          "point": "‘멈춤’ 설계는 제품에 새로운 사용자 경험을 추가해 웰빙과 참여도를 높일 수 있다",
+          "point": "새로운 추정치는 교차 검증된 적절 점수 규칙에서 성능이 향상되고, 진단 플롯으로 타당성을 평가한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "오프라인 퍼즐 신문을 사내 복지 프로그램에 도입해 직원들의 스크린 피로를 줄이고 집중 회복을 돕는다",
-        "정기적으로 우편으로 발송되는 간단한 퍼즐 브리프를 원격 팀에 제공해 회의 전 집중력을 높이고 디지털 알림 과부하를 완화한다",
-        "디지털 서비스에 ‘잠시 멈춤’ 모드를 추가해 UI를 퍼즐 화면으로 전환, 사용자가 스스로 화면에서 물러나 휴식할 수 있게 설계한다"
+        "스플라인 변환을 활용해 인간 라벨링 시간과 라벨 난이도를 연결, 작업 배분 효율을 높인다.",
+        "아이템 반응 이론을 이용해 강화학습 환경 난이도를 에이전트 성공률에 기반해 보정, 커리큘럼 학습을 최적화한다.",
+        "시간 지평 진단 플롯과 유사한 시각화를 도입해 데이터셋 크기 변화에 따른 모델 성능 신뢰성을 평가한다."
       ],
       "quiz": [
         {
-          "question": "왜 사용자는 디지털 피드보다 퍼즐이 들어간 종이신문을 기다릴까?",
+          "question": "왜 3분에서 30분으로의 시간 지평 상승이 30분에서 5시간 상승보다 쉬운가?",
           "options": [
-            "속도가 빠르기 때문에",
-            "물리적 매체가 의도적인 멈춤을 제공하기 때문에",
-            "광고가 적기 때문에",
-            "화질이 좋기 때문에"
+            "스플라인이 2~30분 구간에서 거의 평탄하기 때문이다",
+            "AI 난이도가 지수적으로 증가하기 때문이다",
+            "인간 시간 측정 오차가 작기 때문이다",
+            "적절 점수 규칙이 긴 구간을 더 크게 벌점하기 때문이다"
           ],
-          "answer_index": 1,
-          "explanation": "종이신문은 화면과 달리 즉각적인 알림이 없고, 퍼즐을 풀며 자연스럽게 화면 사용을 멈추게 해 사용자는 의도적인 휴식을 경험한다"
+          "answer_index": 0,
+          "explanation": "본문에 따르면 스플라인은 2~30분 구간에서 거의 평탄하므로 같은 10배 증가라도 앞 구간이 더 쉬운 것으로 해석된다."
         },
         {
-          "question": "iPhone에서 Wi‑Fi를 제어센터와 설정 화면에서 끌 때 차이는 무엇인가?",
+          "question": "AI 난이도와 인간 시간 로그 사이의 선형 가정을 완화하기 위해 저자들이 사용한 통계 방법은?",
           "options": [
-            "두 방법 모두 Wi‑Fi를 완전히 끈다",
-            "제어센터는 일시적으로 연결을 끊고 설정은 기능 자체를 끈다",
-            "설정은 일시적으로 끊고 제어센터는 완전히 끈다",
-            "두 방법 모두 차이가 없다"
+            "선형 회귀",
+            "스플라인 회귀",
+            "결정 트리",
+            "K-평균 군집화"
           ],
           "answer_index": 1,
-          "explanation": "제어센터의 Wi‑Fi 버튼은 현재 연결된 네트워크에서 잠시 나가게 하고, 일정 조건이 되면 자동으로 다시 연결될 수 있다. 설정 화면의 스위치는 Wi‑Fi 기능 자체를 끈다"
+          "explanation": "저자들은 스플라인과 아이템 반응 이론을 적용해 비선형 관계를 모델링하였다."
+        }
+      ]
+    },
+    {
+      "id": "ecf176110c75",
+      "title": "A Balanced Data Diet: Addressing the Exploration Bottleneck in Mega-Scale RL for Robot Control",
+      "url": "https://arxiv.org/abs/2610.12465v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "대규모 RL에서 탐색 효율을 높이는 샘플링 기법",
+      "positioning": "이 논문은 대규모 시뮬레이션 기반 로봇 강화학습에서 탐색 병목을 해결하고자 한다. 기존 연구는 다양한 초기 상태와 대규모 병렬 환경을 활용했지만, 균일 샘플링으로 인해 학습 효율이 떨어졌다. SGS라는 적응형 샘플러를 도입해 정책의 현재 한계 주변을 집중 탐색함으로써, 병렬 시뮬레이션 확장의 효과를 극대화한다.",
+      "tags": [
+        "Success Guided Sampling",
+        "RL",
+        "sim-to-real",
+        "parallel simulation",
+        "RGB-based policies"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "균일한 시뮬레이터 리셋은 이미 숙달된 혹은 시도 불가능한 작업에 경험을 낭비한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Success Guided Sampling(SGS)은 정책 능력의 경계에 있는 작업을 집중 샘플링해 탐색 효율을 높인다.",
+          "timestamp": null
+        },
+        {
+          "point": "SGS를 사용해 2^20 개 이상의 병렬 환경을 확장하면 복잡한 사족보행·조립 작업을 해결하고 실 로봇에 zero‑shot 전이한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AutoML 하이퍼파라미터 탐색에 SGS를 적용해 현재 최고 성능 근처 설정을 집중 샘플링하면 탐색 효율이 향상된다.",
+        "자연어 생성 모델의 커리큘럼 학습에 SGS를 활용해 모델이 막히는 프롬프트를 중심으로 학습하면 성능 향상이 기대된다.",
+        "컴퓨터 비전 데이터 증강에서 SGS를 사용해 모델이 어려워하는 변형을 우선 선택하면 학습 효율과 일반화가 개선된다."
+      ],
+      "quiz": [
+        {
+          "question": "균일하게 시뮬레이터 리셋을 샘플링하면 학습 경험이 낭비되는 주된 이유는 무엇인가?",
+          "options": [
+            "이미 숙달된 작업을 과도하게 샘플링한다",
+            "희귀 작업을 충분히 샘플링하지 않는다",
+            "학습에 편향을 도입한다",
+            "병렬 환경 수를 감소시킨다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면, 균일 샘플링은 정책이 이미 마스터했거나 아직 시도할 수 없는 작업에 과도하게 할당돼 학습 신호가 낭비된다."
+        },
+        {
+          "question": "Success Guided Sampling(SGS)이 대규모 강화학습에 제공하는 핵심 이점은 무엇인가?",
+          "options": [
+            "필요한 병렬 환경 수를 크게 줄인다",
+            "정책 능력 경계 주변 작업에 집중해 샘플 효율을 높인다",
+            "보상 설계 없이 학습을 가능하게 한다",
+            "실제 로봇에 대한 zero‑shot 전이를 보장한다"
+          ],
+          "answer_index": 1,
+          "explanation": "SGS는 정책의 현재 역량 한계(프론티어) 주변 작업을 집중 샘플링함으로써 배치 내 학습 신호의 낭비를 최소화하고 확장성을 높인다."
+        }
+      ]
+    },
+    {
+      "id": "5aec6d03065f",
+      "title": "CSF: Contextual Safety Filtering for Motion Generators",
+      "url": "https://arxiv.org/abs/2610.12467v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "맥락 기반 동작 안전 필터로 로봇 위험 크게 감소",
+      "positioning": "텍스트 기반 전체 몸동작 생성기는 장면에 따라 위험이 달라지는 안전 문제를 갖지만, 기존 방법은 프롬프트 검사·라벨링·기하학 제약에 머물러 맥락을 반영하지 못한다. CSF는 안전·비안전 레퍼런스 궤적을 활용해 affine safety value를 정의하고 CBF‑QP 로 실시간 안전 트래킹을 수행함으로써, 생성 모델 안전성 연구 흐름에서 훈련‑프리 컨텍스트 기반 필터링을 새롭게 제시한다.",
+      "tags": [
+        "CSF",
+        "CBF-QP",
+        "Unitree G1",
+        "motion generators",
+        "affine safety value"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "CSF는 훈련 없이 자연어 안전 규칙을 생성기의 안전·비안전 레퍼런스 궤적에 매핑해 적용한다.",
+          "timestamp": null
+        },
+        {
+          "point": "안전 규칙마다 안전·비안전 궤적을 이용해 affine safety value를 정의하고, CBF‑QP 로 안전 트래킹을 수행한다.",
+          "timestamp": null
+        },
+        {
+          "point": "실험에서 4개의 사전학습된 모션 생성기 모두 위험 이벤트를 최대 90% 감소시키고, 정상 동작을 88‑100% 유지했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "장면 기반 안전 규칙을 활용해 자율주행 차량의 차선 변경·보행자 회피를 CBF‑QP 로 실시간 필터링한다.",
+        "드론의 인간 근접 비행 시 안전·비안전 비행 궤적을 정의해 컨텍스트 안전 필터를 적용, 충돌 위험을 감소시킨다.",
+        "게임 내 가상 캐릭터의 행동을 씬 컨텍스트에 맞춰 안전 레퍼런스 트래킹으로 제어, 비현실적 동작 방지한다."
+      ],
+      "quiz": [
+        {
+          "question": "CSF가 안전 규칙을 적용하는 핵심 메커니즘은 무엇인가?",
+          "options": [
+            "프롬프트 텍스트를 직접 분석한다",
+            "라벨된 모션 데이터를 학습한다",
+            "안전·비안전 레퍼런스 궤적을 이용해 affine safety value를 정의하고 CBF‑QP 로 트래킹한다",
+            "기하학적 제약만 적용한다"
+          ],
+          "answer_index": 2,
+          "explanation": "논문에서는 안전·비안전 레퍼런스 궤적을 기반으로 affine safety value를 만들고, 이를 CBF‑QP 로 안전 트래킹한다는 것이 핵심이다."
+        },
+        {
+          "question": "CSF는 별도의 모델 훈련이 필요한가?",
+          "options": [
+            "네, 훈련이 필요하다",
+            "아니오, 훈련이 필요하지 않다",
+            "일부 규칙에만 훈련이 필요하다",
+            "알 수 없다"
+          ],
+          "answer_index": 1,
+          "explanation": "CSF는 training‑free 필터로, 기존 생성기를 그대로 사용하면서 레퍼런스 궤적만으로 안전을 보장한다."
         }
       ]
     }

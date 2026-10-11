@@ -1,0 +1,302 @@
+{
+  "contract_version": 1,
+  "date": "2026-10-12",
+  "generated_at": "2026-10-12T08:17:36.405280+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-12.html",
+  "items": [
+    {
+      "id": "0e54b0170c84",
+      "title": "TestPrism: Rethinking Test Evaluation Beyond a Single Reference",
+      "url": "https://arxiv.org/abs/2610.12289v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.SE"
+      },
+      "published_at": "2026-10-08T16:44:39",
+      "summary": "테스트 평가에 다중 정답을 반영해 LLM 코딩 품질을 정확히 측정",
+      "positioning": "LLM 코딩 에이전트가 테스트를 자동 생성하는 상황에서 기존 평가는 단일 정답에만 의존해 한계가 있었다. 본 논문은 다중 구현을 고려한 평가 지표와 대규모 벤치마크를 제시해 LLM 테스트 품질 측정 연구 흐름에 새로운 기준을 제공한다.",
+      "tags": [
+        "TestPrism",
+        "Joint Success Function",
+        "TestHelix",
+        "LLM",
+        "arXiv"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "단일 레퍼런스 기반 테스트 평가는 품질을 과대평가하므로 다중 정답을 고려해야 함",
+          "timestamp": null
+        },
+        {
+          "point": "TestPrism 데이터셋은 300개 과제와 3000개 구현(유효/무효 50:50)을 제공하고 Joint Success Function을 새 메트릭으로 제시",
+          "timestamp": null
+        },
+        {
+          "point": "TestHelix는 이질적 테스트·수정 쌍 생성·피어 교차 검증·재귀적 자기 개선을 통해 Joint Success Function을 8~9% 향상",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Joint Success Function 개념을 ETL 파이프라인의 데이터 변환 검증 스크립트에 적용해 다양한 올바른 변환을 모두 허용하고 오류 변환을 차단한다",
+        "TestHelix의 이질적 합성·피어 교차 검증 방식을 웹 UI 테스트 케이스 자동 생성에 활용해 다양한 사용자 흐름을 포괄하고 테스트 누락을 줄인다",
+        "재귀적 자기 개선 루프를 컨테이너 이미지 보안 테스트 생성에 적용해 초기 테스트가 놓친 취약점을 점진적으로 탐지·보완한다"
+      ],
+      "quiz": [
+        {
+          "question": "Joint Success Function이 만족해야 하는 조건은 무엇인가?",
+          "options": [
+            "초기 프로그램 상태에서 실패하고, 모든 유효 후보를 통과시키며, 모든 무효 후보를 차단한다",
+            "초기 상태를 통과하고, 유효 후보를 차단하며, 무효 후보를 통과한다",
+            "초기 상태를 무시하고, 유효·무효 후보 모두를 통과한다",
+            "초기 상태에서 성공하고, 유효 후보를 차단하고, 무효 후보를 통과한다"
+          ],
+          "answer_index": 0,
+          "explanation": "Joint Success Function은 테스트가 초기 상태에서 실패하고, 올바른 구현은 모두 통과시키며, 잘못된 구현은 모두 차단해야 한다는 세 조건을 정의한다"
+        }
+      ]
+    },
+    {
+      "id": "42eaf7bf3fd7",
+      "title": "Closing the Horizon Gap in Policy Optimization for Adversarial MDPs",
+      "url": "https://arxiv.org/abs/2610.12362v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:stat.ML"
+      },
+      "published_at": "2026-10-08T17:26:55",
+      "summary": "정책 최적화 시 시간 지평 의존성을 크게 낮춰 실시간 RL 효율성을 높임",
+      "positioning": "온라인 에피소드형 탭ular MDP에서 적대적 손실과 밴딧 피드백을 다루는 기존 정책 최적화는 점유‑측정 기반 방법보다 시간 지평 H에 대해 1배 더 큰 regret을 보였다. 본 논문은 정규화 Q‑함수를 이용해 모든 state‑action에 대한 업데이트를 동시에 제어함으로써 그 차이를 없애고, 알려진·미지 전이 모두에서 최선의 regret 한계에 도달한다. 이는 정책 최적화가 점유‑측정 기반과 동등한 이론적 성능을 갖게 하는 중요한 전환점이다",
+      "tags": [
+        "Markov decision processes",
+        "adversarial losses",
+        "bandit feedback",
+        "regularized Q-functions",
+        "linear-mixture MDPs"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "정규화된 Q‑함수를 도입해 모든 state‑action 쌍에 대한 업데이트를 공동으로 안정화함으로써 기존 정책 최적화의 H 배 차이를 해소한다",
+          "timestamp": null
+        },
+        {
+          "point": "알려진 전이에서는 O~(sqrt(H·S·(H+A)·T)), 알려지지 않은 전이에서는 O~(H·S·sqrt(A·T))의 고확률 regret 상한을 달성한다",
+          "timestamp": null
+        },
+        {
+          "point": "이 방법을 적대적 선형‑혼합 MDP에도 확장해 동일한 지평 개선을 제공한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "정규화 Q‑함수 기반 안정화 기법을 멀티에이전트 추천 시스템에 적용해 장기 사용자 행동 예측 시 지평 의존성을 감소시킨다",
+        "오프라인 배치 RL에서 정규화 Q‑함수를 사용해 정책 업데이트의 변동성을 줄여 데이터 분포 변화에 대한 견고성을 높인다",
+        "금융 포트폴리오 최적화에서 적대적 손실을 시장 충격으로 모델링하고 정규화 Q‑함수 기법을 적용해 장기 투자 전략의 regret을 최소화한다"
+      ],
+      "quiz": [
+        {
+          "question": "정규화된 Q‑함수를 사용하면 정책 최적화에서 시간 지평(H) 의존성을 줄일 수 있는 주된 이유는?",
+          "options": [
+            "모든 state‑action 쌍에 대해 업데이트를 공동으로 안정화하기 때문",
+            "탐색 범위를 확대하기 때문",
+            "보상 스케일을 고정하기 때문",
+            "정책 파라미터 수를 감소시키기 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "정규화 Q‑함수는 업데이트를 전체 state‑action 공간에 걸쳐 동시에 제어해 변동성을 낮추고, 기존에 각 상태별로 독립적으로 진행되던 업데이트에서 발생하던 H 배의 추가 regret을 제거한다"
+        }
+      ]
+    },
+    {
+      "id": "b3b0d96e3f7d",
+      "title": "On the estimation and validity of AI time horizons---a statistical look at the METR plot",
+      "url": "https://arxiv.org/abs/2610.12466v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.AI"
+      },
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "AI 능력, 인간 시간으로 직관화해 벤치마크 설계",
+      "positioning": "기존 METR은 AI 난이도가 인간 시간 로그에 선형적으로 의존한다는 가정에 기반했으나, 실제 데이터에서 비선형성을 보인다. 본 논문은 스플라인과 아이템 반응 이론을 도입해 이를 완화하고, 보다 정확한 시간 지평 추정치와 진단 플롯을 제공함으로써 AI 능력 측정 연구 흐름에서 타당성 평가 방법을 확장한다.",
+      "tags": [
+        "METR",
+        "spline",
+        "item-response theory",
+        "proper scoring rules",
+        "diagnostic plots"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "METR 50% 시간 지평은 AI 능력을 인간 작업 시간으로 해석 가능하게 한다.",
+          "timestamp": null
+        },
+        {
+          "point": "스플라인과 아이템 반응 이론을 사용해 AI 난이도와 인간 시간의 비선형 관계를 밝혀냈다.",
+          "timestamp": null
+        },
+        {
+          "point": "새로운 추정치는 교차 검증된 적절 점수 규칙에서 성능이 향상되고, 진단 플롯으로 타당성을 평가한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "스플라인 변환을 활용해 인간 라벨링 시간과 라벨 난이도를 연결, 작업 배분 효율을 높인다.",
+        "아이템 반응 이론을 이용해 강화학습 환경 난이도를 에이전트 성공률에 기반해 보정, 커리큘럼 학습을 최적화한다.",
+        "시간 지평 진단 플롯과 유사한 시각화를 도입해 데이터셋 크기 변화에 따른 모델 성능 신뢰성을 평가한다."
+      ],
+      "quiz": [
+        {
+          "question": "왜 3분에서 30분으로의 시간 지평 상승이 30분에서 5시간 상승보다 쉬운가?",
+          "options": [
+            "스플라인이 2~30분 구간에서 거의 평탄하기 때문이다",
+            "AI 난이도가 지수적으로 증가하기 때문이다",
+            "인간 시간 측정 오차가 작기 때문이다",
+            "적절 점수 규칙이 긴 구간을 더 크게 벌점하기 때문이다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 스플라인은 2~30분 구간에서 거의 평탄하므로 같은 10배 증가라도 앞 구간이 더 쉬운 것으로 해석된다."
+        },
+        {
+          "question": "AI 난이도와 인간 시간 로그 사이의 선형 가정을 완화하기 위해 저자들이 사용한 통계 방법은?",
+          "options": [
+            "선형 회귀",
+            "스플라인 회귀",
+            "결정 트리",
+            "K-평균 군집화"
+          ],
+          "answer_index": 1,
+          "explanation": "저자들은 스플라인과 아이템 반응 이론을 적용해 비선형 관계를 모델링하였다."
+        }
+      ]
+    },
+    {
+      "id": "ecf176110c75",
+      "title": "A Balanced Data Diet: Addressing the Exploration Bottleneck in Mega-Scale RL for Robot Control",
+      "url": "https://arxiv.org/abs/2610.12465v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "대규모 RL에서 탐색 효율을 높이는 샘플링 기법",
+      "positioning": "이 논문은 대규모 시뮬레이션 기반 로봇 강화학습에서 탐색 병목을 해결하고자 한다. 기존 연구는 다양한 초기 상태와 대규모 병렬 환경을 활용했지만, 균일 샘플링으로 인해 학습 효율이 떨어졌다. SGS라는 적응형 샘플러를 도입해 정책의 현재 한계 주변을 집중 탐색함으로써, 병렬 시뮬레이션 확장의 효과를 극대화한다.",
+      "tags": [
+        "Success Guided Sampling",
+        "RL",
+        "sim-to-real",
+        "parallel simulation",
+        "RGB-based policies"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "균일한 시뮬레이터 리셋은 이미 숙달된 혹은 시도 불가능한 작업에 경험을 낭비한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Success Guided Sampling(SGS)은 정책 능력의 경계에 있는 작업을 집중 샘플링해 탐색 효율을 높인다.",
+          "timestamp": null
+        },
+        {
+          "point": "SGS를 사용해 2^20 개 이상의 병렬 환경을 확장하면 복잡한 사족보행·조립 작업을 해결하고 실 로봇에 zero‑shot 전이한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AutoML 하이퍼파라미터 탐색에 SGS를 적용해 현재 최고 성능 근처 설정을 집중 샘플링하면 탐색 효율이 향상된다.",
+        "자연어 생성 모델의 커리큘럼 학습에 SGS를 활용해 모델이 막히는 프롬프트를 중심으로 학습하면 성능 향상이 기대된다.",
+        "컴퓨터 비전 데이터 증강에서 SGS를 사용해 모델이 어려워하는 변형을 우선 선택하면 학습 효율과 일반화가 개선된다."
+      ],
+      "quiz": [
+        {
+          "question": "균일하게 시뮬레이터 리셋을 샘플링하면 학습 경험이 낭비되는 주된 이유는 무엇인가?",
+          "options": [
+            "이미 숙달된 작업을 과도하게 샘플링한다",
+            "희귀 작업을 충분히 샘플링하지 않는다",
+            "학습에 편향을 도입한다",
+            "병렬 환경 수를 감소시킨다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면, 균일 샘플링은 정책이 이미 마스터했거나 아직 시도할 수 없는 작업에 과도하게 할당돼 학습 신호가 낭비된다."
+        },
+        {
+          "question": "Success Guided Sampling(SGS)이 대규모 강화학습에 제공하는 핵심 이점은 무엇인가?",
+          "options": [
+            "필요한 병렬 환경 수를 크게 줄인다",
+            "정책 능력 경계 주변 작업에 집중해 샘플 효율을 높인다",
+            "보상 설계 없이 학습을 가능하게 한다",
+            "실제 로봇에 대한 zero‑shot 전이를 보장한다"
+          ],
+          "answer_index": 1,
+          "explanation": "SGS는 정책의 현재 역량 한계(프론티어) 주변 작업을 집중 샘플링함으로써 배치 내 학습 신호의 낭비를 최소화하고 확장성을 높인다."
+        }
+      ]
+    },
+    {
+      "id": "5aec6d03065f",
+      "title": "CSF: Contextual Safety Filtering for Motion Generators",
+      "url": "https://arxiv.org/abs/2610.12467v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-08T17:59:50",
+      "summary": "맥락 기반 동작 안전 필터로 로봇 위험 크게 감소",
+      "positioning": "텍스트 기반 전체 몸동작 생성기는 장면에 따라 위험이 달라지는 안전 문제를 갖지만, 기존 방법은 프롬프트 검사·라벨링·기하학 제약에 머물러 맥락을 반영하지 못한다. CSF는 안전·비안전 레퍼런스 궤적을 활용해 affine safety value를 정의하고 CBF‑QP 로 실시간 안전 트래킹을 수행함으로써, 생성 모델 안전성 연구 흐름에서 훈련‑프리 컨텍스트 기반 필터링을 새롭게 제시한다.",
+      "tags": [
+        "CSF",
+        "CBF-QP",
+        "Unitree G1",
+        "motion generators",
+        "affine safety value"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "CSF는 훈련 없이 자연어 안전 규칙을 생성기의 안전·비안전 레퍼런스 궤적에 매핑해 적용한다.",
+          "timestamp": null
+        },
+        {
+          "point": "안전 규칙마다 안전·비안전 궤적을 이용해 affine safety value를 정의하고, CBF‑QP 로 안전 트래킹을 수행한다.",
+          "timestamp": null
+        },
+        {
+          "point": "실험에서 4개의 사전학습된 모션 생성기 모두 위험 이벤트를 최대 90% 감소시키고, 정상 동작을 88‑100% 유지했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "장면 기반 안전 규칙을 활용해 자율주행 차량의 차선 변경·보행자 회피를 CBF‑QP 로 실시간 필터링한다.",
+        "드론의 인간 근접 비행 시 안전·비안전 비행 궤적을 정의해 컨텍스트 안전 필터를 적용, 충돌 위험을 감소시킨다.",
+        "게임 내 가상 캐릭터의 행동을 씬 컨텍스트에 맞춰 안전 레퍼런스 트래킹으로 제어, 비현실적 동작 방지한다."
+      ],
+      "quiz": [
+        {
+          "question": "CSF가 안전 규칙을 적용하는 핵심 메커니즘은 무엇인가?",
+          "options": [
+            "프롬프트 텍스트를 직접 분석한다",
+            "라벨된 모션 데이터를 학습한다",
+            "안전·비안전 레퍼런스 궤적을 이용해 affine safety value를 정의하고 CBF‑QP 로 트래킹한다",
+            "기하학적 제약만 적용한다"
+          ],
+          "answer_index": 2,
+          "explanation": "논문에서는 안전·비안전 레퍼런스 궤적을 기반으로 affine safety value를 만들고, 이를 CBF‑QP 로 안전 트래킹한다는 것이 핵심이다."
+        },
+        {
+          "question": "CSF는 별도의 모델 훈련이 필요한가?",
+          "options": [
+            "네, 훈련이 필요하다",
+            "아니오, 훈련이 필요하지 않다",
+            "일부 규칙에만 훈련이 필요하다",
+            "알 수 없다"
+          ],
+          "answer_index": 1,
+          "explanation": "CSF는 training‑free 필터로, 기존 생성기를 그대로 사용하면서 레퍼런스 궤적만으로 안전을 보장한다."
+        }
+      ]
+    }
+  ]
+}
