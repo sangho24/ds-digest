@@ -1,0 +1,324 @@
+{
+  "contract_version": 1,
+  "date": "2026-10-13",
+  "generated_at": "2026-10-13T11:00:32.153578+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-13.html",
+  "items": [
+    {
+      "id": "8e9720268994",
+      "title": "Hide and Seek: HIDE Concepts to SEEK explanations for black box models",
+      "url": "https://arxiv.org/abs/2610.13935v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-09T17:56:59",
+      "summary": "블랙박스 비전 모델의 개념 수준 설명을 직접 측정해 해석 가능성을 높인다",
+      "positioning": "이 논문은 블랙박스 비전 모델의 해석 가능성 문제를 기존에 가중치·대규모 라벨 데이터가 필요하던 개념 기반 방법의 한계를 넘어, 비전‑언어 모델을 활용해 모델-불가지론적인 지역 설명을 제공하는 흐름에 위치한다. 기존 방법이 분류·회귀에 국한된 반면, HnS는 다양한 비전 과제에 적용 가능해 새로운 모델 제어 수단을 제시한다.",
+      "tags": [
+        "Hide and Seek",
+        "vision-language model",
+        "CelebA",
+        "COCO-Stuff",
+        "satellite image segmentation"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "HnS는 모델 가중치나 라벨된 개념 데이터 없이 비전‑언어 모델로 개념에 맞는 이미지를 찾아 마스크하고 출력 변화를 측정해 개념 수준 기여도를 추정한다",
+          "timestamp": null
+        },
+        {
+          "point": "마스크된 영역과 원본 이미지의 출력 차이를 직접 측정함으로써 지역적이고 신뢰성 있는 설명을 제공한다",
+          "timestamp": null
+        },
+        {
+          "point": "CelebA와 COCO‑Stuff에서 기존 방법보다 실제 기여도와 더 잘 일치했으며, 이미지 캡셔닝·위성 이미지 분할 등 기존 방법이 적용되지 못한 작업에도 활용 가능하다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "텍스트 분류 모델에 개념 단어가 포함된 문장을 언어 모델로 검색하고, 해당 단어를 마스크한 뒤 출력 변화를 측정해 개념 기여도를 평가한다",
+        "오디오 인식 모델에서 특정 소리 개념이 포함된 클립을 오디오‑텍스트 모델로 찾고, 해당 구간을 무음 처리해 모델 출력 변화를 분석한다",
+        "강화학습 정책에 대해 상태 이미지에서 특정 객체 개념을 비전‑언어 모델로 식별하고, 해당 객체를 가리워 정책 행동 변화를 측정해 개념 기반 정책 해석을 시도한다"
+      ],
+      "quiz": [
+        {
+          "question": "HnS가 개념 수준 기여도를 측정하기 위해 수행하는 핵심 단계는 무엇인가?",
+          "options": [
+            "이미지에 노이즈를 추가한다",
+            "지역을 마스크하고 출력 변화를 비교한다",
+            "이미지 색상을 반전시킨다",
+            "이미지를 회전시킨다"
+          ],
+          "answer_index": 1,
+          "explanation": "HnS는 개념이 위치한 영역을 마스크한 뒤 원본 이미지와 마스크 이미지의 모델 출력 차이를 측정해 기여도를 추정한다."
+        },
+        {
+          "question": "HnS의 실험 검증에 사용된 데이터셋는 다음 중 어느 것인가?",
+          "options": [
+            "ImageNet",
+            "CelebA",
+            "COCO-Stuff",
+            "CelebA와 COCO-Stuff 모두"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 따르면 HnS는 CelebA와 COCO-Stuff 두 데이터셋에서 기존 방법보다 더 높은 일치도를 보였다."
+        }
+      ]
+    },
+    {
+      "id": "bb0b49818bac",
+      "title": "서비스 개발에 집중할 수 있는 AI 플랫폼 만들기",
+      "url": "https://toss.tech/article/ai-platform-foundation",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-10-13T01:34:00",
+      "summary": "AI 플랫폼으로 모델 관리·비용·운영을 통합해 서비스 개발 효율을 높인다",
+      "positioning": null,
+      "tags": [
+        "GenAI Portal",
+        "GenAI Gateway",
+        "LLM Gateway",
+        "MCP Gateway",
+        "Toss"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "모델 호출은 쉬우나 서비스 적용 시 모델·데이터 범위·예상 비용·처리 용량을 검토해야 한다",
+          "timestamp": null
+        },
+        {
+          "point": "토스 AI Platform이 모델 신청·설정·권한·사용량 집계 등을 중앙화해 서비스 팀의 중복 작업을 제거한다",
+          "timestamp": null
+        },
+        {
+          "point": "GenAI Portal에서 모델 가격·성능을 비교·선택하고 프로젝트에 설정 후 API 키를 발급받아 Gateway가 실제 호출에 적용한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "데이터 파이프라인 포털을 구축해 파이프라인 선택·비용·성능을 비교하고 API 키를 발급받아 중앙화된 실행 환경을 제공한다",
+        "내부 마이크로서비스용 게이트웨이를 도입해 권한 검증·사용량 제한을 적용, 서비스 간 호출 안정성을 확보한다",
+        "머신러닝 피처 엔지니어링 단계별 벤치마크 대시보드를 만들어 다양한 피처 조합의 성능·비용을 시각화하고 선택을 지원한다"
+      ],
+      "quiz": [
+        {
+          "question": "GenAI Gateway가 서비스와 모델 사이에 존재하는 주요 이유는 무엇인가?",
+          "options": [
+            "모델 정확도를 향상시키기 위해",
+            "권한 확인 및 사용량 집계 등 운영 관리 기능을 제공하기 위해",
+            "데이터 라벨링을 수행하기 위해",
+            "사용자 인터페이스를 제공하기 위해"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 Gateway는 권한 확인과 사용량 집계 등 운영 관련 처리를 담당한다."
+        },
+        {
+          "question": "GenAI Portal이 모델 선택 시 제공하는 핵심 기능은 무엇인가?",
+          "options": [
+            "실시간 채팅 지원",
+            "모델 가격·사양·성능 비교와 프로젝트 설정",
+            "자동 코드 생성",
+            "데이터 라벨링 툴 제공"
+          ],
+          "answer_index": 1,
+          "explanation": "Portal에서는 모델별 가격·사양·성능을 비교하고 프로젝트에 필요한 설정을 입력하도록 돕는다."
+        }
+      ]
+    },
+    {
+      "id": "859a8e76f628",
+      "title": "CPU 뼛속까지 써먹고, Milvus 사이징 기준을 만들기까지",
+      "url": "https://toss.tech/article/milvus-optimization-and-sizing",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-10-12T01:00:00",
+      "summary": "CPU·메모리 최적화로 Milvus 검색 성능과 비용을 동시에 개선",
+      "positioning": null,
+      "tags": [
+        "Milvus",
+        "CPU",
+        "메모리",
+        "벡터 검색",
+        "인덱스"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "CPU·메모리 배치를 조정해 동일 서버에서 처리량을 41% 향상시켰다",
+          "timestamp": null
+        },
+        {
+          "point": "벡터 차원·검색 설정·서버 수를 변형해 실서비스에 맞는 사이징 기준을 도출했다",
+          "timestamp": null
+        },
+        {
+          "point": "공개 벤치마크 QPS만으로는 온프레미스 환경의 실제 처리량·지연시간을 예측하기 어려워 직접 측정이 필요했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "CPU·메모리 배치 최적화를 적용해 ETL 파이프라인의 배치 처리 지연을 감소시킨다",
+        "벡터 차원·인덱스 설정 변화를 활용해 추천 시스템의 용량 계획을 수립한다",
+        "실시간 사기 탐지 마이크로서비스에 동일한 배치 최적화 기법을 적용해 서버 수를 줄이고 비용을 절감한다"
+      ],
+      "quiz": [
+        {
+          "question": "CPU와 메모리 배치를 바꾸면 같은 서버에서 처리량이 증가하는 주요 이유는 무엇인가?",
+          "options": [
+            "네트워크 대역폭 확대",
+            "CPU 캐시 지역성 및 NUMA 최적화",
+            "디스크 I/O 속도 향상",
+            "GPU 가속 사용"
+          ],
+          "answer_index": 1,
+          "explanation": "CPU와 메모리 배치를 재조정하면 데이터가 CPU 캐시에 더 가깝게 배치되고 NUMA 구조를 효율적으로 활용해 메모리 접근 지연이 감소해 처리량이 상승한다."
+        },
+        {
+          "question": "벡터 차원과 검색 설정을 변경하면 사이징 기준에 어떤 영향을 미치는가?",
+          "options": [
+            "처리량만 감소한다",
+            "메모리 사용량만 증가한다",
+            "검색 정확도와 처리량·메모리 사용량 모두 변한다",
+            "전혀 영향을 주지 않는다"
+          ],
+          "answer_index": 2,
+          "explanation": "차원 수와 검색 파라미터는 인덱스 크기와 연산 복잡도에 직접 영향을 주어 메모리 사용량, 처리량, 그리고 검색 정확도 모두 변화시킨다."
+        }
+      ]
+    },
+    {
+      "id": "a607cc3b436f",
+      "title": "What Most People Get Wrong About Evolution | Akarsh Kumar",
+      "url": "https://youtu.be/615B5nyMFPk",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-10-10T04:31:57",
+      "summary": "진화 알고리즘이 복잡 문제 탐색에 핵심임을 강조",
+      "positioning": null,
+      "tags": [
+        "Conway's Game of Life",
+        "Core War",
+        "LLM",
+        "Picbreeder",
+        "Artificial life"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Evolution is not random; deterministic processes generate complexity",
+          "timestamp": "00:00"
+        },
+        {
+          "point": "Conway's Game of Life shows that ultra‑simple rules can yield insane complexity",
+          "timestamp": "00:22"
+        },
+        {
+          "point": "Evolution is a powerful algorithm for solving discrete combinatorial problems by building on partial solutions",
+          "timestamp": "03:12"
+        }
+      ],
+      "ideas": [
+        "LLM 기반 진화 방식을 활용해 API 테스트용 극한 입력 케이스를 자동 생성해 소프트웨어 견고성을 높인다",
+        "셀룰러 오토마타 규칙 공간 탐색을 메타‑하이퍼파라미터 탐색에 적용해 새로운 신경망 구조를 효율적으로 발견한다",
+        "진화 알고리즘을 이용해 고차원 데이터의 특징 집합을 진화시켜 모델 성능을 최적화한다"
+      ],
+      "quiz": [
+        {
+          "question": "Conway's Game of Life이 단순 규칙에도 불구하고 복잡한 행동을 보이는 이유는?",
+          "options": [
+            "무작위 초기 상태 때문",
+            "단순 결정론적 규칙이 상호작용해 emergent 복잡성을 만든다",
+            "양자역학을 시뮬레이션하기 때문",
+            "내장된 무작위성이 있기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "게임은 완전히 결정론적이지만, 셀 간의 간단한 상호작용이 예측 불가능한 패턴을 생성한다."
+        },
+        {
+          "question": "진화 탐색이 이산 조합 문제 해결에 제공하는 장점은?",
+          "options": [
+            "부분 해결을 이어가며 탐색 차원을 선형으로 감소시킨다",
+            "전역 최적을 보장한다",
+            "평가 함수가 필요 없다",
+            "연속 공간에만 적용 가능하다"
+          ],
+          "answer_index": 0,
+          "explanation": "진화는 이미 찾은 부분 해를 고정하고 나머지를 탐색함으로써 지수적 탐색을 선형에 가깝게 만든다."
+        }
+      ]
+    },
+    {
+      "id": "0075550ec422",
+      "title": "DeepSeek Solved AI’s Memory Problem",
+      "url": "https://youtu.be/4fLVq6HJsKc",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-10-11T16:53:17",
+      "summary": "AI 토큰 비용 절감, 대규모 문서 압축",
+      "positioning": null,
+      "tags": [
+        "DeepSeek",
+        "OCR",
+        "JPEG",
+        "A100 GPU",
+        "LLM"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "텍스트를 이미지로 변환 후 학습 기반 압축 적용",
+          "timestamp": "00:54"
+        },
+        {
+          "point": "10배 압축에서도 텍스트 96% 이상 복원 가능",
+          "timestamp": "01:47"
+        },
+        {
+          "point": "지역 윈도우 어텐션·16배 컨볼루션·전역 시각 처리로 고해상도 문서 비용 절감",
+          "timestamp": "03:00"
+        }
+      ],
+      "ideas": [
+        "텍스트 로그 데이터를 이미지로 변환·압축해 저장하면, 시각 패턴 기반 이상 탐지를 저비용으로 수행할 수 있다.",
+        "고해상도 위성 영상을 이미지 압축 후 비전 인코더로 변환하면, 지리 정보 LLM 학습 시 GPU 메모리 사용량을 크게 줄인다.",
+        "대규모 그래프 인접 행렬을 이미지 형태로 압축하고 동일한 인코더 구조로 복원하면, 그래프 신경망 전처리 비용을 절감한다."
+      ],
+      "quiz": [
+        {
+          "question": "DeepSeek OCR가 10배 압축에서도 높은 텍스트 복원률을 보이는 이유는 무엇인가?",
+          "options": [
+            "손실 없는 JPEG 알고리즘을 사용했기 때문",
+            "언어 사전 확률을 활용해 누락된 단어를 추정하기 때문",
+            "원본 텍스트를 메타데이터에 별도로 저장했기 때문",
+            "양자 인코딩을 적용했기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "본문 04:21에 따르면, 압축이 과도해지면 모델이 시각 정보를 잃고 대신 언어 사전 확률을 이용해 가장 가능성 높은 단어를 추정한다."
+        },
+        {
+          "question": "높은 해상도 문서를 비용 폭발 없이 처리하기 위한 핵심 엔지니어링 트릭은 무엇인가?",
+          "options": [
+            "전체 픽셀에 전역 어텐션 적용",
+            "지역 윈도우 어텐션·16배 컨볼루션 압축·전역 시각 처리 결합",
+            "대형 GPU만 사용",
+            "텍스트를 오디오로 변환 후 처리"
+          ],
+          "answer_index": 1,
+          "explanation": "03:00~03:14에 설명된 바와 같이, 로컬 윈도우 어텐션과 16배 컨볼루션 압축, 그리고 전역 시각 처리를 조합해 비용을 낮춘다."
+        }
+      ]
+    }
+  ]
+}

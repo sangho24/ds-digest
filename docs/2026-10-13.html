@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 13일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 13일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">멀티모달 표현 학습</span><span class="concept">AI 생산성 도구</span><span class="concept">AI 비용 효율성</span><span class="concept">개발자 경험 개선</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">디자인 트레이드오프</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">코드 자동생성</span><span class="concept">진화 알고리즘</span><span class="concept">AI 에이전트 메모리 관리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.13935v1" target="_blank" rel="noopener">Hide and Seek: HIDE Concepts to SEEK explanations for black box models</a>
+        </h2>
+
+        <p class="summary">블랙박스 비전 모델의 개념 수준 설명을 직접 측정해 해석 가능성을 높인다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>이 논문은 블랙박스 비전 모델의 해석 가능성 문제를 기존에 가중치·대규모 라벨 데이터가 필요하던 개념 기반 방법의 한계를 넘어, 비전‑언어 모델을 활용해 모델-불가지론적인 지역 설명을 제공하는 흐름에 위치한다. 기존 방법이 분류·회귀에 국한된 반면, HnS는 다양한 비전 과제에 적용 가능해 새로운 모델 제어 수단을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>HnS는 모델 가중치나 라벨된 개념 데이터 없이 비전‑언어 모델로 개념에 맞는 이미지를 찾아 마스크하고 출력 변화를 측정해 개념 수준 기여도를 추정한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>마스크된 영역과 원본 이미지의 출력 차이를 직접 측정함으로써 지역적이고 신뢰성 있는 설명을 제공한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>CelebA와 COCO‑Stuff에서 기존 방법보다 실제 기여도와 더 잘 일치했으며, 이미지 캡셔닝·위성 이미지 분할 등 기존 방법이 적용되지 못한 작업에도 활용 가능하다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>텍스트 분류 모델에 개념 단어가 포함된 문장을 언어 모델로 검색하고, 해당 단어를 마스크한 뒤 출력 변화를 측정해 개념 기여도를 평가한다</span></li>
+            
+            <li><span class="box"></span><span>오디오 인식 모델에서 특정 소리 개념이 포함된 클립을 오디오‑텍스트 모델로 찾고, 해당 구간을 무음 처리해 모델 출력 변화를 분석한다</span></li>
+            
+            <li><span class="box"></span><span>강화학습 정책에 대해 상태 이미지에서 특정 객체 개념을 비전‑언어 모델로 식별하고, 해당 객체를 가리워 정책 행동 변화를 측정해 개념 기반 정책 해석을 시도한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">HnS가 개념 수준 기여도를 측정하기 위해 수행하는 핵심 단계는 무엇인가?</div>
+            
+            <div class="q-opt">① 이미지에 노이즈를 추가한다</div>
+            
+            <div class="q-opt">② 지역을 마스크하고 출력 변화를 비교한다</div>
+            
+            <div class="q-opt">③ 이미지 색상을 반전시킨다</div>
+            
+            <div class="q-opt">④ 이미지를 회전시킨다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 지역을 마스크하고 출력 변화를 비교한다</div>
+              <div class="why">HnS는 개념이 위치한 영역을 마스크한 뒤 원본 이미지와 마스크 이미지의 모델 출력 차이를 측정해 기여도를 추정한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">HnS의 실험 검증에 사용된 데이터셋는 다음 중 어느 것인가?</div>
+            
+            <div class="q-opt">① ImageNet</div>
+            
+            <div class="q-opt">② CelebA</div>
+            
+            <div class="q-opt">③ COCO-Stuff</div>
+            
+            <div class="q-opt">④ CelebA와 COCO-Stuff 모두</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ CelebA와 COCO-Stuff 모두</div>
+              <div class="why">본문에 따르면 HnS는 CelebA와 COCO-Stuff 두 데이터셋에서 기존 방법보다 더 높은 일치도를 보였다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Hide and Seek</span><span class="tag">vision-language model</span><span class="tag">CelebA</span><span class="tag">COCO-Stuff</span><span class="tag">satellite image segmentation</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/ai-platform-foundation" target="_blank" rel="noopener">서비스 개발에 집중할 수 있는 AI 플랫폼 만들기</a>
+        </h2>
+
+        <p class="summary">AI 플랫폼으로 모델 관리·비용·운영을 통합해 서비스 개발 효율을 높인다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델 호출은 쉬우나 서비스 적용 시 모델·데이터 범위·예상 비용·처리 용량을 검토해야 한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>토스 AI Platform이 모델 신청·설정·권한·사용량 집계 등을 중앙화해 서비스 팀의 중복 작업을 제거한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GenAI Portal에서 모델 가격·성능을 비교·선택하고 프로젝트에 설정 후 API 키를 발급받아 Gateway가 실제 호출에 적용한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 포털을 구축해 파이프라인 선택·비용·성능을 비교하고 API 키를 발급받아 중앙화된 실행 환경을 제공한다</span></li>
+            
+            <li><span class="box"></span><span>내부 마이크로서비스용 게이트웨이를 도입해 권한 검증·사용량 제한을 적용, 서비스 간 호출 안정성을 확보한다</span></li>
+            
+            <li><span class="box"></span><span>머신러닝 피처 엔지니어링 단계별 벤치마크 대시보드를 만들어 다양한 피처 조합의 성능·비용을 시각화하고 선택을 지원한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">GenAI Gateway가 서비스와 모델 사이에 존재하는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 정확도를 향상시키기 위해</div>
+            
+            <div class="q-opt">② 권한 확인 및 사용량 집계 등 운영 관리 기능을 제공하기 위해</div>
+            
+            <div class="q-opt">③ 데이터 라벨링을 수행하기 위해</div>
+            
+            <div class="q-opt">④ 사용자 인터페이스를 제공하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 권한 확인 및 사용량 집계 등 운영 관리 기능을 제공하기 위해</div>
+              <div class="why">본문에 따르면 Gateway는 권한 확인과 사용량 집계 등 운영 관련 처리를 담당한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">GenAI Portal이 모델 선택 시 제공하는 핵심 기능은 무엇인가?</div>
+            
+            <div class="q-opt">① 실시간 채팅 지원</div>
+            
+            <div class="q-opt">② 모델 가격·사양·성능 비교와 프로젝트 설정</div>
+            
+            <div class="q-opt">③ 자동 코드 생성</div>
+            
+            <div class="q-opt">④ 데이터 라벨링 툴 제공</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모델 가격·사양·성능 비교와 프로젝트 설정</div>
+              <div class="why">Portal에서는 모델별 가격·사양·성능을 비교하고 프로젝트에 필요한 설정을 입력하도록 돕는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GenAI Portal</span><span class="tag">GenAI Gateway</span><span class="tag">LLM Gateway</span><span class="tag">MCP Gateway</span><span class="tag">Toss</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/milvus-optimization-and-sizing" target="_blank" rel="noopener">CPU 뼛속까지 써먹고, Milvus 사이징 기준을 만들기까지</a>
+        </h2>
+
+        <p class="summary">CPU·메모리 최적화로 Milvus 검색 성능과 비용을 동시에 개선</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>CPU·메모리 배치를 조정해 동일 서버에서 처리량을 41% 향상시켰다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>벡터 차원·검색 설정·서버 수를 변형해 실서비스에 맞는 사이징 기준을 도출했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>공개 벤치마크 QPS만으로는 온프레미스 환경의 실제 처리량·지연시간을 예측하기 어려워 직접 측정이 필요했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>CPU·메모리 배치 최적화를 적용해 ETL 파이프라인의 배치 처리 지연을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>벡터 차원·인덱스 설정 변화를 활용해 추천 시스템의 용량 계획을 수립한다</span></li>
+            
+            <li><span class="box"></span><span>실시간 사기 탐지 마이크로서비스에 동일한 배치 최적화 기법을 적용해 서버 수를 줄이고 비용을 절감한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">CPU와 메모리 배치를 바꾸면 같은 서버에서 처리량이 증가하는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 네트워크 대역폭 확대</div>
+            
+            <div class="q-opt">② CPU 캐시 지역성 및 NUMA 최적화</div>
+            
+            <div class="q-opt">③ 디스크 I/O 속도 향상</div>
+            
+            <div class="q-opt">④ GPU 가속 사용</div>
+            
+            <div class="q-answer">
+              <div class="correct">② CPU 캐시 지역성 및 NUMA 최적화</div>
+              <div class="why">CPU와 메모리 배치를 재조정하면 데이터가 CPU 캐시에 더 가깝게 배치되고 NUMA 구조를 효율적으로 활용해 메모리 접근 지연이 감소해 처리량이 상승한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">벡터 차원과 검색 설정을 변경하면 사이징 기준에 어떤 영향을 미치는가?</div>
+            
+            <div class="q-opt">① 처리량만 감소한다</div>
+            
+            <div class="q-opt">② 메모리 사용량만 증가한다</div>
+            
+            <div class="q-opt">③ 검색 정확도와 처리량·메모리 사용량 모두 변한다</div>
+            
+            <div class="q-opt">④ 전혀 영향을 주지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 검색 정확도와 처리량·메모리 사용량 모두 변한다</div>
+              <div class="why">차원 수와 검색 파라미터는 인덱스 크기와 연산 복잡도에 직접 영향을 주어 메모리 사용량, 처리량, 그리고 검색 정확도 모두 변화시킨다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Milvus</span><span class="tag">CPU</span><span class="tag">메모리</span><span class="tag">벡터 검색</span><span class="tag">인덱스</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/615B5nyMFPk" target="_blank" rel="noopener">What Most People Get Wrong About Evolution | Akarsh Kumar</a>
+        </h2>
+
+        <p class="summary">진화 알고리즘이 복잡 문제 탐색에 핵심임을 강조</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>Evolution is not random; deterministic processes generate complexity</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:22</span>
+            
+            <span>Conway's Game of Life shows that ultra‑simple rules can yield insane complexity</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:12</span>
+            
+            <span>Evolution is a powerful algorithm for solving discrete combinatorial problems by building on partial solutions</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 진화 방식을 활용해 API 테스트용 극한 입력 케이스를 자동 생성해 소프트웨어 견고성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>셀룰러 오토마타 규칙 공간 탐색을 메타‑하이퍼파라미터 탐색에 적용해 새로운 신경망 구조를 효율적으로 발견한다</span></li>
+            
+            <li><span class="box"></span><span>진화 알고리즘을 이용해 고차원 데이터의 특징 집합을 진화시켜 모델 성능을 최적화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Conway's Game of Life이 단순 규칙에도 불구하고 복잡한 행동을 보이는 이유는?</div>
+            
+            <div class="q-opt">① 무작위 초기 상태 때문</div>
+            
+            <div class="q-opt">② 단순 결정론적 규칙이 상호작용해 emergent 복잡성을 만든다</div>
+            
+            <div class="q-opt">③ 양자역학을 시뮬레이션하기 때문</div>
+            
+            <div class="q-opt">④ 내장된 무작위성이 있기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 단순 결정론적 규칙이 상호작용해 emergent 복잡성을 만든다</div>
+              <div class="why">게임은 완전히 결정론적이지만, 셀 간의 간단한 상호작용이 예측 불가능한 패턴을 생성한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">진화 탐색이 이산 조합 문제 해결에 제공하는 장점은?</div>
+            
+            <div class="q-opt">① 부분 해결을 이어가며 탐색 차원을 선형으로 감소시킨다</div>
+            
+            <div class="q-opt">② 전역 최적을 보장한다</div>
+            
+            <div class="q-opt">③ 평가 함수가 필요 없다</div>
+            
+            <div class="q-opt">④ 연속 공간에만 적용 가능하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 부분 해결을 이어가며 탐색 차원을 선형으로 감소시킨다</div>
+              <div class="why">진화는 이미 찾은 부분 해를 고정하고 나머지를 탐색함으로써 지수적 탐색을 선형에 가깝게 만든다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Conway's Game of Life</span><span class="tag">Core War</span><span class="tag">LLM</span><span class="tag">Picbreeder</span><span class="tag">Artificial life</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/4fLVq6HJsKc" target="_blank" rel="noopener">DeepSeek Solved AI’s Memory Problem</a>
+        </h2>
+
+        <p class="summary">AI 토큰 비용 절감, 대규모 문서 압축</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:54</span>
+            
+            <span>텍스트를 이미지로 변환 후 학습 기반 압축 적용</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:47</span>
+            
+            <span>10배 압축에서도 텍스트 96% 이상 복원 가능</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:00</span>
+            
+            <span>지역 윈도우 어텐션·16배 컨볼루션·전역 시각 처리로 고해상도 문서 비용 절감</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>텍스트 로그 데이터를 이미지로 변환·압축해 저장하면, 시각 패턴 기반 이상 탐지를 저비용으로 수행할 수 있다.</span></li>
+            
+            <li><span class="box"></span><span>고해상도 위성 영상을 이미지 압축 후 비전 인코더로 변환하면, 지리 정보 LLM 학습 시 GPU 메모리 사용량을 크게 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 그래프 인접 행렬을 이미지 형태로 압축하고 동일한 인코더 구조로 복원하면, 그래프 신경망 전처리 비용을 절감한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">DeepSeek OCR가 10배 압축에서도 높은 텍스트 복원률을 보이는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 손실 없는 JPEG 알고리즘을 사용했기 때문</div>
+            
+            <div class="q-opt">② 언어 사전 확률을 활용해 누락된 단어를 추정하기 때문</div>
+            
+            <div class="q-opt">③ 원본 텍스트를 메타데이터에 별도로 저장했기 때문</div>
+            
+            <div class="q-opt">④ 양자 인코딩을 적용했기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 언어 사전 확률을 활용해 누락된 단어를 추정하기 때문</div>
+              <div class="why">본문 04:21에 따르면, 압축이 과도해지면 모델이 시각 정보를 잃고 대신 언어 사전 확률을 이용해 가장 가능성 높은 단어를 추정한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">높은 해상도 문서를 비용 폭발 없이 처리하기 위한 핵심 엔지니어링 트릭은 무엇인가?</div>
+            
+            <div class="q-opt">① 전체 픽셀에 전역 어텐션 적용</div>
+            
+            <div class="q-opt">② 지역 윈도우 어텐션·16배 컨볼루션 압축·전역 시각 처리 결합</div>
+            
+            <div class="q-opt">③ 대형 GPU만 사용</div>
+            
+            <div class="q-opt">④ 텍스트를 오디오로 변환 후 처리</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 지역 윈도우 어텐션·16배 컨볼루션 압축·전역 시각 처리 결합</div>
+              <div class="why">03:00~03:14에 설명된 바와 같이, 로컬 윈도우 어텐션과 16배 컨볼루션 압축, 그리고 전역 시각 처리를 조합해 비용을 낮춘다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">DeepSeek</span><span class="tag">OCR</span><span class="tag">JPEG</span><span class="tag">A100 GPU</span><span class="tag">LLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
