@@ -15,6 +15,15 @@
     .venv/bin/python -m evals.judge run --judge qwen --since 2026-10-01 --limit 20
     .venv/bin/python -m evals.judge report --window 14 --json
     .venv/bin/python -m evals.judge disagreements --out data/evals/disagreements.json
+    .venv/bin/python -m evals.judge labeling --out data/evals/labeling.html
+    .venv/bin/python -m evals.judge import-labels labels.json
+
+사람 표시 흐름:
+    disagreements → labeling(HTML 한 장, 브라우저에서 표시) → "결과 JSON 복사" →
+    import-labels(data/evals/labels.jsonl 에 append) → report 에 심판별 사람 일치율.
+
+환경변수:
+    CLI 진입 시 프로젝트 루트의 .env 를 읽되, 이미 설정된 변수는 덮지 않는다.
 """
 
 from __future__ import annotations
@@ -23,6 +32,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 import hashlib
+import html
 import json
 import os
 from pathlib import Path
@@ -32,11 +42,30 @@ import threading
 import time
 from typing import Any, Callable, TextIO
 
+from dotenv import load_dotenv
 import httpx
 
 ROOT = Path(__file__).resolve().parent.parent
 RECORDS_DIR = ROOT / "data" / "records"
 DEFAULT_CACHE_PATH = ROOT / "data" / "evals" / "judgments.jsonl"
+DEFAULT_LABELS_PATH = ROOT / "data" / "evals" / "labels.jsonl"
+
+# 사람 표시 값. 페이지의 라디오 값이자 labels.jsonl 의 human 필드다.
+HUMAN_CHOICES = ("supported", "unsupported", "unsure")
+HUMAN_LABELS_KO = {"supported": "근거 있음", "unsupported": "근거 없음", "unsure": "판단 보류"}
+
+
+def load_project_env(env_path: Path | str | None = None) -> bool:
+    """프로젝트 루트 .env 를 읽어 **아직 없는** 환경변수만 채운다(override=False).
+
+    app/config.py 가 pydantic_settings 로 읽는 것과 같은 파일이다. CLI 진입(main)
+    시점에만 부른다. import 시점에 부르면 테스트가 개발자의 .env 키를 물려받는다.
+    키 값은 어디에도 출력하지 않는다. 파일이 없으면 False.
+    """
+    path = Path(env_path) if env_path is not None else ROOT / ".env"
+    if not path.is_file():
+        return False
+    return bool(load_dotenv(path, override=False))
 
 JUDGE_MAX_CHARS = int(os.environ.get("JUDGE_MAX_CHARS", "16000"))
 MAX_WORKERS = 4
@@ -1042,6 +1071,82 @@ def compute_agreement(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
     }
 
 
+def question_id(url: Any, analysis_hash: Any, prompt_hash: Any, question: Any, index: Any) -> str:
+    """사람 표시 항목의 결정적 id. 같은 (url, analysis, prompt, 질문, 번호)면 언제 만들어도 같다."""
+    raw = "|".join(str(part) for part in (url, analysis_hash, prompt_hash, question, index))
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def _claimed_positive(question: str, entry: dict[str, Any]) -> bool:
+    """심판 주장(claimed)을 사람 표시의 '근거 있음' 과 같은 축으로 접는다.
+
+    퀴즈는 answerable 과 answer_correct 가 모두 참일 때만 긍정이다. 사람은 질문 하나에
+    한 번 표시하므로 두 필드를 따로 대조하지 않는다.
+    """
+    if question == "summary":
+        return bool(entry.get("faithful"))
+    if question == "key_points":
+        return bool(entry.get("supported"))
+    if question == "production_ideas":
+        return bool(entry.get("grounded"))
+    if question == "quiz":
+        return bool(entry.get("answerable")) and bool(entry.get("answer_correct"))
+    return False
+
+
+def _row_question_entries(row: dict[str, Any]) -> list[tuple[str, str, dict[str, Any]]]:
+    """심판 행의 판정 항목마다 (question_id, 질문 종류, 항목). id 는 find_disagreements 와 같은 규칙."""
+    verdicts = row.get("verdicts") or {}
+    url, analysis_hash, prompt_hash = row.get("url"), row.get("analysis_hash"), row.get("prompt_hash")
+    out: list[tuple[str, str, dict[str, Any]]] = []
+    for kind in QUESTION_KINDS:
+        if kind == "summary":
+            entries = [verdicts.get("summary")] if verdicts.get("summary") else []
+        else:
+            entries = list(verdicts.get(kind) or [])
+        for position, entry in enumerate(entries):
+            if not isinstance(entry, dict):
+                continue
+            index = 0 if kind == "summary" else entry.get("index", position)
+            out.append((question_id(url, analysis_hash, prompt_hash, kind, index), kind, entry))
+    return out
+
+
+def compute_human_agreement(
+    rows: list[dict[str, Any]], labels: dict[str, dict[str, Any]] | None
+) -> dict[str, Any] | None:
+    """심판별 사람 일치율. human 이 보류(unsure)인 라벨은 분모에서 뺀다.
+
+    라벨은 **id 로만** 매칭한다. id 가 (url, analysis_hash, prompt_hash, 질문, 번호)의
+    결정적 해시라 심판 행 쪽에서 같은 규칙으로 계산해 대조하면 되고, 라벨에 실린
+    url 등 키 필드는 사람이 읽기 위한 보조 정보일 뿐이다. 심판 행이 없는 라벨은 그
+    심판에서 세지 않는다.
+    """
+    if not labels:
+        return None
+    index = _judged_index(rows)
+    by_judge = {judge_id: {"compared": 0, "agreed": 0} for judge_id in sorted(index)}
+    unsure = sum(1 for label in labels.values() if label.get("human") == "unsure")
+    active = {label_id: label for label_id, label in labels.items() if label.get("human") != "unsure"}
+    for judge_id, items in index.items():
+        for row in items.values():
+            for label_id, kind, entry in _row_question_entries(row):
+                label = active.get(label_id)
+                if label is None:
+                    continue
+                by_judge[judge_id]["compared"] += 1
+                if _claimed_positive(kind, entry) == (label.get("human") == "supported"):
+                    by_judge[judge_id]["agreed"] += 1
+    return {
+        "labels": len(labels),
+        "unsure": unsure,
+        "by_judge": {
+            judge_id: {**counts, "rate": _rate(counts["agreed"], counts["compared"])}
+            for judge_id, counts in by_judge.items()
+        },
+    }
+
+
 def build_report(
     rows: list[dict[str, Any]],
     *,
@@ -1049,12 +1154,14 @@ def build_report(
     until: date | None = None,
     prompt_hash: str | None = PROMPT_HASH,
     current_keys: set[tuple[str, str]] | None = None,
+    labels: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """심판별 주(ISO 월요일 시작) 단위와 최근 창 지표, 두 심판의 일치율.
+    """심판별 주(ISO 월요일 시작) 단위와 최근 창 지표, 두 심판의 일치율, 사람 일치율.
 
     최근 창의 기준일(until)은 오늘이 아니라 판정 데이터의 마지막 날짜다(evals/run.py 의
     `_recent_since` 와 같은 규칙). 파이프라인이 멈춰도 창이 통째로 비지 않게 한다.
     prompt_hash 가 None 이면 모든 프롬프트의 행을 본다(`--all-prompts`).
+    labels 가 있으면(import-labels 로 반입한 사람 표시) 심판별 사람 일치율을 함께 낸다.
     """
     rows, filtered = filter_current_rows(rows, prompt_hash=prompt_hash, current_keys=current_keys)
     latest = list(latest_rows(rows).values())
@@ -1101,6 +1208,7 @@ def build_report(
             "overall": compute_agreement(latest),
             "window": compute_agreement(window_rows_all),
         },
+        "human": compute_human_agreement(latest, labels),
     }
 
 
@@ -1149,6 +1257,16 @@ def format_report(report: dict[str, Any]) -> str:
         )
     else:
         lines.append("[일치율] 두 심판이 모두 판정한 아이템이 없다.")
+    human = report.get("human")
+    if human:
+        parts = [
+            f"{judge_id} {_fmt(block['rate'])} ({block['agreed']}/{block['compared']})"
+            for judge_id, block in human["by_judge"].items()
+        ]
+        lines.append(
+            f"[사람 일치율] 표시 {human['labels']}건 (보류 {human['unsure']}건은 분모 제외) | "
+            + (" ".join(parts) if parts else "대조할 심판 행이 없다")
+        )
     return "\n".join(lines)
 
 
@@ -1243,6 +1361,7 @@ def find_disagreements(
                 quotes = [left_entry.get("quote"), right_entry.get("quote")]
                 questions.append(
                     {
+                        "id": question_id(key[0], key[1], key[2], kind, position),
                         "question": kind,
                         "index": position,
                         "text": left_entry.get("text"),
@@ -1267,6 +1386,284 @@ def find_disagreements(
                 }
             )
     return items
+
+
+# ──────────────────────────────────────────────
+# 사람 표시: labels.jsonl
+# ──────────────────────────────────────────────
+
+# 라벨에 함께 실리는 보조 필드. 매칭은 id 로만 하고, 이 필드들은 사람이 읽기 위한 것이다.
+LABEL_KEY_FIELDS = ("url", "analysis_hash", "prompt_hash", "question", "index")
+
+
+def resolve_labels_path(path: Path | str | None = None) -> Path:
+    if path is not None:
+        return Path(path)
+    env = os.environ.get("JUDGE_LABELS_PATH")
+    return Path(env) if env else DEFAULT_LABELS_PATH
+
+
+def normalize_label(raw: Any) -> dict[str, Any] | None:
+    """페이지가 낸 라벨 하나를 저장 형태로 다듬는다. id 나 human 이 없거나 값이 틀리면 None."""
+    if not isinstance(raw, dict):
+        return None
+    label_id = str(raw.get("id") or "").strip()
+    human = str(raw.get("human") or "").strip()
+    if not label_id or human not in HUMAN_CHOICES:
+        return None
+    record: dict[str, Any] = {"id": label_id, "human": human, "note": str(raw.get("note") or "").strip()}
+    for field in LABEL_KEY_FIELDS:
+        record[field] = raw.get(field)
+    return record
+
+
+def load_labels(path: Path | str | None = None) -> dict[str, dict[str, Any]]:
+    """labels.jsonl 을 읽어 id → 마지막 레코드. 같은 id 가 여러 번이면 뒤의 것이 이긴다."""
+    labels_path = resolve_labels_path(path)
+    latest: dict[str, dict[str, Any]] = {}
+    if not labels_path.exists():
+        return latest
+    with labels_path.open(encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                record = normalize_label(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+            if record is not None:
+                latest[record["id"]] = record
+    return latest
+
+
+def import_labels(source: Path | str, labels_path: Path | str | None = None) -> dict[str, int]:
+    """페이지에서 복사한 JSON(목록 또는 {"labels": [...]})을 labels.jsonl 에 append 한다."""
+    payload = json.loads(Path(source).read_text(encoding="utf-8"))
+    if isinstance(payload, dict):
+        payload = payload.get("labels")
+    if not isinstance(payload, list):
+        raise ValueError("라벨 JSON 은 목록이거나 {\"labels\": [...]} 여야 한다")
+    target = resolve_labels_path(labels_path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    imported = rejected = 0
+    labeled_at = _now_iso()
+    with target.open("a", encoding="utf-8") as handle:
+        for raw in payload:
+            record = normalize_label(raw)
+            if record is None:
+                rejected += 1
+                continue
+            record["labeled_at"] = labeled_at
+            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+            imported += 1
+    return {"imported": imported, "rejected": rejected}
+
+
+# ──────────────────────────────────────────────
+# 사람 표시: HTML 페이지
+# ──────────────────────────────────────────────
+
+QUESTION_LABELS_KO = {
+    "summary": "요약",
+    "key_points": "핵심 포인트",
+    "production_ideas": "적용 아이디어",
+    "quiz": "퀴즈",
+}
+_FIELD_LABELS_KO = {
+    "faithful": "충실",
+    "supported": "근거",
+    "grounded": "출발점",
+    "answerable": "답가능",
+    "answer_correct": "정답일치",
+}
+
+
+def _esc(value: Any) -> str:
+    return html.escape("" if value is None else str(value), quote=True)
+
+
+def _verdict_html(judge_id: str, question: str, view: dict[str, Any]) -> str:
+    fields = _QUESTION_FIELDS.get(question, ())
+    flags = " ".join(
+        f'<span class="flag {"yes" if view.get(f) else "no"}">{_FIELD_LABELS_KO.get(f, f)}'
+        f' {"예" if view.get(f) else "아니오"}</span>'
+        for f in fields
+    )
+    quote = view.get("quote")
+    if quote:
+        verified = "본문에 있음" if view.get("quote_verified") else "본문에 없음"
+        quote_html = f'<blockquote>{_esc(quote)}</blockquote><small class="qv">인용 검증: {verified}</small>'
+    else:
+        quote_html = '<small class="qv">인용 없음</small>'
+    claim = view.get("unsupported_claim")
+    claim_html = f'<p class="claim">근거 없다고 본 주장: {_esc(claim)}</p>' if claim else ""
+    return f'<div class="verdict"><strong>{_esc(judge_id)}</strong> {flags}{claim_html}{quote_html}</div>'
+
+
+def _question_html(item: dict[str, Any], question: dict[str, Any]) -> str:
+    kind = str(question.get("question"))
+    index = question.get("index")
+    label_id = _label_id_of(item, question)
+    verdicts = question.get("verdicts") or {}
+    verdict_blocks = "".join(_verdict_html(j, kind, v or {}) for j, v in verdicts.items())
+    radios = "".join(
+        f'<label><input type="radio" name="h-{_esc(label_id)}" value="{choice}"> {HUMAN_LABELS_KO[choice]}</label>'
+        for choice in HUMAN_CHOICES
+    )
+    excerpt = question.get("excerpt")
+    excerpt_html = (
+        f"<details><summary>본문 발췌</summary><p class=\"excerpt\">{_esc(excerpt)}</p></details>"
+        if excerpt
+        else '<p class="excerpt none">본문 발췌 없음</p>'
+    )
+    title = item.get("title") or item.get("url") or "(제목 없음)"
+    return (
+        f'<section class="q" data-id="{_esc(label_id)}" data-url="{_esc(item.get("url"))}"'
+        f' data-analysis-hash="{_esc(item.get("analysis_hash"))}" data-prompt-hash="{_esc(item.get("prompt_hash"))}"'
+        f' data-question="{_esc(kind)}" data-index="{_esc(index)}">'
+        f'<div class="meta">{_esc(item.get("date"))} · <a href="{_esc(item.get("url"))}" target="_blank" rel="noopener">'
+        f"{_esc(title)}</a> · {QUESTION_LABELS_KO.get(kind, _esc(kind))} #{_esc(index)}</div>"
+        f'<p class="target">{_esc(question.get("text"))}</p>'
+        f'<div class="verdicts">{verdict_blocks}</div>'
+        f"{excerpt_html}"
+        f'<div class="human">{radios} <input type="text" class="note" placeholder="한 줄 메모" maxlength="200"></div>'
+        "</section>"
+    )
+
+
+_LABELING_CSS = """
+:root{--bg:#fff;--fg:#1b1b1b;--muted:#666;--line:#ddd;--yes:#1a7f37;--no:#b42318;--box:#f6f7f9}
+@media(prefers-color-scheme:dark){:root{--bg:#121417;--fg:#e8e8e8;--muted:#9a9a9a;--line:#333;--yes:#4ade80;--no:#f87171;--box:#1c2026}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+main{max-width:860px;margin:0 auto}
+h1{font-size:20px;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 16px}
+.q{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:0 0 14px}
+.meta{color:var(--muted);font-size:13px;word-break:break-all}
+.meta a{color:inherit}
+.target{font-weight:600;margin:6px 0 10px}
+.verdict{background:var(--box);border-radius:6px;padding:8px 10px;margin:0 0 6px}
+.flag{display:inline-block;margin-left:6px;font-size:13px}
+.flag.yes{color:var(--yes)}.flag.no{color:var(--no)}
+.claim{margin:6px 0 0;font-size:14px}
+blockquote{margin:6px 0 2px;padding-left:10px;border-left:3px solid var(--line);white-space:pre-wrap;word-break:break-word}
+.qv{color:var(--muted)}
+details{margin:6px 0}
+.excerpt{white-space:pre-wrap;word-break:break-word;font-size:14px;color:var(--muted)}
+.excerpt.none{font-style:italic}
+.human{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.human label{white-space:nowrap}
+.note{flex:1 1 200px;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
+.foot{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{padding:8px 14px;border:1px solid var(--line);border-radius:6px;background:var(--box);color:var(--fg);cursor:pointer;font:inherit}
+#status{color:var(--muted);font-size:14px}
+#fallback{width:100%;min-height:140px;font:13px/1.4 ui-monospace,Menlo,monospace;display:none;margin-top:8px}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+"""
+
+_LABELING_JS = """
+(function(){
+  var sections=document.querySelectorAll('.q');
+  var status=document.getElementById('status');
+  var fallback=document.getElementById('fallback');
+  function collect(){
+    var out=[];
+    sections.forEach(function(s){
+      var r=s.querySelector('input[type=radio]:checked');
+      if(!r) return;
+      var note=s.querySelector('.note');
+      out.push({id:s.dataset.id,url:s.dataset.url,analysis_hash:s.dataset.analysisHash,
+        prompt_hash:s.dataset.promptHash,question:s.dataset.question,index:Number(s.dataset.index),
+        human:r.value,note:note?note.value.trim():''});
+    });
+    return out;
+  }
+  function refresh(){
+    if(status) status.textContent='표시 '+collect().length+' / '+sections.length+'건';
+  }
+  document.addEventListener('change',refresh);
+  refresh();
+  var btn=document.getElementById('copy');
+  if(btn) btn.addEventListener('click',function(){
+    var text=JSON.stringify(collect(),null,2);
+    function showFallback(){
+      fallback.style.display='block';fallback.value=text;fallback.focus();fallback.select();
+      status.textContent='클립보드 복사가 막혀 아래 상자에 넣었다. 전체 선택해 복사하라.';
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        status.textContent='결과 JSON '+collect().length+'건을 클립보드에 복사했다. import-labels 로 반입하라.';
+      },showFallback);
+    }else{showFallback();}
+  });
+})();
+"""
+
+
+def _label_id_of(item: dict[str, Any], question: dict[str, Any]) -> str:
+    return str(
+        question.get("id")
+        or question_id(
+            item.get("url"), item.get("analysis_hash"), item.get("prompt_hash"), question.get("question"), question.get("index")
+        )
+    )
+
+
+def dedupe_label_questions(items: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """같은 id 의 질문이 두 번 오면 뒤의 것을 버린다. (정리된 목록, 버린 수)
+
+    id 가 라디오 name 이라 중복되면 두 항목이 한 라디오 그룹으로 묶여 표시가 섞인다.
+    """
+    seen: set[str] = set()
+    cleaned: list[dict[str, Any]] = []
+    skipped = 0
+    for item in items:
+        kept: list[dict[str, Any]] = []
+        for question in item.get("questions") or []:
+            label_id = _label_id_of(item, question)
+            if label_id in seen:
+                skipped += 1
+                continue
+            seen.add(label_id)
+            kept.append(question)
+        if kept:
+            cleaned.append({**item, "questions": kept})
+    return cleaned, skipped
+
+
+def build_labeling_html(items: list[dict[str, Any]]) -> str:
+    """disagreements 목록으로 사람 표시용 단일 HTML 을 만든다. 외부 리소스를 쓰지 않는다.
+
+    중복 id 는 여기서도 걸러 라디오 name 충돌을 막는다. 건너뛴 수를 알리려면 호출 전에
+    dedupe_label_questions 를 직접 부른다(main 이 그렇게 한다).
+    """
+    items, _ = dedupe_label_questions(items)
+    question_count = sum(len(item.get("questions") or []) for item in items)
+    if question_count == 0:
+        body = '<p class="empty">엇갈린 항목이 없다. 두 심판이 모두 판정한 아이템에서 판정이 갈린 질문이 없다.</p>'
+        foot = ""
+    else:
+        sections = "".join(
+            _question_html(item, question) for item in items for question in item.get("questions") or []
+        )
+        body = sections
+        foot = (
+            '<div class="foot"><button id="copy" type="button">결과 JSON 복사</button>'
+            '<span id="status"></span><textarea id="fallback" readonly></textarea></div>'
+        )
+    return (
+        "<!doctype html>\n<html lang=\"ko\"><head><meta charset=\"utf-8\">"
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        "<title>LLM 심판 사람 표시</title>"
+        f"<style>{_LABELING_CSS}</style></head><body><main>"
+        "<h1>LLM 심판 사람 표시</h1>"
+        f'<p class="lead">두 심판이 엇갈린 질문 {question_count}건 (아이템 {len(items)}건). '
+        "본문 발췌를 보고 산출물에 근거가 있는지 표시한 뒤, 하단에서 결과 JSON 을 복사해"
+        " <code>python -m evals.judge import-labels</code> 로 반입한다.</p>"
+        f"{body}{foot}"
+        f"</main><script>{_LABELING_JS}</script></body></html>\n"
+    )
 
 
 # ──────────────────────────────────────────────
@@ -1304,10 +1701,21 @@ def build_parser() -> argparse.ArgumentParser:
     dis_p = sub.add_parser("disagreements", help="두 심판이 엇갈린 아이템을 내보낸다")
     dis_p.add_argument("--out", type=Path, default=None)
     dis_p.add_argument("--all-prompts", action="store_true")
+
+    lab_p = sub.add_parser("labeling", help="엇갈린 아이템을 사람이 표시할 HTML 한 장으로 만든다")
+    lab_p.add_argument("--out", type=Path, required=True)
+    lab_p.add_argument(
+        "--in", dest="source", type=Path, default=None, help="disagreements JSON. 없으면 캐시에서 바로 계산한다"
+    )
+    lab_p.add_argument("--all-prompts", action="store_true")
+
+    imp_p = sub.add_parser("import-labels", help="표시 페이지에서 복사한 JSON 을 labels.jsonl 에 append 한다")
+    imp_p.add_argument("source", type=Path)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
+    load_project_env()
     args = build_parser().parse_args(argv)
     if args.command == "run":
         summary = run_judge(
@@ -1320,6 +1728,7 @@ def main(argv: list[str] | None = None) -> int:
             window_days=args.window,
             prompt_hash=None if args.all_prompts else PROMPT_HASH,
             current_keys=current_item_keys(),
+            labels=load_labels(),
         )
         if args.json:
             print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -1337,6 +1746,35 @@ def main(argv: list[str] | None = None) -> int:
             print(f"엇갈린 아이템 {len(items)}건 → {args.out}")
         else:
             print(text)
+        return 0
+    if args.command == "labeling":
+        if args.source is not None:
+            items = json.loads(args.source.read_text(encoding="utf-8"))
+            if not isinstance(items, list):
+                print("disagreements JSON 은 목록이어야 한다", file=sys.stderr)
+                return 2
+        else:
+            items = find_disagreements(
+                load_cache(), collect_targets(), prompt_hash=None if args.all_prompts else PROMPT_HASH
+            )
+        items, skipped = dedupe_label_questions(items)
+        page = build_labeling_html(items)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(page, encoding="utf-8")
+        question_count = sum(len(item.get("questions") or []) for item in items)
+        print(f"표시 페이지 생성: 질문 {question_count}건 (아이템 {len(items)}건) → {args.out}")
+        if skipped:
+            print(f"  같은 id 의 질문 {skipped}건은 중복이라 건너뛰었다")
+        return 0
+    if args.command == "import-labels":
+        try:
+            result = import_labels(args.source)
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"라벨 반입 실패: {exc}", file=sys.stderr)
+            return 2
+        print(
+            f"라벨 {result['imported']}건 반입 (거부 {result['rejected']}건) → {resolve_labels_path()}"
+        )
         return 0
     return 2
 

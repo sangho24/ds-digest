@@ -65,6 +65,54 @@ jobs:
             exit 1
           fi
 
+      # LLM 심판(evals/judge.py)은 **보고 전용**이다. run.py 의 통계 지표가 못 보는
+      # "쓴 내용이 본문에 실제로 있는가"를 외부 모델에게 묻고 인용을 코드로 대조하지만,
+      # 심판 자체의 신뢰도 장치(두 심판 일치율 추세, 사람 표시 일치율)가 자리 잡기
+      # 전에는 게이트에 넣지 않는다. 심판이 틀린 것을 파이프라인 회귀로 읽으면 안 된다.
+      # continue-on-error 인 이유: 키 만료·제공자 장애·429 같은 심판 쪽 실패가 품질
+      # 게이트(위 Run evals 의 성패)를 빨간불로 만들면 알림이 "지표 문제"로 잘못 나간다.
+      # 최근 14일 창만 돌리고, 소급은 로컬에서 `--since` 를 넓혀 한 번 돌린다.
+      - name: Run LLM judge (report only)
+        if: always()
+        continue-on-error: true
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ] && [ -z "$DASHSCOPE_API_KEY" ]; then
+            echo "::notice::심판 키가 없어 건너뛴다"
+            exit 0
+          fi
+          # GNU date 문법이라 ubuntu 러너 전용이다. macOS 에서 손으로 돌릴 때는
+          # `date -u -v-14d +%F` 를 쓴다.
+          SINCE="$(date -u -d '14 days ago' +%F)"
+          # run 은 실패 건이 하나라도 있으면 exit 1 이다. 나머지 심판과 보고는 계속 돈다.
+          if [ -n "$DEEPSEEK_API_KEY" ]; then
+            python -m evals.judge run --judge deepseek --since "$SINCE" || \
+              echo "::warning::deepseek 심판 실행에 실패한 건이 있다"
+          fi
+          if [ -n "$DASHSCOPE_API_KEY" ]; then
+            python -m evals.judge run --judge qwen --since "$SINCE" || \
+              echo "::warning::qwen 심판 실행에 실패한 건이 있다"
+          fi
+          python -m evals.judge report || echo "::warning::심판 보고 생성 실패"
+          # 캐시는 append-only 이고 호출 비용이 든 결과라 커밋한다. 첫 실행에는 파일이
+          # 아직 추적되지 않으므로 add 뒤 staged diff 로 변경 여부를 본다.
+          git add data/evals/judgments.jsonl 2>/dev/null || true
+          if ! git diff --cached --quiet -- data/evals/judgments.jsonl; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "data: LLM 심판 판정 $(date -u +%Y-%m-%d)" || {
+              echo "::warning::심판 판정 커밋 실패"; exit 0;
+            }
+            # Record curation advice 와 같은 방식: 원격이 앞서 있으면 rebase 후 재시도.
+            for i in 1 2 3; do
+              git push && exit 0
+              git pull --rebase --autostash origin main || break
+            done
+            echo "::warning::심판 판정 push 실패"
+          fi
+
       # 계측은 재기만 해서는 아무것도 바꾸지 못한다. 프롬프트로 고칠 수 있는
       # 위반은 다음 날 큐레이션에 권고 한 줄로 남긴다. 게이트가 실패했든
       # 통과했든(WARN) 돌아야 하므로 always() 다.

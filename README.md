@@ -86,6 +86,20 @@ Discord 에 "논문보다 실무 사례 위주로" 라고 쓰면 다음 날 반�
 - 실패하면 Discord 와 이메일로 **무엇이** 문제인지 알립니다
 - 글쓰기 지시로 고칠 수 있는 항목이면 다음 날 권고 한 줄을 남깁니다 (7일 후 자동 만료)
 
+통계 지표는 "쓴 내용이 본문에 실제로 있는가"를 읽지 못합니다. 그래서 **LLM 심판**
+(`evals/judge.py`)이 요약·포인트·아이디어·퀴즈가 본문에 근거하는지 외부 모델 두 개
+(DeepSeek, Qwen)에게 묻고, 모델이 댄 인용이 본문에 정말 있는지는 코드가 대조합니다.
+이것도 **보고 전용**이라 게이트에는 들어가지 않습니다. 심판 자신이 틀릴 수 있으므로
+두 심판이 엇갈린 항목을 사람이 표시하는 페이지(`labeling`)와 그 결과 대비 일치율을
+먼저 쌓습니다. 키는 `DEEPSEEK_API_KEY`, `DASHSCOPE_API_KEY` 두 환경변수이며, CI 는
+최근 14일만 돌리고 소급은 로컬에서 합니다.
+
+```bash
+.venv/bin/python -m evals.judge run --judge deepseek --since 2026-09-01   # 로컬 소급
+.venv/bin/python -m evals.judge report                                    # 추세·일치율
+.venv/bin/python -m evals.judge labeling --out data/evals/labeling.html   # 사람 표시 페이지
+```
+
 ### 4. 조용한 실패를 시끄럽게 만들기
 
 가장 비싼 고장은 터지는 고장이 아니라 **아무 소리도 안 나는 고장**입니다.

@@ -763,3 +763,293 @@ def test_user_prompt_placeholders_do_not_cascade():
     assert prompt.count("<<SUMMARY>>") == 1 and prompt.count("<<QUIZ>>") == 1
     assert prompt.count(target["analysis"]["one_line_summary"]) == 1
     assert body in prompt
+
+
+# 실행 편의: .env 로드, 사람 표시 페이지, 라벨 반입 -----------------------------
+
+
+def test_load_project_env_calls_dotenv_without_override(tmp_path, monkeypatch):
+    calls: list[tuple] = []
+
+    def fake_load_dotenv(path, override):
+        calls.append((Path(path), override))
+        return True
+
+    monkeypatch.setattr(judge, "load_dotenv", fake_load_dotenv)
+    env_file = tmp_path / ".env"
+    # 파일이 없으면 부르지 않는다
+    assert judge.load_project_env(env_file) is False and calls == []
+    env_file.write_text("X=1\n", encoding="utf-8")
+    assert judge.load_project_env(env_file) is True
+    assert calls == [(env_file, False)]
+
+
+def test_load_project_env_keeps_existing_variables(tmp_path, monkeypatch):
+    # 실제 python-dotenv 로 돈다. 이미 있는 변수는 그대로, 없는 변수만 채운다
+    monkeypatch.setenv("JUDGE_TEST_EXISTING", "keep")
+    monkeypatch.delenv("JUDGE_TEST_NEW", raising=False)
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "# 주석\nJUDGE_TEST_EXISTING=overwritten\nexport JUDGE_TEST_NEW=\"filled\"\n", encoding="utf-8"
+    )
+    assert judge.load_project_env(env_file) is True
+    assert judge.os.environ["JUDGE_TEST_EXISTING"] == "keep"
+    assert judge.os.environ["JUDGE_TEST_NEW"] == "filled"
+    monkeypatch.delenv("JUDGE_TEST_NEW", raising=False)
+
+
+def test_main_loads_env_on_entry_only(tmp_path, monkeypatch, capsys):
+    calls: list[int] = []
+    monkeypatch.setattr(judge, "load_project_env", lambda *a, **k: calls.append(1))
+    monkeypatch.setenv("JUDGE_CACHE_PATH", str(tmp_path / "none.jsonl"))
+    monkeypatch.setenv("JUDGE_LABELS_PATH", str(tmp_path / "labels.jsonl"))
+    assert judge.main(["report"]) == 0
+    capsys.readouterr()
+    assert calls == [1]
+
+
+def _fake_disagreements() -> list[dict]:
+    """가짜 disagreements 2건(아이템 2, 질문 3). 본문에 HTML 특수문자를 섞는다."""
+    return [
+        {
+            "date": "2026-10-12",
+            "url": "https://example.com/a?x=1&y=2",
+            "title": "제목 <A> & \"B\"",
+            "analysis_hash": "aaaaaaaaaaaa",
+            "prompt_hash": PROMPT_HASH,
+            "judges": ["deepseek", "qwen"],
+            "questions": [
+                {
+                    "id": "id-a-idea-1",
+                    "question": "production_ideas",
+                    "index": 1,
+                    "text": "피어 교차 검증을 UI 테스트에 쓴다",
+                    "verdicts": {
+                        "deepseek": {"grounded": True, "quote": "피어 교차 검증을 쓴다", "quote_verified": True},
+                        "qwen": {"grounded": False, "quote": None, "quote_verified": False},
+                    },
+                    "excerpt": "<script>alert(\"x\")</script> & 본문 발췌 피어 교차 검증을 쓴다",
+                    "human": None,
+                },
+                {
+                    "id": "id-a-quiz-0",
+                    "question": "quiz",
+                    "index": 0,
+                    "text": "TestPrism 의 과제 수는?",
+                    "verdicts": {
+                        "deepseek": {"answerable": True, "answer_correct": True, "quote": "300개 과제", "quote_verified": True},
+                        "qwen": {"answerable": True, "answer_correct": False, "quote": "300개 과제", "quote_verified": True},
+                    },
+                    "excerpt": "300개 과제와 3000개 구현",
+                    "human": None,
+                },
+            ],
+        },
+        {
+            "date": "2026-10-11",
+            "url": "https://example.com/b",
+            "title": "제목 b",
+            "analysis_hash": "bbbbbbbbbbbb",
+            "prompt_hash": PROMPT_HASH,
+            "judges": ["deepseek", "qwen"],
+            "questions": [
+                {
+                    "question": "summary",  # id 없는 옛 형식: 페이지가 결정적 id 를 계산한다
+                    "index": 0,
+                    "text": "다중 정답을 반영해 테스트 품질을 측정한다",
+                    "verdicts": {
+                        "deepseek": {"faithful": True, "quote": "300개", "quote_verified": True, "unsupported_claim": None},
+                        "qwen": {"faithful": False, "quote": None, "quote_verified": False, "unsupported_claim": "다중 정답"},
+                    },
+                    "excerpt": None,
+                    "human": None,
+                }
+            ],
+        },
+    ]
+
+
+def test_labeling_html_renders_items_radios_and_escapes():
+    page = judge.build_labeling_html(_fake_disagreements())
+    assert page.count('class="q"') == 3  # 질문 단위 섹션
+    assert page.count('type="radio"') == 9  # 질문당 3개
+    assert page.count('class="note"') == 3
+    for label in ("근거 있음", "근거 없음", "판단 보류"):
+        assert page.count(f"> {label}</label>") == 3
+    assert "결과 JSON 복사" in page and 'id="fallback"' in page
+    assert "피어 교차 검증을 UI 테스트에 쓴다" in page and "TestPrism 의 과제 수는?" in page
+    assert "deepseek" in page and "qwen" in page
+    assert "근거 없다고 본 주장: 다중 정답" in page
+    assert 'data-id="id-a-idea-1"' in page
+    # 옛 형식(id 없음)은 결정적 id 를 만든다
+    expected = judge.question_id("https://example.com/b", "bbbbbbbbbbbb", PROMPT_HASH, "summary", 0)
+    assert f'data-id="{expected}"' in page
+    # 이스케이프: 본문의 스크립트가 살아 있으면 안 된다
+    assert "<script>alert" not in page
+    assert "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; &amp; 본문 발췌" in page
+    assert "제목 &lt;A&gt; &amp; &quot;B&quot;" in page
+    assert 'href="https://example.com/a?x=1&amp;y=2"' in page
+    # 외부 리소스 없음
+    assert "http://" not in page.replace("https://example.com", "")
+    assert "<link" not in page and 'src="' not in page
+
+
+def test_labeling_html_empty_input():
+    page = judge.build_labeling_html([])
+    assert "엇갈린 항목이 없다" in page
+    assert 'type="radio"' not in page and "결과 JSON 복사" not in page
+    assert page.startswith("<!doctype html>")
+
+
+def test_question_id_is_deterministic_and_distinct():
+    a = judge.question_id("u", "h", "p", "quiz", 0)
+    assert a == judge.question_id("u", "h", "p", "quiz", 0) and len(a) == 16
+    assert a != judge.question_id("u", "h", "p", "quiz", 1)
+    assert a != judge.question_id("u2", "h", "p", "quiz", 0)
+
+
+def test_import_labels_and_report_human_agreement(tmp_path, monkeypatch):
+    _write_record(tmp_path / "records", "2026-10-12", [_entry("https://example.com/a")])
+    _run("deepseek", tmp_path, FakeTransport(answer=_good_answer()))
+    qwen_answer = _good_answer()
+    qwen_answer["production_ideas"][1] = {"index": 1, "grounded": False, "quote": None}
+    qwen_answer["quiz"][0]["answer_correct"] = False
+    _run("qwen", tmp_path, FakeTransport(answer=qwen_answer))
+    rows = load_cache(tmp_path / "cache" / "judgments.jsonl")
+    items = find_disagreements(rows, judge.collect_targets(tmp_path / "records"))
+    questions = items[0]["questions"]
+    assert all(q["id"] for q in questions)
+    idea_q, quiz_q = questions[0], questions[1]
+    assert idea_q["question"] == "production_ideas" and quiz_q["question"] == "quiz"
+
+    def label(q, human, note=""):
+        return {
+            "id": q["id"], "url": items[0]["url"], "analysis_hash": items[0]["analysis_hash"],
+            "prompt_hash": items[0]["prompt_hash"], "question": q["question"], "index": q["index"],
+            "human": human, "note": note,
+        }
+
+    labels_path = tmp_path / "labels.jsonl"
+    monkeypatch.setenv("JUDGE_LABELS_PATH", str(labels_path))
+    first = tmp_path / "first.json"
+    # 아이디어는 처음에 보류, 퀴즈는 근거 없음(qwen 쪽 손), 깨진 레코드 하나
+    first.write_text(
+        json.dumps([label(idea_q, "unsure"), label(quiz_q, "unsupported", "정답이 틀렸다"), {"id": "x", "human": "maybe"}]),
+        encoding="utf-8",
+    )
+    assert judge.import_labels(first) == {"imported": 2, "rejected": 1}
+    loaded = judge.load_labels()
+    assert set(loaded) == {idea_q["id"], quiz_q["id"]}
+    assert loaded[quiz_q["id"]]["note"] == "정답이 틀렸다" and "labeled_at" in json.loads(labels_path.read_text().splitlines()[0])
+
+    report = build_report(rows, until=date(2026, 10, 14), labels=loaded)
+    human = report["human"]
+    # 보류 1건은 분모에서 빠진다. 퀴즈: deepseek 은 둘 다 참(긍정) → 불일치, qwen 은 answer_correct 거짓 → 일치
+    assert human["labels"] == 2 and human["unsure"] == 1
+    assert human["by_judge"]["deepseek"] == {"compared": 1, "agreed": 0, "rate": 0.0}
+    assert human["by_judge"]["qwen"] == {"compared": 1, "agreed": 1, "rate": 1.0}
+    text = judge.format_report(report)
+    assert "[사람 일치율] 표시 2건 (보류 1건은 분모 제외)" in text
+    assert "deepseek 0.0% (0/1)" in text and "qwen 100.0% (1/1)" in text
+
+    # 같은 id 를 다시 반입하면 마지막 것이 이긴다: 아이디어를 근거 있음으로 확정
+    second = tmp_path / "second.json"
+    second.write_text(json.dumps({"labels": [label(idea_q, "supported")]}), encoding="utf-8")
+    assert judge.import_labels(second) == {"imported": 1, "rejected": 0}
+    loaded = judge.load_labels()
+    assert len(loaded) == 2 and loaded[idea_q["id"]]["human"] == "supported"
+    report = build_report(rows, until=date(2026, 10, 14), labels=loaded)
+    assert report["human"]["unsure"] == 0
+    assert report["human"]["by_judge"]["deepseek"] == {"compared": 2, "agreed": 1, "rate": 0.5}
+    assert report["human"]["by_judge"]["qwen"] == {"compared": 2, "agreed": 1, "rate": 0.5}
+
+    # 라벨이 없으면 human 은 None 이고 보고 텍스트에도 줄이 없다
+    assert build_report(rows, until=date(2026, 10, 14))["human"] is None
+    assert "[사람 일치율]" not in judge.format_report(build_report(rows, until=date(2026, 10, 14)))
+
+    # 매칭은 id 로만 한다: url 등 키 필드가 없는 라벨도 일치율에 들어간다
+    id_only = {idea_q["id"]: {"id": idea_q["id"], "human": "unsupported", "note": ""}}
+    report = build_report(rows, until=date(2026, 10, 14), labels=id_only)
+    assert report["human"]["by_judge"]["deepseek"] == {"compared": 1, "agreed": 0, "rate": 0.0}
+    assert report["human"]["by_judge"]["qwen"] == {"compared": 1, "agreed": 1, "rate": 1.0}
+    # 심판 행에 없는 id 는 어느 심판에서도 세지 않는다
+    stray = {"nope": {"id": "nope", "human": "supported", "note": ""}}
+    report = build_report(rows, until=date(2026, 10, 14), labels=stray)
+    assert report["human"]["labels"] == 1
+    assert report["human"]["by_judge"]["deepseek"]["compared"] == 0
+
+
+def test_labeling_html_skips_duplicate_ids():
+    items = _fake_disagreements()
+    duplicate = dict(items[0]["questions"][0], text="같은 id 의 두 번째 항목")
+    items[1]["questions"].append(duplicate)
+    cleaned, skipped = judge.dedupe_label_questions(items)
+    assert skipped == 1
+    assert sum(len(i["questions"]) for i in cleaned) == 3
+    page = judge.build_labeling_html(items)
+    assert page.count('name="h-id-a-idea-1"') == 3  # 라디오 3개, 그룹 하나
+    assert "같은 id 의 두 번째 항목" not in page
+    assert page.count('class="q"') == 3
+    # 중복이 없으면 그대로
+    assert judge.dedupe_label_questions(_fake_disagreements())[1] == 0
+
+
+def test_cli_labeling_and_import_labels_roundtrip(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(judge, "load_project_env", lambda *a, **k: False)
+    monkeypatch.setattr(judge, "RECORDS_DIR", tmp_path / "records")
+    cache = tmp_path / "cache" / "judgments.jsonl"
+    monkeypatch.setenv("JUDGE_CACHE_PATH", str(cache))
+    monkeypatch.setenv("JUDGE_LABELS_PATH", str(tmp_path / "labels.jsonl"))
+
+    # 캐시가 비어 있으면 빈 페이지
+    empty_out = tmp_path / "empty.html"
+    assert judge.main(["labeling", "--out", str(empty_out)]) == 0
+    capsys.readouterr()
+    assert "엇갈린 항목이 없다" in empty_out.read_text(encoding="utf-8")
+
+    # 두 심판이 퀴즈 정답일치에서 엇갈리는 캐시를 만든다
+    _write_record(tmp_path / "records", "2026-10-12", [_entry("https://example.com/a")])
+    _run("deepseek", tmp_path, FakeTransport(answer=_good_answer()))
+    qwen_answer = _good_answer()
+    qwen_answer["quiz"][0]["answer_correct"] = False
+    _run("qwen", tmp_path, FakeTransport(answer=qwen_answer))
+
+    source = tmp_path / "d.json"
+    assert judge.main(["disagreements", "--out", str(source)]) == 0
+    capsys.readouterr()
+    items = json.loads(source.read_text(encoding="utf-8"))
+    assert len(items) == 1 and [q["question"] for q in items[0]["questions"]] == ["quiz"]
+    quiz_id = items[0]["questions"][0]["id"]
+
+    out = tmp_path / "pages" / "labeling.html"
+    assert judge.main(["labeling", "--out", str(out), "--in", str(source)]) == 0
+    assert "질문 1건 (아이템 1건)" in capsys.readouterr().out
+    page = out.read_text(encoding="utf-8")
+    assert page.count('class="q"') == 1 and f'data-id="{quiz_id}"' in page
+
+    # 페이지에서 복사한 결과 중 id 와 human 만 있어도 반입·대조된다
+    labels = tmp_path / "copied.json"
+    labels.write_text(json.dumps([{"id": quiz_id, "human": "unsupported", "note": "메모"}]), encoding="utf-8")
+    assert judge.main(["import-labels", str(labels)]) == 0
+    assert "라벨 1건 반입 (거부 0건)" in capsys.readouterr().out
+    assert len(judge.load_labels()) == 1
+    assert judge.main(["report", "--json"]) == 0
+    human = json.loads(capsys.readouterr().out)["human"]
+    assert human["labels"] == 1 and human["unsure"] == 0
+    # deepseek 은 answerable·answer_correct 둘 다 참(긍정) → 사람과 불일치, qwen 은 일치
+    assert human["by_judge"]["deepseek"] == {"compared": 1, "agreed": 0, "rate": 0.0}
+    assert human["by_judge"]["qwen"] == {"compared": 1, "agreed": 1, "rate": 1.0}
+    assert judge.main(["report"]) == 0
+    assert "deepseek 0.0% (0/1)" in capsys.readouterr().out
+
+    # 중복 id 가 든 입력은 건너뛴 수를 알린다
+    items[0]["questions"].append(dict(items[0]["questions"][0]))
+    source.write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
+    assert judge.main(["labeling", "--out", str(out), "--in", str(source)]) == 0
+    assert "중복이라 건너뛰었다" in capsys.readouterr().out
+
+    # 깨진 파일은 2 로 끝난다
+    bad = tmp_path / "bad.json"
+    bad.write_text("{not json", encoding="utf-8")
+    assert judge.main(["import-labels", str(bad)]) == 2
+    assert "라벨 반입 실패" in capsys.readouterr().err
