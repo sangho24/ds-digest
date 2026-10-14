@@ -51,8 +51,8 @@ QUESTION_KINDS = ("summary", "key_points", "production_ideas", "quiz")
 JUDGES: dict[str, dict[str, str]] = {
     "deepseek": {
         "id": "deepseek",
-        "base_url": "https://api.deepseek.com/v1",
-        "model": "deepseek-chat",
+        "base_url": "https://api.deepseek.com",
+        "model": "deepseek-flash",
         "model_env": "JUDGE_DEEPSEEK_MODEL",
         "api_key_env": "DEEPSEEK_API_KEY",
     },

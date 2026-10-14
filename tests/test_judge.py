@@ -398,7 +398,7 @@ def test_run_row_shape(tmp_path):
         "skipped", "reason", "error", "truncated", "usage", "verdicts",
     }
     assert expected <= set(row)
-    assert row["judge_id"] == "deepseek" and row["model"] == "deepseek-chat"
+    assert row["judge_id"] == "deepseek" and row["model"] == "deepseek-flash"
     assert row["prompt_hash"] == PROMPT_HASH and len(row["prompt_hash"]) == 12
     assert set(row["verdicts"]) == {"summary", "key_points", "production_ideas", "quiz"}
 

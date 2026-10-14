@@ -869,7 +869,7 @@ GitHub Actions (07:30 KST)
 - **원인**: 근거 판정은 본문을 읽어야 하고, 읽는 주체(외부 모델)와 그 주장을 검증하는 장치
   (코드)가 없었다.
 - **수정**: `evals/judge.py` 신규. 정본 `data/records/digest_*.json` 의 evidence_level=full
-  아이템만 OpenAI 호환 심판(deepseek-chat / qwen-flash, httpx 직접 호출, 동시성 4)에게
+  아이템만 OpenAI 호환 심판(deepseek-flash / qwen-flash, httpx 직접 호출, 동시성 4)에게
   아이템당 1회 보내 4가지 질문(summary faithful, key_points supported, production_ideas
   grounded, quiz answerable·answer_correct)을 예/아니오 + 본문 인용으로 받는다. 인용은 코드가
   공백 정규화 후 본문 부분 문자열 검사로 `quote_verified` 를 붙이고, 집계는 심판 주장과
