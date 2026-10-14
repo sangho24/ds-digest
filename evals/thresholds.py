@@ -50,7 +50,16 @@ THRESHOLDS: list[dict[str, Any]] = [
     # current: 0.008621 (1/116)
     {"scope": "recent", "path": "evidence_proxy.timestamp_rate", "operator": "<", "value": 0.70, "severity": "FAIL", "label": "YouTube 타임스탬프 비율"},
     # current: 1.0 (247/247가 2개)
-    {"scope": "recent", "path": "schema_rigidity.production_ideas_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "적용 아이디어 개수 고정률"},
+    # 2026-10-14 에 FAIL → WARN 으로 내렸다. 이 지표로는 품질 저하 여부를 알 수 없다. 09-04 에
+    # 프롬프트가 0~2개에서 0~3개로 바뀌었고 모델은 전후 모두 상한을 채운다(근거 있는 아이템
+    # 기준 전환 전 97%, 전환 후 92%, 최근 2주 98.5%). 프롬프트가 "3은 상한이지 목표가 아니다"
+    # 라고 써도 98.5% 상한을 채우므로 지시로 고칠 수 없고, baseline 비교는 프롬프트 범위가
+    # 바뀔 때마다 무력해진다. 분모에 코드가 비운 0개(evidence_level 이 description/title_only)
+    # 까지 섞여 숫자도 정직하지 않다(70건 중 3개 64, 0개 5, 2개 1 → 0.914, 0개를 빼면
+    # 64/65 = 0.985). 09-15 baseline 0.644 는 과도기 혼합 분포였고 4주간 거짓 회귀 FAIL 을
+    # 냈다(§46). 그래서 게이트와 권고에서 내리고 보고 전용으로 둔다. 상한 도달률(cap_hit_ratio)
+    # 은 임계값 없이 보고만 하고, 근거 여부는 LLM 심판(evals/judge.py, §47)이 잰다.
+    {"scope": "recent", "path": "schema_rigidity.production_ideas_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "WARN", "label": "적용 아이디어 개수 고정률"},
     # current: 1.0 (247/247가 2개)
     {"scope": "recent", "path": "schema_rigidity.quiz_count.fixed_ratio", "operator": ">", "value": 0.95, "severity": "FAIL", "label": "퀴즈 개수 고정률"},
     # current: 32.380567자
@@ -121,7 +130,15 @@ BASELINE_COMPARISONS: list[dict[str, Any]] = [
     {"path": "duplicate_rate.duplicate_url_rate", "direction": "higher", "min_delta": 0.02, "label": "중복 URL 비율"},
     # 분모가 YouTube 아이템(약 15건)뿐이라 다른 비율보다 잡음이 두 배 크다.
     {"path": "evidence_proxy.timestamp_rate", "direction": "lower", "min_delta": 0.20, "label": "YouTube 타임스탬프 비율"},
-    {"path": "schema_rigidity.production_ideas_count.fixed_ratio", "direction": "higher", "min_delta": 0.12, "label": "적용 아이디어 개수 고정률"},
+    # schema_rigidity.production_ideas_count.fixed_ratio 는 2026-10-14 에 뺐다. 09-04 에
+    # 프롬프트가 production_ideas 를 0~2개에서 0~3개로 바꿨고, 모델은 전후 모두 상한을 채운다
+    # (최빈값 2 → 3). 09-15 baseline 0.644 는 전환일을 가로지른 창의 혼합 분포였고, 창이
+    # 전환 이후로 채워지자 "정상 상태"가 4주 연속 거짓 회귀 FAIL 이 됐다(§46). 재생성한
+    # baseline 0.914 로는 허용폭(min_delta 0.12)이 한도를 1.0 너머로 밀어 비교가 무력하다.
+    # 모델이 상한을 채우는 것은 지시로 고칠 수 없고(위 THRESHOLDS 주석), 프롬프트 범위가 바뀔
+    # 때마다 기준점이 무력해지므로 회귀 비교 대신 THRESHOLDS 의 WARN(> 0.95) 과 보고 전용
+    # cap_hit_ratio 로만 본다. 이 지표로는 품질 저하 여부를 알 수 없다.
+    # 퀴즈 고정률은 둔다. 아직 분산이 있다(2개 55, 1개 10, 0개 5).
     {"path": "schema_rigidity.quiz_count.fixed_ratio", "direction": "higher", "min_delta": 0.10, "label": "퀴즈 개수 고정률"},
     # summary_stats.one_line_summary.mean은 2026-09-15에 뺐다. 방향이 틀린 비교였다.
     # 프롬프트는 "30자 이내"를 지시하는데 baseline 32.38자는 지시 위반 상태였고,

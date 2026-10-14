@@ -510,6 +510,25 @@ def _print_report(report: dict[str, Any]) -> None:
     evidence = metrics["evidence_proxy"]
     interval = duplicate["reappearance_intervals_days"]
     stale_names = ", ".join(source["source_name"] for source in reach["stale_sources"]) or "없음"
+
+    def _cap_hit(field: str) -> str:
+        """상한 도달률. recent 창 값을 앞에, 전체 구간 값을 괄호에 둔다(_actual 과 같은 꼴).
+
+        보고 전용이라 threshold_results 에 안 실리므로 여기서 보여준다. 분모(eligible_items)는
+        코드가 비운 0개를 뺀 수라 fixed_ratio 의 분모(total_items)와 다르다.
+        """
+        def _one(source: dict[str, Any] | None) -> str | None:
+            rigidity = (source or {}).get("schema_rigidity") or {}
+            row = rigidity.get(field) or {}
+            if "cap_hit_ratio" not in row:
+                return None
+            return f"{_format_value(row['cap_hit_ratio'])} ({row['cap_hit_count']}/{row['eligible_items']}, 상한 {row['cap']})"
+
+        recent, lifetime = _one(report.get("recent_metrics")), _one(metrics)
+        if recent is None:
+            return lifetime or "-"
+        return recent if lifetime is None or lifetime == recent else f"{recent}  (전체 {lifetime})"
+
     print()
     print("세부 요약")
     detail_rows = [
@@ -518,6 +537,10 @@ def _print_report(report: dict[str, Any]) -> None:
         ["고유 URL / 중복 발생분", f"{duplicate['unique_urls']} / {duplicate['duplicate_occurrences']}"],
         ["재등장 간격(일)", f"{interval['min']}~{interval['max']}, 평균 {interval['mean']}"],
         ["YouTube 타임스탬프", f"{evidence['with_timestamp']}/{evidence['youtube_items']}"],
+        # 고정률(fixed_ratio)은 임계값 표에 있다. 여기는 코드가 비운 0개를 뺀 분모로 잰
+        # 상한 도달률만 싣는다(evals/metrics.py _cap_hit). 임계값 없는 보고 전용 지표다.
+        ["적용 아이디어 상한 도달률", _cap_hit("production_ideas_count")],
+        ["퀴즈 상한 도달률", _cap_hit("quiz_count")],
     ]
     _print_table(["항목", "값"], detail_rows)
 
@@ -764,6 +787,9 @@ def main() -> int:
     report = {
         "input": input_meta,
         "metrics": metrics,
+        # recent 창 지표. 임계값 표(threshold_results)에 실리지 않는 보고 전용 값(상한 도달률)을
+        # 콘솔·JSON 에서 볼 수 있게 싣는다. baseline 문서(build_baseline_document)와 같은 키다.
+        "recent_metrics": recent_metrics,
         "threshold_results": threshold_rows,
         "violations": violations,
         "blocking_violations": blocking,

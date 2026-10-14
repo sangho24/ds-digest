@@ -899,6 +899,68 @@ GitHub Actions (07:30 KST)
   일치율이 낮은 질문은 disagreements 로 사람이 표시한다. 워크플로 연결과 README 는 이번
   범위 밖이다.
 
+### 48. 적용 아이디어 고정률을 게이트에서 내리고 분모를 정직하게 만든다 (`evals/metrics.py`, `evals/thresholds.py`, `evals/directive.py`)
+- **증상**: `schema_rigidity.production_ideas_count.fixed_ratio` 가 §46 뒤에도 품질 신호가 아니었다.
+  recent 70건은 3개 64, 2개 1, 0개 5 로 0.914 인데, 0개 5건은 전부 evidence_level 이
+  description/title_only 라 모델이 아니라 `app/models.py` 의 validator 가 비운 것이다. 그걸 빼면
+  64/65 = 0.985. 즉 지표는 모델이 범위 지시(0~3개)의 상한을 채우는 정도를 재고 있었고(근거 있는
+  아이템 기준 전환 전 97% = 168/173, 전환 후 92% = 154/167, 최근 2주 98.5% = 64/65. 경계는 최빈값이
+  3 이 된 09-05, 09-04 다이제스트는 커밋 전 발송분), 분모까지 섞여 숫자도 거짓이었다. 이 지표로는
+  품질 저하 여부를 알 수 없다. 프롬프트가 "3은 상한이지 목표가 아니다"라고 써도 모델은 98.5%
+  상한을 채우므로 지시로 고칠 수 없고, baseline 비교는 프롬프트 범위가 바뀔 때마다 무력해진다.
+  권고 "개수를 달리하라"도 같은 이유로 소음이었다. 근거 여부는 LLM 심판(§47)이 잰다.
+- **원인**: fixed_ratio 는 전체 아이템이 분모이고 `evals/build_items.py` 가 evidence_level 을
+  평탄화하지 않아 코드가 비운 0개를 가를 수 없었다. 요약 길이도 같은 이유(한쪽 방향이 늘 좋은
+  지표가 아님)로 2026-09-15 에 회귀 비교에서 뺐는데 이 지표는 그대로 FAIL + 회귀 비교였다.
+- **수정**:
+  - `build_items.flatten_record` 가 `evidence_level` 을 싣는다(옛 레코드는 None).
+  - `metrics.schema_rigidity` 에 보고 전용 `cap_hit_ratio`(근거 있는 아이템 중 개수가 프롬프트 상한과
+    같은 비율. 아이디어 3, 퀴즈 2. 스키마 max_length 3 과는 별개다), `eligible_items`(코드가 비운
+    아이템을 뺀 분모), `cap_hit_count`, `eligible_distribution` 을 production_ideas·quiz 양쪽에 추가.
+    기존 fixed_ratio 는 호환을 위해 그대로. evidence_level 이 없는 옛 아이템은 "근거 있음"으로 분모에
+    넣는다. metrics.py 는 app 을 import 하지 않고 값(`description`/`title_only`, 상한)을 상수로 베끼고,
+    테스트가 `app.models.EvidenceLevel`·스키마 max_length(상한 <= max_length)·`app/analyzer.py`
+    프롬프트 원문의 "0~N개"/"0~N문항"(정규식) 과 대조한다. 독립 검증이 퀴즈 상한을 스키마 3 으로
+    둔 오류(도달률이 구조적으로 0)를 잡아 프롬프트 상한 2 로 고쳤다.
+  - `THRESHOLDS` 의 production_ideas fixed_ratio 행 FAIL → WARN(> 0.95). `BASELINE_COMPARISONS` 에서
+    제거(이유 주석은 요약 길이 선례와 같은 형식). 퀴즈 고정률은 아직 분산이 있어(2개 55, 1개 10,
+    0개 5) FAIL + 회귀 비교 유지. cap_hit_ratio 는 임계값 없이 보고만 한다.
+  - `directive.ADVICE` 에서 production_ideas 키 제거. 효과 확인된 권고만 남긴다.
+  - `run.py` 콘솔 세부 요약에 "적용 아이디어 상한 도달률 / 퀴즈 상한 도달률" 행 추가(recent 값
+    앞, 전체 괄호). 리포트 JSON 에 `recent_metrics` 키를 실어 보고 전용 값도 볼 수 있게 했다.
+- **검증**: 전체 703 통과. 신규 테스트: 코드가 비운 0개가 분모에서 빠짐(70건 → 65건, 0.914 vs
+  0.985), evidence_level 없는 아이템은 분모 포함, 상수가 `app.models`·프롬프트 원문과 일치, WARN
+  강등과 회귀 비교 제외(0.644 → 0.985 가 회귀 아님, 1.0 이어도 WARN), ADVICE 에 production_ideas
+  없음, 콘솔 출력. 로컬 `--json --baseline` exit 0, 회귀 0. recent: fixed_ratio 0.914286,
+  cap_hit_ratio 0.984615 (64/65), eligible_items 65. 전체 363건: eligible 340(0개 23건 전부
+  코드가 비운 것), 전환 전 2개 163건이 분모에 섞여 cap_hit 0.4588. 퀴즈 cap_hit 는 상한 2 기준
+  recent 0.846(55/65), 전체 0.797(271/340).
+- **남은 것**: baseline.json 은 재생성하지 않았다(뺀 지표는 남아 있어도 비교되지 않는다).
+  cap_hit_ratio 를 시계열로 쌓아 프롬프트 범위를 바꿀 때 전후를 비교하는 용도로만 쓴다.
+  퀴즈 고정률도 같은 성격(상한 2 도달 85%)이라 분산이 사라지면 같은 처리가 필요하다.
+
+### 49. LLM 심판 실행 편의 (`evals/judge.py`, `.github/workflows/evals.yml`)
+- **증상**: 심판 모듈(§47)은 있는데 키 로드, 사람 표시, 라벨 반입, CI 실행 경로가 없어
+  키가 생겨도 손으로 환경변수를 넣고 JSON 을 눈으로 읽어야 했다.
+- **수정**: (1) CLI 진입 시 프로젝트 루트 `.env` 를 python-dotenv 로 읽되 이미 있는
+  환경변수는 덮지 않는다(`override=False`, import 시점이 아니라 main 진입 시).
+  (2) `labeling` 서브커맨드가 두 심판이 엇갈린 질문을 사람이 브라우저에서 표시하는 단일
+  HTML(외부 리소스 없음)로 만든다. 질문마다 결정적 id(url, analysis_hash, prompt_hash, 질문,
+  번호의 sha256 앞 16자)를 두고 "결과 JSON 복사" 버튼으로 클립보드에 넣는다(막히면 textarea).
+  (3) `import-labels` 가 그 JSON 을 `data/evals/labels.jsonl` 에 append 하고 `report` 가
+  심판별 사람 일치율을 낸다. 라벨은 id 로만 매칭한다(심판 행에서 같은 규칙으로 id 를 계산해
+  대조). 보류는 분모에서 빼고, 퀴즈는 answerable 과 answer_correct 가 모두 참일 때만 긍정으로
+  접는다. 생성 HTML(`data/evals/*.html`)은 .gitignore 로 추적에서 뺀다. (4) `evals.yml` 에 보고 전용 스텝
+  `Run LLM judge (report only)` 를 넣었다. `always()` + `continue-on-error` 이고 키가 없으면
+  notice 만 남기고 건너뛴다. 최근 14일 창만 돌리고 캐시 변경은
+  `data: LLM 심판 판정 YYYY-MM-DD` 로 커밋한다.
+- **게이트에 넣지 않는 이유**: 심판 자체의 신뢰도 장치(두 심판 일치율, 사람 일치율)가 아직
+  쌓이지 않았다. 심판 쪽 실패가 품질 게이트를 빨간불로 만들면 알림이 지표 문제로 오독된다.
+- **검증**: 테스트 9건 추가(총 703). 작성과 검증은 세션을 분리했고, 검증이 잡은 4건(id 매칭,
+  GNU date 주석, HTML 추적 제외, 중복 id)을 반영했다.
+- **남은 것**: API 키 미확보. 키가 오면 로컬에서 10건 → 323건 소급, 엇갈린 건을 `labeling`
+  으로 뽑아 사람 표시, 그 뒤 임베딩 층(DashScope text-embedding, 로컬 모델은 의존성 1GB 라 제외).
+
 ---
 
 ## 다음 스텝 아이디에이션

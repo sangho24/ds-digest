@@ -54,6 +54,10 @@ def flatten_record(record: dict[str, Any]) -> list[dict[str, Any]]:
                 ),
                 "production_ideas": analysis.get("production_ideas") or [],
                 "quiz_count": len(analysis.get("quiz") or []),
+                # app/models.py 의 validator 가 evidence_level 이 description/title_only 면
+                # production_ideas 와 quiz 를 코드에서 비운다. schema_rigidity 가 "모델이 고른
+                # 개수"와 "코드가 비운 0개"를 가르는 데 쓴다. 옛 레코드에는 없을 수 있다(None).
+                "evidence_level": analysis.get("evidence_level"),
                 "one_line_summary": analysis.get("one_line_summary"),
             }
         )

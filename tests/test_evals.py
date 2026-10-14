@@ -150,6 +150,103 @@ def test_schema_rigidity_measures_dominant_counts_not_text_identity():
     assert result["combined_fixed_values"]["fixed_ratio"] == pytest.approx(0.666667)
 
 
+def test_cap_hit_ratio_excludes_items_emptied_by_code():
+    """코드가 비운 0개는 모델의 선택이 아니다. 분모(eligible_items)에서 뺀다.
+
+    실측(2026-10-14, 70건): 3개 64, 2개 1, 0개 5(전부 evidence_level 이 description/
+    title_only) → fixed_ratio 0.914 인데 0개 5건을 빼면 64/65 = 0.985 다. fixed_ratio 는
+    호환을 위해 그대로 두고, cap_hit_ratio 가 정직한 분모로 상한 도달을 센다.
+    """
+    items = (
+        [_item(production_ideas=["a", "b", "c"], quiz_count=2, evidence_level="full")] * 64
+        + [_item(production_ideas=["a", "b"], quiz_count=1, evidence_level="partial")]
+        + [_item(production_ideas=[], quiz_count=0, evidence_level="description")] * 3
+        + [_item(production_ideas=[], quiz_count=0, evidence_level="title_only")] * 2
+    )
+
+    result = schema_rigidity(items)
+
+    ideas = result["production_ideas_count"]
+    # 기존 값은 변하지 않는다(분모 70).
+    assert result["total_items"] == 70
+    assert ideas["fixed_ratio"] == pytest.approx(0.914286)
+    assert ideas["distribution"] == {"0": 5, "2": 1, "3": 64}
+    # 새 값은 분모 65.
+    assert ideas["cap"] == 3
+    assert ideas["eligible_items"] == 65
+    assert ideas["cap_hit_count"] == 64
+    assert ideas["cap_hit_ratio"] == pytest.approx(0.984615)
+    assert ideas["eligible_distribution"] == {"2": 1, "3": 64}
+    # 퀴즈도 같은 구조. 상한은 프롬프트의 "0~2문항"(스키마 max_length 3 이 아니다).
+    quizzes = result["quiz_count"]
+    assert quizzes["eligible_items"] == 65 and quizzes["cap"] == 2
+    assert quizzes["cap_hit_count"] == 64 and quizzes["cap_hit_ratio"] == pytest.approx(0.984615)
+    assert quizzes["eligible_distribution"] == {"1": 1, "2": 64}
+
+
+def test_cap_hit_ratio_counts_items_without_evidence_level():
+    """evidence_level 이 없는 옛 아이템(도입 전 레코드·정적 스냅샷)은 모델이 개수를 직접
+    골랐으므로 "근거 있음"으로 분모에 넣는다. 0개여도 코드가 비운 게 아니라 모델의 선택이다."""
+    items = [
+        _item(production_ideas=["a", "b", "c"], quiz_count=2),
+        _item(production_ideas=[], quiz_count=0),
+    ]
+    assert "evidence_level" not in items[0]
+
+    result = schema_rigidity(items)
+
+    ideas = result["production_ideas_count"]
+    assert ideas["eligible_items"] == 2
+    assert ideas["cap_hit_ratio"] == 0.5
+    assert ideas["eligible_distribution"] == {"0": 1, "3": 1}
+    assert result["quiz_count"]["eligible_items"] == 2
+    assert result["quiz_count"]["cap_hit_ratio"] == 0.5
+    # 빈 입력은 0 으로 떨어진다.
+    assert schema_rigidity([])["production_ideas_count"]["cap_hit_ratio"] == 0.0
+    assert schema_rigidity([])["production_ideas_count"]["eligible_items"] == 0
+
+
+def test_cap_hit_constants_match_app_models():
+    """metrics.py 는 app 을 import 하지 않고 값을 베껴 둔다. 스키마가 바뀌면 여기서 잡힌다.
+
+    상한 상수는 프롬프트가 지시하는 상한이라 스키마 max_length 와 같을 필요는 없지만,
+    스키마가 허용하는 것보다 클 수는 없다(그러면 도달률이 구조적으로 0 이다).
+    """
+    from app.models import ContentAnalysis, EvidenceLevel
+    from evals.metrics import EVIDENCE_LEVELS_EMPTIED_BY_CODE, PRODUCTION_IDEAS_PROMPT_CAP, QUIZ_PROMPT_CAP
+
+    assert EVIDENCE_LEVELS_EMPTIED_BY_CODE == {EvidenceLevel.DESCRIPTION.value, EvidenceLevel.TITLE_ONLY.value}
+    fields = ContentAnalysis.model_fields
+    assert PRODUCTION_IDEAS_PROMPT_CAP <= _max_length(fields["production_ideas"])
+    assert QUIZ_PROMPT_CAP <= _max_length(fields["quiz"])
+
+
+def test_cap_hit_constants_match_analyzer_prompt():
+    """상한 상수는 분석 프롬프트의 범위 지시를 베낀 것이다. 프롬프트가 바뀌면 상수도 바뀌어야 한다.
+
+    퀴즈는 스키마(max_length 3)와 프롬프트("0~2문항")가 다르다. 처음에 스키마 상한 3 으로
+    재서 퀴즈 도달률이 구조적으로 0 이었다(독립 검증이 잡음). 프롬프트 원문에서 직접 뽑아 대조한다.
+    """
+    import re
+    from evals.build_items import ROOT
+    from evals.metrics import PRODUCTION_IDEAS_PROMPT_CAP, QUIZ_PROMPT_CAP
+
+    prompt = (ROOT / "app" / "analyzer.py").read_text(encoding="utf-8")
+    ideas = re.search(r"production_ideas:.*?\n.*?0~(\d+)개", prompt)
+    quiz = re.search(r"quiz:.*?0~(\d+)문항", prompt)
+    assert ideas and quiz, "프롬프트에서 범위 지시(0~N개 / 0~N문항)를 찾지 못했다"
+    assert int(ideas.group(1)) == PRODUCTION_IDEAS_PROMPT_CAP
+    assert int(quiz.group(1)) == QUIZ_PROMPT_CAP
+
+
+def _max_length(field) -> int | None:
+    """pydantic v2 FieldInfo 의 max_length 는 metadata 안에 있다."""
+    for meta in field.metadata:
+        if getattr(meta, "max_length", None) is not None:
+            return meta.max_length
+    return None
+
+
 def test_summary_stats_measure_characters_per_entry_and_item():
     items = [
         _item(one_line_summary="abcd", key_points=["a", "bbb"], production_ideas=["xy"]),
@@ -242,6 +339,9 @@ def test_flatten_record_maps_metric_fields():
     assert item["has_timestamp"] is True
     assert item["quiz_count"] == 1
     assert item["one_line_summary"] == "요약 문장"
+    # evidence_level 도입 전 레코드에는 없다. None 으로 평탄화되고 metrics 는 "근거 있음"으로 본다.
+    assert item["evidence_level"] is None
+    assert flatten_record(_record(analysis={"evidence_level": "description"}))[0]["evidence_level"] == "description"
 
 
 def test_flatten_record_timestamp_absent_is_false():
@@ -514,6 +614,34 @@ def test_every_baseline_comparison_has_a_threshold_policy():
         assert scope in ("recent", "lifetime") and severity in ("WARN", "FAIL")
 
 
+IDEAS_PATH = "schema_rigidity.production_ideas_count.fixed_ratio"
+
+
+def test_production_ideas_fixed_ratio_is_warn_and_not_a_baseline_comparison():
+    """적용 아이디어 고정률은 2026-10-14 에 게이트에서 내렸다.
+
+    프롬프트가 0~3개 범위를 주면 모델은 근거가 충분한 한 상한을 채운다(근거 있는 아이템 기준
+    전환 전 97%, 전환 후 92%, 최근 2주 98.5%). 이 지표로는 품질 저하 여부를 알 수 없고 지시로
+    고칠 수도 없어 FAIL 도 회귀 비교도 맞지 않는다(09-15 baseline 0.644 가 4주간 거짓 회귀를
+    냈다). WARN 으로 보고만 한다.
+    """
+    rows = [r for r in THRESHOLDS if r["path"] == IDEAS_PATH]
+    assert [(r["operator"], r["value"], r["severity"], r["scope"]) for r in rows] == [(">", 0.95, "WARN", "recent")]
+    assert IDEAS_PATH not in [rule["path"] for rule in BASELINE_COMPARISONS]
+    # 퀴즈 고정률은 아직 분산이 있어 그대로 둔다(FAIL + 회귀 비교).
+    quiz = [r for r in THRESHOLDS if r["path"] == "schema_rigidity.quiz_count.fixed_ratio"]
+    assert [r["severity"] for r in quiz] == ["FAIL"]
+    assert "schema_rigidity.quiz_count.fixed_ratio" in [rule["path"] for rule in BASELINE_COMPARISONS]
+
+    # 실제 규칙으로: 0.644 → 0.985 가 회귀로 잡히면 안 되고, 1.0 이라도 게이트를 막지 않는다.
+    current = {"schema_rigidity": {"production_ideas_count": {"fixed_ratio": 0.985}}}
+    baseline = {"schema_rigidity": {"production_ideas_count": {"fixed_ratio": 0.644}}}
+    assert [r for r in evals_run.compare_baseline(current, baseline, current, baseline, 70) if r["metric"] == IDEAS_PATH] == []
+    full = {"schema_rigidity": {"production_ideas_count": {"fixed_ratio": 1.0}}}
+    _, violations = evals_run.evaluate_thresholds(full, full, recent_item_count=70)
+    assert [(v["metric"], v["status"]) for v in violations if v["metric"] == IDEAS_PATH] == [(IDEAS_PATH, "WARN")]
+
+
 def _baseline_rules(monkeypatch, thresholds, comparisons):
     monkeypatch.setattr(evals_run, "THRESHOLDS", thresholds)
     monkeypatch.setattr(evals_run, "BASELINE_COMPARISONS", comparisons)
@@ -732,9 +860,49 @@ def test_window_mismatch_skips_recent_comparison_visibly(monkeypatch, capsys, tm
         "duplicate_rate": duplicate_rate(sample),
         "source_reach": source_reach(sample, 30),
         "evidence_proxy": evidence_proxy(sample),
+        "schema_rigidity": schema_rigidity(sample),
     }
     evals_run._print_report(report)
     assert "비교 생략" in capsys.readouterr().out
+
+
+def test_print_report_shows_cap_hit_ratio_recent_over_lifetime(capsys):
+    """상한 도달률은 임계값 표에 없는 보고 전용 값이라 세부 요약에 실린다.
+
+    recent 창 값이 앞, 전체 구간 값이 괄호다. 분모는 코드가 비운 0개를 뺀 eligible_items 다.
+    """
+    lifetime_items = [
+        _item(production_ideas=["a", "b", "c"], quiz_count=2),
+        _item(production_ideas=["a", "b"], quiz_count=2),
+        _item(production_ideas=[], quiz_count=0, evidence_level="description"),
+    ]
+    recent_items = lifetime_items[:1] + lifetime_items[2:]
+    base = {
+        "score_distribution": score_distribution(lifetime_items),
+        "duplicate_rate": duplicate_rate(lifetime_items),
+        "source_reach": source_reach(lifetime_items, 30),
+        "evidence_proxy": evidence_proxy(lifetime_items),
+    }
+    report = {
+        "input": {"item_count": 3, "start_date": None, "end_date": None},
+        "threshold_results": [], "violations": [], "blocking_violations": [],
+        "regressions": [], "blocking_regressions": [], "baseline_compared": False, "exit_code": 0,
+        "metrics": {**base, "schema_rigidity": schema_rigidity(lifetime_items)},
+        "recent_metrics": {**base, "schema_rigidity": schema_rigidity(recent_items)},
+    }
+    evals_run._print_report(report)
+    out = capsys.readouterr().out
+    # recent: 근거 있는 1건 중 1건이 상한(3). lifetime: 근거 있는 2건 중 1건.
+    assert "적용 아이디어 상한 도달률" in out
+    assert "1 (1/1, 상한 3)  (전체 0.5 (1/2, 상한 3))" in out
+    # 퀴즈 상한은 프롬프트의 2 다(스키마 3 이 아니다). recent 1/1, 전체는 2문항 2건 / 근거 있는 2건.
+    assert "퀴즈 상한 도달률" in out
+    assert "1 (1/1, 상한 2)  (전체 1 (2/2, 상한 2))" in out
+
+    # recent_metrics 가 없으면(표본 0건) 전체 구간 값만 보여준다.
+    report["recent_metrics"] = None
+    evals_run._print_report(report)
+    assert "| 0.5 (1/2, 상한 3)" in capsys.readouterr().out
 
 
 FUNNEL = {"source_funnel": {"starved_family_count": 3, "confirmed_silent_count": 0, "silent_family_count": 9}}
@@ -1117,12 +1285,14 @@ def test_advice_is_built_from_regressions_too():
 
     적용 아이디어 고정률 0.806→0.800→0.843. ADVICE 에 그 지표가 있는데도 build_advice 가
     violations 만 읽어 권고가 한 번도 안 나갔다. 회귀도 같은 지표가 나빠졌다는 신호다.
+    (당시 사례는 적용 아이디어였는데 그 권고는 2026-10-14 에 ADVICE 에서 뺐다. 같은 경로를
+    퀴즈 고정률로 확인한다.)
     """
     report = {"violations": [],
-              "regressions": [_regression("schema_rigidity.production_ideas_count.fixed_ratio", "higher")]}
+              "regressions": [_regression("schema_rigidity.quiz_count.fixed_ratio", "higher")]}
     advice = build_advice(report)
     assert len(advice) == 1 and advice[0].startswith(PREFIX)
-    assert "적용 아이디어" in advice[0]
+    assert "퀴즈 개수" in advice[0]
 
     # WARN 회귀도 대상이다(위반 쪽이 WARN 을 포함하는 것과 같은 기준).
     warn = {"violations": [],
@@ -1146,8 +1316,21 @@ def test_advice_operator_agrees_with_baseline_direction():
 
 def test_advice_merges_violation_and_regression_of_same_metric():
     """같은 지표가 임계값 위반과 회귀에 동시에 걸려도 권고는 한 줄이다."""
-    metric = "schema_rigidity.production_ideas_count.fixed_ratio"
+    metric = "schema_rigidity.quiz_count.fixed_ratio"
     report = {"violations": [_violation(metric)], "regressions": [_regression(metric, "higher")]}
     advice = build_advice(report)
-    assert len(advice) == 1 and "적용 아이디어" in advice[0]
+    assert len(advice) == 1 and "퀴즈 개수" in advice[0]
+
+
+def test_advice_no_longer_asks_to_vary_production_idea_count():
+    """"개수를 달리하라"는 모델이 따를 수 없는 지시다(2026-10-14 제거).
+
+    프롬프트가 0~3개 범위를 주면 모델은 근거가 충분한 한 상한을 채운다. 그 지표가 WARN 에
+    걸리거나 회귀해도 권고는 나가지 않아야 한다. 정합성 테스트(test_advice_keys_match_real_
+    thresholds)는 ADVICE ⊆ THRESHOLDS 만 보므로 제거 쪽은 여기서 고정한다.
+    """
+    metric = "schema_rigidity.production_ideas_count.fixed_ratio"
+    assert all(key[0] != metric for key in ADVICE)
+    report = {"violations": [_violation(metric, status="WARN")], "regressions": [_regression(metric, "higher")]}
+    assert build_advice(report) == []
 

@@ -47,7 +47,12 @@ ADVICE: dict[tuple[str, str], str] = {
     ("tag_entropy.normalized_entropy", "<"): "최근 주제 다양성이 줄었다. 내일은 분야가 겹치지 않게 고르라.",
     ("score_distribution.iqr", "<"): "관련도 점수가 한 값에 몰려 순위가 사실상 없다. 후보끼리 비교해 점수 차이를 분명히 벌려라.",
     ("score_distribution.distinct_values", "<"): "관련도 점수가 몇 값만 쓰이고 있다. 후보 간 차이를 더 세밀하게 매겨라.",
-    ("schema_rigidity.production_ideas_count.fixed_ratio", ">"): "적용 아이디어 개수가 매번 똑같다. 내용에 맞게 개수를 달리하라.",
+    # schema_rigidity.production_ideas_count.fixed_ratio 는 2026-10-14 에 뺐다. "개수를 달리하라"는
+    # 모델이 따를 수 없는 지시다. 프롬프트가 "0~3개" 범위를 주면 모델은 근거가 충분한 한 상한을
+    # 채운다(근거 있는 아이템 기준 전환 전 97%, 전환 후 92%, 최근 2주 98.5%). 프롬프트에
+    # "3은 상한이지 목표가 아니다"라고 써 둔 지금도 그렇다. 이 지표로는 품질 저하 여부를 알 수
+    # 없고, 근거 여부는 LLM 심판(evals/judge.py)이 잰다. 효과가 확인된 권고만 남긴다.
+    # 지표 자체는 THRESHOLDS 에 WARN 으로 남아 보고만 된다.
     ("schema_rigidity.quiz_count.fixed_ratio", ">"): "퀴즈 개수가 매번 똑같다. 내용에 맞게 개수를 달리하라.",
     ("summary_stats.one_line_summary.mean", ">"): "한 줄 요약이 길어지고 있다. 30자 이내로 더 압축하라.",
     ("summary_stats.one_line_summary.mean", "<"): "한 줄 요약이 지나치게 짧아 상투적이다. 30자 이내에서 핵심을 담아라.",

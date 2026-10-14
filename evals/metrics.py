@@ -275,6 +275,29 @@ def evidence_proxy(items: list[Item]) -> dict[str, Any]:
     }
 
 
+# app/models.py 의 ContentAnalysis.enforce_evidence_gate 가 production_ideas 와 quiz 를
+# 코드에서 []로 비우는 evidence_level 값. EvidenceLevel.DESCRIPTION / TITLE_ONLY 의 .value 다.
+# app 패키지를 import 하지 않는 이유: metrics.py 는 순수 함수 모음이고, app.models 는 structlog
+# 등 런타임 의존성을 끌고 온다(evals/source_funnel.py 가 같은 이유로 import 실패를 겪었다).
+# 값이 어긋나지 않게 tests/test_evals.py 가 app.models.EvidenceLevel 과 대조한다.
+EVIDENCE_LEVELS_EMPTIED_BY_CODE = frozenset({"description", "title_only"})
+# 분석 프롬프트(app/analyzer.py)가 지시하는 개수 상한. production_ideas "0~3개", quiz "0~2문항".
+# 스키마 상한(app/models.py max_length=3)과는 별개다. 퀴즈는 스키마가 3 까지 허용하지만 프롬프트는
+# 2 를 지시하므로 모델이 실제로 채우는 상한은 2 다(스키마 3 으로 재면 도달률이 구조적으로 0 이다).
+# 프롬프트의 범위가 바뀌면 여기도 바뀌어야 한다. tests/test_evals.py 가 프롬프트 원문과 대조한다.
+PRODUCTION_IDEAS_PROMPT_CAP = 3
+QUIZ_PROMPT_CAP = 2
+
+
+def _emptied_by_code(item: Item) -> bool:
+    """코드가 아이디어·퀴즈를 비운 아이템인가.
+
+    evidence_level 키가 없는 옛 아이템(evidence_level 도입 전 레코드, 정적 스냅샷)은
+    "근거 있음"으로 취급해 분모에 넣는다. 그때는 모델이 개수를 직접 골랐기 때문이다.
+    """
+    return str(item.get("evidence_level") or "") in EVIDENCE_LEVELS_EMPTIED_BY_CODE
+
+
 def _dominant_value(counts: Counter[Any], total: int) -> dict[str, Any]:
     value, count = counts.most_common(1)[0] if counts else (None, 0)
     return {
@@ -285,15 +308,45 @@ def _dominant_value(counts: Counter[Any], total: int) -> dict[str, Any]:
     }
 
 
+def _cap_hit(eligible_counts: Counter[Any], cap: int) -> dict[str, Any]:
+    """근거가 있는 아이템(코드가 비우지 않은 것) 중 개수가 프롬프트 상한과 같은 비율.
+
+    fixed_ratio 의 분모에는 코드가 비운 0개가 섞여 값이 실제보다 낮게 나온다
+    (실측 2026-10-14: 70건 중 3개 64, 2개 1, 0개 5 → fixed_ratio 0.914, 0개 5건을
+    빼면 64/65 = 0.985). 이 지표는 그 0개를 분모에서 빼고, 최빈값이 아니라 상한
+    도달을 센다. 모델이 범위 지시의 상한을 얼마나 채우는지를 직접 재는 보고 전용
+    값이다(프롬프트 범위를 바꿀 때 전후 비교용). 이 값으로 품질 저하 여부는 알 수
+    없다. 근거 여부는 LLM 심판(evals/judge.py)이 잰다.
+    """
+    eligible = sum(eligible_counts.values())
+    hits = eligible_counts.get(cap, 0)
+    return {
+        "cap": cap,
+        "eligible_items": eligible,
+        "cap_hit_count": hits,
+        "cap_hit_ratio": _round(hits / eligible) if eligible else 0.0,
+        "eligible_distribution": {
+            str(key): value for key, value in sorted(eligible_counts.items(), key=lambda pair: str(pair[0]))
+        },
+    }
+
+
 def schema_rigidity(items: list[Item]) -> dict[str, Any]:
     """적용 아이디어 개수와 퀴즈 개수가 최빈 고정값에 몰린 비율을 계산한다.
 
     잡아내는 현상: 내용의 복잡도와 무관하게 정해진 개수만 채워 스키마를 기계적으로 완성하는 현상.
-    경보 임계값: 두 필드 중 하나라도 최빈값 고정 비율이 0.95를 초과하면 FAIL이다.
+    경보 임계값: 퀴즈 개수 고정 비율이 0.95를 초과하면 FAIL, 적용 아이디어는 WARN 이다
+    (evals/thresholds.py 참조. 아이디어 고정률은 2026-10-14 에 게이트에서 내렸다).
+
+    fixed_ratio 는 전체 아이템이 분모라 코드가 비운 0개(evidence_level 이
+    description/title_only)가 섞인다. 호환을 위해 남기고, 그 0개를 뺀 cap_hit_ratio 와
+    eligible_items 를 같은 dict 에 추가한다(_cap_hit 설명 참조).
     """
     idea_counts: Counter[int] = Counter()
     quiz_counts: Counter[Any] = Counter()
     combined: Counter[tuple[int, Any]] = Counter()
+    eligible_idea_counts: Counter[int] = Counter()
+    eligible_quiz_counts: Counter[Any] = Counter()
     for item in items:
         ideas = item.get("production_ideas")
         idea_count = len(ideas) if isinstance(ideas, list) else 0
@@ -301,12 +354,21 @@ def schema_rigidity(items: list[Item]) -> dict[str, Any]:
         idea_counts[idea_count] += 1
         quiz_counts[quiz_count] += 1
         combined[(idea_count, quiz_count)] += 1
+        if not _emptied_by_code(item):
+            eligible_idea_counts[idea_count] += 1
+            eligible_quiz_counts[quiz_count] += 1
 
     combined_value, combined_count = combined.most_common(1)[0] if combined else ((None, None), 0)
     return {
         "total_items": len(items),
-        "production_ideas_count": _dominant_value(idea_counts, len(items)),
-        "quiz_count": _dominant_value(quiz_counts, len(items)),
+        "production_ideas_count": {
+            **_dominant_value(idea_counts, len(items)),
+            **_cap_hit(eligible_idea_counts, PRODUCTION_IDEAS_PROMPT_CAP),
+        },
+        "quiz_count": {
+            **_dominant_value(quiz_counts, len(items)),
+            **_cap_hit(eligible_quiz_counts, QUIZ_PROMPT_CAP),
+        },
         "combined_fixed_values": {
             "production_ideas_count": combined_value[0],
             "quiz_count": combined_value[1],
