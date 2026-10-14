@@ -25,6 +25,9 @@ data/*
 # 오늘 눌린 👍를 어느 아이템 것인지 알 수 없어 피드백이 통째로 유실된다.
 !data/discord_messages.jsonl
 !data/discord_cursor.json
+# LLM 심판 판정 캐시(evals/judge.py). append-only 이고 외부 모델 호출 비용이 든 결과라
+# 러너가 사라지면 다시 사지 못한다. 추세 지표의 원천이므로 커밋한다.
+!data/evals/
 # data/* 는 리포 루트에만 앵커되므로, 하위 경로의 data/(예: evals/data/의 대용량
 # 픽스처)는 기존 무앵커 data/ 패턴처럼 계속 무시되도록 명시한다(회귀 방지).
 evals/data/

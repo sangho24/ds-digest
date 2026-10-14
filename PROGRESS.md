@@ -862,6 +862,43 @@ GitHub Actions (07:30 KST)
   (b) 표본 30건 미만 창에서 FAIL 이 WARN 으로 강등된 회귀도 권고로 나간다(기존 violations
   경로와 같은 규칙). 설계 판단은 보류했다.
 
+### 47. 내용을 읽는 눈: LLM 심판으로 "쓴 것이 본문에 있는가"를 묻는다 (`evals/judge.py`, 보고 전용)
+- **증상**: evals 지표는 전부 통계(개수·분포·중복)라 요약·포인트·아이디어·퀴즈가 본문에 실제로
+  근거하는지는 아무도 읽지 않았다. 아이디어 3개를 매번 채우는 것은 잡아도(§46) 그 3개가 본문의
+  어떤 기법에서 출발했는지는 계측 밖이었다.
+- **원인**: 근거 판정은 본문을 읽어야 하고, 읽는 주체(외부 모델)와 그 주장을 검증하는 장치
+  (코드)가 없었다.
+- **수정**: `evals/judge.py` 신규. 정본 `data/records/digest_*.json` 의 evidence_level=full
+  아이템만 OpenAI 호환 심판(deepseek-chat / qwen-flash, httpx 직접 호출, 동시성 4)에게
+  아이템당 1회 보내 4가지 질문(summary faithful, key_points supported, production_ideas
+  grounded, quiz answerable·answer_correct)을 예/아니오 + 본문 인용으로 받는다. 인용은 코드가
+  공백 정규화 후 본문 부분 문자열 검사로 `quote_verified` 를 붙이고, 집계는 심판 주장과
+  검증이 모두 참인 것만 센다(claimed 와 verified 를 함께 기록, truncated 를 뺀 비율도 병기).
+  결과는 `data/evals/judgments.jsonl` append-only 캐시(키 judge_id·url·analysis_hash·
+  prompt_hash, error 행만 재시도, .gitignore 예외 추가). 4xx 처리: 400/422 는 response_format
+  을 빼고 1회 재시도, 401/403 은 키 문제라 첫 건에서 run 전체 중단(남은 건은 기록하지 않아
+  다음 run 대상), 나머지 4xx 는 재시도 없이 error 행. CLI: `run --judge --since --until
+  --limit --dry-run`, `report --window 14 --json [--all-prompts]`(주 단위·최근 창 지표 6종 +
+  두 심판 일치율), `disagreements --out`(엇갈린 질문을 본문 발췌와 `human: null` 로 내보냄).
+  보고는 기본으로 현재 prompt_hash 행만 쓰고, 정본에서 사라진 (url, analysis_hash) 행은
+  걸러 대체된 옛 행이 이중 집계되지 않게 한다. 최근 창 기준일은 오늘이 아니라 판정 데이터의
+  마지막 날짜다(run.py `_recent_since` 와 같은 규칙). run.py 의 게이트·thresholds 는 건드리지
+  않았다.
+- **검증**: 전체 687 통과(수정 전 646, 신규 41). 가짜 transport 로 인용 검증·skip·캐시 적중·
+  코드펜스 파싱·429 백오프·4xx 분기·verified 만 세는 집계·agreement·analysis_hash 를 확인.
+  독립 검증(별도 세션)이 9건을 잡아 반영했고 각각 수정 전 FAIL 테스트를 붙였다: 인용문 안의
+  코드펜스가 펜스 정규식에 먼저 걸려 영구 error 가 되던 파싱 순서(실제 full 아이템 323건 중
+  19건 본문에 펜스 존재, 19/19 통과 확인), 대체된 옛 행 이중 집계, 창 기준일, bool 문자열
+  파싱("false" 가 참으로 읽힘), 캐시 꼬리 개행 복구, 401/403 중단, truncated 제외 비율,
+  응답 예시가 전부 true 라 생기는 앵커링(예시를 섞음, prompt_hash a1c3608a1c60), 본문에
+  플레이스홀더 문자열이 있을 때 치환이 연쇄되는 문제(정규식 한 패스로 교체).
+  실제 dry-run(10-14): 대상 363건 중 full 323건(89.0%), 건너뜀 40건(description 23,
+  partial 17), 본문 16,000자 상한 초과 15건, 예상 입력 토큰 약 817K(본문 글자수/2 근사).
+- **남은 것**: DEEPSEEK_API_KEY·DASHSCOPE_API_KEY 미확보라 실제 소급 판정은 아직이다. 키가
+  오면 `--since` 로 2주치부터 돌려 quote_verified_rate(심판 신뢰도)를 먼저 보고, 두 심판
+  일치율이 낮은 질문은 disagreements 로 사람이 표시한다. 워크플로 연결과 README 는 이번
+  범위 밖이다.
+
 ---
 
 ## 다음 스텝 아이디에이션
