@@ -55,15 +55,23 @@ ADVICE: dict[tuple[str, str], str] = {
 
 
 def build_advice(report: dict[str, Any]) -> list[str]:
-    """리포트에서 프롬프트로 고칠 수 있는 위반만 골라 권고 문구로 바꾼다.
+    """리포트에서 프롬프트로 고칠 수 있는 위반·회귀만 골라 권고 문구로 바꾼다.
 
     게이트를 막는 FAIL 뿐 아니라 WARN 도 대상으로 삼는다. 요약 길이처럼 WARN 인
     지표는 게이트를 떨어뜨리지 않으므로, 여기서 다루지 않으면 추세가 기울어도
     아무 일도 일어나지 않는다.
+
+    임계값 위반(violations)뿐 아니라 baseline 회귀(regressions)도 읽는다. 둘은 같은
+    지표가 나빠졌다는 신호를 다른 기준으로 잰 것이다. 위반만 읽던 동안 적용 아이디어
+    고정률이 절대 임계값(> 0.95)은 안 넘은 채 회귀로만 4주 연속 게이트를 막았고
+    (0.806→0.800→0.843), ADVICE 에 그 지표가 있는데도 권고가 한 번도 안 나갔다.
+    blocking_regressions 는 regressions 의 부분집합이라 따로 읽지 않는다. 같은 지표가
+    양쪽에 걸리면 seen 이 한 줄로 합친다.
     """
     seen: set[tuple[str, str]] = set()
     advice: list[str] = []
-    for row in report.get("violations") or []:
+    rows = list(report.get("violations") or []) + list(report.get("regressions") or [])
+    for row in rows:
         key = (str(row.get("metric") or ""), str(row.get("operator") or ""))
         text = ADVICE.get(key)
         if not text or key in seen:

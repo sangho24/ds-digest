@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from datetime import date
 import json
+import shutil
+import subprocess
 
 import pytest
 
@@ -568,6 +571,9 @@ def test_drop_within_tolerance_passes_and_beyond_regresses(monkeypatch):
     assert row["tolerance"] == pytest.approx(0.10)
     assert row["allowed_delta"] == pytest.approx(0.10)
     assert row["limit"] == pytest.approx(0.90)
+    # 권고 생성(evals/directive.py)이 (metric, operator) 키로 ADVICE 를 찾는다.
+    # direction 만 있고 operator 가 없으면 회귀는 권고로 이어지지 않는다.
+    assert row["direction"] == "lower" and row["operator"] == "<"
 
 
 def test_near_zero_baseline_uses_absolute_floor(monkeypatch):
@@ -581,13 +587,21 @@ def test_near_zero_baseline_uses_absolute_floor(monkeypatch):
     assert evals_run.compare_baseline({"d": {"r": 0.01}}, {"d": {"r": 0.0}}) == []
     regressions = evals_run.compare_baseline({"d": {"r": 0.03}}, {"d": {"r": 0.0}})
     assert [(r["allowed_delta"], r["min_delta"]) for r in regressions] == [(0.02, 0.02)]
+    assert regressions[0]["direction"] == "higher" and regressions[0]["operator"] == ">"
 
 
 def _run_main(monkeypatch, capsys, tmp_path, argv, lifetime, recent,
-              recent_n=40, baseline_doc=None, input_label=DERIVED):
-    """run.main()을 끝까지 돌린다. 지표 계산만 고정값으로 바꾼다."""
+              recent_n=40, baseline_doc=None, input_label=DERIVED,
+              prompt_changed=date(2026, 1, 1)):
+    """run.main()을 끝까지 돌린다. 지표 계산만 고정값으로 바꾼다.
+
+    recent 창은 2026-03-01 하루다. 프롬프트 변경일(git 조회)은 기본으로 그보다 앞인
+    2026-01-01 로 바꿔 둬 baseline 가드의 창 검사가 통과한다. 실제 git 을 부르면
+    리포의 analyzer.py 변경일(2026-09-04)이 창보다 뒤라 모든 --write-baseline 이 거부된다.
+    """
     items = [_item(date="2026-01-01")] * 5 + [_item(date="2026-03-01")] * recent_n
     monkeypatch.setattr(evals_run, "resolve_items", lambda: (items, input_label))
+    monkeypatch.setattr(evals_run, "_prompt_last_changed", lambda: prompt_changed)
     monkeypatch.setattr(
         evals_run, "calculate_metrics",
         lambda xs: lifetime if len(xs) == len(items) else recent,
@@ -780,8 +794,9 @@ def test_write_baseline_refuses_empty_source_funnel(monkeypatch, capsys, tmp_pat
     )
     assert code == 1 and not path.exists()
 
+    monkeypatch.setattr(evals_run, "_prompt_last_changed", lambda: date(2026, 1, 1))
     reasons = evals_run.baseline_write_blockers(
-        DERIVED, {"m": {"v": 2.0}, **empty_funnel}, {"m": {"v": 2.0}, **FUNNEL}, 40,
+        DERIVED, {"m": {"v": 2.0}, **empty_funnel}, {"m": {"v": 2.0}, **FUNNEL}, 40, "2026-03-01",
     )
     assert len(reasons) == 1 and "source_funnel(lifetime)" in reasons[0]
 
@@ -809,6 +824,92 @@ def test_write_baseline_records_both_scopes_and_round_trips(monkeypatch, capsys,
     )
     assert code == 0 and report["regressions"] == []
     assert report["baseline_input"]["recent_item_count"] == 40
+
+
+def test_write_baseline_refuses_window_crossing_prompt_change(monkeypatch, capsys, tmp_path):
+    """recent 창이 분석 프롬프트 변경일을 가로지르면 과도기 혼합 분포가 기준점이 된다.
+
+    실제 사례: 09-04 에 production_ideas 지시가 0~2개에서 0~3개로 바뀌었는데 09-15 baseline 의
+    창(09-02~09-15)이 변경일을 가로질러 fixed_ratio 0.644 가 박제됐고, 창이 전환 이후로
+    채워진 09-21 부터 매주 거짓 회귀 FAIL 이 났다. _run_main 의 recent 창은 2026-03-01 이다.
+    """
+    _guard_rules(monkeypatch)
+    lifetime, recent = {"m": {"v": 1.8}, **FUNNEL}, {"m": {"v": 2.0}, **FUNNEL}
+    # 변경일이 창 시작일보다 뒤 → 거부. 같은 날도 거부(그날 다이제스트가 커밋 전일 수 있다).
+    for changed in (date(2026, 3, 5), date(2026, 3, 1)):
+        code, _, path = _run_main(
+            monkeypatch, capsys, tmp_path, ["--write-baseline"],
+            lifetime=lifetime, recent=recent, prompt_changed=changed,
+        )
+        assert code == 1 and not path.exists(), changed
+        reasons = evals_run.baseline_write_blockers(DERIVED, lifetime, recent, 40, "2026-03-01")
+        assert len(reasons) == 1 and "프롬프트 마지막 변경일" in reasons[0], reasons
+    # 변경일이 창 시작일보다 앞 → 통과.
+    code, _, path = _run_main(
+        monkeypatch, capsys, tmp_path, ["--write-baseline"],
+        lifetime=lifetime, recent=recent, prompt_changed=date(2026, 2, 28),
+    )
+    assert code == 0 and path.exists()
+
+
+def test_write_baseline_refuses_when_prompt_change_date_is_unknown(monkeypatch):
+    """git 조회 실패는 가드를 건너뛰는 이유가 아니라 거부 사유다. 모르는 채 박제한 것이 원인이었다."""
+    good = {"m": {"v": 2.0}, **FUNNEL}
+    _guard_rules(monkeypatch)
+
+    def _no_git(*args, **kwargs):
+        raise FileNotFoundError("git")
+
+    monkeypatch.setattr(evals_run.subprocess, "run", _no_git)
+    with pytest.raises(ValueError, match="git"):
+        evals_run._prompt_last_changed()
+    reasons = evals_run.baseline_write_blockers(DERIVED, good, good, 40, "2026-03-01")
+    assert len(reasons) == 1 and "프롬프트 변경일을 구하지 못했습니다" in reasons[0]
+
+    # 그 파일들에 커밋 이력이 전혀 없으면 빈 출력이고, 마찬가지로 거부한다.
+    # (얕은 clone 은 빈 출력이 아니라 HEAD 날짜를 돌려줘 창 검사 쪽에서 거부된다.)
+    class _Empty:
+        stdout = ""
+
+    monkeypatch.setattr(evals_run.subprocess, "run", lambda *a, **k: _Empty())
+    reasons = evals_run.baseline_write_blockers(DERIVED, good, good, 40, "2026-03-01")
+    assert len(reasons) == 1 and "커밋 이력이 전혀 없습니다" in reasons[0]
+
+
+def test_prompt_last_changed_asks_git_for_prompt_files(monkeypatch):
+    """가드가 보는 파일 목록이 git 명령에 그대로 실려야 한다. 분석 프롬프트는 app/analyzer.py 에 있다."""
+    seen = {}
+
+    class _Out:
+        stdout = "2026-09-04\n"
+
+    def _fake_run(command, **kwargs):
+        seen["command"] = command
+        return _Out()
+
+    monkeypatch.setattr(evals_run.subprocess, "run", _fake_run)
+    assert evals_run._prompt_last_changed() == date(2026, 9, 4)
+    assert seen["command"][:4] == ["git", "log", "-1", "--format=%cs"]
+    assert "app/analyzer.py" in seen["command"] and "app/analyzer.py" in evals_run.PROMPT_FILES
+    assert "app/models.py" in seen["command"] and "app/models.py" in evals_run.PROMPT_FILES
+
+
+def test_prompt_last_changed_against_real_git():
+    """_run_main 은 git 조회를 monkeypatch 하므로 실제 git 경로는 여기서만 돈다.
+
+    얕은 clone 에서는 HEAD 날짜가 나오므로 특정 날짜는 단언하지 않는다.
+    """
+    root = evals_run.EVALS_DIR.parent
+    if not shutil.which("git"):
+        pytest.skip("git 이 없다")
+    probe = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
+                           cwd=root, capture_output=True, text=True)
+    if probe.returncode != 0 or probe.stdout.strip() != "true":
+        pytest.skip("git 저장소가 아니다")
+    changed = evals_run._prompt_last_changed()
+    assert isinstance(changed, date)
+    assert date.fromisoformat(changed.isoformat()) == changed
+    assert changed <= date.today()
 
 
 def test_write_baseline_rejects_since_and_baseline_flags(monkeypatch):
@@ -1001,3 +1102,52 @@ def test_advice_keys_match_real_thresholds():
     defined = {(rule["path"], rule["operator"]) for rule in THRESHOLDS}
     missing = [key for key in ADVICE if key not in defined]
     assert not missing, f"임계값에 없는 권고 키: {missing}"
+
+
+def _regression(metric, direction, status="FAIL"):
+    """evals/run.py compare_baseline 이 만드는 회귀 행의 모양."""
+    return {"metric": metric, "label": metric, "status": status, "scope": "recent",
+            "current": 0.9, "baseline": 0.6, "direction": direction,
+            "operator": ">" if direction == "higher" else "<",
+            "tolerance": 0.1, "min_delta": 0.12, "allowed_delta": 0.12, "limit": 0.72}
+
+
+def test_advice_is_built_from_regressions_too():
+    """FAIL 임계값(> 0.95)은 안 넘었지만 baseline 회귀로 4주째 게이트가 막힌 지표가 있었다.
+
+    적용 아이디어 고정률 0.806→0.800→0.843. ADVICE 에 그 지표가 있는데도 build_advice 가
+    violations 만 읽어 권고가 한 번도 안 나갔다. 회귀도 같은 지표가 나빠졌다는 신호다.
+    """
+    report = {"violations": [],
+              "regressions": [_regression("schema_rigidity.production_ideas_count.fixed_ratio", "higher")]}
+    advice = build_advice(report)
+    assert len(advice) == 1 and advice[0].startswith(PREFIX)
+    assert "적용 아이디어" in advice[0]
+
+    # WARN 회귀도 대상이다(위반 쪽이 WARN 을 포함하는 것과 같은 기준).
+    warn = {"violations": [],
+            "regressions": [_regression("tag_entropy.normalized_entropy", "lower", status="WARN")]}
+    assert "다양성" in build_advice(warn)[0]
+
+
+def test_advice_operator_agrees_with_baseline_direction():
+    """회귀 행의 operator 는 direction 에서 만든다(higher→">", lower→"<").
+
+    ADVICE 키의 연산자가 비교 방향과 어긋나면 회귀가 권고 키에 닿지 않는다. 요약 길이처럼
+    회귀 비교에 없는 키는 건너뛴다.
+    """
+    direction_of = {rule["path"]: rule["direction"] for rule in BASELINE_COMPARISONS}
+    expected = {"higher": ">", "lower": "<"}
+    for metric, operator in ADVICE:
+        if metric not in direction_of:
+            continue
+        assert operator == expected[direction_of[metric]], (metric, operator, direction_of[metric])
+
+
+def test_advice_merges_violation_and_regression_of_same_metric():
+    """같은 지표가 임계값 위반과 회귀에 동시에 걸려도 권고는 한 줄이다."""
+    metric = "schema_rigidity.production_ideas_count.fixed_ratio"
+    report = {"violations": [_violation(metric)], "regressions": [_regression(metric, "higher")]}
+    advice = build_advice(report)
+    assert len(advice) == 1 and "적용 아이디어" in advice[0]
+

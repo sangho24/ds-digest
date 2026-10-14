@@ -69,6 +69,15 @@ BASELINE_FORMAT_VERSION = 2
 # (예: structlog 없는 시스템 파이썬) evals/source_funnel.py가 이 키들이 없는 빈 dict를
 # 돌려주고, 퍼널 임계값은 None으로 조용히 통과한다.
 FUNNEL_REQUIRED_KEYS = ("starved_family_count", "confirmed_silent_count", "silent_family_count")
+# 산출물 분포를 만드는 파일. 계측하는 recent 지표(요약 길이·태그·점수·퀴즈/아이디어 개수)는
+# app/analyzer.py 의 프롬프트 지시와 app/models.py 의 스키마(production_ideas·quiz 의
+# max_length, evidence_level 에 따라 퀴즈·아이디어를 비우는 validator)가 함께 만든다.
+# app/directives.py 의 INTERPRET_PROMPT 는 사용자 지시 해석용이고 app/concepts.py 는 어휘
+# 상한 상수뿐이라 넣지 않는다. app/config.py 도 넣지 않는다: 무관한 설정 변경이 잦아 가드가
+# 과도하게 엄격해진다. 대신 모델 교체(config.py 의 groq_model)는 가드가 못 잡으므로 교체
+# 뒤에는 수동으로 baseline 을 다시 찍는다. 프롬프트가 다른 파일로 옮겨지면 여기에 추가한다.
+# 여러 파일이면 `git log -1 -- <files>` 가 그중 가장 늦게 바뀐 커밋을 돌려준다.
+PROMPT_FILES = ("app/analyzer.py", "app/models.py")
 
 
 def calculate_metrics(items: list[dict[str, Any]]) -> dict[str, Any]:
@@ -254,6 +263,11 @@ def compare_baseline(
                 "current": current,
                 "baseline": baseline,
                 "direction": rule["direction"],
+                # 권고 생성(evals/directive.py build_advice)은 (metric, operator) 키로 ADVICE 를
+                # 찾는다. 회귀 행에 direction 만 있고 operator 가 없어서, 임계값은 안 넘었지만
+                # 회귀로 4주 연속 FAIL 이던 지표(적용 아이디어 고정률)에 권고가 한 번도 안
+                # 나갔다. "higher 로 가면 나쁨" = 임계값 행의 ">" 와 같은 뜻이라 그대로 옮긴다.
+                "operator": ">" if rule["direction"] == "higher" else "<",
                 "tolerance": tolerance,
                 "min_delta": min_delta,
                 "allowed_delta": round(allowed, 6),
@@ -288,6 +302,7 @@ def baseline_write_blockers(
     metrics: dict[str, Any],
     recent_metrics: dict[str, Any] | None,
     recent_item_count: int,
+    recent_start_date: str | None,
 ) -> list[str]:
     """현재 입력이 baseline 자격이 없는 이유들. 비어 있어야 기록한다.
 
@@ -300,6 +315,14 @@ def baseline_write_blockers(
       3. 모든 FAIL 임계값을 통과한다. 표본 부족 강등 없이 원래 severity로 본다.
       4. source_funnel이 실제로 계측됐다. import 실패로 비어 있으면 퍼널 FAIL 임계값이
          None으로 통과해 3번이 거짓 통과가 되고, CI(의존성 설치됨)와 다른 숫자가 박제된다.
+      5. recent 창의 시작일이 분석 프롬프트(PROMPT_FILES)의 마지막 변경일보다 뒤다.
+         창이 변경일을 가로지르면 baseline 이 변경 전후가 섞인 과도기 분포가 되고, 몇 주 뒤
+         창이 변경 이후로만 채워지면 "정상 상태"가 baseline 보다 나빠 보여 거짓 회귀가 난다.
+         실제 사례: 09-04 에 production_ideas 지시가 0~2개에서 0~3개로 바뀌었고(모델은 전후
+         모두 상한을 채운다), 09-15 baseline 의 창(09-02~09-15)은 2개 17건 + 3개 38건 혼합이라
+         fixed_ratio 가 0.644 로 인위적으로 낮았다. 창이 전환 이후로 채워진 09-21 부터
+         0.806, 0.800, 0.843 으로 매주 회귀 FAIL 이 났다. 품질이 나빠진 게 아니라 기준점이
+         과도기였던 것이다. 변경일 당일은 그날 다이제스트가 커밋 전에 나갔을 수 있어 제외한다.
     """
     reasons: list[str] = []
     for scope_name, source in (("lifetime", metrics), ("recent", recent_metrics)):
@@ -331,7 +354,59 @@ def baseline_write_blockers(
                 f"FAIL 임계값 위반: {row['label']} {row['actual']} "
                 f"({row['operator']} {row['threshold']}, {row['scope']})"
             )
+    # git 조회 실패는 가드를 건너뛰는 이유가 아니라 거부 사유다. 변경일을 모르면 창이
+    # 과도기인지 아닌지도 모르는 것이고, 모르는 채 박제한 기준점이 이번 사고의 원인이다.
+    try:
+        prompt_changed = _prompt_last_changed()
+    except ValueError as error:
+        reasons.append(str(error))
+    else:
+        window_start = _parse_iso_date(recent_start_date)
+        if window_start is None or window_start <= prompt_changed:
+            reasons.append(
+                f"recent 창 시작일 {recent_start_date or '-'} 이 분석 프롬프트 마지막 변경일 "
+                f"{prompt_changed.isoformat()} ({', '.join(PROMPT_FILES)}) 보다 뒤가 아닙니다: "
+                "창이 변경 전후를 섞으면 과도기 분포가 기준점이 되어 몇 주 뒤 거짓 회귀가 납니다. "
+                "변경 이후 14일이 쌓인 뒤 다시 실행하세요"
+            )
     return reasons
+
+
+def _parse_iso_date(value: str | None) -> date | None:
+    try:
+        return date.fromisoformat(str(value)[:10]) if value else None
+    except ValueError:
+        return None
+
+
+def _prompt_last_changed() -> date:
+    """분석 프롬프트 파일(PROMPT_FILES) 중 가장 늦게 바뀐 커밋의 날짜.
+
+    git 이 없거나(로컬 비정상 환경) 그 파일들에 커밋 이력이 전혀 없으면 ValueError.
+    호출자(baseline_write_blockers)는 이 예외를 거부 사유로 바꾼다.
+
+    얕은 clone(`--depth 1`)에서는 빈 출력이 아니라 **HEAD 커밋 날짜**가 나온다(실측,
+    rc=0). 그러면 변경일이 창 시작일 이후가 되어 가드가 거의 항상 거부한다. 거부
+    방향이라 안전하지만, baseline 은 전체 이력이 있는 로컬 체크아웃에서만 작성하라.
+    """
+    root = EVALS_DIR.parent
+    command = ["git", "log", "-1", "--format=%cs", "--", *PROMPT_FILES]
+    try:
+        output = subprocess.run(
+            command, cwd=root, capture_output=True, text=True, timeout=10, check=True
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ValueError(
+            f"분석 프롬프트 변경일을 구하지 못했습니다(`{' '.join(command)}` 실패: {error}). "
+            "git 이 있는 체크아웃에서 다시 실행하세요. 변경일을 모르면 창이 과도기인지 판단할 수 없어 거부합니다"
+        ) from error
+    changed = _parse_iso_date(output)
+    if changed is None:
+        raise ValueError(
+            f"분석 프롬프트 변경일을 구하지 못했습니다(`{' '.join(command)}` 출력: {output!r}). "
+            f"{', '.join(PROMPT_FILES)} 에 커밋 이력이 전혀 없습니다"
+        )
+    return changed
 
 
 def _git_state() -> tuple[str | None, bool | None]:
@@ -580,7 +655,8 @@ def _parse_args() -> argparse.Namespace:
         action="store_true",
         help=(
             "현재 입력의 지표로 evals/baseline.json을 다시 쓴다. data/records/ 파생 입력이 아니거나, "
-            "recent 표본이 부족하거나, FAIL 임계값을 하나라도 위반하면 거부하고 exit 1"
+            "recent 표본이 부족하거나, FAIL 임계값을 하나라도 위반하거나, recent 창이 분석 프롬프트 "
+            "변경일을 가로지르면 거부하고 exit 1"
         ),
     )
     args = parser.parse_args()
@@ -603,7 +679,9 @@ def _write_baseline(
     recent_item_count: int,
 ) -> int:
     """가드를 통과하면 BASELINE_PATH에 기록하고 0, 거부하면 기존 파일을 건드리지 않고 1."""
-    reasons = baseline_write_blockers(input_meta["path"], metrics, recent_metrics, recent_item_count)
+    reasons = baseline_write_blockers(
+        input_meta["path"], metrics, recent_metrics, recent_item_count, input_meta.get("recent_start_date")
+    )
     if reasons:
         print("baseline 재생성 거부: 현재 입력은 기준점 자격이 없습니다", file=sys.stderr)
         for reason in reasons:

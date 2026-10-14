@@ -827,6 +827,41 @@ GitHub Actions (07:30 KST)
   실행 이후다. 모델이 `standing_note` 를 얼마나 따르는지 재는 수단도 없다. 지표가 회복되는지로
   간접 확인할 수밖에 없다.
 
+### 46. 과도기 기준점이 만든 거짓 회귀, 그리고 회귀는 권고로 이어지지 않았다 (`evals/run.py`, `evals/directive.py`)
+- **증상**: Weekly Evals 가 09-21 부터 4주 연속 `schema_rigidity.production_ideas_count.fixed_ratio`
+  회귀 FAIL 이었다(0.806 → 0.800 → 0.843, 로컬 10-12 기준 0.914). 절대 임계값(> 0.95)은 한 번도
+  안 넘었다. 그리고 ADVICE 에 이 지표가 있는데도 권고(§45)는 한 줄도 안 나갔다.
+- **원인 1 - 기준점이 과도기 혼합 분포였다**: 09-04 커밋 dcf4310 이 `app/analyzer.py` 의
+  production_ideas 지시를 "0~2개"에서 "0~3개"로 바꿨고, 모델은 전후 모두 상한을 채운다(최빈값이
+  09-05 부터 2 → 3). 09-15 baseline(53884d7)의 recent 창은 09-02~09-15 라 전환일을 가로질러
+  2개 17건 + 3개 38건이었고, fixed_ratio 0.644 는 분포가 다양해서가 아니라 섞여서 낮았다.
+  창이 전환 이후로만 채워지자 "정상 상태"가 한도 0.764(0.644 + max(0.064, 0.12)) 를 넘었다.
+- **원인 2 - 회귀 행에 `operator` 가 없었다**: `build_advice` 는 `report["violations"]` 만
+  읽고 (metric, operator) 키로 ADVICE 를 찾는다. 회귀 행(`compare_baseline`)은 direction
+  ("higher"/"lower")만 있어 키가 맞지 않았고, 애초에 regressions 는 읽지도 않았다.
+- **수정**:
+  - `--write-baseline` 가드에 5번째 검사: recent 창 시작일이 분석 프롬프트(`PROMPT_FILES` =
+    `app/analyzer.py`)의 마지막 커밋일(`git log -1 --format=%cs`)보다 뒤여야 한다. 같은 날은
+    거부(그날 다이제스트가 커밋 전에 나갔을 수 있다). git 조회 실패·이력 없음은 건너뛰지
+    않고 거부 사유로 낸다. 다른 파일은 안 본다: `app/directives.py` 의 INTERPRET_PROMPT 는
+    지시 해석용, `app/concepts.py` 는 어휘 상한 상수라 계측 지표를 바꾸지 않는다.
+  - baseline 재생성(10-12, 창 09-29~10-12, recent 70건, 전체 363건). recent fixed_ratio
+    0.914(3개 64, 0개 5, 2개 1), 퀴즈 0.786. 가드 통과, `--json --baseline` exit 0, 회귀 0.
+  - 회귀 행에 `operator` 키 추가(higher → ">", lower → "<"). `build_advice` 가 violations 와
+    regressions 를 이어 붙여 읽는다(WARN 회귀 포함, 같은 지표는 seen 으로 한 줄).
+- **검증**: 전체 645 통과(수정 전 639). 2단계 수정 전에 `test_advice_is_built_from_regressions_too`
+  (`0 == 1`)와 compare_baseline 테스트 2개(`KeyError: 'operator'`)가 FAIL, 수정 후 PASS.
+  옛 09-15 baseline 으로 현재 입력을 비교하면 회귀 1건이 나오고 그것이 이제
+  "[품질 계기판] 적용 아이디어 개수가 매번 똑같다..." 권고로 이어진다.
+- **남은 것 (사용자 결정)**: 새 baseline 0.914 는 절대 임계값 0.95 와 0.04 차이인데 회귀
+  허용폭이 min_delta 0.12 라 한도가 1.0 을 넘는다. 이 지표의 회귀 비교는 사실상 무력화됐고
+  절대 임계값만 남는다. 코드는 바꾸지 않았다. 또 baseline 의 `git_dirty: true` 는 이번 변경을
+  커밋하기 전에 재생성했기 때문이다.
+  (a) 새 baseline 으로 `quiz_count.fixed_ratio` 한도가 0.9475 → 0.8857, `score_distribution.
+  distinct_values` 한도가 5 → 6 으로 엄격해져 다음 주 회귀 FAIL 가능성이 있다.
+  (b) 표본 30건 미만 창에서 FAIL 이 WARN 으로 강등된 회귀도 권고로 나간다(기존 violations
+  경로와 같은 규칙). 설계 판단은 보류했다.
+
 ---
 
 ## 다음 스텝 아이디에이션
