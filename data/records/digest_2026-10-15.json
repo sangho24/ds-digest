@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-15",
+  "generated_at": "2026-10-14T23:05:07.400643",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Integrating Netflix’s Foundation Model into Personalization applications",
+        "url": "https://netflixtechblog.com/integrating-netflixs-foundation-model-into-personalization-applications-cf176b5860eb?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-14T20:02:22",
+        "transcript": null,
+        "body": "<p>Authors: <a href=\"https://www.linkedin.com/in/divya-gadde-3ba01551/\">Divya Gadde</a>, <a href=\"https://www.linkedin.com/in/markhsiao/\">Ko-Jen Hsiao</a>, <a href=\"https://www.linkedin.com/in/dhaval-patel-1a23aa8/\">Dhaval Patel</a> and <a href=\"https://www.linkedin.com/in/moumitab/\">Moumita Bhattacharya</a></p><p>The motivation for building the Netflix Foundation Model for personalization was laid out in this <a href=\"https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39\">previous blog</a> post. The Netflix homepage is powered by several specialized models and it requires significant time and resources to maintain and continue innovating on these individual models. Therefore, we decided to centralize member preference learning and have one powerful model learned from comprehensive user interaction histories and content data at a large scale and have this model distribute its learnings to other models.</p><p>The previous two blog posts(<a href=\"https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39\">1</a>, <a href=\"https://netflixtechblog.com/fm-intent-predicting-user-session-intent-with-hierarchical-multi-task-learning-94c75e18f4b8\">2</a>) focus on the development of the Foundation Model and here we talk about how we integrate the Foundation Model into various applications. We found that there is extensive literature focused on the training and inference of large-scale transformer-based models. However, there remains a significant gap in practical guidance and research on how to effectively and efficiently integrate large models into existing production systems. At Netflix, we experimented with 3 distinct integration approaches — embeddings, subgraph and fine-tuning. The motivation for trying different approaches stems from varying application needs. Specifically, different teams have different latency requirements, tech stack constraints and different appetites for leveraging the full power of a large foundation model.</p><p>In this blog, we go over the 3 approaches we experimented with and which are now used in production for different use cases. Each integration approach has its own set of motivations, tradeoffs, complexities and learnings. The following sections go into the details of each of these integration approaches.</p><h3>Embeddings from Foundation model</h3><p>Transformer style foundation models naturally lend themselves to generating comprehensive user profile and item representations. Our approach for generating embeddings includes getting the hidden state of the last user event as the profile embedding and weights from the item tower as item embeddings.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/960/1*9xBaz1zkvALNwB3iT3xK8g.png\" /></figure><p>Netflix has an elaborate set up for refreshing the embeddings every day. First, the Foundation Model is pre-trained from scratch every month. Then, the monthly pre-trained model is fine-tuned everyday based on the latest data. The daily fine-tuning also expands the entity id space to include the newly launching titles. After the daily fine-tuned model is ready, we run batch inference to refresh the profile and item embeddings and publish them to the Embedding Store.</p><p>An important part of this setup is the embedding stabilization technique (<a href=\"https://arxiv.org/abs/2508.07574\">paper</a>). When the pretraining job retrains the model from scratch, the embedding spaces between different runs are completely different due to the random initialization in the model. In addition, the embeddings start to drift when the daily job fine-tunes on the latest data, despite the daily fine-tuning job warm-starting from the previous day’s model. Therefore, it is important to map the embeddings generated everyday into the same embedding space, so that downstream models can consume pre-computed embeddings as features.</p><p>This embedding approach relies heavily on the Embedding Store, which is a feature store specializing in embeddings built by the platform team at Netflix. The embedding store makes producing and consuming embeddings easy by taking care of versioning and timestamping the embeddings. The Embedding Store also provides various interfaces to access the embeddings offline and online.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/419/1*i7hLvlBy0Pn1XA_x6xIduw.png\" /><figcaption>Embedding Store integration</figcaption></figure><p>This approach is often the initial and most straightforward way for applications to interact with the Foundation Model. Embeddings can serve as powerful features for other models or for candidate generation, helping to retrieve appealing titles for a user or facilitate title-to-title recommendations. Integrating embeddings as features into existing pipelines is generally well-supported and offers a low barrier to entry. Compared to other integration approaches, using embeddings from the Embedding Store is expected to ha",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "대규모 퍼스널라이즈 모델을 서비스에 적용하는 실전",
+        "tags": [
+          "Netflix",
+          "Foundation Model",
+          "Embedding Store",
+          "Transformer",
+          "Hierarchical Multi-Task Learning"
+        ],
+        "concepts": [
+          "모델 파인튜닝",
+          "개인화 추천"
+        ],
+        "key_points": [
+          {
+            "point": "Netflix는 여러 전문 모델을 대체하기 위해 사용자 선호를 학습하는 대규모 Foundation Model을 구축했다",
+            "timestamp": null
+          },
+          {
+            "point": "Embedding, Subgraph, Fine‑tuning 등 3가지 통합 방식을 실험해 각각의 지연·스택 제약에 맞게 적용한다",
+            "timestamp": null
+          },
+          {
+            "point": "Embedding 파이프라인은 월간 사전학습·일일 파인튜닝·배치 추론·Embedding Stabilization으로 일관된 임베딩을 제공한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Embedding Stabilization 기법을 전자상거래 상품 임베딩에 적용해 모델 재학습 시 추천 품질 변동을 최소화한다",
+          "일일 파인튜닝 파이프라인을 뉴스 기사 개인화 시스템에 도입해 최신 기사와 사용자 행동을 빠르게 반영한다",
+          "중앙화된 Foundation Model을 활용해 금융 사기 탐지 서비스의 여러 마이크로서비스에 공통 임베딩을 제공함으로써 개별 모델 개발 비용을 절감한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 Foundation Model을 매월 처음부터 재학습할 때 임베딩 공간이 달라지는가?",
+            "options": [
+              "학습 데이터가 달라서",
+              "무작위 초기화로 인해",
+              "모델 구조가 바뀌어서",
+              "하드웨어가 달라서"
+            ],
+            "answer_index": 1,
+            "explanation": "무작위 초기화 때문에 매번 학습을 시작하면 임베딩 벡터의 좌표계가 달라진다."
+          },
+          {
+            "question": "Embedding, Subgraph, Fine‑tuning 중 어느 요소가 각 접근 방식을 선택하게 하는 주요 고려사항인가?",
+            "options": [
+              "데이터 양",
+              "지연 요구사항",
+              "사용자 수",
+              "UI 디자인"
+            ],
+            "answer_index": 1,
+            "explanation": "각 팀의 지연 요구사항, 기술 스택 제약 등에 따라 적합한 통합 방식을 선택한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "CASTLE: training natural language search before the first real query",
+        "url": "https://medium.com/airbnb-engineering/castle-training-natural-language-search-before-the-first-real-query-3818ef8b4828?source=rss----53c7c27702d5---4",
+        "published_at": "2026-10-13T17:01:02",
+        "transcript": null,
+        "body": "<h4><em>How we addressed the cold-start problem for Airbnb’s natural language search by jointly generating synthetic training data — queries and relevance labels — from de-identified booking and search signals.</em></h4><figure><img alt=\"View across the lake in St. James’s Park, London, framed by golden autumn willow trees, with the ornate towers and domes of Horse Guards building visible in the background and swans and waterfowl swimming on the water with a fountain spraying in the center.\" src=\"https://cdn-images-1.medium.com/max/1024/1*EsZaupfNPaIk04Xh5whb5A.jpeg\" /></figure><p><strong>By</strong>: <a href=\"https://www.linkedin.com/in/wendyranwei/\">Wendy Ran Wei</a>, <a href=\"https://www.linkedin.com/in/haoli-cs/\">Hao Li</a>, <a href=\"https://www.linkedin.com/in/weiwei-guo/\">Weiwei Guo</a>, <a href=\"https://www.linkedin.com/in/xiaowei-liu-60415841/\">Xiaowei Liu</a>, <a href=\"https://www.linkedin.com/in/xueyinsherry/\">Xueyin Chen</a>, <a href=\"https://www.linkedin.com/in/chunhowt/\">Chun How Tan</a>, <a href=\"https://www.linkedin.com/in/malayhaldar/\">Malay Haldar</a>, <a href=\"https://www.linkedin.com/in/soumyadip-banerjee-75991b42/\">Soumyadip Banerjee</a>, <a href=\"https://www.linkedin.com/in/kedar-bellare-3048128a/\">Kedar Bellare</a>, <a href=\"https://www.linkedin.com/in/huiji-gao/\">Huiji Gao</a>, <a href=\"https://www.linkedin.com/in/sanjeevkatariya/\">Sanjeev Katariya</a>, and <a href=\"https://www.linkedin.com/in/stephanie-moyerman/\">Stephanie Moyerman</a></p><h3>Introduction</h3><p>Natural language search lets guests express intent in their own words, such as “romantic cabin near skiing” or “pet-friendly beach house that sleeps eight,” rather than navigating filters and categories. We needed to introduce this kind of search for Airbnb, and to have it work well from the start. However, this required training the model before we had actual user queries to train the model on, and a reasonable set of relevance labels (inferred from the queries) to map queries to matching listings. Without prior traffic, both must be synthesized from scratch. This is the cold-start problem for natural-language search.</p><p>Other organizations have faced similar challenges and have created methods to address them. However, prior approaches address the need for a body of queries and the need for relevance labels separately. Passage-based methods such as InPars [1] prompt a large language model (LLM) to generate queries conditioned on a single document, then rely on additional LLM judgments to assign relevance labels, introducing a second source of error. Promptagator [2] improves query diversity using few-shot examples, but is still limited by the gap between its generation distribution and real user behavior.</p><p>In this post, we describe Contrastive And Seed-guided Training for natural Language sEarch (CASTLE), our framework for jointly generating queries and producing relevance labels from Airbnb’s own de-identified booking data. Our paper describing CASTLE was accepted as a full research paper at the 35th ACM International Conference on Information and Knowledge Management, more widely known as CIKM 2026 [3].</p><h3>Challenges</h3><p>Generating useful synthetic training data for search requires more than producing grammatically plausible queries. The distribution of synthetic queries must match how real guests actually search; their preferred phrasing, query length, and attributes they tend to mention. If queries fail to match real-world search patterns, the model trained on them will generalize poorly.</p><p>We measured this mismatch using Kullback–Leibler (KL) divergence (a measure of how much one probability distribution differs from a reference distribution) between synthetic and real query distributions — both over surface-level query statistics and over attribute types (property type, amenity, location, and so on). Prior approaches scored between 9.33 and 26.2 on the KL divergence metric: far from the real-user distribution. Beyond distributional alignment, we also needed relevance labels. Generating a query is only half the problem; knowing which listings are relevant to it is the other half.</p><h3>Solution</h3><p>CASTLE addresses both challenges through a single mechanism: contrastive listing pairs derived from de-identified booking sessions, selected in accordance with user privacy permissions. When a guest books a specific listing after viewing several possible alternatives, that event implicitly encodes preference: the booked listing was selected over the others. We use these (positive, negative) pairs of listings — where the negative is randomly sampled from the other viewed-but-not-booked alternatives — as the structured input for query generation. Listing features include amenities, property details, and a one sentence summary of recent public guest reviews, with personal identifying information removed. Because we instruct the LLM to generate a query that is satisfied by the positive listing but not the ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "실제 쿼리 없이도 검색 모델을 학습할 수 있는 합성 데이터 생성 방법",
+        "tags": [
+          "CASTLE",
+          "InPars",
+          "Promptagator",
+          "LLM",
+          "Airbnb"
+        ],
+        "concepts": [
+          "합성 데이터 생성",
+          "콜드 스타트 문제",
+          "대조 학습"
+        ],
+        "key_points": [
+          {
+            "point": "자연어 검색의 콜드 스타트 문제를 해결하기 위해 쿼리와 레이블을 동시에 합성 생성하는 CASTLE 프레임워크를 제안한다.",
+            "timestamp": null
+          },
+          {
+            "point": "기존 방법은 쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요했지만, CASTLE는 예약 데이터에서 시드 정보를 추출해 일관된 합성 데이터를 만든다.",
+            "timestamp": null
+          },
+          {
+            "point": "합성 데이터의 품질을 KL divergence로 평가했으며, CASTLE는 기존 접근보다 실 사용자 쿼리 분포와 더 가깝게 맞춘다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "e‑commerce 검색 엔진을 출시하기 전, 구매 로그를 활용해 쿼리‑레벨 레이블을 공동 생성해 초기 검색 모델을 학습한다.",
+          "추천 시스템의 콜드 스타트 상황에서, 합성 사용자‑아이템 상호작용을 생성하고 KL divergence로 실제 로그와의 차이를 모니터링한다.",
+          "음성 비서의 인텐트 분류에 대해, 익명화된 사용 로그를 기반으로 합성 발화와 인텐트 레이블을 대조 학습 방식으로 만들고 초기 모델을 훈련한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 방법(InPars, Promptagator)이 오류가 누적된다고 언급되었나요?",
+            "options": [
+              "쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요하기 때문",
+              "모델이 너무 작아",
+              "데이터가 부족",
+              "학습률이 높다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 기존 접근이 쿼리 생성 후 별도의 LLM 판단으로 레이블을 부여해 두 번의 오류 발생 가능성을 지적한다."
+          },
+          {
+            "question": "CASTLE가 합성 데이터 품질을 평가하기 위해 사용한 지표는 무엇인가요?",
+            "options": [
+              "정확도",
+              "F1 점수",
+              "KL divergence",
+              "ROC AUC"
+            ],
+            "answer_index": 2,
+            "explanation": "텍스트에서 합성 쿼리와 실제 쿼리 분포 차이를 KL divergence로 측정했다고 명시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "research-method"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "Spark Connect on Kubernetes #2: Operator로 만드는 Control Plane",
+        "url": "https://toss.tech/article/spark-connect-on-kubernetes-2",
+        "published_at": "2026-10-14T05:06:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"88e9d82e-2955-4da4-973d-d2201d630138\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스증권 Data Infra팀 박지원입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"eb17c7c2-7293-46f0-bb31-53d037bf61eb\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><a class=\"css-iynyr0\" href=\"https://toss.tech/article/spark-connect-on-kubernetes-1\" rel=\"noreferrer noopener\" target=\"_blank\">지난 편</a><span class=\"css-1kxrhf3\">에서는 Spark Connect 서버를 여러 replica로 나누고 Gateway로 요청을 분산시켰습니다. 한 Driver에 몰리던 사용자를 분산해 장애와 리소스 경합을 줄이기 위해 새 세션은 한가한 서버에 배치하고, 기존 세션은 원래 서버로 보냈어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"d9984c67-4fd2-4292-8ee8-92302faf333d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 Gateway가 요청을 보낼 서버들은 누가 만들고 관리할까요? Driver가 죽으면 다시 띄워야 하고, 이미지나 설정을 바꾸려면 실행 중인 서버를 교체해야 해요. 이미 세션이 붙어 있는 서버를 그냥 내릴 수는 없고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"6bf979aa-ed24-40e0-9f23-b79c871ddde9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이번 편은 이 서버들의 생명주기를 관리하는 Control Plane 이야기입니다. 개별 서버의 실행과 복구는 Apache Spark Operator에 맡기고, 여러 서버를 하나의 서비스로 운영하는 Spark Tenant Operator를 만들었어요. 두 계층의 역할과 서버 교체 과정을 살펴본 뒤, 장기 실행 중 겪은 Driver 메모리 문제도 다룰게요.</span></span></span></p><figure class=\"css-of5acw\" id=\"a420b196-9db5-49a3-a3e6-e78dad7c202b\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/ead1283a-4515-4ffa-9222-a0384bc2d67f/p2-01-managed-servers-techblog-v3.png\" /></figure><p class=\"css-14on8x8\" id=\"3f9a360d-33e3-806b-b352-fbf5b4cae002\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"063af39b-692c-4bbc-be90-bf2f8f179d28\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">여러 Spark Connect 서버를 어떻게 관리할까</span></span></span></h2><p class=\"css-14on8x8\" id=\"7cdb8145-008e-46d4-a790-ecda032ade48\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">대화형 분석과 무거운 파이프라인을 같은 서버에서 실행하면 자원 경합이 생겨요. 그래서 용도별로 서버를 묶고 이미지, 자원, Spark 설정과 replica 수를 지정했어요. 이 서버 그룹을 </span><span class=\"css-goq46l\">테넌트</span><span class=\"css-1kxrhf3\">라고 부릅니다. </span></span></span></p><p class=\"css-14on8x8\" id=\"2240a628-b920-4694-bf0f-efcafc5dfa56\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">아래 표는 용도에 따라 테넌트 설정을 나눈 예시예요.</span></span></span></p><div class=\"css-1m7s5mg\"><div class=\"css-uznrcw\"><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">구분</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">테넌트</span><span class=\"css-1mjnzsq\"> A</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">테넌트</span><span class=\"css-1mjnzsq\"> B</span></div></div><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">용도</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">대화형 분석</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">대용량 파이프라인</span></div></div><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">Driver 사양(CPU / Heap)</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">2 cores / 4 GiB</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">4 cores / 8 GiB</span></div></div><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">Executor 사양(CPU / Heap)</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">2 cores / 4 GiB</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">4 cores / 16 GiB</span></div></div><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">spark.dynamicAllocation.maxExecutors</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">10</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">50</span></div></div><div class=\"css-1obf64m\"><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">spark.sql.shuffle.partitions</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">200</span></div><div class=\"css-8vl804\"><span class=\"css-1mjnzsq\">1000</span></div></div></div></div><h2 class=\"css-1c1qox8\" id=\"73176acd-3ab7-4fd1-b37b-0f0d34fc09c2\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">두 Operator의 역할 나누기</span></span></span></h2><p class=\"css-14on8x8\" id=\"9f8f3002-ab6d-4331-96d7-8a2d666d66a0\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">테넌트를 운영하려면 개별 서버의 장애를 복구하고 테넌트 전체의 서버 수를 유지해야 해요. 스펙이나 설정이 바뀌면 서버를 교체해야 하고요. 저희는 이 역할을 두 Operator로 나눴습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"f5d50872-81b1-4880-baba-5c5cb7c4208a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">Kubernetes에서 Deployment가 여러 Pod의 수와 교체를 관리하는 것처럼, 저희는 Spark Tenant Operator가 여러 SparkApplication을 관리해요. </span><code><span class=\"css-1mjnzsq\">SparkTenant</span></code><span class=\"css-1kxrhf3\">에 원하는 설정과 서버 수를 선언하면 Tenant Operator가 그에 맞춰 SparkApplication을 생성하고 교체해요. 각 Application의 Driver를 실행하고",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "Spark Connect 자동 관리로 분석 안정성 확보",
+        "tags": [
+          "Spark Connect",
+          "Kubernetes",
+          "Apache Spark Operator",
+          "Spark Tenant Operator",
+          "Driver"
+        ],
+        "concepts": [
+          "객체 생명주기 관리",
+          "작업 격리"
+        ],
+        "key_points": [
+          {
+            "point": "Spark Connect 서버를 테넌트 단위로 묶어 용도별 리소스와 Spark 설정을 지정한다.",
+            "timestamp": null
+          },
+          {
+            "point": "개별 서버의 실행·복구는 Apache Spark Operator에 맡기고, 다수 서버를 하나의 서비스로 운영하는 Spark Tenant Operator를 만든다.",
+            "timestamp": null
+          },
+          {
+            "point": "장기 실행 중 발생한 Driver 메모리 문제와 서버 교체 절차를 다룬다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "테넌트 기반 리소스·설정 지정 방식을 모델 서빙 클러스터에 적용해 비즈니스 유닛별 모델 격리와 자원 최적화를 이룬다.",
+          "Apache Spark Operator의 생명주기 관리 로직을 일반 배치 잡 컨테이너에 적용해 실패 복구와 자동 재시작을 자동화한다.",
+          "Driver 메모리 모니터링 및 자동 교체 메커니즘을 Flink 스트리밍 작업에 도입해 장시간 실행 시 메모리 누수 위험을 감소시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "Spark Connect 서버를 여러 replica로 나누고 Gateway가 요청을 분산시키는 주요 목적은?",
+            "options": [
+              "리소스 경합 감소",
+              "보안 강화",
+              "데이터 복제",
+              "로그 중앙화"
+            ],
+            "answer_index": 0,
+            "explanation": "여러 replica와 Gateway를 사용하면 한 Driver에 몰리는 사용자를 분산시켜 장애와 리소스 경합을 줄일 수 있다."
+          },
+          {
+            "question": "Spark Tenant Operator의 핵심 역할은 무엇인가?",
+            "options": [
+              "개별 Spark Driver 실행 관리",
+              "다수 서버를 하나의 서비스로 운영",
+              "데이터 저장",
+              "네트워크 라우팅"
+            ],
+            "answer_index": 1,
+            "explanation": "Spark Tenant Operator는 여러 Spark Connect 서버를 하나의 서비스처럼 관리하여 전체 테넌트의 생명주기를 제어한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Joint Neural Posterior Estimation and Model Selection for Chemical Reaction Networks",
+        "url": "https://arxiv.org/abs/2610.18825v1",
+        "published_at": "2026-10-13T17:52:39",
+        "transcript": null,
+        "body": "Simulation-based Bayesian inference for Chemical Reaction Networks (CRNs) must simultaneously solve two computationally demanding problems: discriminating between overlapping reaction pathways and estimating reaction rate constants. Classical approaches, such as Sequential Monte Carlo ABC, rely on handcrafted summary statistics and scale poorly across large parameter spaces. To overcome this, we introduce a neural inference architecture. Our pipeline utilizes shared 1D-CNNs and a permutation-invariant Set Attention mechanism to learn low-dimensional summary statistics from variable-length, multi-experiment time-series data. These statistics simultaneously condition a model selection network to compute posterior model probabilities and model-specific conditional Invertible Neural Networks (cINNs) that estimate parameter posterior distributions. We demonstrate the practical utility of our approach on a real protodeboronation example, illustrating how it handles structural ambiguity and extracts kinetic parameters from competing catalyst deactivation pathways.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "CRN 베이지안 추론에서 자동 요약과 효율적 모델 선택이 가능해 현업 DS가 복잡한 반응 메커니즘을 빠르게 분석할 수 있음",
+        "tags": [
+          "1D-CNN",
+          "Set Attention",
+          "cINN",
+          "Sequential Monte Carlo ABC",
+          "protodeboronation"
+        ],
+        "concepts": [
+          "베이지안 추론",
+          "조건부 확률 모델링",
+          "모듈형 신경망 구조"
+        ],
+        "key_points": [
+          {
+            "point": "전통적인 Sequential Monte Carlo ABC는 수작업 요약 통계와 높은 계산 비용으로 대규모 파라미터 공간에 한계가 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "공유 1D‑CNN과 순열 불변 Set Attention을 이용해 가변 길이·다중 실험 시계열에서 저차원 요약 통계를 자동 학습한다.",
+            "timestamp": null
+          },
+          {
+            "point": "학습된 요약은 모델 선택 네트워크와 조건부 INN에 동시에 입력되어 모델 확률과 파라미터 사후분포를 추정한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "CRN의 베이지안 추론은 모델 선택과 파라미터 추정이라는 두 문제를 동시에 해결해야 하지만 기존 Sequential Monte Carlo ABC는 요약 통계 설계와 높은 계산 비용으로 제한됐다. 본 논문은 1D‑CNN과 Set Attention 기반 요약 학습으로 모델 선택 네트워크와 조건부 INN을 결합, 다중 실험 시계열을 직접 처리해 실제 프로토데보로네이션 사례에 적용함으로써 기존 방법 대비 자동 요약 및 효율성을 제공한다.",
+        "production_ideas": [
+          "Set Attention을 활용해 이기종 IoT 센서 데이터 집합을 통합, 결측 스트림에 강인한 예측 유지보수 모델을 만든다",
+          "공유 1D‑CNN 기반 요약을 금융 다자산 시계열에 적용해 공동 변동성 모델 선택을 자동화, 수작업 특성 설계 없이 효율적인 위험 분석을 가능하게 한다",
+          "조건부 INN을 사용자 선호 파라미터의 사후분포 추정에 사용해 불확실성을 반영한 추천 시스템을 구축, 추천 정확도와 신뢰성을 동시에 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "어떤 구성 요소가 가변 길이·다중 실험 시계열 데이터를 처리하도록 허용하는가?",
+            "options": [
+              "1D‑CNN",
+              "Set Attention",
+              "Sequential Monte Carlo ABC",
+              "RNN"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 순열 불변 Set Attention 메커니즘을 사용해 변수 길이와 실험 수에 관계없이 요약 통계를 학습한다."
+          },
+          {
+            "question": "조건부 Invertible Neural Networks(cINN)의 주요 역할은 무엇인가?",
+            "options": [
+              "모델 선택 확률 계산",
+              "파라미터 사후분포 추정",
+              "합성 반응 경로 생성",
+              "차원 축소"
+            ],
+            "answer_index": 1,
+            "explanation": "cINN은 학습된 요약 통계를 조건으로 하여 각 모델별 파라미터 사후분포를 추정하도록 설계되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "TimeSeries Tiered Storage Journey: Kafka/Flink Streams to Native Cassandra Cold Reads",
+        "url": "https://netflixtechblog.com/timeseries-tiered-storage-journey-kafka-flink-streams-to-native-cassandra-cold-reads-e59d597c9d60?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-14T19:56:08",
+        "transcript": null,
+        "body": "<p>By <a href=\"https://www.linkedin.com/in/oleksii-tkachuk-98b47375/\">Oleksii Tkachuk</a>, <a href=\"https://www.linkedin.com/in/rajiv-shringi/\">Rajiv Shringi</a>, <a href=\"https://www.linkedin.com/in/clohfink/\">Chris Lohfink</a>, <a href=\"https://www.linkedin.com/in/abe-ratnofsky/\">Abe Ratnofsky</a>, <a href=\"https://www.linkedin.com/in/kartik894/\">Kartik Sathyanarayanan</a></p><h3>Introduction</h3><p>In an earlier <a href=\"https://netflixtechblog.com/introducing-netflix-timeseries-data-abstraction-layer-31552f6326f8\">post</a>, we introduced the TimeSeries Abstraction, our high-throughput, low-latency platform designed to store and query temporal event data at scale. It has since become the operational backbone for Netflix’s largest datasets, which now span multiple petabytes.</p><p>However, managing such large datasets in <em>hot</em> storage, <a href=\"https://netflixtechblog.com/dynamically-splitting-wide-partitions-in-cassandra-for-time-series-workloads-0eded064f456\">tuned for low-millisecond latency access</a>, is not cheap. At Netflix, cost-efficiency is a continuous discipline rather than a temporary initiative. This post shares two solutions that significantly reduce storage costs by continuously moving older, less frequently accessed data into cheaper object storage:</p><ul><li><strong>Solution 1</strong>: Uses <a href=\"https://kafka.apache.org/\">Apache Kafka</a> and <a href=\"https://flink.apache.org/\">Flink</a> to stream data directly to <a href=\"https://aws.amazon.com/pm/serv-s3/\">S3</a></li><li><strong>Solution 2</strong>: Leverages <a href=\"https://cassandra.apache.org/_/index.html\">Cassandra</a> backups in S3 and <a href=\"https://cassandra.apache.org/_/blog/Apache-Cassandra-4.1-Features-Pluggable-Memtable-Implementations.html\">pluggable Memtables</a> to read data directly from S3</li></ul><p>We’ll start with the Kafka/Flink-based design, then describe how we evolved to a native Cassandra-based cold tier.</p><h3>Challenges</h3><p>As Netflix’s TimeSeries datasets have expanded, we’ve encountered several compounding challenges:</p><ul><li><strong>Growing retention demands</strong>: Users often push for increasing data retention to serve a broader range of use cases, which in turn increases the storage costs.</li><li><strong>Escalating costs</strong>: Maintaining massive, dense clusters for infrequently accessed historical data is prohibitively expensive.</li><li><strong>Sparse historical access:</strong> Most queries target recent events, but older data must remain readily available for occasional audits and investigations.</li><li><strong>Operational strain</strong>: High storage density on hot nodes complicates scaling, deployment, and cluster stability.</li><li><strong>Latency requirements</strong>: Even historical data sometimes requires sub-second query performance for internal tooling and analysis.</li></ul><p>This creates a clear opportunity: keep the most recent data on fast storage and migrate older, rarely read data to cheaper storage <em>while preserving a consistent API</em>. Done well, this can meet user and operational needs while greatly reducing our infrastructure spend.</p><h3>TimeSeries Abstraction</h3><p>Before we dive into the cold storage solutions, here is a quick recap of how TimeSeries partitions its dataset into multiple tables, each covering a window of time we call <strong>Time Slices</strong>.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*ZL0rDP0Un-DxepYPmFo4aQ.png\" /><figcaption>Time Slices and Immutable Windows</figcaption></figure><p>This enables several key optimizations, most notably allowing a table to become immutable once it crosses the write boundary, which lets us safely apply further optimizations. For more details, refer to our previous <a href=\"https://netflixtechblog.com/introducing-netflix-timeseries-data-abstraction-layer-31552f6326f8\">post</a>.</p><p>This slice information is critical and is maintained in a dedicated metadata table:</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/857/1*awpc-KnTpnKdPMEWPql_wQ.png\" /><figcaption>Time Slice Metadata Storage</figcaption></figure><p>Creating new Time Slices and maintaining their metadata is a primary responsibility of the TimeSeries control plane. The TimeSeries data plane uses this information to correctly route the read and write traffic to the provisioned tables.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*gMEWgeg9XIxbyNf642RUTQ.png\" /><figcaption>TimeSeries Data and Control Plane</figcaption></figure><p>With that background, let’s look at the different solutions we built for data tiering.</p><h3>Solution 1: Streaming with Apache Kafka and Flink</h3><p>Our first solution followed a familiar streaming pattern using Apache Kafka and Flink, where we streamed data to S3 in realtime while simultaneously persisting it to Cassandra.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*GzdLV6xrVy1ZYm-EL06K6A.png\" /><figcaption>S",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "시간 시계열 데이터를 계층형 스토리지로 옮겨 비용 절감과 지연시간 유지가 가능함을 보여줌",
+        "tags": [
+          "Apache Kafka",
+          "Apache Flink",
+          "Amazon S3",
+          "Apache Cassandra",
+          "Pluggable Memtables"
+        ],
+        "concepts": [
+          "계층형 스토리지",
+          "시간 시계열 파티셔닝",
+          "스트림 파이프라인"
+        ],
+        "key_points": [
+          {
+            "point": "Kafka와 Flink를 이용해 실시간 스트림을 S3에 저장해 오래된 시계열 데이터를 저비용 스토리지로 이동시켰다",
+            "timestamp": null
+          },
+          {
+            "point": "Cassandra 백업을 S3에 두고 플러그인형 Memtable을 활용해 직접 S3에서 읽어오는 네이티브 콜드 리드 방식을 도입했다",
+            "timestamp": null
+          },
+          {
+            "point": "계층형 스토리지 설계로 최신 데이터는 고성능 스토리지에, 과거 데이터는 저비용 스토리지에 보관해 비용을 크게 절감하면서도 서브초 지연을 유지한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Kafka·Flink 기반 스트리밍 파이프라인을 활용해 전자상거래 서비스의 주문 로그를 실시간으로 S3에 적재해 BI 분석용 저비용 데이터 레이크를 구축한다",
+          "플러그인형 Memtable 개념을 ScyllaDB에 적용해 IoT 센서 데이터의 오래된 파티션을 S3에서 직접 읽어 처리함으로써 클러스터 용량을 절감한다",
+          "시간 슬라이스 기반 불변 테이블 설계를 데이터 웨어하우스에 도입해 GDPR 삭제 요청 시 특정 시간 구간 데이터를 빠르게 제외하도록 설계한다"
+        ],
+        "quiz": [
+          {
+            "question": "Netflix가 오래된 시계열 데이터를 S3로 옮기는 주요 이유는 무엇인가?",
+            "options": [
+              "지연 시간을 줄이기 위해",
+              "스토리지 비용을 낮추기 위해",
+              "쓰기 처리량을 높이기 위해",
+              "쿼리 언어를 단순화하기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 비용 효율성을 강조하며, 오래된 데이터는 저비용 객체 스토리지인 S3로 이동해 비용을 절감한다고 설명한다."
+          },
+          {
+            "question": "Cassandra에서 플러그인형 Memtable을 사용하면 얻는 이점은 무엇인가?",
+            "options": [
+              "S3에서 직접 데이터를 읽을 수 있다",
+              "쓰기 지연 시간이 감소한다",
+              "자동 데이터 압축이 가능해진다",
+              "내장 머신러닝 예측 기능을 제공한다"
+            ],
+            "answer_index": 0,
+            "explanation": "플러그인형 Memtable을 활용해 S3에 저장된 백업을 바로 읽어오므로 별도 복구 과정 없이 콜드 데이터를 조회할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

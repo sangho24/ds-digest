@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 15일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 15일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모델 파인튜닝</span><span class="concept">개인화 추천</span><span class="concept">합성 데이터 생성</span><span class="concept">콜드 스타트 문제</span><span class="concept">대조 학습</span><span class="concept">객체 생명주기 관리</span><span class="concept">작업 격리</span><span class="concept">베이지안 추론</span><span class="concept">조건부 확률 모델링</span><span class="concept">모듈형 신경망 구조</span><span class="concept">계층형 스토리지</span><span class="concept">시간 시계열 파티셔닝</span><span class="concept">스트림 파이프라인</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/integrating-netflixs-foundation-model-into-personalization-applications-cf176b5860eb?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">Integrating Netflix’s Foundation Model into Personalization applications</a>
+        </h2>
+
+        <p class="summary">대규모 퍼스널라이즈 모델을 서비스에 적용하는 실전</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Netflix는 여러 전문 모델을 대체하기 위해 사용자 선호를 학습하는 대규모 Foundation Model을 구축했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Embedding, Subgraph, Fine‑tuning 등 3가지 통합 방식을 실험해 각각의 지연·스택 제약에 맞게 적용한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Embedding 파이프라인은 월간 사전학습·일일 파인튜닝·배치 추론·Embedding Stabilization으로 일관된 임베딩을 제공한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Embedding Stabilization 기법을 전자상거래 상품 임베딩에 적용해 모델 재학습 시 추천 품질 변동을 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>일일 파인튜닝 파이프라인을 뉴스 기사 개인화 시스템에 도입해 최신 기사와 사용자 행동을 빠르게 반영한다</span></li>
+            
+            <li><span class="box"></span><span>중앙화된 Foundation Model을 활용해 금융 사기 탐지 서비스의 여러 마이크로서비스에 공통 임베딩을 제공함으로써 개별 모델 개발 비용을 절감한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 Foundation Model을 매월 처음부터 재학습할 때 임베딩 공간이 달라지는가?</div>
+            
+            <div class="q-opt">① 학습 데이터가 달라서</div>
+            
+            <div class="q-opt">② 무작위 초기화로 인해</div>
+            
+            <div class="q-opt">③ 모델 구조가 바뀌어서</div>
+            
+            <div class="q-opt">④ 하드웨어가 달라서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 무작위 초기화로 인해</div>
+              <div class="why">무작위 초기화 때문에 매번 학습을 시작하면 임베딩 벡터의 좌표계가 달라진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Embedding, Subgraph, Fine‑tuning 중 어느 요소가 각 접근 방식을 선택하게 하는 주요 고려사항인가?</div>
+            
+            <div class="q-opt">① 데이터 양</div>
+            
+            <div class="q-opt">② 지연 요구사항</div>
+            
+            <div class="q-opt">③ 사용자 수</div>
+            
+            <div class="q-opt">④ UI 디자인</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 지연 요구사항</div>
+              <div class="why">각 팀의 지연 요구사항, 기술 스택 제약 등에 따라 적합한 통합 방식을 선택한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Netflix</span><span class="tag">Foundation Model</span><span class="tag">Embedding Store</span><span class="tag">Transformer</span><span class="tag">Hierarchical Multi-Task Learning</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">The Airbnb Tech Blog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/airbnb-engineering/castle-training-natural-language-search-before-the-first-real-query-3818ef8b4828?source=rss----53c7c27702d5---4" target="_blank" rel="noopener">CASTLE: training natural language search before the first real query</a>
+        </h2>
+
+        <p class="summary">실제 쿼리 없이도 검색 모델을 학습할 수 있는 합성 데이터 생성 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>자연어 검색의 콜드 스타트 문제를 해결하기 위해 쿼리와 레이블을 동시에 합성 생성하는 CASTLE 프레임워크를 제안한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 방법은 쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요했지만, CASTLE는 예약 데이터에서 시드 정보를 추출해 일관된 합성 데이터를 만든다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>합성 데이터의 품질을 KL divergence로 평가했으며, CASTLE는 기존 접근보다 실 사용자 쿼리 분포와 더 가깝게 맞춘다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>e‑commerce 검색 엔진을 출시하기 전, 구매 로그를 활용해 쿼리‑레벨 레이블을 공동 생성해 초기 검색 모델을 학습한다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템의 콜드 스타트 상황에서, 합성 사용자‑아이템 상호작용을 생성하고 KL divergence로 실제 로그와의 차이를 모니터링한다.</span></li>
+            
+            <li><span class="box"></span><span>음성 비서의 인텐트 분류에 대해, 익명화된 사용 로그를 기반으로 합성 발화와 인텐트 레이블을 대조 학습 방식으로 만들고 초기 모델을 훈련한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 방법(InPars, Promptagator)이 오류가 누적된다고 언급되었나요?</div>
+            
+            <div class="q-opt">① 쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요하기 때문</div>
+            
+            <div class="q-opt">② 모델이 너무 작아</div>
+            
+            <div class="q-opt">③ 데이터가 부족</div>
+            
+            <div class="q-opt">④ 학습률이 높다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요하기 때문</div>
+              <div class="why">본문에서는 기존 접근이 쿼리 생성 후 별도의 LLM 판단으로 레이블을 부여해 두 번의 오류 발생 가능성을 지적한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">CASTLE가 합성 데이터 품질을 평가하기 위해 사용한 지표는 무엇인가요?</div>
+            
+            <div class="q-opt">① 정확도</div>
+            
+            <div class="q-opt">② F1 점수</div>
+            
+            <div class="q-opt">③ KL divergence</div>
+            
+            <div class="q-opt">④ ROC AUC</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ KL divergence</div>
+              <div class="why">텍스트에서 합성 쿼리와 실제 쿼리 분포 차이를 KL divergence로 측정했다고 명시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">CASTLE</span><span class="tag">InPars</span><span class="tag">Promptagator</span><span class="tag">LLM</span><span class="tag">Airbnb</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/spark-connect-on-kubernetes-2" target="_blank" rel="noopener">Spark Connect on Kubernetes #2: Operator로 만드는 Control Plane</a>
+        </h2>
+
+        <p class="summary">Spark Connect 자동 관리로 분석 안정성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Spark Connect 서버를 테넌트 단위로 묶어 용도별 리소스와 Spark 설정을 지정한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>개별 서버의 실행·복구는 Apache Spark Operator에 맡기고, 다수 서버를 하나의 서비스로 운영하는 Spark Tenant Operator를 만든다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>장기 실행 중 발생한 Driver 메모리 문제와 서버 교체 절차를 다룬다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>테넌트 기반 리소스·설정 지정 방식을 모델 서빙 클러스터에 적용해 비즈니스 유닛별 모델 격리와 자원 최적화를 이룬다.</span></li>
+            
+            <li><span class="box"></span><span>Apache Spark Operator의 생명주기 관리 로직을 일반 배치 잡 컨테이너에 적용해 실패 복구와 자동 재시작을 자동화한다.</span></li>
+            
+            <li><span class="box"></span><span>Driver 메모리 모니터링 및 자동 교체 메커니즘을 Flink 스트리밍 작업에 도입해 장시간 실행 시 메모리 누수 위험을 감소시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Spark Connect 서버를 여러 replica로 나누고 Gateway가 요청을 분산시키는 주요 목적은?</div>
+            
+            <div class="q-opt">① 리소스 경합 감소</div>
+            
+            <div class="q-opt">② 보안 강화</div>
+            
+            <div class="q-opt">③ 데이터 복제</div>
+            
+            <div class="q-opt">④ 로그 중앙화</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 리소스 경합 감소</div>
+              <div class="why">여러 replica와 Gateway를 사용하면 한 Driver에 몰리는 사용자를 분산시켜 장애와 리소스 경합을 줄일 수 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Spark Tenant Operator의 핵심 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 개별 Spark Driver 실행 관리</div>
+            
+            <div class="q-opt">② 다수 서버를 하나의 서비스로 운영</div>
+            
+            <div class="q-opt">③ 데이터 저장</div>
+            
+            <div class="q-opt">④ 네트워크 라우팅</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 다수 서버를 하나의 서비스로 운영</div>
+              <div class="why">Spark Tenant Operator는 여러 Spark Connect 서버를 하나의 서비스처럼 관리하여 전체 테넌트의 생명주기를 제어한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Spark Connect</span><span class="tag">Kubernetes</span><span class="tag">Apache Spark Operator</span><span class="tag">Spark Tenant Operator</span><span class="tag">Driver</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.18825v1" target="_blank" rel="noopener">Joint Neural Posterior Estimation and Model Selection for Chemical Reaction Networks</a>
+        </h2>
+
+        <p class="summary">CRN 베이지안 추론에서 자동 요약과 효율적 모델 선택이 가능해 현업 DS가 복잡한 반응 메커니즘을 빠르게 분석할 수 있음</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>CRN의 베이지안 추론은 모델 선택과 파라미터 추정이라는 두 문제를 동시에 해결해야 하지만 기존 Sequential Monte Carlo ABC는 요약 통계 설계와 높은 계산 비용으로 제한됐다. 본 논문은 1D‑CNN과 Set Attention 기반 요약 학습으로 모델 선택 네트워크와 조건부 INN을 결합, 다중 실험 시계열을 직접 처리해 실제 프로토데보로네이션 사례에 적용함으로써 기존 방법 대비 자동 요약 및 효율성을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전통적인 Sequential Monte Carlo ABC는 수작업 요약 통계와 높은 계산 비용으로 대규모 파라미터 공간에 한계가 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>공유 1D‑CNN과 순열 불변 Set Attention을 이용해 가변 길이·다중 실험 시계열에서 저차원 요약 통계를 자동 학습한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>학습된 요약은 모델 선택 네트워크와 조건부 INN에 동시에 입력되어 모델 확률과 파라미터 사후분포를 추정한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Set Attention을 활용해 이기종 IoT 센서 데이터 집합을 통합, 결측 스트림에 강인한 예측 유지보수 모델을 만든다</span></li>
+            
+            <li><span class="box"></span><span>공유 1D‑CNN 기반 요약을 금융 다자산 시계열에 적용해 공동 변동성 모델 선택을 자동화, 수작업 특성 설계 없이 효율적인 위험 분석을 가능하게 한다</span></li>
+            
+            <li><span class="box"></span><span>조건부 INN을 사용자 선호 파라미터의 사후분포 추정에 사용해 불확실성을 반영한 추천 시스템을 구축, 추천 정확도와 신뢰성을 동시에 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">어떤 구성 요소가 가변 길이·다중 실험 시계열 데이터를 처리하도록 허용하는가?</div>
+            
+            <div class="q-opt">① 1D‑CNN</div>
+            
+            <div class="q-opt">② Set Attention</div>
+            
+            <div class="q-opt">③ Sequential Monte Carlo ABC</div>
+            
+            <div class="q-opt">④ RNN</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Set Attention</div>
+              <div class="why">논문에서는 순열 불변 Set Attention 메커니즘을 사용해 변수 길이와 실험 수에 관계없이 요약 통계를 학습한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">조건부 Invertible Neural Networks(cINN)의 주요 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 선택 확률 계산</div>
+            
+            <div class="q-opt">② 파라미터 사후분포 추정</div>
+            
+            <div class="q-opt">③ 합성 반응 경로 생성</div>
+            
+            <div class="q-opt">④ 차원 축소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 파라미터 사후분포 추정</div>
+              <div class="why">cINN은 학습된 요약 통계를 조건으로 하여 각 모델별 파라미터 사후분포를 추정하도록 설계되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">1D-CNN</span><span class="tag">Set Attention</span><span class="tag">cINN</span><span class="tag">Sequential Monte Carlo ABC</span><span class="tag">protodeboronation</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/timeseries-tiered-storage-journey-kafka-flink-streams-to-native-cassandra-cold-reads-e59d597c9d60?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">TimeSeries Tiered Storage Journey: Kafka/Flink Streams to Native Cassandra Cold Reads</a>
+        </h2>
+
+        <p class="summary">시간 시계열 데이터를 계층형 스토리지로 옮겨 비용 절감과 지연시간 유지가 가능함을 보여줌</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Kafka와 Flink를 이용해 실시간 스트림을 S3에 저장해 오래된 시계열 데이터를 저비용 스토리지로 이동시켰다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Cassandra 백업을 S3에 두고 플러그인형 Memtable을 활용해 직접 S3에서 읽어오는 네이티브 콜드 리드 방식을 도입했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>계층형 스토리지 설계로 최신 데이터는 고성능 스토리지에, 과거 데이터는 저비용 스토리지에 보관해 비용을 크게 절감하면서도 서브초 지연을 유지한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Kafka·Flink 기반 스트리밍 파이프라인을 활용해 전자상거래 서비스의 주문 로그를 실시간으로 S3에 적재해 BI 분석용 저비용 데이터 레이크를 구축한다</span></li>
+            
+            <li><span class="box"></span><span>플러그인형 Memtable 개념을 ScyllaDB에 적용해 IoT 센서 데이터의 오래된 파티션을 S3에서 직접 읽어 처리함으로써 클러스터 용량을 절감한다</span></li>
+            
+            <li><span class="box"></span><span>시간 슬라이스 기반 불변 테이블 설계를 데이터 웨어하우스에 도입해 GDPR 삭제 요청 시 특정 시간 구간 데이터를 빠르게 제외하도록 설계한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Netflix가 오래된 시계열 데이터를 S3로 옮기는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 지연 시간을 줄이기 위해</div>
+            
+            <div class="q-opt">② 스토리지 비용을 낮추기 위해</div>
+            
+            <div class="q-opt">③ 쓰기 처리량을 높이기 위해</div>
+            
+            <div class="q-opt">④ 쿼리 언어를 단순화하기 위해</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 스토리지 비용을 낮추기 위해</div>
+              <div class="why">본문에서는 비용 효율성을 강조하며, 오래된 데이터는 저비용 객체 스토리지인 S3로 이동해 비용을 절감한다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Cassandra에서 플러그인형 Memtable을 사용하면 얻는 이점은 무엇인가?</div>
+            
+            <div class="q-opt">① S3에서 직접 데이터를 읽을 수 있다</div>
+            
+            <div class="q-opt">② 쓰기 지연 시간이 감소한다</div>
+            
+            <div class="q-opt">③ 자동 데이터 압축이 가능해진다</div>
+            
+            <div class="q-opt">④ 내장 머신러닝 예측 기능을 제공한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① S3에서 직접 데이터를 읽을 수 있다</div>
+              <div class="why">플러그인형 Memtable을 활용해 S3에 저장된 백업을 바로 읽어오므로 별도 복구 과정 없이 콜드 데이터를 조회할 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Apache Kafka</span><span class="tag">Apache Flink</span><span class="tag">Amazon S3</span><span class="tag">Apache Cassandra</span><span class="tag">Pluggable Memtables</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
