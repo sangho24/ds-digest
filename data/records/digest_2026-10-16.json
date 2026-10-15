@@ -1,0 +1,428 @@
+{
+  "date": "2026-10-16",
+  "generated_at": "2026-10-15T23:06:05.789662",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Behind the Scenes: Evolving Netflix’s Ads Event Pipeline for Live — Part II",
+        "url": "https://netflixtechblog.com/behind-the-scenes-evolving-netflixs-ads-event-pipeline-for-live-part-ii-826ebf9ad9fb?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-14T19:51:35",
+        "transcript": null,
+        "body": "<p>By <a href=\"https://www.linkedin.com/in/yogeshnagarur/\">Yogesh Nagarur</a></p><h3>Introduction</h3><p>In <a href=\"https://netflixtechblog.com/behind-the-scenes-building-a-robust-ads-event-processing-pipeline-e4e86caf9249\">Part 1 of this series</a>, we shared how Netflix built the Ads Event pipeline and approached it as a system design problem: replacing fragmented pipelines with a centralized collection, enrichment, and a standard data contract. The result was Ads Event Publisher, the system that collects ad telemetry from client devices, <em>enriches</em> it with the context of the ad that was actually served, and publishes a single, unified stream of ad events to every downstream consumer: frequency capping, metrics, billing, measurement partners, and reporting. Any member viewing or account details that move through this pipeline end-to-end are encrypted and handled in accordance with Netflix’s strict privacy and security practices to safeguard member PII.</p><p>If ad serving is the “brain” and ad events are the “heartbeats” that feed it, then enrichment is what gives each heartbeat its meaning, turning a bare “[Somebody] watched an ad to completion” signal into “<em>this</em> campaign, <em>this</em> creative, at <em>this</em> price, for <em>this</em> break.” Part 1 described that enrichment step as a single box in the architecture. This post is about what was inside that box, and why we rebuilt it.</p><p>Part 1 ended with a look at what was on the horizon: ads on live streams, de-duplication, and richer data signals. A single project delivered all three by rebuilding the Ads Event Publisher around stateful stream processing. We replaced a database lookup with a real-time streaming join in Apache Flink, which let the system scale for Live, took a dependency off the critical path, and replaced the engine of a high-traffic pipeline without downtime.</p><p>Let’s dive in.</p><h3>A quick recap: enrichment and the Metadata Registry</h3><p>When an ad is served, the ad server knows everything about it: the campaign, the creative, the price of the impression, the targeting context, and the tracking URLs that measurement partners expect us to fire. The client device, by contrast, knows almost nothing: just an opaque token and <em>when</em> to send each event. Enrichment is the act of reuniting the two.</p><p>In the architecture from Part 1, that reunion happened through the <strong>Ads Metadata Registry</strong>, a Key-Value store:</p><ul><li>When the ad server made a decision, it <strong>wrote the metadata</strong> for that impression into the registry.</li><li>It encoded only reference identifiers into the opaque token returned to the device, keeping the token small.</li><li>Later, when the client fired an event carrying that token, the Ads Event Publisher decoded the token, <strong>looked up the metadata</strong> in the registry, and stitched the two together into an enriched ad event.</li></ul><p>This design served us well. The registry was globally replicated, which gave us a useful property almost for free: an event arriving in <em>any</em> region could find its metadata regardless of where the ad was decided. It future-proofed the token against ever-growing metadata, and it carried us through the first phase of Netflix’s advertising growth.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*LkXsONCex0Q1KvttewSZ1w.png\" /><figcaption><em>The ad server writes per-impression metadata to the globally replicated registry on the serving path, and the Ads Event Publisher reads it back to enrich each client event.</em></figcaption></figure><p>But as we looked ahead, especially to ads on live streams, the limits of this design became clear.</p><h3>Why we needed to evolve</h3><p>The forcing function was Live. Netflix’s live slate has grown rapidly, from <a href=\"https://www.netflix.com/tudum/articles/nfl-games-on-netflix\">NFL games</a> to <a href=\"https://www.netflix.com/tudum/tyson-fury-vs-arslanbek-makhmudov\">blockbuster fight nights</a> to the <a href=\"https://www.netflix.com/tudum/features/fifa-womens-world-cup-2027\">FIFA Women’s World Cup 2027</a>, and viewership keeps growing. That traffic looks nothing like Subscription Video on Demand (SVOD): a single event can surge toward tens of millions of concurrent viewers within minutes, then drain just as fast when it ends. Building the ad pipeline for Live meant building for that trajectory.</p><p>To see why the old design could not get there, let’s put some numbers on it. When Netflix streamed the <a href=\"https://www.netflix.com/tudum/articles/jake-paul-vs-mike-tyson-live-release-date-news\">Jake Paul vs. Mike Tyson fight</a> to more than 100 million viewers, a single ad break at that scale would generate an enormous volume of ad events. Serving those ads in the old design would have meant writing metadata for each of them to the Metadata Registry and waiting for acknowledgment before the ads could serve: millions of must-succeed database write",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "실시간 스트림 조인으로 광고 이벤트를 효율적으로 풍부화",
+        "tags": [
+          "Apache Flink",
+          "Ads Metadata Registry",
+          "Ads Event Publisher",
+          "Netflix",
+          "Live streams"
+        ],
+        "concepts": [
+          "스트림 파이프라인",
+          "데이터 풍부화",
+          "실시간 조인"
+        ],
+        "key_points": [
+          {
+            "point": "기존 메타데이터 레지스트리(KV) 방식은 전역 복제로 지역 무관하게 조회 가능했지만, 라이브 광고에서는 확장성 한계가 있었다.",
+            "timestamp": null
+          },
+          {
+            "point": "Apache Flink 기반 상태ful 스트림 조인으로 실시간 메타데이터와 클라이언트 이벤트를 결합해 지연 시간을 낮추고 다운타임 없이 엔진 교체가 가능했다.",
+            "timestamp": null
+          },
+          {
+            "point": "재구성으로 라이브 스트림 광고, 중복 제거, 풍부한 데이터 신호 제공이 가능해졌으며, 의존성을 크리티컬 경로에서 제거했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Flink 실시간 스트림 조인을 활용해 클릭스트림에 사용자 프로필을 즉시 결합하면 전자상거래 사이트에서 실시간 개인화 추천이 가능해진다.",
+          "상태ful 스트림 처리를 이용해 IoT 센서 데이터의 중복 이벤트를 실시간으로 제거하면 저장 비용과 분석 지연을 줄일 수 있다.",
+          "거래 이벤트와 동적 가격 메타데이터를 Flink 스트림 조인으로 결합하면 핀테크 서비스에서 실시간 수익 분석이 가능해진다."
+        ],
+        "quiz": [
+          {
+            "question": "Netflix가 기존 메타데이터 레지스트리 방식에서 실시간 스트림 조인으로 전환한 주요 이유는?",
+            "options": [
+              "레지스트리 비용 절감",
+              "라이브 스트림 광고 확장성 문제 해결",
+              "데이터 보안 강화",
+              "새로운 광고 포맷 지원"
+            ],
+            "answer_index": 1,
+            "explanation": "라이브 스트림 광고는 높은 처리량과 낮은 지연이 필요했으며, 기존 KV 조회는 확장성에 한계가 있어 Flink 기반 실시간 조인으로 전환했다."
+          },
+          {
+            "question": "Apache Flink를 사용한 재구성에서 언급되지 않은 이점은?",
+            "options": [
+              "다운타임 없이 엔진 교체",
+              "전역 복제 필요 제거",
+              "실시간 조인으로 지연 감소",
+              "데이터 암호화 자동화"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에서는 엔진 교체, 복제 의존성 감소, 지연 감소를 강조했지만 데이터 암호화 자동화에 대한 언급은 없었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.DC",
+        "source_key": "arxiv:cs.DC",
+        "source_label": "arXiv:cs.DC",
+        "title": "Prioritizing Microservice Requests via Retries",
+        "url": "https://arxiv.org/abs/2610.20567v1",
+        "published_at": "2026-10-14T17:51:58",
+        "transcript": null,
+        "body": "Cloud services rapidly shift towards independently-managed microservices architectures. This independence may lead to temporary microservices miscoordination, resulting in overloads and rejections of valuable transactions. This weakness may further be exploited by attackers to launch overload attacks inflicting performance and cost damages.\n  Retry operations are a key machinery aiming at overcoming seldom rejections. However, during overload periods they: a) Fail protecting valuable transactions from rejections, and b) Trigger large-scale performance-degrading retry storms.\n  We propose simple modifications in retry operations, overcoming these deficiencies by transforming retries into a rejection prioritization mechanism, DiffTry (Differential Retries). It is based on a simple, lightweight, distributed and stateless design and requires neither overload sensing nor microservices coordination.\n  We develop an analytical model capturing DiffTry's effectiveness for two services in tandem, then generalize it to networks of services. Our theoretical framework lets practitioners quantify, for a given network, the resulting prioritization and rejection rates, and yields formal guarantees that DiffTry substantially reduces the impact of both incidental and adversarial orchestrated overloads. We validate these predictions in simulation and on a live Kubernetes deployment, where DiffTry is a simple drop-in service-mesh plugin requiring no application changes; the measured rejection closely matches the analysis.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "재시도 메커니즘을 우선순위화해 서비스 과부하와 비용 손실을 방지",
+        "tags": [
+          "DiffTry",
+          "Kubernetes",
+          "microservices",
+          "service-mesh",
+          "retry"
+        ],
+        "concepts": [
+          "비동기 처리와 트랜잭션",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "오버로드 시 재시도 폭풍이 성능 저하와 비용 손실을 초래한다",
+            "timestamp": null
+          },
+          {
+            "point": "DiffTry는 재시도를 거부 우선순위화 메커니즘으로 변환해 오버로드 감지·조정 없이 동작한다",
+            "timestamp": null
+          },
+          {
+            "point": "분석 모델과 Kubernetes 실증을 통해 DiffTry가 과부하 영향을 크게 감소시킴을 입증했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "마이크로서비스 간 일시적 불협화음으로 인한 과부하와 재시도 폭풍 문제를 해결하고자 기존 재시도 전략이 보호에 실패한 점을 보완한다. DiffTry는 무상태·분산 설계로 오버로드 감지 없이 거부를 우선순위화하는 접근으로, 재시도 제어와 과부하 완화 연구 흐름에 새로운 실용적 방법을 제공한다.",
+        "production_ideas": [
+          "DiffTry의 차등 재시도 방식을 데이터베이스 배치 작업의 쿼리 스로틀링에 적용해 핵심 쿼리를 우선 처리한다",
+          "서비스 메쉬 대신 엣지 API 게이트웨이에서 DiffTry와 유사한 우선순위 재시도 로직을 도입해 DDoS 공격 시 중요한 트래픽을 보호한다",
+          "메시지 큐 소비자에게 DiffTry식 무상태 백오프 전략을 적용해 소비자 폭풍을 방지하고 시스템 안정성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "DiffTry가 기존 재시도 메커니즘과 다른 핵심 특징은 무엇인가?",
+            "options": [
+              "오버로드 감지를 필요로 한다",
+              "오버로드 감지 없이 무상태·분산 설계로 거부를 우선순위화한다",
+              "애플리케이션 코드를 수정해야 한다",
+              "중앙 집중형 조정이 필요하다"
+            ],
+            "answer_index": 1,
+            "explanation": "DiffTry는 경량·무상태 설계이며 오버로드 감지나 마이크로서비스 간 조정을 요구하지 않고 재시도를 거부 우선순위화 메커니즘으로 변환한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "software-eng"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "DataJunction as Netflix’s answer to the missing piece of the modern data stack",
+        "url": "https://netflixtechblog.com/datajunction-as-netflixs-answer-to-the-missing-piece-of-the-modern-data-stack-92af926b40a5?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-14T19:59:08",
+        "transcript": null,
+        "body": "<p>by <a href=\"https://www.linkedin.com/in/agorajek/\">Olek Gorajek</a>, <a href=\"https://www.linkedin.com/in/sredai/\">Samuel Redai</a>, <a href=\"https://www.linkedin.com/in/shyiann/\">Yian Shang</a></p><h3>Intro</h3><p>Our Netflix journey from data to dashboards, particularly within the space of the experimentation platform, always presented a unique set of challenges. This blog post aims to illuminate these hurdles and explain how an innovative open-source metric platform became instrumental in overcoming some of them. We’ll showcase the critical role that DataJunction played in streamlining our data workflows and enhancing our ability to derive meaningful insights from our vast datasets.</p><p>Metrics are the foundation of data-driven decision-making, but at many organizations, they are scattered, inconsistently defined, and difficult to discover or trust. At Netflix, this challenge first became apparent in our experimentation platform, where reliable metrics are essential for interpreting test results. But the complexity of the original tooling made it very difficult to understand and introspect these metrics both in terms of their definitions as well as their values.</p><h4>Initial Problem</h4><p>Scattered metric definitions, redundant datasets, and pipelines are often a natural effect of a fast-moving company with a large and powerful analytical workforce. This is a common problem in big data-driven firms, and it is not easy to solve across multiple departments, which are often governed by somewhat different rules and regulations. An easy-to-use, well-governed, and centralized semantic layer can help with these issues. Our initial problem was most evident in our Experimentation Platform team, where the previous system required:</p><ul><li>extensive business knowledge</li><li>familiarity with experimentation conventions</li><li>and complex engineering practices</li></ul><p>This led to metric authoring processes that would take weeks, which was a prohibitive requirement for Data Scientists and Analytics Engineers who wanted to onboard new metrics to the Experimentation Platform.</p><h4>Enter DataJunction</h4><p>To address this problem and to set ourselves on the path to a successful semantic layer solution in the future, we looked at several candidates. Among other solutions we evaluated Mando (an internal framework), Minerva (an open source semantic layer from AirBnB), and DataJunction (another open source solution, “DJ” for short). All of them had some strength, but DJ offered one thing that the others did not at the time: a solid SQL parsing and SQL generation engine. At the time of the POC, DJ was also the only open-source solution that stored all its definitions in a connected graph, similar to how relational databases store metadata on their views and queries. Easy “SQL wrangling” with rich metadata was the main feature that convinced us to try it for our immediate use case.</p><p>DataJunction originated from a similar internal Facebook project created (around 2015) by the data science and infrastructure (DSI) team, mainly as an answer to the need for metrics portability. During several iterations of the Deltoid project — which was the main experimentation platform at Facebook at the time — users were required to rebuild and repopulate their metrics when they wanted to move to the next version of Deltoid. But after implementing DJ and abstracting all metric definitions the team offered seamless migrations by separating the concerns between the metrics and the stats computation platform. That project was subsequently renamed to MDF (Metrics and Dimensions Factory) and promoted as a generic semantic layer used widely by various departments. In 2021, one of the Facebook engineers (<a href=\"https://github.com/betodealmeida\">Beto Dealmeida</a>), started the <a href=\"https://github.com/DataJunction/dj\">DJ Github project</a> and built out some basic functionality. Then together with some folks at Netflix expanded the scope further, and soon after that the project was introduced at Netflix. Following that introduction, three Netflix engineers (authors of this blog) together with a couple of external contributors, most notably <a href=\"https://github.com/CircArgs\">Nick Ouellet</a>, have been building out the remaining features of the platform.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*dcANBgrIzPINy2sZeZNXMQ.png\" /></figure><h3>Architecture Decisions</h3><p>A critical design constraint for building DJ at Netflix was resource scarcity. We refused to compromise on product quality, choosing instead to limit the feature set. Although DJ was clearly capable of addressing many simultaneous problems across diverse use cases, our lack of adequate resources and official support meant we developed it as a side project for over two years. Our hope was that demonstrating its value would eventually secure management attention.</p><h4>API First, UI and Other Interfaces Later</h4><p>A metrics pl",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "Netflix가 메트릭 정의와 파이프라인 복잡성을 해결하기 위해 DataJunction을 도입해 중앙화된 시맨틱 레이어를 구축한 사례",
+        "tags": [
+          "DataJunction",
+          "Netflix",
+          "AirBnB",
+          "Facebook",
+          "SQL"
+        ],
+        "concepts": [
+          "semantic query processing",
+          "SQL 기반 그래프 쿼리",
+          "metadata 활용 검색"
+        ],
+        "key_points": [
+          {
+            "point": "메트릭 정의가 산재하고 중복된 파이프라인으로 인해 실험 플랫폼에서 메트릭 작성에 수주가 소요되었다.",
+            "timestamp": null
+          },
+          {
+            "point": "DataJunction은 강력한 SQL 파싱·생성 엔진과 그래프 형태 메타데이터 저장으로 메트릭 정의를 중앙화하고 재사용성을 높였다.",
+            "timestamp": null
+          },
+          {
+            "point": "Netflix는 DataJunction 도입 후 메트릭 온보딩 속도가 크게 개선되어 데이터 과학자와 분석 엔지니어의 생산성이 향상되었다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "그래프 기반 메타데이터 저장 방식을 활용해 ML 피처 스토어의 피처 정의와 의존성을 시각화·관리함으로써 피처 재사용성을 높인다.",
+          "SQL 파싱 엔진을 이용해 ETL 파이프라인에서 자동 데이터 검증 쿼리를 생성해 데이터 품질 이슈를 사전 탐지한다.",
+          "중앙화된 시맨틱 레이어를 재무 부서의 KPI 대시보드에 적용해 부서 간 메트릭 정의 중복을 제거하고 보고 일관성을 확보한다."
+        ],
+        "quiz": [
+          {
+            "question": "Netflix가 DataJunction을 선택한 주요 이유는 무엇인가?",
+            "options": [
+              "UI가 가장 직관적이었다",
+              "강력한 SQL 파싱·생성 엔진을 제공한다",
+              "비용이 가장 낮았다",
+              "커뮤니티 기여자가 가장 많았다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 DataJunction은 다른 후보들보다 견고한 SQL 파싱·생성 엔진을 제공했기 때문에 선택되었다."
+          },
+          {
+            "question": "DataJunction이 Experimentation Platform 팀의 어떤 문제를 해결했는가?",
+            "options": [
+              "스토리지 용량 부족",
+              "메트릭 작성에 광범위한 비즈니스 지식과 복잡한 엔지니어링이 필요했다",
+              "네트워크 지연",
+              "시각화 도구 부재"
+            ],
+            "answer_index": 1,
+            "explanation": "팀은 메트릭 작성에 수주가 걸릴 정도로 비즈니스 지식과 복잡한 엔지니어링이 필요했으며, DataJunction이 이를 간소화했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "LFM2.5-24B-A2B: Built for fast on-device agents",
+        "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+        "published_at": null,
+        "transcript": null,
+        "body": "![LFM2.5-24B-A2B: Built for Fast On-Device Agents](/_next/image?url=https%3A%2F%2Faypchzzf9pftwuto.public.blob.vercel-storage.com%2Fimage%2520(3)-oOdUn61bDRSykk4H951SoDOHzqoOe1.png&w=3840&q=75)![LFM2.5-24B-A2B: Built for Fast On-Device Agents](/_next/image?url=https%3A%2F%2Faypchzzf9pftwuto.public.blob.vercel-storage.com%2Fimage%2520(2)-RCsBGYwWubfPfDGmnAGc9jMCH6T4mW.png&w=3840&q=75)\n\n# LFM2.5-24B-A2B: Built for Fast On-Device Agents\n\nOCT 13, 2026\n\nToday, we release **LFM2.5-24B-A2B**, a 24B-parameter reasoning model with just 2B active parameters, built for fast, private agents on-device. It is the largest and final model in the LFM2.5 family, which now spans two orders of magnitude: from [LFM2.5-230M](https://www.liquid.ai/blog/lfm2-5-230m) to [LFM2.5-24B-A2B](https://huggingface.co/LiquidAI/LFM2.5-24B-A2B).\n\nLFM2.5-24B-A2B is competitive with Qwen3.6-35B-A3B, a model with ~50% more total and active parameters, on five of eight agentic and tool-use benchmarks, scoring 48.09 on LiveClaw versus 38.19 and 27.69 on AutomationBench versus 8.72.  Because only 2B parameters are active per token, it runs up to 1.7× faster than comparable MoEs on-device, with 184 tokens/s on an Apple M5 Max and up to 21K output tokens/s on a single NVIDIA B300 GPU.\n\nThe base (LFM2.5-24B-A2B-Base) and post-trained (LFM2.5-24B-A2B) models are open-weight and available today on [Hugging Face](https://huggingface.co/LiquidAI/LFM2.5-24B-A2B) and [our Playground](https://playground.liquid.ai/chat?model=LFM2.5-24B-A2B). Check out our [docs](https://docs.liquid.ai/lfm/models/lfm25-24b-a2b) on how to run and fine-tune it locally.\n\n## What changed since LFM2-24B-A2B\n\nLFM2.5-24B-A2B builds on our previous [LFM2-24B-A2B](https://www.liquid.ai/blog/lfm2-24b-a2b) release, with an expanded vocabulary and context window, scaled-up pretraining, and large-scale reinforcement learning. Unlike its predecessor, LFM2.5-24B-A2B is a reasoning-only model that produces an explicit chain of thought before its final answer. We adopted this strategy to leverage its high decode speed and improve answer quality.\n\n**Architecture.** It keeps the 40 layers, 64 experts per MoE block with top-4 routing, and the same hybrid of gated short convolutions and GQA. The two architectural changes are the context window extension from 32,768 to 131,072 tokens, and the [in-place tokenizer expansion](https://www.liquid.ai/blog/tokenizer-expansion), which doubles the vocabulary from 65K to 128K tokens for better non-Latin tokenization.\n\n**Pre-training** was scaled up from 17T tokens to 33T tokens.\n\n**Mid-training** has two phases. The first runs 2T tokens at 32K context on curated, higher-quality data weighted toward reasoning, math, code, instruction following, and multilingual text. The second runs 300B tokens at 131K context, weighted toward long context data. Tool calls and multi-turn trajectories appear throughout both phases to prepare the model for agentic workloads.\n\n**Post-training** turns LFM2.5-24B-A2B-Base into the agentic LFM2.5-24B-A2B in a five-stage pipeline as illustrated below: (1) Supervised Fine-Tuning (SFT), (2) Teacher Specialization, (3) non-agentic and (4) agentic Multi-Domain On-Policy Distillation (MOPD), and (5) Agentic Reinforcement Learning (Agentic RL), training the model inside agent harnesses, such as [OpenClaw](https://openclaw.ai/), [Hermes Agent](https://hermes-agent.nousresearch.com/), [Pi](https://pi.dev/), and [OpenCode](https://opencode.ai/).![LFM2.5-24B-A2B Post-training recipe](/_next/image?url=https%3A%2F%2Faypchzzf9pftwuto.public.blob.vercel-storage.com%2Flfm2.5-24b-a2b-post-training-recipe-lGn9WUKjroMlFomvlnX4d7f6xouRH9.png&w=3840&q=75)\n\nFigure 2: LFM2.5-24B-A2B Post-training recipe\n\nDuring teacher specialization, LFM2.5-24B-A2B exhibited well-known reward-hacking behaviors: searching for the final answer in a repository's git history or on platforms like GitHub, PyPI, and Hugging Face. More surprisingly, it even figured out it was in a sandbox, as shown in the examples below.\n\nThis behavior looks emergent but might be explained by training data containing similar patterns. We tightened our sandboxes in response, and all reported results below come from sealed evaluation environments.\n\n## Benchmarks\n\nWe evaluated LFM2.5-24B-A2B across 16 benchmarks covering tool use and agentic workflows, knowledge, instruction following, math, and coding. Despite being the smallest model in total and active number of parameters, it is competitive with, and often outperforms, larger MoEs with ~50% more total and active parameters, such as Qwen3.6-35B-A3B.\n\n|  |  |  |  |  |\n| --- | --- | --- | --- | --- |\n| **Benchmark** | **LFM2.5-24B-A2B** | **Qwen3.6-35B-A3B** | **Gemma-4-26B-A4B-it** | **Nemotron-3.5-Lightning (30B-A3B)** |\n| AutomationBench | **27.69** | 8.72 | 5.46 | 2.61 |\n| BFCLv4 | **65.01** | 65.00 | 57.09 | 53.78 |\n| ToolSandbox | **80.71** | 75.02 | 72.09 | 75.13 |\n| LiveClaw | **48.09** | 38.19 | 41.25 | 37.72 |\n| PinchBench | 83.18 | **8",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "토큰당 2B 파라미터만 활성화해 온‑디바이스 에이전트 속도를 크게 높인 LLM 출시",
+        "tags": [
+          "LFM2.5-24B-A2B",
+          "Qwen3.6-35B-A3B",
+          "LiveClaw",
+          "Apple M5 Max",
+          "NVIDIA B300"
+        ],
+        "concepts": [
+          "모델 파인튜닝",
+          "온-폴리시 학습",
+          "멀티에이전트 시스템"
+        ],
+        "key_points": [
+          {
+            "point": "24B 파라미터 중 토큰당 2B만 활성화해 MoE 기반 추론 속도를 1.7배 가속",
+            "timestamp": null
+          },
+          {
+            "point": "컨텍스트 윈도우를 32k→131k 토큰으로 확장하고 vocab을 65k→128k로 두 배 확대",
+            "timestamp": null
+          },
+          {
+            "point": "SFT·Teacher Specialization·비·에이전트 MOPD·Agentic RL 5단계 포스트 트레이닝으로 에이전트 성능 최적화",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "인플레이스 토크나이저 확장을 활용해 의료 논문에서 특수 용어 토큰화를 개선한다",
+          "컨텍스트 윈도우를 200k 토큰까지 늘려 법률 계약 전체를 한 번에 처리하는 시스템에 적용한다",
+          "2B 활성 파라미터 MoE 구조를 엣지 IoT 디바이스에 배포해 실시간 이상 탐지를 고속으로 수행한다"
+        ],
+        "quiz": [
+          {
+            "question": "LFM2.5-24B-A2B가 기존 MoE 대비 최대 1.7배 빠른 이유는 무엇인가?",
+            "options": [
+              "전체 파라미터 수가 적기 때문",
+              "토큰당 2B 파라미터만 활성화하기 때문",
+              "전용 하드웨어를 사용하기 때문",
+              "토큰 길이를 줄였기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 따르면 토큰당 2B 파라미터만 활성화해 연산량이 감소해 속도가 빨라진다."
+          },
+          {
+            "question": "5단계 포스트 트레이닝 파이프라인의 주요 목적은?",
+            "options": [
+              "대규모 사전학습 데이터 양을 늘리기 위해",
+              "에이전트 작업과 도구 사용 능력을 강화하기 위해",
+              "모델 크기를 압축하기 위해",
+              "벤치마크 점수를 평가하기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "포스트 트레이닝은 SFT, Teacher Specialization, 비·에이전트 MOPD, Agentic RL 단계로 구성돼 에이전트와 툴 사용 능력을 향상시키는 것이 목표다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "토스뱅크가 패키지를 관리하는 방식 #1: 패키지를 ESM으로만 제공하기로 했어요",
+        "url": "https://toss.tech/article/package-management-1",
+        "published_at": "2026-10-15T09:23:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8059-8395-d457956f32d5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스뱅크에서 패키지 개발 환경을 개선하고 있는 기술그룹입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80a6-8d93-cf0d718019b7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스뱅크에서는 여러 서비스가 함께 쓰는 코드를 패키지로 관리해요. 그동안 ECMAScript Modules(이하 ESM)와 CommonJS(이하 CJS) 두 형식으로 빌드하고, </span><code><span class=\"css-1mjnzsq\">package.json</span></code><span class=\"css-1kxrhf3\">의 </span><code><span class=\"css-1mjnzsq\">exports</span></code><span class=\"css-1kxrhf3\">로 각 환경에 맞는 코드와 타입을 제공해왔어요. 이러한 Dual package 방식의 배경과 설정은 </span><a class=\"css-iynyr0\" href=\"https://toss.tech/article/commonjs-esm-exports-field\" rel=\"noreferrer noopener\" target=\"_blank\">CommonJS와 ESM에 모두 대응하는 라이브러리 개발하기: exports field</a><span class=\"css-1kxrhf3\">에서 자세히 볼 수 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8047-ad63-c65a822e0e45\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 Dual package 방식은 두 형식으로 빌드하는 것 외에도 신경 쓸 일이 많았어요. 같은 패키지의 상태가 둘로 나뉘거나, 한쪽 경로에서 타입을 찾지 못할 수 있었거든요. 어떤 문제인지부터 살펴볼게요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80bc-8953-c39722cb4ef4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3faa360d-33e3-8081-9923-fb4972c19d78\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">같은 패키지인데 상태가 둘로 나뉘어요</span></span></span></h2><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8031-8771-dc890bd01d0a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">React 컨텍스트를 제공하는 패키지를 ESM과 CJS로 각각 빌드했다고 해볼게요. 서비스는 ESM 구현을, 서비스가 사용하는 다른 패키지는 CJS 구현을 읽는 상황이에요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8006-8d40-ccd31f3c814d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">두 구현에서 각각 컨텍스트를 만들면 객체도 둘이 돼요. 서비스의 Provider는 컨텍스트 ①에 값을 넣는데, 다른 패키지의 Hook은 컨텍스트 ②에서 값을 찾을 수 있어요. Provider로 감쌌는데도 값을 읽지 못하는 거예요.</span></span></span></p><figure class=\"css-of5acw\" id=\"3faa360d-33e3-803a-be91-f2a14dc77fc7\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/b1583194-2fe9-417a-b1bb-b6c62f3724ab/esm-package-dependency-vertical-v2.png\" /></figure><p class=\"css-14on8x8\" id=\"3faa360d-33e3-804c-9996-e2681fb9bb7e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">같은 패키지 이름으로 불렀는데 왜 이런 일이 생길까요? </span><code><span class=\"css-1mjnzsq\">exports</span></code><span class=\"css-1kxrhf3\">에서 불러오는 방식에 따라 서로 다른 파일을 연결했기 때문이에요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80e9-8071-eecd41d94c5c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8009-bbb5-db7c8ef314f1\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 구성에서는 </span><code><span class=\"css-1mjnzsq\">import</span></code><span class=\"css-1kxrhf3\">와 </span><code><span class=\"css-1mjnzsq\">require()</span></code><span class=\"css-1kxrhf3\">가 서로 다른 구현을 읽어요. 두 모듈이 각각 실행되면서 만든 객체는 내용이 같아도 다른 객체예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8038-be49-f08c4f106594\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">패키지를 한 버전만 설치했어도 생길 수 있는 일이에요. 이렇게 두 모듈이 함께 로드되면서 공유해야 할 객체나 상태가 나뉘는 위험을 </span><a class=\"css-iynyr0\" href=\"https://nodejs.org/download/release/v22.8.0/docs/api/packages.html#packages_dual_package_hazard\" rel=\"noreferrer noopener\" target=\"_blank\">Dual package hazard</a><span class=\"css-1kxrhf3\">라고 해요. 컨텍스트뿐 아니라 모듈이 보관하는 캐시나 상태도 영향을 받을 수 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8099-b880-d06215324795\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3faa360d-33e3-80a8-a298-e3a6b0d83fb9\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">실행 코드는 찾았는데 타입은 찾지 못해요</span></span></span></h2><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8013-8c34-ca7830ad98a6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">타입도 두 경로에서 확인해야 해요. 우리 패키지의 타입이 외부 라이브러리를 참조한다면, 그 라이브러리의 타입까지 올바르게 연결돼야 하고요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8030-9738-c511ea53559d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">예를 들어 UI 패키지가 외부 라이브러리의 </span><code><span class=\"css-1mjnzsq\">ExternalProps</span></code><span class=\"css-1kxrhf3\">를 가져와 버튼의 props를 정의한다고 해볼게요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8098-8190-dbb11db6dacd\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">TypeScript는 외부 라이브러리의 package.json에 명시된 exports를 따라 타입을 찾아요. 이때 TypeScript 설정에 따라 import(ESM) 또는 require(CJS) 경로를 선택할 수 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-804a-9283-d1349b04b5c9\"><span class=\"css-1",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "ESM 전용 패키지로 상태 분리 위험 방지",
+        "tags": [
+          "ESM",
+          "CommonJS",
+          "package.json",
+          "Dual package hazard",
+          "React"
+        ],
+        "concepts": [
+          "레거시 시스템 리팩터링",
+          "개발자 경험 개선",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "Dual package(ESM+CJS) 로드 시 동일 패키지가 두 번 로드돼 상태가 분리되는 Dual package hazard가 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "import와 require가 서로 다른 구현을 읽어 컨텍스트와 캐시가 별도 객체로 생성된다.",
+            "timestamp": null
+          },
+          {
+            "point": "토스뱅크는 이러한 문제를 해결하기 위해 패키지를 ESM 전용으로 제공하도록 전환했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "ESM 전용 배포 방식을 데이터 파이프라인 라이브러리의 Python 3 전용 패키지로 전환해 모듈 중복 로드를 방지한다.",
+          "package.json의 exports 필드를 활용해 GPU와 CPU 구현을 구분해 제공함으로써 환경별 최적화된 코드를 안전하게 선택한다.",
+          "CI 파이프라인에 Dual package hazard 검사를 추가해 import와 require가 동시에 사용되는 경우를 사전에 차단한다."
+        ],
+        "quiz": [
+          {
+            "question": "import와 require가 같은 패키지를 로드할 때 두 개의 별도 컨텍스트가 생성되는 이유는?",
+            "options": [
+              "exports 필드가 다른 파일을 가리키기 때문",
+              "Node가 파일 확장자별로 캐시를 구분하기 때문",
+              "import는 ESM을, require는 CJS를 로드해 각각 실행되기 때문",
+              "package.json이 중복 로드를 강제하기 때문"
+            ],
+            "answer_index": 2,
+            "explanation": "import는 ECMAScript Module을, require는 CommonJS 모듈을 로드하며 각각 별도 실행 컨텍스트를 만들기 때문에 동일 패키지가 두 객체로 존재한다."
+          },
+          {
+            "question": "패키지를 ESM과 CJS 두 형태로 제공할 때 발생하는 상태 분리 위험을 무엇이라고 부르는가?",
+            "options": [
+              "Module duplication bug",
+              "Dual package hazard",
+              "Export field conflict",
+              "Context mismatch"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 이러한 현상을 Dual package hazard 라고 정의한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

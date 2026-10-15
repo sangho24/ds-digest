@@ -1,322 +1,311 @@
 {
   "contract_version": 1,
-  "date": "2026-10-15",
-  "generated_at": "2026-10-15T08:05:07.396897+09:00",
+  "date": "2026-10-16",
+  "generated_at": "2026-10-16T08:06:05.784246+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-15.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-16.html",
   "items": [
     {
-      "id": "f261413aa296",
-      "title": "Integrating Netflix’s Foundation Model into Personalization applications",
-      "url": "https://netflixtechblog.com/integrating-netflixs-foundation-model-into-personalization-applications-cf176b5860eb?source=rss----2615bd06b42e---4",
+      "id": "45aa88868d2f",
+      "title": "Behind the Scenes: Evolving Netflix’s Ads Event Pipeline for Live — Part II",
+      "url": "https://netflixtechblog.com/behind-the-scenes-evolving-netflixs-ads-event-pipeline-for-live-part-ii-826ebf9ad9fb?source=rss----2615bd06b42e---4",
       "source": {
         "type": "rss",
         "name": "Netflix TechBlog - Medium"
       },
-      "published_at": "2026-10-14T20:02:22",
-      "summary": "대규모 퍼스널라이즈 모델을 서비스에 적용하는 실전",
+      "published_at": "2026-10-14T19:51:35",
+      "summary": "실시간 스트림 조인으로 광고 이벤트를 효율적으로 풍부화",
       "positioning": null,
       "tags": [
+        "Apache Flink",
+        "Ads Metadata Registry",
+        "Ads Event Publisher",
         "Netflix",
-        "Foundation Model",
-        "Embedding Store",
-        "Transformer",
-        "Hierarchical Multi-Task Learning"
+        "Live streams"
       ],
-      "relevance": 8,
+      "relevance": 9,
       "key_points": [
         {
-          "point": "Netflix는 여러 전문 모델을 대체하기 위해 사용자 선호를 학습하는 대규모 Foundation Model을 구축했다",
+          "point": "기존 메타데이터 레지스트리(KV) 방식은 전역 복제로 지역 무관하게 조회 가능했지만, 라이브 광고에서는 확장성 한계가 있었다.",
           "timestamp": null
         },
         {
-          "point": "Embedding, Subgraph, Fine‑tuning 등 3가지 통합 방식을 실험해 각각의 지연·스택 제약에 맞게 적용한다",
+          "point": "Apache Flink 기반 상태ful 스트림 조인으로 실시간 메타데이터와 클라이언트 이벤트를 결합해 지연 시간을 낮추고 다운타임 없이 엔진 교체가 가능했다.",
           "timestamp": null
         },
         {
-          "point": "Embedding 파이프라인은 월간 사전학습·일일 파인튜닝·배치 추론·Embedding Stabilization으로 일관된 임베딩을 제공한다",
+          "point": "재구성으로 라이브 스트림 광고, 중복 제거, 풍부한 데이터 신호 제공이 가능해졌으며, 의존성을 크리티컬 경로에서 제거했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Embedding Stabilization 기법을 전자상거래 상품 임베딩에 적용해 모델 재학습 시 추천 품질 변동을 최소화한다",
-        "일일 파인튜닝 파이프라인을 뉴스 기사 개인화 시스템에 도입해 최신 기사와 사용자 행동을 빠르게 반영한다",
-        "중앙화된 Foundation Model을 활용해 금융 사기 탐지 서비스의 여러 마이크로서비스에 공통 임베딩을 제공함으로써 개별 모델 개발 비용을 절감한다"
+        "Flink 실시간 스트림 조인을 활용해 클릭스트림에 사용자 프로필을 즉시 결합하면 전자상거래 사이트에서 실시간 개인화 추천이 가능해진다.",
+        "상태ful 스트림 처리를 이용해 IoT 센서 데이터의 중복 이벤트를 실시간으로 제거하면 저장 비용과 분석 지연을 줄일 수 있다.",
+        "거래 이벤트와 동적 가격 메타데이터를 Flink 스트림 조인으로 결합하면 핀테크 서비스에서 실시간 수익 분석이 가능해진다."
       ],
       "quiz": [
         {
-          "question": "왜 Foundation Model을 매월 처음부터 재학습할 때 임베딩 공간이 달라지는가?",
+          "question": "Netflix가 기존 메타데이터 레지스트리 방식에서 실시간 스트림 조인으로 전환한 주요 이유는?",
           "options": [
-            "학습 데이터가 달라서",
-            "무작위 초기화로 인해",
-            "모델 구조가 바뀌어서",
-            "하드웨어가 달라서"
+            "레지스트리 비용 절감",
+            "라이브 스트림 광고 확장성 문제 해결",
+            "데이터 보안 강화",
+            "새로운 광고 포맷 지원"
           ],
           "answer_index": 1,
-          "explanation": "무작위 초기화 때문에 매번 학습을 시작하면 임베딩 벡터의 좌표계가 달라진다."
+          "explanation": "라이브 스트림 광고는 높은 처리량과 낮은 지연이 필요했으며, 기존 KV 조회는 확장성에 한계가 있어 Flink 기반 실시간 조인으로 전환했다."
         },
         {
-          "question": "Embedding, Subgraph, Fine‑tuning 중 어느 요소가 각 접근 방식을 선택하게 하는 주요 고려사항인가?",
+          "question": "Apache Flink를 사용한 재구성에서 언급되지 않은 이점은?",
           "options": [
-            "데이터 양",
-            "지연 요구사항",
-            "사용자 수",
-            "UI 디자인"
+            "다운타임 없이 엔진 교체",
+            "전역 복제 필요 제거",
+            "실시간 조인으로 지연 감소",
+            "데이터 암호화 자동화"
           ],
-          "answer_index": 1,
-          "explanation": "각 팀의 지연 요구사항, 기술 스택 제약 등에 따라 적합한 통합 방식을 선택한다."
+          "answer_index": 3,
+          "explanation": "본문에서는 엔진 교체, 복제 의존성 감소, 지연 감소를 강조했지만 데이터 암호화 자동화에 대한 언급은 없었다."
         }
       ]
     },
     {
-      "id": "1b6d678aa36e",
-      "title": "CASTLE: training natural language search before the first real query",
-      "url": "https://medium.com/airbnb-engineering/castle-training-natural-language-search-before-the-first-real-query-3818ef8b4828?source=rss----53c7c27702d5---4",
+      "id": "742b1d0bdc9b",
+      "title": "Prioritizing Microservice Requests via Retries",
+      "url": "https://arxiv.org/abs/2610.20567v1",
       "source": {
         "type": "rss",
-        "name": "The Airbnb Tech Blog - Medium"
+        "name": "arXiv:cs.DC"
       },
-      "published_at": "2026-10-13T17:01:02",
-      "summary": "실제 쿼리 없이도 검색 모델을 학습할 수 있는 합성 데이터 생성 방법",
-      "positioning": null,
+      "published_at": "2026-10-14T17:51:58",
+      "summary": "재시도 메커니즘을 우선순위화해 서비스 과부하와 비용 손실을 방지",
+      "positioning": "마이크로서비스 간 일시적 불협화음으로 인한 과부하와 재시도 폭풍 문제를 해결하고자 기존 재시도 전략이 보호에 실패한 점을 보완한다. DiffTry는 무상태·분산 설계로 오버로드 감지 없이 거부를 우선순위화하는 접근으로, 재시도 제어와 과부하 완화 연구 흐름에 새로운 실용적 방법을 제공한다.",
       "tags": [
-        "CASTLE",
-        "InPars",
-        "Promptagator",
-        "LLM",
-        "Airbnb"
+        "DiffTry",
+        "Kubernetes",
+        "microservices",
+        "service-mesh",
+        "retry"
       ],
-      "relevance": 8,
+      "relevance": 9,
       "key_points": [
         {
-          "point": "자연어 검색의 콜드 스타트 문제를 해결하기 위해 쿼리와 레이블을 동시에 합성 생성하는 CASTLE 프레임워크를 제안한다.",
+          "point": "오버로드 시 재시도 폭풍이 성능 저하와 비용 손실을 초래한다",
           "timestamp": null
         },
         {
-          "point": "기존 방법은 쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요했지만, CASTLE는 예약 데이터에서 시드 정보를 추출해 일관된 합성 데이터를 만든다.",
+          "point": "DiffTry는 재시도를 거부 우선순위화 메커니즘으로 변환해 오버로드 감지·조정 없이 동작한다",
           "timestamp": null
         },
         {
-          "point": "합성 데이터의 품질을 KL divergence로 평가했으며, CASTLE는 기존 접근보다 실 사용자 쿼리 분포와 더 가깝게 맞춘다.",
+          "point": "분석 모델과 Kubernetes 실증을 통해 DiffTry가 과부하 영향을 크게 감소시킴을 입증했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "e‑commerce 검색 엔진을 출시하기 전, 구매 로그를 활용해 쿼리‑레벨 레이블을 공동 생성해 초기 검색 모델을 학습한다.",
-        "추천 시스템의 콜드 스타트 상황에서, 합성 사용자‑아이템 상호작용을 생성하고 KL divergence로 실제 로그와의 차이를 모니터링한다.",
-        "음성 비서의 인텐트 분류에 대해, 익명화된 사용 로그를 기반으로 합성 발화와 인텐트 레이블을 대조 학습 방식으로 만들고 초기 모델을 훈련한다."
+        "DiffTry의 차등 재시도 방식을 데이터베이스 배치 작업의 쿼리 스로틀링에 적용해 핵심 쿼리를 우선 처리한다",
+        "서비스 메쉬 대신 엣지 API 게이트웨이에서 DiffTry와 유사한 우선순위 재시도 로직을 도입해 DDoS 공격 시 중요한 트래픽을 보호한다",
+        "메시지 큐 소비자에게 DiffTry식 무상태 백오프 전략을 적용해 소비자 폭풍을 방지하고 시스템 안정성을 높인다"
       ],
       "quiz": [
         {
-          "question": "왜 기존 방법(InPars, Promptagator)이 오류가 누적된다고 언급되었나요?",
+          "question": "DiffTry가 기존 재시도 메커니즘과 다른 핵심 특징은 무엇인가?",
           "options": [
-            "쿼리와 레이블을 별도로 생성해 두 번의 LLM 판단이 필요하기 때문",
-            "모델이 너무 작아",
-            "데이터가 부족",
-            "학습률이 높다"
+            "오버로드 감지를 필요로 한다",
+            "오버로드 감지 없이 무상태·분산 설계로 거부를 우선순위화한다",
+            "애플리케이션 코드를 수정해야 한다",
+            "중앙 집중형 조정이 필요하다"
           ],
-          "answer_index": 0,
-          "explanation": "본문에서는 기존 접근이 쿼리 생성 후 별도의 LLM 판단으로 레이블을 부여해 두 번의 오류 발생 가능성을 지적한다."
-        },
-        {
-          "question": "CASTLE가 합성 데이터 품질을 평가하기 위해 사용한 지표는 무엇인가요?",
-          "options": [
-            "정확도",
-            "F1 점수",
-            "KL divergence",
-            "ROC AUC"
-          ],
-          "answer_index": 2,
-          "explanation": "텍스트에서 합성 쿼리와 실제 쿼리 분포 차이를 KL divergence로 측정했다고 명시한다."
+          "answer_index": 1,
+          "explanation": "DiffTry는 경량·무상태 설계이며 오버로드 감지나 마이크로서비스 간 조정을 요구하지 않고 재시도를 거부 우선순위화 메커니즘으로 변환한다."
         }
       ]
     },
     {
-      "id": "8ea001a06170",
-      "title": "Spark Connect on Kubernetes #2: Operator로 만드는 Control Plane",
-      "url": "https://toss.tech/article/spark-connect-on-kubernetes-2",
+      "id": "f9f9bfa51ed0",
+      "title": "DataJunction as Netflix’s answer to the missing piece of the modern data stack",
+      "url": "https://netflixtechblog.com/datajunction-as-netflixs-answer-to-the-missing-piece-of-the-modern-data-stack-92af926b40a5?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-10-14T19:59:08",
+      "summary": "Netflix가 메트릭 정의와 파이프라인 복잡성을 해결하기 위해 DataJunction을 도입해 중앙화된 시맨틱 레이어를 구축한 사례",
+      "positioning": null,
+      "tags": [
+        "DataJunction",
+        "Netflix",
+        "AirBnB",
+        "Facebook",
+        "SQL"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "메트릭 정의가 산재하고 중복된 파이프라인으로 인해 실험 플랫폼에서 메트릭 작성에 수주가 소요되었다.",
+          "timestamp": null
+        },
+        {
+          "point": "DataJunction은 강력한 SQL 파싱·생성 엔진과 그래프 형태 메타데이터 저장으로 메트릭 정의를 중앙화하고 재사용성을 높였다.",
+          "timestamp": null
+        },
+        {
+          "point": "Netflix는 DataJunction 도입 후 메트릭 온보딩 속도가 크게 개선되어 데이터 과학자와 분석 엔지니어의 생산성이 향상되었다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "그래프 기반 메타데이터 저장 방식을 활용해 ML 피처 스토어의 피처 정의와 의존성을 시각화·관리함으로써 피처 재사용성을 높인다.",
+        "SQL 파싱 엔진을 이용해 ETL 파이프라인에서 자동 데이터 검증 쿼리를 생성해 데이터 품질 이슈를 사전 탐지한다.",
+        "중앙화된 시맨틱 레이어를 재무 부서의 KPI 대시보드에 적용해 부서 간 메트릭 정의 중복을 제거하고 보고 일관성을 확보한다."
+      ],
+      "quiz": [
+        {
+          "question": "Netflix가 DataJunction을 선택한 주요 이유는 무엇인가?",
+          "options": [
+            "UI가 가장 직관적이었다",
+            "강력한 SQL 파싱·생성 엔진을 제공한다",
+            "비용이 가장 낮았다",
+            "커뮤니티 기여자가 가장 많았다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 DataJunction은 다른 후보들보다 견고한 SQL 파싱·생성 엔진을 제공했기 때문에 선택되었다."
+        },
+        {
+          "question": "DataJunction이 Experimentation Platform 팀의 어떤 문제를 해결했는가?",
+          "options": [
+            "스토리지 용량 부족",
+            "메트릭 작성에 광범위한 비즈니스 지식과 복잡한 엔지니어링이 필요했다",
+            "네트워크 지연",
+            "시각화 도구 부재"
+          ],
+          "answer_index": 1,
+          "explanation": "팀은 메트릭 작성에 수주가 걸릴 정도로 비즈니스 지식과 복잡한 엔지니어링이 필요했으며, DataJunction이 이를 간소화했다."
+        }
+      ]
+    },
+    {
+      "id": "c099e6f9efcc",
+      "title": "LFM2.5-24B-A2B: Built for fast on-device agents",
+      "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "토큰당 2B 파라미터만 활성화해 온‑디바이스 에이전트 속도를 크게 높인 LLM 출시",
+      "positioning": null,
+      "tags": [
+        "LFM2.5-24B-A2B",
+        "Qwen3.6-35B-A3B",
+        "LiveClaw",
+        "Apple M5 Max",
+        "NVIDIA B300"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "24B 파라미터 중 토큰당 2B만 활성화해 MoE 기반 추론 속도를 1.7배 가속",
+          "timestamp": null
+        },
+        {
+          "point": "컨텍스트 윈도우를 32k→131k 토큰으로 확장하고 vocab을 65k→128k로 두 배 확대",
+          "timestamp": null
+        },
+        {
+          "point": "SFT·Teacher Specialization·비·에이전트 MOPD·Agentic RL 5단계 포스트 트레이닝으로 에이전트 성능 최적화",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "인플레이스 토크나이저 확장을 활용해 의료 논문에서 특수 용어 토큰화를 개선한다",
+        "컨텍스트 윈도우를 200k 토큰까지 늘려 법률 계약 전체를 한 번에 처리하는 시스템에 적용한다",
+        "2B 활성 파라미터 MoE 구조를 엣지 IoT 디바이스에 배포해 실시간 이상 탐지를 고속으로 수행한다"
+      ],
+      "quiz": [
+        {
+          "question": "LFM2.5-24B-A2B가 기존 MoE 대비 최대 1.7배 빠른 이유는 무엇인가?",
+          "options": [
+            "전체 파라미터 수가 적기 때문",
+            "토큰당 2B 파라미터만 활성화하기 때문",
+            "전용 하드웨어를 사용하기 때문",
+            "토큰 길이를 줄였기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면 토큰당 2B 파라미터만 활성화해 연산량이 감소해 속도가 빨라진다."
+        },
+        {
+          "question": "5단계 포스트 트레이닝 파이프라인의 주요 목적은?",
+          "options": [
+            "대규모 사전학습 데이터 양을 늘리기 위해",
+            "에이전트 작업과 도구 사용 능력을 강화하기 위해",
+            "모델 크기를 압축하기 위해",
+            "벤치마크 점수를 평가하기 위해"
+          ],
+          "answer_index": 1,
+          "explanation": "포스트 트레이닝은 SFT, Teacher Specialization, 비·에이전트 MOPD, Agentic RL 단계로 구성돼 에이전트와 툴 사용 능력을 향상시키는 것이 목표다."
+        }
+      ]
+    },
+    {
+      "id": "ac389cbfd13d",
+      "title": "토스뱅크가 패키지를 관리하는 방식 #1: 패키지를 ESM으로만 제공하기로 했어요",
+      "url": "https://toss.tech/article/package-management-1",
       "source": {
         "type": "rss",
         "name": "토스 기술 블로그, 토스 테크"
       },
-      "published_at": "2026-10-14T05:06:00",
-      "summary": "Spark Connect 자동 관리로 분석 안정성 확보",
+      "published_at": "2026-10-15T09:23:00",
+      "summary": "ESM 전용 패키지로 상태 분리 위험 방지",
       "positioning": null,
       "tags": [
-        "Spark Connect",
-        "Kubernetes",
-        "Apache Spark Operator",
-        "Spark Tenant Operator",
-        "Driver"
+        "ESM",
+        "CommonJS",
+        "package.json",
+        "Dual package hazard",
+        "React"
       ],
-      "relevance": 8,
+      "relevance": 6,
       "key_points": [
         {
-          "point": "Spark Connect 서버를 테넌트 단위로 묶어 용도별 리소스와 Spark 설정을 지정한다.",
+          "point": "Dual package(ESM+CJS) 로드 시 동일 패키지가 두 번 로드돼 상태가 분리되는 Dual package hazard가 발생한다.",
           "timestamp": null
         },
         {
-          "point": "개별 서버의 실행·복구는 Apache Spark Operator에 맡기고, 다수 서버를 하나의 서비스로 운영하는 Spark Tenant Operator를 만든다.",
+          "point": "import와 require가 서로 다른 구현을 읽어 컨텍스트와 캐시가 별도 객체로 생성된다.",
           "timestamp": null
         },
         {
-          "point": "장기 실행 중 발생한 Driver 메모리 문제와 서버 교체 절차를 다룬다.",
+          "point": "토스뱅크는 이러한 문제를 해결하기 위해 패키지를 ESM 전용으로 제공하도록 전환했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "테넌트 기반 리소스·설정 지정 방식을 모델 서빙 클러스터에 적용해 비즈니스 유닛별 모델 격리와 자원 최적화를 이룬다.",
-        "Apache Spark Operator의 생명주기 관리 로직을 일반 배치 잡 컨테이너에 적용해 실패 복구와 자동 재시작을 자동화한다.",
-        "Driver 메모리 모니터링 및 자동 교체 메커니즘을 Flink 스트리밍 작업에 도입해 장시간 실행 시 메모리 누수 위험을 감소시킨다."
+        "ESM 전용 배포 방식을 데이터 파이프라인 라이브러리의 Python 3 전용 패키지로 전환해 모듈 중복 로드를 방지한다.",
+        "package.json의 exports 필드를 활용해 GPU와 CPU 구현을 구분해 제공함으로써 환경별 최적화된 코드를 안전하게 선택한다.",
+        "CI 파이프라인에 Dual package hazard 검사를 추가해 import와 require가 동시에 사용되는 경우를 사전에 차단한다."
       ],
       "quiz": [
         {
-          "question": "Spark Connect 서버를 여러 replica로 나누고 Gateway가 요청을 분산시키는 주요 목적은?",
+          "question": "import와 require가 같은 패키지를 로드할 때 두 개의 별도 컨텍스트가 생성되는 이유는?",
           "options": [
-            "리소스 경합 감소",
-            "보안 강화",
-            "데이터 복제",
-            "로그 중앙화"
+            "exports 필드가 다른 파일을 가리키기 때문",
+            "Node가 파일 확장자별로 캐시를 구분하기 때문",
+            "import는 ESM을, require는 CJS를 로드해 각각 실행되기 때문",
+            "package.json이 중복 로드를 강제하기 때문"
           ],
-          "answer_index": 0,
-          "explanation": "여러 replica와 Gateway를 사용하면 한 Driver에 몰리는 사용자를 분산시켜 장애와 리소스 경합을 줄일 수 있다."
+          "answer_index": 2,
+          "explanation": "import는 ECMAScript Module을, require는 CommonJS 모듈을 로드하며 각각 별도 실행 컨텍스트를 만들기 때문에 동일 패키지가 두 객체로 존재한다."
         },
         {
-          "question": "Spark Tenant Operator의 핵심 역할은 무엇인가?",
+          "question": "패키지를 ESM과 CJS 두 형태로 제공할 때 발생하는 상태 분리 위험을 무엇이라고 부르는가?",
           "options": [
-            "개별 Spark Driver 실행 관리",
-            "다수 서버를 하나의 서비스로 운영",
-            "데이터 저장",
-            "네트워크 라우팅"
-          ],
-          "answer_index": 1,
-          "explanation": "Spark Tenant Operator는 여러 Spark Connect 서버를 하나의 서비스처럼 관리하여 전체 테넌트의 생명주기를 제어한다."
-        }
-      ]
-    },
-    {
-      "id": "3d8c47a66126",
-      "title": "Joint Neural Posterior Estimation and Model Selection for Chemical Reaction Networks",
-      "url": "https://arxiv.org/abs/2610.18825v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:stat.ML"
-      },
-      "published_at": "2026-10-13T17:52:39",
-      "summary": "CRN 베이지안 추론에서 자동 요약과 효율적 모델 선택이 가능해 현업 DS가 복잡한 반응 메커니즘을 빠르게 분석할 수 있음",
-      "positioning": "CRN의 베이지안 추론은 모델 선택과 파라미터 추정이라는 두 문제를 동시에 해결해야 하지만 기존 Sequential Monte Carlo ABC는 요약 통계 설계와 높은 계산 비용으로 제한됐다. 본 논문은 1D‑CNN과 Set Attention 기반 요약 학습으로 모델 선택 네트워크와 조건부 INN을 결합, 다중 실험 시계열을 직접 처리해 실제 프로토데보로네이션 사례에 적용함으로써 기존 방법 대비 자동 요약 및 효율성을 제공한다.",
-      "tags": [
-        "1D-CNN",
-        "Set Attention",
-        "cINN",
-        "Sequential Monte Carlo ABC",
-        "protodeboronation"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "전통적인 Sequential Monte Carlo ABC는 수작업 요약 통계와 높은 계산 비용으로 대규모 파라미터 공간에 한계가 있다.",
-          "timestamp": null
-        },
-        {
-          "point": "공유 1D‑CNN과 순열 불변 Set Attention을 이용해 가변 길이·다중 실험 시계열에서 저차원 요약 통계를 자동 학습한다.",
-          "timestamp": null
-        },
-        {
-          "point": "학습된 요약은 모델 선택 네트워크와 조건부 INN에 동시에 입력되어 모델 확률과 파라미터 사후분포를 추정한다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "Set Attention을 활용해 이기종 IoT 센서 데이터 집합을 통합, 결측 스트림에 강인한 예측 유지보수 모델을 만든다",
-        "공유 1D‑CNN 기반 요약을 금융 다자산 시계열에 적용해 공동 변동성 모델 선택을 자동화, 수작업 특성 설계 없이 효율적인 위험 분석을 가능하게 한다",
-        "조건부 INN을 사용자 선호 파라미터의 사후분포 추정에 사용해 불확실성을 반영한 추천 시스템을 구축, 추천 정확도와 신뢰성을 동시에 향상시킨다"
-      ],
-      "quiz": [
-        {
-          "question": "어떤 구성 요소가 가변 길이·다중 실험 시계열 데이터를 처리하도록 허용하는가?",
-          "options": [
-            "1D‑CNN",
-            "Set Attention",
-            "Sequential Monte Carlo ABC",
-            "RNN"
+            "Module duplication bug",
+            "Dual package hazard",
+            "Export field conflict",
+            "Context mismatch"
           ],
           "answer_index": 1,
-          "explanation": "논문에서는 순열 불변 Set Attention 메커니즘을 사용해 변수 길이와 실험 수에 관계없이 요약 통계를 학습한다."
-        },
-        {
-          "question": "조건부 Invertible Neural Networks(cINN)의 주요 역할은 무엇인가?",
-          "options": [
-            "모델 선택 확률 계산",
-            "파라미터 사후분포 추정",
-            "합성 반응 경로 생성",
-            "차원 축소"
-          ],
-          "answer_index": 1,
-          "explanation": "cINN은 학습된 요약 통계를 조건으로 하여 각 모델별 파라미터 사후분포를 추정하도록 설계되었다."
-        }
-      ]
-    },
-    {
-      "id": "a4fedcec0787",
-      "title": "TimeSeries Tiered Storage Journey: Kafka/Flink Streams to Native Cassandra Cold Reads",
-      "url": "https://netflixtechblog.com/timeseries-tiered-storage-journey-kafka-flink-streams-to-native-cassandra-cold-reads-e59d597c9d60?source=rss----2615bd06b42e---4",
-      "source": {
-        "type": "rss",
-        "name": "Netflix TechBlog - Medium"
-      },
-      "published_at": "2026-10-14T19:56:08",
-      "summary": "시간 시계열 데이터를 계층형 스토리지로 옮겨 비용 절감과 지연시간 유지가 가능함을 보여줌",
-      "positioning": null,
-      "tags": [
-        "Apache Kafka",
-        "Apache Flink",
-        "Amazon S3",
-        "Apache Cassandra",
-        "Pluggable Memtables"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "Kafka와 Flink를 이용해 실시간 스트림을 S3에 저장해 오래된 시계열 데이터를 저비용 스토리지로 이동시켰다",
-          "timestamp": null
-        },
-        {
-          "point": "Cassandra 백업을 S3에 두고 플러그인형 Memtable을 활용해 직접 S3에서 읽어오는 네이티브 콜드 리드 방식을 도입했다",
-          "timestamp": null
-        },
-        {
-          "point": "계층형 스토리지 설계로 최신 데이터는 고성능 스토리지에, 과거 데이터는 저비용 스토리지에 보관해 비용을 크게 절감하면서도 서브초 지연을 유지한다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "Kafka·Flink 기반 스트리밍 파이프라인을 활용해 전자상거래 서비스의 주문 로그를 실시간으로 S3에 적재해 BI 분석용 저비용 데이터 레이크를 구축한다",
-        "플러그인형 Memtable 개념을 ScyllaDB에 적용해 IoT 센서 데이터의 오래된 파티션을 S3에서 직접 읽어 처리함으로써 클러스터 용량을 절감한다",
-        "시간 슬라이스 기반 불변 테이블 설계를 데이터 웨어하우스에 도입해 GDPR 삭제 요청 시 특정 시간 구간 데이터를 빠르게 제외하도록 설계한다"
-      ],
-      "quiz": [
-        {
-          "question": "Netflix가 오래된 시계열 데이터를 S3로 옮기는 주요 이유는 무엇인가?",
-          "options": [
-            "지연 시간을 줄이기 위해",
-            "스토리지 비용을 낮추기 위해",
-            "쓰기 처리량을 높이기 위해",
-            "쿼리 언어를 단순화하기 위해"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서는 비용 효율성을 강조하며, 오래된 데이터는 저비용 객체 스토리지인 S3로 이동해 비용을 절감한다고 설명한다."
-        },
-        {
-          "question": "Cassandra에서 플러그인형 Memtable을 사용하면 얻는 이점은 무엇인가?",
-          "options": [
-            "S3에서 직접 데이터를 읽을 수 있다",
-            "쓰기 지연 시간이 감소한다",
-            "자동 데이터 압축이 가능해진다",
-            "내장 머신러닝 예측 기능을 제공한다"
-          ],
-          "answer_index": 0,
-          "explanation": "플러그인형 Memtable을 활용해 S3에 저장된 백업을 바로 읽어오므로 별도 복구 과정 없이 콜드 데이터를 조회할 수 있다."
+          "explanation": "본문에서는 이러한 현상을 Dual package hazard 라고 정의한다."
         }
       ]
     }

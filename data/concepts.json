@@ -128,9 +128,15 @@
     },
     "SQL 기반 그래프 쿼리": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-09-02"
+      "last_seen": "2026-10-16"
+    },
+    "metadata 활용 검색": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-16",
+      "last_seen": "2026-10-16"
     },
     "minimax rate analysis": {
       "aliases": [],
@@ -158,9 +164,9 @@
     },
     "semantic query processing": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-10-05",
-      "last_seen": "2026-10-10"
+      "last_seen": "2026-10-16"
     },
     "source and capacity conditions": {
       "aliases": [],
@@ -188,9 +194,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 15,
+      "count": 16,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-10-13"
+      "last_seen": "2026-10-16"
     },
     "개인화 추천": {
       "aliases": [],
@@ -336,6 +342,12 @@
       "first_seen": "2026-10-07",
       "last_seen": "2026-10-07"
     },
+    "데이터 풍부화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-16",
+      "last_seen": "2026-10-16"
+    },
     "동기 부여 설계": {
       "aliases": [],
       "count": 1,
@@ -344,9 +356,9 @@
     },
     "디자인 트레이드오프": {
       "aliases": [],
-      "count": 8,
+      "count": 10,
       "first_seen": "2026-09-23",
-      "last_seen": "2026-10-14"
+      "last_seen": "2026-10-16"
     },
     "라벨 불확실성 모델링": {
       "aliases": [],
@@ -362,9 +374,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-07"
+      "last_seen": "2026-10-16"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -392,9 +404,9 @@
     },
     "멀티에이전트 시스템": {
       "aliases": [],
-      "count": 13,
+      "count": 14,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-10-14"
+      "last_seen": "2026-10-16"
     },
     "멀티컨커런시": {
       "aliases": [],
@@ -458,9 +470,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-10-15"
+      "last_seen": "2026-10-16"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -578,9 +590,9 @@
     },
     "비동기 처리와 트랜잭션": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-16"
     },
     "비디오 디퓨전": {
       "aliases": [],
@@ -686,9 +698,9 @@
     },
     "스트림 파이프라인": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-15"
+      "last_seen": "2026-10-16"
     },
     "시각적 위계 설계": {
       "aliases": [],
@@ -719,6 +731,12 @@
       "count": 1,
       "first_seen": "2026-10-02",
       "last_seen": "2026-10-02"
+    },
+    "실시간 조인": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-16",
+      "last_seen": "2026-10-16"
     },
     "실제 트래픽 기반 로드 테스트": {
       "aliases": [],
@@ -758,9 +776,9 @@
     },
     "온-폴리시 학습": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-12"
+      "last_seen": "2026-10-16"
     },
     "요청-응답 매핑": {
       "aliases": [],
@@ -1231,6 +1249,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-15T08:04:53.242636+09:00",
+  "updated_at": "2026-10-16T08:05:55.150181+09:00",
   "version": 1
 }
