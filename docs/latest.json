@@ -1,322 +1,319 @@
 {
   "contract_version": 1,
-  "date": "2026-10-17",
-  "generated_at": "2026-10-17T09:24:12.422154+09:00",
+  "date": "2026-10-18",
+  "generated_at": "2026-10-18T07:16:23.541080+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-17.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-18.html",
   "items": [
     {
-      "id": "a49583f59657",
-      "title": "실행은 도메인별로, 문맥은 한 레포에",
-      "url": "https://toss.tech/article/dw-airflow-migration",
+      "id": "c3d471dd5190",
+      "title": "Discovering state-of-the-art quantum circuits with large language models",
+      "url": "https://arxiv.org/abs/2610.22367v1",
       "source": {
         "type": "rss",
-        "name": "토스 기술 블로그, 토스 테크"
+        "name": "arXiv:cs.AI"
       },
-      "published_at": "2026-10-16T06:15:00",
-      "summary": "DW Airflow·dbt 전환, 효율·가시성 개선",
-      "positioning": null,
+      "published_at": "2026-10-15T17:59:20",
+      "summary": "LLM으로 양자 회로 설계 효율 크게 향상",
+      "positioning": "양자 알고리즘은 가역성 제약으로 기존 설계가 한계에 부딪혔다. 본 논문은 LLM이 회로를 생성하고 평가자가 점수를 매기는 진화적 프레임워크를 도입해 Toffoli와 qubit 수를 크게 줄인다. 이는 양자 회로 설계 자동화와 가역 연산 구조 탐색을 결합한 새로운 연구 흐름이다.",
       "tags": [
-        "DW Airflow",
-        "dbt",
-        "Airflow",
-        "DAG",
-        "Toss"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "중앙 DW Airflow에 400여 개 DAG가 몰려 자원 경쟁과 배치 지연이 발생했다",
-          "timestamp": null
-        },
-        {
-          "point": "도메인별 Airflow와 dbt 기반 선언적 파이프라인으로 전환해 DAG 코드 라인이 2,794줄에서 100줄로 축소되었다",
-          "timestamp": null
-        },
-        {
-          "point": "파이프라인 실행 시간이 4시간에서 2시간 30분으로 단축되었다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "도메인별 Airflow 분리를 ML 모델 학습 파이프라인에 적용해 팀 간 GPU/CPU 자원 충돌을 줄인다",
-        "dbt와 같은 선언적 변환 프레임워크를 마케팅 분석 ETL에 도입해 변환 로직의 재사용성과 가시성을 높인다",
-        "중앙 메타데이터 카탈로그를 활용해 금융 데이터 테이블 설명을 자동화해 데이터 탐색과 품질 관리 효율을 향상시킨다"
-      ],
-      "quiz": [
-        {
-          "question": "왜 중앙 DW Airflow에 모든 도메인 DAG가 모여 있으면 배치 지연이 발생했는가?",
-          "options": [
-            "동일 클러스터에서 자원 경쟁이 발생했기 때문",
-            "DAG 파일 크기 제한으로 스케줄링이 늦어졌기 때문",
-            "네트워크 대역폭이 부족했기 때문",
-            "데이터베이스 락이 빈번했기 때문"
-          ],
-          "answer_index": 0,
-          "explanation": "여러 도메인의 배치가 한 클러스터에 몰리면 CPU·메모리·I/O 등 자원을 공유하게 되어 한 도메인의 작업이 다른 도메인의 작업을 지연시킨다."
-        },
-        {
-          "question": "도메인별 Airflow와 dbt 파이프라인 도입으로 DAG 라인 수가 크게 감소한 주된 이유는?",
-          "options": [
-            "dbt가 자동으로 DAG를 생성해 중복을 없앴기 때문",
-            "도메인별로 DAG를 별도 관리해 중복 로직을 제거했기 때문",
-            "Airflow 버전 업그레이드로 코드가 간결해졌기 때문",
-            "SQL 파일을 압축해 라인 수가 줄었기 때문"
-          ],
-          "answer_index": 1,
-          "explanation": "각 도메인이 자체 Airflow와 dbt 파이프라인을 관리하면서 기존 중앙에서 중복·복사된 DAG와 로직을 제거해 전체 코드 라인이 크게 감소했다."
-        }
-      ]
-    },
-    {
-      "id": "1b11483a2cf8",
-      "title": "Ontology-Driven Observability: Building an End-to-End Knowledge Graph at Netflix Scale",
-      "url": "https://netflixtechblog.com/ontology-driven-observability-building-an-end-to-end-knowledge-graph-at-netflix-scale-421392cf5adf?source=rss----2615bd06b42e---4",
-      "source": {
-        "type": "rss",
-        "name": "Netflix TechBlog - Medium"
-      },
-      "published_at": "2026-10-16T16:01:02",
-      "summary": "대규모 시스템 장애 원인 파악을 빠르게 지원하는 관찰성 설계",
-      "positioning": null,
-      "tags": [
-        "Netflix",
-        "MELT",
-        "GraphQL",
-        "knowledge graph",
-        "AI agents"
+        "large language models",
+        "Toffoli",
+        "qubit",
+        "prime-field modular inversion",
+        "divsteps"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "Metrics·Events·Logs·Traces(MELT)를 단일 관찰성 레이어로 통합해 실시간 시스템 전반을 파악한다.",
+          "point": "LLM이 회로 설계안을 제시하고 독립 평가자가 점수를 매겨 Toffoli와 qubit 수를 크게 감소시켰다.",
           "timestamp": null
         },
         {
-          "point": "실제 사고 조사에 평균 4시간이 소요되며, 대부분은 기존 관찰 시스템이 알지만 기록되지 않은 관계 재구성 때문이다.",
+          "point": "진화적 프레임워크를 8가지 작업에 적용해 7곳에서 최첨단 대비 성능 향상을 달성했다.",
           "timestamp": null
         },
         {
-          "point": "온톨로지 기반 지식 그래프를 구축해 관계를 명시적으로 저장하면 원인 분석 속도가 크게 향상된다.",
+          "point": "소수체 모듈러 역산을 위한 새로운 가역 아키텍처가 divsteps를 가능하게 하여 트레이드오프를 개선했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "관찰성 MELT 데이터를 온톨로지 기반 지식 그래프로 변환해 전자상거래 주문 흐름의 병목을 실시간으로 탐지한다",
-        "통합된 MELT 레이어를 AI 기반 자동 인시던트 대응 봇에 연결해 알림 발생 시 즉시 원인 후보를 제시하도록 한다",
-        "관계 그래프를 활용해 마이크로서비스 간 A/B 테스트 영향도를 자동 추적·시각화해 실험 결과 해석을 가속화한다"
+        "LLM 기반 회로 설계 프레임워크를 데이터 파이프라인 DAG 최적화에 적용해 단계별 연산 비용을 최소화한다.",
+        "가역성 설계 원칙을 저전력 임베디드 시스템의 연산 모듈에 도입해 에너지 효율을 높인다.",
+        "LLM과 평가자 루프를 화학 반응 경로 탐색에 활용해 실험 비용을 줄이고 새로운 합성 경로를 발견한다."
       ],
       "quiz": [
         {
-          "question": "관찰성 데이터(MELT)를 단일 레이어로 통합하면 사고 조사 시간이 감소하는 주요 이유는?",
+          "question": "양자 알고리즘 설계에서 가역성 제약이 중요한 이유는?",
           "options": [
-            "수동 로그 상관 작업이 사라지기 때문",
-            "스토리지 비용이 감소하기 때문",
-            "트레이스 정보가 숨겨지기 때문",
-            "서비스 수가 줄어들기 때문"
+            "양자 게이트는 유니터리이어야 하기 때문이다",
+            "클래식 게이트는 항상 가역적이다",
+            "양자 컴퓨터는 큐빗 수가 제한된다",
+            "오류 정정이 불가능하기 때문이다"
           ],
           "answer_index": 0,
-          "explanation": "MELT를 하나의 레이어에 모으면 로그·메트릭·트레이스 등을 별도로 찾아 연결할 필요가 없어져 조사 시간이 크게 단축된다."
+          "explanation": "양자 연산은 유니터리(가역)이어야 하므로 회로 설계 시 가역성 제약을 고려해야 한다."
         },
         {
-          "question": "AI 에이전트를 컨텍스트 없이 사용할 때 가장 큰 위험은?",
+          "question": "새로운 가역 아키텍처가 prime-field modular inversion에 제공한 주요 이점은?",
           "options": [
-            "응답 속도가 빨라진다",
-            "시스템 비용이 감소한다",
-            "환각(hallucination)으로 잘못된 원인 분석을 제공한다",
-            "알림이 자동으로 차단된다"
+            "Toffoli 수만 감소",
+            "divsteps 알고리즘을 가역적으로 구현 가능",
+            "큐빗 수 증가",
+            "측정 단계 단순화"
           ],
-          "answer_index": 2,
-          "explanation": "컨텍스트가 부족하면 에이전트가 잘못된 추론을 내놓아 잘못된 해결 경로로 이끌 수 있다."
+          "answer_index": 1,
+          "explanation": "가역 설계 덕분에 기존에 가역적으로 구현하기 어려웠던 divsteps 알고리즘을 사용할 수 있게 되어 트레이드오프가 개선된다."
         }
       ]
     },
     {
-      "id": "e13a42d89ce3",
-      "title": "Explore Once, Evaluate Many: Multiple Policy Evaluation for Stochastic Linear Bandits",
-      "url": "https://arxiv.org/abs/2610.22252v1",
+      "id": "435adb508ee9",
+      "title": "Advancing Generative Recommendation Inference: our collaboration with NVIDIA on TensorRT LLM",
+      "url": "https://engineering.atspotify.com/2026/10/advancing-generative-recommendation-inference-our-collaboration-with-nvidia-on-tensorrt-llm/",
       "source": {
         "type": "rss",
-        "name": "arXiv:stat.ML"
+        "name": "Spotify Engineering"
       },
-      "published_at": "2026-10-15T17:22:59",
-      "summary": "다중 정책을 한 번에 정확히 평가해 데이터 효율성 향상",
-      "positioning": "다중 정책을 개별적으로 평가하면 샘플 비용이 급증하고 기존 오프라인 평가 방법은 강한 가정이 필요했다. 이 논문은 보상‑무료 플래닝과 정규화된 공유 샘플링 설계를 결합해 선형 밴드릿 상황에서 정책 평가 비용을 로그 K 수준으로 줄인다. 이는 오프라인‑온라인 연계 전략과 불확실성 정량화 연구 흐름에 속한다.",
+      "published_at": "2026-10-16T14:29:18",
+      "summary": "LLM 기반 실시간 개인화 추천을 GPU 최적화 추론으로 확장하는 방법",
+      "positioning": null,
       "tags": [
-        "PRISMA",
-        "stochastic linear bandits",
-        "ridge regression",
-        "reward-free planning",
-        "regularized sampling"
+        "Spotify",
+        "NVIDIA",
+        "TensorRT",
+        "vLLM",
+        "Beam search"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "PRISMA는 공유 샘플링과 단일 ridge 회귀 추정기를 이용해 K개의 목표 정책을 동시에 평가한다.",
+          "point": "LLM을 활용한 실시간 개인화 추천에 Beam search와 후보 점수화(log‑prob) 기법을 적용한다.",
           "timestamp": null
         },
         {
-          "point": "샘플 복잡도는 (L²S²+β²)(1∨ρ*)/ε²·logK 로, 컨텍스트·액션 공간 크기에 의존하지 않는다.",
+          "point": "vLLM의 Beam search 구현은 CPU‑GPU 병목과 KV 블록 재계산으로 고성능 GPU 활용에 제한이 있다.",
           "timestamp": null
         },
         {
-          "point": "적응형 doubling 절차가 ρ*를 모른 채 정규화 스케일을 선택하며, 두 번째 모멘트 고유값에 대한 하한이 필요하지 않다.",
+          "point": "NVIDIA TensorRT LLM과 협업해 GPU‑최적화 Beam search를 구현, 비용 효율적인 대규모 추론을 가능하게 했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "공유 샘플링 설계를 전자상거래 추천 모델들의 오프라인 평가에 적용해 데이터 수집 비용을 절감한다.",
-        "보상‑무료 플래닝과 정규화 샘플링을 다중 치료 정책을 동시에 평가해야 하는 임상 시험 설계에 활용한다.",
-        "적응형 doubling 정규화 방식을 스트리밍 데이터에서 ridge 회귀 하이퍼파라미터 자동 선택에 적용해 사전 분산 지식 없이 모델을 안정화한다."
+        "GPU‑최적화 Beam search(TensorRT LLM)를 전자상거래 상품 추천 엔진에 적용해 응답 지연을 크게 줄인다.",
+        "로그 확률 기반 후보 점수화를 기업 문서 검색 시스템에 도입해 검색 결과의 관련성을 향상시킨다.",
+        "CPU‑GPU 워크로드 분리를 활용해 실시간 사기 탐지 파이프라인을 재설계, 고비용 연산을 GPU로 옮겨 처리량을 높인다."
       ],
       "quiz": [
         {
-          "question": "논문에서 ρ*가 의미하는 것은 무엇인가?",
+          "question": "vLLM의 Beam search 구현이 GPU 효율을 낮추는 주요 원인은 무엇인가?",
           "options": [
-            "공유 샘플링 분포 설계 난이도의 인스턴스‑종속 측정",
-            "특징 차원의 크기",
-            "정책 수 K",
-            "보상 노이즈 분산"
-          ],
-          "answer_index": 0,
-          "explanation": "본문에 ρ*는 공유 샘플링 분포 설계 난이도를 나타내는 인스턴스‑종속 측정이라고 명시되어 있다."
-        },
-        {
-          "question": "PRISMA가 ρ*를 사전에 알 필요 없이 정규화 스케일을 선택할 수 있게 하는 요소는?",
-          "options": [
-            "보상‑무료 플래닝",
-            "적응형 doubling 절차",
-            "ridge 회귀 추정기",
-            "정규화 샘플링 설계"
+            "Beam search가 GPU 내부에서 실행된다",
+            "CPU 측에서 KV 블록을 재계산한다",
+            "모델 파라미터가 과도하게 크다",
+            "네트워크 대역폭이 제한된다"
           ],
           "answer_index": 1,
-          "explanation": "알고리즘은 적응형 doubling 절차를 통해 ρ*를 모른 채 정규화 스케일을 자동으로 선택한다."
+          "explanation": "vLLM은 Beam search를 핵심 GPU 엔진 밖에서 수행해 CPU‑GPU 병목을 만들고, 부분적으로 채워진 KV 블록을 재계산하게 되어 GPU 활용도가 떨어진다."
+        },
+        {
+          "question": "Spotify가 후보 점수화를 위해 사용하는 핵심 메트릭은?",
+          "options": [
+            "정확도",
+            "로그 확률",
+            "F1 점수",
+            "ROC AUC"
+          ],
+          "answer_index": 1,
+          "explanation": "후보 점수화는 모델이 출력한 로그 확률(log‑prob)을 이용해 후보들을 평가·순위 매기는 방식이다."
         }
       ]
     },
     {
-      "id": "98e6a11f87f3",
-      "title": "Apple ML Research: Muse Spark Open with MLX on Mac Studio",
-      "url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+      "id": "1557ed18b567",
+      "title": "Show HN: Llmspeed – feel how fast a local LLM runs before you buy the hardware",
+      "url": "https://llmspeed.dev/",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "맥 스튜디오에서 대규모 LLM을 로컬로 빠르게 실험 가능",
+      "summary": "로컬 LLM 성능을 미리 예측해 하드웨어 선택 비용 절감",
       "positioning": null,
       "tags": [
-        "MLX",
-        "Mac Studio",
-        "Muse Spark Open",
-        "M5 Ultra",
-        "RDMA"
+        "Llmspeed",
+        "GitHub",
+        "JavaScript",
+        "r/LocalLLaMA",
+        "localscore.ai"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "MLX와 Apple Silicon 통합 메모리 덕분에 512GB까지 로컬에서 트릴리언 파라미터 모델을 실행할 수 있다",
+          "point": "Llmspeed는 로컬 LLM 실행 속도를 하드웨어별로 시뮬레이션한다.",
           "timestamp": null
         },
         {
-          "point": "Muse Spark Open은 MoE 구조와 NVFP4 4비트 정밀도로 토큰당 36 + 토큰을 생성하며 파이프라인·텐서 병렬화로 확장 가능",
+          "point": "커뮤니티 벤치마크와 사양 기반 추정치를 결합해 속도를 예측한다.",
           "timestamp": null
         },
         {
-          "point": "M5 Ultra GPU Neural Accelerator가 매트릭스 연산을 가속해 M3 Ultra 대비 처리량과 전력 효율이 크게 향상된다",
+          "point": "오픈소스로 GitHub에 제공돼 직접 사용 및 커스터마이징이 가능하다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "RDMA 기반 Thunderbolt 연결을 활용해 여러 iMac을 클러스터링해 실시간 영상 분석 파이프라인을 구축, 데이터 전송 지연을 최소화한다",
-        "MLX의 4비트 NVFP4 정밀도와 MoE 활성화 방식을 모바일 AI 앱에 적용해 배터리 소모를 낮추면서 대규모 언어 모델 기능을 제공한다",
-        "Apple Silicon 통합 메모리를 이용해 로컬 데이터 파이프라인에서 대규모 그래프 신경망을 메모리 복제 없이 실행해 개인정보 보호를 강화한다"
+        "비전 모델을 엣지 디바이스에 배포하기 전에 유사 시뮬레이션을 적용해 추론 지연 시간을 예측하고 최적 하드웨어를 선정한다.",
+        "LLM 기반 검색(RAG) 파이프라인에서 다양한 데이터베이스 엔진의 쿼리 처리 속도를 시뮬레이션해 비용 효율적인 스토리지 선택을 지원한다."
       ],
       "quiz": [
         {
-          "question": "Muse Spark Open이 dense 모델보다 추론 시 계산량을 줄이는 이유는 무엇인가?",
+          "question": "Llmspeed가 하드웨어별 LLM 실행 속도를 추정하는 주요 데이터 원천은 무엇인가?",
           "options": [
-            "MoE 구조로 일부 전문가만 활성화한다",
-            "GPU Neural Accelerator를 사용한다",
-            "FP8 대신 FP16을 사용한다",
-            "컨텍스트 크기를 감소시킨다"
+            "커뮤니티 벤치마크",
+            "제조사 공식 벤치마크",
+            "랜덤 추정",
+            "사용자 설문"
           ],
           "answer_index": 0,
-          "explanation": "Muse Spark Open은 mixture‑of‑experts 모델로, 활성화되는 전문가와 파라미터가 전체의 일부에 불과해 계산량이 감소한다."
+          "explanation": "본문에 언급된 r/LocalLLaMA와 localscore.ai 등 커뮤니티 벤치마크를 활용한다."
         },
         {
-          "question": "RDMA over Thunderbolt를 이용해 여러 Mac Studio를 연결하면 얻는 주요 이점은?",
+          "question": "Llmspeed가 직접 측정이 불가능한 경우, 추정값을 생성하는 방법은?",
           "options": [
-            "GPU 클럭 속도 상승",
-            "저지연 고대역폭 메모리 공유",
-            "자동 모델 양자화",
-            "각 머신의 전력 소비 감소"
+            "유사 사양 장비 측정값을 보정",
+            "머신러닝 모델 예측",
+            "단순 평균",
+            "무작위 선택"
           ],
-          "answer_index": 1,
-          "explanation": "RDMA는 Thunderbolt를 통해 직접 메모리 접근을 제공해 머신 간 데이터 전송 지연을 최소화하고 대역폭을 높인다."
+          "answer_index": 0,
+          "explanation": "유사한 설정이나 사양을 기반으로 추정값을 도출한다."
         }
       ]
     },
     {
-      "id": "c4801fe0d53a",
-      "title": "토스뱅크가 패키지를 관리하는 방식 #2: 토스뱅크 패키지의 세 가지 기준",
-      "url": "https://toss.tech/article/package-management-2",
+      "id": "9ddacccf90a9",
+      "title": "이제 사람과 AI는 목소리로 구분할 수 없습니다 | SlashLive",
+      "url": "https://youtu.be/j41oq_xbTgs",
       "source": {
-        "type": "rss",
-        "name": "토스 기술 블로그, 토스 테크"
+        "type": "youtube",
+        "name": "토스 챌린저스"
       },
-      "published_at": "2026-10-16T01:00:00",
-      "summary": "패키지 호환성 검증으로 서비스 안정성 확보",
+      "published_at": "2026-10-16T06:30:03",
+      "summary": "대규모 데이터와 토큰화로 자연스러운 TTS 구현",
       "positioning": null,
       "tags": [
-        "Toss Bank",
-        "rolldown",
-        "oxc",
-        "ES2025",
-        "Proxy"
+        "TTS",
+        "멜 스펙트로그램",
+        "오토인코더",
+        "벡터 컨타이제이션",
+        "GPT2"
       ],
-      "relevance": 8,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "패키지는 호스트가 지원하는 실행 환경에서 안정적으로 동작해야 하며, 이를 위해 문법 변환과 API 지원을 사전 검증한다.",
-          "timestamp": null
+          "point": "초기 TTS는 텍스트→멜 스펙트로그램→보코더 구조의 2단계 파이프라인을 사용했다.",
+          "timestamp": "01:49"
         },
         {
-          "point": "최신 문법 사용 시에도 호스트 트랜스파일러가 해당 변환을 지원해야 하며, 폴리필만으로는 일부 API(예: Proxy)를 대체할 수 없다.",
-          "timestamp": null
+          "point": "오토인코더는 고차원 데이터를 압축·복원하며 레이블 없이 음성 표현을 학습한다.",
+          "timestamp": "03:57"
         },
         {
-          "point": "타입 검사와 별도 호환성 확인을 통해 배포 후 원본 코드 의도와 디버깅 편의성을 유지한다.",
-          "timestamp": null
+          "point": "톨터스 TTS는 GPT2와 벡터 컨타이제이션으로 음성 토큰을 예측해 자연스러운 TTS를 구현한다.",
+          "timestamp": "05:57"
         }
       ],
       "ideas": [
-        "호스트 기반 트랜스파일 검증 방식을 사내 UI 컴포넌트 라이브러리에 적용해 브라우저 호환성을 사전에 확보한다.",
-        "폴리필 가능 여부 검증을 마이크로서비스 빌드 단계에 도입해 오래된 런타임에서도 안정적인 API 사용을 보장한다.",
-        "CI 파이프라인에 타입 기반 호환성 체크를 추가해 데이터 처리 스크립트가 다양한 실행 환경에서 예측 가능하게 동작하도록 한다."
+        "벡터 컨타이제이션을 이용해 음성 특징을 토큰화해 저자원 ASR 모델의 학습 효율을 높인다.",
+        "오토인코더로 텍스트와 음성 로그를 압축해 멀티모달 임베딩을 만들고 개인화 추천에 활용한다.",
+        "2단계 TTS(멜 스펙트로그램→보코더)를 이용해 다양한 감정의 합성 음성을 생성, 감정 인식 모델을 데이터 증강한다."
       ],
       "quiz": [
         {
-          "question": "왜 폴리필만으로 Proxy API를 완전히 대체할 수 없는가?",
+          "question": "초기 TTS가 두 단계(멜 스펙트로그램 → 보코더) 구조를 사용한 주요 이유는?",
           "options": [
-            "Proxy는 언어 레벨 기능이라 구현이 복잡하다",
-            "브라우저가 Proxy를 지원하지 않으면 성능 저하가 발생한다",
-            "폴리필은 런타임에만 동작한다",
-            "Proxy는 보안 제한이 있다"
+            "직접 파형 예측이 높은 샘플 레이트 때문에 계산적으로 어려워서",
+            "멜 스펙트로그램이 피치 제어에 유리해서",
+            "보코더가 노이즈 감소 효과를 제공해서",
+            "두 단계가 모델 크기를 크게 줄여주기 때문에"
           ],
           "answer_index": 0,
-          "explanation": "Proxy는 JavaScript 언어 자체의 메커니즘으로, 순수 JavaScript 코드만으로 완전한 동작을 재현하기 어렵기 때문에 폴리필로 대체할 수 없다."
+          "explanation": "텍스트에서 초당 수만 개 샘플인 파형을 직접 예측하기는 당시 모델로는 어려웠기 때문에 중간 표현인 멜 스펙트로그램을 예측하고 보코더가 파형을 복원하는 두 단계 구조를 사용했다."
         },
         {
-          "question": "호스트가 낮은 target을 지정해도 변환이 되지 않을 수 있는 이유는?",
+          "question": "벡터 컨타이제이션이 TTS 모델에 가져다 주는 장점은?",
           "options": [
-            "호스트 트랜스파일러가 해당 문법 변환을 지원하지 않기 때문",
-            "TypeScript 설정이 부족하기 때문",
-            "패키지에 polyfill이 없기 때문",
-            "브라우저가 최신 ES를 지원하기 때문"
+            "연속적인 잠재 공간을 제공해 부드러운 음성을 만든다",
+            "고차원 벡터를 이산 토큰으로 변환해 언어 모델 방식 학습이 가능해진다",
+            "데이터 양을 크게 줄일 수 있다",
+            "실시간 추론 속도를 크게 향상시킨다"
           ],
-          "answer_index": 0,
-          "explanation": "트랜스파일러가 변환 로직을 제공하지 않으면, 낮은 target을 설정해도 지원되지 않는 최신 문법은 그대로 남아 변환되지 않는다."
+          "answer_index": 1,
+          "explanation": "벡터 컨타이제이션은 고차원 표현을 이산 토큰으로 양자화해, 텍스트 토큰처럼 시퀀스 모델이 학습하도록 하여 다양한 프로소디를 생성할 수 있게 한다."
+        }
+      ]
+    },
+    {
+      "id": "055c7c0ed4c3",
+      "title": "AI Coding Is a Slot Machine: Loss Disguised as a Win | Jeremy Howard",
+      "url": "https://youtu.be/DVRMDoYhVBI",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-10-11T09:19:59",
+      "summary": "AI 코딩의 불확실성·통제감 착각이 생산성 함정",
+      "positioning": null,
+      "tags": [
+        "AI",
+        "MCPs",
+        "prompt"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 기반 코딩은 슬롯 머신과 같으며 통제감 착각을 유발한다.",
+          "timestamp": "00:00"
+        },
+        {
+          "point": "프롬프트를 바꾸며 레버를 반복적으로 당기지만, 승리는 드물고 손실이 감춰진다.",
+          "timestamp": "00:34"
+        },
+        {
+          "point": "연구 결과, 실제 고품질 소프트웨어 생산량은 크게 증가하지 않았다.",
+          "timestamp": "00:46"
+        }
+      ],
+      "ideas": [
+        "프롬프트를 반복적으로 수정하며 얻는 불확실한 결과를 테스트 케이스 자동 생성에 적용해, 다양한 edge case를 빠르게 탐색한다.",
+        "슬롯 머신식 레버 당기기 방식을 UI A/B 테스트에 도입해, 각 디자인 변형을 무작위로 시도하고 성공률을 누적한다.",
+        "통제감 착각을 감지하는 메트릭을 개발자 도구에 표시해, 코드 자동 생성 시 불확실성을 명시적으로 보여준다."
+      ],
+      "quiz": [
+        {
+          "question": "Jeremy Howard가 AI 기반 코딩을 비유한 것은 무엇인가?",
+          "options": [
+            "체스 게임",
+            "슬롯 머신",
+            "롤러코스터",
+            "퍼즐"
+          ],
+          "answer_index": 1,
+          "explanation": "00:00 구간에서 AI 기반 코딩을 슬롯 머신에 비유하며 통제감 착각을 언급한다."
+        },
+        {
+          "question": "연구 결과에 따르면 AI 코딩이 실제 소프트웨어 생산량에 미친 영향은?",
+          "options": [
+            "대폭 증가",
+            "전혀 변화 없음",
+            "소폭 증가",
+            "감소"
+          ],
+          "answer_index": 2,
+          "explanation": "00:46 구간에서 연구 결과가 고품질 소프트웨어 생산량이 크게 증가하지 않았다고 언급한다."
         }
       ]
     }

@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-18",
+  "generated_at": "2026-10-17T22:16:23.546801",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.AI",
+        "source_key": "arxiv:cs.AI",
+        "source_label": "arXiv:cs.AI",
+        "title": "Discovering state-of-the-art quantum circuits with large language models",
+        "url": "https://arxiv.org/abs/2610.22367v1",
+        "published_at": "2026-10-15T17:59:20",
+        "transcript": null,
+        "body": "Significant efforts are currently being directed toward the implementation of large-scale quantum information processors, but realizing useful quantum advantage also requires the development of efficient quantum algorithms. While for many practical problems the dominant resource costs are associated with a small set of computational primitives, optimizing them in the quantum setting presents unique challenges, including a reversibility constraint absent from ordinary classical computation. Here we introduce an evolutionary framework in which large language models (LLMs) propose circuit designs and an independent evaluator verifies and scores them. We apply this framework to tasks spanning numerical computation, chemistry, optimization, quantum simulation, and number theory. In seven of the eight tasks, the discovered circuits significantly reduce both Toffoli and qubit counts relative to the state of the art. In the eighth, the search discovers a new reversible architecture for prime-field modular inversion. By handling reversibility differently, the architecture makes divsteps -- a classical algorithm previously impractical for reversible integer arithmetic -- viable and substantially improves the Toffoli-qubit trade-off for modular inversion. These results open the door for evaluator-guided LLM co-design of new algorithmic structures for quantum computation.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM으로 양자 회로 설계 효율 크게 향상",
+        "tags": [
+          "large language models",
+          "Toffoli",
+          "qubit",
+          "prime-field modular inversion",
+          "divsteps"
+        ],
+        "concepts": [
+          "reversible computing",
+          "LLM 기반 설계 자동화",
+          "양자 회로 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "LLM이 회로 설계안을 제시하고 독립 평가자가 점수를 매겨 Toffoli와 qubit 수를 크게 감소시켰다.",
+            "timestamp": null
+          },
+          {
+            "point": "진화적 프레임워크를 8가지 작업에 적용해 7곳에서 최첨단 대비 성능 향상을 달성했다.",
+            "timestamp": null
+          },
+          {
+            "point": "소수체 모듈러 역산을 위한 새로운 가역 아키텍처가 divsteps를 가능하게 하여 트레이드오프를 개선했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "양자 알고리즘은 가역성 제약으로 기존 설계가 한계에 부딪혔다. 본 논문은 LLM이 회로를 생성하고 평가자가 점수를 매기는 진화적 프레임워크를 도입해 Toffoli와 qubit 수를 크게 줄인다. 이는 양자 회로 설계 자동화와 가역 연산 구조 탐색을 결합한 새로운 연구 흐름이다.",
+        "production_ideas": [
+          "LLM 기반 회로 설계 프레임워크를 데이터 파이프라인 DAG 최적화에 적용해 단계별 연산 비용을 최소화한다.",
+          "가역성 설계 원칙을 저전력 임베디드 시스템의 연산 모듈에 도입해 에너지 효율을 높인다.",
+          "LLM과 평가자 루프를 화학 반응 경로 탐색에 활용해 실험 비용을 줄이고 새로운 합성 경로를 발견한다."
+        ],
+        "quiz": [
+          {
+            "question": "양자 알고리즘 설계에서 가역성 제약이 중요한 이유는?",
+            "options": [
+              "양자 게이트는 유니터리이어야 하기 때문이다",
+              "클래식 게이트는 항상 가역적이다",
+              "양자 컴퓨터는 큐빗 수가 제한된다",
+              "오류 정정이 불가능하기 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "양자 연산은 유니터리(가역)이어야 하므로 회로 설계 시 가역성 제약을 고려해야 한다."
+          },
+          {
+            "question": "새로운 가역 아키텍처가 prime-field modular inversion에 제공한 주요 이점은?",
+            "options": [
+              "Toffoli 수만 감소",
+              "divsteps 알고리즘을 가역적으로 구현 가능",
+              "큐빗 수 증가",
+              "측정 단계 단순화"
+            ],
+            "answer_index": 1,
+            "explanation": "가역 설계 덕분에 기존에 가역적으로 구현하기 어려웠던 divsteps 알고리즘을 사용할 수 있게 되어 트레이드오프가 개선된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Spotify Engineering",
+        "source_key": "https://engineering.atspotify.com/feed/",
+        "source_label": "Spotify Engineering",
+        "title": "Advancing Generative Recommendation Inference: our collaboration with NVIDIA on TensorRT LLM",
+        "url": "https://engineering.atspotify.com/2026/10/advancing-generative-recommendation-inference-our-collaboration-with-nvidia-on-tensorrt-llm/",
+        "published_at": "2026-10-16T14:29:18",
+        "transcript": null,
+        "body": "# Advancing Generative Recommendation Inference: our collaboration with NVIDIA on TensorRT LLM\n\n![Feature Image](https://images.ctfassets.net/p762jor363g1/6W7dL3t2a6sqZOSWM99yfq/764a49205da0ce14b47648043fddde3a/Option_12.png)\n\nAt Spotify, every surface and interaction is personalized to you as a user: the content on the Home page, the next song that plays, and more recently the ability to talk to Spotify.\n\nTraditionally, this content is provided by recommendation systems that require multiple steps for candidate retrieval and ranking, and perhaps individual systems per surface. Generative AI is fundamentally changing this. We have been exploring how to provide recommendations via a Large Personalized Language Model in real time, across multiple surfaces.\n\nThis shift, however, presents unique engineering challenges, particularly when moving from a proof of concept to a scalable, production-grade inference architecture.\n\n## **Spotify’s journey into LLM-powered recommendations**\n\n### **Beam search**\n\nIn January 2026, Spotify introduced LLM-powered technology to its podcast recommendations. The work is grounded in recent advancements in generative recommendation architectures, specifically the foundational methods introduced in the [PLUM paper](https://arxiv.org/abs/2510.07784) . At Spotify, we have applied these concepts to build a specialized generative recommendation system for podcasts, aimed at delivering deeply personalized listening experiences. Our specialized architecture, detailed in our [\"Deploying Semantic ID-based Generative Retrieval for Large-Scale Podcast Discovery at Spotify\"](https://arxiv.org/pdf/2603.17540) paper  employs beam search to explore multiple token sequence paths simultaneously for candidate generation.\n\nBeam search is a technique that allows exploration of an LLM’s output space with the goal of identifying highly probable token sequences. This technique navigates a decision tree of potential recommendations by keeping the most promising 'beams' or sequences active at each step, with the goal of identifying the highest-scoring podcasts for personalization. For this reason, these top sequences constitute semantic IDs that are then translated to catalog items to serve recommendations to users.\n\n![Beam Search](//images.ctfassets.net/p762jor363g1/428m8tTUKuNmmg3vEbNYKT/76d6fe626e4a683dd2a3994bc5d6a3c1/image1.png)\n\n\nBeam search decoding explanation.\n\nOur initial release relies on [vLLM](https://github.com/vllm-project/vllm) as an inference engine. vLLM is one of the most widely adopted open source inference engines, particularly strong at supporting modern model architectures for high-throughput  inference deployments. However vLLM’s support for beam search is limited compared to traditional completion requests – its beam search implementation doesn’t extract the maximum performance from GPU devices.\n\nSpecifically, vLLM's beam search implementation operates outside the core GPU engine, which introduces CPU-side bottlenecks and additional GPU work due to the recomputation of partially filled KV blocks.\n\nFor our January launch, these limitations meant we couldn't fully utilize high-end GPUs, so we opted for lower-tier accelerators to manage costs while keeping the system at a more optimal load point.\n\n## **Candidate scoring**\n\nAnother inference technique we’ve been exploring is candidate scoring. Candidate scoring uses a model's log probabilities to evaluate and rank a set of candidates.\n\nA naive way to perform this type of inference is to adopt a “fan-out” approach and run inference on each candidate separately, for each request then we extract the related logprobs, before aggregating them to achieve the desired ranking operation.\n\nThis type of inference is generally available in most open source inference engines, however a more efficient technique has found its way into [SGLang](https://github.com/sgl-project/sglang), thanks also to work from [Linkedin’s engineering team](https://www.linkedin.com/blog/engineering/ai/turbocharging-linkedins-recommendation-systems-with-sglang). For this reason we’ve been utilizing SGLang as well to access this feature at inference time with an efficient candidate masking technique that allows us to score multiple candidates in a single request.\n\n![Candidate scoring](//images.ctfassets.net/p762jor363g1/63LsM1ILHVYf5AZYjC9NWE/7e90af20c1a20fea24c827e7706b6141/image3.png)\n\n\nMulti item scoring explanation.\n\n## **Personalization**\n\nThe most important part of Spotify recommendations is our ability to personalize based on user preferences and interactions. In our traditional recommendation systems, we have used [dense user embeddings](https://research.atspotify.com/2025/9/generalized-user-representations-for-large-scale-recommendations) to accomplish personalization at scale. As we have experimented with LLM-based recommendations, we have explored a few approaches to enable personalization in this new paradigm.\n\n### **Plain User Text**\n\nThis approach entails co",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 기반 실시간 개인화 추천을 GPU 최적화 추론으로 확장하는 방법",
+        "tags": [
+          "Spotify",
+          "NVIDIA",
+          "TensorRT",
+          "vLLM",
+          "Beam search"
+        ],
+        "concepts": [
+          "개인화 추천",
+          "조건부 확률 모델링",
+          "빔 서치"
+        ],
+        "key_points": [
+          {
+            "point": "LLM을 활용한 실시간 개인화 추천에 Beam search와 후보 점수화(log‑prob) 기법을 적용한다.",
+            "timestamp": null
+          },
+          {
+            "point": "vLLM의 Beam search 구현은 CPU‑GPU 병목과 KV 블록 재계산으로 고성능 GPU 활용에 제한이 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "NVIDIA TensorRT LLM과 협업해 GPU‑최적화 Beam search를 구현, 비용 효율적인 대규모 추론을 가능하게 했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "GPU‑최적화 Beam search(TensorRT LLM)를 전자상거래 상품 추천 엔진에 적용해 응답 지연을 크게 줄인다.",
+          "로그 확률 기반 후보 점수화를 기업 문서 검색 시스템에 도입해 검색 결과의 관련성을 향상시킨다.",
+          "CPU‑GPU 워크로드 분리를 활용해 실시간 사기 탐지 파이프라인을 재설계, 고비용 연산을 GPU로 옮겨 처리량을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "vLLM의 Beam search 구현이 GPU 효율을 낮추는 주요 원인은 무엇인가?",
+            "options": [
+              "Beam search가 GPU 내부에서 실행된다",
+              "CPU 측에서 KV 블록을 재계산한다",
+              "모델 파라미터가 과도하게 크다",
+              "네트워크 대역폭이 제한된다"
+            ],
+            "answer_index": 1,
+            "explanation": "vLLM은 Beam search를 핵심 GPU 엔진 밖에서 수행해 CPU‑GPU 병목을 만들고, 부분적으로 채워진 KV 블록을 재계산하게 되어 GPU 활용도가 떨어진다."
+          },
+          {
+            "question": "Spotify가 후보 점수화를 위해 사용하는 핵심 메트릭은?",
+            "options": [
+              "정확도",
+              "로그 확률",
+              "F1 점수",
+              "ROC AUC"
+            ],
+            "answer_index": 1,
+            "explanation": "후보 점수화는 모델이 출력한 로그 확률(log‑prob)을 이용해 후보들을 평가·순위 매기는 방식이다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Llmspeed – feel how fast a local LLM runs before you buy the hardware",
+        "url": "https://llmspeed.dev/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# How fast will your local model feel?\n\n## Browse by hardware\n\n- [NVIDIA RTX 3090 24GB](/hardware/rtx-3090/)\n- [AMD Ryzen AI Max+ 395 128GB (Strix Halo)](/hardware/ryzen-ai-max-395-128gb/)\n- [NVIDIA RTX 5090 32GB](/hardware/rtx-5090/)\n- [AMD Radeon AI PRO R9700 32GB](/hardware/radeon-ai-pro-r9700/)\n- [NVIDIA RTX 4090 24GB](/hardware/rtx-4090/)\n- [Mac Studio M5 Ultra 256GB](/hardware/mac-studio-m5-ultra-256gb/)\n- [MacBook Pro M5 Max 128GB](/hardware/m5-max-128gb/)\n- [NVIDIA DGX Spark 128GB](/hardware/dgx-spark-128gb/)\n- [NVIDIA RTX 5060 Ti 16GB](/hardware/rtx-5060-ti-16gb/)\n- [NVIDIA RTX PRO 6000 96GB](/hardware/rtx-pro-6000-blackwell/)\n- [Mac Studio M5 Ultra 512GB](/hardware/mac-studio-m5-ultra-512gb/)\n- [NVIDIA Tesla V100 32GB](/hardware/tesla-v100-32gb/)\n- [Intel Arc Pro B70 32GB](/hardware/arc-pro-b70/)\n- [AMD RX 7900 XTX 24GB](/hardware/rx-7900-xtx/)\n- [NVIDIA RTX 5070 Ti 16GB](/hardware/rtx-5070-ti/)\n- [NVIDIA RTX Spark N1X 128GB (laptop)](/hardware/rtx-spark-n1x-128gb/)\n- [AMD Ryzen AI Max+ PRO 495 192GB (Gorgon Halo)](/hardware/ryzen-ai-max-pro-495-192gb/)\n- [NVIDIA RTX 3060 12GB](/hardware/rtx-3060/)\n- [NVIDIA RTX 5080 16GB](/hardware/rtx-5080/)\n- [Mac Studio M3 Ultra 512GB](/hardware/mac-studio-m3-ultra-512gb/)\n- [Mac mini M5 Pro 64GB](/hardware/mac-mini-m5-pro-64gb/)\n- [AMD Instinct MI50 32GB](/hardware/instinct-mi50-32gb/)\n- [MacBook Pro M5 Pro 48GB](/hardware/m5-pro-48gb/)\n- [Mac Studio M4 Max 128GB](/hardware/m4-max-128gb/)\n- [AMD RX 9070 XT 16GB](/hardware/rx-9070-xt/)\n- [AMD RX 7900 XT 20GB](/hardware/rx-7900-xt/)\n- [CPU-only (Ryzen 9 9950X, 96GB DDR5)](/hardware/cpu-ryzen-9950x/)\n- [MacBook M4 Pro 24GB](/hardware/m4-pro-24gb/)\n- [H100 80GB (cloud)](/hardware/h100-80gb/)\n- [H200 141GB (cloud)](/hardware/h200-141gb/)\n\n## Browse by model\n\n- [Qwen 3.6/3.8 27B](/models/qwen3.6-27b/)\n- [Qwen 3.8 Flash-Next](/models/qwen3.8-flash-next/)\n- [GLM-5.3 Flash](/models/glm-5.3-flash/)\n- [Gemma 4 26B A4B](/models/gemma-4-26b-a4b/)\n- [GPT-OSS 20B](/models/gpt-oss-20b/)\n- [Qwen 3.5/3.6 35B A3B](/models/qwen3.6-35b-a3b/)\n- [Gemma 4 31B](/models/gemma-4-31b/)\n- [Qwen 3.5 9B](/models/qwen3.5-9b/)\n- [DeepSeek V4 Flash](/models/deepseek-v4-flash/)\n- [DeepSeek V4.1 Flash](/models/deepseek-v4.1-flash/)\n- [GPT-OSS 120B](/models/gpt-oss-120b/)\n- [Llama 3.1 8B](/models/llama-3.1-8b/)\n- [Gemma 4 12B](/models/gemma-4-12b/)\n- [GLM-5.3](/models/glm-5.3/)\n- [Nemotron 3.5 Lightning 30B A3B](/models/nemotron-3.5-lightning-30b-a3b/)\n\nEstimates for a short prompt on a single device. Measured numbers come from community benchmarks (r/LocalLLaMA, localscore.ai and more); others are derived from similar setups or projected from specs. [Open source on GitHub](https://github.com/nicorobinreal/llmspeed).\n\n⚡ llmspeed — feel how fast a local LLM runs before you buy the hardware. This simulator needs JavaScript; the code and data are at [github.com/nicorobinreal/llmspeed](https://github.com/nicorobinreal/llmspeed).",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "로컬 LLM 성능을 미리 예측해 하드웨어 선택 비용 절감",
+        "tags": [
+          "Llmspeed",
+          "GitHub",
+          "JavaScript",
+          "r/LocalLLaMA",
+          "localscore.ai"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 인프라 경쟁",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "Llmspeed는 로컬 LLM 실행 속도를 하드웨어별로 시뮬레이션한다.",
+            "timestamp": null
+          },
+          {
+            "point": "커뮤니티 벤치마크와 사양 기반 추정치를 결합해 속도를 예측한다.",
+            "timestamp": null
+          },
+          {
+            "point": "오픈소스로 GitHub에 제공돼 직접 사용 및 커스터마이징이 가능하다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "비전 모델을 엣지 디바이스에 배포하기 전에 유사 시뮬레이션을 적용해 추론 지연 시간을 예측하고 최적 하드웨어를 선정한다.",
+          "LLM 기반 검색(RAG) 파이프라인에서 다양한 데이터베이스 엔진의 쿼리 처리 속도를 시뮬레이션해 비용 효율적인 스토리지 선택을 지원한다."
+        ],
+        "quiz": [
+          {
+            "question": "Llmspeed가 하드웨어별 LLM 실행 속도를 추정하는 주요 데이터 원천은 무엇인가?",
+            "options": [
+              "커뮤니티 벤치마크",
+              "제조사 공식 벤치마크",
+              "랜덤 추정",
+              "사용자 설문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 언급된 r/LocalLLaMA와 localscore.ai 등 커뮤니티 벤치마크를 활용한다."
+          },
+          {
+            "question": "Llmspeed가 직접 측정이 불가능한 경우, 추정값을 생성하는 방법은?",
+            "options": [
+              "유사 사양 장비 측정값을 보정",
+              "머신러닝 모델 예측",
+              "단순 평균",
+              "무작위 선택"
+            ],
+            "answer_index": 0,
+            "explanation": "유사한 설정이나 사양을 기반으로 추정값을 도출한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "이제 사람과 AI는 목소리로 구분할 수 없습니다 | SlashLive",
+        "url": "https://youtu.be/j41oq_xbTgs",
+        "published_at": "2026-10-16T06:30:03",
+        "transcript": "[00:00] 안녕하세요, 저는 토스커머스 AI 오퍼레이션 센터 팀의 AI 엔지니어 허담이라고 합니다. 오늘은 저희 AI 오퍼레이션 센터 팀의 AI 콜에서 그중에서도 AI의 음성에 대해서 이야기해보려고 하는데요. 혹시 여러분들 중에 모르는 번호로 전화를 받았다가 끊었는데, 어? 이거 혹시 AI였나? 하는 생각해 보신 적 있으신가요?\n[00:20] 사실 저희는 고객들에게 그런 전화를 걸고 있습니다. 근데 저희가 느꼈던 바는 그중에서도 AI 음성이 상당히 중요하다는 경험이었는데요. 그래서 오늘은 저희가 그걸 어떻게 적용하고 어떻게 발전시켜 나갔는지 말씀드려보려고 합니다.\n[00:37] 네 먼저 발표는 다음과 같습니다. 뭐 2부에서 본격적인 이야기를 하겠지만 거기에 앞서서 배경 지식으로 필수적으로 필요할 만한 부분들을 어 TTS에 대해서 짚어보고 가려고 하고요.\n[00:50] 2부에서는 저희가 실제로 어떻게 적용하고 개발하고 발전시켰는지, 그리고 어떤 지표를 보여줬는지 공유 드려보려고 합니다. 네 먼저 뭐 TTS가 생소하실 수도 있고, 열어가는 차원에서 TTS에 대해서 간단히 설명을 드리면 TTS는 이제 텍스트투스피치 말 그대로 이제 텍스트를 음성으로 변환하는 어 기술이라고 할 수 있는데요.\n[01:12] 저희가 원하는 뭐 안녕하세요라는 글자가 있으면 TTS 모델이 저희가 들을 수 있는 음성으로 변환을 해줍니다. TTS에서 중요하다고 꼽을 수 있을 만한 것들이 세 가지 있다면 바로 저희가 이제 발화시키고자 하는 텍스트를 모델이 정확하게 말하는 것, 그러니까 안녕하세요를 음성에 다 담아내는 것이죠.\n[01:30] 그리고 또 이 음성을 사람처럼 자연스럽게 말했으면 하는 것이 있고요. 만약에 제 목소리를 모방하고 싶다면 발화의 처음부터 끝까지 제 목소리를 발화하는 것처럼 일관성이 있기를 기대합니다. 그러면 이 TTS 기술이 처음에는 어떤 형태를 띄고 있었을까요?\n[01:49] 처음에 TTS 기술은 이런 투 스테이지 구조로 이루어져 있었습니다. 어 예를 들어 안녕하세요라는 텍스트를 입력하면 멜 스펙트로그램이라고 하는 중간 음향 특징을 예측하게 되고 그 음향 특징이 바탕으로 보코더가 저희가 들을 수 있는 음성으로 변환을 하게 되는데요.\n[02:06] 어 사실 이런 구조를 가질 가질 수밖에 없었던 건 그 당시의 기술 차원에서는 이 음성이라는 게 샘플이 1초에 수만 개씩 나오는 표현이기 때문에 텍스트에서 음성을 직접 예측하는 것이 모델 차원에서는 상당히 어려운 일이었거든요, 그 당시에는. 그렇다 보니까 그런 학습적인 안정성을 위해서 이 투 스테이지 모델을 활용하게 됐었고.\n[02:28] 이 멜 스펙트로그램이라고 하는 중간 표현이 인간이 고주파수 대역을 잘 못 듣는다는 것을 반영해서 저주파 대역을 잘 표현한 음향 특징이거든요. 그렇다 보니까 이런 식으로 투 스테이지 모델을 어 활용해서 음성 생성 모델을 학습을 했었었고요.\n[02:44] 근데 이 TTS 모델의 한계는 뭐였냐면 어 텍스트에서 멜 스펙트로그램을 예측할 때 이 멜 스펙트로그램 실수값 자체를 직접 예측하려고 하다 보니까 어 사실 인간이라는 게 안녕하세요라는 같은 말을 하더라도 다양한 톤으로 대화를 하게 되는데 그걸 다양한 톤으로 발화할 수 있게 만드는 게 아니라 되게 안정적이고 되게 평균적이고 그런 되게 단조로울 수도 있는 형태로 음성을 예측하게 됐거든요.\n[03:11] 그렇다 보니까 여러분들이 잘 아시고 계시는 그런 단조롭고 AI 티나는 TTS들이 이런 구조로 학습이 됐다고 보시면 될 거 같아요.\n[03:20] 그러면 이 기술은 어떻게 왔을까를 한번 설명해 드려 보려고 하는데요. 먼저 알고 가셔야 되는 기술이 간단하게 있습니다. 일단 오토 인코더와 벡터 컨타이제이션이라는 기술인데요. 이걸 간단히 훑어보면 오토 인코더 구조는 어 예를 들어 저희가 이미지가 있을 때 이 이미지를 굉장히 작은 차원으로 압축을 했다가 다시 디코더로 큰 차원으로 다시 그 이미지를 복원하는 구조인데 이 구조의 목표는 가운데 아주 작은 차원에 불필요한 정보를 다 덜어내고 필요한 정보만 담아내는 겁니다.\n[03:57] 근데 그것보다도 더 중요한 이 모델의 어 장점이라고 할 수 있는 게 뭐냐면 사실 학습을 한다고 하면 뭐 예를 들어 뭐 이 이미지가 원숭이인지 고양이인지 요런 레이블이 필요하다고 하잖아요. 근데 이 구조에서는 그런 레이블들이 필요하지 않게 됩니다.\n[04:11] 그냥 단순 이미지 하나 가지고 아니면 단순 음성 하나 가지고 본인 자신을 복원하는 학습을 할 수 있게 되는 거고 모델에게 그 음성 세계나 아니면 이미지 세계에 대한 이해를 수많은 데이터를 가지고 할 수 있게 하는 구조예요.\n[04:27] 그래서 이 구조가 그 지금의 TTS가 엄청나게 수많은 데이터를 활용할 수 있게 한 기술의 발원이라고 보시면 될 거 같고요. 거기서 이제 다음으로 나아간 것이 벡터 컨타이제이션이라는 기술인데 이제 앞서 보시면은 자기 자신으로 학습을 할 수 있다고 했잖아요, 이 구조에서는. 그렇다 보니까 음성을 다시 복원하는 구조로 학습을 하는데 그 중간에 벡터 컨타이제이션 레이어라는 걸 둬서 이 레이어가 압축된 표현을 양자화를 하게 됩니다.\n[04:55] 저희가 양자화를 하게 되면 장점이 뭐냐면 이 되게 고차원의 벡터를 이산 공간으로 그러니까 디스크리 스페이스로 그 트랜스폼을 하게 되는데 그렇게 되면 저희가 이제 알고 있는 LLM이 마치 텍스트 토큰을 시퀀셜하게 학습했던 것처럼 음성도 토큰 시퀀스로 치환이 돼서 LM에게 학습을 할 수 있게 됩니다.\n[05:18] 이렇게 함으로써 생기는 장점은 이전에 TTS 모델은 뭔가 안정적이고 평균적인 값만 예측했다면 이제는 오토인코더에서 가능하게 만든 수많은 데이터를 활용한 학습 그 벡터 컨타이제이션에서 이산화를 통해 LM이 학습하도록 만든 것을 통해서 저희가 엄청나게 자연스러운 다양한 프로소디의 발화들 이런 것들을 생성할 수 있게 되는 거죠.\n[05:40] 지금의 되게 자연스러운 TTS를 만들어낸 기술 하나를 짚어보고 가려고 하는데요. 이름하여 이제 톨터스 TTS라는 모델인데 어 자세하게 설명드릴 건 아니고 어떻게 보면 지금의 다양한 TTS 모델들의 그런 자연스러움의 혁신의 시작이었다고 볼 수 있을 것 같습니다.\n[05:57] 제임스 베커라고 하는 연구자가 혼자서 1년 동안 되게 적은 GPU 자원을 가지고 만들어낸 프로젝트이자 모델인데 GPT2라는 아주 원시적인 LM 구조와 그 멜 스펙트로그램이라고 아까 말씀드렸던 저주파 대역 위주로 반영된 표현을 가지고 방금 말씀드린 벡터 컨타이제이션 기술로 음성 토큰 시퀀스를 만들어서 토큰 예측 기반의 TTS 모델을 만들어냈고요.\n[06:23] 그 당시에는 사실 이 모델이 만들어낸 음성이 너무 자연스러워서 굉장히 업계에서는 큰 반향을 일으켰었고 그 후속으로 다양한 연구들이 나왔고 지금처럼 엄청나게 자연스러운 TTS 모델들이 나오게 되는 어 발원이 됐었던 거 같아요.\n[06:40] 2부에서의 설명을 위한 간단한 배경 지식을 말씀드렸고요. 그래서 지금은 안정적이고 단조로운 프로소디의 TTS가 아니라 되게 다양하고 자연스러운 한 사람의 음성을 모사할 수 있는 TTS가 됐다라고 요약할 수 있을 것 같아요.\n[06:56] 그래서 2부에서는 AIOC의 가 어떻게 이런 기술을 적용했고 개발했는지를 얘기 들으려고 하는데요. 아무래도 앞서 AIOC에 대한 소개가 자세히 없었던 거 같아서 다시 한번 설명을 드려보면 AIOC는 이제 AI 오퍼레이션 센터의 약자로 저희는 이제 텍스트와 보이스 콜로 이루어진 모든 오퍼레이션들을 AI로 수행하고자 하는 조직입니다.\n[07:19] 그중에서도 제가 참여했던 프로젝트는 음성 관련, 보이스 콜 관련 프로젝트인데 저희 보이스 콜 에이전트는 어떤 형식으로 구성이 돼 있냐면 모델 하나가 모든 걸 해결하는 게 아니라 고객이 발화를 하면 STT라고 하는 음성인식 모델이 고객의 발화를 듣고 그 텍스트가 LLM에게 전달이 되면 LLM이 대화를 이제 텍스트 레벨에서 해주는 거죠.\n[07:43] 그러면은 LLM이 이제 응답할 텍스트를 TTS에게 전달해주고 TTS가 그걸 고객이 들을 수 있는 음성의 형태로 만들어줍니다. 그러면 이제 앞에 AI 상담원이라고 세워 놓은 이제 가상의 에이전트가 고객에게 음성을 전달하고 이 순환 루프를 계속 돌게 되는 거죠, 통화 내에서.\n[08:02] 근데 그중에서도 저희가 중요하다고 생각했고 오늘 발표에서도 설명하려고 하는 건 TTS인데요. 사실 당연하게도 처음 시작은 API로 시작을 했습니다. 사실 당연한 게 어 STT, LLM, TTS 생각해 보면 요즘 너무 잘 되는 API들이 많잖아요, 기술들이. 그걸 조립하는 거를 저희도 처음에 시도를 했었습니다.\n[08:23] 근데 그중에서도 이제 TTS를 보시면 여러 회사들이 있을 있을 것 같아요, 잘하고 있는. 일단 일레븐 랩스라는 회사가 있을 것 같고요. 뭐 카르테시아, 이런 장표에 다양한 TTS를 되게 잘하는 회사들이 있는데 저희가 사용해본 경험에 의하면은 사실 한국어가 저희가 원하는 수준으로 나오지는 않았던 거 같아요.\n[08:42] 그러니까 저희가 원하는 수준이라 하면 되게 자연스러워서 고객이 AI임을 잊고 대화할 수 있을 정도를 말하는 거거든요. 근데 왜 그럴까 생각해 보니 명확한 이유가 있더라고요. 이제 사실 이 회사들은 어 시장 규모를 따져서 마켓을 타겟을 해야 되기 때문에 글로벌 마켓에 특화가 될 수밖에 없었습니다.\n[09:00] 그러면은 당연히 영어권, 중국어권 고객들이 엄청나게 많겠죠. 그렇다 보니까 영어와 중국어권의 성능에 비해서 한국어 성능이 약간은 떨어지는 건 어쩔 수 없었던 거 같아요. 그래서 저희도 아 이건 어쩔 수 없이 저희가 특화 모델을 만들어야겠다, 직접 학습해서 서빙할 필요가 있겠다는 생각을 하게 됐고요.\n[09:21] 그래서 당연히 처음에 접근하는 방식은 오픈소스 모델이었습니다. 그래서 오픈소스 모델을 어떻게 써야 될까를 고민해보면 사실 단순할 수 있을 것 같아요. 일단 학습은 어 예를 들어 오픈소스 모델의 베이스 가중치가 있을 거고요.\n[09:36] 그리고 만약에 제 음성을 어 모방하고 싶다고 하면 저의 음성이 한 10분 이상 있을 것 같아요. 그래서 이제 로라라고 하는 되게 저자원으로 가볍게 학습할 수 있는 파인 튜닝을 오픈소스 모델에 하고 그러면은 이제 로라 체크포인트가 나올 것이고 이제 서빙을 할 때는 로라 체크포인트를 오픈소스 모델에 붙여서 사용을 하는 거죠.\n[09:56] 그러면은 이게 TTS 음성이 저희가 원하는 대로 나올 거라고 생각을 할 수 있는데 근데 여기서도 API 벤더사를 활용했을 때와 동일한 한계를 느꼈던 거 같아요. 근데 왜일까 생각해 보니 오픈소스 모델 자체도 타겟이 글로벌 시장일 수밖에 없는 거죠.\n[10:15] 왜냐면 어쨌든 본인들의 연구적인 성과가 글로벌하게 인정을 받고 해야 되기 때문에. 그렇다 보니까 심지어 그 장표에서 보이는 인월드 TTS 모델은 어 20만 시간 중에 한국어 데이터가 단 400시간 밖에 사용되지 않았습니다.\n[10:31] 그럼 당연히 예를 들어 저희가 30년이라는 인생을 산다고 가정을 해보면 30년 중에 한 2, 3개월 영어를 공부했다고 영어를 잘 할 수 있을까요? 한국어만 하던 사람이. 그러니까 그런 개념으로 보실 수 있을 것 같아요.\n[10:45] 그렇다 보니까 어 오픈소스 모델들도 상당히 영어와 중국어를 잘하게 편향이 돼 있다는 결론을 낼 수 있었고요. 거기다 심지어 LoRA를 적용하다 보니까 LoRA의 특성이 되게 많이 반영이 됐던 거 같은데요.\n[10:58] 되게 엄청나게 많은 데이터와 엄청나게 많은 GPU 자원, 시간 자원을 들여서 학습된 모델을 활용하고 싶어 하는데 저희가 원하는 태스크가 따로 있어서 그걸 좀 더 잘하게 만들고 싶을 때 LoRA를 활용하게 되잖아요. 근데 그러니까 여기서는 LoRA의 장점이 단점으로 작용한 건데요.\n[11:16] 그러니까 원래 능력을 덜 잊고 배우는 것도 덜 배우는 거죠. 그렇다 보니까 저희는 한국어를 잘하게 만들고 싶은데 이제 원래 영어 중국어를 잘하는 모델이 한국어를 잘하게 만들기에 LoRA는 충분하지 않았던 거예요.\n[11:31] 그리고 저희가 어쨌든 일단 일차원적으로는 타겟을 이제 한국어를 잘하는 거로 목표를 했기 때문에 풀 파인 튜닝을 적용해서 한국어를 잘하도록 편향을 시켜야겠다라는 생각을 하게 됐고요. 그래서 나온 결과가 어 다음 장표에서 공유 드릴 수 있을 것 같아요.\n[11:47] 그래서 저희가 어 만들어낸 모델을 가지고 AB 테스트도 수행을 해 해 봤는데요. 먼저 이제 로라 음성을 한번 들어보시면\n[11:56] 안녕하세요. 토스 상상팀 명확한 MD입니다.\n[12:00] 네 그리고 풀파인튜닝 음성을 한번 들어보시면\n[12:01] 대표님, 맞으세요.\n[12:06] 안녕하세요. 토스 상상팀 명확한 MD입니다.\n[12:07] 네 그리고 풀파인튜닝 음성을 한번 들어보시면\n[12:11] 대표님, 맞으세요.\n[12:14] 네, 들어보시면 어 B 음성이 상당히 훨씬 자연스러워진 걸 보실 수 있고요. 실제로 저희 내부적인 블라인드 테스트에서도 어 B 음성에 대한 자연스러운 선호도가 상당히 큰 격차로 나온 걸 보실 수 있습니다.\n[12:26] 근데 저희가 풀 파인 튜닝 방법이 확정됐다고 생각하고 데이터를 늘리고 이렇게 학습을 지속적으로 수행을 했는데도 특정 이상으로 자연스러움이 어 좋아지지가 않더라고요. 그러니까 저희가 원하는 어떤 수준이 있었거든요.\n[12:40] 그래서 아 이거는 이것만으로는 해결할 수 없는 문제구나라는 생각을 하게 됐고 또 다른 우리의 성능 개선의 병목을 하고 있는 것이 무엇일까를 찾아보게 되었습니다. 네, 앞서 1부에서 설명드린 것과 약간 이어진 내용인데요.\n[12:54] LM의 벡터 컨타이제이션 모델이 어떻게 보면 일종의 토크나이저로 붙어서 LM이 음성 생성을 학습할 수 있도록 만들었다고 했는데요. 그렇다 보니까 이 벡터 컨타이제이션 모듈이 LM 모델의 어떤 정답 같은 걸로 작동을 하게 되면서 얘가 성능에 어 병목 역할을 하게 됐던 거 같아요.\n[13:14] 그렇다 보니까 벡터 컨타이제이션에 제가 꼽기로는 세 개 정도가 어떤 성능 병목의 역할을 한 거 같은데 그게 하나 처음으로 이제 학습 데이터셋의 분포일 것 같아요. 당연하겠지만 만약에 한국어 데이터가 벡터 컨타이제이션에서 적게 학습됐다면 당연히 한국어 성능이 떨어질 수밖에 없겠죠.\n[13:34] 그리고 또 하나는 이산화인데 어 이제 앞서 말씀드렸다시피 벡터 컨타이제이션이 되게 댄스한 표현인 음성을 디스크리 스페이스로 트랜스폼한다고 했잖아요. 그 과정에서 되게 필수적인 정보라고 할 수 있을 만한 것들이 되게 많이 없어질 수 있을 것 같고요.\n[13:50] 그렇다 보면 어느 정도의 성능 병목 역할을 할 수 있을 거라고 봤습니다. 그리고 마지막으로 설명드리려고 하는 게 좀 더 이제 치명적이었던 거 같았는데요. 먼저 시멘틱이라는 거에서 간단히 설명을 드리면 음성에서는 이제 시멘틱을 발화나 발음 같이 의미적으로 중요한 부분을 시멘틱이라고 하는데요.\n[14:11] 이 시멘틱이 벡터 컨타이제이션 학습 시에 상당히 어려운 정보거든요. 그래서 어 이제 연구자들 입장에서는 이 시멘틱을 안정적으로 학습할 수 있는 방법을 찾고자 했고 그게 바로 시멘틱 디스틸레이션이라는 테크닉인데요. 이 시멘틱을 벡터 컨타이제이션 모듈에 알려줄 수 있는 그 티처 모델이 필요하게 됩니다.\n[14:31] 또 이 시멘틱 티처들이 어떻게 보면 성능적으로 병목 역할을 할 수 있게 되는 거죠. 근데 이 시멘틱 디스틸레이션이라는 기술이 텍스트 스피치에선 상당히 많이 활용되는 기술인데 최근에 나온 다양한 모델들도 이 시멘틱 디스틸레이션 테크닉을 활용하고 있거든요.\n[14:47] 심지어 최근에 나온 이제 퀸3 같은 경우에도 벡터 컨타이제이션을 학습할 때 시멘틱 디스틸레이션을 활용하고 있고요. 근데 여기서 문제가 뭐냐면 이 시멘틱 티처라고 하고 있는 이제 스파크 TTS 웨이브2백이나 뭐 웨이브LM, 웨이브투백투버트 같은 모델들이 거의 영어로 학습된 모델이라고 생각하시면 됩니다.\n[15:06] 그럼 이 지금 이 상황은 뭐냐면 영어 원어민한테 한국어를 배우고 있는 거예요. 그렇다 보니까 그 일반적으로 한국에서 몇 십 년 산 사람들이 말하는 것처럼 구어체로 자연스럽게 말할 수는 없겠죠.\n[15:18] 그래서 저희는 앞서 말씀드린 이 모든 병목을 최대한 덜어낸 구조와 모델을 찾아내고자 했습니다. 그래서 새로운 모델을 학습을 했는데요. 대화를 한번 모사를 해본 건데 한번 들어보도록 하겠습니다. 이게 B가 아까 들려드린 두 번째 개선됐다고 하는 음성이고요.\n[15:37] 안녕하세요. 토스 쇼핑 담당자입니다. 저 지금 판매 중인 상품 가격 노출 관련해서 짧게 확인 드릴 내용이 있어서 연락 드렸거든요. 잠깐 통화 괜찮으세요?\n[15:46] 네, 말씀하세요.\n[15:48] 네, 감사합니다. 대표님 상품 추천과 때문에 연락 드렸거든요.\n[15:53] 네, 무슨 일인가요?\n[15:55] 그 토스 앱 안에서는 가격 경쟁력이 맞는 상품이 메인이나 추천 영역에서 더 잘 보일 수 있거든요. 그래서 가격을 조금만 조정하시면 노출 기회가 더 좋아질 수 있습니다.\n[16:06] 가격을 낮추라고요?\n[16:09] 네. 어 상당히 자연스럽게 느껴질 수 있을 것 같긴 한데요. 한번 C 음성을 들어보도록 할게요.\n[16:15] 안녕하세요, 토스 쇼핑 담당자입니다. 저 지금 판매 중인 상품 가격 노출 관련해서 짧게 확인 드릴 내용이 있어서 연락 드렸거든요. 잠깐 통화 괜찮으세요?\n[16:23] 네, 말씀하세요.\n[16:26] 네, 감사합니다. 대표님 상품 추천과 때문에 연락 드렸거든요.\n[16:31] 네, 무슨 일인가요?\n[16:34] 그 토스 앱 안에서는 가격 경쟁력이 맞는 상품이 메인이나 추천 영역에서 더 잘 보일 수 있거든요. 그래서 가격을 조금만 조정하시면 노출 기회가 더 좋아질 수 있습니다.\n[16:44] 네, 들어보시면은 C 음성이 상당히 정말 사람처럼 자연스러워진 걸 느끼실 수 있고 오른쪽에 있는 저희가 수행한 블라인드 테스트에서도 상당히 압도적인 선호도를 보여준 걸 확인하실 수 있습니다.\n[16:56] 그리고 저희가 이런 지표뿐만 아니라 실제로 저희가 나간 통화에서도 어떤 좋은 지표들이 있었는지 공유해드리려고 하는데요. 보시면은 어 사실 통화에서 제일 중요한 게 인게이지먼트라고 볼 수 있는데 고객이 얼마나 그 통화를 끊지 않고 계속 할 수 있느냐라고 볼 수 있을 것 같거든요.\n[17:12] 거기다가 저희가 지금 하고 있는 통화는 아웃바운드 통화다 보니까 사실 통화가 길어지기는 쉽지 않은 환경인데 통화가 만약에 길어진다면 고객의 인게이지먼트를 상당히 끌어냈다라고 볼 수 있을 것 같아요. 그래서 실제 왼쪽 장표에 보시면 3분 이상 통화 비율도 1차에서 로라 모델 썼을 때와 2, 3, 4차에서 풀 파인 튜닝 모델을 썼을 때에 비해서 상당히 7.6%까지 증가한 걸 볼 수 있고요.\n[17:36] 그리고 심지어 되게 긴 5분 이상 통화는 4.1%까지 늘어난 걸 보실 수 있는데 실제로 10분 20분씩 길어지는 통화들도 있었기 때문에 상당히 유의미한 변화였다라고 보실 수 있을 것 같아요.\n[17:49] 네 그리고 어 이거는 이제 고객 끼어들기에 관한 이야기인데요. 고객 끼어들기가 뭐냐면 어 이 AI가 발화하고 있는 도중에 고객이 끼어드는 거거든요. 이게 어떤 의미냐면 저희가 통화 양상을 봤을 때는 이제 이전에는 고객이 ARS 음성을 듣듯이 아니면 기계적인 안내음을 듣듯이 AI가 말할 때까지 기다렸다가 말했다고 한다면 이제는 정말로 대화한다는 느낌을 받고 AI라는 불쾌함을 느끼지 않게 돼서 고객이 자연스럽게 대화에 주도적으로 참여하게 됐다.\n[18:20] 끼어들게 됐다라고 보시면 될 것 같아요. 그리고 콜당 고객 발화량도 보시면 원래는 되게 적게 말하던 것도 고객이 적극적으로 발화를 하게 되면서 평균 80자까지 늘어나신 걸 보실 수 있습니다.\n[18:32] 어 그래서 사실은 이 음성 보이스 에이전트를 구성하는 데 있어서 이야기 드리고 싶은 게 정말 많은데 사실 TTS가 되게 중요하다는 생각을 저희 팀적으로는 되게 하고 있었고 어 팀적인 어떤 성과를 공유드리고 싶었습니다.\n[18:47] 그리고 이제 사실 대화에서는 어떻게 보면 언제 말할지 상대방의 말을 언제까지 기다릴지 뭐 내 말을 하다가 언제 끊을지 요런 것도 중요하게 되는데 그 내용에 있어서도 저희가 상당히 개선을 이룬 부분들이 많기 때문에 기술적으로나 뭐 모델 성능적으로나 어 나중에 다음 발표 때 공유할 수 있으면 정말 좋을 것 같습니다.",
+        "body": "#토스 #AI #tts \n\n2026.10.14\nSlashLive 1화 : 전화 너머, 사람 같은 AI 목소리\n\n토스팀의 테크, 기술에 대한 정보를 나눕니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "대규모 데이터와 토큰화로 자연스러운 TTS 구현",
+        "tags": [
+          "TTS",
+          "멜 스펙트로그램",
+          "오토인코더",
+          "벡터 컨타이제이션",
+          "GPT2"
+        ],
+        "concepts": [
+          "음성 토큰화",
+          "오토인코더 기반 표현 학습",
+          "자연스러운 TTS 생성"
+        ],
+        "key_points": [
+          {
+            "point": "초기 TTS는 텍스트→멜 스펙트로그램→보코더 구조의 2단계 파이프라인을 사용했다.",
+            "timestamp": "01:49"
+          },
+          {
+            "point": "오토인코더는 고차원 데이터를 압축·복원하며 레이블 없이 음성 표현을 학습한다.",
+            "timestamp": "03:57"
+          },
+          {
+            "point": "톨터스 TTS는 GPT2와 벡터 컨타이제이션으로 음성 토큰을 예측해 자연스러운 TTS를 구현한다.",
+            "timestamp": "05:57"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "벡터 컨타이제이션을 이용해 음성 특징을 토큰화해 저자원 ASR 모델의 학습 효율을 높인다.",
+          "오토인코더로 텍스트와 음성 로그를 압축해 멀티모달 임베딩을 만들고 개인화 추천에 활용한다.",
+          "2단계 TTS(멜 스펙트로그램→보코더)를 이용해 다양한 감정의 합성 음성을 생성, 감정 인식 모델을 데이터 증강한다."
+        ],
+        "quiz": [
+          {
+            "question": "초기 TTS가 두 단계(멜 스펙트로그램 → 보코더) 구조를 사용한 주요 이유는?",
+            "options": [
+              "직접 파형 예측이 높은 샘플 레이트 때문에 계산적으로 어려워서",
+              "멜 스펙트로그램이 피치 제어에 유리해서",
+              "보코더가 노이즈 감소 효과를 제공해서",
+              "두 단계가 모델 크기를 크게 줄여주기 때문에"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트에서 초당 수만 개 샘플인 파형을 직접 예측하기는 당시 모델로는 어려웠기 때문에 중간 표현인 멜 스펙트로그램을 예측하고 보코더가 파형을 복원하는 두 단계 구조를 사용했다."
+          },
+          {
+            "question": "벡터 컨타이제이션이 TTS 모델에 가져다 주는 장점은?",
+            "options": [
+              "연속적인 잠재 공간을 제공해 부드러운 음성을 만든다",
+              "고차원 벡터를 이산 토큰으로 변환해 언어 모델 방식 학습이 가능해진다",
+              "데이터 양을 크게 줄일 수 있다",
+              "실시간 추론 속도를 크게 향상시킨다"
+            ],
+            "answer_index": 1,
+            "explanation": "벡터 컨타이제이션은 고차원 표현을 이산 토큰으로 양자화해, 텍스트 토큰처럼 시퀀스 모델이 학습하도록 하여 다양한 프로소디를 생성할 수 있게 한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "AI Coding Is a Slot Machine: Loss Disguised as a Win | Jeremy Howard",
+        "url": "https://youtu.be/DVRMDoYhVBI",
+        "published_at": "2026-10-11T09:19:59",
+        "transcript": "[00:00] The thing about AI-based coding is that it's like a slot machine and that you have an illusion of control. You get to craft your prompt and your list of MCPs and your skills and whatever.\n[00:13] And then but in the end you pull the lever, right? You put in the prompt and something comes back and it's like, cherry, cherry, it's like, oh, next time, I'll change my prompt a bit. I'll add a bit more context.\n[00:26] Pull the lever again, pull the lever again. It's the stochastic thing. You get the occasional win that's like, oh, I won. I got a feature.\n[00:34] It's got all these hallmarks of loss disguised as a win, um, somewhat stochastic, uh, feeling of control, all this stuff that, um, gaming companies try to engineer into their gaming rooms.\n[00:46] No one's actually creating fifty times more high quality software than they were before.\n[00:52] So we've actually just done a study of this and there's a tiny uptick in what people are actually shipping.\n[00:59] That's the fact, but gosh, it's hard to tell.",
+        "body": "Jeremy Howard, co-founder of fast.ai, on why AI-assisted coding works like a slot machine: you craft the prompt, pull the lever, and the occasional win feels like control. In his words: \"It's got all these hallmarks of loss disguised as a win... all the stuff that gaming companies try to engineer into their gaming rooms.\"\n\nFull conversation with Jeremy on Machine Learning Street Talk.\n\n#Shorts #AICoding #MachineLearning\n\nWatch the full conversation: https://www.youtube.com/watch?v=dHBEQ-Ryo24",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 코딩의 불확실성·통제감 착각이 생산성 함정",
+        "tags": [
+          "AI",
+          "MCPs",
+          "prompt"
+        ],
+        "concepts": [
+          "불확실성 정량화",
+          "프롬프트 협업",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI 기반 코딩은 슬롯 머신과 같으며 통제감 착각을 유발한다.",
+            "timestamp": "00:00"
+          },
+          {
+            "point": "프롬프트를 바꾸며 레버를 반복적으로 당기지만, 승리는 드물고 손실이 감춰진다.",
+            "timestamp": "00:34"
+          },
+          {
+            "point": "연구 결과, 실제 고품질 소프트웨어 생산량은 크게 증가하지 않았다.",
+            "timestamp": "00:46"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "프롬프트를 반복적으로 수정하며 얻는 불확실한 결과를 테스트 케이스 자동 생성에 적용해, 다양한 edge case를 빠르게 탐색한다.",
+          "슬롯 머신식 레버 당기기 방식을 UI A/B 테스트에 도입해, 각 디자인 변형을 무작위로 시도하고 성공률을 누적한다.",
+          "통제감 착각을 감지하는 메트릭을 개발자 도구에 표시해, 코드 자동 생성 시 불확실성을 명시적으로 보여준다."
+        ],
+        "quiz": [
+          {
+            "question": "Jeremy Howard가 AI 기반 코딩을 비유한 것은 무엇인가?",
+            "options": [
+              "체스 게임",
+              "슬롯 머신",
+              "롤러코스터",
+              "퍼즐"
+            ],
+            "answer_index": 1,
+            "explanation": "00:00 구간에서 AI 기반 코딩을 슬롯 머신에 비유하며 통제감 착각을 언급한다."
+          },
+          {
+            "question": "연구 결과에 따르면 AI 코딩이 실제 소프트웨어 생산량에 미친 영향은?",
+            "options": [
+              "대폭 증가",
+              "전혀 변화 없음",
+              "소폭 증가",
+              "감소"
+            ],
+            "answer_index": 2,
+            "explanation": "00:46 구간에서 연구 결과가 고품질 소프트웨어 생산량이 크게 증가하지 않았다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 3,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

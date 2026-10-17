@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 18일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 18일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">reversible computing</span><span class="concept">LLM 기반 설계 자동화</span><span class="concept">양자 회로 최적화</span><span class="concept">개인화 추천</span><span class="concept">조건부 확률 모델링</span><span class="concept">빔 서치</span><span class="concept">AI 비용 효율성</span><span class="concept">AI 인프라 경쟁</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">음성 토큰화</span><span class="concept">오토인코더 기반 표현 학습</span><span class="concept">자연스러운 TTS 생성</span><span class="concept">불확실성 정량화</span><span class="concept">프롬프트 협업</span><span class="concept">AI 생산성 도구</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.AI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.22367v1" target="_blank" rel="noopener">Discovering state-of-the-art quantum circuits with large language models</a>
+        </h2>
+
+        <p class="summary">LLM으로 양자 회로 설계 효율 크게 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>양자 알고리즘은 가역성 제약으로 기존 설계가 한계에 부딪혔다. 본 논문은 LLM이 회로를 생성하고 평가자가 점수를 매기는 진화적 프레임워크를 도입해 Toffoli와 qubit 수를 크게 줄인다. 이는 양자 회로 설계 자동화와 가역 연산 구조 탐색을 결합한 새로운 연구 흐름이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM이 회로 설계안을 제시하고 독립 평가자가 점수를 매겨 Toffoli와 qubit 수를 크게 감소시켰다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>진화적 프레임워크를 8가지 작업에 적용해 7곳에서 최첨단 대비 성능 향상을 달성했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>소수체 모듈러 역산을 위한 새로운 가역 아키텍처가 divsteps를 가능하게 하여 트레이드오프를 개선했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 회로 설계 프레임워크를 데이터 파이프라인 DAG 최적화에 적용해 단계별 연산 비용을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>가역성 설계 원칙을 저전력 임베디드 시스템의 연산 모듈에 도입해 에너지 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>LLM과 평가자 루프를 화학 반응 경로 탐색에 활용해 실험 비용을 줄이고 새로운 합성 경로를 발견한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">양자 알고리즘 설계에서 가역성 제약이 중요한 이유는?</div>
+            
+            <div class="q-opt">① 양자 게이트는 유니터리이어야 하기 때문이다</div>
+            
+            <div class="q-opt">② 클래식 게이트는 항상 가역적이다</div>
+            
+            <div class="q-opt">③ 양자 컴퓨터는 큐빗 수가 제한된다</div>
+            
+            <div class="q-opt">④ 오류 정정이 불가능하기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 양자 게이트는 유니터리이어야 하기 때문이다</div>
+              <div class="why">양자 연산은 유니터리(가역)이어야 하므로 회로 설계 시 가역성 제약을 고려해야 한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">새로운 가역 아키텍처가 prime-field modular inversion에 제공한 주요 이점은?</div>
+            
+            <div class="q-opt">① Toffoli 수만 감소</div>
+            
+            <div class="q-opt">② divsteps 알고리즘을 가역적으로 구현 가능</div>
+            
+            <div class="q-opt">③ 큐빗 수 증가</div>
+            
+            <div class="q-opt">④ 측정 단계 단순화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② divsteps 알고리즘을 가역적으로 구현 가능</div>
+              <div class="why">가역 설계 덕분에 기존에 가역적으로 구현하기 어려웠던 divsteps 알고리즘을 사용할 수 있게 되어 트레이드오프가 개선된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">large language models</span><span class="tag">Toffoli</span><span class="tag">qubit</span><span class="tag">prime-field modular inversion</span><span class="tag">divsteps</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Spotify Engineering</div>
+
+        <h2 class="title">
+          <a href="https://engineering.atspotify.com/2026/10/advancing-generative-recommendation-inference-our-collaboration-with-nvidia-on-tensorrt-llm/" target="_blank" rel="noopener">Advancing Generative Recommendation Inference: our collaboration with NVIDIA on TensorRT LLM</a>
+        </h2>
+
+        <p class="summary">LLM 기반 실시간 개인화 추천을 GPU 최적화 추론으로 확장하는 방법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM을 활용한 실시간 개인화 추천에 Beam search와 후보 점수화(log‑prob) 기법을 적용한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>vLLM의 Beam search 구현은 CPU‑GPU 병목과 KV 블록 재계산으로 고성능 GPU 활용에 제한이 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NVIDIA TensorRT LLM과 협업해 GPU‑최적화 Beam search를 구현, 비용 효율적인 대규모 추론을 가능하게 했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>GPU‑최적화 Beam search(TensorRT LLM)를 전자상거래 상품 추천 엔진에 적용해 응답 지연을 크게 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>로그 확률 기반 후보 점수화를 기업 문서 검색 시스템에 도입해 검색 결과의 관련성을 향상시킨다.</span></li>
+            
+            <li><span class="box"></span><span>CPU‑GPU 워크로드 분리를 활용해 실시간 사기 탐지 파이프라인을 재설계, 고비용 연산을 GPU로 옮겨 처리량을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">vLLM의 Beam search 구현이 GPU 효율을 낮추는 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① Beam search가 GPU 내부에서 실행된다</div>
+            
+            <div class="q-opt">② CPU 측에서 KV 블록을 재계산한다</div>
+            
+            <div class="q-opt">③ 모델 파라미터가 과도하게 크다</div>
+            
+            <div class="q-opt">④ 네트워크 대역폭이 제한된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② CPU 측에서 KV 블록을 재계산한다</div>
+              <div class="why">vLLM은 Beam search를 핵심 GPU 엔진 밖에서 수행해 CPU‑GPU 병목을 만들고, 부분적으로 채워진 KV 블록을 재계산하게 되어 GPU 활용도가 떨어진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Spotify가 후보 점수화를 위해 사용하는 핵심 메트릭은?</div>
+            
+            <div class="q-opt">① 정확도</div>
+            
+            <div class="q-opt">② 로그 확률</div>
+            
+            <div class="q-opt">③ F1 점수</div>
+            
+            <div class="q-opt">④ ROC AUC</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 로그 확률</div>
+              <div class="why">후보 점수화는 모델이 출력한 로그 확률(log‑prob)을 이용해 후보들을 평가·순위 매기는 방식이다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Spotify</span><span class="tag">NVIDIA</span><span class="tag">TensorRT</span><span class="tag">vLLM</span><span class="tag">Beam search</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://llmspeed.dev/" target="_blank" rel="noopener">Show HN: Llmspeed – feel how fast a local LLM runs before you buy the hardware</a>
+        </h2>
+
+        <p class="summary">로컬 LLM 성능을 미리 예측해 하드웨어 선택 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Llmspeed는 로컬 LLM 실행 속도를 하드웨어별로 시뮬레이션한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>커뮤니티 벤치마크와 사양 기반 추정치를 결합해 속도를 예측한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>오픈소스로 GitHub에 제공돼 직접 사용 및 커스터마이징이 가능하다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>비전 모델을 엣지 디바이스에 배포하기 전에 유사 시뮬레이션을 적용해 추론 지연 시간을 예측하고 최적 하드웨어를 선정한다.</span></li>
+            
+            <li><span class="box"></span><span>LLM 기반 검색(RAG) 파이프라인에서 다양한 데이터베이스 엔진의 쿼리 처리 속도를 시뮬레이션해 비용 효율적인 스토리지 선택을 지원한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Llmspeed가 하드웨어별 LLM 실행 속도를 추정하는 주요 데이터 원천은 무엇인가?</div>
+            
+            <div class="q-opt">① 커뮤니티 벤치마크</div>
+            
+            <div class="q-opt">② 제조사 공식 벤치마크</div>
+            
+            <div class="q-opt">③ 랜덤 추정</div>
+            
+            <div class="q-opt">④ 사용자 설문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 커뮤니티 벤치마크</div>
+              <div class="why">본문에 언급된 r/LocalLLaMA와 localscore.ai 등 커뮤니티 벤치마크를 활용한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Llmspeed가 직접 측정이 불가능한 경우, 추정값을 생성하는 방법은?</div>
+            
+            <div class="q-opt">① 유사 사양 장비 측정값을 보정</div>
+            
+            <div class="q-opt">② 머신러닝 모델 예측</div>
+            
+            <div class="q-opt">③ 단순 평균</div>
+            
+            <div class="q-opt">④ 무작위 선택</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 유사 사양 장비 측정값을 보정</div>
+              <div class="why">유사한 설정이나 사양을 기반으로 추정값을 도출한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Llmspeed</span><span class="tag">GitHub</span><span class="tag">JavaScript</span><span class="tag">r/LocalLLaMA</span><span class="tag">localscore.ai</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/j41oq_xbTgs" target="_blank" rel="noopener">이제 사람과 AI는 목소리로 구분할 수 없습니다 | SlashLive</a>
+        </h2>
+
+        <p class="summary">대규모 데이터와 토큰화로 자연스러운 TTS 구현</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:49</span>
+            
+            <span>초기 TTS는 텍스트→멜 스펙트로그램→보코더 구조의 2단계 파이프라인을 사용했다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:57</span>
+            
+            <span>오토인코더는 고차원 데이터를 압축·복원하며 레이블 없이 음성 표현을 학습한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:57</span>
+            
+            <span>톨터스 TTS는 GPT2와 벡터 컨타이제이션으로 음성 토큰을 예측해 자연스러운 TTS를 구현한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>벡터 컨타이제이션을 이용해 음성 특징을 토큰화해 저자원 ASR 모델의 학습 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>오토인코더로 텍스트와 음성 로그를 압축해 멀티모달 임베딩을 만들고 개인화 추천에 활용한다.</span></li>
+            
+            <li><span class="box"></span><span>2단계 TTS(멜 스펙트로그램→보코더)를 이용해 다양한 감정의 합성 음성을 생성, 감정 인식 모델을 데이터 증강한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">초기 TTS가 두 단계(멜 스펙트로그램 → 보코더) 구조를 사용한 주요 이유는?</div>
+            
+            <div class="q-opt">① 직접 파형 예측이 높은 샘플 레이트 때문에 계산적으로 어려워서</div>
+            
+            <div class="q-opt">② 멜 스펙트로그램이 피치 제어에 유리해서</div>
+            
+            <div class="q-opt">③ 보코더가 노이즈 감소 효과를 제공해서</div>
+            
+            <div class="q-opt">④ 두 단계가 모델 크기를 크게 줄여주기 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 직접 파형 예측이 높은 샘플 레이트 때문에 계산적으로 어려워서</div>
+              <div class="why">텍스트에서 초당 수만 개 샘플인 파형을 직접 예측하기는 당시 모델로는 어려웠기 때문에 중간 표현인 멜 스펙트로그램을 예측하고 보코더가 파형을 복원하는 두 단계 구조를 사용했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">벡터 컨타이제이션이 TTS 모델에 가져다 주는 장점은?</div>
+            
+            <div class="q-opt">① 연속적인 잠재 공간을 제공해 부드러운 음성을 만든다</div>
+            
+            <div class="q-opt">② 고차원 벡터를 이산 토큰으로 변환해 언어 모델 방식 학습이 가능해진다</div>
+            
+            <div class="q-opt">③ 데이터 양을 크게 줄일 수 있다</div>
+            
+            <div class="q-opt">④ 실시간 추론 속도를 크게 향상시킨다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 고차원 벡터를 이산 토큰으로 변환해 언어 모델 방식 학습이 가능해진다</div>
+              <div class="why">벡터 컨타이제이션은 고차원 표현을 이산 토큰으로 양자화해, 텍스트 토큰처럼 시퀀스 모델이 학습하도록 하여 다양한 프로소디를 생성할 수 있게 한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TTS</span><span class="tag">멜 스펙트로그램</span><span class="tag">오토인코더</span><span class="tag">벡터 컨타이제이션</span><span class="tag">GPT2</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/DVRMDoYhVBI" target="_blank" rel="noopener">AI Coding Is a Slot Machine: Loss Disguised as a Win | Jeremy Howard</a>
+        </h2>
+
+        <p class="summary">AI 코딩의 불확실성·통제감 착각이 생산성 함정</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:00</span>
+            
+            <span>AI 기반 코딩은 슬롯 머신과 같으며 통제감 착각을 유발한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:34</span>
+            
+            <span>프롬프트를 바꾸며 레버를 반복적으로 당기지만, 승리는 드물고 손실이 감춰진다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:46</span>
+            
+            <span>연구 결과, 실제 고품질 소프트웨어 생산량은 크게 증가하지 않았다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>프롬프트를 반복적으로 수정하며 얻는 불확실한 결과를 테스트 케이스 자동 생성에 적용해, 다양한 edge case를 빠르게 탐색한다.</span></li>
+            
+            <li><span class="box"></span><span>슬롯 머신식 레버 당기기 방식을 UI A/B 테스트에 도입해, 각 디자인 변형을 무작위로 시도하고 성공률을 누적한다.</span></li>
+            
+            <li><span class="box"></span><span>통제감 착각을 감지하는 메트릭을 개발자 도구에 표시해, 코드 자동 생성 시 불확실성을 명시적으로 보여준다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Jeremy Howard가 AI 기반 코딩을 비유한 것은 무엇인가?</div>
+            
+            <div class="q-opt">① 체스 게임</div>
+            
+            <div class="q-opt">② 슬롯 머신</div>
+            
+            <div class="q-opt">③ 롤러코스터</div>
+            
+            <div class="q-opt">④ 퍼즐</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 슬롯 머신</div>
+              <div class="why">00:00 구간에서 AI 기반 코딩을 슬롯 머신에 비유하며 통제감 착각을 언급한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">연구 결과에 따르면 AI 코딩이 실제 소프트웨어 생산량에 미친 영향은?</div>
+            
+            <div class="q-opt">① 대폭 증가</div>
+            
+            <div class="q-opt">② 전혀 변화 없음</div>
+            
+            <div class="q-opt">③ 소폭 증가</div>
+            
+            <div class="q-opt">④ 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 소폭 증가</div>
+              <div class="why">00:46 구간에서 연구 결과가 고품질 소프트웨어 생산량이 크게 증가하지 않았다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI</span><span class="tag">MCPs</span><span class="tag">prompt</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
