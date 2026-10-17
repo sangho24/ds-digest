@@ -56,9 +56,9 @@
     },
     "AI 인프라 경쟁": {
       "aliases": [],
-      "count": 13,
+      "count": 14,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-06"
+      "last_seen": "2026-10-17"
     },
     "AI와 인간 협업": {
       "aliases": [],
@@ -122,9 +122,9 @@
     },
     "Root Cause Analysis": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-10-10",
-      "last_seen": "2026-10-10"
+      "last_seen": "2026-10-17"
     },
     "SQL 기반 그래프 쿼리": {
       "aliases": [],
@@ -132,11 +132,17 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-10-16"
     },
-    "metadata 활용 검색": {
+    "graph analysis": {
       "aliases": [],
       "count": 1,
+      "first_seen": "2026-10-17",
+      "last_seen": "2026-10-17"
+    },
+    "metadata 활용 검색": {
+      "aliases": [],
+      "count": 2,
       "first_seen": "2026-10-16",
-      "last_seen": "2026-10-16"
+      "last_seen": "2026-10-17"
     },
     "minimax rate analysis": {
       "aliases": [],
@@ -194,9 +200,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 16,
+      "count": 17,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-10-16"
+      "last_seen": "2026-10-17"
     },
     "개인화 추천": {
       "aliases": [],
@@ -272,9 +278,9 @@
     },
     "기술 부채 관리": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-05"
+      "last_seen": "2026-10-17"
     },
     "기술 작가의 제품 소유권": {
       "aliases": [],
@@ -314,9 +320,9 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 23,
+      "count": 24,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-10-13"
+      "last_seen": "2026-10-17"
     },
     "데이터 사용 투명성": {
       "aliases": [],
@@ -341,6 +347,12 @@
       "count": 1,
       "first_seen": "2026-10-07",
       "last_seen": "2026-10-07"
+    },
+    "데이터 파이프라인 분리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-17",
+      "last_seen": "2026-10-17"
     },
     "데이터 풍부화": {
       "aliases": [],
@@ -374,9 +386,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-16"
+      "last_seen": "2026-10-17"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -437,6 +449,12 @@
       "count": 1,
       "first_seen": "2026-09-30",
       "last_seen": "2026-09-30"
+    },
+    "메타데이터 활용": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-17",
+      "last_seen": "2026-10-17"
     },
     "메타데이터 활용 검색": {
       "aliases": [],
@@ -542,9 +560,9 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 12,
+      "count": 13,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-14"
+      "last_seen": "2026-10-17"
     },
     "보안 협업": {
       "aliases": [],
@@ -560,9 +578,9 @@
     },
     "불확실성 정량화": {
       "aliases": [],
-      "count": 10,
+      "count": 11,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-12"
+      "last_seen": "2026-10-17"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -660,6 +678,12 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-02"
     },
+    "선언적 파이프라인": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-17",
+      "last_seen": "2026-10-17"
+    },
     "손실 함수": {
       "aliases": [],
       "count": 2,
@@ -716,9 +740,9 @@
     },
     "시뮬레이션 기반 정책 검증": {
       "aliases": [],
-      "count": 9,
+      "count": 10,
       "first_seen": "2026-09-16",
-      "last_seen": "2026-10-13"
+      "last_seen": "2026-10-17"
     },
     "신경망 기하학 및 개념 매니폴드": {
       "aliases": [],
@@ -770,9 +794,9 @@
     },
     "오프라인-온라인 연계 전략": {
       "aliases": [],
-      "count": 10,
+      "count": 11,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-11"
+      "last_seen": "2026-10-17"
     },
     "온-폴리시 학습": {
       "aliases": [],
@@ -1249,6 +1273,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-16T08:05:55.150181+09:00",
+  "updated_at": "2026-10-17T09:23:59.420000+09:00",
   "version": 1
 }

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 17일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 17일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">데이터 파이프라인 분리</span><span class="concept">선언적 파이프라인</span><span class="concept">메타데이터 활용</span><span class="concept">Root Cause Analysis</span><span class="concept">metadata 활용 검색</span><span class="concept">graph analysis</span><span class="concept">불확실성 정량화</span><span class="concept">오프라인-온라인 연계 전략</span><span class="concept">시뮬레이션 기반 정책 검증</span><span class="concept">병렬 처리</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">AI 인프라 경쟁</span><span class="concept">개발자 경험 개선</span><span class="concept">기술 부채 관리</span><span class="concept">레거시 시스템 리팩터링</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/dw-airflow-migration" target="_blank" rel="noopener">실행은 도메인별로, 문맥은 한 레포에</a>
+        </h2>
+
+        <p class="summary">DW Airflow·dbt 전환, 효율·가시성 개선</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>중앙 DW Airflow에 400여 개 DAG가 몰려 자원 경쟁과 배치 지연이 발생했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>도메인별 Airflow와 dbt 기반 선언적 파이프라인으로 전환해 DAG 코드 라인이 2,794줄에서 100줄로 축소되었다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>파이프라인 실행 시간이 4시간에서 2시간 30분으로 단축되었다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>도메인별 Airflow 분리를 ML 모델 학습 파이프라인에 적용해 팀 간 GPU/CPU 자원 충돌을 줄인다</span></li>
+            
+            <li><span class="box"></span><span>dbt와 같은 선언적 변환 프레임워크를 마케팅 분석 ETL에 도입해 변환 로직의 재사용성과 가시성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>중앙 메타데이터 카탈로그를 활용해 금융 데이터 테이블 설명을 자동화해 데이터 탐색과 품질 관리 효율을 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 중앙 DW Airflow에 모든 도메인 DAG가 모여 있으면 배치 지연이 발생했는가?</div>
+            
+            <div class="q-opt">① 동일 클러스터에서 자원 경쟁이 발생했기 때문</div>
+            
+            <div class="q-opt">② DAG 파일 크기 제한으로 스케줄링이 늦어졌기 때문</div>
+            
+            <div class="q-opt">③ 네트워크 대역폭이 부족했기 때문</div>
+            
+            <div class="q-opt">④ 데이터베이스 락이 빈번했기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 동일 클러스터에서 자원 경쟁이 발생했기 때문</div>
+              <div class="why">여러 도메인의 배치가 한 클러스터에 몰리면 CPU·메모리·I/O 등 자원을 공유하게 되어 한 도메인의 작업이 다른 도메인의 작업을 지연시킨다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">도메인별 Airflow와 dbt 파이프라인 도입으로 DAG 라인 수가 크게 감소한 주된 이유는?</div>
+            
+            <div class="q-opt">① dbt가 자동으로 DAG를 생성해 중복을 없앴기 때문</div>
+            
+            <div class="q-opt">② 도메인별로 DAG를 별도 관리해 중복 로직을 제거했기 때문</div>
+            
+            <div class="q-opt">③ Airflow 버전 업그레이드로 코드가 간결해졌기 때문</div>
+            
+            <div class="q-opt">④ SQL 파일을 압축해 라인 수가 줄었기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 도메인별로 DAG를 별도 관리해 중복 로직을 제거했기 때문</div>
+              <div class="why">각 도메인이 자체 Airflow와 dbt 파이프라인을 관리하면서 기존 중앙에서 중복·복사된 DAG와 로직을 제거해 전체 코드 라인이 크게 감소했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">DW Airflow</span><span class="tag">dbt</span><span class="tag">Airflow</span><span class="tag">DAG</span><span class="tag">Toss</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/ontology-driven-observability-building-an-end-to-end-knowledge-graph-at-netflix-scale-421392cf5adf?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">Ontology-Driven Observability: Building an End-to-End Knowledge Graph at Netflix Scale</a>
+        </h2>
+
+        <p class="summary">대규모 시스템 장애 원인 파악을 빠르게 지원하는 관찰성 설계</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Metrics·Events·Logs·Traces(MELT)를 단일 관찰성 레이어로 통합해 실시간 시스템 전반을 파악한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실제 사고 조사에 평균 4시간이 소요되며, 대부분은 기존 관찰 시스템이 알지만 기록되지 않은 관계 재구성 때문이다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>온톨로지 기반 지식 그래프를 구축해 관계를 명시적으로 저장하면 원인 분석 속도가 크게 향상된다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>관찰성 MELT 데이터를 온톨로지 기반 지식 그래프로 변환해 전자상거래 주문 흐름의 병목을 실시간으로 탐지한다</span></li>
+            
+            <li><span class="box"></span><span>통합된 MELT 레이어를 AI 기반 자동 인시던트 대응 봇에 연결해 알림 발생 시 즉시 원인 후보를 제시하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>관계 그래프를 활용해 마이크로서비스 간 A/B 테스트 영향도를 자동 추적·시각화해 실험 결과 해석을 가속화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">관찰성 데이터(MELT)를 단일 레이어로 통합하면 사고 조사 시간이 감소하는 주요 이유는?</div>
+            
+            <div class="q-opt">① 수동 로그 상관 작업이 사라지기 때문</div>
+            
+            <div class="q-opt">② 스토리지 비용이 감소하기 때문</div>
+            
+            <div class="q-opt">③ 트레이스 정보가 숨겨지기 때문</div>
+            
+            <div class="q-opt">④ 서비스 수가 줄어들기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 수동 로그 상관 작업이 사라지기 때문</div>
+              <div class="why">MELT를 하나의 레이어에 모으면 로그·메트릭·트레이스 등을 별도로 찾아 연결할 필요가 없어져 조사 시간이 크게 단축된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 에이전트를 컨텍스트 없이 사용할 때 가장 큰 위험은?</div>
+            
+            <div class="q-opt">① 응답 속도가 빨라진다</div>
+            
+            <div class="q-opt">② 시스템 비용이 감소한다</div>
+            
+            <div class="q-opt">③ 환각(hallucination)으로 잘못된 원인 분석을 제공한다</div>
+            
+            <div class="q-opt">④ 알림이 자동으로 차단된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 환각(hallucination)으로 잘못된 원인 분석을 제공한다</div>
+              <div class="why">컨텍스트가 부족하면 에이전트가 잘못된 추론을 내놓아 잘못된 해결 경로로 이끌 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Netflix</span><span class="tag">MELT</span><span class="tag">GraphQL</span><span class="tag">knowledge graph</span><span class="tag">AI agents</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.22252v1" target="_blank" rel="noopener">Explore Once, Evaluate Many: Multiple Policy Evaluation for Stochastic Linear Bandits</a>
+        </h2>
+
+        <p class="summary">다중 정책을 한 번에 정확히 평가해 데이터 효율성 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>다중 정책을 개별적으로 평가하면 샘플 비용이 급증하고 기존 오프라인 평가 방법은 강한 가정이 필요했다. 이 논문은 보상‑무료 플래닝과 정규화된 공유 샘플링 설계를 결합해 선형 밴드릿 상황에서 정책 평가 비용을 로그 K 수준으로 줄인다. 이는 오프라인‑온라인 연계 전략과 불확실성 정량화 연구 흐름에 속한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>PRISMA는 공유 샘플링과 단일 ridge 회귀 추정기를 이용해 K개의 목표 정책을 동시에 평가한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>샘플 복잡도는 (L²S²+β²)(1∨ρ*)/ε²·logK 로, 컨텍스트·액션 공간 크기에 의존하지 않는다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>적응형 doubling 절차가 ρ*를 모른 채 정규화 스케일을 선택하며, 두 번째 모멘트 고유값에 대한 하한이 필요하지 않다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>공유 샘플링 설계를 전자상거래 추천 모델들의 오프라인 평가에 적용해 데이터 수집 비용을 절감한다.</span></li>
+            
+            <li><span class="box"></span><span>보상‑무료 플래닝과 정규화 샘플링을 다중 치료 정책을 동시에 평가해야 하는 임상 시험 설계에 활용한다.</span></li>
+            
+            <li><span class="box"></span><span>적응형 doubling 정규화 방식을 스트리밍 데이터에서 ridge 회귀 하이퍼파라미터 자동 선택에 적용해 사전 분산 지식 없이 모델을 안정화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">논문에서 ρ*가 의미하는 것은 무엇인가?</div>
+            
+            <div class="q-opt">① 공유 샘플링 분포 설계 난이도의 인스턴스‑종속 측정</div>
+            
+            <div class="q-opt">② 특징 차원의 크기</div>
+            
+            <div class="q-opt">③ 정책 수 K</div>
+            
+            <div class="q-opt">④ 보상 노이즈 분산</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 공유 샘플링 분포 설계 난이도의 인스턴스‑종속 측정</div>
+              <div class="why">본문에 ρ*는 공유 샘플링 분포 설계 난이도를 나타내는 인스턴스‑종속 측정이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">PRISMA가 ρ*를 사전에 알 필요 없이 정규화 스케일을 선택할 수 있게 하는 요소는?</div>
+            
+            <div class="q-opt">① 보상‑무료 플래닝</div>
+            
+            <div class="q-opt">② 적응형 doubling 절차</div>
+            
+            <div class="q-opt">③ ridge 회귀 추정기</div>
+            
+            <div class="q-opt">④ 정규화 샘플링 설계</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 적응형 doubling 절차</div>
+              <div class="why">알고리즘은 적응형 doubling 절차를 통해 ρ*를 모른 채 정규화 스케일을 자동으로 선택한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">PRISMA</span><span class="tag">stochastic linear bandits</span><span class="tag">ridge regression</span><span class="tag">reward-free planning</span><span class="tag">regularized sampling</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://machinelearning.apple.com/research/mlx-distributed-inference" target="_blank" rel="noopener">Apple ML Research: Muse Spark Open with MLX on Mac Studio</a>
+        </h2>
+
+        <p class="summary">맥 스튜디오에서 대규모 LLM을 로컬로 빠르게 실험 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>MLX와 Apple Silicon 통합 메모리 덕분에 512GB까지 로컬에서 트릴리언 파라미터 모델을 실행할 수 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Muse Spark Open은 MoE 구조와 NVFP4 4비트 정밀도로 토큰당 36 + 토큰을 생성하며 파이프라인·텐서 병렬화로 확장 가능</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>M5 Ultra GPU Neural Accelerator가 매트릭스 연산을 가속해 M3 Ultra 대비 처리량과 전력 효율이 크게 향상된다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>RDMA 기반 Thunderbolt 연결을 활용해 여러 iMac을 클러스터링해 실시간 영상 분석 파이프라인을 구축, 데이터 전송 지연을 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>MLX의 4비트 NVFP4 정밀도와 MoE 활성화 방식을 모바일 AI 앱에 적용해 배터리 소모를 낮추면서 대규모 언어 모델 기능을 제공한다</span></li>
+            
+            <li><span class="box"></span><span>Apple Silicon 통합 메모리를 이용해 로컬 데이터 파이프라인에서 대규모 그래프 신경망을 메모리 복제 없이 실행해 개인정보 보호를 강화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Muse Spark Open이 dense 모델보다 추론 시 계산량을 줄이는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① MoE 구조로 일부 전문가만 활성화한다</div>
+            
+            <div class="q-opt">② GPU Neural Accelerator를 사용한다</div>
+            
+            <div class="q-opt">③ FP8 대신 FP16을 사용한다</div>
+            
+            <div class="q-opt">④ 컨텍스트 크기를 감소시킨다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① MoE 구조로 일부 전문가만 활성화한다</div>
+              <div class="why">Muse Spark Open은 mixture‑of‑experts 모델로, 활성화되는 전문가와 파라미터가 전체의 일부에 불과해 계산량이 감소한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">RDMA over Thunderbolt를 이용해 여러 Mac Studio를 연결하면 얻는 주요 이점은?</div>
+            
+            <div class="q-opt">① GPU 클럭 속도 상승</div>
+            
+            <div class="q-opt">② 저지연 고대역폭 메모리 공유</div>
+            
+            <div class="q-opt">③ 자동 모델 양자화</div>
+            
+            <div class="q-opt">④ 각 머신의 전력 소비 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 저지연 고대역폭 메모리 공유</div>
+              <div class="why">RDMA는 Thunderbolt를 통해 직접 메모리 접근을 제공해 머신 간 데이터 전송 지연을 최소화하고 대역폭을 높인다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">MLX</span><span class="tag">Mac Studio</span><span class="tag">Muse Spark Open</span><span class="tag">M5 Ultra</span><span class="tag">RDMA</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/package-management-2" target="_blank" rel="noopener">토스뱅크가 패키지를 관리하는 방식 #2: 토스뱅크 패키지의 세 가지 기준</a>
+        </h2>
+
+        <p class="summary">패키지 호환성 검증으로 서비스 안정성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>패키지는 호스트가 지원하는 실행 환경에서 안정적으로 동작해야 하며, 이를 위해 문법 변환과 API 지원을 사전 검증한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>최신 문법 사용 시에도 호스트 트랜스파일러가 해당 변환을 지원해야 하며, 폴리필만으로는 일부 API(예: Proxy)를 대체할 수 없다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>타입 검사와 별도 호환성 확인을 통해 배포 후 원본 코드 의도와 디버깅 편의성을 유지한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>호스트 기반 트랜스파일 검증 방식을 사내 UI 컴포넌트 라이브러리에 적용해 브라우저 호환성을 사전에 확보한다.</span></li>
+            
+            <li><span class="box"></span><span>폴리필 가능 여부 검증을 마이크로서비스 빌드 단계에 도입해 오래된 런타임에서도 안정적인 API 사용을 보장한다.</span></li>
+            
+            <li><span class="box"></span><span>CI 파이프라인에 타입 기반 호환성 체크를 추가해 데이터 처리 스크립트가 다양한 실행 환경에서 예측 가능하게 동작하도록 한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 폴리필만으로 Proxy API를 완전히 대체할 수 없는가?</div>
+            
+            <div class="q-opt">① Proxy는 언어 레벨 기능이라 구현이 복잡하다</div>
+            
+            <div class="q-opt">② 브라우저가 Proxy를 지원하지 않으면 성능 저하가 발생한다</div>
+            
+            <div class="q-opt">③ 폴리필은 런타임에만 동작한다</div>
+            
+            <div class="q-opt">④ Proxy는 보안 제한이 있다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Proxy는 언어 레벨 기능이라 구현이 복잡하다</div>
+              <div class="why">Proxy는 JavaScript 언어 자체의 메커니즘으로, 순수 JavaScript 코드만으로 완전한 동작을 재현하기 어렵기 때문에 폴리필로 대체할 수 없다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">호스트가 낮은 target을 지정해도 변환이 되지 않을 수 있는 이유는?</div>
+            
+            <div class="q-opt">① 호스트 트랜스파일러가 해당 문법 변환을 지원하지 않기 때문</div>
+            
+            <div class="q-opt">② TypeScript 설정이 부족하기 때문</div>
+            
+            <div class="q-opt">③ 패키지에 polyfill이 없기 때문</div>
+            
+            <div class="q-opt">④ 브라우저가 최신 ES를 지원하기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 호스트 트랜스파일러가 해당 문법 변환을 지원하지 않기 때문</div>
+              <div class="why">트랜스파일러가 변환 로직을 제공하지 않으면, 낮은 target을 설정해도 지원되지 않는 최신 문법은 그대로 남아 변환되지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Toss Bank</span><span class="tag">rolldown</span><span class="tag">oxc</span><span class="tag">ES2025</span><span class="tag">Proxy</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

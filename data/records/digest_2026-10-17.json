@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-17",
+  "generated_at": "2026-10-17T00:24:12.426656",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "실행은 도메인별로, 문맥은 한 레포에",
+        "url": "https://toss.tech/article/dw-airflow-migration",
+        "published_at": "2026-10-16T06:15:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><h2 class=\"css-1c1qox8\" id=\"3f1a360d-33e3-8054-8fa9-e54771313d9f\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">들어가며</span></span></span></h2><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-8051-a48b-dc01388dc42f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요, </span><span class=\"css-1kxrhf3\">토스</span><span class=\"css-1kxrhf3\"> Data Warehouse 팀의 Data Analytics Engineer 김문수입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-80d8-839b-f32d78925722\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 글에서는 데이터 웨어하우스(DW) 마트를 만드는 중앙 DW Airflow를 멈추지 않고, 도메인별 DW Airflow와 dbt 기반의 선언적 파이프라인으로 옮겨 온 과정을 공유하려고 합니다. 새 플랫폼은 팀 안에서 이를 ‘뉴타운’이라고 부르고 있습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-807d-a5bb-c31e3f9922b1\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">얼마 전 코딩 에이전트에게 &quot;이 테이블 어디서 만들어져?&quot;라고 물었습니다. 한참 코드를 뒤지던 에이전트의 답은 이랬습니다. &quot;적재 주체는 코드에 없어 확인할 수 없습니다.&quot; 맞는 말입니다. 정말로 코드에 없었기 때문이죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-80a4-aeca-d70e92c835bf\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 글은 그 답을 코드에 적어 넣기까지의 이야기입니다. 그 과정에서 토스 광고 도메인의 DAG 코드는 </span><span class=\"css-q3ktjb\">2,794줄에서 100줄</span><span class=\"css-1kxrhf3\">이 되었고, 테이블 순서를 손으로 잇던 </span><code><span class=\"css-1mjnzsq\">&gt;&gt;</span></code><span class=\"css-1kxrhf3\"> </span><span class=\"css-q3ktjb\">180줄은 0줄</span><span class=\"css-1kxrhf3\">이 되었습니다. 파이프라인 시간도 </span><span class=\"css-q3ktjb\">4시간에서 2시간 30분</span><span class=\"css-1kxrhf3\">으로 줄었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-807c-8a0c-cad30a0ac406\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3f1a360d-33e3-802e-afe9-d4b7e7e5c8f2\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">DW Airflow 하나에 DAG 400여 개</span></span></span></h2><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-8099-ad7b-d7cf9382fd3c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스에는 용도와 팀에 따라 운영하는 Airflow가 여럿 있습니다. 이 글에서 다루는 건 그중 DW 마트를 만드는 DW Airflow입니다. DW 마트에는 </span><span class=\"css-1kxrhf3\">광고, 쇼핑, 결제, 금융</span><span class=\"css-1kxrhf3\"> 등 도메인 팀이 각자 관리하는 도메인 마트와, 중앙 DW팀이 관리하는 마트가 있습니다. 중앙 DW팀은 전사 공통 마트뿐 아니라, 어느 도메인에도 딱 떨어지지 않아 주인이 애매한 마트까지 맡고 있습니다. 그런데 이 마트 파이프라인이 도메인과 상관없이 전부 DW Airflow 클러스터 하나에서 돌고 있었습니다. DAG 파일로 세면 400개가 넘습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-8049-9bc5-c727b011ecc0\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">한 클러스터에 모여 있다 보니 문제가 몇 가지 있었습니다. 한 도메인의 배치가 몰리면 다른 도메인의 배치까지 밀렸고, 파이프라인 하나를 고치려면 다른 도메인이 어떻게 돌고 있는지까지 알아야 했습니다. 비슷한 로직도 표준 없이 여기저기 복사돼 있었습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-8088-9ad4-e8301bf1d778\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">매일 겪는 불편은 조금 더 구체적이었습니다. 테이블 하나를 이해하려면 다섯 군데를 열어야 했습니다.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3f1a360d-33e3-800e-9d9d-e78c79629751\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3f1a360d-33e3-80aa-8316-e58f49b43251\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">어느 DAG에서 어떤 순서로 도는지: DAG 파일</span></span></span></li><li class=\"css-1hwiibq\" id=\"3f1a360d-33e3-8071-9238-eb2ae9c2c6f3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">어떻게 만드는지: SQL 파일</span></span></span></li><li class=\"css-1hwiibq\" id=\"3f1a360d-33e3-8023-b389-fb726108f34a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">품질 규칙: 별도 설정 파일이나 품질 관리 시스템</span></span></span></li><li class=\"css-1hwiibq\" id=\"3f1a360d-33e3-80f9-ab7e-e31fdc119522\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">테이블과 컬럼 설명: 사내 데이터 카탈로그</span></span></span></li><li class=\"css-1hwiibq\" id=\"3f1a360d-33e3-8084-9969-d5016b59ee00\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">읽는 테이블이 어디서 만들어지는지: 원천 DB에서 적재한 테이블이면 적재 메타 관리 시스템, 다른 마트면 영향도 시스템 등 여러 사내 시스템</span></span></span></li></ul></div></aside><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-80ef-a0c5-dc8cfa5d2ae5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3f1a360d-33e3-80a5-95a2-fdb0933494cc\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">고쳐 쓰지 않고 옆에 새로 짓기로 했습니다</span></span></span></h2><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-80e3-b917-f14c1e99b4cc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">처음에는 기존 레포를 리팩토링하는 방법도 생각했습니다. 그런데 문제의 뿌리가 &quot;클러스터 하나에 다 모여 있다&quot;는 구조 자체라서, 코드를 아무리 정리해도 이 부분은 해결이 안 됩니다. 그렇다고 전사 배치를 한 번에 새 플랫폼으로 옮기는 건 너무 위험합니다. 문제가 생기면 대응하기가 꽤 까다로워요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3f1a360d-33e3-80a3-b4e9-e4e3d193eff3\"><span class=",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "DW Airflow·dbt 전환, 효율·가시성 개선",
+        "tags": [
+          "DW Airflow",
+          "dbt",
+          "Airflow",
+          "DAG",
+          "Toss"
+        ],
+        "concepts": [
+          "데이터 파이프라인 분리",
+          "선언적 파이프라인",
+          "메타데이터 활용"
+        ],
+        "key_points": [
+          {
+            "point": "중앙 DW Airflow에 400여 개 DAG가 몰려 자원 경쟁과 배치 지연이 발생했다",
+            "timestamp": null
+          },
+          {
+            "point": "도메인별 Airflow와 dbt 기반 선언적 파이프라인으로 전환해 DAG 코드 라인이 2,794줄에서 100줄로 축소되었다",
+            "timestamp": null
+          },
+          {
+            "point": "파이프라인 실행 시간이 4시간에서 2시간 30분으로 단축되었다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "도메인별 Airflow 분리를 ML 모델 학습 파이프라인에 적용해 팀 간 GPU/CPU 자원 충돌을 줄인다",
+          "dbt와 같은 선언적 변환 프레임워크를 마케팅 분석 ETL에 도입해 변환 로직의 재사용성과 가시성을 높인다",
+          "중앙 메타데이터 카탈로그를 활용해 금융 데이터 테이블 설명을 자동화해 데이터 탐색과 품질 관리 효율을 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 중앙 DW Airflow에 모든 도메인 DAG가 모여 있으면 배치 지연이 발생했는가?",
+            "options": [
+              "동일 클러스터에서 자원 경쟁이 발생했기 때문",
+              "DAG 파일 크기 제한으로 스케줄링이 늦어졌기 때문",
+              "네트워크 대역폭이 부족했기 때문",
+              "데이터베이스 락이 빈번했기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "여러 도메인의 배치가 한 클러스터에 몰리면 CPU·메모리·I/O 등 자원을 공유하게 되어 한 도메인의 작업이 다른 도메인의 작업을 지연시킨다."
+          },
+          {
+            "question": "도메인별 Airflow와 dbt 파이프라인 도입으로 DAG 라인 수가 크게 감소한 주된 이유는?",
+            "options": [
+              "dbt가 자동으로 DAG를 생성해 중복을 없앴기 때문",
+              "도메인별로 DAG를 별도 관리해 중복 로직을 제거했기 때문",
+              "Airflow 버전 업그레이드로 코드가 간결해졌기 때문",
+              "SQL 파일을 압축해 라인 수가 줄었기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "각 도메인이 자체 Airflow와 dbt 파이프라인을 관리하면서 기존 중앙에서 중복·복사된 DAG와 로직을 제거해 전체 코드 라인이 크게 감소했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Ontology-Driven Observability: Building an End-to-End Knowledge Graph at Netflix Scale",
+        "url": "https://netflixtechblog.com/ontology-driven-observability-building-an-end-to-end-knowledge-graph-at-netflix-scale-421392cf5adf?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-16T16:01:02",
+        "transcript": null,
+        "body": "<p><a href=\"https://www.linkedin.com/in/pvijayanathan/\">Prasanna Vijayanathan</a>, <a href=\"https://www.linkedin.com/in/renzosanchezsilva/\">Renzo Sanchez-Silva</a></p><p>When Jake Paul and Mike Tyson stepped into the ring in November 2024, we delivered the fight to roughly 65 million concurrent streams. On an ordinary day our infrastructure takes in more than 2 billion requests and handles upwards of 38 million real-time logging events every second. At that scale, the whole picture doesn’t fit into a single engineering team’s head or onto a single dashboard. With more Live content, Podcasts and real-time streams, our need to understand and update our systems as quickly as possible becomes imperative to provide a good user experience. Understanding the system at this scale and within the time constraints we have, often becomes a daunting exercise in finding a needle in a haystack, in a dark jungle, blindfolded.</p><p>This post is about that search for the needle.</p><h3>The Four hours before a fix</h3><p>Consider a regression of the kind we see in a given week. The home screen where you see the list of lists of movies, starts taking about 1.5 seconds longer to render. An alert fires. And then we go looking for what caused this issue and how do we fix it?</p><p>As it so happens, a regression on the application could be related to anywhere in the system — a client app regression from a new version deployment or A/B test rollout, a load shedding in the infrastructure, a GraphQL query responding with bad data because of a service rollout 6 hops downstream, are all suspects at this point. So, answering <em>“what caused the issue?”</em> needs insights from across the system, and this involves combing through layers of data in a meticulous manner.</p><h3>The MELT Layer</h3><p><em>“What caused the issue?”</em></p><p>Metrics, events, logs and traces, or MELT, in the industry’s shorthand, are the right raw materials for such an investigation, and each of them answers roughly a quarter of the question. We collect observability data across these four pillars, unified into a single observability data layer. This lets us observe our systems in real time, across what our users are experiencing, how our applications are doing and what our backend infrastructure and services are processing and responding to.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*oFq_6JphuwR2l1zG6i8J5A.png\" /><figcaption>MELT — Metrics, Events, Logs and Traces, and how they are captured across the system.</figcaption></figure><p>The investigation that follows may look like this in each layer:</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*YFPCXLL1qt2gFmNTj5wpOQ.png\" /><figcaption>What each layer of MELT tells us and what it leaves out</figcaption></figure><h3>The timeline of an investigation</h3><p>So how long does it take to investigate an issue, figure out the root cause and fix it, so our users stop running into this issue again?</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*8BEaMy8uy3bqqAjTF3pOjA.png\" /><figcaption>A timeline of an investigation: ~4 hours</figcaption></figure><p>In our chosen example, four hours. Very little of it went into computing anything difficult. Most of it went into reconstructing relationships that our observability systems already knew but we had never written down anywhere a human or machine could simply read and discover.</p><h3>The disagreement underneath</h3><p>The instinct here could have been, around 2023, to reach for more data or better dashboards, and while both help at the margins, neither addresses what makes these investigations slow.</p><p>It’s 2026 now, so we might say, “hey, agents”, but without the right context delivered to the agents, AI systems hallucinate, and especially when teams are on-call and need a fix “now”, we cannot let inaccurate agentic analysis lead us down the wrong path. We need the right needle, not any needle.</p><p>Each of our systems is internally coherent and externally isolated. <a href=\"https://github.com/Netflix/atlas\">Atlas</a>, our telemetry platform, knows applications and their time series. Radar, our alerting system, knows thresholds and firing history. incident.io knows severities and responders. PagerDuty knows rotations. Spinnaker knows what shipped and when. And our Slack history knows, in a form no query engine can reach, which engineer solved something very similar last quarter and what they found.</p><p>The difficulty is that they do not agree on what they are talking about. A thing that is an <em>application</em> in one system is a <em>service</em> in a second and a <em>cluster</em> in a third, with names differing by a suffix, a casing convention, or a rename only a couple of people remember (SMEs, ring a bell?). Joining across them requires a human carrying the mapping in their head, and that person becomes the bottleneck in such cross-domain investigations. The hard part of end-to-end observ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "대규모 시스템 장애 원인 파악을 빠르게 지원하는 관찰성 설계",
+        "tags": [
+          "Netflix",
+          "MELT",
+          "GraphQL",
+          "knowledge graph",
+          "AI agents"
+        ],
+        "concepts": [
+          "Root Cause Analysis",
+          "metadata 활용 검색",
+          "graph analysis"
+        ],
+        "key_points": [
+          {
+            "point": "Metrics·Events·Logs·Traces(MELT)를 단일 관찰성 레이어로 통합해 실시간 시스템 전반을 파악한다.",
+            "timestamp": null
+          },
+          {
+            "point": "실제 사고 조사에 평균 4시간이 소요되며, 대부분은 기존 관찰 시스템이 알지만 기록되지 않은 관계 재구성 때문이다.",
+            "timestamp": null
+          },
+          {
+            "point": "온톨로지 기반 지식 그래프를 구축해 관계를 명시적으로 저장하면 원인 분석 속도가 크게 향상된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "관찰성 MELT 데이터를 온톨로지 기반 지식 그래프로 변환해 전자상거래 주문 흐름의 병목을 실시간으로 탐지한다",
+          "통합된 MELT 레이어를 AI 기반 자동 인시던트 대응 봇에 연결해 알림 발생 시 즉시 원인 후보를 제시하도록 한다",
+          "관계 그래프를 활용해 마이크로서비스 간 A/B 테스트 영향도를 자동 추적·시각화해 실험 결과 해석을 가속화한다"
+        ],
+        "quiz": [
+          {
+            "question": "관찰성 데이터(MELT)를 단일 레이어로 통합하면 사고 조사 시간이 감소하는 주요 이유는?",
+            "options": [
+              "수동 로그 상관 작업이 사라지기 때문",
+              "스토리지 비용이 감소하기 때문",
+              "트레이스 정보가 숨겨지기 때문",
+              "서비스 수가 줄어들기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "MELT를 하나의 레이어에 모으면 로그·메트릭·트레이스 등을 별도로 찾아 연결할 필요가 없어져 조사 시간이 크게 단축된다."
+          },
+          {
+            "question": "AI 에이전트를 컨텍스트 없이 사용할 때 가장 큰 위험은?",
+            "options": [
+              "응답 속도가 빨라진다",
+              "시스템 비용이 감소한다",
+              "환각(hallucination)으로 잘못된 원인 분석을 제공한다",
+              "알림이 자동으로 차단된다"
+            ],
+            "answer_index": 2,
+            "explanation": "컨텍스트가 부족하면 에이전트가 잘못된 추론을 내놓아 잘못된 해결 경로로 이끌 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Explore Once, Evaluate Many: Multiple Policy Evaluation for Stochastic Linear Bandits",
+        "url": "https://arxiv.org/abs/2610.22252v1",
+        "published_at": "2026-10-15T17:22:59",
+        "transcript": null,
+        "body": "We study how to evaluate $K$ target policies simultaneously in stochastic contextual bandits with linear reward structure. Given a known $d$-dimensional feature map and reward-free access to policy queries, we propose PRISMA (Policy evaluation through Regularized Information Sharing and Mixture Allocation), an algorithm that estimates every target policy's value to accuracy $\\varepsilon$ with probability at least $1-δ$. The algorithm uses $\\widetilde{\\mathcal{O}}\\!\\left( \\frac{(L^2S^2+β^2)(1\\veeρ^\\star)}{\\varepsilon^2} \\cdot \\log(K) \\right)$ context draws and reward observations, where $ρ^\\star\\le d$ is an instance-dependent measure of the difficulty of designing a shared sampling distribution. Here, $L$, $S$, and $β$ bound the feature norm, reward parameter norm, and reward noise, respectively, and the suppressed factors are logarithmic in $K$, $d$, and $1/δ$. Our method combines reward-free planning, a regularized sampling design, and a single ridge regression estimator shared across all target policies. An adaptive doubling procedure selects the regularization scale without knowledge of $ρ^\\star$. The guarantees require no numerical lower bound on second-moment eigenvalues and have no explicit dependence on the cardinalities of the context and action spaces. Policy-query costs are accounted for separately, with $K$ queries per shared planning context.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "다중 정책을 한 번에 정확히 평가해 데이터 효율성 향상",
+        "tags": [
+          "PRISMA",
+          "stochastic linear bandits",
+          "ridge regression",
+          "reward-free planning",
+          "regularized sampling"
+        ],
+        "concepts": [
+          "불확실성 정량화",
+          "오프라인-온라인 연계 전략",
+          "시뮬레이션 기반 정책 검증"
+        ],
+        "key_points": [
+          {
+            "point": "PRISMA는 공유 샘플링과 단일 ridge 회귀 추정기를 이용해 K개의 목표 정책을 동시에 평가한다.",
+            "timestamp": null
+          },
+          {
+            "point": "샘플 복잡도는 (L²S²+β²)(1∨ρ*)/ε²·logK 로, 컨텍스트·액션 공간 크기에 의존하지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "적응형 doubling 절차가 ρ*를 모른 채 정규화 스케일을 선택하며, 두 번째 모멘트 고유값에 대한 하한이 필요하지 않다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "다중 정책을 개별적으로 평가하면 샘플 비용이 급증하고 기존 오프라인 평가 방법은 강한 가정이 필요했다. 이 논문은 보상‑무료 플래닝과 정규화된 공유 샘플링 설계를 결합해 선형 밴드릿 상황에서 정책 평가 비용을 로그 K 수준으로 줄인다. 이는 오프라인‑온라인 연계 전략과 불확실성 정량화 연구 흐름에 속한다.",
+        "production_ideas": [
+          "공유 샘플링 설계를 전자상거래 추천 모델들의 오프라인 평가에 적용해 데이터 수집 비용을 절감한다.",
+          "보상‑무료 플래닝과 정규화 샘플링을 다중 치료 정책을 동시에 평가해야 하는 임상 시험 설계에 활용한다.",
+          "적응형 doubling 정규화 방식을 스트리밍 데이터에서 ridge 회귀 하이퍼파라미터 자동 선택에 적용해 사전 분산 지식 없이 모델을 안정화한다."
+        ],
+        "quiz": [
+          {
+            "question": "논문에서 ρ*가 의미하는 것은 무엇인가?",
+            "options": [
+              "공유 샘플링 분포 설계 난이도의 인스턴스‑종속 측정",
+              "특징 차원의 크기",
+              "정책 수 K",
+              "보상 노이즈 분산"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 ρ*는 공유 샘플링 분포 설계 난이도를 나타내는 인스턴스‑종속 측정이라고 명시되어 있다."
+          },
+          {
+            "question": "PRISMA가 ρ*를 사전에 알 필요 없이 정규화 스케일을 선택할 수 있게 하는 요소는?",
+            "options": [
+              "보상‑무료 플래닝",
+              "적응형 doubling 절차",
+              "ridge 회귀 추정기",
+              "정규화 샘플링 설계"
+            ],
+            "answer_index": 1,
+            "explanation": "알고리즘은 적응형 doubling 절차를 통해 ρ*를 모른 채 정규화 스케일을 자동으로 선택한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Apple ML Research: Muse Spark Open with MLX on Mac Studio",
+        "url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+        "published_at": null,
+        "transcript": null,
+        "body": "content type Featured highlight\n\n# Local and Distributed Large LLM Inference with MLX and RDMA on Mac Studio\n\n![The MLX logo](https://mlr.cdn-apple.com/media/Hero_Banner_c2c57d2d3f.png)\n\nOctober 15, 2026\n\n[MLX](https://mlx-framework.org/) on Mac with Apple silicon lets AI researchers and developers experiment locally with the latest models and methods in a private environment. The open-source array framework leverages the unified memory architecture of Apple silicon, enabling anyone to run new inference and fine-tuning methods on their own hardware and explore other AI techniques. [In a previous post](/research/exploring-llms-mlx-m5), we highlighted the advantages of the M5 architecture and its GPU Neural Accelerators.\n\nIn this post, we show how to run the latest frontier-class model — Muse Spark Open, with nearly a trillion parameters — right from your desk, using the latest version of MLX, released today. On a cluster of four Mac Studios, Muse Spark Open generates over 36 tokens per second (see [Figure 1](#figure1)), well above average human reading speed.\n\nBeginning on a single Mac Studio (up to 512GB of unified memory), then scaling out across multiple Macs with the RDMA over Thunderbolt driver, below we share an overview of the range of models you can now run on Mac Studio.\n\n### Muse Spark Open Decode Speed\n\n#### Context size of 8,192 tokens\n\nFigure 1: Muse Spark Open decode speed in tokens per second, on Mac Studio with M5 Ultra, at a context size of 8,192 tokens. Higher is better. We report performance for three parallelization schemes: pipeline parallelization over two Mac Studio computers (2 M5 Pipeline), and tensor parallelization over two (2 M5 Tensor) and four Mac Studio (4 M5 Tensor) computers.\n\n## [Running Large Language Models with MLX](#running-large-language-models-with-mlx)\n\nWe benchmark several popular open-weight LLMs on [Mac Studio](https://www.apple.com/mac-studio/specs/), using the MLX LM package, as described in our [prior post](/research/exploring-llms-mlx-m5#running--llms-on-apple-silicon). We compare two generations of Mac Studio: the recently released M5 Ultra and the previous generation, M3 Ultra. The M5 generation features the GPU Neural Accelerator, which supports dedicated matrix multiplication operations, essential for many machine learning workloads.\n\nWe evaluate three frontier-class models ([Table 1](#table1)) spanning a wide range of sizes (in billions of parameters, B): the newly released Muse Spark Open (816 B), Mistral Medium 3.5 (128 B), and Qwen 3.8 (27 B). Muse Spark Open is a mixture of experts (MoE) model, which keeps only a fraction of its experts — and thus parameters — active, reducing compute at inference, and it is evaluated in NVFP4 precision. Mistral Medium 3.5 and Qwen 3.8 are dense architectures, where all parameters are active at inference, and they are evaluated in their native floating-point precision (FP8 and BF16, respectively).\n\n| Model | Total Parameters | Active Parameters | Native Precision | Evaluation Precision |\n| --- | --- | --- | --- | --- |\n| Muse Spark Open | 816B | 42B | BF16 | NVFP4 |\n| Mistral Medium 3.5 | 128B | 128B | FP8 | FP8 |\n| Qwen 3.8 | 27B | 27B | BF16 | BF16 |\n\nTable 1: Language models used in this post. Models ship in various precision formats; we evaluate Qwen 3.8 and Mistral Medium 3.5 in their native precision, and Muse Spark Open in 4-bit (NVFP4) precision.\n\nOur evaluation measures three metrics across a range of context sizes: time to first token (TTFT, in seconds), generation throughput (in tokens/second), and peak power usage (in watts). All the performance numbers in this post were obtained with `mlx_lm.benchmark`. For example, running Qwen 3.8 with 8,192 tokens of context and generating 128 tokens is performed with the command line:\n\n```\nmlx_lm.benchmark --model Qwen/Qwen3.8-27B -p 8192 -g 128 -b 1\n```\n\nA popular use of local LLMs on Mac Studio is running agentic experiences in a private environment, including agentic coding applications that often need large contexts. We therefore report performance at both 8,192 and 65,536 context sizes.\n\nRaw TTFT and decode throughput are reported in [Table 2](#table2) and [Table 3](#table3), respectively.\n\n## [Inference Performance on a Single Mac Studio](#inference-performance-on-a-single-mac-studio)\n\nQwen 3.8 27B and Mistral Medium 3.5 128B fit comfortably on a single Mac Studio with 512GB, taking up to 68GB and 158GB of RAM in the large context size (65,536 tokens) setup. In [Figure 2](#figure2), we compare their inference performance on a single Mac Studio with 512GB of RAM, both on M3 Ultra and M5 Ultra.\n\nTime to first token (TTFT) is essentially compute bound, and that is where the Neural Accelerators in the M5 Ultra GPU shine: the specialized hardware support for fast matrix-multiplication of the GPU Neural Accelerator directly translates into significant speedups for TTFT, up to 4.6× faster compared to an M3 Ultra (see [Figure 2](#figure2)). That makes the Mac Studio with",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "맥 스튜디오에서 대규모 LLM을 로컬로 빠르게 실험 가능",
+        "tags": [
+          "MLX",
+          "Mac Studio",
+          "Muse Spark Open",
+          "M5 Ultra",
+          "RDMA"
+        ],
+        "concepts": [
+          "병렬 처리",
+          "데이터 기반 벤치마킹",
+          "AI 인프라 경쟁"
+        ],
+        "key_points": [
+          {
+            "point": "MLX와 Apple Silicon 통합 메모리 덕분에 512GB까지 로컬에서 트릴리언 파라미터 모델을 실행할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "Muse Spark Open은 MoE 구조와 NVFP4 4비트 정밀도로 토큰당 36 + 토큰을 생성하며 파이프라인·텐서 병렬화로 확장 가능",
+            "timestamp": null
+          },
+          {
+            "point": "M5 Ultra GPU Neural Accelerator가 매트릭스 연산을 가속해 M3 Ultra 대비 처리량과 전력 효율이 크게 향상된다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "RDMA 기반 Thunderbolt 연결을 활용해 여러 iMac을 클러스터링해 실시간 영상 분석 파이프라인을 구축, 데이터 전송 지연을 최소화한다",
+          "MLX의 4비트 NVFP4 정밀도와 MoE 활성화 방식을 모바일 AI 앱에 적용해 배터리 소모를 낮추면서 대규모 언어 모델 기능을 제공한다",
+          "Apple Silicon 통합 메모리를 이용해 로컬 데이터 파이프라인에서 대규모 그래프 신경망을 메모리 복제 없이 실행해 개인정보 보호를 강화한다"
+        ],
+        "quiz": [
+          {
+            "question": "Muse Spark Open이 dense 모델보다 추론 시 계산량을 줄이는 이유는 무엇인가?",
+            "options": [
+              "MoE 구조로 일부 전문가만 활성화한다",
+              "GPU Neural Accelerator를 사용한다",
+              "FP8 대신 FP16을 사용한다",
+              "컨텍스트 크기를 감소시킨다"
+            ],
+            "answer_index": 0,
+            "explanation": "Muse Spark Open은 mixture‑of‑experts 모델로, 활성화되는 전문가와 파라미터가 전체의 일부에 불과해 계산량이 감소한다."
+          },
+          {
+            "question": "RDMA over Thunderbolt를 이용해 여러 Mac Studio를 연결하면 얻는 주요 이점은?",
+            "options": [
+              "GPU 클럭 속도 상승",
+              "저지연 고대역폭 메모리 공유",
+              "자동 모델 양자화",
+              "각 머신의 전력 소비 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "RDMA는 Thunderbolt를 통해 직접 메모리 접근을 제공해 머신 간 데이터 전송 지연을 최소화하고 대역폭을 높인다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "토스뱅크가 패키지를 관리하는 방식 #2: 토스뱅크 패키지의 세 가지 기준",
+        "url": "https://toss.tech/article/package-management-2",
+        "published_at": "2026-10-16T01:00:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8091-bd80-dd2574804529\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">안녕하세요. 토스뱅크에서 패키지 개발 환경을 개선하고 있는 기술그룹입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8083-8a32-e990ee1a4c63\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">패키지를 사용하는 쪽(이하 호스트)에서는 패키지 코드가 어떤 브라우저까지 지원하는지, 패키지 개발 중 사용하던 API를 실행 환경에서도 쓸 수 있는지 따로 살펴봐야 했어요. 호스트에서 패키지의 원본 소스 코드를 확인하기도 어려웠어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8056-866a-f86cf8a31d12\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 문제를 해결하기 위해 패키지가 갖춰야 할 기준을 정했어요. 그리고 각 기준을 충족하려면 무엇이 필요한지 살펴보고, 그에 맞는 빌드 도구와 설정을 선택하기로 했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-804c-8666-c58c66a9ccb4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">기준은 세 가지예요.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"3faa360d-33e3-8098-9b89-dad69459e6ef\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"3faa360d-33e3-8059-b6d1-c64e0e6599b6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">안정성</span><span class=\"css-1kxrhf3\">: 호스트가 지원하는 실행 환경에서 안정적으로 동작해야 해요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3faa360d-33e3-8014-aaba-e158c16095da\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">예측 가능성</span><span class=\"css-1kxrhf3\">: 배포 후에도 원본 코드의 의도가 유지되어야 해요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"3faa360d-33e3-806d-90be-c71c3eb01703\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">디버깅 편의성</span><span class=\"css-1kxrhf3\">: 사용처에서 쉽게 디버깅할 수 있어야 해요.</span></span></span></li></ul></div></aside><h2 class=\"css-1c1qox8\" id=\"3faa360d-33e3-8014-999a-f675031fd3b4\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">호스트가 지원하는 실행 환경에서 안정적으로 동작해야 해요</span></span></span></h2><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8024-a9fe-d9b63ffde6d9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스뱅크의 각 서비스는 자신의 지원 범위에 맞춰 패키지를 항상 트랜스파일해요. 그럼 최신 문법을 모두 사용해도 호스트 런타임에 문제가 없다고 보장할 수 있을까요?</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8099-8b34-d33f19d3b5ff\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문법은 호스트의 트랜스파일러가 해당 문법 변환을 지원해야 하고, API는 실행 환경에서 제공하거나 폴리필로 추가해야 해요. 예를 들어 </span><a class=\"css-iynyr0\" href=\"https://github.com/rolldown/rolldown/pull/10564\" rel=\"noreferrer noopener\" target=\"_blank\">rolldown의 문법 변환 관련 이슈</a><span class=\"css-1kxrhf3\">에서는 당시 oxc가 ES2025의 일부 정규식 문법을 구형 환경용으로 변환하지 못한다는 점을 짚었어요. 즉 최종 호스트가 낮은 </span><code><span class=\"css-1mjnzsq\">target</span></code><span class=\"css-1kxrhf3\">을 지정하더라도 도구가 지원하지 않는 변환까지 수행되지는 않는 거예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80db-ad2a-e0c0c5ac7524\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">폴리필에도 한계가 있어요. 예를 들어 </span><code><span class=\"css-1mjnzsq\">Proxy</span></code><span class=\"css-1kxrhf3\">는 이를 지원하지 않는 엔진에서 폴리필만으로 전체 동작을 구현할 수 없어요. 폴리필 라이브러리를 추가하는 것만으로 모든 API를 사용할 수 있게 되는 것은 아니에요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80dd-8681-c011ab791d66\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">따라서 문법은 호스트의 변환 도구가 처리할 수 있는지, API는 대상 브라우저 또는 호스트의 폴리필이 제공할 수 있는지를 각각 확인해야 해요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8092-9ddf-dccc601d6397\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">트랜스파일링을 호스트에 맡기더라도 호환성 문제는 패키지 개발 단계에서 미리 확인해야 해요. 그래서 호스트의 API 지원 범위를 타입 검사에 반영했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8017-b614-fbefebdbe576\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">다만 TypeScript 설정만으로 호환성을 모두 확인할 수는 없으므로, 실제 API 지원 여부와 필요한 문법 변환이 가능한지도 확인해야 해요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3faa360d-33e3-8041-ab14-c33297c5feb8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3faa360d-33e3-80b9-a148-e71cb2b02337\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">배포 후에도 원본 코드의 의도가 유지되어야 해요</span></span></span></h2><p class=\"css-14on8x8\" id=\"3faa360d-33e3-80a0-ad2d-e62cc841e36c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">호스트는 자신의 실행 환경에 맞춰 패키지 코드를 변환하고 번들링해요. 저희는 이 작업을 호스트에 맡기고, 패키지 빌드에서는 원본의 문법과 모듈 구조를 최대한 유지하기로 했어요.</span></span></span></p><h3 class=\"css-1feg9au\" id=\"3faa360d-33e3-80aa-b02f-e607bfd1e268\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">문법 변환은 호스트에 맡겨요</span></span></span></h3><p class=\"css-14on8x8\" id=\"3faa360d-33e3-801b-89f3-e960f5546872\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">패키지를 사용하는 서비스마다 지원하는 브라우저와 런타임이 달라요. 따라서 같은 패키지 코드라도 호스트에 따라 필요한 문법 변환이 달",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "패키지 호환성 검증으로 서비스 안정성 확보",
+        "tags": [
+          "Toss Bank",
+          "rolldown",
+          "oxc",
+          "ES2025",
+          "Proxy"
+        ],
+        "concepts": [
+          "개발자 경험 개선",
+          "기술 부채 관리",
+          "레거시 시스템 리팩터링"
+        ],
+        "key_points": [
+          {
+            "point": "패키지는 호스트가 지원하는 실행 환경에서 안정적으로 동작해야 하며, 이를 위해 문법 변환과 API 지원을 사전 검증한다.",
+            "timestamp": null
+          },
+          {
+            "point": "최신 문법 사용 시에도 호스트 트랜스파일러가 해당 변환을 지원해야 하며, 폴리필만으로는 일부 API(예: Proxy)를 대체할 수 없다.",
+            "timestamp": null
+          },
+          {
+            "point": "타입 검사와 별도 호환성 확인을 통해 배포 후 원본 코드 의도와 디버깅 편의성을 유지한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "호스트 기반 트랜스파일 검증 방식을 사내 UI 컴포넌트 라이브러리에 적용해 브라우저 호환성을 사전에 확보한다.",
+          "폴리필 가능 여부 검증을 마이크로서비스 빌드 단계에 도입해 오래된 런타임에서도 안정적인 API 사용을 보장한다.",
+          "CI 파이프라인에 타입 기반 호환성 체크를 추가해 데이터 처리 스크립트가 다양한 실행 환경에서 예측 가능하게 동작하도록 한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 폴리필만으로 Proxy API를 완전히 대체할 수 없는가?",
+            "options": [
+              "Proxy는 언어 레벨 기능이라 구현이 복잡하다",
+              "브라우저가 Proxy를 지원하지 않으면 성능 저하가 발생한다",
+              "폴리필은 런타임에만 동작한다",
+              "Proxy는 보안 제한이 있다"
+            ],
+            "answer_index": 0,
+            "explanation": "Proxy는 JavaScript 언어 자체의 메커니즘으로, 순수 JavaScript 코드만으로 완전한 동작을 재현하기 어렵기 때문에 폴리필로 대체할 수 없다."
+          },
+          {
+            "question": "호스트가 낮은 target을 지정해도 변환이 되지 않을 수 있는 이유는?",
+            "options": [
+              "호스트 트랜스파일러가 해당 문법 변환을 지원하지 않기 때문",
+              "TypeScript 설정이 부족하기 때문",
+              "패키지에 polyfill이 없기 때문",
+              "브라우저가 최신 ES를 지원하기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "트랜스파일러가 변환 로직을 제공하지 않으면, 낮은 target을 설정해도 지원되지 않는 최신 문법은 그대로 남아 변환되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
