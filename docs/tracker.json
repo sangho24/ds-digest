@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-17T00:55:18.421068+00:00",
+ "generated_at": "2026-10-18T00:30:32.665453+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -17,8 +17,22 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "deepseek-ai",
-   "tracked": 72,
+   "tracked": 73,
    "models": [
+    {
+     "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+     "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+     "created_at": "2026-10-17T02:40:38+00:00",
+     "last_modified": "2026-10-17T05:46:55+00:00",
+     "weights_at": "2026-10-17T02:40:38+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-17T02:40:38+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "mit",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash",
      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
@@ -623,22 +637,6 @@
      "license": "other",
      "gated": "false",
      "derivative": null
-    },
-    {
-     "repo_id": "deepseek-ai/DeepSeek-Prover-V1.5-RL",
-     "url": "https://huggingface.co/deepseek-ai/DeepSeek-Prover-V1.5-RL",
-     "created_at": "2024-08-15T14:37:11+00:00",
-     "last_modified": "2024-08-29T12:13:55+00:00",
-     "weights_at": "2024-08-15T14:37:11+00:00",
-     "has_weights": true,
-     "model_card_at": "2024-08-15T14:37:11+00:00",
-     "report_at": "2024-08-15T14:37:11+00:00",
-     "arxiv_ids": [
-      "2408.08152"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": "finetune"
     }
    ]
   },
@@ -6471,6 +6469,29 @@
  ],
  "recent_events": [
   {
+   "org": "deepseek",
+   "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "transition": "repo_created",
+   "observed_at": "2026-10-18T00:30:32.665453Z",
+   "at": "2026-10-17T02:40:38Z",
+   "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "mit",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-10-17T02:40:38+00:00"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-NVFP4",
    "transition": "repo_created",
@@ -7847,36 +7868,11 @@
      "Qwen/Qwen3-8B-Base"
     ]
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:37Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-8B-Base"
-    ]
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 611,
-  "events": 619
+  "models": 612,
+  "events": 620
  }
 }
