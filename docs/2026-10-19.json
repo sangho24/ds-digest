@@ -1,0 +1,297 @@
+{
+  "contract_version": 1,
+  "date": "2026-10-19",
+  "generated_at": "2026-10-19T07:10:00.787356+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-19.html",
+  "items": [
+    {
+      "id": "d2d1f7fd5e93",
+      "title": "OmniVerifier-C1: Decomposed Graded Verifier for Rule-Governed Generative World Modeling",
+      "url": "https://arxiv.org/abs/2610.22355v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.CL"
+      },
+      "published_at": "2026-10-15T17:58:04",
+      "summary": "세밀한 점수 기반 검증기로 멀티모달 모델 신뢰성 강화",
+      "positioning": "멀티모달 생성 모델의 신뢰성을 평가하기 위해 기존 이진 시각 검증기의 한계가 지적돼 왔다. 본 논문은 프롬프트를 세분화하고 점수화하는 graded verifier와 이를 학습하기 위한 Decoupled RL 방식을 제안하며, 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku) 평가에서 기존 방법을 능가한다. 이는 멀티모달 평가와 강화학습 기반 검증 연구 흐름에서 연속 점수와 구조화된 피드백을 도입한 새로운 단계이다.",
+      "tags": [
+        "OmniVerifier-C1",
+        "Decoupled RL",
+        "pointwise graded verifier",
+        "pairwise verification",
+        "Maze"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "기존 이진 검증기를 넘어 복합 프롬프트를 자동 분해해 세부 구성요소별 점수를 부여하는 연속형 검증기를 제안한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Decoupled RL 훈련 전략으로 서브 질문 이진 판단과 전역 정렬 점수를 동시에 최적화해 세밀한 피드백을 제공한다.",
+          "timestamp": null
+        },
+        {
+          "point": "점수형 검증기가 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku)에서 이진 검증기보다 일반화와 정확도가 크게 향상됨을 실험적으로 입증한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "점수형 검증기를 코드 생성 모델에 적용해 구문, 정확성, 스타일을 각각 점수화함으로써 세부 품질 피드백을 제공한다.",
+        "Decoupled RL 방식을 챗봇 응답 평가에 활용해 관련성·안전성·사실성 이진 서브 질문과 전체 만족도 점수를 동시에 학습한다.",
+        "쌍별 검증 패러다임을 의료 영상 진단 모델에 적용해 전문가 라벨 이미지와 비교해 보다 정확한 비판을 얻는다."
+      ],
+      "quiz": [
+        {
+          "question": "점수형 검증기가 기존 이진 검증기에 비해 제공하는 주요 이점은 무엇인가?",
+          "options": [
+            "연속적인 비판 신호 제공",
+            "계산 비용 감소",
+            "강화학습 필요성 제거",
+            "비지도 학습 가능"
+          ],
+          "answer_index": 0,
+          "explanation": "초록에서 점수형 검증기가 연속적이고 더 정보가 풍부한 비판 신호를 제공한다고 명시한다."
+        },
+        {
+          "question": "논문에 따르면, 실제 이미지가 존재할 때 더 정확한 비판을 제공하는 검증 패러다임은?",
+          "options": [
+            "점별 형식",
+            "쌍별 검증",
+            "이진 검증",
+            "비지도 점수화"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 ground-truth 이미지가 있을 때 쌍별 검증 패러다임이 더 정확한 비판을 제공한다는 결과를 제시한다."
+        }
+      ]
+    },
+    {
+      "id": "35098ab77e23",
+      "title": "💸 ChatGPT가 골라준 주식, 믿고 사도 될까?",
+      "url": "https://dflick.stibee.com/p/115",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-10-13T00:00:00",
+      "summary": "AI 주식 추천 한계와 검증법을 파악해 투자 데이터 분석에 활용",
+      "positioning": null,
+      "tags": [
+        "ChatGPT",
+        "Gemini",
+        "Claude",
+        "Anthropic",
+        "shadcn"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "동일 투자 조건에도 ChatGPT·Gemini·Claude가 제시하는 위험 수준이 서로 다르다",
+          "timestamp": null
+        },
+        {
+          "point": "AI는 공시 요약 등 보조 역할은 가능하지만 투자 결정·손실 책임은 인간에게 있다",
+          "timestamp": null
+        },
+        {
+          "point": "연구·금융당국 조사 결과를 토대로 AI가 담당할 부분과 직접 검증이 필요한 부분을 구분해야 한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI를 활용해 기업 ESG 공시를 요약·분석해 지속가능성 평가에 적용한다",
+        "디자인 스킬 프롬프트를 이용해 AI가 만든 마케팅 카피를 블라인드 평가해 브랜드 일관성을 높인다",
+        "여러 LLM의 의료 진단 위험 평가를 비교해 모델별 편향을 식별하고 안전성을 강화한다"
+      ],
+      "quiz": [
+        {
+          "question": "동일 투자 조건을 입력했을 때 ChatGPT와 Gemini, Claude가 제시하는 위험 수준이 서로 다른 주요 이유는?",
+          "options": [
+            "각 모델이 학습한 데이터와 위험 평가 기준이 다르다",
+            "모델이 답을 무작위로 생성한다",
+            "입력 파싱 오류가 발생한다",
+            "금융 규제 차이가 모델에 반영된다"
+          ],
+          "answer_index": 0,
+          "explanation": "각 LLM은 서로 다른 학습 데이터와 위험 평가 로직을 가지고 있어 같은 조건이라도 위험 수준을 다르게 판단한다."
+        },
+        {
+          "question": "AI가 제공하는 주식 추천에서 인간이 반드시 직접 검증해야 하는 핵심 이유는?",
+          "options": [
+            "AI는 법적·재정적 책임을 지지 않는다",
+            "AI는 항상 최신 데이터를 사용한다",
+            "AI는 투자 손실을 보상한다",
+            "AI는 위험을 과소평가한다"
+          ],
+          "answer_index": 0,
+          "explanation": "AI는 조언을 제공할 수 있지만, 투자 결정과 손실에 대한 책임은 인간 투자자에게 있으며, 따라서 직접 검증이 필요하다."
+        }
+      ]
+    },
+    {
+      "id": "1179099135c9",
+      "title": "OpenAI’s New AI Is Doing Things We Barely Understand",
+      "url": "https://youtu.be/z_sXLlLVUls",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-10-13T08:56:12",
+      "summary": "AI가 만든 수학 증명·정리의 신뢰성과 활용성을 고민해야 함",
+      "positioning": null,
+      "tags": [
+        "OpenAI",
+        "triangular billiards",
+        "conformal transformation",
+        "neural network"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "불규칙 각을 가진 삼각형에서는 거의 모든 광선이 전체를 고르게 방문한다",
+          "timestamp": "01:11"
+        },
+        {
+          "point": "각을 보존하는 conformal 변환으로 복잡한 구멍을 원이나 점으로 변형할 수 있다",
+          "timestamp": "02:16"
+        },
+        {
+          "point": "AI가 만든 증명은 비우아하고, 수학의 목표가 결과만인가, 이해인가를 논의한다",
+          "timestamp": "03:20"
+        }
+      ],
+      "ideas": [
+        "복잡한 CFD 메쉬를 conformal 변환으로 단순한 도메인으로 매핑해 솔버 안정성을 높인다",
+        "AI가 생성한 비우아한 증명을 품질 예측 모델의 학습 데이터로 활용해 자동 정리 시스템을 보조한다",
+        "불규칙 각 삼각형의 에르고딕 특성을 의사난수 생성에 적용해 Monte Carlo 시뮬레이션의 샘플링 품질을 개선한다"
+      ],
+      "quiz": [
+        {
+          "question": "어떤 삼각형의 각 조건이 거의 모든 광선이 전체를 고르게 방문하게 만든다?",
+          "options": [
+            "모든 각이 π의 유리배",
+            "적어도 하나의 각이 π에 대해 무리수배",
+            "모든 각이 동일",
+            "직각삼각형"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면, 삼각형에 최소 하나의 각이 π에 대해 무리수이면 거의 모든 광선이 전체를 고르게 방문한다."
+        },
+        {
+          "question": "conformal 변환이 보존하는 특성은 무엇인가?",
+          "options": [
+            "면적",
+            "각도",
+            "길이",
+            "곡률"
+          ],
+          "answer_index": 1,
+          "explanation": "conformal 변환은 각을 보존하면서 형태를 변형한다는 것이 텍스트에 언급되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "6673fc37d821",
+      "title": "There's never been a better time to go into math",
+      "url": "https://youtu.be/LKrwhjOI8Nc",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-10-16T16:15:20",
+      "summary": "AI 시대에 수학 전공 선택과 가치를 재평가해야 함",
+      "positioning": null,
+      "tags": [
+        "AI",
+        "AI safety",
+        "PhD",
+        "3Blue1Brown"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI와 AI 안전에 대한 우려 속에서도 수학이 사라지지 않을 것이라는 주장",
+          "timestamp": "01:04"
+        },
+        {
+          "point": "수학자들의 역할을 나열하고, 그 가치와 자금 흐름을 연결해 보는 프레임워크 제시",
+          "timestamp": "01:28"
+        },
+        {
+          "point": "AI가 모든 수학 작업을 대체한다 가정했을 때 불확실성을 넓은 오류 범위로 제시",
+          "timestamp": "01:51"
+        }
+      ],
+      "ideas": [
+        "수학자 역할·가치 매핑 프레임워크를 데이터 사이언스 직무와 보상 구조 분석에 적용해 커리어 로드맵을 설계한다",
+        "학계에서의 논문 인용·저자 순위 재구성을 기업 프로젝트 기여도 평가 체계에 빌려와 직원 승진 기준을 다변화한다",
+        "AI가 업무를 대체할 경우를 가정하고 넓은 오류 범위(불확실성 정량화)를 제품 로드맵에 적용해 위험 관리와 일정 계획을 보수적으로 설계한다"
+      ],
+      "quiz": [
+        {
+          "question": "영상에서 저자는 AI가 모든 수학 작업을 수행한다면 어떤 접근을 제시했는가?",
+          "options": [
+            "즉시 수학 전공을 포기한다",
+            "불확실성을 넓은 오류 범위로 고려한다",
+            "새로운 학위 프로그램을 만든다",
+            "AI와 협업을 완전히 배제한다"
+          ],
+          "answer_index": 1,
+          "explanation": "01:51에 저자는 AI가 모든 작업을 더 잘 수행한다는 가정 하에 ‘very wide error bars’를 두어 불확실성을 크게 잡아야 한다고 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "52719c23f180",
+      "title": "Life as it could be | Akarsh Kumar on Artificial Life",
+      "url": "https://youtu.be/pniLY0I9VJQ",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-10-08T11:34:31",
+      "summary": "간단 규칙으로 복잡성 생성 원리를 이해",
+      "positioning": null,
+      "tags": [
+        "Conway's Game of Life",
+        "foundation model"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Conway's Game of Life는 2D 격자에서 셀을 켜거나 끄는 단순 규칙만 가짐",
+          "timestamp": "00:04"
+        },
+        {
+          "point": "극히 단순한 규칙에서도 놀라운 복잡성이 생성된다",
+          "timestamp": "00:10"
+        },
+        {
+          "point": "시뮬레이션 공간을 파라미터화해 기반 모델에 입력하면 작은 솔루션 섬을 찾을 수 있다",
+          "timestamp": "00:40"
+        }
+      ],
+      "ideas": [
+        "데이터 증강 파이프라인을 파라미터화된 시뮬레이션 공간으로 정의하고, 기초 모델이 가장 다양하고 유용한 증강 조합을 선택하도록 적용한다",
+        "하이퍼파라미터 최적화에서 메타 모델이 예측한 작은 ‘솔루션 섬’에 집중 탐색함으로써 탐색 효율을 높인다",
+        "멀티에이전트 강화학습 환경에 원시적인 상호작용 규칙을 부여해, 단순 규칙이 복잡한 전략으로 자가 조직되는 현상을 설계한다"
+      ],
+      "quiz": [
+        {
+          "question": "Conway's Game of Life와 무작위 노이즈 시뮬레이션의 차이는 무엇에 기인하는가?",
+          "options": [
+            "규칙의 결정성",
+            "셀 수의 많음",
+            "초기 조건",
+            "시뮬레이션 속도"
+          ],
+          "answer_index": 0,
+          "explanation": "텍스트(00:10~00:16)에서 단순 규칙이 복잡성을 만들고, 무작위 노이즈는 그런 현상을 만들지 못한다는 점을 강조한다. 이는 규칙이 결정적이며 상호작용을 통해 복잡성이 발생하기 때문이다."
+        }
+      ]
+    }
+  ]
+}

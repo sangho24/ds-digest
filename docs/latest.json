@@ -1,319 +1,295 @@
 {
   "contract_version": 1,
-  "date": "2026-10-18",
-  "generated_at": "2026-10-18T07:16:23.541080+09:00",
+  "date": "2026-10-19",
+  "generated_at": "2026-10-19T07:10:00.787356+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-18.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-19.html",
   "items": [
     {
-      "id": "c3d471dd5190",
-      "title": "Discovering state-of-the-art quantum circuits with large language models",
-      "url": "https://arxiv.org/abs/2610.22367v1",
+      "id": "d2d1f7fd5e93",
+      "title": "OmniVerifier-C1: Decomposed Graded Verifier for Rule-Governed Generative World Modeling",
+      "url": "https://arxiv.org/abs/2610.22355v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.AI"
+        "name": "arXiv:cs.CL"
       },
-      "published_at": "2026-10-15T17:59:20",
-      "summary": "LLM으로 양자 회로 설계 효율 크게 향상",
-      "positioning": "양자 알고리즘은 가역성 제약으로 기존 설계가 한계에 부딪혔다. 본 논문은 LLM이 회로를 생성하고 평가자가 점수를 매기는 진화적 프레임워크를 도입해 Toffoli와 qubit 수를 크게 줄인다. 이는 양자 회로 설계 자동화와 가역 연산 구조 탐색을 결합한 새로운 연구 흐름이다.",
+      "published_at": "2026-10-15T17:58:04",
+      "summary": "세밀한 점수 기반 검증기로 멀티모달 모델 신뢰성 강화",
+      "positioning": "멀티모달 생성 모델의 신뢰성을 평가하기 위해 기존 이진 시각 검증기의 한계가 지적돼 왔다. 본 논문은 프롬프트를 세분화하고 점수화하는 graded verifier와 이를 학습하기 위한 Decoupled RL 방식을 제안하며, 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku) 평가에서 기존 방법을 능가한다. 이는 멀티모달 평가와 강화학습 기반 검증 연구 흐름에서 연속 점수와 구조화된 피드백을 도입한 새로운 단계이다.",
       "tags": [
-        "large language models",
-        "Toffoli",
-        "qubit",
-        "prime-field modular inversion",
-        "divsteps"
+        "OmniVerifier-C1",
+        "Decoupled RL",
+        "pointwise graded verifier",
+        "pairwise verification",
+        "Maze"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "LLM이 회로 설계안을 제시하고 독립 평가자가 점수를 매겨 Toffoli와 qubit 수를 크게 감소시켰다.",
+          "point": "기존 이진 검증기를 넘어 복합 프롬프트를 자동 분해해 세부 구성요소별 점수를 부여하는 연속형 검증기를 제안한다.",
           "timestamp": null
         },
         {
-          "point": "진화적 프레임워크를 8가지 작업에 적용해 7곳에서 최첨단 대비 성능 향상을 달성했다.",
+          "point": "Decoupled RL 훈련 전략으로 서브 질문 이진 판단과 전역 정렬 점수를 동시에 최적화해 세밀한 피드백을 제공한다.",
           "timestamp": null
         },
         {
-          "point": "소수체 모듈러 역산을 위한 새로운 가역 아키텍처가 divsteps를 가능하게 하여 트레이드오프를 개선했다.",
+          "point": "점수형 검증기가 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku)에서 이진 검증기보다 일반화와 정확도가 크게 향상됨을 실험적으로 입증한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "LLM 기반 회로 설계 프레임워크를 데이터 파이프라인 DAG 최적화에 적용해 단계별 연산 비용을 최소화한다.",
-        "가역성 설계 원칙을 저전력 임베디드 시스템의 연산 모듈에 도입해 에너지 효율을 높인다.",
-        "LLM과 평가자 루프를 화학 반응 경로 탐색에 활용해 실험 비용을 줄이고 새로운 합성 경로를 발견한다."
+        "점수형 검증기를 코드 생성 모델에 적용해 구문, 정확성, 스타일을 각각 점수화함으로써 세부 품질 피드백을 제공한다.",
+        "Decoupled RL 방식을 챗봇 응답 평가에 활용해 관련성·안전성·사실성 이진 서브 질문과 전체 만족도 점수를 동시에 학습한다.",
+        "쌍별 검증 패러다임을 의료 영상 진단 모델에 적용해 전문가 라벨 이미지와 비교해 보다 정확한 비판을 얻는다."
       ],
       "quiz": [
         {
-          "question": "양자 알고리즘 설계에서 가역성 제약이 중요한 이유는?",
+          "question": "점수형 검증기가 기존 이진 검증기에 비해 제공하는 주요 이점은 무엇인가?",
           "options": [
-            "양자 게이트는 유니터리이어야 하기 때문이다",
-            "클래식 게이트는 항상 가역적이다",
-            "양자 컴퓨터는 큐빗 수가 제한된다",
-            "오류 정정이 불가능하기 때문이다"
+            "연속적인 비판 신호 제공",
+            "계산 비용 감소",
+            "강화학습 필요성 제거",
+            "비지도 학습 가능"
           ],
           "answer_index": 0,
-          "explanation": "양자 연산은 유니터리(가역)이어야 하므로 회로 설계 시 가역성 제약을 고려해야 한다."
+          "explanation": "초록에서 점수형 검증기가 연속적이고 더 정보가 풍부한 비판 신호를 제공한다고 명시한다."
         },
         {
-          "question": "새로운 가역 아키텍처가 prime-field modular inversion에 제공한 주요 이점은?",
+          "question": "논문에 따르면, 실제 이미지가 존재할 때 더 정확한 비판을 제공하는 검증 패러다임은?",
           "options": [
-            "Toffoli 수만 감소",
-            "divsteps 알고리즘을 가역적으로 구현 가능",
-            "큐빗 수 증가",
-            "측정 단계 단순화"
+            "점별 형식",
+            "쌍별 검증",
+            "이진 검증",
+            "비지도 점수화"
           ],
           "answer_index": 1,
-          "explanation": "가역 설계 덕분에 기존에 가역적으로 구현하기 어려웠던 divsteps 알고리즘을 사용할 수 있게 되어 트레이드오프가 개선된다."
+          "explanation": "본문에서 ground-truth 이미지가 있을 때 쌍별 검증 패러다임이 더 정확한 비판을 제공한다는 결과를 제시한다."
         }
       ]
     },
     {
-      "id": "435adb508ee9",
-      "title": "Advancing Generative Recommendation Inference: our collaboration with NVIDIA on TensorRT LLM",
-      "url": "https://engineering.atspotify.com/2026/10/advancing-generative-recommendation-inference-our-collaboration-with-nvidia-on-tensorrt-llm/",
+      "id": "35098ab77e23",
+      "title": "💸 ChatGPT가 골라준 주식, 믿고 사도 될까?",
+      "url": "https://dflick.stibee.com/p/115",
       "source": {
-        "type": "rss",
-        "name": "Spotify Engineering"
+        "type": "newsletter",
+        "name": "디플릭"
       },
-      "published_at": "2026-10-16T14:29:18",
-      "summary": "LLM 기반 실시간 개인화 추천을 GPU 최적화 추론으로 확장하는 방법",
+      "published_at": "2026-10-13T00:00:00",
+      "summary": "AI 주식 추천 한계와 검증법을 파악해 투자 데이터 분석에 활용",
       "positioning": null,
       "tags": [
-        "Spotify",
-        "NVIDIA",
-        "TensorRT",
-        "vLLM",
-        "Beam search"
+        "ChatGPT",
+        "Gemini",
+        "Claude",
+        "Anthropic",
+        "shadcn"
       ],
-      "relevance": 8,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "LLM을 활용한 실시간 개인화 추천에 Beam search와 후보 점수화(log‑prob) 기법을 적용한다.",
+          "point": "동일 투자 조건에도 ChatGPT·Gemini·Claude가 제시하는 위험 수준이 서로 다르다",
           "timestamp": null
         },
         {
-          "point": "vLLM의 Beam search 구현은 CPU‑GPU 병목과 KV 블록 재계산으로 고성능 GPU 활용에 제한이 있다.",
+          "point": "AI는 공시 요약 등 보조 역할은 가능하지만 투자 결정·손실 책임은 인간에게 있다",
           "timestamp": null
         },
         {
-          "point": "NVIDIA TensorRT LLM과 협업해 GPU‑최적화 Beam search를 구현, 비용 효율적인 대규모 추론을 가능하게 했다.",
+          "point": "연구·금융당국 조사 결과를 토대로 AI가 담당할 부분과 직접 검증이 필요한 부분을 구분해야 한다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "GPU‑최적화 Beam search(TensorRT LLM)를 전자상거래 상품 추천 엔진에 적용해 응답 지연을 크게 줄인다.",
-        "로그 확률 기반 후보 점수화를 기업 문서 검색 시스템에 도입해 검색 결과의 관련성을 향상시킨다.",
-        "CPU‑GPU 워크로드 분리를 활용해 실시간 사기 탐지 파이프라인을 재설계, 고비용 연산을 GPU로 옮겨 처리량을 높인다."
+        "AI를 활용해 기업 ESG 공시를 요약·분석해 지속가능성 평가에 적용한다",
+        "디자인 스킬 프롬프트를 이용해 AI가 만든 마케팅 카피를 블라인드 평가해 브랜드 일관성을 높인다",
+        "여러 LLM의 의료 진단 위험 평가를 비교해 모델별 편향을 식별하고 안전성을 강화한다"
       ],
       "quiz": [
         {
-          "question": "vLLM의 Beam search 구현이 GPU 효율을 낮추는 주요 원인은 무엇인가?",
+          "question": "동일 투자 조건을 입력했을 때 ChatGPT와 Gemini, Claude가 제시하는 위험 수준이 서로 다른 주요 이유는?",
           "options": [
-            "Beam search가 GPU 내부에서 실행된다",
-            "CPU 측에서 KV 블록을 재계산한다",
-            "모델 파라미터가 과도하게 크다",
-            "네트워크 대역폭이 제한된다"
+            "각 모델이 학습한 데이터와 위험 평가 기준이 다르다",
+            "모델이 답을 무작위로 생성한다",
+            "입력 파싱 오류가 발생한다",
+            "금융 규제 차이가 모델에 반영된다"
           ],
-          "answer_index": 1,
-          "explanation": "vLLM은 Beam search를 핵심 GPU 엔진 밖에서 수행해 CPU‑GPU 병목을 만들고, 부분적으로 채워진 KV 블록을 재계산하게 되어 GPU 활용도가 떨어진다."
+          "answer_index": 0,
+          "explanation": "각 LLM은 서로 다른 학습 데이터와 위험 평가 로직을 가지고 있어 같은 조건이라도 위험 수준을 다르게 판단한다."
         },
         {
-          "question": "Spotify가 후보 점수화를 위해 사용하는 핵심 메트릭은?",
+          "question": "AI가 제공하는 주식 추천에서 인간이 반드시 직접 검증해야 하는 핵심 이유는?",
           "options": [
-            "정확도",
-            "로그 확률",
-            "F1 점수",
-            "ROC AUC"
+            "AI는 법적·재정적 책임을 지지 않는다",
+            "AI는 항상 최신 데이터를 사용한다",
+            "AI는 투자 손실을 보상한다",
+            "AI는 위험을 과소평가한다"
           ],
-          "answer_index": 1,
-          "explanation": "후보 점수화는 모델이 출력한 로그 확률(log‑prob)을 이용해 후보들을 평가·순위 매기는 방식이다."
+          "answer_index": 0,
+          "explanation": "AI는 조언을 제공할 수 있지만, 투자 결정과 손실에 대한 책임은 인간 투자자에게 있으며, 따라서 직접 검증이 필요하다."
         }
       ]
     },
     {
-      "id": "1557ed18b567",
-      "title": "Show HN: Llmspeed – feel how fast a local LLM runs before you buy the hardware",
-      "url": "https://llmspeed.dev/",
-      "source": {
-        "type": "rss",
-        "name": "HackerNews"
-      },
-      "published_at": null,
-      "summary": "로컬 LLM 성능을 미리 예측해 하드웨어 선택 비용 절감",
-      "positioning": null,
-      "tags": [
-        "Llmspeed",
-        "GitHub",
-        "JavaScript",
-        "r/LocalLLaMA",
-        "localscore.ai"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "Llmspeed는 로컬 LLM 실행 속도를 하드웨어별로 시뮬레이션한다.",
-          "timestamp": null
-        },
-        {
-          "point": "커뮤니티 벤치마크와 사양 기반 추정치를 결합해 속도를 예측한다.",
-          "timestamp": null
-        },
-        {
-          "point": "오픈소스로 GitHub에 제공돼 직접 사용 및 커스터마이징이 가능하다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "비전 모델을 엣지 디바이스에 배포하기 전에 유사 시뮬레이션을 적용해 추론 지연 시간을 예측하고 최적 하드웨어를 선정한다.",
-        "LLM 기반 검색(RAG) 파이프라인에서 다양한 데이터베이스 엔진의 쿼리 처리 속도를 시뮬레이션해 비용 효율적인 스토리지 선택을 지원한다."
-      ],
-      "quiz": [
-        {
-          "question": "Llmspeed가 하드웨어별 LLM 실행 속도를 추정하는 주요 데이터 원천은 무엇인가?",
-          "options": [
-            "커뮤니티 벤치마크",
-            "제조사 공식 벤치마크",
-            "랜덤 추정",
-            "사용자 설문"
-          ],
-          "answer_index": 0,
-          "explanation": "본문에 언급된 r/LocalLLaMA와 localscore.ai 등 커뮤니티 벤치마크를 활용한다."
-        },
-        {
-          "question": "Llmspeed가 직접 측정이 불가능한 경우, 추정값을 생성하는 방법은?",
-          "options": [
-            "유사 사양 장비 측정값을 보정",
-            "머신러닝 모델 예측",
-            "단순 평균",
-            "무작위 선택"
-          ],
-          "answer_index": 0,
-          "explanation": "유사한 설정이나 사양을 기반으로 추정값을 도출한다."
-        }
-      ]
-    },
-    {
-      "id": "9ddacccf90a9",
-      "title": "이제 사람과 AI는 목소리로 구분할 수 없습니다 | SlashLive",
-      "url": "https://youtu.be/j41oq_xbTgs",
+      "id": "1179099135c9",
+      "title": "OpenAI’s New AI Is Doing Things We Barely Understand",
+      "url": "https://youtu.be/z_sXLlLVUls",
       "source": {
         "type": "youtube",
-        "name": "토스 챌린저스"
+        "name": "Two Minute Papers"
       },
-      "published_at": "2026-10-16T06:30:03",
-      "summary": "대규모 데이터와 토큰화로 자연스러운 TTS 구현",
+      "published_at": "2026-10-13T08:56:12",
+      "summary": "AI가 만든 수학 증명·정리의 신뢰성과 활용성을 고민해야 함",
       "positioning": null,
       "tags": [
-        "TTS",
-        "멜 스펙트로그램",
-        "오토인코더",
-        "벡터 컨타이제이션",
-        "GPT2"
+        "OpenAI",
+        "triangular billiards",
+        "conformal transformation",
+        "neural network"
       ],
-      "relevance": 7,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "초기 TTS는 텍스트→멜 스펙트로그램→보코더 구조의 2단계 파이프라인을 사용했다.",
-          "timestamp": "01:49"
+          "point": "불규칙 각을 가진 삼각형에서는 거의 모든 광선이 전체를 고르게 방문한다",
+          "timestamp": "01:11"
         },
         {
-          "point": "오토인코더는 고차원 데이터를 압축·복원하며 레이블 없이 음성 표현을 학습한다.",
-          "timestamp": "03:57"
+          "point": "각을 보존하는 conformal 변환으로 복잡한 구멍을 원이나 점으로 변형할 수 있다",
+          "timestamp": "02:16"
         },
         {
-          "point": "톨터스 TTS는 GPT2와 벡터 컨타이제이션으로 음성 토큰을 예측해 자연스러운 TTS를 구현한다.",
-          "timestamp": "05:57"
+          "point": "AI가 만든 증명은 비우아하고, 수학의 목표가 결과만인가, 이해인가를 논의한다",
+          "timestamp": "03:20"
         }
       ],
       "ideas": [
-        "벡터 컨타이제이션을 이용해 음성 특징을 토큰화해 저자원 ASR 모델의 학습 효율을 높인다.",
-        "오토인코더로 텍스트와 음성 로그를 압축해 멀티모달 임베딩을 만들고 개인화 추천에 활용한다.",
-        "2단계 TTS(멜 스펙트로그램→보코더)를 이용해 다양한 감정의 합성 음성을 생성, 감정 인식 모델을 데이터 증강한다."
+        "복잡한 CFD 메쉬를 conformal 변환으로 단순한 도메인으로 매핑해 솔버 안정성을 높인다",
+        "AI가 생성한 비우아한 증명을 품질 예측 모델의 학습 데이터로 활용해 자동 정리 시스템을 보조한다",
+        "불규칙 각 삼각형의 에르고딕 특성을 의사난수 생성에 적용해 Monte Carlo 시뮬레이션의 샘플링 품질을 개선한다"
       ],
       "quiz": [
         {
-          "question": "초기 TTS가 두 단계(멜 스펙트로그램 → 보코더) 구조를 사용한 주요 이유는?",
+          "question": "어떤 삼각형의 각 조건이 거의 모든 광선이 전체를 고르게 방문하게 만든다?",
           "options": [
-            "직접 파형 예측이 높은 샘플 레이트 때문에 계산적으로 어려워서",
-            "멜 스펙트로그램이 피치 제어에 유리해서",
-            "보코더가 노이즈 감소 효과를 제공해서",
-            "두 단계가 모델 크기를 크게 줄여주기 때문에"
-          ],
-          "answer_index": 0,
-          "explanation": "텍스트에서 초당 수만 개 샘플인 파형을 직접 예측하기는 당시 모델로는 어려웠기 때문에 중간 표현인 멜 스펙트로그램을 예측하고 보코더가 파형을 복원하는 두 단계 구조를 사용했다."
-        },
-        {
-          "question": "벡터 컨타이제이션이 TTS 모델에 가져다 주는 장점은?",
-          "options": [
-            "연속적인 잠재 공간을 제공해 부드러운 음성을 만든다",
-            "고차원 벡터를 이산 토큰으로 변환해 언어 모델 방식 학습이 가능해진다",
-            "데이터 양을 크게 줄일 수 있다",
-            "실시간 추론 속도를 크게 향상시킨다"
+            "모든 각이 π의 유리배",
+            "적어도 하나의 각이 π에 대해 무리수배",
+            "모든 각이 동일",
+            "직각삼각형"
           ],
           "answer_index": 1,
-          "explanation": "벡터 컨타이제이션은 고차원 표현을 이산 토큰으로 양자화해, 텍스트 토큰처럼 시퀀스 모델이 학습하도록 하여 다양한 프로소디를 생성할 수 있게 한다."
+          "explanation": "텍스트에 따르면, 삼각형에 최소 하나의 각이 π에 대해 무리수이면 거의 모든 광선이 전체를 고르게 방문한다."
+        },
+        {
+          "question": "conformal 변환이 보존하는 특성은 무엇인가?",
+          "options": [
+            "면적",
+            "각도",
+            "길이",
+            "곡률"
+          ],
+          "answer_index": 1,
+          "explanation": "conformal 변환은 각을 보존하면서 형태를 변형한다는 것이 텍스트에 언급되어 있다."
         }
       ]
     },
     {
-      "id": "055c7c0ed4c3",
-      "title": "AI Coding Is a Slot Machine: Loss Disguised as a Win | Jeremy Howard",
-      "url": "https://youtu.be/DVRMDoYhVBI",
+      "id": "6673fc37d821",
+      "title": "There's never been a better time to go into math",
+      "url": "https://youtu.be/LKrwhjOI8Nc",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-10-16T16:15:20",
+      "summary": "AI 시대에 수학 전공 선택과 가치를 재평가해야 함",
+      "positioning": null,
+      "tags": [
+        "AI",
+        "AI safety",
+        "PhD",
+        "3Blue1Brown"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "AI와 AI 안전에 대한 우려 속에서도 수학이 사라지지 않을 것이라는 주장",
+          "timestamp": "01:04"
+        },
+        {
+          "point": "수학자들의 역할을 나열하고, 그 가치와 자금 흐름을 연결해 보는 프레임워크 제시",
+          "timestamp": "01:28"
+        },
+        {
+          "point": "AI가 모든 수학 작업을 대체한다 가정했을 때 불확실성을 넓은 오류 범위로 제시",
+          "timestamp": "01:51"
+        }
+      ],
+      "ideas": [
+        "수학자 역할·가치 매핑 프레임워크를 데이터 사이언스 직무와 보상 구조 분석에 적용해 커리어 로드맵을 설계한다",
+        "학계에서의 논문 인용·저자 순위 재구성을 기업 프로젝트 기여도 평가 체계에 빌려와 직원 승진 기준을 다변화한다",
+        "AI가 업무를 대체할 경우를 가정하고 넓은 오류 범위(불확실성 정량화)를 제품 로드맵에 적용해 위험 관리와 일정 계획을 보수적으로 설계한다"
+      ],
+      "quiz": [
+        {
+          "question": "영상에서 저자는 AI가 모든 수학 작업을 수행한다면 어떤 접근을 제시했는가?",
+          "options": [
+            "즉시 수학 전공을 포기한다",
+            "불확실성을 넓은 오류 범위로 고려한다",
+            "새로운 학위 프로그램을 만든다",
+            "AI와 협업을 완전히 배제한다"
+          ],
+          "answer_index": 1,
+          "explanation": "01:51에 저자는 AI가 모든 작업을 더 잘 수행한다는 가정 하에 ‘very wide error bars’를 두어 불확실성을 크게 잡아야 한다고 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "52719c23f180",
+      "title": "Life as it could be | Akarsh Kumar on Artificial Life",
+      "url": "https://youtu.be/pniLY0I9VJQ",
       "source": {
         "type": "youtube",
         "name": "Machine Learning Street Talk"
       },
-      "published_at": "2026-10-11T09:19:59",
-      "summary": "AI 코딩의 불확실성·통제감 착각이 생산성 함정",
+      "published_at": "2026-10-08T11:34:31",
+      "summary": "간단 규칙으로 복잡성 생성 원리를 이해",
       "positioning": null,
       "tags": [
-        "AI",
-        "MCPs",
-        "prompt"
+        "Conway's Game of Life",
+        "foundation model"
       ],
-      "relevance": 6,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "AI 기반 코딩은 슬롯 머신과 같으며 통제감 착각을 유발한다.",
-          "timestamp": "00:00"
+          "point": "Conway's Game of Life는 2D 격자에서 셀을 켜거나 끄는 단순 규칙만 가짐",
+          "timestamp": "00:04"
         },
         {
-          "point": "프롬프트를 바꾸며 레버를 반복적으로 당기지만, 승리는 드물고 손실이 감춰진다.",
-          "timestamp": "00:34"
+          "point": "극히 단순한 규칙에서도 놀라운 복잡성이 생성된다",
+          "timestamp": "00:10"
         },
         {
-          "point": "연구 결과, 실제 고품질 소프트웨어 생산량은 크게 증가하지 않았다.",
-          "timestamp": "00:46"
+          "point": "시뮬레이션 공간을 파라미터화해 기반 모델에 입력하면 작은 솔루션 섬을 찾을 수 있다",
+          "timestamp": "00:40"
         }
       ],
       "ideas": [
-        "프롬프트를 반복적으로 수정하며 얻는 불확실한 결과를 테스트 케이스 자동 생성에 적용해, 다양한 edge case를 빠르게 탐색한다.",
-        "슬롯 머신식 레버 당기기 방식을 UI A/B 테스트에 도입해, 각 디자인 변형을 무작위로 시도하고 성공률을 누적한다.",
-        "통제감 착각을 감지하는 메트릭을 개발자 도구에 표시해, 코드 자동 생성 시 불확실성을 명시적으로 보여준다."
+        "데이터 증강 파이프라인을 파라미터화된 시뮬레이션 공간으로 정의하고, 기초 모델이 가장 다양하고 유용한 증강 조합을 선택하도록 적용한다",
+        "하이퍼파라미터 최적화에서 메타 모델이 예측한 작은 ‘솔루션 섬’에 집중 탐색함으로써 탐색 효율을 높인다",
+        "멀티에이전트 강화학습 환경에 원시적인 상호작용 규칙을 부여해, 단순 규칙이 복잡한 전략으로 자가 조직되는 현상을 설계한다"
       ],
       "quiz": [
         {
-          "question": "Jeremy Howard가 AI 기반 코딩을 비유한 것은 무엇인가?",
+          "question": "Conway's Game of Life와 무작위 노이즈 시뮬레이션의 차이는 무엇에 기인하는가?",
           "options": [
-            "체스 게임",
-            "슬롯 머신",
-            "롤러코스터",
-            "퍼즐"
+            "규칙의 결정성",
+            "셀 수의 많음",
+            "초기 조건",
+            "시뮬레이션 속도"
           ],
-          "answer_index": 1,
-          "explanation": "00:00 구간에서 AI 기반 코딩을 슬롯 머신에 비유하며 통제감 착각을 언급한다."
-        },
-        {
-          "question": "연구 결과에 따르면 AI 코딩이 실제 소프트웨어 생산량에 미친 영향은?",
-          "options": [
-            "대폭 증가",
-            "전혀 변화 없음",
-            "소폭 증가",
-            "감소"
-          ],
-          "answer_index": 2,
-          "explanation": "00:46 구간에서 연구 결과가 고품질 소프트웨어 생산량이 크게 증가하지 않았다고 언급한다."
+          "answer_index": 0,
+          "explanation": "텍스트(00:10~00:16)에서 단순 규칙이 복잡성을 만들고, 무작위 노이즈는 그런 현상을 만들지 못한다는 점을 강조한다. 이는 규칙이 결정적이며 상호작용을 통해 복잡성이 발생하기 때문이다."
         }
       ]
     }
