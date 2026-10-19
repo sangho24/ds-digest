@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-18T00:30:32.665453+00:00",
+ "generated_at": "2026-10-19T00:38:13.353084+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -655,7 +655,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 69,
+   "tracked": 82,
    "models": [
     {
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-NVFP4",
@@ -770,6 +770,48 @@
      "derivative": null
     },
     {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S5_2",
+     "created_at": "2026-10-10T18:54:08+00:00",
+     "last_modified": "2026-10-18T20:16:30+00:00",
+     "weights_at": "2026-10-10T18:54:08+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-10T18:54:08+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_all",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S5_all",
+     "created_at": "2026-10-10T18:53:19+00:00",
+     "last_modified": "2026-10-18T20:16:26+00:00",
+     "weights_at": "2026-10-10T18:53:19+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-10T18:53:19+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D5",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D5",
+     "created_at": "2026-10-09T21:31:12+00:00",
+     "last_modified": "2026-10-18T20:16:23+00:00",
+     "weights_at": "2026-10-09T21:31:12+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-09T21:31:12+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
      "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16",
      "created_at": "2026-10-09T12:45:14+00:00",
@@ -781,6 +823,90 @@
      "arxiv_ids": [
       "2605.07182"
      ],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_best",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_best",
+     "created_at": "2026-10-08T18:25:07+00:00",
+     "last_modified": "2026-10-18T20:16:15+00:00",
+     "weights_at": "2026-10-08T18:25:07+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-08T18:25:07+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_worst",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_worst",
+     "created_at": "2026-10-08T18:24:21+00:00",
+     "last_modified": "2026-10-18T20:16:19+00:00",
+     "weights_at": "2026-10-08T18:24:21+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-08T18:24:21+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_all",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_all",
+     "created_at": "2026-10-07T16:51:49+00:00",
+     "last_modified": "2026-10-18T20:15:58+00:00",
+     "weights_at": "2026-10-07T16:51:49+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-07T16:51:49+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D_half",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D_half",
+     "created_at": "2026-10-07T16:48:52+00:00",
+     "last_modified": "2026-10-18T20:16:11+00:00",
+     "weights_at": "2026-10-07T16:48:52+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-07T16:48:52+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D2",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D2",
+     "created_at": "2026-10-07T16:46:35+00:00",
+     "last_modified": "2026-10-18T20:16:02+00:00",
+     "weights_at": "2026-10-07T16:46:35+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-07T16:46:35+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S2",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S2",
+     "created_at": "2026-10-07T16:43:30+00:00",
+     "last_modified": "2026-10-18T20:16:06+00:00",
+     "weights_at": "2026-10-07T16:43:30+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-07T16:43:30+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
      "license": "other",
      "gated": "false",
      "derivative": "finetune"
@@ -814,6 +940,48 @@
      "derivative": "finetune"
     },
     {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D",
+     "created_at": "2026-10-06T21:16:31+00:00",
+     "last_modified": "2026-10-18T20:15:53+00:00",
+     "weights_at": "2026-10-06T21:16:31+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-06T21:16:31+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-R",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-R",
+     "created_at": "2026-10-06T21:13:34+00:00",
+     "last_modified": "2026-10-18T20:15:49+00:00",
+     "weights_at": "2026-10-06T21:13:34+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-10-06T21:13:34+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": "finetune"
+    },
+    {
+     "repo_id": "nvidia/cosmos3-nano-libero10-sft-exports",
+     "url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sft-exports",
+     "created_at": "2026-09-29T20:52:44+00:00",
+     "last_modified": "2026-10-18T20:21:25+00:00",
+     "weights_at": "2026-09-29T20:52:44+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-29T20:52:44+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4",
      "created_at": "2026-09-04T14:34:50+00:00",
@@ -826,6 +994,20 @@
       "2609.02849"
      ],
      "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
+     "repo_id": "nvidia/Nemotron-3.5-Parse",
+     "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
+     "created_at": "2026-09-03T06:29:29+00:00",
+     "last_modified": "2026-10-18T18:00:22+00:00",
+     "weights_at": "2026-09-03T06:29:29+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-03T06:29:29+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "openmdw-1.1",
      "gated": "false",
      "derivative": null
     },
@@ -1059,210 +1241,6 @@
      "license": "other",
      "gated": "false",
      "derivative": "finetune"
-    },
-    {
-     "repo_id": "nvidia/Nemotron-3-Embed-8B-BF16",
-     "url": "https://huggingface.co/nvidia/Nemotron-3-Embed-8B-BF16",
-     "created_at": "2026-07-14T07:38:49+00:00",
-     "last_modified": "2026-08-28T15:59:43+00:00",
-     "weights_at": "2026-07-14T07:38:49+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-14T07:38:49+00:00",
-     "report_at": "2026-07-14T07:38:49+00:00",
-     "arxiv_ids": [
-      "2502.13595"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "nvidia/Nemotron-3-Embed-1B-BF16",
-     "url": "https://huggingface.co/nvidia/Nemotron-3-Embed-1B-BF16",
-     "created_at": "2026-07-14T07:32:18+00:00",
-     "last_modified": "2026-08-27T23:53:03+00:00",
-     "weights_at": "2026-07-14T07:32:18+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-14T07:32:18+00:00",
-     "report_at": "2026-07-14T07:32:18+00:00",
-     "arxiv_ids": [
-      "2407.14679",
-      "2502.13595"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Edge-Policy-DROID",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Edge-Policy-DROID",
-     "created_at": "2026-07-09T21:19:56+00:00",
-     "last_modified": "2026-09-16T19:00:40+00:00",
-     "weights_at": "2026-07-09T21:19:56+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-09T21:19:56+00:00",
-     "report_at": "2026-07-09T21:19:56+00:00",
-     "arxiv_ids": [
-      "2405.14867"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Super-Image2Video-4Step",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Super-Image2Video-4Step",
-     "created_at": "2026-07-07T01:00:23+00:00",
-     "last_modified": "2026-09-16T19:00:27+00:00",
-     "weights_at": "2026-07-07T01:00:23+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-07T01:00:23+00:00",
-     "report_at": "2026-07-07T01:00:23+00:00",
-     "arxiv_ids": [
-      "2405.14867"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Super-Text2Image-4Step",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Super-Text2Image-4Step",
-     "created_at": "2026-07-07T01:00:22+00:00",
-     "last_modified": "2026-09-16T19:00:30+00:00",
-     "weights_at": "2026-07-07T01:00:22+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-07T01:00:22+00:00",
-     "report_at": "2026-07-07T01:00:22+00:00",
-     "arxiv_ids": [
-      "2405.14867"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Nemotron-Labs-Audex-2B",
-     "url": "https://huggingface.co/nvidia/Nemotron-Labs-Audex-2B",
-     "created_at": "2026-07-06T16:21:07+00:00",
-     "last_modified": "2026-08-18T19:02:05+00:00",
-     "weights_at": "2026-07-06T16:21:07+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-06T16:21:07+00:00",
-     "report_at": "2026-07-06T16:21:07+00:00",
-     "arxiv_ids": [
-      "2607.05196"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Nemotron-Labs-Audex-30B-A3B",
-     "url": "https://huggingface.co/nvidia/Nemotron-Labs-Audex-30B-A3B",
-     "created_at": "2026-07-06T16:20:28+00:00",
-     "last_modified": "2026-08-13T20:34:22+00:00",
-     "weights_at": "2026-07-06T16:20:28+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-06T16:20:28+00:00",
-     "report_at": "2026-07-06T16:20:28+00:00",
-     "arxiv_ids": [
-      "2607.05196"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Edge",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Edge",
-     "created_at": "2026-07-01T21:54:04+00:00",
-     "last_modified": "2026-09-16T18:48:41+00:00",
-     "weights_at": "2026-07-01T21:54:04+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-07-01T21:54:04+00:00",
-     "report_at": "2026-07-01T21:54:04+00:00",
-     "arxiv_ids": [
-      "2405.14867"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-Parse-2.0",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Parse-2.0",
-     "created_at": "2026-06-30T20:14:50+00:00",
-     "last_modified": "2026-08-22T01:29:54+00:00",
-     "weights_at": "2026-06-30T20:14:50+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-06-30T20:14:50+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "openmdw-1.1",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-Labs-3-Puzzle-75B-A9B-BF16",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-3-Puzzle-75B-A9B-BF16",
-     "created_at": "2026-06-24T15:32:34+00:00",
-     "last_modified": "2026-07-07T10:58:24+00:00",
-     "weights_at": "2026-06-24T15:32:34+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-06-24T15:32:34+00:00",
-     "report_at": "2026-06-24T15:32:34+00:00",
-     "arxiv_ids": [
-      "2411.19146",
-      "2512.20848",
-      "2604.12374",
-      "2607.04371"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4",
-     "created_at": "2026-06-03T14:54:33+00:00",
-     "last_modified": "2026-08-24T23:46:57+00:00",
-     "weights_at": "2026-06-03T14:54:33+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-06-03T14:54:33+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
-     "created_at": "2026-06-03T14:50:04+00:00",
-     "last_modified": "2026-08-24T23:47:18+00:00",
-     "weights_at": "2026-06-03T14:50:04+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-06-03T14:50:04+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-Base-BF16",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-Base-BF16",
-     "created_at": "2026-06-03T14:47:17+00:00",
-     "last_modified": "2026-08-25T15:49:19+00:00",
-     "weights_at": "2026-06-03T14:47:17+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-06-03T14:47:17+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
     }
    ]
   },
@@ -6469,6 +6447,327 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-10T18:54:08Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S5_2",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-10T18:54:08+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_all",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-10T18:53:19Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S5_all",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-10T18:53:19+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D5",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-09T21:31:12Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D5",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-09T21:31:12+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_best",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-08T18:25:07Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_best",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-08T18:25:07+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_worst",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-08T18:24:21Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_worst",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-08T18:24:21+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_all",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-07T16:51:49Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_all",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-07T16:51:49+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D_half",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-07T16:48:52Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D_half",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-07T16:48:52+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D2",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-07T16:46:35Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D2",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-07T16:46:35+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S2",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-07T16:43:30Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S2",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-07T16:43:30+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-06T21:16:31Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-06T21:16:31+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-R",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-06T21:13:34Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-R",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "nvidia/Cosmos3-Nano"
+    ],
+    "surfaced": false,
+    "created_at": "2026-10-06T21:13:34+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/cosmos3-nano-libero10-sft-exports",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-18T20:21:25Z",
+   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sft-exports",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-09-29T20:52:44+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Nemotron-3.5-Parse",
+   "transition": "repo_created",
+   "observed_at": "2026-10-19T00:38:13.353084Z",
+   "at": "2026-10-18T18:00:22Z",
+   "source_url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "openmdw-1.1",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-09-03T06:29:29+00:00"
+   }
+  },
+  {
    "org": "deepseek",
    "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
    "transition": "repo_created",
@@ -7543,336 +7842,11 @@
     "derivative": null,
     "base_models": []
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-AgentWorld-35B-A3B",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-06-22T14:49:37Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-AgentWorld-35B-A3B",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2606.24597"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-35B-A3B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-Bench",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-05-21T04:15:56Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-Bench",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.28091"
-    ],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.6-27B"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W128K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:47Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W128K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-35B-A3B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:46Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-35B-A3B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3-30B-A3B-Base-W128K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:45Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3-30B-A3B-Base-W128K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-30B-A3B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3-30B-A3B-Base-W32K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:44Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3-30B-A3B-Base-W32K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-30B-A3B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-27B-W80K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:43Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-27B-W80K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-27B"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-27B-W80K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:42Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-27B-W80K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-27B"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:41Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-9B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:40Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-9B-Base-W64K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-9B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:40Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-2B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_50",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:39Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_50",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3.5-2B-Base"
-    ]
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_100",
-   "transition": "repo_created",
-   "observed_at": "2026-09-03T06:06:36.259665Z",
-   "at": "2026-04-27T03:39:38Z",
-   "source_url": "https://huggingface.co/Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_100",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": true,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [
-     "2605.11887"
-    ],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "Qwen/Qwen3-8B-Base"
-    ]
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 612,
-  "events": 620
+  "models": 625,
+  "events": 633
  }
 }
