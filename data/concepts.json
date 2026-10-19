@@ -20,9 +20,9 @@
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 16,
+      "count": 17,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-19"
+      "last_seen": "2026-10-20"
     },
     "AI 기반 진단 보조": {
       "aliases": [],
@@ -38,9 +38,9 @@
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 26,
+      "count": 27,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-18"
+      "last_seen": "2026-10-20"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -54,6 +54,12 @@
       "first_seen": "2026-09-01",
       "last_seen": "2026-10-13"
     },
+    "AI 에이전트 상태 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
+    },
     "AI 인프라 경쟁": {
       "aliases": [],
       "count": 15,
@@ -62,9 +68,9 @@
     },
     "AI와 인간 협업": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-10-03",
-      "last_seen": "2026-10-19"
+      "last_seen": "2026-10-20"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -338,9 +344,9 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 25,
+      "count": 26,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-10-18"
+      "last_seen": "2026-10-20"
     },
     "데이터 사용 투명성": {
       "aliases": [],
@@ -504,6 +510,12 @@
       "first_seen": "2026-09-14",
       "last_seen": "2026-09-14"
     },
+    "모델 서빙": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
+    },
     "모델 파인튜닝": {
       "aliases": [],
       "count": 9,
@@ -602,9 +614,9 @@
     },
     "불확실성 정량화": {
       "aliases": [],
-      "count": 14,
+      "count": 15,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-19"
+      "last_seen": "2026-10-20"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -629,6 +641,12 @@
       "count": 1,
       "first_seen": "2026-09-16",
       "last_seen": "2026-09-16"
+    },
+    "비동기 스케줄링": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
     },
     "비동기 처리와 트랜잭션": {
       "aliases": [],
@@ -671,6 +689,12 @@
       "count": 1,
       "first_seen": "2026-09-22",
       "last_seen": "2026-09-22"
+    },
+    "사용자 행동 변화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
     },
     "사회적 전파 모델": {
       "aliases": [],
@@ -791,6 +815,12 @@
       "count": 1,
       "first_seen": "2026-10-02",
       "last_seen": "2026-10-02"
+    },
+    "실시간 SLA 보장": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
     },
     "실시간 조인": {
       "aliases": [],
@@ -1128,6 +1158,12 @@
       "first_seen": "2026-10-12",
       "last_seen": "2026-10-12"
     },
+    "컨텍스트 예산 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
+    },
     "컨트롤러 기반 라우팅": {
       "aliases": [],
       "count": 1,
@@ -1224,11 +1260,23 @@
       "first_seen": "2026-10-04",
       "last_seen": "2026-10-04"
     },
+    "프로모션 효과 분석": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
+    },
     "프록시 기반 AOP": {
       "aliases": [],
       "count": 1,
       "first_seen": "2026-09-05",
       "last_seen": "2026-09-05"
+    },
+    "프롬프트 디버깅": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
     },
     "프롬프트 협업": {
       "aliases": [],
@@ -1247,6 +1295,12 @@
       "count": 1,
       "first_seen": "2026-09-01",
       "last_seen": "2026-09-01"
+    },
+    "플랫폼 수익 다각화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-20"
     },
     "플랫폼 협업": {
       "aliases": [],
@@ -1333,6 +1387,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-19T07:09:48.959238+09:00",
+  "updated_at": "2026-10-20T08:27:15.924846+09:00",
   "version": 1
 }

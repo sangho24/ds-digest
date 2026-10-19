@@ -1,295 +1,300 @@
 {
   "contract_version": 1,
-  "date": "2026-10-19",
-  "generated_at": "2026-10-19T07:10:00.787356+09:00",
+  "date": "2026-10-20",
+  "generated_at": "2026-10-20T08:27:29.227329+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-19.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-20.html",
   "items": [
     {
-      "id": "d2d1f7fd5e93",
-      "title": "OmniVerifier-C1: Decomposed Graded Verifier for Rule-Governed Generative World Modeling",
-      "url": "https://arxiv.org/abs/2610.22355v1",
+      "id": "e22eeba82d81",
+      "title": "AI-Driven Reproducibility and Analytical Robustness in Scientific Discovery",
+      "url": "https://arxiv.org/abs/2610.23845v1",
       "source": {
         "type": "rss",
         "name": "arXiv:cs.CL"
       },
-      "published_at": "2026-10-15T17:58:04",
-      "summary": "세밀한 점수 기반 검증기로 멀티모달 모델 신뢰성 강화",
-      "positioning": "멀티모달 생성 모델의 신뢰성을 평가하기 위해 기존 이진 시각 검증기의 한계가 지적돼 왔다. 본 논문은 프롬프트를 세분화하고 점수화하는 graded verifier와 이를 학습하기 위한 Decoupled RL 방식을 제안하며, 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku) 평가에서 기존 방법을 능가한다. 이는 멀티모달 평가와 강화학습 기반 검증 연구 흐름에서 연속 점수와 구조화된 피드백을 도입한 새로운 단계이다.",
+      "published_at": "2026-10-16T17:57:55",
+      "summary": "LLM으로 암 연구 재현·견고성 자동화, 검증 효율↑",
+      "positioning": "재현성과 견고성 검증에 수작업 비용이 크게 소요되는 문제를 해결하고자, SEER 데이터 기반 논문을 대상으로 LLM 에이전트가 자동 재현·분석 파이프라인을 제시한다. 기존 LLM 활용 연구에 이어 과학적 검증 워크플로우 자동화 흐름의 최신 단계이며, SEER‑Repro 벤치마크를 통해 실증적 성과를 보여준다.",
       "tags": [
-        "OmniVerifier-C1",
-        "Decoupled RL",
-        "pointwise graded verifier",
-        "pairwise verification",
-        "Maze"
+        "SEER",
+        "LLM",
+        "SEER-Repro",
+        "Surveillance, Epidemiology, and End Results",
+        "AI agent"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "기존 이진 검증기를 넘어 복합 프롬프트를 자동 분해해 세부 구성요소별 점수를 부여하는 연속형 검증기를 제안한다.",
+          "point": "LLM 에이전트가 SEER 기반 20개 논문의 2,190개 원자 주장 중 77.4%를 재현했다.",
           "timestamp": null
         },
         {
-          "point": "Decoupled RL 훈련 전략으로 서브 질문 이진 판단과 전역 정렬 점수를 동시에 최적화해 세밀한 피드백을 제공한다.",
+          "point": "자동화 파이프라인이 재현된 결과 중 9.5%에서 중요한 분석 선택을 식별해 전문가 검토를 요구한다.",
           "timestamp": null
         },
         {
-          "point": "점수형 검증기가 텍스트‑이미지 및 규칙 기반 세계 모델(Maze, Sudoku)에서 이진 검증기보다 일반화와 정확도가 크게 향상됨을 실험적으로 입증한다.",
+          "point": "SEER‑Repro 벤치마크와 에이전트 기반 분석이 과학적 검증 효율을 크게 향상시킨다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "점수형 검증기를 코드 생성 모델에 적용해 구문, 정확성, 스타일을 각각 점수화함으로써 세부 품질 피드백을 제공한다.",
-        "Decoupled RL 방식을 챗봇 응답 평가에 활용해 관련성·안전성·사실성 이진 서브 질문과 전체 만족도 점수를 동시에 학습한다.",
-        "쌍별 검증 패러다임을 의료 영상 진단 모델에 적용해 전문가 라벨 이미지와 비교해 보다 정확한 비판을 얻는다."
+        "LLM 에이전트를 활용해 기업 재무 보고서의 핵심 지표를 자동 재현·검증하여 감사 효율을 높인다.",
+        "정책 효과 분석에 에이전트 기반 견고성 파이프라인을 적용해 분석 선택의 민감성을 자동 탐지하고 전문가 검토를 유도한다.",
+        "대규모 NLP 데이터셋에 대한 재현성 벤치마크를 구축해 LLM 에이전트가 결과를 자동 검증하도록 한다."
       ],
       "quiz": [
         {
-          "question": "점수형 검증기가 기존 이진 검증기에 비해 제공하는 주요 이점은 무엇인가?",
+          "question": "이 연구에서 에이전트 기반 분석 파이프라인의 주요 기능은 무엇인가?",
           "options": [
-            "연속적인 비판 신호 제공",
-            "계산 비용 감소",
-            "강화학습 필요성 제거",
-            "비지도 학습 가능"
-          ],
-          "answer_index": 0,
-          "explanation": "초록에서 점수형 검증기가 연속적이고 더 정보가 풍부한 비판 신호를 제공한다고 명시한다."
-        },
-        {
-          "question": "논문에 따르면, 실제 이미지가 존재할 때 더 정확한 비판을 제공하는 검증 패러다임은?",
-          "options": [
-            "점별 형식",
-            "쌍별 검증",
-            "이진 검증",
-            "비지도 점수화"
+            "데이터 수집",
+            "분석 선택 식별 및 대안 제시",
+            "모델 훈련",
+            "결과 시각화"
           ],
           "answer_index": 1,
-          "explanation": "본문에서 ground-truth 이미지가 있을 때 쌍별 검증 패러다임이 더 정확한 비판을 제공한다는 결과를 제시한다."
+          "explanation": "본문에 따르면 파이프라인은 각 발견에 대한 분석 선택을 식별하고 방어 가능한 대안을 제시한 뒤 재분석하여 결론에 영향을 미치는지를 판단한다."
         }
       ]
     },
     {
-      "id": "35098ab77e23",
-      "title": "💸 ChatGPT가 골라준 주식, 믿고 사도 될까?",
-      "url": "https://dflick.stibee.com/p/115",
+      "id": "1e538e69cd8d",
+      "title": "Harness Engineering 101: The LLM is the brain, the harness is the body",
+      "url": "https://github.com/IsuruMaduranga/harness-engineering-101",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 호출 상태 관리로 에이전트 신뢰성 확보",
+      "positioning": null,
+      "tags": [
+        "LLM",
+        "WSO2 MI Copilot",
+        "One Code",
+        "Claude Code",
+        "pi"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LLM API는 무상태이며 전체 대화는 JSON 배열로 전달한다.",
+          "timestamp": null
+        },
+        {
+          "point": "하네스는 이 배열을 구축·유지·보호하며 패치 형태로 에이전트 기능을 추가한다.",
+          "timestamp": null
+        },
+        {
+          "point": "컨텍스트는 예산이며, 캐싱·서브에이전트·스티어링 등으로 관리한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "하네스 패턴을 데이터 파이프라인의 외부 API 호출 관리에 적용해 상태와 재시도를 일관되게 기록한다",
+        "컨텍스트 예산 개념을 피처 스토어 쿼리 제한에 활용해 토큰/메모리 사용을 최적화한다",
+        "서브에이전트 아이디어를 모델 추론 작업을 여러 워커에 분산시켜 장기 실행 작업의 스케일을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "LLM API가 무상태라는 의미는?",
+          "options": [
+            "새 모델 인스턴스를 매 호출마다 만든다",
+            "이전 대화가 자동 저장된다",
+            "호출 시 전체 대화 히스토리를 전달해야 한다",
+            "응답이 항상 동일하다"
+          ],
+          "answer_index": 2,
+          "explanation": "무상태 API는 서버가 이전 대화를 기억하지 않으므로 클라이언트가 전체 대화(프롬프트)를 매 요청에 포함시켜야 한다."
+        },
+        {
+          "question": "컨텍스트를 '예산'이라고 부르는 이유는?",
+          "options": [
+            "무제한으로 사용할 수 있기 때문",
+            "토큰 수에 제한이 있어 관리해야 하기 때문",
+            "비용이 무료이기 때문",
+            "모델이 자동으로 최적화하기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "LLM의 컨텍스트 길이는 토큰 제한이 있어, 이를 예산처럼 관리해야 효율적인 대화가 가능하다."
+        }
+      ]
+    },
+    {
+      "id": "5e5507bbbbe0",
+      "title": "👋이젠 AI 창을 따로 켜지 않아도 된다고?",
+      "url": "https://hai-hancom.stibee.com/p/181",
       "source": {
         "type": "newsletter",
-        "name": "디플릭"
+        "name": "한컴 AI"
+      },
+      "published_at": "2026-10-19T00:00:00",
+      "summary": "브라우저·문서 AI 탑재로 작업 흐름·생산성 향상",
+      "positioning": null,
+      "tags": [
+        "Gemini",
+        "Copilot",
+        "Han Addons",
+        "Canva",
+        "Figma"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "브라우저에 AI가 내장돼 페이지 내용 바로 질문·요약 가능",
+          "timestamp": null
+        },
+        {
+          "point": "문서·프레젠테이션 도구에 AI 애드온으로 기능 확장, 작업 흐름 통합",
+          "timestamp": null
+        },
+        {
+          "point": "탭 간 비교·스케줄·메일 자동화 등 AI가 기존 UI에 직접 연동",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Jupyter 노트북에 현재 셀 출력과 코드 컨텍스트를 참고해 요약·질문하는 AI 어시스턴트를 삽입해 데이터 탐색 속도 향상",
+        "다중 데이터 대시보드에서 탭 간 비교 기능을 차용해 서로 다른 데이터셋의 핵심 지표를 AI가 자동 정리·비교하도록 하여 의사결정 시간을 단축",
+        "코드 IDE에 AI 애드온을 적용해 선택한 함수·클래스에 대한 문서와 사용 예시를 자동 생성해 개발 생산성을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "브라우저에 내장된 AI가 페이지 내용을 활용해 답변을 제공하려면 어떤 메커니즘이 작동하나요?",
+          "options": [
+            "페이지 텍스트를 자동 복사",
+            "AI가 페이지 DOM을 직접 참조",
+            "사용자가 URL을 입력",
+            "별도 API 호출"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 AI 버튼을 누르면 AI가 현재 페이지 내용을 참고해 답변을 생성한다는 설명이 있어, 이는 AI가 페이지 DOM을 직접 참조하는 방식이다."
+        },
+        {
+          "question": "한글에 AI 애드온을 설치했을 때 제공되지 않는 기능은 무엇인가요?",
+          "options": [
+            "회의록 자동 작성",
+            "문서 교정",
+            "데이터베이스 연결",
+            "슬라이드 디자인 자동 생성"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 회의록 작성·문서 교정·슬라이드 디자인 기능은 언급됐지만, 데이터베이스 연결에 대한 언급은 없으므로 해당 옵션이 제공되지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "52e64d3c2512",
+      "title": "🥤당근이 철 지난 쇼핑 행사를 부활시킨 이유",
+      "url": "https://trendlite.stibee.com/p/492",
+      "source": {
+        "type": "newsletter",
+        "name": "트렌드라이트"
       },
       "published_at": "2026-10-13T00:00:00",
-      "summary": "AI 주식 추천 한계와 검증법을 파악해 투자 데이터 분석에 활용",
+      "summary": "바로구매가 사용자 행동·매출에 미치는 효과",
       "positioning": null,
       "tags": [
-        "ChatGPT",
-        "Gemini",
-        "Claude",
-        "Anthropic",
-        "shadcn"
+        "당근",
+        "바로구매",
+        "CJ대한통운",
+        "G마켓",
+        "빅스마일데이"
       ],
-      "relevance": 5,
+      "relevance": 6,
       "key_points": [
         {
-          "point": "동일 투자 조건에도 ChatGPT·Gemini·Claude가 제시하는 위험 수준이 서로 다르다",
+          "point": "당근절은 무료 배송을 통해 ‘바로구매’ 사용을 촉진하려는 전략이었다.",
           "timestamp": null
         },
         {
-          "point": "AI는 공시 요약 등 보조 역할은 가능하지만 투자 결정·손실 책임은 인간에게 있다",
+          "point": "행사 당일 거래 건수는 141% 증가했지만 방문자 수와 사용시간 증가는 미미했다.",
           "timestamp": null
         },
         {
-          "point": "연구·금융당국 조사 결과를 토대로 AI가 담당할 부분과 직접 검증이 필요한 부분을 구분해야 한다",
+          "point": "‘바로구매’는 당근의 광고 외 수익원이며 CJ대한통운은 물량 확보 기회가 된다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "AI를 활용해 기업 ESG 공시를 요약·분석해 지속가능성 평가에 적용한다",
-        "디자인 스킬 프롬프트를 이용해 AI가 만든 마케팅 카피를 블라인드 평가해 브랜드 일관성을 높인다",
-        "여러 LLM의 의료 진단 위험 평가를 비교해 모델별 편향을 식별하고 안전성을 강화한다"
+        "무료 배송 혜택을 활용해 SaaS 구독 기능 체험을 유도한다",
+        "한정 무료 사용 크레딧을 제공해 프리미엄 API 체험을 촉진한다",
+        "클라우드 파트너와 협업해 신규 AI 추론 서비스의 컴퓨팅 용량을 확보한다"
       ],
       "quiz": [
         {
-          "question": "동일 투자 조건을 입력했을 때 ChatGPT와 Gemini, Claude가 제시하는 위험 수준이 서로 다른 주요 이유는?",
+          "question": "당근절이 거래 건수는 크게 늘었지만 방문자 수가 크게 증가하지 않은 이유는 무엇으로 설명될 수 있는가?",
           "options": [
-            "각 모델이 학습한 데이터와 위험 평가 기준이 다르다",
-            "모델이 답을 무작위로 생성한다",
-            "입력 파싱 오류가 발생한다",
-            "금융 규제 차이가 모델에 반영된다"
+            "무료 배송 혜택이 제한적이었다",
+            "사용자는 이미 앱을 자주 이용했기 때문에 추가 방문이 필요 없었다",
+            "배송비가 높은 상품이 많아 구매 장벽이 남았다",
+            "이벤트가 짧게 진행돼 인지도가 낮았다"
           ],
-          "answer_index": 0,
-          "explanation": "각 LLM은 서로 다른 학습 데이터와 위험 평가 로직을 가지고 있어 같은 조건이라도 위험 수준을 다르게 판단한다."
-        },
-        {
-          "question": "AI가 제공하는 주식 추천에서 인간이 반드시 직접 검증해야 하는 핵심 이유는?",
-          "options": [
-            "AI는 법적·재정적 책임을 지지 않는다",
-            "AI는 항상 최신 데이터를 사용한다",
-            "AI는 투자 손실을 보상한다",
-            "AI는 위험을 과소평가한다"
-          ],
-          "answer_index": 0,
-          "explanation": "AI는 조언을 제공할 수 있지만, 투자 결정과 손실에 대한 책임은 인간 투자자에게 있으며, 따라서 직접 검증이 필요하다."
+          "answer_index": 2,
+          "explanation": "본문에 배송비가 3천 원 안팎으로 낮은 가격 상품에 비해 부담이 커서 구매 장벽이 된다고 언급되어 있다."
         }
       ]
     },
     {
-      "id": "1179099135c9",
-      "title": "OpenAI’s New AI Is Doing Things We Barely Understand",
-      "url": "https://youtu.be/z_sXLlLVUls",
+      "id": "a536a0e17997",
+      "title": "토스는 AI모델을 어떻게 서빙할까 | SlashLive",
+      "url": "https://youtu.be/t_35VpGYgiY",
       "source": {
         "type": "youtube",
-        "name": "Two Minute Papers"
+        "name": "토스 챌린저스"
       },
-      "published_at": "2026-10-13T08:56:12",
-      "summary": "AI가 만든 수학 증명·정리의 신뢰성과 활용성을 고민해야 함",
+      "published_at": "2026-10-19T00:41:21",
+      "summary": "AI 서빙 SLA 보장을 위한 엔지니어링 기법",
       "positioning": null,
       "tags": [
-        "OpenAI",
-        "triangular billiards",
-        "conformal transformation",
-        "neural network"
+        "TTS",
+        "LLM",
+        "VLM Omni",
+        "Kubernetes",
+        "KV 캐시"
       ],
-      "relevance": 5,
+      "relevance": 6,
       "key_points": [
         {
-          "point": "불규칙 각을 가진 삼각형에서는 거의 모든 광선이 전체를 고르게 방문한다",
-          "timestamp": "01:11"
+          "point": "모델 요청 시 GPU 수·비용·ROI를 시뮬레이션해 SLA와 비용 효율성을 사전 검증",
+          "timestamp": "00:46"
         },
         {
-          "point": "각을 보존하는 conformal 변환으로 복잡한 구멍을 원이나 점으로 변형할 수 있다",
-          "timestamp": "02:16"
+          "point": "실시간 대유저 서비스와 대규모 트래픽에서 레이턴시·멀티테넌트 SLA 보장이 핵심 과제",
+          "timestamp": "02:00"
         },
         {
-          "point": "AI가 만든 증명은 비우아하고, 수학의 목표가 결과만인가, 이해인가를 논의한다",
-          "timestamp": "03:20"
+          "point": "CUDA 그래프 캡처와 비동기 스케줄러 도입으로 TTS 서빙 레이턴시 크게 감소",
+          "timestamp": "05:37"
         }
       ],
       "ideas": [
-        "복잡한 CFD 메쉬를 conformal 변환으로 단순한 도메인으로 매핑해 솔버 안정성을 높인다",
-        "AI가 생성한 비우아한 증명을 품질 예측 모델의 학습 데이터로 활용해 자동 정리 시스템을 보조한다",
-        "불규칙 각 삼각형의 에르고딕 특성을 의사난수 생성에 적용해 Monte Carlo 시뮬레이션의 샘플링 품질을 개선한다"
+        "GPU·비용 시뮬레이션을 전자상거래 추천 배치 파이프라인에 적용해 비용 효율적 스케일링을 설계한다",
+        "KV 어웨어 라우터 개념을 마이크로서비스 데이터베이스 요청 라우팅에 적용해 캐시 히트율을 높인다",
+        "CUDA 그래프와 비동기 스케줄러를 영상 트랜스코딩 파이프라인에 도입해 처리 지연을 최소화한다"
       ],
       "quiz": [
         {
-          "question": "어떤 삼각형의 각 조건이 거의 모든 광선이 전체를 고르게 방문하게 만든다?",
+          "question": "TTS 서빙 엔진에서 레이턴시를 줄이기 위해 도입한 주요 기술은?",
           "options": [
-            "모든 각이 π의 유리배",
-            "적어도 하나의 각이 π에 대해 무리수배",
-            "모든 각이 동일",
-            "직각삼각형"
+            "모델 압축",
+            "CUDA 그래프 캡처",
+            "모델 양자화",
+            "데이터 증강"
           ],
           "answer_index": 1,
-          "explanation": "텍스트에 따르면, 삼각형에 최소 하나의 각이 π에 대해 무리수이면 거의 모든 광선이 전체를 고르게 방문한다."
+          "explanation": "본문에서 반복되는 CPU·GPU 연산을 CUDA 그래프로 캡처하고 비동기 스케줄러를 구현해 레이턴시를 크게 낮췄다고 설명한다."
         },
         {
-          "question": "conformal 변환이 보존하는 특성은 무엇인가?",
+          "question": "실시간 AI 상담 서비스에서 SLA 700ms 목표를 달성하기 위해 설정한 지표는?",
           "options": [
-            "면적",
-            "각도",
-            "길이",
-            "곡률"
+            "RTF 1.0 미만",
+            "TTFA 140ms",
+            "GPU 사용량 제한",
+            "CPU 사용량 제한"
           ],
           "answer_index": 1,
-          "explanation": "conformal 변환은 각을 보존하면서 형태를 변형한다는 것이 텍스트에 언급되어 있다."
-        }
-      ]
-    },
-    {
-      "id": "6673fc37d821",
-      "title": "There's never been a better time to go into math",
-      "url": "https://youtu.be/LKrwhjOI8Nc",
-      "source": {
-        "type": "youtube",
-        "name": "3Blue1Brown"
-      },
-      "published_at": "2026-10-16T16:15:20",
-      "summary": "AI 시대에 수학 전공 선택과 가치를 재평가해야 함",
-      "positioning": null,
-      "tags": [
-        "AI",
-        "AI safety",
-        "PhD",
-        "3Blue1Brown"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "AI와 AI 안전에 대한 우려 속에서도 수학이 사라지지 않을 것이라는 주장",
-          "timestamp": "01:04"
-        },
-        {
-          "point": "수학자들의 역할을 나열하고, 그 가치와 자금 흐름을 연결해 보는 프레임워크 제시",
-          "timestamp": "01:28"
-        },
-        {
-          "point": "AI가 모든 수학 작업을 대체한다 가정했을 때 불확실성을 넓은 오류 범위로 제시",
-          "timestamp": "01:51"
-        }
-      ],
-      "ideas": [
-        "수학자 역할·가치 매핑 프레임워크를 데이터 사이언스 직무와 보상 구조 분석에 적용해 커리어 로드맵을 설계한다",
-        "학계에서의 논문 인용·저자 순위 재구성을 기업 프로젝트 기여도 평가 체계에 빌려와 직원 승진 기준을 다변화한다",
-        "AI가 업무를 대체할 경우를 가정하고 넓은 오류 범위(불확실성 정량화)를 제품 로드맵에 적용해 위험 관리와 일정 계획을 보수적으로 설계한다"
-      ],
-      "quiz": [
-        {
-          "question": "영상에서 저자는 AI가 모든 수학 작업을 수행한다면 어떤 접근을 제시했는가?",
-          "options": [
-            "즉시 수학 전공을 포기한다",
-            "불확실성을 넓은 오류 범위로 고려한다",
-            "새로운 학위 프로그램을 만든다",
-            "AI와 협업을 완전히 배제한다"
-          ],
-          "answer_index": 1,
-          "explanation": "01:51에 저자는 AI가 모든 작업을 더 잘 수행한다는 가정 하에 ‘very wide error bars’를 두어 불확실성을 크게 잡아야 한다고 언급한다."
-        }
-      ]
-    },
-    {
-      "id": "52719c23f180",
-      "title": "Life as it could be | Akarsh Kumar on Artificial Life",
-      "url": "https://youtu.be/pniLY0I9VJQ",
-      "source": {
-        "type": "youtube",
-        "name": "Machine Learning Street Talk"
-      },
-      "published_at": "2026-10-08T11:34:31",
-      "summary": "간단 규칙으로 복잡성 생성 원리를 이해",
-      "positioning": null,
-      "tags": [
-        "Conway's Game of Life",
-        "foundation model"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "Conway's Game of Life는 2D 격자에서 셀을 켜거나 끄는 단순 규칙만 가짐",
-          "timestamp": "00:04"
-        },
-        {
-          "point": "극히 단순한 규칙에서도 놀라운 복잡성이 생성된다",
-          "timestamp": "00:10"
-        },
-        {
-          "point": "시뮬레이션 공간을 파라미터화해 기반 모델에 입력하면 작은 솔루션 섬을 찾을 수 있다",
-          "timestamp": "00:40"
-        }
-      ],
-      "ideas": [
-        "데이터 증강 파이프라인을 파라미터화된 시뮬레이션 공간으로 정의하고, 기초 모델이 가장 다양하고 유용한 증강 조합을 선택하도록 적용한다",
-        "하이퍼파라미터 최적화에서 메타 모델이 예측한 작은 ‘솔루션 섬’에 집중 탐색함으로써 탐색 효율을 높인다",
-        "멀티에이전트 강화학습 환경에 원시적인 상호작용 규칙을 부여해, 단순 규칙이 복잡한 전략으로 자가 조직되는 현상을 설계한다"
-      ],
-      "quiz": [
-        {
-          "question": "Conway's Game of Life와 무작위 노이즈 시뮬레이션의 차이는 무엇에 기인하는가?",
-          "options": [
-            "규칙의 결정성",
-            "셀 수의 많음",
-            "초기 조건",
-            "시뮬레이션 속도"
-          ],
-          "answer_index": 0,
-          "explanation": "텍스트(00:10~00:16)에서 단순 규칙이 복잡성을 만들고, 무작위 노이즈는 그런 현상을 만들지 못한다는 점을 강조한다. 이는 규칙이 결정적이며 상호작용을 통해 복잡성이 발생하기 때문이다."
+          "explanation": "TTFA는 첫 오디오 응답까지 걸리는 시간으로, 본문에서 140ms로 설정했다고 언급한다."
         }
       ]
     }

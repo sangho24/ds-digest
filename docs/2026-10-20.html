@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 20일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 20일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 기반 업무 검증</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">불확실성 정량화</span><span class="concept">AI 에이전트 상태 관리</span><span class="concept">컨텍스트 예산 관리</span><span class="concept">프롬프트 디버깅</span><span class="concept">AI 생산성 도구</span><span class="concept">AI와 인간 협업</span><span class="concept">프로모션 효과 분석</span><span class="concept">사용자 행동 변화</span><span class="concept">플랫폼 수익 다각화</span><span class="concept">모델 서빙</span><span class="concept">실시간 SLA 보장</span><span class="concept">비동기 스케줄링</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CL</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.23845v1" target="_blank" rel="noopener">AI-Driven Reproducibility and Analytical Robustness in Scientific Discovery</a>
+        </h2>
+
+        <p class="summary">LLM으로 암 연구 재현·견고성 자동화, 검증 효율↑</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>재현성과 견고성 검증에 수작업 비용이 크게 소요되는 문제를 해결하고자, SEER 데이터 기반 논문을 대상으로 LLM 에이전트가 자동 재현·분석 파이프라인을 제시한다. 기존 LLM 활용 연구에 이어 과학적 검증 워크플로우 자동화 흐름의 최신 단계이며, SEER‑Repro 벤치마크를 통해 실증적 성과를 보여준다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 에이전트가 SEER 기반 20개 논문의 2,190개 원자 주장 중 77.4%를 재현했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>자동화 파이프라인이 재현된 결과 중 9.5%에서 중요한 분석 선택을 식별해 전문가 검토를 요구한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SEER‑Repro 벤치마크와 에이전트 기반 분석이 과학적 검증 효율을 크게 향상시킨다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 에이전트를 활용해 기업 재무 보고서의 핵심 지표를 자동 재현·검증하여 감사 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>정책 효과 분석에 에이전트 기반 견고성 파이프라인을 적용해 분석 선택의 민감성을 자동 탐지하고 전문가 검토를 유도한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 NLP 데이터셋에 대한 재현성 벤치마크를 구축해 LLM 에이전트가 결과를 자동 검증하도록 한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">이 연구에서 에이전트 기반 분석 파이프라인의 주요 기능은 무엇인가?</div>
+            
+            <div class="q-opt">① 데이터 수집</div>
+            
+            <div class="q-opt">② 분석 선택 식별 및 대안 제시</div>
+            
+            <div class="q-opt">③ 모델 훈련</div>
+            
+            <div class="q-opt">④ 결과 시각화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 분석 선택 식별 및 대안 제시</div>
+              <div class="why">본문에 따르면 파이프라인은 각 발견에 대한 분석 선택을 식별하고 방어 가능한 대안을 제시한 뒤 재분석하여 결론에 영향을 미치는지를 판단한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">SEER</span><span class="tag">LLM</span><span class="tag">SEER-Repro</span><span class="tag">Surveillance, Epidemiology, and End Results</span><span class="tag">AI agent</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/IsuruMaduranga/harness-engineering-101" target="_blank" rel="noopener">Harness Engineering 101: The LLM is the brain, the harness is the body</a>
+        </h2>
+
+        <p class="summary">LLM 호출 상태 관리로 에이전트 신뢰성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM API는 무상태이며 전체 대화는 JSON 배열로 전달한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>하네스는 이 배열을 구축·유지·보호하며 패치 형태로 에이전트 기능을 추가한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>컨텍스트는 예산이며, 캐싱·서브에이전트·스티어링 등으로 관리한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>하네스 패턴을 데이터 파이프라인의 외부 API 호출 관리에 적용해 상태와 재시도를 일관되게 기록한다</span></li>
+            
+            <li><span class="box"></span><span>컨텍스트 예산 개념을 피처 스토어 쿼리 제한에 활용해 토큰/메모리 사용을 최적화한다</span></li>
+            
+            <li><span class="box"></span><span>서브에이전트 아이디어를 모델 추론 작업을 여러 워커에 분산시켜 장기 실행 작업의 스케일을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">LLM API가 무상태라는 의미는?</div>
+            
+            <div class="q-opt">① 새 모델 인스턴스를 매 호출마다 만든다</div>
+            
+            <div class="q-opt">② 이전 대화가 자동 저장된다</div>
+            
+            <div class="q-opt">③ 호출 시 전체 대화 히스토리를 전달해야 한다</div>
+            
+            <div class="q-opt">④ 응답이 항상 동일하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 호출 시 전체 대화 히스토리를 전달해야 한다</div>
+              <div class="why">무상태 API는 서버가 이전 대화를 기억하지 않으므로 클라이언트가 전체 대화(프롬프트)를 매 요청에 포함시켜야 한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">컨텍스트를 '예산'이라고 부르는 이유는?</div>
+            
+            <div class="q-opt">① 무제한으로 사용할 수 있기 때문</div>
+            
+            <div class="q-opt">② 토큰 수에 제한이 있어 관리해야 하기 때문</div>
+            
+            <div class="q-opt">③ 비용이 무료이기 때문</div>
+            
+            <div class="q-opt">④ 모델이 자동으로 최적화하기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 토큰 수에 제한이 있어 관리해야 하기 때문</div>
+              <div class="why">LLM의 컨텍스트 길이는 토큰 제한이 있어, 이를 예산처럼 관리해야 효율적인 대화가 가능하다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LLM</span><span class="tag">WSO2 MI Copilot</span><span class="tag">One Code</span><span class="tag">Claude Code</span><span class="tag">pi</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">한컴 AI</div>
+
+        <h2 class="title">
+          <a href="https://hai-hancom.stibee.com/p/181" target="_blank" rel="noopener">👋이젠 AI 창을 따로 켜지 않아도 된다고?</a>
+        </h2>
+
+        <p class="summary">브라우저·문서 AI 탑재로 작업 흐름·생산성 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>브라우저에 AI가 내장돼 페이지 내용 바로 질문·요약 가능</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>문서·프레젠테이션 도구에 AI 애드온으로 기능 확장, 작업 흐름 통합</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>탭 간 비교·스케줄·메일 자동화 등 AI가 기존 UI에 직접 연동</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Jupyter 노트북에 현재 셀 출력과 코드 컨텍스트를 참고해 요약·질문하는 AI 어시스턴트를 삽입해 데이터 탐색 속도 향상</span></li>
+            
+            <li><span class="box"></span><span>다중 데이터 대시보드에서 탭 간 비교 기능을 차용해 서로 다른 데이터셋의 핵심 지표를 AI가 자동 정리·비교하도록 하여 의사결정 시간을 단축</span></li>
+            
+            <li><span class="box"></span><span>코드 IDE에 AI 애드온을 적용해 선택한 함수·클래스에 대한 문서와 사용 예시를 자동 생성해 개발 생산성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">브라우저에 내장된 AI가 페이지 내용을 활용해 답변을 제공하려면 어떤 메커니즘이 작동하나요?</div>
+            
+            <div class="q-opt">① 페이지 텍스트를 자동 복사</div>
+            
+            <div class="q-opt">② AI가 페이지 DOM을 직접 참조</div>
+            
+            <div class="q-opt">③ 사용자가 URL을 입력</div>
+            
+            <div class="q-opt">④ 별도 API 호출</div>
+            
+            <div class="q-answer">
+              <div class="correct">② AI가 페이지 DOM을 직접 참조</div>
+              <div class="why">본문에 AI 버튼을 누르면 AI가 현재 페이지 내용을 참고해 답변을 생성한다는 설명이 있어, 이는 AI가 페이지 DOM을 직접 참조하는 방식이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">한글에 AI 애드온을 설치했을 때 제공되지 않는 기능은 무엇인가요?</div>
+            
+            <div class="q-opt">① 회의록 자동 작성</div>
+            
+            <div class="q-opt">② 문서 교정</div>
+            
+            <div class="q-opt">③ 데이터베이스 연결</div>
+            
+            <div class="q-opt">④ 슬라이드 디자인 자동 생성</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 데이터베이스 연결</div>
+              <div class="why">본문에 회의록 작성·문서 교정·슬라이드 디자인 기능은 언급됐지만, 데이터베이스 연결에 대한 언급은 없으므로 해당 옵션이 제공되지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Gemini</span><span class="tag">Copilot</span><span class="tag">Han Addons</span><span class="tag">Canva</span><span class="tag">Figma</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/492" target="_blank" rel="noopener">🥤당근이 철 지난 쇼핑 행사를 부활시킨 이유</a>
+        </h2>
+
+        <p class="summary">바로구매가 사용자 행동·매출에 미치는 효과</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>당근절은 무료 배송을 통해 ‘바로구매’ 사용을 촉진하려는 전략이었다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>행사 당일 거래 건수는 141% 증가했지만 방문자 수와 사용시간 증가는 미미했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>‘바로구매’는 당근의 광고 외 수익원이며 CJ대한통운은 물량 확보 기회가 된다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>무료 배송 혜택을 활용해 SaaS 구독 기능 체험을 유도한다</span></li>
+            
+            <li><span class="box"></span><span>한정 무료 사용 크레딧을 제공해 프리미엄 API 체험을 촉진한다</span></li>
+            
+            <li><span class="box"></span><span>클라우드 파트너와 협업해 신규 AI 추론 서비스의 컴퓨팅 용량을 확보한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">당근절이 거래 건수는 크게 늘었지만 방문자 수가 크게 증가하지 않은 이유는 무엇으로 설명될 수 있는가?</div>
+            
+            <div class="q-opt">① 무료 배송 혜택이 제한적이었다</div>
+            
+            <div class="q-opt">② 사용자는 이미 앱을 자주 이용했기 때문에 추가 방문이 필요 없었다</div>
+            
+            <div class="q-opt">③ 배송비가 높은 상품이 많아 구매 장벽이 남았다</div>
+            
+            <div class="q-opt">④ 이벤트가 짧게 진행돼 인지도가 낮았다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 배송비가 높은 상품이 많아 구매 장벽이 남았다</div>
+              <div class="why">본문에 배송비가 3천 원 안팎으로 낮은 가격 상품에 비해 부담이 커서 구매 장벽이 된다고 언급되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">당근</span><span class="tag">바로구매</span><span class="tag">CJ대한통운</span><span class="tag">G마켓</span><span class="tag">빅스마일데이</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/t_35VpGYgiY" target="_blank" rel="noopener">토스는 AI모델을 어떻게 서빙할까 | SlashLive</a>
+        </h2>
+
+        <p class="summary">AI 서빙 SLA 보장을 위한 엔지니어링 기법</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:46</span>
+            
+            <span>모델 요청 시 GPU 수·비용·ROI를 시뮬레이션해 SLA와 비용 효율성을 사전 검증</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:00</span>
+            
+            <span>실시간 대유저 서비스와 대규모 트래픽에서 레이턴시·멀티테넌트 SLA 보장이 핵심 과제</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:37</span>
+            
+            <span>CUDA 그래프 캡처와 비동기 스케줄러 도입으로 TTS 서빙 레이턴시 크게 감소</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>GPU·비용 시뮬레이션을 전자상거래 추천 배치 파이프라인에 적용해 비용 효율적 스케일링을 설계한다</span></li>
+            
+            <li><span class="box"></span><span>KV 어웨어 라우터 개념을 마이크로서비스 데이터베이스 요청 라우팅에 적용해 캐시 히트율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>CUDA 그래프와 비동기 스케줄러를 영상 트랜스코딩 파이프라인에 도입해 처리 지연을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">TTS 서빙 엔진에서 레이턴시를 줄이기 위해 도입한 주요 기술은?</div>
+            
+            <div class="q-opt">① 모델 압축</div>
+            
+            <div class="q-opt">② CUDA 그래프 캡처</div>
+            
+            <div class="q-opt">③ 모델 양자화</div>
+            
+            <div class="q-opt">④ 데이터 증강</div>
+            
+            <div class="q-answer">
+              <div class="correct">② CUDA 그래프 캡처</div>
+              <div class="why">본문에서 반복되는 CPU·GPU 연산을 CUDA 그래프로 캡처하고 비동기 스케줄러를 구현해 레이턴시를 크게 낮췄다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실시간 AI 상담 서비스에서 SLA 700ms 목표를 달성하기 위해 설정한 지표는?</div>
+            
+            <div class="q-opt">① RTF 1.0 미만</div>
+            
+            <div class="q-opt">② TTFA 140ms</div>
+            
+            <div class="q-opt">③ GPU 사용량 제한</div>
+            
+            <div class="q-opt">④ CPU 사용량 제한</div>
+            
+            <div class="q-answer">
+              <div class="correct">② TTFA 140ms</div>
+              <div class="why">TTFA는 첫 오디오 응답까지 걸리는 시간으로, 본문에서 140ms로 설정했다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TTS</span><span class="tag">LLM</span><span class="tag">VLM Omni</span><span class="tag">Kubernetes</span><span class="tag">KV 캐시</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

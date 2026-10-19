@@ -1,0 +1,418 @@
+{
+  "date": "2026-10-20",
+  "generated_at": "2026-10-19T23:27:29.233201",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "AI-Driven Reproducibility and Analytical Robustness in Scientific Discovery",
+        "url": "https://arxiv.org/abs/2610.23845v1",
+        "published_at": "2026-10-16T17:57:55",
+        "transcript": null,
+        "body": "Reproducible and analytically robust research findings are essential to scientific progress, but evaluating these properties typically requires costly manual effort. We investigate whether LLM agents can help automate reproduction and robustness analysis, using a medical case study grounded in the Surveillance, Epidemiology, and End Results (SEER) database, a widely used U.S. cancer registry underlying tens of thousands of published studies. First, we introduce SEER-Repro, a benchmark of 20 published SEER-based papers together with the data and resources required to reproduce their findings. Second, we create an AI agent that successfully reproduces 77.4% of 2,190 atomic claims, while providing executable baselines for further analysis. Third, we develop an agentic analysis pipeline to test the robustness of the medical findings by identifying analytical choices underlying each finding, proposing defensible alternatives, and rerunning the analysis to determine whether those choices affect the conclusion. Across published papers in SEER-Repro, our pipeline identifies potentially consequential analytical choices in 9.5% of fully reproduced findings and flags them for expert review. These results show how LLM agents can support scientific review by reproducing findings, systematically testing their robustness, and directing expert attention toward potentially consequential analytical choices.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM으로 암 연구 재현·견고성 자동화, 검증 효율↑",
+        "tags": [
+          "SEER",
+          "LLM",
+          "SEER-Repro",
+          "Surveillance, Epidemiology, and End Results",
+          "AI agent"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "데이터 기반 벤치마킹",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 에이전트가 SEER 기반 20개 논문의 2,190개 원자 주장 중 77.4%를 재현했다.",
+            "timestamp": null
+          },
+          {
+            "point": "자동화 파이프라인이 재현된 결과 중 9.5%에서 중요한 분석 선택을 식별해 전문가 검토를 요구한다.",
+            "timestamp": null
+          },
+          {
+            "point": "SEER‑Repro 벤치마크와 에이전트 기반 분석이 과학적 검증 효율을 크게 향상시킨다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "재현성과 견고성 검증에 수작업 비용이 크게 소요되는 문제를 해결하고자, SEER 데이터 기반 논문을 대상으로 LLM 에이전트가 자동 재현·분석 파이프라인을 제시한다. 기존 LLM 활용 연구에 이어 과학적 검증 워크플로우 자동화 흐름의 최신 단계이며, SEER‑Repro 벤치마크를 통해 실증적 성과를 보여준다.",
+        "production_ideas": [
+          "LLM 에이전트를 활용해 기업 재무 보고서의 핵심 지표를 자동 재현·검증하여 감사 효율을 높인다.",
+          "정책 효과 분석에 에이전트 기반 견고성 파이프라인을 적용해 분석 선택의 민감성을 자동 탐지하고 전문가 검토를 유도한다.",
+          "대규모 NLP 데이터셋에 대한 재현성 벤치마크를 구축해 LLM 에이전트가 결과를 자동 검증하도록 한다."
+        ],
+        "quiz": [
+          {
+            "question": "이 연구에서 에이전트 기반 분석 파이프라인의 주요 기능은 무엇인가?",
+            "options": [
+              "데이터 수집",
+              "분석 선택 식별 및 대안 제시",
+              "모델 훈련",
+              "결과 시각화"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 파이프라인은 각 발견에 대한 분석 선택을 식별하고 방어 가능한 대안을 제시한 뒤 재분석하여 결론에 영향을 미치는지를 판단한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Harness Engineering 101: The LLM is the brain, the harness is the body",
+        "url": "https://github.com/IsuruMaduranga/harness-engineering-101",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Harness Engineering 101\n\n*The LLM is the brain. The harness is the body.*\n\n*Version 1.1, October 2026.*\n\n> AI usage disclosure: I drafted every chapter myself, from what I learned\n> building\n> [WSO2 MI Copilot](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/wso2-integrator-copilot/overview/),\n> [WSO2 BI Copilot](https://wso2.com/integration-platform/docs/saas/editor/copilot)\n> and [One Code](https://github.com/IsuruMaduranga/one-code). I used Claude\n> Code and One Code to reorder each chapter so it leads with the answer (the\n> Minto pyramid), to polish the English, to generate the diagrams, and to\n> write the code that draws the charts.\n\nA blog series about building AI agents from first principles, published as a\nbook.\n\n**📖 Read it online: <https://isuruwijesiri.com/harness-engineering-101/>**\n\nAn LLM API is stateless. Every turn, you send the entire conversation as a JSON\narray and get text back. A *harness* is the program that builds, maintains, and\nprotects that array. Everything the field calls \"agents\" is a set of patches to\nthat one loop, and each patch exists because something concrete broke. This\nseries develops that one idea across 16 chapters, growing a ~300-line toy agent\nin plain Python as it goes.\n\nI use the same ideas in [One Code](https://github.com/IsuruMaduranga/one-code),\nan open-source coding agent built on [pi](https://github.com/earendil-works/pi).\n\nThe rendered book reads best online at the link above. If you'd rather read\nthe source here on GitHub, follow the chapters in order below. The full\nintroduction is on the [book's landing page](/IsuruMaduranga/harness-engineering-101/blob/main/src/README.md).\n\n## Reading order\n\nEvery chapter has the same shape: the failure, the minimal patch, what the\npatch costs.\n\n### Part I — The Wire (nothing is magic)\n\n| # | Chapter | The failure it patches |\n| --- | --- | --- |\n| 1 | [It's Just a JSON Array](/IsuruMaduranga/harness-engineering-101/blob/main/src/01-its-just-a-json-array.md) | \"How do I even talk to this thing?\" |\n| 2 | [The Brain: A Next-Token Black Box](/IsuruMaduranga/harness-engineering-101/blob/main/src/02-the-brain.md) | \"Why does it behave like that?\" |\n| 3 | [Tools: JSON Mapped to Functions](/IsuruMaduranga/harness-engineering-101/blob/main/src/03-tools.md) | The brain can't touch the world |\n| 4 | [The Agent Loop](/IsuruMaduranga/harness-engineering-101/blob/main/src/04-the-agent-loop.md) | One tool call isn't enough |\n| 5 | [Caching: Why Order Matters](/IsuruMaduranga/harness-engineering-101/blob/main/src/05-caching.md) | Resending the array gets expensive |\n\n### Part II — Running Long (the array under pressure)\n\n| # | Chapter | The failure it patches |\n| --- | --- | --- |\n| 6 | [Context Is a Budget, Not a Bag](/IsuruMaduranga/harness-engineering-101/blob/main/src/06-context-is-a-budget.md) | The window fills up |\n| 7 | [Subagents: Fork the Context](/IsuruMaduranga/harness-engineering-101/blob/main/src/07-subagents.md) | One array can't hold all the work |\n| 8 | [Steering the Running Loop](/IsuruMaduranga/harness-engineering-101/blob/main/src/08-steering.md) | The brain drifts mid-task |\n| 9 | [Background Work and Time](/IsuruMaduranga/harness-engineering-101/blob/main/src/09-background-work-and-time.md) | The loop is synchronous; the world isn't |\n\n### Part III — The Ecosystem (naming what you already understand)\n\n| # | Chapter | The failure it patches |\n| --- | --- | --- |\n| 10 | [Every Framework Is a Wrapper Around Chapter 1](/IsuruMaduranga/harness-engineering-101/blob/main/src/10-frameworks-are-wrappers.md) | Abstraction anxiety |\n| 11 | [Extending the Body: MCP, Skills, Deferred Loading, Hooks](/IsuruMaduranga/harness-engineering-101/blob/main/src/11-extending-the-body.md) | Capabilities don't fit in the array |\n| 12 | [Debugging the Array](/IsuruMaduranga/harness-engineering-101/blob/main/src/12-debugging-the-array.md) | You can't fix the prompt you can't see |\n\n### Part IV — Trust, Domains, and Data\n\n| # | Chapter | The failure it patches |\n| --- | --- | --- |\n| 13 | [Reflexes and Guardrails](/IsuruMaduranga/harness-engineering-101/blob/main/src/13-reflexes-and-guardrails.md) | The loop will do something dumb |\n| 14 | [Case Study: Coding Agents](/IsuruMaduranga/harness-engineering-101/blob/main/src/14-coding-agents.md) | How specialized does the body need to be? |\n| 15 | [RAG Was a Harness Pattern All Along](/IsuruMaduranga/harness-engineering-101/blob/main/src/15-rag.md) | A thousand names for one idea |\n\n### Epilogue\n\n- [Build Your Own](/IsuruMaduranga/harness-engineering-101/blob/main/src/16-epilogue-build-your-own.md): the complete toy harness, annotated\n\n### Appendix — Advanced Topics\n\nStandalone pieces. Read them when you need them.\n\n- [A. One Harness, Many Brains](/IsuruMaduranga/harness-engineering-101/blob/main/src/appendix-a-one-harness-many-brains.md): model routing, prompt tiers, cost engineering\n- [B. Worktrees and Isolation](/IsuruMaduranga/harness-engineering-101/blob/main/src/appendix-b-worktre",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 호출 상태 관리로 에이전트 신뢰성 확보",
+        "tags": [
+          "LLM",
+          "WSO2 MI Copilot",
+          "One Code",
+          "Claude Code",
+          "pi"
+        ],
+        "concepts": [
+          "AI 에이전트 상태 관리",
+          "컨텍스트 예산 관리",
+          "프롬프트 디버깅"
+        ],
+        "key_points": [
+          {
+            "point": "LLM API는 무상태이며 전체 대화는 JSON 배열로 전달한다.",
+            "timestamp": null
+          },
+          {
+            "point": "하네스는 이 배열을 구축·유지·보호하며 패치 형태로 에이전트 기능을 추가한다.",
+            "timestamp": null
+          },
+          {
+            "point": "컨텍스트는 예산이며, 캐싱·서브에이전트·스티어링 등으로 관리한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "하네스 패턴을 데이터 파이프라인의 외부 API 호출 관리에 적용해 상태와 재시도를 일관되게 기록한다",
+          "컨텍스트 예산 개념을 피처 스토어 쿼리 제한에 활용해 토큰/메모리 사용을 최적화한다",
+          "서브에이전트 아이디어를 모델 추론 작업을 여러 워커에 분산시켜 장기 실행 작업의 스케일을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "LLM API가 무상태라는 의미는?",
+            "options": [
+              "새 모델 인스턴스를 매 호출마다 만든다",
+              "이전 대화가 자동 저장된다",
+              "호출 시 전체 대화 히스토리를 전달해야 한다",
+              "응답이 항상 동일하다"
+            ],
+            "answer_index": 2,
+            "explanation": "무상태 API는 서버가 이전 대화를 기억하지 않으므로 클라이언트가 전체 대화(프롬프트)를 매 요청에 포함시켜야 한다."
+          },
+          {
+            "question": "컨텍스트를 '예산'이라고 부르는 이유는?",
+            "options": [
+              "무제한으로 사용할 수 있기 때문",
+              "토큰 수에 제한이 있어 관리해야 하기 때문",
+              "비용이 무료이기 때문",
+              "모델이 자동으로 최적화하기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "LLM의 컨텍스트 길이는 토큰 제한이 있어, 이를 예산처럼 관리해야 효율적인 대화가 가능하다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "한컴 AI",
+        "source_key": "hai-hancom.stibee.com",
+        "source_label": "한컴 AI",
+        "title": "👋이젠 AI 창을 따로 켜지 않아도 된다고?",
+        "url": "https://hai-hancom.stibee.com/p/181",
+        "published_at": "2026-10-19T00:00:00",
+        "transcript": null,
+        "body": "👋 쓰던 브라우저가 지금 보고 있는 페이지를 읽고 답하기 시작했어. 👋 문서 프로그램에는 필요한 AI 기능을 골라 붙여 쓸 수 있게 됐지.  👋 디자인 프로그램은 AI가 초안 작업부터 함께할 수 있어.\n\nHAI! 내가 왔어  , 오늘 AI 창 몇 번이나 열었어? 일하다 막히면 AI 창을 새로 열고, 보던 내용을 복사해 붙여 넣고, 받은 답을 다시 원래 화면으로 옮겨 오잖아. 이렇게 여러 화면을 오가던 일이 요즘 줄어들고 있어. 따로 찾아가던 AI가 매일 여는 화면 안으로 들어오고 있거든. 새 도구를 배우지 않아도 쓰던 도구가 달라진다면, 일하는 방식은 어떻게 바뀔까?\n\n매일 쓰는 브라우저에 AI가 들어왔어\n\n• 브라우저는 하루 업무가 시작되는 곳이야. 자료를 찾고, 메일을 확인하고, 사내 시스템에 접속하는 일이 대부분 브라우저 안에서 일어나지. 웹페이지를 읽다가 AI의 도움이 필요하면, 내용을 복사해 별도의 AI 서비스에 붙여 넣고 질문하곤 했어. 이제는 쓰던 브라우저 안에서 AI를 불러 지금 보고 있는 내용을 물어볼 수 있어. [구글 크롬의 '제미나이 인 크롬(Gemini in Chrome)'](https://blog.google/intl/ko-kr/products/android-play-hardware/gemini-in-chrome-launch-korea/), [마이크로소프트 엣지의 '코파일럿(Copilot)'](https://blogs.windows.com/msedgedev/2026/05/13/new-updates-to-edge-across-desktop-and-mobile/), [네이버 웨일의 'AI 챗(AI Chat)'](https://www.navercorp.com/media/pressReleasesDetail?seq=10034705)이 이런 기능을 제공해.\n\n• 가장 먼저 달라지는 건 페이지를 보다가 궁금한 점을 해결하는 방식이야. 브라우저에서 AI 버튼을 누르면 읽던 페이지 옆에 보조 패널이 열리고, 그 안에서 AI와 대화할 수 있어. AI가 페이지 내용을 참고하기 때문에 다른 창이나 탭에 별도의 AI 서비스를 띄우고 본문을 복사해 넣을 필요가 없어. 긴 업계 기사를 보다가 핵심을 놓쳤다면 \"이 글에서 중요한 내용을 세 가지로 정리해 줘\"라고 요청하고, 이해하기 어려운 대목에는 \"이 부분을 쉽게 설명해 줘\"라고 물을 수 있어. 원문과 AI의 답변을 나란히 보면서 추가 질문을 이어가는 거야.\n\n• 여러 페이지를 비교하는 일도 쉬워져. 예를 들어 출장 숙소를 찾느라 후보 세 곳을 각각 탭으로 열어 뒀다고 해 보자. AI에게 해당 탭을 참고하도록 하고 \"페이지에 나온 가격과 위치, 취소 조건을 비교해 줘\"라고 요청할 수 있어. 크롬의 제미나이와 엣지의 코파일럿 모두 이런 탭 간 비교를 지원해. 탭을 하나씩 오가며 정보를 옮겨 적는 대신, 비교할 대상과 기준을 알려 주고 정리된 내용을 확인할 수 있는 거야.\n\n구글 크롬의 '제미나이에게 물어보기'\n\n• 시작하는 방법도 복잡하지 않아. 크롬에서는 오른쪽 위 '제미나이에게 물어보기' 버튼을, 엣지에서는 오른쪽 위 코파일럿 아이콘을 누르면 돼. 웨일에서는 사이드바의 AI 챗을 열거나, 궁금한 문장을 드래그한 뒤 퀵서치에서 'AI 챗'을 선택할 수 있어. 문장 하나에서 막혔다면 그 부분을 선택하고 바로 질문을 이어갈 수 있는 거지.\n\n• 페이지에서 찾은 내용으로 메일을 보내거나 일정을 잡을 수도 있어. 예를 들어 관심 있는 행사 안내를 읽다가 일정에 넣어 두고 싶다면, 브라우저의 AI에게 등록을 부탁하는 거야. 크롬에서는 구글 캘린더에, 웨일에서는 연결해 둔 네이버 캘린더에 일정을 넣을 수 있어. 크롬에서는 지메일로 보낼 메일을 작성하고 전송하는 것도 가능해. 행사 정보를 동료에게 알리고 싶을 때 페이지를 보면서 메일 작성을 부탁할 수 있지. 크롬의 메일 전송과 일정 추가, 웨일의 일정 등록은 실행 전에 확인을 받으니, 내용을 살펴보고 진행하면 돼.\n\n• 키보드로 질문을 입력하는 대신 말로 물어볼 수도 있어. 엣지 코파일럿의 '보이스 앤 비전(Voice and Vision)'은 사용자가 허락하면 화면을 함께 보면서 음성으로 대화하는 기능이야. 보고 있는 내용 중 이해가 안 되는 부분을 말로 물으면 AI가 설명해 주는 거지. 웨일에서는 나중에 다시 보고 싶은 AI 챗 답변을 '스크랩북'에 저장할 수 있어. 유용한 설명을 받았다면 저장해 뒀다가 필요할 때 꺼내 보면 돼.\n\n• 직접 써 보고 싶다면 크롬은 최신 버전으로 업데이트하고 구글 계정에 로그인하면 돼. 만 18세 이상부터 쓸 수 있고, 회사나 학교 계정이라면 관리자가 기능을 허용해 뒀는지도 확인해야 해. 엣지의 코파일럿은 개인 마이크로소프트 계정으로 로그인해 무료로 시작할 수 있어. 다만 일부 기능은 쓸 수 있는 양이 정해져 있어. 더 많이 쓰고 싶다면 마이크로소프트 365 구독으로 한도를 늘릴 수 있고.\n\n• 이제 웹페이지를 읽다가 도움이 필요하면, 쓰던 브라우저의 AI 버튼부터 눌러 보면 돼. 글을 요약하고, 여러 페이지를 비교하고, 궁금한 부분을 묻는 일을 읽던 자리에서 이어갈 수 있어. 익숙한 서비스에 AI가 들어오면서, 질문하기 위해 내용을 옮기고 다른 창을 찾아가는 수고가 줄어드는 거야.\n\n문서부터 발표, 디자인까지, 쓰던 도구에 AI를 더하면 달라지는 일\n\n• 문서를 쓰다 보면 AI의 도움이 필요한 순간이 자주 생겨. 보고서에 참고할 자료를 찾거나, 길게 쓴 문장을 다듬거나, 회의 녹음을 회의록으로 정리할 때 말이야. 별도의 AI 서비스에서 도움을 받았다면 그 결과를 다시 문서로 가져와야 하잖아. 이제는 문서를 작성하던 프로그램 안에서 필요한 기능을 불러, 확인하고 고치는 일을 이어갈 수 있어.\n\n• 한컴의 '한애드온즈'가 그런 방식이야. [한애드온즈는 한컴오피스 '한글'에 필요한 AI 기능을 골라 설치할 수 있는 확장 플랫폼](https://addons.hancom.com/)이야. 여기서 '애드온'은 쓰던 프로그램에 덧붙이는 기능을 뜻해. 회의록 작성이나 학술자료 검색, 문서 교정처럼 내 업무에 필요한 기능을 선택하면 한글 메뉴에서 바로 불러 쓸 수 있어. 익숙한 한글에 나만의 업무 도구를 더하는 거지. 문서를 작성하는 일과 그 문서에 필요한 도움을 받는 일이 같은 프로그램 안에서 이어지니, 다른 서비스를 오가며 내용을 옮기는 수고가 줄어들어.\n\n• 지금은 '한글'에서 이용할 수 있지만, 앞으로는 '한셀'과 '한쇼'로도 지원 범위를 넓힐 계획이야. 파트너사의 서비스뿐 아니라 한컴이 직접 만드는 기능도 계속 더해 갈 예정이고. [자주 쓰는 문서 프로그램을 유지하면서, 업무에 필요한 기능을 하나씩 추가](https://blog.hancom.com/han-addons-six-services-guide/)할 수 있는 거야. 어떤 애드온이 내 업무에 맞을지는 이어지는 코너에서 더 자세히 살펴볼게.\n\n• 발표 자료를 만드는 도구에서도 AI의 도움을 바로 받을 수 있어. 프레젠테이션과 각종 시각 자료를 만드는 디자인 플랫폼 '캔바(Canva)'에서는 AI에게 발표 주제나 담고 싶은 내용을 설명하면 슬라이드 구성과 디자인을 만들어 줘. [노션, 슬랙, 구글 드라이브, 지메일 같은 업무 도구를 연결해 그 안의 자료를 프레젠테이션에 활용](https://www.canva.com/ko_kr/presentation-ai/)할 수도 있어. 이렇게 만든 슬라이드는 캔바에서 AI와 대화하며 다듬거나 직접 편집하면 돼. AI에게 구성안을 받은 뒤 디자인 화면으로 다시 옮기는 과정이 줄어드는 거지.\n\n[출처: 피그마 공식 블로그](https://www.figma.com/blog/the-figma-agent-is-here/)\n\n• 이미 만든 디자인을 수정하는 일도 달라지고 있어. 웹사이트나 앱 화면을 디자인하는 도구 ['피그마(Figma)'는 지난 5월 작업 화면 안에서 움직이는 AI 에이전트를 베타로 공개](https://www.figma.com/blog/the-figma-agent-is-here/)했고, 10월 6일 정식 출시했어. 여러 화면에 쓰인 글꼴을 바꿔야 한다면, 이제는 텍스트를 하나씩 찾아 수정하는 대신 에이전트에게 한꺼번에 바꿔 달라고 요청할 수 있어. AI가 수정 방법을 글로 알려 주는 데서 그치지 않고, 작업 중인 디자인에 직접 변경 사항을 적용하는 거지. 결과를 확인한 뒤 마음에 들지 않는 부분은 같은 화면에서 직접 손보거나 다시 수정을 요청하면 돼.\n\n• 사진을 편집할 때는 바꾸고 싶은 부분을 채팅으로 요청할 수도 있어. 어도비(Adobe)는 지난 3월 [포토샵 웹과 모바일에 AI 어시스턴트를](https://blog.adobe.com/ko/publish/2026/03/12/image-editing-just-got-smarter-with-ai-photoshop-firefly) 베타로 선보였어. 사진을 열어 놓고 \"뒤에 있는 사람을 지워 줘\"나 \"사진을 조금 더 밝게 해 줘\"라고 입력하면 돼. 모바일 앱에서는 직접 목소리로 요청할 수도 있어. AI가 사진을 직접 수정하게 할 수도 있고, 편집 방법을 단계별로 안내받으며 내가 직접 고칠 수도 있어. 배경을 지우려면 어떤 도구를 골라야 하는지, 밝기는 어디서 조절하는지 몰라도 원하는 수정부터 요청할 수 있는 거야.\n\n• 한글에 필요한 기능을 골라 더하고, 발표 자료를 만들던 화면에서 초안을 받아 고치고, 편집 중인 사진에 원하는 변화를 요청하는 것. 쓰는 도구와 작업은 달라도, AI의 도움을 받기 위해 하던 일을 멈추고 다른 화면으로 옮겨 갈 필요가 줄어든다는 점은 같아. 매일 여는 프로그램에 어떤 AI 기능이 들어왔는지 살펴보면, 늘 하던 일을 조금 더 빠르게 끝낼 방법을 찾을 수 있을 거야. 쓰던 도구에서 바로 활용할 수 있는 AI 소식은 HAI가 계속 챙겨 줄게.\n\n스마트폰에 필요한 앱만 골라 설치하듯, 한글에도 업무에 필요한 기능만 골라 더할 수 있어. [한애드온즈](https://addons.hancom.com/)는 한글의 추가 기능 메뉴에서 애드온을 설치해 한글 화면 안에서 바로 쓰는 확장 플랫폼이야. 지금 쓸 수 있는 6가지 기능을 소개할게. 내 업무에 맞는 걸 골라 써 봐.\n\n| 쓰기 전엔 자료부터 모으기\n\n논문이나 연구보고서를 준비한다면 틀루토 AI를 설치해 봐. 학술자료를 찾아 요약하고, 데이터 분석 결과를 그림과 표로 정리해 줄 수 있어. 참고문헌도 학교나 학회가 요구하는 양식에 맞춰 만들어 줘. 회의나 인터뷰 녹음을 정리해야 할 땐 다글로가 화자별로 받아쓰고 요약한 뒤 회의록까지 만들어 줘. 자료를 모으는 단계부터 결과가 한글 문서 안에 바로 쌓이는 셈이야.\n\n| 쓰는 중엔 초안 받고 꾸미기\n\n계약서를 써야 한다면 앨리비에 계약 조건을 알려 주고 초안을 받아 봐. 긴 계약서의 핵심 내용을 요약하거나, 조항별로 주의해서 검토할 부분을 확인할 수도 있어. 사내에 법무팀이 없어 계약서를 직접 작성하고 검토해야 한다면 큰 도움이 될거야.\n\n[출처: 한애드온즈](https://addons.hancom.com/)\n\n보고서에 아이콘이나 이미지가 필요할 땐 애셋 스튜디오에서 검색해 한글 문서에 바로 넣으면 돼. 아이콘은 색과 두께를 조절할 수 있고, 색상을 문서 글자색에 맞출 수도 있어.\n\n| 내기 전엔 교정과 점검까지\n\n다 쓴 문서는 에디트업으로 한 번 다듬어 봐. 맞춤법뿐 아니라 주어와 서술어가 자연스럽게 이어지는지, 문맥에 어울리지 않는 표현은 없는지도 살펴보고 수정을 제안해 줘. 원본과 교열본을 나란히 보여 주니, 어떤 부분이 어떻게 바뀌었는지 비교하며 확인할 수 있어.\n\n논문이나 과제, 보고서를 제출하기 전에는 카피킬러로 다른 자료와 겹치는 문장이 있는지 살펴봐. 비슷한 문장이 발견되면 비교된 자료의 출처도 확인할 수 있어. 내가 쓴 문장과 다른 자료에서 인용한 내용을 구분하고, 인용 표시나 출처를 빠뜨린 곳은 없는지 점검할 때 도움이 돼.\n\n써 보고 싶다면 한글의 '추가 기능' 메뉴에서 '한애드온즈'를 열어 봐. 내 업무에 필요한 기능을 골라 설치하고, 문서를 저장한 뒤 한글을 다시 실행하면 돼. 이제 '한애드온즈'로 한글에 나한테 맞는 AI 기능을 더해서, 문서 작업이 조금 더 가벼워지는 걸 느껴 봐!\n\n[**이용해 보러 가기**](https://addons.hancom.com/)\n\n오늘의 HAI는 어땠어? 좋았던 부분과 아쉬웠던 부분에 대해 의견을 남겨줘.\n\n[좋았어](https://hform.hancom.com/r/LriUP3vqQJ)  [아쉬워](https://hform.hancom.com/r/4xKCBd3xFT)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "브라우저·문서 AI 탑재로 작업 흐름·생산성 향상",
+        "tags": [
+          "Gemini",
+          "Copilot",
+          "Han Addons",
+          "Canva",
+          "Figma"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "브라우저에 AI가 내장돼 페이지 내용 바로 질문·요약 가능",
+            "timestamp": null
+          },
+          {
+            "point": "문서·프레젠테이션 도구에 AI 애드온으로 기능 확장, 작업 흐름 통합",
+            "timestamp": null
+          },
+          {
+            "point": "탭 간 비교·스케줄·메일 자동화 등 AI가 기존 UI에 직접 연동",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Jupyter 노트북에 현재 셀 출력과 코드 컨텍스트를 참고해 요약·질문하는 AI 어시스턴트를 삽입해 데이터 탐색 속도 향상",
+          "다중 데이터 대시보드에서 탭 간 비교 기능을 차용해 서로 다른 데이터셋의 핵심 지표를 AI가 자동 정리·비교하도록 하여 의사결정 시간을 단축",
+          "코드 IDE에 AI 애드온을 적용해 선택한 함수·클래스에 대한 문서와 사용 예시를 자동 생성해 개발 생산성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "브라우저에 내장된 AI가 페이지 내용을 활용해 답변을 제공하려면 어떤 메커니즘이 작동하나요?",
+            "options": [
+              "페이지 텍스트를 자동 복사",
+              "AI가 페이지 DOM을 직접 참조",
+              "사용자가 URL을 입력",
+              "별도 API 호출"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 AI 버튼을 누르면 AI가 현재 페이지 내용을 참고해 답변을 생성한다는 설명이 있어, 이는 AI가 페이지 DOM을 직접 참조하는 방식이다."
+          },
+          {
+            "question": "한글에 AI 애드온을 설치했을 때 제공되지 않는 기능은 무엇인가요?",
+            "options": [
+              "회의록 자동 작성",
+              "문서 교정",
+              "데이터베이스 연결",
+              "슬라이드 디자인 자동 생성"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 회의록 작성·문서 교정·슬라이드 디자인 기능은 언급됐지만, 데이터베이스 연결에 대한 언급은 없으므로 해당 옵션이 제공되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤당근이 철 지난 쇼핑 행사를 부활시킨 이유",
+        "url": "https://trendlite.stibee.com/p/492",
+        "published_at": "2026-10-13T00:00:00",
+        "transcript": null,
+        "body": "2026.10.14 26-041호   |   [잘림 없이 보기](https://stib.ee/lLjO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 당근이 철 지난 쇼핑 행사를 부활시킨 이유\n2. 파리 라파예트에 들어간 더현대, 의의와 과제는\n3. Picked\\_ '반도체와 화장품의 공통점은 재고' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n당근이 철 지난 쇼핑 행사를 부활시킨 이유\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 당근이 처음으로 ‘당근절’을 연 건 무료 배송을 앞세워 동네 직거래에 익숙한 이용자들에게 ‘바로구매’라는 전국 택배 거래 방식을 경험시키기 위해서였습니다.\n2. 다만 행사 당일 거래 건수는 늘었지만 앱 방문자 수와 사용시간의 변화는 크지 않아, ‘연중 최대 행사’라는 이름에 비해 이용자 행동을 크게 바꿨다고 보기는 어려웠습니다.\n3. ‘바로구매’는 당근에는 광고 외 수익원을 만들 기회이고 CJ대한통운에는 새로운 택배 물량을 확보할 기회인 만큼, 두 회사가 더 과감하게 투자해 이를 새로운 거래 습관으로 키워낼 필요가 있습니다.\n\n당근절, 들어보셨습니까?  10월 10일이 무슨 날인지 아시나요? 바로 ‘당근절’이었습니다. 모르셨어도 이상한 게 아닙니다. [올해 처음으로 당근이 만든 연중 최대 중고거래 행사](https://about.daangn.com/company/pr/archive/당근-연중-최대-중고거래의-날-당근절-개최/)였거든요.    당근을 사용해 보신 분이라면 ‘당근에 웬 쇼핑 행사이지?’ 하고 어색하게 느끼셨을 수도 있습니다. 당근은 동네 이웃 간 거래 플랫폼으로 출발해 지역 커뮤니티를 표방해 온 서비스거든요. 애초에 걸어서 갈 만한 거리 안에서 중고거래를 하도록 만든 것이 차별점이었죠. 이런 구조에서는 하루 날을 잡아 큰 행사를 열더라도 거래를 크게 늘리기가 쉽지 않습니다. 가까운 거리 안에서 사고 싶은 사람과 팔고 싶은 사람을 동시에 맞춰야 하기 때문입니다.    당근이 갑자기 당근절을 만든 건 지난해 9월 도입한 ‘바로구매’ 기능을 활성화하기 위해서였던 것으로 보입니다. 바로구매는 안심결제로 상품을 구매하면 택배 배송까지 연결해 주는 서비스인데요. 동네라는 지역 제한을 넘어 상품을 사고팔 수 있다는 것이 가장 큰 장점입니다.    다만 활성화를 가로막는 장벽도 있습니다. 바로 수수료와 배송비입니다. 수수료는 구매자에게만 3.3%가 부과돼 상대적으로 부담이 크지 않을 수 있습니다. 심지어 현재는 출시 기념으로 2.2%만 받고 있고요. 하지만 3천 원 안팎의 배송비는 이야기가 다릅니다. 특히 가격이 낮은 상품일수록 상품값에 비해 배송비가 크게 느껴질 수밖에 없죠.    그래서 당근은 이번 당근절의 핵심 혜택으로 1인당 최대 5회까지 ‘바로구매 배송비 0원’을 내걸었습니다. 우선 무료 배송으로 첫 구매를 유도하고, 한 번 택배 거래의 편리함을 경험한 이용자가 이후에도 바로구매를 계속 쓰도록 만들려는 겁니다.    생각해 보면 과거 십일절이나 빅스마일데이 같은 대형 쇼핑 행사가 유행한 것도 비슷한 이유였습니다. 온라인 쇼핑이 아직 낯설거나 자주 이용하지 않던 사람을 대거 끌어들이고, 판매자에게는 짧은 기간 많은 상품을 팔 기회를 제공해 더 좋은 가격과 혜택을 만들어냈죠. 이렇게 한 번 거래액과 이용자 규모를 크게 끌어올리면, 행사가 끝난 뒤에도 플랫폼 전체가 한 단계 성장하는 효과를 기대할 수 있었고요.  타이틀 대비 효과는 미미했습니다  그렇다면 당근절은 기대한 만큼의 효과를 거뒀을까요? 우선 [당근이 공개한 자료](https://www.newsway.co.kr/news/view?ud=2026101216401212029)만 보면 성과는 나쁘지 않았습니다. 이용자가 빠르게 몰리면서 행사 시작 9시간 만에 조기 종료됐고요. 행사 당일 중고거래 건수도 행사 전 토요일 대비 141% 증가했다고 합니다. 만약 사전에 예상했던 배송 물량과 예산이 소진돼 행사가 조기 종료된 것이 맞다면, 적어도 내부적으로 기대한 수준의 반응은 얻었을 가능성이 큽니다.    다만 외부 데이터를 보면 정말 ‘흥행’했다고 부를 수 있는지는 의문이 남습니다. 정작 당근절 당일 앱 방문자 수가 눈에 띄게 늘지는 않았기 때문입니다. 모바일인덱스 Insight에 따르면 당일 당근 앱 방문자 수는 약 725만 명으로, 직전 4주 같은 요일 평균보다 1% 남짓 증가하는 데 그쳤습니다. 올해 상반기 G마켓 빅스마일데이 당시 방문자 수가 직전 4주 평균 대비 28% 증가한 것과 비교하면, 행사 자체가 새로운 이용자를 끌어들이는 효과는 크지 않았다고 볼 수 있습니다.    그나마 행사 당일 당근의 1인당 사용시간은 약 15% 늘었습니다. 기존 이용자들이 평소보다 더 적극적으로 앱을 사용한 흔적은 확인된 셈이죠. 하지만 G마켓 역시 빅스마일데이 기간 1인당 사용시간이 21% 증가했던 점을 감안하면, 이 역시 압도적인 변화라고 보기는 어렵습니다.    물론 애초에 ‘바로구매’ 활성화를 위해 준비한 행사였던 만큼, 해당 기능의 이용만 충분히 늘었다면 목적을 달성했다고 볼 수도 있습니다. 다만 ‘연중 최대 행사’라는 이름을 내걸고, 이를 통해 고객의 행동까지 바꾸려 했다면 개인적으로는 조금 더 큰 변화가 필요했다고 봅니다.    과거 ‘○○절’이라고 이름 붙인 대형 쇼핑 행사는 고객의 쇼핑 습관을 바꾸기 위한 강력한 장치였습니다. 실제로 플랫폼이 한 단계 성장하는 계기가 되기도 했고요. 이런 행사의 영향력이 예전 같지 않아 진 것도 쿠팡의 성장과 코로나19를 거치며 온라인 쇼핑 자체가 이미 일상이 됐기 때문일 겁니다.    그런 점에서 당근이 ‘바로구매’라는 새로운 습관을 정말 만들고 싶었다면, 적어도 평소와 확연히 다른 수준의 변화가 필요하지 않았을까요? 당일 방문자가 수십 퍼센트 늘고, 거래량 역시 몇 배씩 뛰는 식으로 말이죠. 무엇보다 ‘바로구매’가 단순한 부가 기능을 넘어, 앞으로 당근의 전체 비즈니스 성과를 좌우할 수 있는 중요한 서비스라는 점에서 더욱 그렇습니다.  정말 과감한 베팅이 필요합니다  최근 당근은 매년 매출과 이익을 꾸준히 늘려왔습니다. 성적은 훌륭했지만, 동시에 해마다 반복해서 따라붙는 지적도 있었습니다. 광고 이외에는 뚜렷한 수익 모델이 보이지 않는다는 점이었죠.  그런 면에서 ‘바로구매’의 확산은 당근에 중요한 기회입니다. 거래 수수료를 통해 광고 외의 새로운 수익원을 만들 수 있기 때문입니다. 단순히 중고거래를 편리하게 만드는 기능을 넘어, 당근 전체 비즈니스가 한 단계 더 성장할 수 있는 발판이 될 수 있는 거죠. 그렇기에 이를 빠르게 확산시키려면 지금보다 더욱 과감한 베팅이 필요해 보입니다.  더욱이 ‘바로구매’의 활성화가 중요한 건 당근뿐만이 아닙니다. 배송 파트너인 CJ대한통운 역시 새로운 택배 물량을 확보해야 하는 상황이기 때문입니다. 자체 물류망을 갖춘 쿠팡이 이커머스 시장에서 차지하는 비중이 커지면서 [CJ대한통운은 택배업계 2위](https://contents.premium.naver.com/connectx/us/contents/260921143459539qv)로 내려왔는데요. 이는 단순히 순위가 바뀌었다는 것 이상의 의미를 가집니다. 택배 사업은 처리하는 물량이 많을수록 운영 효율을 높이기 쉬운 만큼, 새로운 물량을 꾸준히 확보하는 것이 중요하기 때문입니다.    그런 점에서 당근을 비롯한 개인 간 거래, 즉 C2C 택배 시장은 CJ대한통운에도 새로운 기회가 될 수 있습니다. 실제로 이번 당근절 배송 역시 CJ대한통운이 맡았고, [별도의 보도자료](https://cjnews.cj.net/cj대한통운-10월-10일-당근절-바로구매-배송-전담당근/)까지 내며 행사를 적극적으로 알렸습니다.  그래서 앞으로는 두 회사가 더욱 적극적으로 ‘바로구매’를 밀어야 할 겁니다. 당근은 당근절 같은 이벤트와 프로모션을 통해 더 많은 이용자에게 바로구매를 경험하게 하고, CJ대한통운은 안정적인 배송으로 이를 뒷받침하는 식으로 말이죠. CJ대한통운 입장에서는 일정 수준 이상의 물량이 모여야 배송 효율을 높일 수 있고요. 당근 역시 거래 과정이 아무리 편리해도 [실제 배송 경험이 만족스럽지 않다](https://www.4th.kr/news/articleView.html?idxno=2119562)면 바로구매를 계속 확대하기 어렵습니다.  다행인 건 둘의 이해관계가 상당히 잘 맞아떨어진다는 점입니다. 그래서 앞으로는 조금 더 과감한 시도도 기대해 볼 만한데요. 예를 들어 하루짜리 행사에 그치지 않고, 두 회사가 비용을 나눠 일정 기간 무료 배송 혜택을 제공한다면 더 빠르게 바로구매를 고객의 습관으로 만들 수 있지 않을까요? 초기 로켓배송을 거의 무료에 가깝게 제공하며 이용 경험을 빠르게 확산시켰던 쿠팡처럼 말이죠. 당근절은 이런 혜택을 대대적으로 알리는 계기로 활용할 수도 있고요.    어느 정도의 강도로 이어질지는 모르지만, 적어도 당근과 CJ대한통운은 당분간 당근절과 같은 새로운 시도를 계속해 나갈 가능성이 커 보입니다. 그리고 이러한 노력의 진짜 성공은 하루 동안 거래량을 얼마나 끌어올렸느냐보다, 얼마나 많은 이용자를 ‘동네 직거래’에서 ‘전국 택배 거래’로 넘어오게 만들었느냐로 평가해야 할 겁니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n파리 라파예트에 들어간 더현대, 의의와 과제는\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 더현대 글로벌의 파리 진출은 한국 브랜드의 무대를 아시아에서 유럽으로 넓히고, 상대적으로 고가의 디자이너 브랜드까지 다루기 시작했다는 점에서 의미가 있습니다.\n2. 하지만 해외에서 브랜드가 오래 성장하려면 온라인과 팝업에서 반응을 확인한 뒤 백화점 입점이나 상설 매장으로 이어져야 하고, 그렇게 만든 오프라인 접점이 일회성에 그치지 않고 꾸준히 잘 운영돼야 합니다.\n3. 결국 더현대 글로벌의 진짜 과제는 팝업을 한 번 흥행시키는 데서 끝나는 것이 아니라, 현지에서 잘 팔리는 상품을 찾고 재구매와 재주문까지 이어지게 만들어 한국 브랜드가 오래 살아남을 수 있는 구조를 만드는 일입니다.\n\n오스만 본점 광고, 정말 상징적입니다    파리를 대표하는 백화점 중 하나인 [갤러리 라파예트 오스만 본점 외벽에 더현대 글로벌 팝업스토어의 대형 광고](https://www.hankyung.com/article/202610125216P)가 걸렸습니다. 현대백화점은 이를 보도자료를 통해 대대적으로 알렸는데요. 이에 따르면 해당 외벽 광고는 그동안 글로벌 럭셔리 브랜드들에만 허용돼 왔다고 합니다. 국내 기업이 이곳에서 광고를 진행한 것 역시 처음이라고 하니 충분히 자랑할 만한 일이죠. K패션을 바라보는 현지의 관심이 그만큼 커졌다는 걸 보여주는 상징적인 장면이기도 하고요.    이는 현대백화점이 한국 브랜드의 해외 진출을 돕는 플랫폼인 ‘더현대 글로벌’을 만든 이유와도 맞닿아 있습니다. 그만큼 한국 브랜드의 가능성과 중요성이 커지고 있다는 뜻이니까요. 더욱이 브랜드의 해외 진출을 돕는 사업 자체도 의미가 있지만, 현대백화점에도 돌아오는 이점이 있습니다. 이를 통해 더 다양한 브랜드를 확보할 수 있고, K브랜드의 위상이 높아질수록 국내 매장을 찾는 외국인 고객의 매출 증가로도 이어질 수 있죠.    특히 이번 파리 라파예트 팝업은 아시아를 중심으로 확장해 온 더현대 글로벌이 유럽의 주요 백화점으로 무대를 넓혔다는 점에서 눈길을 끕니다. 그동안 국내 플랫폼의 한국 브랜드 해외 진출 지원은 주로 일본과 중국 등 아시아 시장을 중심으로 이뤄졌습니다. 더현대 글로벌 역시 대만과 일본에서 여러 차례 팝업스토어를 열었고, 지금은 아예 도쿄에서 상설 매장까지 운영하고 있을 정도죠.    이번에 파리에서 선보인 브랜드 구성도 이전과는 조금 다릅니다. 지금까지 더현대 글로벌이나 경쟁사들의 해외 진출 사례가 마뗑킴이나 마르디 메크르디처럼 비교적 대중적인 브랜드에 집중됐다면, 이번에는 상대적으로 가격대와 감도가 높은 디자이너 브랜드까지 범위를 넓혔습니다. 해외 진출의 무대뿐 아니라 다루는 브랜드의 범위까지 함께 확장하고 있는 셈입니다.    더욱이 아시아 시장과 비교적 대중적인 K패션 브랜드의 해외 진출은 이미 무신사가 빠르게 선점하고 있습니다. 여러 차례 팝업스토어를 진행하며 경험을 쌓았고, 조조타운과 안타스포츠처럼 일본과 중국의 강력한 현지 파트너와도 손잡았죠. 중국을 시작으로 일본과 동남아시아까지 상설 매장을 확대할 계획이라고 하고요.    그런 면에서 더현대 글로벌이 무신사가 앞서가는 영역을 그대로 따라가기보다, 유럽이라는 새로운 시장과 상대적으로 하이엔드한 브랜드군에서 차별화된 역할을 만들려는 움직임은 더욱 흥미롭습니다. 단순히 해외 진출 지역을 하나 더 늘린 것이 아니라, 더현대 글로벌만의 역할을 새롭게 만들어가고 있다는 점에서 이번 파리 진출을 바라볼 필요가 있습니다.  팝업 다음에는 꾸준히 팔 곳이 필요합니다  패션보다 한 발 앞서 글로벌 시장에서 의미 있는 성과를 내고 있는 K뷰티의 사례를 보면, 앞으로 더현대 글로벌을 비롯한 해외 진출 지원 플랫폼이 해야 할 일도 비교적 분명해집니다.    K뷰티는 틱톡과 릴스에서 주목받고, 아마존을 통해 소비자 사이에 빠르게 퍼졌습니다. 하지만 이것만으로는 한계가 있었습니다. 일부 소비자층을 중심으로 인기를 얻는 데는 성공했지만, [아직 대중적인 인지도를 충분히 확보했다고 보기는 어려웠기 때문](https://www.thescoop.co.kr/news/articleView.html?idxno=311796)입니다.    그래서 최근 뷰티 브랜드들은 주요 오프라인 유통 채널에 적극적으로 들어가고 있습니다. 북미에서는 한국의 올리브영과 비슷한 역할을 하는 전문점 울타뷰티를 비롯해 코스트코, 월마트 등에 입점하고 있고요. 올리브영 역시 세포라와 손잡고 K뷰티 전용 섹션을 운영하는 동시에 직접 진출까지 추진하고 있습니다. 결국 주요 오프라인 유통망에서 얼마나 안정적인 판매 접점을 확보하느냐도 K뷰티의 인기가 반짝 유행에 그치지 않고 장기적으로 이어지는 데 중요한 변수가 될 겁니다.    패션도 비슷한 흐름으로 움직이고 있습니다. 먼저 온라인에서 가능성을 확인하고, 이후 팝업스토어를 통해 현지 반응을 한 번 더 살펴봅니다. 그리고 마지막에는 백화점 같은 주요 유통 채널에 입점하거나 상설 매장을 여는 단계로 넘어가게 되는 거죠. 국내에서도 브랜드가 온라인에서 성장한 뒤 오프라인으로 확장하며 규모를 키워가는 것과 비슷한 흐름입니다.    특히 패션은 디자인과 소재, 실제로 입었을 때의 느낌까지 직접 경험하는 일이 중요합니다. 매장은 이런 매력을 가장 잘 전달할 수 있는 공간이면서, 브랜드 인지도와 선호도를 쌓는 데도 효과적입니다. 결국 주요 상권이나 유통 채널에서 얼마나 자주 고객과 만날 수 있느냐가 브랜드의 존재감을 좌우하게 되는 거죠.    그래서 더현대 글로벌도 이미 다음 단계를 준비하고 있습니다. [올해 도쿄에 선보인 더현대 오모테산도가 대표적인 사례](https://brunch.co.kr/@trendlite/703)입니다. 팝업스토어에 그치지 않고 상설 매장을 열어 브랜드를 꾸준히 소개하고, 현지 고객과 관계를 쌓아가고 있죠. 이번 라파예트 팝업 역시 성공적으로 마무리된다면, 이후에는 비슷한 방식으로 백화점 입점이나 상설 매장으로 이어질 가능성이 큽니다.  다만 매장을 여는 데서 그치면 안 됩니다    물론 매장을 연다고 바로 성공이 보장되는 건 아닙니다. 지난 9월 초 더현대 오모테산도 현장을 직접 방문했는데요. 주말이었음에도 인근 오모테산도의 다른 매장들과 비교하면 상당히 한산하다는 인상을 받았습니다. 물론 한 번의 방문만으로 매장의 성패를 판단할 수는 없습니다. 다만 오픈 당시의 관심이 평소의 방문과 구매로 얼마나 이어지고 있는지는 조금 더 지켜볼 필요가 있겠다는 생각이 들었습니다. 아직까지는 오픈 초기 목표를 30% 초과 달성했다는 발표 외에 구체적인 성과가 많이 공개되지 않기도 했고요.    사실 우리가 접하는 건 대부분 팝업스토어나 매장 오픈 소식입니다. 이 단계에서는 기대 이상의 성과를 거뒀다는 소식도 자주 전해지죠. 하지만 그 이후에도 꾸준히 해외에서 존재감을 키우며 자리 잡은 사례는 상대적으로 드뭅니다. 그렇기에 더현대 글로벌에도 결국 중요한 건 이런 장기적인 성공 사례를 만들어내는 일일 겁니다.    그래서 팝업이나 매장을 초기에 흥행시키는 데서 그쳐서는 안 됩니다. 현지에서 어떤 상품이 잘 팔리는지 파악하고, 이를 재구매와 유통사의 재주문으로 연결하며, 검증된 수요에 맞춰 판매 접점까지 넓혀갈 수 있어야 합니다. 단순히 브랜드를 소개하는 데서 끝나는 것이 아니라, 현지에서 계속 팔릴 수 있도록 운영까지 뒷받침해야 하는 거죠.    결국 더현대 글로벌의 성공도 여기에 달려 있을 겁니다. 단 한 번의 팝업을 성공시키는 것을 넘어, 한국 브랜드가 현지에서 꾸준히 팔리고 오래 살아남을 수 있는 구조까지 만들어낼 수 있느냐에 말이죠.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대한 의견이나 광고·기고·기타 협업 문의는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 반도체와 화장품 유통의 공통점은 재고?](https://www.chosun.com/GFHINJFZJZGDDG6BEYYPJWNKKQ/) 창업자에게 직접 들은 실리콘투의 성공 스토리    [2. 책, 그거그거 돈이 됩니까?](https://stib.ee/R7jO)  기꺼이 지갑을 열 만한 경험을 만들고 있나요?    [3. 구글 광고는 25년째 죽는 중이에요](https://inlevel9.com/issues/google-ads-dead-25-years) 중요한 건 '누구에게 얼마나 넘겼나'입니다    [4. 컬리N마트 1년, 컬리가 얻은 것은](https://newsroom.kurlycorp.com/kurlynmart-1st-anniversary-event/)  찾는 상품과 장보기 방식이 달랐습니다    [5. 쉬인은 정말 패션계 빌런일까요?](https://oncuration.com/쉬인-논란-패션계-빌런/)  패션 산업의 예외냐, 가장 극단적인 사례냐\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/lLjO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/lLjO \"게시하기\")[웹에서 보기](https://stib.ee/lLjO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "바로구매가 사용자 행동·매출에 미치는 효과",
+        "tags": [
+          "당근",
+          "바로구매",
+          "CJ대한통운",
+          "G마켓",
+          "빅스마일데이"
+        ],
+        "concepts": [
+          "프로모션 효과 분석",
+          "사용자 행동 변화",
+          "플랫폼 수익 다각화"
+        ],
+        "key_points": [
+          {
+            "point": "당근절은 무료 배송을 통해 ‘바로구매’ 사용을 촉진하려는 전략이었다.",
+            "timestamp": null
+          },
+          {
+            "point": "행사 당일 거래 건수는 141% 증가했지만 방문자 수와 사용시간 증가는 미미했다.",
+            "timestamp": null
+          },
+          {
+            "point": "‘바로구매’는 당근의 광고 외 수익원이며 CJ대한통운은 물량 확보 기회가 된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "무료 배송 혜택을 활용해 SaaS 구독 기능 체험을 유도한다",
+          "한정 무료 사용 크레딧을 제공해 프리미엄 API 체험을 촉진한다",
+          "클라우드 파트너와 협업해 신규 AI 추론 서비스의 컴퓨팅 용량을 확보한다"
+        ],
+        "quiz": [
+          {
+            "question": "당근절이 거래 건수는 크게 늘었지만 방문자 수가 크게 증가하지 않은 이유는 무엇으로 설명될 수 있는가?",
+            "options": [
+              "무료 배송 혜택이 제한적이었다",
+              "사용자는 이미 앱을 자주 이용했기 때문에 추가 방문이 필요 없었다",
+              "배송비가 높은 상품이 많아 구매 장벽이 남았다",
+              "이벤트가 짧게 진행돼 인지도가 낮았다"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 배송비가 3천 원 안팎으로 낮은 가격 상품에 비해 부담이 커서 구매 장벽이 된다고 언급되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business",
+          "product"
+        ],
+        "content_type": "news",
+        "half_life": "seasonal",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "토스는 AI모델을 어떻게 서빙할까 | SlashLive",
+        "url": "https://youtu.be/t_35VpGYgiY",
+        "published_at": "2026-10-19T00:41:21",
+        "transcript": "[00:00] 네, 안녕하세요. 저는 토스에서 서빙 엔지니어링 담당하고 있는 정태현이라고 합니다.\n[00:06] 오늘은 다양한 모델들이 새로 출시되고 있는데요. 이제 이러한 모델들을 통해서 이제 AI 서비스들도 많이 만들어지고 있습니다.\n[00:13] 저희는 이제 서빙에서는 이런 서비스들의 SLA를 보장하기 위해서 커널 레벨부터 이제 엔진까지 직접 구현한 사례까지 소개해 드리면서 저희 토스에서 이제 SLA 보장을 위해 어떠한 엔지니어링 테크닉을 쓰고 있는지 좀 공유드리려고 자료를 준비해 보았습니다.\n[00:30] 네, 먼저 저희의 전체적인 골부터 한번 설명을 드리고 싱크 이후에 이제 디테일한 테크닉은 공유드리도록 하겠습니다.\n[00:37] 먼저 저희는 이제 에이전틱 워크플로우로 이제 이러한 서빙부터 배포까지 모든 부분을 다 자동화하는 것을 목표로 하였습니다.\n[00:46] 그래서 처음에 모델 요청이 오게 되면 이제 이것들을 처음에 시뮬레이션 하는 걸 먼저 만들었습니다.\n[00:51] 그래서 이런 SLA 보장을 위해 필요한 GPU 수와 비용 그리고 이제 이런 것들이 ROI가 나오는지 시뮬레이션을 다 진행하도록 하였고요.\n[01:00] 보유하고 있는 다양한 GPU가 있는데 그중에서 어떠한 GPU를 사용하는 것이 가장 효율이 좋을지 그리고 이제 최근에 다양한 이제 엔진들이 많이 출시가 되고 있고 또 저희는 자체적으로 엔진을 만들기도 하는데요.\n[01:13] 이제 이런 엔진을 어떤 걸 선택하는 것이 좋을지 그리고 웬만해서는 검증된 스테이블한 버전을 사용하겠지만 이제 필요에 따라서는 프리 릴리즈 버전이나 혹은 PR 단위로 올라와 있는 작업을 이어서 개발하는 경우도 있습니다.\n[01:27] 그리고 이제 내부 컴포넌트로 저희가 전후 처리를 넣거나 커널 레벨 프로그래밍을 하거나 이제 다양한 코드 패치를 하는 경우도 있고 이제 그 위에 이제 다이나모 컴포넌트들을 붙여서 여러 가지 서빙 시스템을 운영하고 있습니다.\n[01:39] 이런 것들을 저희가 코드로 모두 구현하는 건 아니고 워크플로우를 통해서 이제 컨피그 드리븐으로 처리할 수 있게끔 했고요.\n[01:47] 그래서 이제 신규 서빙 엔지니어가 왔을 때도 이제 저희가 이런 옵션들만 잘 지정하면 바로 시뮬레이션부터 배포까지 이루어질 수 있는 구조를 설계했습니다.\n[01:57] 서빙에서 풀어야 할 두 가지 문제를 공유드리고자 합니다.\n[02:00] 먼저 실시간 대유저 서비스들이 있는데요. 실시간성이 보장되어야 되는 레이턴시에 되게 민감한 서비스들이 많아지고 있습니다.\n[02:08] 실시간 전화 상담도 그렇고 이제 토스 쇼핑에 있는 검색 시스템에서 실시간 검색 같은 경우는 직접적으로 유저와 맞닿아 있기 때문에 빠른 서비스를 보장해야 된다는 문제가 있습니다.\n[02:20] 그리고 두 번째로는 대규모 트래픽인데요. 트래픽 양이 많아졌을 때도 이런 속도를 보장하거나 멀티테넌트한 요청들이 섞였을 때도 이런 SLA를 보장해야 됩니다.\n[02:29] 이런 것들을 해결한 사례와 어떤 것들을 하고 있는지를 한번 설명드리도록 하겠습니다.\n[02:34] 네, 저희가 다루고 있는 일단 레이어는 전체적으로 다음과 같습니다.\n[02:38] 먼저 네트워크 레벨에서 이제 KV 캐시 히트를 좀 올리기 위해서 KV 어웨어 라우터를 사용하고 있고요.\n[02:44] 이제 그 같은 레벨에서 이제 어드미션 컨트롤을 사용하고 있는데요. 급격하게 트래픽이 많이 들어오는 경우에 성능이 꺾일 수도 있기 때문에 이제 이런 것들을 방어하기 위한 로직을 충분히 구축하고 있고요.\n[02:55] 이제 그루브와 플래너와 같이 쿠버네티스 레벨에서 오토 스케일링을 하는 것들도 충분히 다루고 있습니다.\n[03:02] 그리고 요즘에 많이 사용하고 있는 디스어그리게이티드 서빙도 저희 사용하고 있고 KV 캐시 히트를 좀 더 오프로딩한다든지 엔진 쪽을 패치하거나 커널 쪽을 패치하거나 요런 작업들도 진행하고 있습니다.\n[03:14] 그래서 먼저 소개해 드릴 내용은 엔진 패치 쪽을 먼저 설명드리도록 하겠습니다.\n[03:19] 바로 앞에 발표에 있었던 AIOC를 한번 예시로 설명드리려고 하는데요.\n[03:24] 이제 사용자와 AI 상담원이 이렇게 통화하는 과정에서 저희는 이제 SLA를 700ms 안에 응답하는 것을 목표로 하고 있었습니다.\n[03:33] 이제 STT 모델로 이제 듣고 LLM 모델로 여러 번 생각하고 TTS 모델로 음성이 나오기까지 이제 700ms 안에 이런 처리를 해야 되는데요.\n[03:41] 이런 것들을 한두 건 POC 할 때는 사실 문제가 안 되는데 다음과 같이 이제 상담의 횟수가 많아지거나 동시 처리하는 양이 많아지는 경우엔 이런 대규모 처리에서도 SLA를 보장해야 되는 상황이었습니다.\n[03:54] 먼저 TTS 쪽을 한번 예시로 보여드리면 비즈니스 SLA를 먼저 선정했을 때 RTF라는 리얼타임 팩터라는 수치는 이제 저희가 1.0 미만이면 실시간 처리가 가능하도록 보고 있습니다.\n[04:07] 이제 1.0을 기준으로 잡았고 TTFA는 이제 첫 오디오가 응답할 때까지 필요한 시간입니다.\n[04:13] 이것을 저희는 이제 비즈니스적으로 140ms를 잡았습니다.\n[04:17] 그리고 초기에 요청량이 많지는 않지만 이제 앞으로 더 많아질 것을 대비해서 이제 요청량에 관한 부분도 있었는데요.\n[04:23] 공개된 VLM-Omni라는 프레임워크를 통해서 서빙을 하게 되면 RTF도 보장이 되지 않고 TTFA도 저희가 원하는 수준에 미치지 못했습니다.\n[04:32] 그리고 다른 선택지로 SGLang Omni나 뭐 TensorRT LLM 등은 도입 당시 아예 해당 모델을 지원하지 않는 경우가 많았습니다.\n[04:41] 저희는 이런 문제를 이제 해결해야 되는 상황이었고 퀄리티 같은 경우는 이제 AIOC 팀에서 너무 잘 만들어 주셨기 때문에 속도 문제만 해결하면 되는 상황이었습니다.\n[04:50] 네, 그래서 저희가 이제 VLM Omni를 프로파일링 해 보았는데요.\n[04:54] 살펴보니 이제 프레임워크 단의 지연이 GPU 실제 병목보다 훨씬 더 높았습니다.\n[05:00] 대부분의 오디오 모델은 요즘에 투스테이지 모델 혹은 여러 스테이지 모델을 사용하게 되는데 이런 모델 내부에서도 반복문을 통해 여러 번 호출하는 경우가 많았습니다.\n[05:10] 이제 스케줄링하고 연산하는 과정이 되게 반복적으로 호출되고 다른 모델들은 정상적으로 처리하지 못하고 이제 대기하고 있는 상태가 많았습니다.\n[05:20] 그래서 실제로 VLM Omni 쪽에 이제 병목을 봤을 땐 프레임워크 쪽에 오버헤드가 훨씬 많았고 샘플링이나 이제 스케줄링 쪽 이슈가 큰 비효율을 만들고 있다고 확인되었습니다.\n[05:31] 저희는 그래서 이제 자체 TTS 서빙 엔진을 만들어서 레이턴시를 좀 빠르게 줄이기 위해서 시도해 보았습니다.\n[05:37] 먼저 반복되는 CPU와 GPU 연산의 호출을 이제 쿠다 그래프를 통해서 반복되는 연산을 캡처를 해서 진행하였고요.\n[05:44] 이제 각 모델별로 그래프 캡처를 이제 배치 처리가 가능한 한도 내에서 여러 개의 그 그래프를 만들어서 처리하도록 하였습니다.\n[05:51] 그리고 비동기식 스케줄러를 구현하고 이제 이 모델들이 쉬지 않고 계속해서 그래프 연산을 할 수 있게끔 구조를 다 직접 개발을 했습니다.\n[06:01] 요러한 것들을 이제 단순히 만들어서 도커 해서 올리는 건 아니고 저희가 기존에 쓰고 있는 이런 서빙 시스템에서 엔진 부분에만 이제 갈아 끼울 수 있도록 지금 작업을 했습니다.\n[06:11] 그래서 이런 엔진이 이제 저희가 TTS 모델을 만약에 여러 가지 서빙을 한다고 했을 때 모두 다 이런 엔진으로 서빙 하는 것은 아니고 VLM Omni나 SGLang Omni 같이 메이저한 서빙 프레임워크들을 사용하는 경우도 있고 혹은 이제 필요에 따라서 저희가 이제 SLA 보장을 위해선 최적화가 꼭 필요한 경우가 생깁니다.\n[06:29] 그러한 경우엔 이제 이런 토스 엔진이나 이런 자체적인 엔진까지도 직접 구현하고 선택할 수 있게끔 해서 배포를 하고 있습니다.\n[06:37] 요러한 서빙 시스템을 직접 만들어서 AIOC 서비스를 실제로 해 본 결과 처음에 목표로 했던 것보다 RTF의 경우에는 4.5배 정도 더 빠른 성능을 보였고 TTFA 같은 경우는 VLM Omni 대비 한 60배 정도 빠른 속도를 보였습니다.\n[06:51] 그리고 동시 처리량도 원하는 만큼 충분히 나와서 이제 요것들로 이제 실제로 유저분들을 만나서 서비스를 할 수 있게 되었습니다.\n[06:58] 근데 요즘엔 이제 증가 추이가 계속 늘어나고 있어요.\n[07:01] 그 AIOC뿐 아니라 저희 토스 쇼핑과 페이 그리고 광고 같은 여러 도메인에서 다양한 AI 서비스를 만들고 계신데요.\n[07:09] 유저분들이 접속하는 양도 많고 그리고 트래픽 자체가 많이 오르고 있는 추세입니다.\n[07:14] 그래서 저희는 이제 레이턴시도 보지만 대규모 처리를 하기 위한 여러 테크닉들도 소개해 드리려고 합니다.\n[07:22] 먼저 그 서빙 구조에 관한 부분인데요. 사실 Disaggregated 서빙이 유리한 점은 있지만 사실 모든 경우에 다 좋지는 않습니다.\n[07:30] 그래서 저희가 다루고 있는 모델만 해도 40종이 넘기 때문에 모든 것을 다 Disaggregated 서빙으로 하지는 않고요.\n[07:37] 이제 필요에 따라서 유연하게 선택할 수 있게끔 하였습니다.\n[07:41] 그래서 기본적인 Aggregated 방식부터 시작해서 필요에 따라서는 Disaggregated 방식을 저희가 선택할 수 있게 아까 말씀드린 Agentic Workflow에서 이제 Config 단위에서 저희가 선택을 하게 되면 자동으로 이로운 구조로 배포가 되고 테스트가 되고 이제 원하는 벤치마크 성능들이 뽑히니까 저희 엔지니어들은 그런 벤치마크 성능을 보고 결정하면 되게끔 지금 구성되어 있습니다.\n[08:03] 네, 기본적으로 Aggregated 방식과 Disaggregated 방식 모두 이제 KV Aware Routing을 사용하는데요.\n[08:08] 기술 자체는 이제 KV 캐시 히트율을 높이는 것이 근간입니다.\n[08:12] 같은 요청들은 최대한 캐시 히트를 통해서 빠르게 처리하는 것이 목표인데요.\n[08:16] 이것을 캐시 히트만 딱 보고 높이게 되면 이제 하나의 워커에 부하가 편중되는 것들을 저희가 경험적으로 많이 겪게 되었습니다.\n[08:25] 그래서 이제 이런 것들을 좀 분산시키기 위해서 부하를 패널티 방식으로 저희가 적용하게 되었고 캐시 히트율은 기본적으로 높이는 것을 목표로 하되 부하가 하나의 워커에 쏠리지 않게끔 하는 것은 대부분의 지금 모델에 적용이 되어 있는 상태입니다.\n[08:41] 같은 라우터 레벨에서 이제 어드미션 컨트롤에 대해서 설명드리려고 하는데요.\n[08:44] 저희가 요청이 갑자기 쏟아지는 경우들이 되게 많습니다.\n[08:48] 순간적으로 엄청나게 많은 요청이 오거나 큰 이미지나 굉장히 긴 요청이 오는 경우도 많은데요.\n[08:54] 이런 경우엔 이제 서버의 성능이 급격하게 떨어지는 지점을 저희가 경험을 그 서빙을 좀 해보신 분들이라면 경험하셨을 겁니다.\n[09:00] 그래서 저희는 이제 활성 디코드 블록 수를 기본으로 설정해 나왔고 이거 외에도 프리필 쪽도 지금 설정을 하고 최근에는 이제 다이나모 쪽에서 지원하는 이제 큐 대기하고 있는 수량까지도 저희가 이제 이런 어드미션 컨트롤로 겁니다.\n[09:14] 정해 놓은 안전선을 넘어가면 나머지는 이제 429 Too Many Request를 통해서 리퀘스트 리젝션을 하고 이제 유저분들이 이제 폴백 로직이나 리트라이 로직을 통해서 계속해서 시도를 해 주시고 그 어느 정도 한 번에 쏟아지는 트래픽은 이렇게 방지하고 있음을 설명드리고 싶었습니다.\n[09:32] 네, 이렇게 순간적인 부하가 아니고 연속적인 부하가 오는 경우도 있습니다.\n[09:36] 계속되는 부하는 사실 저희 같은 경우는 오토 스케일링을 당연히 할 수밖에 없는데요.\n[09:41] 다이나모를 베이스로 하고 있기 때문에 이제 그루브나 플래너 쪽이 세팅이 되어 있고 또 저희 토스는 GPU 장비들이 지금 인피니밴드 풀 매시로 구성이 되어 있습니다.\n[09:50] 서빙 구조에서 이제 특정 뭐 디코드 워커들을 늘리거나 하는 것들에 대해서 굉장히 용이하고 순간적인 TPM 폭증이 아니라 지속적으로 트래픽이 쏟아지는 경우에는 필요한 프리필과 디코드에 부하가 어디 쪽에 더 많은지 그리고 얼마나 필요한지 등을 계산해서 자동으로 오토 스케일링이 되도록 구현하였습니다.\n[10:09] 이제 기본적으로 저희가 적용하고 있는 세 가지 기술을 한번 요약하고 가면 좋을 것 같은데요.\n[10:13] KV-aware Routing을 통해서 이제 캐시 히트율은 높이되 이제 부하가 한쪽에 편중되지 않도록 저희가 부하 분산을 하면서 캐시 히트를 쫓고 있고 그다음 어드미션 컨트롤을 통해서 순간적으로 들어오는 스파이크성 TPM은 방어를 하고 있습니다.\n[10:28] 그리고 이제 이런 어드미션 컨트롤을 넘어서 계속되는 부하가 발생하는 경우에는 오토 스케일링을 통해서 대응하고 있습니다.\n[10:36] 네, 이번엔 엔진 쪽 좀 설명드리고 싶습니다.\n[10:39] 저희가 VLM SGLang 쪽을 많이 서빙해 보신 분들은 아마 좀 아실 수도 있을 것 같은데요.\n[10:45] 이 모델은 이제 젬마를 예시로 하였습니다.\n[10:48] 저희가 젬마 쪽을 살펴보게 되면 이제 애제지 쪽을 보면 이제 슬라이딩 윈도우 쪽과 풀 어텐션 쪽에 이제 헤드 디멘션 숫자가 다릅니다.\n[10:56] 그래서 이제 VLM 쪽에 구현을 보면 이제 이런 것들을 좀 다른 것들을 각각 처리하기는 좀 어렵다고 판단돼서인지 트라이튼 커널로 다 폴백을 시켜 놨습니다.\n[11:05] 어텐션 병렬화 쪽도 이제 살펴보게 되면 꼭 젬마뿐 아니라 여러 가지 모델들을 좀 검수하다 보면 분산 처리나 병렬 처리 쪽에서 이제 버그가 있거나 원하는 대로 동작하지 않는 경우도 되게 많았습니다.\n[11:17] 그리고 이제 MOE 커널 쪽을 봐도 이제 요청 크기에 따라서 꼭 마를린 폴백이 정답은 아닌 경우도 있었습니다.\n[11:22] 커틀러스나 이런 다른 대안들도 훨씬 많았는데 이것들을 업스트림에서 항상 고쳐주기를 바랄 순 없었고 또 필요한 경우엔 직접 고쳐야 될 필요도 되게 많았습니다.\n[11:32] 그래서 저희 같은 경우는 이제 슬라이딩 윈도우 같은 경우는 플래시 어텐션 3에서 훨씬 더 동작을 잘하면서 이제 결과는 똑같이 보장된다는 레그레션 테스트 결과도 좋았고요.\n[11:41] 이제 마찬가지로 이제 플래시 어텐션 4도 사용하고 이제 커틀러스 커널 같은 계속 지속적으로 프로파일링을 하면서 이제 더 나은 커널이나 더 나은 코드나 이런 버그를 잡는 것도 하고 있습니다.\n[11:52] 그래서 단순하게 이제 VLM 특정 버전을 통해서 띄우는 것을 넘어서 띄운 후에 프로파일링을 하면서 검수하고 오픈 소스에서 발생할 수 있는 결함에 대해서도 많이 다뤘고 또 이런 것들을 저희는 되게 내부적으로 오픈 소스 컨트리뷰트 하는 걸 장려하는 분위기이고 또 되게 승인을 잘해 주셔 가지고 이런 것들에 대한 오픈 소스 컨트리뷰트도 많이 기여하려고 하고 있습니다.\n[12:15] 네, 요런 결과 이제 젬마 같은 경우는 저희가 옵티마이즈를 끝까지 했을 때 오픈 라우터에 공개된 TTFT 수치를 봐도 저희가 가장 빠른 것을 볼 수 있고요.\n[12:25] 유저당 토큰 생성 수도 저희는 500이 넘는 수치로 굉장히 빠르게 동작하고 있는 것을 볼 수 있습니다.\n[12:31] 내부 모델 중에 이 모델을 사용하는 서비스들도 되게 많고요.\n[12:35] 이것처럼 이제 특정 모델을 단순하게 띄우는 것을 넘어서 조금 더 빠르게 만들기 위한 고민을 많이 하고 있습니다.\n[12:43] 같은 궤에서 이제 또 다른 모델에 대한 예시도 한번 설명드리려고 하는데요.\n[12:47] 저희가 GLM 5.3 플래시라는 모델도 이제 출시 당일부터 바로 사용하기가 필요한 모델이었습니다.\n[12:53] 근데 그 당일 날 웨이트가 올라오고 저희가 웨이트를 다운 받은 시점에는 이제 디플래시 2와 같은 스페큘레이티브 디코딩 기술이 아예 지원되지 않았고 SGLang과 VLM에서 디스어그리게이티드 서빙을 해보면 바로 무언가 코드 버그로 서빙 시스템이 죽는 버그가 있었습니다.\n[13:08] 근데 이거를 저희는 말씀드렸다시피 당일에 바로 필요했고 스트림을 패치를 기다릴 시간이 없고 바로 패치를 해야 되는 상황이었습니다.\n[13:17] 따라서 이런 디플래시 2 같은 경우는 웨이트도 있고 이미 다 공개가 된 상태인데 왜 연결이 되지 않을까?\n[13:23] 이제 좀 살펴보면 사실 생각보다 쉬운 버그들이 많습니다.\n[13:27] 모델의 중간 출력을 저희가 가로채서 이제 드래프트가 검수할 수 있게 해야 되는데 요런 것들이 단순히 코드 몇 줄만 빠져 있어서 연결이 안 되는 경우도 많았고요.\n[13:35] 이런 것들이 저희가 패치한 것과 한 2주 정도 뒤에 똑같이 오픈 소스에 패치가 돼서 적용이 되더라고요.\n[13:43] 그래서 이런 간단한 패치는 사실 바로바로 할 수 있으니까 저희가 적용을 했고요.\n[13:47] 아까 말씀드렸던 스페큘레이티브 디코딩에서 서버가 죽는 문제도 이제 TP 쪽 분산 처리하는 쪽에서 코드 오류가 누락된 코드가 몇 가지 있었습니다.\n[13:56] 저희는 요런 걸 찾아서 바로 패치를 적용해서 데이 제로로 당일 날 서빙을 해 드렸고 이제 그냥 VLM을 올린 상태보다 훨씬 더 빠르게 옵티마이즈를 해서 유저분들에게 당일 날 제공할 수 있었습니다.\n[14:10] 그럼 이제 이런 제공된 모델들로 다양한 서비스들을 만드시면서 이제 여러 가지 비즈니스를 하시는 것으로 이해해 주시면 됩니다.\n[14:19] 네, 저희 같은 경우는 또 설명드릴 것이 GPU 부분인데요.\n[14:23] 저희가 이제 주력으로 쓰는 GPU는 정해져 있지만 이제 여러 가지 GPU들이 또 보조로 있습니다.\n[14:29] 그래서 이제 주력 GPU들이 가끔 뭐 오토 스케일링으로 다 쓰고 있거나 혹은 보조 GPU들이 많이 남는 경우에는 이제 이런 것들을 좀 극한까지 좀 활용해 보고 싶은 생각이 있었습니다.\n[14:41] 네, 그래서 이제 커널 쪽 좀 다뤄 보려고 하는데요.\n[14:44] 이 모델은 이제 GLM 5.2입니다.\n[14:46] GLM 5.2에 저희 같은 팀원 분이 만들어 주신 커널 쪽 한번 사례를 설명드리려고 하는데요.\n[14:52] GLM 5.2를 A100 GPU에서 실행하려고 하면 아마 실행이 안 되실 겁니다.\n[14:58] 왜냐하면 이제 어텐션 쪽에 있는 이 DSA 쪽 인덱서와 이제 Sparse MLA 쪽에 이런 것들이 Hopper 쪽 H 시리즈를 이제 타겟으로 만들었기 때문에 일반적으로는 실행할 수가 없습니다.\n[15:10] 그래서 이것들을 저희는 이제 A100에서 돌 수 있게 BF16으로 이런 커널들을 트라이튼 커널을 통해서 직접 개발하였고 이런 개발된 것들을 이제 VLM에서 필요한 부분만 패치를 통해서 바로 변경해서 서빙할 수 있게끔 연결하였습니다.\n[15:26] 이런 커널들을 계속 개발하면서 저희는 지금 노하우를 쌓았고 이제 이것들로 이제 GLM 5.2 이후에 새로운 모델이 나오고 뭐 5.3, 5.4 이렇게 나오는 경우에도 참고해서 개발할 수 있도록 지금 여러 가지 레퍼런스로 만들고 있습니다.\n[15:41] 그 트라이튼 커널 쪽 말고도 이제 쿠다 커널 쪽도 저희가 다루고 있는데요.\n[15:44] 이거는 단순한 예시입니다.\n[15:46] 저희가 이제 오퍼레이션 퓨전을 할 일이 되게 많습니다.\n[15:49] 이제 모델 서빙 이후에 아까 검수하는 과정이 있다고 했는데 이런 프로파일링 이후에 이제 불필요하게 연산을 두 번씩 처리하는 경우들이 식별되면 저희는 이제 커널 쪽을 한 번에 연산할 수 있게 오퍼레이션 퓨전을 하는 커널을 만들어서 이제 저희 러스트 코드 베이스에 통합하는 구조를 잘 만들어 놨습니다.\n[16:07] 그래서 혹시 커널 프로그램에 관심이 많으시거나 이 이런 부분에 기여하실 수 있는 분은 저희 팀 지원 많이 해 주시면 감사드릴 것 같고요.\n[16:14] 그래서 저희는 이제 트라이튼뿐 아니라 커널 프로그래밍도 저희 코드 베이스에서 많이 기여하면서 작업하고 있습니다.\n[16:21] 네, 이러한 커널 구현을 왜 했는가를 살펴보면 저희는 이제 게이트웨이에서 이제 여러 가지 똑같은 모델도 호퍼나 블랙웰 그리고 이제 L40S나 요런 것들로 각각 뽑아낼 수 있는 캐패시티는 다르겠지만 이제 이 세 가지, 네 가지 여러 가지 방식으로 띄운 후에 이 캐패시티에 맞게끔 저희가 라우팅하는 것들이 다 준비가 되어 있습니다.\n[16:43] 그래서 이제 남는 GPU가 비효율적으로 사용되지 않도록 이제 필요한 경우엔 커널 패치까지 진행하면서 주력 모델들을 좀 더 많은 용량으로 제공해 드리기 위해서 이렇게 이기종 GPU를 적극 활용하기 위해서 저희가 작업을 하게 되었습니다.\n[17:01] 네, 이제 트래픽에 관련된 부분 간단하게 좀 말씀드리려고 하는데요.\n[17:05] 아마 요 부분은 대부분 회사가 아마 비슷할 겁니다.\n[17:08] 업무 시간에 트래픽이 되게 집중돼서 들어오게 됩니다.\n[17:12] 그래서 저희 같은 경우도 실시간 서비스는 그래서 이제 주간에 많이 들어오게 되는데요.\n[17:16] 이제 오토 스케일링을 최대한 적용하는 건 사실 너무 쉬운 일이고 이제 비즈니스 도메인 쪽과 잘 협의해 가지고 배치성 워크로드나 이제 검수 같은 꼭 굳이 주간에 하지 않아도 되는 업무들은 야간 쪽으로 많이 저희 가이드 드리고 있습니다.\n[17:33] 그래서 이제 백필이나 배치 처리 같은 경우는 주간에 트래픽에서 별로 없는 GPU들은 야간 배치성 워크로드에 모델들도 많이 스케일링하고 그쪽에서 처리하고 다시 주간이 돌아오면 다시 원상복구하는 형식으로 최대한 GPU들을 효율적으로 짜기 위해서 작업을 하고 있습니다.\n[17:53] 네, 이러한 업무 프로세스가 되게 광범위하게 설명드렸는데요.\n[17:56] 앞서 설명드린 것처럼 에이전트 워크플로우를 통해서 최대한 자동화했습니다.\n[18:00] 현재도 모델 새로운 모델이 출시되면 허깅페이스나 이런 곳에 탐지하는 것부터 시작해서 시뮬레이션을 합니다.\n[18:07] 요즘에 이제 AI 시뮬레이터라는 엔비디아에서 제공해 주는 시뮬레이터도 저희는 컴포넌트 중 하나로 활용하고 있고요.\n[18:15] 이런 시뮬레이션을 통해서 이 모델을 서빙할 때 어느 정도 성능이 나오고 ROI가 나오는지 검토를 하고 이제 모델 업로드부터 시작해서 검증하고 테스트하고 벤치마크까지 수행해서 배포를 할지 말지 저희는 승인만 하면 되는 프로세스로 진행을 합니다.\n[18:29] 이제 여기서 벤치마크에서 무언가 SLA이 안 되고 하자가 있으면 이제 옵티마이즈를 하는 형식으로 생각해 주시면 됩니다.\n[18:39] 네, 그래서 저희가 서빙하고 있는 모델들 이제 다 대부분 아마 토스에 근무하시는 분들은 제가 공지 사항 쓰는 것들을 이제 보고 이제 많은 비즈니스 만들고 계셔서 아마 아실 텐데요.\n[18:49] 저희는 신규 모델이 나오면 당일 날 바로 제공하는 것을 지금 원칙으로 하고 있습니다.\n[18:53] 그래서 이런 큰 모델들이 나왔을 때도 당일에 바로 사용해 보실 수 있게 하는 것을 목표로 하고 있고 뭐 미치 못하게 어쩔 수 없이 뭐 웨이트 파일이 너무 커서 오래 걸리는 것 그런 것이 아니면 이제 최대한 당일에 지원해 드리고 있습니다.\n[19:08] 이처럼 저희가 서빙하고 있는 모델 수는 굉장히 많고요.\n[19:11] Qwen부터 시작해서 뭔가 어 엔비디아 모델 DeepSeek 모델 같이 여러 가지 모델들도 있고 또 토스에 자체 모델들도 있습니다.\n[19:19] 그래서 이런 모델들이 현재 모두 서빙되고 있는 건 아니고 어 필요에 따라서 이제 새로운 버전이 나온 경우에 이제 마이그레이션하기도 하고 또 새로운 버전이 계속 나오면 새로운 모델들 계속 공급해 드리고 사용량이 적은 모델은 내리고 요런 식으로 잘 운영하고 있습니다.\n[19:34] 네, 요약해 보면 저희는 이제 SLA 보장을 위해서 빠른 속도 보장이 필요한 서비스들이 있었고 대규모 트래픽을 처리하기 위한 되게 다양한 테크닉들을 만들 필요가 있었습니다.\n[19:46] 그리고 이제 이런 것들이 모델이 많아지다 보니까 더 빨리 더 많이 할 필요가 있어서 이런 것들을 좀 자동화하는 데 주력했고 현재까지는 이제 요런 초기 목표는 다 달성했다고 보여지고 있습니다.\n[20:00] 네, 그래서 원래 저희가 총 3단계로 지금 생각을 했었는데요.\n[20:03] 처음엔 일단 모델을 빨리 제공해 드리는 게 먼저라고 생각해서 이런 자동화와 CI/CD를 되게 엄격하게 만들었습니다.\n[20:10] 이런 빠른 단순히 빠르게 하다 보면 실수가 나오고 라이브 서비스에서 오류가 발생하거나 뭔가 장애가 발생하면 너무 크리티컬하기 때문에 테스트 코드 설계나 이런 시뮬레이션이나 밸리데이션 쪽에 굉장히 많은 시간을 들였고 이런 CI/CD에서 확실하게 안정성이 보장될 때까지는 이제 계속해서 이런 CI/CD 보강을 먼저 하였습니다.\n[20:32] 그리고 이후에 이제 어느 정도 생산성을 에서 테스트 코드가 이제 이런 것들을 보완해 줄 수 있다고 판단된 시점부터는 이제 대규모 처리를 위해서 커널 쪽이나 이제 엔진 쪽 만들기도 시작했고 다양한 모델들을 최적화하면서 경험을 쌓고 있습니다.\n[20:47] 이제 다음 단계로는 이제 저희가 또 다시 여러 가지 고민하고 있는 것들이 많은데요.\n[20:53] 요 부분은 이제 저희가 테크 블로그에 통해서 한번 추가로 또 공유드릴 예정입니다.",
+        "body": "#토스 #AI #ML\n\n2026.10.14\nSlashLive 1화 : 커널부터 엔진까지, 토스의 서빙 엔지니어링\n\n토스팀의 테크, 기술에 대한 정보를 나눕니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 서빙 SLA 보장을 위한 엔지니어링 기법",
+        "tags": [
+          "TTS",
+          "LLM",
+          "VLM Omni",
+          "Kubernetes",
+          "KV 캐시"
+        ],
+        "concepts": [
+          "모델 서빙",
+          "실시간 SLA 보장",
+          "비동기 스케줄링"
+        ],
+        "key_points": [
+          {
+            "point": "모델 요청 시 GPU 수·비용·ROI를 시뮬레이션해 SLA와 비용 효율성을 사전 검증",
+            "timestamp": "00:46"
+          },
+          {
+            "point": "실시간 대유저 서비스와 대규모 트래픽에서 레이턴시·멀티테넌트 SLA 보장이 핵심 과제",
+            "timestamp": "02:00"
+          },
+          {
+            "point": "CUDA 그래프 캡처와 비동기 스케줄러 도입으로 TTS 서빙 레이턴시 크게 감소",
+            "timestamp": "05:37"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "GPU·비용 시뮬레이션을 전자상거래 추천 배치 파이프라인에 적용해 비용 효율적 스케일링을 설계한다",
+          "KV 어웨어 라우터 개념을 마이크로서비스 데이터베이스 요청 라우팅에 적용해 캐시 히트율을 높인다",
+          "CUDA 그래프와 비동기 스케줄러를 영상 트랜스코딩 파이프라인에 도입해 처리 지연을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "TTS 서빙 엔진에서 레이턴시를 줄이기 위해 도입한 주요 기술은?",
+            "options": [
+              "모델 압축",
+              "CUDA 그래프 캡처",
+              "모델 양자화",
+              "데이터 증강"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 반복되는 CPU·GPU 연산을 CUDA 그래프로 캡처하고 비동기 스케줄러를 구현해 레이턴시를 크게 낮췄다고 설명한다."
+          },
+          {
+            "question": "실시간 AI 상담 서비스에서 SLA 700ms 목표를 달성하기 위해 설정한 지표는?",
+            "options": [
+              "RTF 1.0 미만",
+              "TTFA 140ms",
+              "GPU 사용량 제한",
+              "CPU 사용량 제한"
+            ],
+            "answer_index": 1,
+            "explanation": "TTFA는 첫 오디오 응답까지 걸리는 시간으로, 본문에서 140ms로 설정했다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
