@@ -122,8 +122,11 @@ BASELINE_COMPARISONS: list[dict[str, Any]] = [
     {"path": "tag_entropy.normalized_entropy", "direction": "lower", "label": "태그 정규화 엔트로피"},
     {"path": "tag_concentration.concentration", "direction": "higher", "min_delta": 0.10, "label": "최빈 태그 집중도"},
     {"path": "score_distribution.iqr", "direction": "lower", "min_delta": 0.5, "label": "관련도 점수 IQR"},
-    # 정수라 한 칸(1)은 잡음으로 본다.
-    {"path": "score_distribution.distinct_values", "direction": "lower", "min_delta": 1, "label": "관련도 고유값 수"},
+    # 정수 지표라 허용폭은 칸 수로 둔다. 2026-10-20 에 1 -> 2 로 넓혔다. 최근 8주 14일 창에서
+    # 고유값은 6 이 6번, 7 이 1번, 5 가 1번이었는데 baseline(10-12 창)이 하필 7 인 주라
+    # 한도 6 은 "평소 값과 같으면 통과, 한 칸만 내려가면 FAIL" 이었다. 한 칸은 하루 5건
+    # 중 한 건의 점수로 갈리는 잡음이고, 절대 임계값(< 5 FAIL)이 바닥을 따로 지킨다.
+    {"path": "score_distribution.distinct_values", "direction": "lower", "min_delta": 2, "label": "관련도 고유값 수"},
     {"path": "source_reach.stale_source_count", "direction": "higher", "min_delta": 1, "label": "장기 미등장 소스 수"},
     # lifetime 비율. 0.009 근처라 상대 10%는 0.001(중복 한 건 미만)이다.
     # FAIL 기준 0.05의 절반 아래에서 조기 경보가 되도록 0.02를 바닥으로 둔다.
