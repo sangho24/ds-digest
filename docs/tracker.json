@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-21T01:09:14.547772+00:00",
+ "generated_at": "2026-10-22T01:06:54.726992+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -655,7 +655,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 93,
+   "tracked": 97,
    "models": [
     {
      "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2_s43",
@@ -793,7 +793,7 @@
      "repo_id": "nvidia/Nemotron-3.5-Rerank-8B-BF16",
      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Rerank-8B-BF16",
      "created_at": "2026-10-15T08:42:42+00:00",
-     "last_modified": "2026-10-20T21:28:18+00:00",
+     "last_modified": "2026-10-21T11:00:51+00:00",
      "weights_at": "2026-10-15T08:42:42+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-15T08:42:42+00:00",
@@ -1039,7 +1039,7 @@
      "repo_id": "nvidia/Nemotron-3.5-Embed-8B-BF16",
      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-8B-BF16",
      "created_at": "2026-10-07T13:12:32+00:00",
-     "last_modified": "2026-10-20T21:10:09+00:00",
+     "last_modified": "2026-10-21T10:52:40+00:00",
      "weights_at": "2026-10-07T13:12:32+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-07T13:12:32+00:00",
@@ -1053,7 +1053,7 @@
      "repo_id": "nvidia/Nemotron-3.5-Embed-1B-BF16",
      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-1B-BF16",
      "created_at": "2026-10-07T10:46:18+00:00",
-     "last_modified": "2026-10-20T21:07:35+00:00",
+     "last_modified": "2026-10-21T11:02:23+00:00",
      "weights_at": "2026-10-07T10:46:18+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-07T10:46:18+00:00",
@@ -1125,7 +1125,7 @@
      "repo_id": "nvidia/Nemotron-3.5-Parse",
      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
      "created_at": "2026-09-03T06:29:29+00:00",
-     "last_modified": "2026-10-19T02:02:21+00:00",
+     "last_modified": "2026-10-21T20:22:01+00:00",
      "weights_at": "2026-09-03T06:29:29+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-03T06:29:29+00:00",
@@ -1203,43 +1203,53 @@
      "derivative": null
     },
     {
-     "repo_id": "nvidia/Nemotron-3-Diarization-preview",
-     "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization-preview",
-     "created_at": "2026-08-24T23:00:02+00:00",
-     "last_modified": "2026-09-18T13:45:46+00:00",
-     "weights_at": null,
-     "has_weights": false,
-     "model_card_at": "2026-08-24T23:00:02+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "other",
-     "gated": "manual",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Teacher-Chat",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Teacher-Chat",
-     "created_at": "2026-08-14T17:09:11+00:00",
-     "last_modified": "2026-08-14T21:24:42+00:00",
-     "weights_at": "2026-08-14T17:09:11+00:00",
+     "repo_id": "nvidia/Cosmos3-Nano-Sim-Transfer",
+     "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Transfer",
+     "created_at": "2026-08-31T19:41:36+00:00",
+     "last_modified": "2026-10-21T03:28:58+00:00",
+     "weights_at": "2026-08-31T19:41:36+00:00",
      "has_weights": true,
-     "model_card_at": "2026-08-14T17:09:11+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
+     "model_card_at": "2026-08-31T19:41:36+00:00",
+     "report_at": "2026-08-31T19:41:36+00:00",
+     "arxiv_ids": [
+      "2512.01989"
+     ],
      "license": "other",
      "gated": "false",
      "derivative": null
     },
     {
-     "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Teacher-Competition-Coding",
-     "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Teacher-Competition-Coding",
-     "created_at": "2026-08-14T17:08:58+00:00",
-     "last_modified": "2026-08-14T21:24:56+00:00",
-     "weights_at": "2026-08-14T17:08:58+00:00",
+     "repo_id": "nvidia/Cosmos3-Nano-Sim-Auto",
+     "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Auto",
+     "created_at": "2026-08-31T19:41:35+00:00",
+     "last_modified": "2026-10-21T02:33:18+00:00",
+     "weights_at": "2026-08-31T19:41:35+00:00",
      "has_weights": true,
-     "model_card_at": "2026-08-14T17:08:58+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
+     "model_card_at": "2026-08-31T19:41:35+00:00",
+     "report_at": "2026-08-31T19:41:35+00:00",
+     "arxiv_ids": [
+      "1706.08500",
+      "1812.01717",
+      "2603.03283"
+     ],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
+    {
+     "repo_id": "nvidia/Cosmos3-Nano-Transfer-Auto",
+     "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Transfer-Auto",
+     "created_at": "2026-08-31T19:41:35+00:00",
+     "last_modified": "2026-10-21T02:33:20+00:00",
+     "weights_at": "2026-08-31T19:41:35+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-08-31T19:41:35+00:00",
+     "report_at": "2026-08-31T19:41:35+00:00",
+     "arxiv_ids": [
+      "1706.08500",
+      "1812.01717",
+      "2603.03283"
+     ],
      "license": "other",
      "gated": "false",
      "derivative": null
@@ -2513,8 +2523,22 @@
    "kind": "weights-open",
    "priority": 2,
    "hf_org": "allenai",
-   "tracked": 51,
+   "tracked": 52,
    "models": [
+    {
+     "repo_id": "allenai/OlmoEarth-v1_3-Base",
+     "url": "https://huggingface.co/allenai/OlmoEarth-v1_3-Base",
+     "created_at": "2026-09-04T15:00:16+00:00",
+     "last_modified": "2026-10-13T09:56:22+00:00",
+     "weights_at": "2026-09-04T15:00:16+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-04T15:00:16+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "allenai/Bolmo-1B-Stage1",
      "url": "https://huggingface.co/allenai/Bolmo-1B-Stage1",
@@ -3122,22 +3146,6 @@
      "has_weights": true,
      "model_card_at": "2025-11-19T00:17:10+00:00",
      "report_at": "2025-11-19T00:17:10+00:00",
-     "arxiv_ids": [
-      "2512.13961"
-     ],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": "finetune"
-    },
-    {
-     "repo_id": "allenai/Olmo-3-7B-Think-DPO",
-     "url": "https://huggingface.co/allenai/Olmo-3-7B-Think-DPO",
-     "created_at": "2025-11-18T04:20:27+00:00",
-     "last_modified": "2026-06-25T21:42:31+00:00",
-     "weights_at": "2025-11-18T04:20:27+00:00",
-     "has_weights": true,
-     "model_card_at": "2025-11-18T04:20:27+00:00",
-     "report_at": "2025-11-18T04:20:27+00:00",
      "arxiv_ids": [
       "2512.13961"
      ],
@@ -3853,7 +3861,7 @@
      "repo_id": "LGAI-EXAONE/EXAONE-Path-2.0-rev-EGFR",
      "url": "https://huggingface.co/LGAI-EXAONE/EXAONE-Path-2.0-rev-EGFR",
      "created_at": "2026-03-04T11:42:00+00:00",
-     "last_modified": "2026-09-01T02:42:54+00:00",
+     "last_modified": "2026-10-21T08:04:11+00:00",
      "weights_at": "2026-03-04T11:42:00+00:00",
      "has_weights": true,
      "model_card_at": "2026-03-04T11:42:00+00:00",
@@ -6450,6 +6458,135 @@
  "recent_events": [
   {
    "org": "nvidia",
+   "repo_id": "nvidia/Cosmos3-Nano-Sim-Transfer",
+   "transition": "repo_created",
+   "observed_at": "2026-10-22T01:06:54.726992Z",
+   "at": "2026-10-21T03:28:58Z",
+   "source_url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Transfer",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2512.01989"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-08-31T19:41:36+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Cosmos3-Nano-Sim-Auto",
+   "transition": "repo_created",
+   "observed_at": "2026-10-22T01:06:54.726992Z",
+   "at": "2026-10-21T02:33:18Z",
+   "source_url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Auto",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "1706.08500",
+     "1812.01717",
+     "2603.03283"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-08-31T19:41:35+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Cosmos3-Nano-Transfer-Auto",
+   "transition": "repo_created",
+   "observed_at": "2026-10-22T01:06:54.726992Z",
+   "at": "2026-10-21T02:33:20Z",
+   "source_url": "https://huggingface.co/nvidia/Cosmos3-Nano-Transfer-Auto",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "1706.08500",
+     "1812.01717",
+     "2603.03283"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-08-31T19:41:35+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/Cosmos3-Nano-Sim-Bimanual",
+   "transition": "repo_created",
+   "observed_at": "2026-10-22T01:06:54.726992Z",
+   "at": "2026-10-21T02:33:21Z",
+   "source_url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Bimanual",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "1801.03924",
+     "2512.01989",
+     "2605.15178"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-08-20T21:52:27+00:00"
+   }
+  },
+  {
+   "org": "allenai",
+   "repo_id": "allenai/OlmoEarth-v1_3-Base",
+   "transition": "repo_created",
+   "observed_at": "2026-10-22T01:06:54.726992Z",
+   "at": "2026-10-13T09:56:22Z",
+   "source_url": "https://huggingface.co/allenai/OlmoEarth-v1_3-Base",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-09-04T15:00:16+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
    "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2_s43",
    "transition": "repo_created",
    "observed_at": "2026-10-21T01:09:14.547772Z",
@@ -7783,108 +7920,11 @@
     "surfaced": false,
     "created_at": "2026-09-14T03:47:26+00:00"
    }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-RL",
-   "transition": "report_published",
-   "observed_at": "2026-09-12T00:49:01.385266Z",
-   "at": "2026-09-11T17:21:24Z",
-   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-RL",
-   "method": "hf_api",
-   "confidence": "unverified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "arxiv_ids": [
-     "2609.10712"
-    ]
-   }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
-   "transition": "report_published",
-   "observed_at": "2026-09-12T00:49:01.385266Z",
-   "at": "2026-09-11T17:21:05Z",
-   "source_url": "https://huggingface.co/nvidia/Nemotron-3-Labs-Ultra-Math-SFT",
-   "method": "hf_api",
-   "confidence": "unverified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "arxiv_ids": [
-     "2609.10712"
-    ]
-   }
-  },
-  {
-   "org": "deepseek",
-   "repo_id": "deepseek-ai/DeepSeek-V4.1-Flash",
-   "transition": "repo_created",
-   "observed_at": "2026-09-11T00:42:19.090775Z",
-   "at": "2026-09-10T02:17:58Z",
-   "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "mit",
-    "gated": "false",
-    "derivative": null,
-    "base_models": [],
-    "surfaced": false,
-    "created_at": "2026-09-10T02:17:58+00:00"
-   }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
-   "transition": "repo_created",
-   "observed_at": "2026-09-11T00:42:19.090775Z",
-   "at": "2026-09-01T19:58:31Z",
-   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16"
-    ],
-    "surfaced": false,
-    "created_at": "2026-09-01T19:58:31+00:00"
-   }
-  },
-  {
-   "org": "openai",
-   "repo_id": "https://openai.com/index/gpt-6-astra-next-generation-work",
-   "transition": "announced",
-   "observed_at": "2026-09-10T00:43:36.798201Z",
-   "at": "2026-09-09T11:00:00Z",
-   "source_url": "https://openai.com/index/gpt-6-astra-next-generation-work",
-   "method": "official_rss",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "title": "GPT-6 Astra: The next generation in intelligence for work"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 636,
-  "events": 644
+  "models": 641,
+  "events": 649
  }
 }
