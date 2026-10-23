@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-24",
+  "generated_at": "2026-10-23T22:57:15.403031",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Beyond API Compatibility: Building a Tool to Measure the Blast Radius of Library Changes",
+        "url": "https://netflixtechblog.com/beyond-api-compatibility-building-a-tool-to-measure-the-blast-radius-of-library-changes-9474f2fd4f90?source=rss----2615bd06b42e---4",
+        "published_at": "2026-10-23T18:32:51",
+        "transcript": null,
+        "body": "<p>By <a href=\"https://www.linkedin.com/in/robertoperezalcolea/\">Roberto Perez Alcolea</a>, Java Platform Team</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*K06WZmnRhhXBboIskWb8qg.png\" /><figcaption>Quasar connects a proposed API change with observed references in consumer repositories, giving the producer evidence for a release decision</figcaption></figure><p>At Netflix, shared Java libraries support applications developed across a large, independently evolving repository ecosystem. A library change begins in one repository, but its impact can reach many others. Producers can see the API diff in front of them. What they often cannot see is who still depends on the symbols that changed.</p><p>The need for that visibility grows as coding agents take on more of the software development lifecycle. An agent can accelerate a local edit, but without cross-repository context it cannot judge downstream risk or help plan consumer migrations. The evidence a producer uses to assess a change can also guide the agent working on it.</p><p>Consider a common case: removing a deprecated API. Deprecated entry points expand the surface producers must test, document, and support, and they can constrain how a library evolves.</p><p>Suppose a replacement has been available for several releases and the old method cannot express options required by new behavior. The library’s tests pass, and a compatibility checker flags the removal. The producer still cannot answer the questions that determine what to do next:</p><ul><li>Does any consumer still call this method?</li><li>Are consumers concentrated on one version or spread across several generations?</li><li>Does another library implement or wrap the API, multiplying its impact?</li><li>Is direct coordination sufficient, or does this require a deprecation and migration campaign?</li></ul><p>At small scale, producers can ask nearby teams or search a handful of repositories. Across many repositories, it is harder to find every caller of a method and the library version each one uses. Those answers are scattered across consumer codebases and builds.</p><p>Without that evidence, a producer may release a breaking change and discover the impact through consumer failures, or preserve an old API indefinitely because the risk is unknown. Libraries need to evolve, and their producers need evidence that helps them do so intentionally.</p><p>We built <strong>Quasar</strong> to index symbol definitions and references across Netflix repositories. For library producers, that shared index helps answer two questions:</p><ol><li><strong>What changed in the library’s public API?</strong></li><li><strong>Which repositories use the exact symbols that changed?</strong></li></ol><p>The first identifies a potentially incompatible change. The second estimates its observed blast radius. Together, they turn a generic compatibility warning into evidence a producer can act on before merging or releasing.</p><h3>From API Changes to Consumer Impact</h3><p>Existing techniques each see a different part of the problem. Binary and source compatibility tools identify contract changes, but cannot tell who uses the changed API. Dependency graphs show declared reach, but cannot prove that code calls a particular method. Text search may miss overloads, inheritance, or the artifact version behind a call. Consumer builds provide strong validation, but running them across the fleet is expensive.</p><p>Quasar builds on <a href=\"https://github.com/sourcegraph/scip\">SCIP</a>, an open interchange format for semantic code intelligence. Language-specific indexers encode definitions, references, and relationships using stable symbol identifiers. Quasar retains API definitions for library versions and commits alongside references from consumer repositories. That shared identity lets it connect an API change in one repository to exact usages elsewhere, even when those repositories were indexed independently.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*5c7ImyYuNCfO7Tv_ma0EYg.png\" /></figure><p>On each enrolled CI build, language-specific indexers submit SCIP indexes to Quasar’s ingestion service. It writes API definitions and consumer references as Parquet in Amazon S3, retaining the symbol identity, dependency version, and source location needed to investigate a change.</p><p>During pull-request review, Quasar compares indexed base and head definitions and counts direct consumer references with Amazon Athena. Quasar exposes those findings through its REST and GraphQL APIs and MCP server; follow-up usage queries provide dependency-version breakdowns and source locations. A separate compatibility-impact assessment can also follow implementations and their callers when a producer supplies a changed JVM symbol.</p><p>Consider this simplified API change:</p><pre>public interface Client {<br />- Result getLegacyValue(Request request);<br />+ Result getValue(Request request, Options opti",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "라이브러리 변경 영향 범위 측정으로 안정적 서비스 유지",
+        "tags": [
+          "Quasar",
+          "SCIP",
+          "Netflix",
+          "Java",
+          "API"
+        ],
+        "concepts": [
+          "레거시 시스템 리팩터링",
+          "기술 부채 관리",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "Quasar는 Netflix 전체 레포지토리에서 심볼 정의와 참조를 인덱싱해 API 변경과 실제 사용을 연결한다.",
+            "timestamp": null
+          },
+          {
+            "point": "이를 통해 라이브러리 제작자는 영향을 받는 레포지토리를 파악하고 블래스트 반경을 사전에 추정할 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "기존 호환성 도구는 계약 변화만 식별하지만 사용자를 알 수 없으며, Quasar는 SCIP 포맷을 활용해 이를 보완한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Quasar와 유사한 심볼 인덱스를 구축해 ETL 파이프라인 단계 변경 시 하위 작업에 미치는 영향을 자동으로 평가한다.",
+          "SCIP 기반 코드 인텔리전스를 활용해 오픈소스 라이브러리의 폐기된 API에 대한 자동 마이그레이션 가이드를 생성한다.",
+          "모델 버전 변경에 대한 블래스트 반경 측정을 도입해 어떤 서비스가 특정 모델 버전을 사용 중인지 추적하고 영향 범위를 최소화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Quasar가 API 변경과 소비자 사용을 연결하기 위해 사용하는 핵심 기술은?",
+            "options": [
+              "바이너리 호환성 검사",
+              "텍스트 검색",
+              "SCIP 기반 심층 코드 인덱스",
+              "의존성 그래프"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에서 Quasar는 SCIP라는 오픈 인터체인지 포맷을 이용해 정의와 참조를 인덱싱한다고 명시한다."
+          },
+          {
+            "question": "기존 도구들이 API 사용자를 정확히 파악하지 못하는 이유는?",
+            "options": [
+              "선언된 의존성만 보여줌",
+              "코드 실행 없이 호출을 증명 못함",
+              "오버로드·상속 등을 놓침",
+              "위 모두"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 기존 기술들의 한계로 의존성 그래프, 텍스트 검색, 바이너리/소스 호환성 도구가 각각 이러한 문제를 가지고 있음을 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng",
+          "tools"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "SympFormer: Inertial Attention Blocks from Damped Hamiltonian Dynamics on Spaces of Probability Measures",
+        "url": "https://arxiv.org/abs/2610.31600v1",
+        "published_at": "2026-10-22T17:32:11",
+        "transcript": null,
+        "body": "The attention mechanism underpins modern large language models, yet their dynamics remain only partially understood. Recent perspectives interpret attention blocks as interacting particle systems, whose mean-field limits correspond to gradient flows of energy functionals on spaces of probability densities on $\\mathbb R^d$ equipped with Wasserstein-type metrics. We extend this viewpoint by deriving accelerated attention blocks from inertial, Nesterov-type damped Hamiltonian dynamics on these density spaces, developing the geometry and differential calculus needed to make the construction rigorous. In particular, we introduce a local-mobility geometry for the Otto-Wasserstein and softmax-Wasserstein settings, and a quotient Stein geometry that resolves the degeneracy of the linear-attention kernel to yield a well-defined metric and differential calculus. We provide rigorous foundations when softmax attention admits a gradient-flow formulation and when its inertial counterpart admits a damped Hamiltonian on explicitly characterized domains. For linear attention, we obtain a finite-dimensional solution theory with sharp conditions for global existence versus finite-time second-moment blow-up. We further prove a quantitative link between continuous moment blow-up and the discrete-layer depth at which token norms cross a prescribed threshold. Finally, motivated by the finite-token geometry, we propose geometric corrections to token and momentum updates. In decoder-only, nanoGPT-style experiments on TinyStories and OpenWebText, these corrections lower validation negative log-likelihood on next-token prediction relative to momentum-only controls.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "확률밀도 흐름으로 주의 메커니즘 가속화",
+        "tags": [
+          "softmax attention",
+          "linear attention",
+          "Wasserstein",
+          "TinyStories",
+          "OpenWebText"
+        ],
+        "concepts": [
+          "optimal transport estimation",
+          "신경망 기하학 및 개념 매니폴드",
+          "gradient flow"
+        ],
+        "key_points": [
+          {
+            "point": "주의 블록을 확률밀도 공간의 관성 해밀턴 동역학으로 가속화",
+            "timestamp": null
+          },
+          {
+            "point": "Otto‑Wasserstein 및 Stein 기하학을 도입해 선형 주의 커널의 퇴화 해결",
+            "timestamp": null
+          },
+          {
+            "point": "기하학적 보정을 적용해 TinyStories·OpenWebText에서 NLL 개선",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 연구는 주의 메커니즘을 입자계의 평균장 한계와 Wasserstein 공간상의 gradient flow로 해석했지만, 가속화된 동역학은 다루지 못했다. 본 논문은 관성·감쇠 해밀턴 동역학을 도입해 주의 블록을 가속화하고, Otto‑Wasserstein·Stein 기하학을 정립해 선형 주의의 퇴화를 해결한다. 실험은 TinyStories·OpenWebText에서 검증한다.",
+        "production_ideas": [
+          "관성 해밀턴 동역학을 확산 모델 최적화에 적용해 수렴 속도를 높인다",
+          "Quotient Stein 기하학을 그래프 신경망 주의 커널에 적용해 대규모 그래프의 안정성을 향상시킨다",
+          "토큰 노름 임계값 기반 순간 폭발 감지를 강화학습 정책 네트워크의 학습 안정성 모니터링에 활용한다"
+        ],
+        "quiz": [
+          {
+            "question": "선형 주의 커널의 퇴화를 해결하기 위해 도입된 기하학 구조는?",
+            "options": [
+              "Otto-Wasserstein geometry",
+              "Quotient Stein geometry",
+              "Euclidean geometry",
+              "Riemannian manifold"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 선형 주의 커널의 퇴화를 해결하기 위해 Quotient Stein geometry를 도입했다고 명시한다."
+          },
+          {
+            "question": "제안된 기하학적 보정을 적용한 실험에서 개선된 평가지표는?",
+            "options": [
+              "학습 속도",
+              "Validation negative log-likelihood",
+              "모델 크기",
+              "토큰화 정확도"
+            ],
+            "answer_index": 1,
+            "explanation": "실험 결과는 기하학적 보정이 다음 토큰 예측의 validation NLL을 낮추었다고 보고한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 8,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "머릿속에 있던 로그 정의 기준을 모두의 AI 스킬로 만들기",
+        "url": "https://toss.tech/article/dataops-log-definition-skill",
+        "published_at": "2026-10-23T01:53:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"3fea360d-33e3-806d-8538-fc1708ee74fd\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스 앱에서 사용자가 어떤 화면을 보고 무엇을 눌렀는지는 앱로그로 남아요. </span></span></span></p><p class=\"css-14on8x8\" id=\"400a360d-33e3-804e-99f4-ce7ad042fed9\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스는 이렇게 쌓이는 로그를 서비스 품질을 높이는 목적으로 사용해요. 그래서 로그를 처음부터 정확하고 일관되게 정의해야 </span><span class=\"css-1kxrhf3\">분석 결과도 믿을 수 있어요. 이를 위해</span><span class=\"css-1kxrhf3\"> 로그를 전담해 설계하고 관리하는 DataOps Manager와 로그 명세를 한곳에서 관리하는 플랫폼인 로그센터가 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-8015-a228-edd312c61758\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">DataOps Manager는 앱로그의 규칙과 맥락을 지키며 담당 도메인의 로그 명세를 정의하고 관리</span><span class=\"css-1kxrhf3\">해요. 이번 글에서는 비개발자인 DataOps Manager들이 모여 로그센터에서 수동으로 진행하던 로그 정의 업무를 </span><span class=\"css-1kxrhf3\">AI 스킬로 개선한 과정</span><span class=\"css-1kxrhf3\">을 소개하려고 해요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-80f2-b1df-fb7eba73dad6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3fea360d-33e3-8062-a9ac-faa95d104518\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">1. 로그 정의할 때 중요한 것들</span></span></span></h2><p class=\"css-14on8x8\" id=\"3fea360d-33e3-8077-9e7e-f1a3e8456218\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">앱 화면은 끊임없이 새로 생기고 바뀌어요. 그때마다 DataOps Manager(DOM)는 사용자의 행동을 어떤 로그로 기록할지, 그 로그에 어떤 파라미터를 함께 남길지 새로 정해야 해요. </span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-80c8-8dfa-ef21e10c10b6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">로그를 정의할 때에는 다음 네 가지를 챙겨야 해요.</span><span class=\"css-1kxrhf3\"> </span></span></span></p><figure class=\"css-of5acw\" id=\"3ffa360d-33e3-8047-8888-ef055fdcbea8\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/f829abaa-98f1-48a9-8826-d2001bfaaf67/image.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-jfs1hr\">로그를 정의할 때에는 로그를 정해진 형식에 따라서, 도메인 안의 맥락을 이어서, 분석에 필요한 것만 남기면서, 정책과 안전을 지켜서 정의해야 해요.</span></figcaption></figure><p class=\"css-14on8x8\" id=\"3fea360d-33e3-80cd-974b-d50240261ca3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">로그 규칙은 &#x27;앱로그 백과사전&#x27;에 정리되어 있었어요. 하지만 로그를 정의할 때는 규칙뿐 아니라 도메인의 맥락과 히스토리도 중요해요. 기존 로그 명세를 직접 검색해 참고할 수는 있었지만, 도메인의 맥락은 담당 DOM의 머릿속에 남아 있는 경우가 많았어요. 그래서 각자가 가진 맥락과 경험에 의존해 로그센터에서 수동으로 로그를 정의하고 관리했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-80a5-9b57-c4a753652f5e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">한 사람이 정확하게 정의하기도, 모두가 일관되게 정의하기도 어려웠던 부분을 </span><span class=\"css-q3ktjb\">저희는 AI 스킬로 로그를 정의하는 방식과 과정 모두를 개선</span><span class=\"css-1kxrhf3\">하고자 했어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-8056-ad54-ed24b9e4c7c6\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"3fea360d-33e3-803e-8433-eecbb822cf40\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">2. 로그 정의 과정을 AI 스킬로 옮기기</span></span></span></h2><p class=\"css-14on8x8\" id=\"3fea360d-33e3-805f-8f4c-ef39acc4f221\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">로그를 정의할 때마다 앞에서 본 네 가지 규칙을 찾아보고 도메인의 맥락까지 기억하는 건 쉽지 않은 일이었어요.</span><span class=\"css-1kxrhf3\"> 그래서 한 DOM이 자신이 알고 있던 규칙과 경험을 살려, 로그 정의를 돕는 작은 스킬을 만들어 쓰기 시작했어요. 하지만 이 스킬은 만든 사람의 도메인과 경험에 묶여 있어서, 만든 사람은 편했지만 다른 사람이나 다른 도메인에서는 그대로 쓰기 어려웠어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-8032-9ef7-ea1e4c754c33\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그래서 저희는 </span><span class=\"css-q3ktjb\">이 스킬을 누가 어떤 도메인에서 작업하든 함께 쓸 수 있도록</span><span class=\"css-1kxrhf3\"> 제대로 풀어보기로 했어요. 로그를 정의할 때 거치는 판단과 순서를 개인의 머릿속이 아니라 스킬 안에 담으면, 매번 규칙을 외우지 않아도 되고 모든 도메인에서 같은 기준으로 정의할 수 있으니까요.</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-8058-8d47-ceee7dd01c3f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그렇게 만든 &#x27;로그 정의 스킬&#x27;은 로그 명세를 대신 찍어내는 생성기는 아니에요. </span></span></span></p><p class=\"css-14on8x8\" id=\"400a360d-33e3-807a-a369-f333650beb38\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">새 로그를 만들기 전에 </span><span class=\"css-q3ktjb\">&#x27;앱로그 백과사전&#x27;의 표준을 확인하고 도메인의 기존 로그 명세를 끝까지 조회해 재사용할 수 있는지 먼저 살피고</span><span class=\"css-1kxrhf3\">, 실제 반영은 </span><span class=\"css-q3ktjb\">사람이 확정한 뒤에만</span><span class=\"css-1kxrhf3\"> 실행해요. (이 스킬은 사용자의 로그를 읽거나 처리하지 않아요.)</span></span></span></p><p class=\"css-14on8x8\" id=\"3fea360d-33e3-80d7-97ba-f3eb882d2106\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">화면 하나의 로그를 정의해달라고 하면 로그 정의 스킬은 다음의 순서로 움직여요. </span></span></span></p><figure class=\"css-of5acw\" id=\"3ffa360d-33e3-80e7-95c4-c758bb51c3d2\"><img alt=\"\" class=\"css-",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 스킬로 로그 표준화, 분석 신뢰·효율↑",
+        "tags": [
+          "DataOps Manager",
+          "로그센터",
+          "AI 스킬",
+          "토스",
+          "앱로그"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "AI와 인간 협업",
+          "데이터 거버넌스"
+        ],
+        "key_points": [
+          {
+            "point": "로그 정의 시 형식·맥락·분석 필요성·정책·안전을 포함한 네 가지 원칙을 강조한다.",
+            "timestamp": null
+          },
+          {
+            "point": "기존 정의는 개인 머릿속에 의존해 일관성·효율성이 낮았다.",
+            "timestamp": null
+          },
+          {
+            "point": "AI 스킬을 도입해 규칙·맥락을 자동화·표준화함으로써 도메인 간 재사용이 가능해졌다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 스킬을 활용해 마이크로서비스 간 API 계약 정의를 자동화해 일관성을 높인다.",
+          "AI 스킬로 데이터 웨어하우스 스키마 문서를 생성해 거버넌스 정책과 맞추어 관리한다.",
+          "AI 스킬을 이용해 사고 대응 플레이북을 코딩해 절차와 정책을 일관적으로 적용한다."
+        ],
+        "quiz": [
+          {
+            "question": "로그 정의 시 강조된 네 가지 요소는 무엇인가?",
+            "options": [
+              "형식·맥락·분석 필요성·정책·안전",
+              "속도·비용·보안·가용성",
+              "UI·UX·DB·API",
+              "팀·프로젝트·일정·예산"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 로그 정의는 정해진 형식, 도메인 맥락, 분석에 필요한 요소, 정책·안전을 고려해야 한다고 명시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "LLMs are making formal software verification feasible at a much larger scale",
+        "url": "https://www.anthropic.com/research/formal-verification",
+        "published_at": null,
+        "transcript": null,
+        "body": "### Chapter 01: Introduction\n\n# LLMs are making formal software verification feasible at a much larger scale\n\n![LLMs are making formal software verification feasible at a much larger scale](/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F62ef4c44cbeeaca254eadaaaf982d1d32a7e9819-2000x1125.jpg&w=1920&q=75)\n\n- Published\n\n  Oct 22, 2026\n- Team\n\n  [Frontier Red Team](/research/team/frontier-red-team)\n- Topics\n\n  - [Cybersecurity](/search?topic=cybersecurity)\n  - [Coding](/search?topic=coding)\n  - [Open source](/search?topic=open-source)\n  - [Partnerships](/search?topic=partnerships)See more...\n\nRelated articles\n\n- Frontier Red Team\n\n  Oct 20, 2026\n\n  [Using Claude to reduce the attack surface of code](/research/attack-surface-reduction)\n\n[View more](/search?topic=cybersecurity)\n\n*Keane Lucas, Aengus Lynch, Luna Tong, Luke Champine, Zygi Straznickas, Dino Distefano, Harshikaa Agrawal  \nEvyatar Ben Asher, Ava Howell, Sami Jawhar, Chris Rohlf, Nickolai Zeldovich  \nNicholas Carlini, Rajashree Agrawal, Jason Gross*\n\n*Most software is riddled with bugs, which AI can now easily [find](https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/) and [exploit](https://www.anthropic.com/research/exploit-evals). The standard defenses against cyberattacks are no longer sufficient: we need ways to prove that code is free of bugs. Formal software verification could provide this guarantee, but it has historically required years of expert effort, making it impractical for most real-world projects. In a collaboration with [Theorem](https://theorem.dev/), however, we show this is no longer the case: LLMs can now produce formal proofs at large scale, enabling new software development workflows that include proven security guarantees. Using Claude, we proved security properties at the assembly code level (RISC-V) in over 100 real-world open-source software libraries. **To our knowledge, this represents the first large-scale effort to use AI to apply formal verification to production software at the assembly code level.** While writing the proofs, Claude also discovered bugs that had eluded detection for years, despite [trillions of test runs](https://opensource.googleblog.com/2016/12/announcing-oss-fuzz-continuous-fuzzing.html). As model capabilities continue to improve, we expect formal verification to become an essential part of secure software development.*\n\n## Introduction\n\nEven mature, heavily tested software contains bugs, and LLMs are [increasingly adept](https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/) at finding them. The Linux kernel—one of the most well-tested pieces of software today, deployed on billions of devices worldwide—recently had [over 1,000 vulnerabilities](https://lwn.net/Articles/1097401/) disclosed. With frontier models becoming more capable of [chaining seemingly benign bugs](https://www.anthropic.com/research/exploit-evals) into critical exploits, we need techniques that can detect and fix these bugs before they can be exploited in the wild.\n\nIdeally, such techniques could find and patch *all bugs,* and then provide some proof that there are no more to be found. *Formal verification* is one way to do this. In formal verification, developers translate their code into a mathematical model, then try to prove that it always follows some defined set of security rules. If they fail to prove this, that means there could be a bug in the code that would violate a rule, and the nature of the failure implies what the bug might be. Repeating this process (after eliminating the cause of failure each time) will ultimately yield proof that the code is devoid of any bug that would violate those rules.\n\nHowever, formal verification isn’t easy. Proofs can be many times larger than the original code, and writing them requires significant effort and a niche, highly specialized skill set. For instance, it took two person-years to implement the seL4 operating system kernel, but *20* person-years [to formally verify it](https://sel4.systems/Research/pdfs/comprehensive-formal-verification-os-microkernel.pdf). Accordingly, formal verification has been practical only in truly mission-critical applications, such as [Airbus’s avionics code](https://www.astree.ens.fr/papers/astree_airbus_sas2007.pdf).\n\nBut LLMs are making it far easier. Frontier models can now produce correctness proofs for real-world software fully autonomously. To demonstrate this, we asked Claude to prove useful security properties across 123 open-source libraries, including showing that some of their executable artifacts can *never* crash under certain conditions. Specifically, Claude proved that these programs will always exit normally without triggering memory-safety errors or failing assertions, for every input less than 64 MB and every modeled Linux operating system (OS) response and memory layout, under certain assumptions (namely that the program runs as a single-threaded static binary w",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM으로 대규모 코드 검증·버그 발견 가능",
+        "tags": [
+          "Claude",
+          "RISC-V",
+          "Theorem",
+          "Linux kernel",
+          "seL4"
+        ],
+        "concepts": [
+          "AI 기반 수학 증명",
+          "AI 기반 업무 검증"
+        ],
+        "key_points": [
+          {
+            "point": "Claude를 이용해 RISC‑V 어셈블리 수준에서 100개 이상의 오픈소스 라이브러리의 보안 속성을 형식적으로 증명했다",
+            "timestamp": null
+          },
+          {
+            "point": "형식 검증 과정에서 수년간 놓였던 버그를 LLM이 자동으로 찾아냈다",
+            "timestamp": null
+          },
+          {
+            "point": "전통적으로 수년이 걸리던 형식 검증을 LLM이 자동화해 실무 적용 가능성을 크게 높였다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "LLM 기반 형식 검증을 스마트 계약(EVM 바이트코드)에 적용해 디파이 프로토콜의 보안성을 사전에 보장한다",
+          "LLM을 활용해 자동차 제어 펌웨어 수준의 안전 속성을 자동 증명함으로써 자율주행 시스템의 신뢰성을 향상시킨다",
+          "LLM이 인프라 코드(Terraform 등)의 구성 규칙을 형식적으로 검증하도록 하여 클라우드 배포 오류를 사전에 차단한다"
+        ],
+        "quiz": [
+          {
+            "question": "형식 검증이 테스트보다 강력한 이유는 무엇인가?",
+            "options": [
+              "테스트는 모든 입력 조합을 검증하지만 형식 검증은 일부만 검증한다",
+              "형식 검증은 코드의 모든 가능한 실행 경로를 수학적으로 증명한다",
+              "테스트는 실행 속도가 빠르지만 형식 검증은 느리다",
+              "형식 검증은 버그를 자동으로 수정한다"
+            ],
+            "answer_index": 1,
+            "explanation": "형식 검증은 프로그램을 수학적 모델로 변환해 정의된 보안 규칙을 모든 가능한 실행 경로에 대해 증명하므로, 테스트가 놓칠 수 있는 미확인 경로까지 커버한다."
+          },
+          {
+            "question": "본문에서 LLM을 활용한 형식 검증의 주요 장점은 무엇인가?",
+            "options": [
+              "LLM이 코드를 자동으로 최적화한다",
+              "LLM이 인간 전문가 없이도 대규모 코드에 대한 증명을 생성한다",
+              "LLM이 테스트 커버리지를 100%로 만든다",
+              "LLM이 버그를 완전히 제거한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 LLM(Claude)이 인간 전문가 없이도 100개 이상의 라이브러리에 대해 형식 증명을 자동으로 생성하고, 기존에 놓였던 버그까지 찾아냈다고 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "3Blue1Brown",
+        "source_key": "UCYO_jab_esuFRV4b17AJtAw",
+        "source_label": "3Blue1Brown",
+        "title": "The jumping pegs puzzle",
+        "url": "https://youtu.be/rYyJm1tD3d0",
+        "published_at": "2026-08-18T14:54:17",
+        "transcript": "[00:00] It's time for a new puzzle of the month.\n[00:02] This one starts with three pegs sitting in three corners of a square on the plane.\n[00:06] And we're going to play a game where at any time you can jump one peg over another one, placing it an equal distance away on the other side.\n[00:14] So, for example, you could have two pegs walk down a line, kind of hopping over one another like this, as far as they want, to their heart's content.\n[00:22] But you don't have to go in a straight line, you can also go diagonally.\n[00:25] This peg could jump over this one, for example,\n[00:28] or maybe this one could jump over this one, giving you an even different angle of movement.\n[00:34] The question is, given our initial configuration of three pegs on three corners of a square, can you get a peg to this fourth corner of the square?\n[00:42] If the answer is yes, find with a proof the smallest number of moves required to get there.\n[00:47] If you think the answer is no, you would have to prove that it's impossible.",
+        "body": "Part of a series of monthly puzzles with MoMath.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "조합 탐색과 증명 연습으로 문제 해결 능력 강화",
+        "tags": [
+          "3Blue1Brown",
+          "YouTube"
+        ],
+        "concepts": [
+          "조합 최적화",
+          "상태 공간 탐색",
+          "수학적 증명"
+        ],
+        "key_points": [
+          {
+            "point": "한 peg를 다른 peg 위로 뛰어넘어 같은 거리만큼 반대쪽에 놓는다",
+            "timestamp": "00:06"
+          },
+          {
+            "point": "세 peg를 시작으로 네 번째 코너에 peg를 옮길 수 있는가를 질문한다",
+            "timestamp": "00:34"
+          },
+          {
+            "point": "가능하면 최소 이동 횟수를 증명, 불가능하면 불가능을 증명한다",
+            "timestamp": "00:42"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "peg 점프 규칙을 데이터 파이프라인 단계 전이 모델링에 적용해 전환 비용 최소화",
+          "상태 공간 탐색을 활용해 복잡한 비즈니스 워크플로우 최적화 문제에 적용",
+          "점프 퍼즐을 강화학습 환경으로 변형해 에이전트의 탐색 전략 교육에 활용"
+        ],
+        "quiz": [
+          {
+            "question": "peg를 다른 peg 위로 뛰어넘을 때 이동 거리는 어떻게 정해지는가?",
+            "options": [
+              "임의 거리",
+              "같은 거리",
+              "두 배 거리",
+              "반대 방향 거리"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 따르면 peg는 다른 peg 위를 뛰어넘어 같은 거리만큼 반대쪽에 놓인다(00:06)."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

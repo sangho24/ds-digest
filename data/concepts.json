@@ -20,15 +20,15 @@
     },
     "AI 기반 수학 증명": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-11",
-      "last_seen": "2026-10-19"
+      "last_seen": "2026-10-24"
     },
     "AI 기반 업무 검증": {
       "aliases": [],
-      "count": 17,
+      "count": 18,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-20"
+      "last_seen": "2026-10-24"
     },
     "AI 기반 진단 보조": {
       "aliases": [],
@@ -44,9 +44,9 @@
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 29,
+      "count": 30,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-21"
+      "last_seen": "2026-10-24"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -74,9 +74,9 @@
     },
     "AI와 인간 협업": {
       "aliases": [],
-      "count": 6,
+      "count": 7,
       "first_seen": "2026-10-03",
-      "last_seen": "2026-10-23"
+      "last_seen": "2026-10-24"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -150,6 +150,12 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-10-16"
     },
+    "gradient flow": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-24",
+      "last_seen": "2026-10-24"
+    },
     "graph analysis": {
       "aliases": [],
       "count": 1,
@@ -176,9 +182,9 @@
     },
     "optimal transport estimation": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-10",
-      "last_seen": "2026-09-29"
+      "last_seen": "2026-10-24"
     },
     "reversible computing": {
       "aliases": [],
@@ -224,9 +230,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 19,
+      "count": 20,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-10-22"
+      "last_seen": "2026-10-24"
     },
     "개인화 추천": {
       "aliases": [],
@@ -308,9 +314,9 @@
     },
     "기술 부채 관리": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-17"
+      "last_seen": "2026-10-24"
     },
     "기술 작가의 제품 소유권": {
       "aliases": [],
@@ -353,6 +359,12 @@
       "count": 1,
       "first_seen": "2026-10-15",
       "last_seen": "2026-10-15"
+    },
+    "데이터 거버넌스": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-24",
+      "last_seen": "2026-10-24"
     },
     "데이터 기반 동역학 모델링": {
       "aliases": [],
@@ -446,9 +458,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-10-21"
+      "last_seen": "2026-10-24"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -744,6 +756,12 @@
       "first_seen": "2026-09-06",
       "last_seen": "2026-09-06"
     },
+    "상태 공간 탐색": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-24",
+      "last_seen": "2026-10-24"
+    },
     "상태 관리": {
       "aliases": [],
       "count": 1,
@@ -797,6 +815,12 @@
       "count": 1,
       "first_seen": "2026-10-23",
       "last_seen": "2026-10-23"
+    },
+    "수학적 증명": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-24",
+      "last_seen": "2026-10-24"
     },
     "숫자 이론": {
       "aliases": [],
@@ -854,9 +878,9 @@
     },
     "신경망 기하학 및 개념 매니폴드": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-03",
-      "last_seen": "2026-10-09"
+      "last_seen": "2026-10-24"
     },
     "신뢰성": {
       "aliases": [],
@@ -1142,9 +1166,9 @@
     },
     "조합 최적화": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-19",
-      "last_seen": "2026-09-19"
+      "last_seen": "2026-10-24"
     },
     "지식 관리": {
       "aliases": [],
@@ -1453,6 +1477,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-23T08:02:53.654003+09:00",
+  "updated_at": "2026-10-24T07:57:02.092334+09:00",
   "version": 1
 }

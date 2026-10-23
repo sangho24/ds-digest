@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 24일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 24일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">레거시 시스템 리팩터링</span><span class="concept">기술 부채 관리</span><span class="concept">개발자 경험 개선</span><span class="concept">optimal transport estimation</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">gradient flow</span><span class="concept">AI 생산성 도구</span><span class="concept">AI와 인간 협업</span><span class="concept">데이터 거버넌스</span><span class="concept">AI 기반 수학 증명</span><span class="concept">AI 기반 업무 검증</span><span class="concept">조합 최적화</span><span class="concept">상태 공간 탐색</span><span class="concept">수학적 증명</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">Netflix TechBlog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://netflixtechblog.com/beyond-api-compatibility-building-a-tool-to-measure-the-blast-radius-of-library-changes-9474f2fd4f90?source=rss----2615bd06b42e---4" target="_blank" rel="noopener">Beyond API Compatibility: Building a Tool to Measure the Blast Radius of Library Changes</a>
+        </h2>
+
+        <p class="summary">라이브러리 변경 영향 범위 측정으로 안정적 서비스 유지</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Quasar는 Netflix 전체 레포지토리에서 심볼 정의와 참조를 인덱싱해 API 변경과 실제 사용을 연결한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이를 통해 라이브러리 제작자는 영향을 받는 레포지토리를 파악하고 블래스트 반경을 사전에 추정할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 호환성 도구는 계약 변화만 식별하지만 사용자를 알 수 없으며, Quasar는 SCIP 포맷을 활용해 이를 보완한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Quasar와 유사한 심볼 인덱스를 구축해 ETL 파이프라인 단계 변경 시 하위 작업에 미치는 영향을 자동으로 평가한다.</span></li>
+            
+            <li><span class="box"></span><span>SCIP 기반 코드 인텔리전스를 활용해 오픈소스 라이브러리의 폐기된 API에 대한 자동 마이그레이션 가이드를 생성한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 버전 변경에 대한 블래스트 반경 측정을 도입해 어떤 서비스가 특정 모델 버전을 사용 중인지 추적하고 영향 범위를 최소화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Quasar가 API 변경과 소비자 사용을 연결하기 위해 사용하는 핵심 기술은?</div>
+            
+            <div class="q-opt">① 바이너리 호환성 검사</div>
+            
+            <div class="q-opt">② 텍스트 검색</div>
+            
+            <div class="q-opt">③ SCIP 기반 심층 코드 인덱스</div>
+            
+            <div class="q-opt">④ 의존성 그래프</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ SCIP 기반 심층 코드 인덱스</div>
+              <div class="why">본문에서 Quasar는 SCIP라는 오픈 인터체인지 포맷을 이용해 정의와 참조를 인덱싱한다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">기존 도구들이 API 사용자를 정확히 파악하지 못하는 이유는?</div>
+            
+            <div class="q-opt">① 선언된 의존성만 보여줌</div>
+            
+            <div class="q-opt">② 코드 실행 없이 호출을 증명 못함</div>
+            
+            <div class="q-opt">③ 오버로드·상속 등을 놓침</div>
+            
+            <div class="q-opt">④ 위 모두</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 위 모두</div>
+              <div class="why">본문에 기존 기술들의 한계로 의존성 그래프, 텍스트 검색, 바이너리/소스 호환성 도구가 각각 이러한 문제를 가지고 있음을 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Quasar</span><span class="tag">SCIP</span><span class="tag">Netflix</span><span class="tag">Java</span><span class="tag">API</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.31600v1" target="_blank" rel="noopener">SympFormer: Inertial Attention Blocks from Damped Hamiltonian Dynamics on Spaces of Probability Measures</a>
+        </h2>
+
+        <p class="summary">확률밀도 흐름으로 주의 메커니즘 가속화</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 연구는 주의 메커니즘을 입자계의 평균장 한계와 Wasserstein 공간상의 gradient flow로 해석했지만, 가속화된 동역학은 다루지 못했다. 본 논문은 관성·감쇠 해밀턴 동역학을 도입해 주의 블록을 가속화하고, Otto‑Wasserstein·Stein 기하학을 정립해 선형 주의의 퇴화를 해결한다. 실험은 TinyStories·OpenWebText에서 검증한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>주의 블록을 확률밀도 공간의 관성 해밀턴 동역학으로 가속화</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Otto‑Wasserstein 및 Stein 기하학을 도입해 선형 주의 커널의 퇴화 해결</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기하학적 보정을 적용해 TinyStories·OpenWebText에서 NLL 개선</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>관성 해밀턴 동역학을 확산 모델 최적화에 적용해 수렴 속도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>Quotient Stein 기하학을 그래프 신경망 주의 커널에 적용해 대규모 그래프의 안정성을 향상시킨다</span></li>
+            
+            <li><span class="box"></span><span>토큰 노름 임계값 기반 순간 폭발 감지를 강화학습 정책 네트워크의 학습 안정성 모니터링에 활용한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">선형 주의 커널의 퇴화를 해결하기 위해 도입된 기하학 구조는?</div>
+            
+            <div class="q-opt">① Otto-Wasserstein geometry</div>
+            
+            <div class="q-opt">② Quotient Stein geometry</div>
+            
+            <div class="q-opt">③ Euclidean geometry</div>
+            
+            <div class="q-opt">④ Riemannian manifold</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Quotient Stein geometry</div>
+              <div class="why">본문에서 선형 주의 커널의 퇴화를 해결하기 위해 Quotient Stein geometry를 도입했다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">제안된 기하학적 보정을 적용한 실험에서 개선된 평가지표는?</div>
+            
+            <div class="q-opt">① 학습 속도</div>
+            
+            <div class="q-opt">② Validation negative log-likelihood</div>
+            
+            <div class="q-opt">③ 모델 크기</div>
+            
+            <div class="q-opt">④ 토큰화 정확도</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Validation negative log-likelihood</div>
+              <div class="why">실험 결과는 기하학적 보정이 다음 토큰 예측의 validation NLL을 낮추었다고 보고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">softmax attention</span><span class="tag">linear attention</span><span class="tag">Wasserstein</span><span class="tag">TinyStories</span><span class="tag">OpenWebText</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/dataops-log-definition-skill" target="_blank" rel="noopener">머릿속에 있던 로그 정의 기준을 모두의 AI 스킬로 만들기</a>
+        </h2>
+
+        <p class="summary">AI 스킬로 로그 표준화, 분석 신뢰·효율↑</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>로그 정의 시 형식·맥락·분석 필요성·정책·안전을 포함한 네 가지 원칙을 강조한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 정의는 개인 머릿속에 의존해 일관성·효율성이 낮았다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 스킬을 도입해 규칙·맥락을 자동화·표준화함으로써 도메인 간 재사용이 가능해졌다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 스킬을 활용해 마이크로서비스 간 API 계약 정의를 자동화해 일관성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>AI 스킬로 데이터 웨어하우스 스키마 문서를 생성해 거버넌스 정책과 맞추어 관리한다.</span></li>
+            
+            <li><span class="box"></span><span>AI 스킬을 이용해 사고 대응 플레이북을 코딩해 절차와 정책을 일관적으로 적용한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">로그 정의 시 강조된 네 가지 요소는 무엇인가?</div>
+            
+            <div class="q-opt">① 형식·맥락·분석 필요성·정책·안전</div>
+            
+            <div class="q-opt">② 속도·비용·보안·가용성</div>
+            
+            <div class="q-opt">③ UI·UX·DB·API</div>
+            
+            <div class="q-opt">④ 팀·프로젝트·일정·예산</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 형식·맥락·분석 필요성·정책·안전</div>
+              <div class="why">본문에 따르면 로그 정의는 정해진 형식, 도메인 맥락, 분석에 필요한 요소, 정책·안전을 고려해야 한다고 명시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">DataOps Manager</span><span class="tag">로그센터</span><span class="tag">AI 스킬</span><span class="tag">토스</span><span class="tag">앱로그</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://www.anthropic.com/research/formal-verification" target="_blank" rel="noopener">LLMs are making formal software verification feasible at a much larger scale</a>
+        </h2>
+
+        <p class="summary">LLM으로 대규모 코드 검증·버그 발견 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Claude를 이용해 RISC‑V 어셈블리 수준에서 100개 이상의 오픈소스 라이브러리의 보안 속성을 형식적으로 증명했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>형식 검증 과정에서 수년간 놓였던 버그를 LLM이 자동으로 찾아냈다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>전통적으로 수년이 걸리던 형식 검증을 LLM이 자동화해 실무 적용 가능성을 크게 높였다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 기반 형식 검증을 스마트 계약(EVM 바이트코드)에 적용해 디파이 프로토콜의 보안성을 사전에 보장한다</span></li>
+            
+            <li><span class="box"></span><span>LLM을 활용해 자동차 제어 펌웨어 수준의 안전 속성을 자동 증명함으로써 자율주행 시스템의 신뢰성을 향상시킨다</span></li>
+            
+            <li><span class="box"></span><span>LLM이 인프라 코드(Terraform 등)의 구성 규칙을 형식적으로 검증하도록 하여 클라우드 배포 오류를 사전에 차단한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">형식 검증이 테스트보다 강력한 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 테스트는 모든 입력 조합을 검증하지만 형식 검증은 일부만 검증한다</div>
+            
+            <div class="q-opt">② 형식 검증은 코드의 모든 가능한 실행 경로를 수학적으로 증명한다</div>
+            
+            <div class="q-opt">③ 테스트는 실행 속도가 빠르지만 형식 검증은 느리다</div>
+            
+            <div class="q-opt">④ 형식 검증은 버그를 자동으로 수정한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 형식 검증은 코드의 모든 가능한 실행 경로를 수학적으로 증명한다</div>
+              <div class="why">형식 검증은 프로그램을 수학적 모델로 변환해 정의된 보안 규칙을 모든 가능한 실행 경로에 대해 증명하므로, 테스트가 놓칠 수 있는 미확인 경로까지 커버한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본문에서 LLM을 활용한 형식 검증의 주요 장점은 무엇인가?</div>
+            
+            <div class="q-opt">① LLM이 코드를 자동으로 최적화한다</div>
+            
+            <div class="q-opt">② LLM이 인간 전문가 없이도 대규모 코드에 대한 증명을 생성한다</div>
+            
+            <div class="q-opt">③ LLM이 테스트 커버리지를 100%로 만든다</div>
+            
+            <div class="q-opt">④ LLM이 버그를 완전히 제거한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② LLM이 인간 전문가 없이도 대규모 코드에 대한 증명을 생성한다</div>
+              <div class="why">본문은 LLM(Claude)이 인간 전문가 없이도 100개 이상의 라이브러리에 대해 형식 증명을 자동으로 생성하고, 기존에 놓였던 버그까지 찾아냈다고 강조한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">RISC-V</span><span class="tag">Theorem</span><span class="tag">Linux kernel</span><span class="tag">seL4</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">3Blue1Brown</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/rYyJm1tD3d0" target="_blank" rel="noopener">The jumping pegs puzzle</a>
+        </h2>
+
+        <p class="summary">조합 탐색과 증명 연습으로 문제 해결 능력 강화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:06</span>
+            
+            <span>한 peg를 다른 peg 위로 뛰어넘어 같은 거리만큼 반대쪽에 놓는다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:34</span>
+            
+            <span>세 peg를 시작으로 네 번째 코너에 peg를 옮길 수 있는가를 질문한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:42</span>
+            
+            <span>가능하면 최소 이동 횟수를 증명, 불가능하면 불가능을 증명한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>peg 점프 규칙을 데이터 파이프라인 단계 전이 모델링에 적용해 전환 비용 최소화</span></li>
+            
+            <li><span class="box"></span><span>상태 공간 탐색을 활용해 복잡한 비즈니스 워크플로우 최적화 문제에 적용</span></li>
+            
+            <li><span class="box"></span><span>점프 퍼즐을 강화학습 환경으로 변형해 에이전트의 탐색 전략 교육에 활용</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">peg를 다른 peg 위로 뛰어넘을 때 이동 거리는 어떻게 정해지는가?</div>
+            
+            <div class="q-opt">① 임의 거리</div>
+            
+            <div class="q-opt">② 같은 거리</div>
+            
+            <div class="q-opt">③ 두 배 거리</div>
+            
+            <div class="q-opt">④ 반대 방향 거리</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 같은 거리</div>
+              <div class="why">텍스트에 따르면 peg는 다른 peg 위를 뛰어넘어 같은 거리만큼 반대쪽에 놓인다(00:06).</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">3Blue1Brown</span><span class="tag">YouTube</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

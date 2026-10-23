@@ -1,0 +1,299 @@
+{
+  "contract_version": 1,
+  "date": "2026-10-24",
+  "generated_at": "2026-10-24T07:57:15.397403+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-24.html",
+  "items": [
+    {
+      "id": "2740539d9b47",
+      "title": "Beyond API Compatibility: Building a Tool to Measure the Blast Radius of Library Changes",
+      "url": "https://netflixtechblog.com/beyond-api-compatibility-building-a-tool-to-measure-the-blast-radius-of-library-changes-9474f2fd4f90?source=rss----2615bd06b42e---4",
+      "source": {
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
+      },
+      "published_at": "2026-10-23T18:32:51",
+      "summary": "라이브러리 변경 영향 범위 측정으로 안정적 서비스 유지",
+      "positioning": null,
+      "tags": [
+        "Quasar",
+        "SCIP",
+        "Netflix",
+        "Java",
+        "API"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Quasar는 Netflix 전체 레포지토리에서 심볼 정의와 참조를 인덱싱해 API 변경과 실제 사용을 연결한다.",
+          "timestamp": null
+        },
+        {
+          "point": "이를 통해 라이브러리 제작자는 영향을 받는 레포지토리를 파악하고 블래스트 반경을 사전에 추정할 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "기존 호환성 도구는 계약 변화만 식별하지만 사용자를 알 수 없으며, Quasar는 SCIP 포맷을 활용해 이를 보완한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Quasar와 유사한 심볼 인덱스를 구축해 ETL 파이프라인 단계 변경 시 하위 작업에 미치는 영향을 자동으로 평가한다.",
+        "SCIP 기반 코드 인텔리전스를 활용해 오픈소스 라이브러리의 폐기된 API에 대한 자동 마이그레이션 가이드를 생성한다.",
+        "모델 버전 변경에 대한 블래스트 반경 측정을 도입해 어떤 서비스가 특정 모델 버전을 사용 중인지 추적하고 영향 범위를 최소화한다."
+      ],
+      "quiz": [
+        {
+          "question": "Quasar가 API 변경과 소비자 사용을 연결하기 위해 사용하는 핵심 기술은?",
+          "options": [
+            "바이너리 호환성 검사",
+            "텍스트 검색",
+            "SCIP 기반 심층 코드 인덱스",
+            "의존성 그래프"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에서 Quasar는 SCIP라는 오픈 인터체인지 포맷을 이용해 정의와 참조를 인덱싱한다고 명시한다."
+        },
+        {
+          "question": "기존 도구들이 API 사용자를 정확히 파악하지 못하는 이유는?",
+          "options": [
+            "선언된 의존성만 보여줌",
+            "코드 실행 없이 호출을 증명 못함",
+            "오버로드·상속 등을 놓침",
+            "위 모두"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 기존 기술들의 한계로 의존성 그래프, 텍스트 검색, 바이너리/소스 호환성 도구가 각각 이러한 문제를 가지고 있음을 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "464258744e1c",
+      "title": "SympFormer: Inertial Attention Blocks from Damped Hamiltonian Dynamics on Spaces of Probability Measures",
+      "url": "https://arxiv.org/abs/2610.31600v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:stat.ML"
+      },
+      "published_at": "2026-10-22T17:32:11",
+      "summary": "확률밀도 흐름으로 주의 메커니즘 가속화",
+      "positioning": "기존 연구는 주의 메커니즘을 입자계의 평균장 한계와 Wasserstein 공간상의 gradient flow로 해석했지만, 가속화된 동역학은 다루지 못했다. 본 논문은 관성·감쇠 해밀턴 동역학을 도입해 주의 블록을 가속화하고, Otto‑Wasserstein·Stein 기하학을 정립해 선형 주의의 퇴화를 해결한다. 실험은 TinyStories·OpenWebText에서 검증한다.",
+      "tags": [
+        "softmax attention",
+        "linear attention",
+        "Wasserstein",
+        "TinyStories",
+        "OpenWebText"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "주의 블록을 확률밀도 공간의 관성 해밀턴 동역학으로 가속화",
+          "timestamp": null
+        },
+        {
+          "point": "Otto‑Wasserstein 및 Stein 기하학을 도입해 선형 주의 커널의 퇴화 해결",
+          "timestamp": null
+        },
+        {
+          "point": "기하학적 보정을 적용해 TinyStories·OpenWebText에서 NLL 개선",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "관성 해밀턴 동역학을 확산 모델 최적화에 적용해 수렴 속도를 높인다",
+        "Quotient Stein 기하학을 그래프 신경망 주의 커널에 적용해 대규모 그래프의 안정성을 향상시킨다",
+        "토큰 노름 임계값 기반 순간 폭발 감지를 강화학습 정책 네트워크의 학습 안정성 모니터링에 활용한다"
+      ],
+      "quiz": [
+        {
+          "question": "선형 주의 커널의 퇴화를 해결하기 위해 도입된 기하학 구조는?",
+          "options": [
+            "Otto-Wasserstein geometry",
+            "Quotient Stein geometry",
+            "Euclidean geometry",
+            "Riemannian manifold"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 선형 주의 커널의 퇴화를 해결하기 위해 Quotient Stein geometry를 도입했다고 명시한다."
+        },
+        {
+          "question": "제안된 기하학적 보정을 적용한 실험에서 개선된 평가지표는?",
+          "options": [
+            "학습 속도",
+            "Validation negative log-likelihood",
+            "모델 크기",
+            "토큰화 정확도"
+          ],
+          "answer_index": 1,
+          "explanation": "실험 결과는 기하학적 보정이 다음 토큰 예측의 validation NLL을 낮추었다고 보고한다."
+        }
+      ]
+    },
+    {
+      "id": "f2281d6db09a",
+      "title": "머릿속에 있던 로그 정의 기준을 모두의 AI 스킬로 만들기",
+      "url": "https://toss.tech/article/dataops-log-definition-skill",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-10-23T01:53:00",
+      "summary": "AI 스킬로 로그 표준화, 분석 신뢰·효율↑",
+      "positioning": null,
+      "tags": [
+        "DataOps Manager",
+        "로그센터",
+        "AI 스킬",
+        "토스",
+        "앱로그"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "로그 정의 시 형식·맥락·분석 필요성·정책·안전을 포함한 네 가지 원칙을 강조한다.",
+          "timestamp": null
+        },
+        {
+          "point": "기존 정의는 개인 머릿속에 의존해 일관성·효율성이 낮았다.",
+          "timestamp": null
+        },
+        {
+          "point": "AI 스킬을 도입해 규칙·맥락을 자동화·표준화함으로써 도메인 간 재사용이 가능해졌다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 스킬을 활용해 마이크로서비스 간 API 계약 정의를 자동화해 일관성을 높인다.",
+        "AI 스킬로 데이터 웨어하우스 스키마 문서를 생성해 거버넌스 정책과 맞추어 관리한다.",
+        "AI 스킬을 이용해 사고 대응 플레이북을 코딩해 절차와 정책을 일관적으로 적용한다."
+      ],
+      "quiz": [
+        {
+          "question": "로그 정의 시 강조된 네 가지 요소는 무엇인가?",
+          "options": [
+            "형식·맥락·분석 필요성·정책·안전",
+            "속도·비용·보안·가용성",
+            "UI·UX·DB·API",
+            "팀·프로젝트·일정·예산"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 로그 정의는 정해진 형식, 도메인 맥락, 분석에 필요한 요소, 정책·안전을 고려해야 한다고 명시한다."
+        }
+      ]
+    },
+    {
+      "id": "1360bd8eb5a8",
+      "title": "LLMs are making formal software verification feasible at a much larger scale",
+      "url": "https://www.anthropic.com/research/formal-verification",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM으로 대규모 코드 검증·버그 발견 가능",
+      "positioning": null,
+      "tags": [
+        "Claude",
+        "RISC-V",
+        "Theorem",
+        "Linux kernel",
+        "seL4"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Claude를 이용해 RISC‑V 어셈블리 수준에서 100개 이상의 오픈소스 라이브러리의 보안 속성을 형식적으로 증명했다",
+          "timestamp": null
+        },
+        {
+          "point": "형식 검증 과정에서 수년간 놓였던 버그를 LLM이 자동으로 찾아냈다",
+          "timestamp": null
+        },
+        {
+          "point": "전통적으로 수년이 걸리던 형식 검증을 LLM이 자동화해 실무 적용 가능성을 크게 높였다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM 기반 형식 검증을 스마트 계약(EVM 바이트코드)에 적용해 디파이 프로토콜의 보안성을 사전에 보장한다",
+        "LLM을 활용해 자동차 제어 펌웨어 수준의 안전 속성을 자동 증명함으로써 자율주행 시스템의 신뢰성을 향상시킨다",
+        "LLM이 인프라 코드(Terraform 등)의 구성 규칙을 형식적으로 검증하도록 하여 클라우드 배포 오류를 사전에 차단한다"
+      ],
+      "quiz": [
+        {
+          "question": "형식 검증이 테스트보다 강력한 이유는 무엇인가?",
+          "options": [
+            "테스트는 모든 입력 조합을 검증하지만 형식 검증은 일부만 검증한다",
+            "형식 검증은 코드의 모든 가능한 실행 경로를 수학적으로 증명한다",
+            "테스트는 실행 속도가 빠르지만 형식 검증은 느리다",
+            "형식 검증은 버그를 자동으로 수정한다"
+          ],
+          "answer_index": 1,
+          "explanation": "형식 검증은 프로그램을 수학적 모델로 변환해 정의된 보안 규칙을 모든 가능한 실행 경로에 대해 증명하므로, 테스트가 놓칠 수 있는 미확인 경로까지 커버한다."
+        },
+        {
+          "question": "본문에서 LLM을 활용한 형식 검증의 주요 장점은 무엇인가?",
+          "options": [
+            "LLM이 코드를 자동으로 최적화한다",
+            "LLM이 인간 전문가 없이도 대규모 코드에 대한 증명을 생성한다",
+            "LLM이 테스트 커버리지를 100%로 만든다",
+            "LLM이 버그를 완전히 제거한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 LLM(Claude)이 인간 전문가 없이도 100개 이상의 라이브러리에 대해 형식 증명을 자동으로 생성하고, 기존에 놓였던 버그까지 찾아냈다고 강조한다."
+        }
+      ]
+    },
+    {
+      "id": "e5132918d901",
+      "title": "The jumping pegs puzzle",
+      "url": "https://youtu.be/rYyJm1tD3d0",
+      "source": {
+        "type": "youtube",
+        "name": "3Blue1Brown"
+      },
+      "published_at": "2026-08-18T14:54:17",
+      "summary": "조합 탐색과 증명 연습으로 문제 해결 능력 강화",
+      "positioning": null,
+      "tags": [
+        "3Blue1Brown",
+        "YouTube"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "한 peg를 다른 peg 위로 뛰어넘어 같은 거리만큼 반대쪽에 놓는다",
+          "timestamp": "00:06"
+        },
+        {
+          "point": "세 peg를 시작으로 네 번째 코너에 peg를 옮길 수 있는가를 질문한다",
+          "timestamp": "00:34"
+        },
+        {
+          "point": "가능하면 최소 이동 횟수를 증명, 불가능하면 불가능을 증명한다",
+          "timestamp": "00:42"
+        }
+      ],
+      "ideas": [
+        "peg 점프 규칙을 데이터 파이프라인 단계 전이 모델링에 적용해 전환 비용 최소화",
+        "상태 공간 탐색을 활용해 복잡한 비즈니스 워크플로우 최적화 문제에 적용",
+        "점프 퍼즐을 강화학습 환경으로 변형해 에이전트의 탐색 전략 교육에 활용"
+      ],
+      "quiz": [
+        {
+          "question": "peg를 다른 peg 위로 뛰어넘을 때 이동 거리는 어떻게 정해지는가?",
+          "options": [
+            "임의 거리",
+            "같은 거리",
+            "두 배 거리",
+            "반대 방향 거리"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면 peg는 다른 peg 위를 뛰어넘어 같은 거리만큼 반대쪽에 놓인다(00:06)."
+        }
+      ]
+    }
+  ]
+}
