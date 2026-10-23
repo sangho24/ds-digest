@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-22T01:06:54.726992+00:00",
+ "generated_at": "2026-10-23T01:07:05.185981+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -655,7 +655,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 97,
+   "tracked": 99,
    "models": [
     {
      "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2_s43",
@@ -869,7 +869,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
      "created_at": "2026-10-12T15:32:06+00:00",
-     "last_modified": "2026-10-16T23:39:54+00:00",
+     "last_modified": "2026-10-22T17:24:14+00:00",
      "weights_at": "2026-10-12T15:32:06+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-12T15:32:06+00:00",
@@ -883,7 +883,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-Base-BF16",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-Base-BF16",
      "created_at": "2026-10-12T15:31:49+00:00",
-     "last_modified": "2026-10-15T17:03:20+00:00",
+     "last_modified": "2026-10-22T17:24:12+00:00",
      "weights_at": "2026-10-12T15:31:49+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-12T15:31:49+00:00",
@@ -1203,6 +1203,23 @@
      "derivative": null
     },
     {
+     "repo_id": "nvidia/NVIDIA-NemotronLabs-RE-USE-laughter",
+     "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-RE-USE-laughter",
+     "created_at": "2026-09-01T07:42:16+00:00",
+     "last_modified": "2026-10-22T21:41:07+00:00",
+     "weights_at": "2026-09-01T07:42:16+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-01T07:42:16+00:00",
+     "report_at": "2026-09-01T07:42:16+00:00",
+     "arxiv_ids": [
+      "2603.02641",
+      "2606.25621"
+     ],
+     "license": "openmdw-1.1",
+     "gated": "false",
+     "derivative": null
+    },
+    {
      "repo_id": "nvidia/Cosmos3-Nano-Sim-Transfer",
      "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Transfer",
      "created_at": "2026-08-31T19:41:36+00:00",
@@ -1223,24 +1240,6 @@
      "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Auto",
      "created_at": "2026-08-31T19:41:35+00:00",
      "last_modified": "2026-10-21T02:33:18+00:00",
-     "weights_at": "2026-08-31T19:41:35+00:00",
-     "has_weights": true,
-     "model_card_at": "2026-08-31T19:41:35+00:00",
-     "report_at": "2026-08-31T19:41:35+00:00",
-     "arxiv_ids": [
-      "1706.08500",
-      "1812.01717",
-      "2603.03283"
-     ],
-     "license": "other",
-     "gated": "false",
-     "derivative": null
-    },
-    {
-     "repo_id": "nvidia/Cosmos3-Nano-Transfer-Auto",
-     "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Transfer-Auto",
-     "created_at": "2026-08-31T19:41:35+00:00",
-     "last_modified": "2026-10-21T02:33:20+00:00",
      "weights_at": "2026-08-31T19:41:35+00:00",
      "has_weights": true,
      "model_card_at": "2026-08-31T19:41:35+00:00",
@@ -6458,6 +6457,58 @@
  "recent_events": [
   {
    "org": "nvidia",
+   "repo_id": "nvidia/NVIDIA-NemotronLabs-RE-USE-laughter",
+   "transition": "repo_created",
+   "observed_at": "2026-10-23T01:07:05.185981Z",
+   "at": "2026-10-22T21:41:07Z",
+   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-RE-USE-laughter",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2603.02641",
+     "2606.25621"
+    ],
+    "license": "openmdw-1.1",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-09-01T07:42:16+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
+   "repo_id": "nvidia/NVIDIA-NemotronLabs-RE-USE",
+   "transition": "repo_created",
+   "observed_at": "2026-10-23T01:07:05.185981Z",
+   "at": "2026-10-22T21:41:39Z",
+   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-RE-USE",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2603.02641",
+     "2606.25621"
+    ],
+    "license": "openmdw-1.1",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-07-22T12:52:19+00:00"
+   }
+  },
+  {
+   "org": "nvidia",
    "repo_id": "nvidia/Cosmos3-Nano-Sim-Transfer",
    "transition": "repo_created",
    "observed_at": "2026-10-22T01:06:54.726992Z",
@@ -7874,57 +7925,11 @@
     "surfaced": false,
     "created_at": "2026-09-20T08:46:47+00:00"
    }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-2.1-PE-T2I",
-   "transition": "repo_created",
-   "observed_at": "2026-09-21T00:41:47.159796Z",
-   "at": "2026-09-20T08:45:29Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "other",
-    "gated": "false",
-    "derivative": null,
-    "base_models": [],
-    "surfaced": false,
-    "created_at": "2026-09-20T08:45:29+00:00"
-   }
-  },
-  {
-   "org": "qwen",
-   "repo_id": "Qwen/Qwen-Image-2.1",
-   "transition": "repo_created",
-   "observed_at": "2026-09-21T00:41:47.159796Z",
-   "at": "2026-09-14T03:47:26Z",
-   "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "other",
-    "gated": "false",
-    "derivative": null,
-    "base_models": [],
-    "surfaced": false,
-    "created_at": "2026-09-14T03:47:26+00:00"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 641,
-  "events": 649
+  "models": 643,
+  "events": 651
  }
 }
