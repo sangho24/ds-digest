@@ -1,297 +1,309 @@
 {
   "contract_version": 1,
-  "date": "2026-10-24",
-  "generated_at": "2026-10-24T07:57:15.397403+09:00",
+  "date": "2026-10-25",
+  "generated_at": "2026-10-25T07:08:45.150636+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-24.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-25.html",
   "items": [
     {
-      "id": "2740539d9b47",
-      "title": "Beyond API Compatibility: Building a Tool to Measure the Blast Radius of Library Changes",
-      "url": "https://netflixtechblog.com/beyond-api-compatibility-building-a-tool-to-measure-the-blast-radius-of-library-changes-9474f2fd4f90?source=rss----2615bd06b42e---4",
+      "id": "3237bebe3ffd",
+      "title": "Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success",
+      "url": "https://arxiv.org/abs/2610.31670v1",
       "source": {
         "type": "rss",
-        "name": "Netflix TechBlog - Medium"
+        "name": "arXiv:cs.LG"
       },
-      "published_at": "2026-10-23T18:32:51",
-      "summary": "라이브러리 변경 영향 범위 측정으로 안정적 서비스 유지",
-      "positioning": null,
+      "published_at": "2026-10-22T17:59:51",
+      "summary": "오프라인 정렬 지표로 로봇 모델 효율 선별",
+      "positioning": "기존 로봇 파운데이션 모델 평가는 비용이 많이 드는 폐쇄형 롤아웃에 의존해 왔으며, 저비용 대체 지표가 부족했다. 본 연구는 센서모터 정렬(S²)이라는 훈련‑무료 오프라인 메트릭을 제안해, 표현이 물리적 움직임 구조와 얼마나 일치하는지를 측정한다. 이는 멀티모달 표현 수렴 가설을 구현형 모델에 확장하고, 모델 선택 단계에서 비용 효율적인 벤치마크 역할을 한다.",
       "tags": [
-        "Quasar",
-        "SCIP",
-        "Netflix",
-        "Java",
-        "API"
+        "Sensorimotor Alignment",
+        "S^2",
+        "Platonic Representation Hypothesis",
+        "Vision-Language Model",
+        "Vision-Language-Action Model"
       ],
-      "relevance": 8,
+      "relevance": 9,
       "key_points": [
         {
-          "point": "Quasar는 Netflix 전체 레포지토리에서 심볼 정의와 참조를 인덱싱해 API 변경과 실제 사용을 연결한다.",
+          "point": "S^2는 훈련‑무료 오프라인 메트릭으로 감각 표현과 물리적 움직임 기하학의 정렬 정도를 측정한다.",
           "timestamp": null
         },
         {
-          "point": "이를 통해 라이브러리 제작자는 영향을 받는 레포지토리를 파악하고 블래스트 반경을 사전에 추정할 수 있다.",
+          "point": "S^2 점수는 다양한 구현 모델군에서 로봇 과제 성공률과 양의 상관관계를 보여 저비용 모델 선별 지표가 된다.",
           "timestamp": null
         },
         {
-          "point": "기존 호환성 도구는 계약 변화만 식별하지만 사용자를 알 수 없으며, Quasar는 SCIP 포맷을 활용해 이를 보완한다.",
+          "point": "S^2는 VLM 백본을 미세조정 전에도 식별해 VLAs 개발 비용을 절감하고, 표현 수준 설명을 제공한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Quasar와 유사한 심볼 인덱스를 구축해 ETL 파이프라인 단계 변경 시 하위 작업에 미치는 영향을 자동으로 평가한다.",
-        "SCIP 기반 코드 인텔리전스를 활용해 오픈소스 라이브러리의 폐기된 API에 대한 자동 마이그레이션 가이드를 생성한다.",
-        "모델 버전 변경에 대한 블래스트 반경 측정을 도입해 어떤 서비스가 특정 모델 버전을 사용 중인지 추적하고 영향 범위를 최소화한다."
+        "자율주행 인식 모델에 S²와 유사한 정렬 지표를 적용해 시각 임베딩을 도로 기하학 궤적과 맞추어 현장 테스트 전 모델을 선별한다.",
+        "산업용 로봇 팔의 힘‑토크 센서 임베딩을 알려진 움직임 매니폴드와 정렬시켜 오프라인에서 캘리브레이션 오류를 탐지한다",
+        "가상 캐릭터 애니메이션 파이프라인에서 모션 캡처 임베딩과 생성된 포즈 임베딩을 정렬해 렌더링 없이 애니메이션 모델을 평가한다"
       ],
       "quiz": [
         {
-          "question": "Quasar가 API 변경과 소비자 사용을 연결하기 위해 사용하는 핵심 기술은?",
+          "question": "S^2 메트릭의 주요 목적은 무엇인가?",
           "options": [
-            "바이너리 호환성 검사",
-            "텍스트 검색",
-            "SCIP 기반 심층 코드 인덱스",
-            "의존성 그래프"
+            "폐쇄형 롤아웃을 완전히 대체한다",
+            "감각 표현과 물리적 움직임 기하학의 정렬을 측정한다",
+            "비전‑언어 모델을 미세조정한다",
+            "계산 효율성을 평가한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 S^2가 감각 표현이 물리적 움직임 구조와 얼마나 일치하는지를 측정하는 훈련‑무료 오프라인 지표라고 설명한다."
+        },
+        {
+          "question": "S^2는 미세조정 전 어떤 모델의 백본을 식별할 수 있다고 언급되었는가?",
+          "options": [
+            "순수 비전 모델",
+            "비전‑언어‑액션 모델",
+            "순수 언어 모델",
+            "강화학습 에이전트"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 S^2가 Vision‑Language‑Action Models(VLAs)로 미세조정하기 전에도 유망한 Vision‑Language Model 백본을 식별한다는 내용이 있다."
+        }
+      ]
+    },
+    {
+      "id": "cebab80e970a",
+      "title": "Direct Pass@$k$ Optimization for Thought Pruning: Balancing Quality and Diversity in Test-Time Reasoning",
+      "url": "https://arxiv.org/abs/2610.31667v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.CL"
+      },
+      "published_at": "2026-10-22T17:59:48",
+      "summary": "추론 시 후보 풀이를 효율적으로 선택해 정확도·비용을 동시에 높인다.",
+      "positioning": "테스트‑타임에 다수의 후보 해답을 생성해 정답을 찾는 방식은 계산 비용이 크게 늘어난다. 기존 프루닝은 품질 기반 혹은 다양성 기반으로 각각 한계가 있었다. 이 논문은 pass@k 최적화를 통해 품질·다양성을 동시에 고려하는 프루닝을 제안, 탐색‑활용 트레이드오프를 직접 모델링한다.",
+      "tags": [
+        "pass@k",
+        "test-time scaling",
+        "pruning",
+        "reasoning models",
+        "open-weight models"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "기존 프루닝은 품질 또는 다양성에만 초점을 맞춰 트레이드오프를 명시적으로 다루지 않는다.",
+          "timestamp": null
+        },
+        {
+          "point": "본 논문은 pass@k를 직접 최적화해 품질과 중복(다양성)을 동시에 고려하는 프루닝 절차를 제안한다.",
+          "timestamp": null
+        },
+        {
+          "point": "8개 오픈‑weight 모델 실험에서 중간 규모 후보 유지 시 기존 방법보다 크게 성능이 향상된다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "코드 생성 모델의 테스트‑타임 후보를 pass@k 최적화 프루닝으로 선택해 정확도와 다양성을 동시에 향상한다.",
+        "멀티모달 이미지 캡션 생성에서 부분 캡션을 pass@k 기반으로 프루닝해 관련성·다양성을 높인다.",
+        "강화학습에서 정책 롤아웃 후보를 pass@k 최적화 프루닝으로 선택해 고보상 최종 상태를 찾는 확률을 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "이 논문에서 제안한 프루닝 절차가 기존 방법과 다른 점은 무엇인가?",
+          "options": [
+            "품질 기반 점수만 사용한다",
+            "다양성만 고려한다",
+            "pass@k를 직접 최적화해 품질과 중복을 동시에 고려한다",
+            "후보 수를 고정한다"
           ],
           "answer_index": 2,
-          "explanation": "본문에서 Quasar는 SCIP라는 오픈 인터체인지 포맷을 이용해 정의와 참조를 인덱싱한다고 명시한다."
-        },
-        {
-          "question": "기존 도구들이 API 사용자를 정확히 파악하지 못하는 이유는?",
-          "options": [
-            "선언된 의존성만 보여줌",
-            "코드 실행 없이 호출을 증명 못함",
-            "오버로드·상속 등을 놓침",
-            "위 모두"
-          ],
-          "answer_index": 3,
-          "explanation": "본문에 기존 기술들의 한계로 의존성 그래프, 텍스트 검색, 바이너리/소스 호환성 도구가 각각 이러한 문제를 가지고 있음을 언급한다."
+          "explanation": "제안 방법은 pass@k를 최적화함으로써 높은 품질의 부분 해답을 유지하면서 중복을 최소화해 다양성을 확보한다."
         }
       ]
     },
     {
-      "id": "464258744e1c",
-      "title": "SympFormer: Inertial Attention Blocks from Damped Hamiltonian Dynamics on Spaces of Probability Measures",
-      "url": "https://arxiv.org/abs/2610.31600v1",
+      "id": "d9f6d57987f6",
+      "title": "🥤다이소와 키르시, 잘못된 만남은 아닐까요?",
+      "url": "https://trendlite.stibee.com/p/494",
       "source": {
-        "type": "rss",
-        "name": "arXiv:stat.ML"
+        "type": "newsletter",
+        "name": "트렌드라이트"
       },
-      "published_at": "2026-10-22T17:32:11",
-      "summary": "확률밀도 흐름으로 주의 메커니즘 가속화",
-      "positioning": "기존 연구는 주의 메커니즘을 입자계의 평균장 한계와 Wasserstein 공간상의 gradient flow로 해석했지만, 가속화된 동역학은 다루지 못했다. 본 논문은 관성·감쇠 해밀턴 동역학을 도입해 주의 블록을 가속화하고, Otto‑Wasserstein·Stein 기하학을 정립해 선형 주의의 퇴화를 해결한다. 실험은 TinyStories·OpenWebText에서 검증한다.",
-      "tags": [
-        "softmax attention",
-        "linear attention",
-        "Wasserstein",
-        "TinyStories",
-        "OpenWebText"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "주의 블록을 확률밀도 공간의 관성 해밀턴 동역학으로 가속화",
-          "timestamp": null
-        },
-        {
-          "point": "Otto‑Wasserstein 및 Stein 기하학을 도입해 선형 주의 커널의 퇴화 해결",
-          "timestamp": null
-        },
-        {
-          "point": "기하학적 보정을 적용해 TinyStories·OpenWebText에서 NLL 개선",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "관성 해밀턴 동역학을 확산 모델 최적화에 적용해 수렴 속도를 높인다",
-        "Quotient Stein 기하학을 그래프 신경망 주의 커널에 적용해 대규모 그래프의 안정성을 향상시킨다",
-        "토큰 노름 임계값 기반 순간 폭발 감지를 강화학습 정책 네트워크의 학습 안정성 모니터링에 활용한다"
-      ],
-      "quiz": [
-        {
-          "question": "선형 주의 커널의 퇴화를 해결하기 위해 도입된 기하학 구조는?",
-          "options": [
-            "Otto-Wasserstein geometry",
-            "Quotient Stein geometry",
-            "Euclidean geometry",
-            "Riemannian manifold"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서 선형 주의 커널의 퇴화를 해결하기 위해 Quotient Stein geometry를 도입했다고 명시한다."
-        },
-        {
-          "question": "제안된 기하학적 보정을 적용한 실험에서 개선된 평가지표는?",
-          "options": [
-            "학습 속도",
-            "Validation negative log-likelihood",
-            "모델 크기",
-            "토큰화 정확도"
-          ],
-          "answer_index": 1,
-          "explanation": "실험 결과는 기하학적 보정이 다음 토큰 예측의 validation NLL을 낮추었다고 보고한다."
-        }
-      ]
-    },
-    {
-      "id": "f2281d6db09a",
-      "title": "머릿속에 있던 로그 정의 기준을 모두의 AI 스킬로 만들기",
-      "url": "https://toss.tech/article/dataops-log-definition-skill",
-      "source": {
-        "type": "rss",
-        "name": "토스 기술 블로그, 토스 테크"
-      },
-      "published_at": "2026-10-23T01:53:00",
-      "summary": "AI 스킬로 로그 표준화, 분석 신뢰·효율↑",
+      "published_at": "2026-10-20T00:00:00",
+      "summary": "저가 협업이 브랜드 매출·이미지에 미치는 데이터 인사이트",
       "positioning": null,
       "tags": [
-        "DataOps Manager",
-        "로그센터",
-        "AI 스킬",
-        "토스",
-        "앱로그"
-      ],
-      "relevance": 7,
-      "key_points": [
-        {
-          "point": "로그 정의 시 형식·맥락·분석 필요성·정책·안전을 포함한 네 가지 원칙을 강조한다.",
-          "timestamp": null
-        },
-        {
-          "point": "기존 정의는 개인 머릿속에 의존해 일관성·효율성이 낮았다.",
-          "timestamp": null
-        },
-        {
-          "point": "AI 스킬을 도입해 규칙·맥락을 자동화·표준화함으로써 도메인 간 재사용이 가능해졌다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "AI 스킬을 활용해 마이크로서비스 간 API 계약 정의를 자동화해 일관성을 높인다.",
-        "AI 스킬로 데이터 웨어하우스 스키마 문서를 생성해 거버넌스 정책과 맞추어 관리한다.",
-        "AI 스킬을 이용해 사고 대응 플레이북을 코딩해 절차와 정책을 일관적으로 적용한다."
-      ],
-      "quiz": [
-        {
-          "question": "로그 정의 시 강조된 네 가지 요소는 무엇인가?",
-          "options": [
-            "형식·맥락·분석 필요성·정책·안전",
-            "속도·비용·보안·가용성",
-            "UI·UX·DB·API",
-            "팀·프로젝트·일정·예산"
-          ],
-          "answer_index": 0,
-          "explanation": "본문에 따르면 로그 정의는 정해진 형식, 도메인 맥락, 분석에 필요한 요소, 정책·안전을 고려해야 한다고 명시한다."
-        }
-      ]
-    },
-    {
-      "id": "1360bd8eb5a8",
-      "title": "LLMs are making formal software verification feasible at a much larger scale",
-      "url": "https://www.anthropic.com/research/formal-verification",
-      "source": {
-        "type": "rss",
-        "name": "HackerNews"
-      },
-      "published_at": null,
-      "summary": "LLM으로 대규모 코드 검증·버그 발견 가능",
-      "positioning": null,
-      "tags": [
-        "Claude",
-        "RISC-V",
-        "Theorem",
-        "Linux kernel",
-        "seL4"
-      ],
-      "relevance": 7,
-      "key_points": [
-        {
-          "point": "Claude를 이용해 RISC‑V 어셈블리 수준에서 100개 이상의 오픈소스 라이브러리의 보안 속성을 형식적으로 증명했다",
-          "timestamp": null
-        },
-        {
-          "point": "형식 검증 과정에서 수년간 놓였던 버그를 LLM이 자동으로 찾아냈다",
-          "timestamp": null
-        },
-        {
-          "point": "전통적으로 수년이 걸리던 형식 검증을 LLM이 자동화해 실무 적용 가능성을 크게 높였다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "LLM 기반 형식 검증을 스마트 계약(EVM 바이트코드)에 적용해 디파이 프로토콜의 보안성을 사전에 보장한다",
-        "LLM을 활용해 자동차 제어 펌웨어 수준의 안전 속성을 자동 증명함으로써 자율주행 시스템의 신뢰성을 향상시킨다",
-        "LLM이 인프라 코드(Terraform 등)의 구성 규칙을 형식적으로 검증하도록 하여 클라우드 배포 오류를 사전에 차단한다"
-      ],
-      "quiz": [
-        {
-          "question": "형식 검증이 테스트보다 강력한 이유는 무엇인가?",
-          "options": [
-            "테스트는 모든 입력 조합을 검증하지만 형식 검증은 일부만 검증한다",
-            "형식 검증은 코드의 모든 가능한 실행 경로를 수학적으로 증명한다",
-            "테스트는 실행 속도가 빠르지만 형식 검증은 느리다",
-            "형식 검증은 버그를 자동으로 수정한다"
-          ],
-          "answer_index": 1,
-          "explanation": "형식 검증은 프로그램을 수학적 모델로 변환해 정의된 보안 규칙을 모든 가능한 실행 경로에 대해 증명하므로, 테스트가 놓칠 수 있는 미확인 경로까지 커버한다."
-        },
-        {
-          "question": "본문에서 LLM을 활용한 형식 검증의 주요 장점은 무엇인가?",
-          "options": [
-            "LLM이 코드를 자동으로 최적화한다",
-            "LLM이 인간 전문가 없이도 대규모 코드에 대한 증명을 생성한다",
-            "LLM이 테스트 커버리지를 100%로 만든다",
-            "LLM이 버그를 완전히 제거한다"
-          ],
-          "answer_index": 1,
-          "explanation": "본문은 LLM(Claude)이 인간 전문가 없이도 100개 이상의 라이브러리에 대해 형식 증명을 자동으로 생성하고, 기존에 놓였던 버그까지 찾아냈다고 강조한다."
-        }
-      ]
-    },
-    {
-      "id": "e5132918d901",
-      "title": "The jumping pegs puzzle",
-      "url": "https://youtu.be/rYyJm1tD3d0",
-      "source": {
-        "type": "youtube",
-        "name": "3Blue1Brown"
-      },
-      "published_at": "2026-08-18T14:54:17",
-      "summary": "조합 탐색과 증명 연습으로 문제 해결 능력 강화",
-      "positioning": null,
-      "tags": [
-        "3Blue1Brown",
-        "YouTube"
+        "키르시",
+        "다이소",
+        "체리 로고",
+        "VT코스메틱",
+        "유니클로"
       ],
       "relevance": 6,
       "key_points": [
         {
-          "point": "한 peg를 다른 peg 위로 뛰어넘어 같은 거리만큼 반대쪽에 놓는다",
-          "timestamp": "00:06"
+          "point": "다이소 저가 상품이 브랜드 인지도는 높이지만 기존 고가 제품 구매로 이어지지 않을 위험이 있다",
+          "timestamp": null
         },
         {
-          "point": "세 peg를 시작으로 네 번째 코너에 peg를 옮길 수 있는가를 질문한다",
-          "timestamp": "00:34"
+          "point": "브랜드는 저가와 기존 제품 간 차별성을 명확히 하여 고객이 추가 가치를 인식하도록 해야 한다",
+          "timestamp": null
         },
         {
-          "point": "가능하면 최소 이동 횟수를 증명, 불가능하면 불가능을 증명한다",
-          "timestamp": "00:42"
+          "point": "IP(로고) 무분별 확장은 브랜드 매력을 약화시킬 수 있으므로 전략적 제한이 필요하다",
+          "timestamp": null
         }
       ],
       "ideas": [
-        "peg 점프 규칙을 데이터 파이프라인 단계 전이 모델링에 적용해 전환 비용 최소화",
-        "상태 공간 탐색을 활용해 복잡한 비즈니스 워크플로우 최적화 문제에 적용",
-        "점프 퍼즐을 강화학습 환경으로 변형해 에이전트의 탐색 전략 교육에 활용"
+        "SaaS 기업이 무료 체험판을 저가 버전으로 제공해 사용자를 확보하고, 프리미엄 플랜으로 업셀링하는 전략에 적용한다",
+        "B2B 하드웨어 기업이 저가 스타터 키트를 다이소형으로 출시해 초기 고객을 유입하고, 전체 솔루션 구매로 연결시키는 모델에 활용한다",
+        "스트리밍 서비스가 한정된 저가 굿즈를 출시해 브랜드 로열티를 높이고, 구독 전환율을 향상시키는 마케팅에 적용한다"
       ],
       "quiz": [
         {
-          "question": "peg를 다른 peg 위로 뛰어넘을 때 이동 거리는 어떻게 정해지는가?",
+          "question": "키르시가 다이소와 협업할 때 가장 큰 위험은 무엇인가?",
           "options": [
-            "임의 거리",
-            "같은 거리",
-            "두 배 거리",
-            "반대 방향 거리"
+            "매출 급증",
+            "브랜드 이미지 약화",
+            "공급망 문제",
+            "제품 품질 향상"
           ],
           "answer_index": 1,
-          "explanation": "텍스트에 따르면 peg는 다른 peg 위를 뛰어넘어 같은 거리만큼 반대쪽에 놓인다(00:06)."
+          "explanation": "본문에서는 저가 상품이 로고를 무분별하게 확장하면 브랜드 매력이 약해질 수 있다고 경고한다."
+        },
+        {
+          "question": "다이소와의 협업이 브랜드에 긍정적 효과를 주려면 필요한 핵심 조건은?",
+          "options": [
+            "가격 차이 명확화",
+            "무조건 저가 판매",
+            "로고 무제한 사용",
+            "대량 생산"
+          ],
+          "answer_index": 0,
+          "explanation": "텍스트는 다이소 상품과 기존 상품의 차이를 분명히 해야 고객이 다른 상품에 제값을 지불할 이유가 생긴다고 강조한다."
+        }
+      ]
+    },
+    {
+      "id": "e00ffb4d5226",
+      "title": "🦄 2026년 9월 스타트업 투자결산 리포트!",
+      "url": "https://innoforest.stibee.com/p/677",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-10-18T00:00:00",
+      "summary": "투자 규모 감소·건수 증가, 섹터 변화를 데이터로 파악",
+      "positioning": null,
+      "tags": [
+        "하이퍼엑셀",
+        "인핸스",
+        "헬스케어",
+        "바이오",
+        "토스"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "9월 국내 스타트업 투자 건수는 122건, 총액 7,065억으로 건수는 15% 늘었지만 금액은 38.7% 감소했다.",
+          "timestamp": null
+        },
+        {
+          "point": "1,000억 이상 라운드는 4건에서 1건으로 감소했으며, 헬스케어·바이오 라운드는 6건에서 16건으로 크게 늘었다.",
+          "timestamp": null
+        },
+        {
+          "point": "Growth Bridge를 통한 오픈이노베이션 공고가 12건 공개돼 대기업과 스타트업의 협업 기회가 확대되고 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "투자 건수와 총액의 역동적 변화를 다른 산업(예: 클라우드 서비스 계약 수와 매출)에도 적용해 시장 포트폴리오 변화를 모니터링한다.",
+        "헬스케어·바이오 라운드 급증을 근거로 의료 AI 파일럿 프로젝트를 우선 선정해 R&D 자원을 재배분한다.",
+        "오픈이노베이션 공고 수를 기업 내부 혁신 파이프라인 지표로 활용해 연간 혁신 목표 달성률을 예측한다."
+      ],
+      "quiz": [
+        {
+          "question": "투자 건수는 늘면서 총 투자액이 감소한 주요 원인은 무엇일 가능성이 높은가?",
+          "options": [
+            "대형 라운드 감소",
+            "소액 다수 투자 확대",
+            "시장 불확실성 증가",
+            "위 모두"
+          ],
+          "answer_index": 3,
+          "explanation": "본문에 대형(1,000억 이상) 라운드가 4건에서 1건으로 감소했고, 전체 건수는 늘었으므로 소액 다수 투자와 시장 불확실성이 동시에 작용했을 것으로 판단한다."
+        },
+        {
+          "question": "헬스케어·바이오 분야 라운드가 크게 늘어난 배경으로 가장 타당한 설명은?",
+          "options": [
+            "정부 정책 지원 확대",
+            "해당 분야 기술 성숙",
+            "시장 수요 급증",
+            "위 모두"
+          ],
+          "answer_index": 3,
+          "explanation": "본문은 라운드 수가 6건에서 16건으로 증가했으며, 일반적으로 이런 급증은 정책·기술·수요가 동시에 개선된 결과로 해석된다."
+        }
+      ]
+    },
+    {
+      "id": "9caa16e27697",
+      "title": "📈2025년에 이어 2026년에도 성장 가능성 높은 스타트업 15곳",
+      "url": "https://innoforest.stibee.com/p/678",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-10-20T00:00:00",
+      "summary": "스타트업 성장·리스크 데이터로 투자 인사이트 제공",
+      "positioning": null,
+      "tags": [
+        "이주형",
+        "혁신의숲",
+        "스타트업 데이터룸"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "혁신의숲 데이터룸을 활용해 2025·2026 성장 잠재력이 높은 스타트업 15곳을 선정",
+          "timestamp": null
+        },
+        {
+          "point": "모든 스타트업이 2025년 매출 증가, 11곳은 영업이익 흑자, 4곳은 적자 리스크",
+          "timestamp": null
+        },
+        {
+          "point": "자세한 인사이트와 추가 보고서를 링크를 통해 제공",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "데이터 기반 성장·리스크 지표를 사내 프로젝트 포트폴리오 평가에 적용해 ROI 높은 과제에 우선순위 부여",
+        "매출 성장과 영업이익 기준을 활용해 기존 제품 라인의 시장 확대 전략을 선정하고 실패 위험을 사전 차단",
+        "스타트업 리스크 평가 모델을 구축해 벤처 투자 포트폴리오의 손실 가능성을 정량화하고 헤징 전략을 설계"
+      ],
+      "quiz": [
+        {
+          "question": "이 콘텐츠가 제공하는 주요 인사이트의 목적은 무엇인가?",
+          "options": [
+            "투자 판단",
+            "제품 개발",
+            "인재 채용",
+            "마케팅 전략"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 성장 지표와 리스크를 기반으로 스타트업을 선정해 투자 판단에 필요한 정보를 제공한다는 점을 강조한다."
+        },
+        {
+          "question": "데이터 기반 스타트업 선정이 데이터 사이언스 현업자에게 중요한 이유는?",
+          "options": [
+            "모델링 연습을 위해",
+            "실제 비즈니스 의사결정에 적용 가능해서",
+            "데이터 시각화 기술을 테스트하기 위해",
+            "코드 최적화 연습을 위해"
+          ],
+          "answer_index": 1,
+          "explanation": "데이터 사이언스는 분석 결과를 비즈니스 의사결정에 직접 연결하는 것이 핵심이며, 이 콘텐츠는 그 사례를 보여준다."
         }
       ]
     }

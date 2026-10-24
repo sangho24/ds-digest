@@ -1,0 +1,422 @@
+{
+  "date": "2026-10-25",
+  "generated_at": "2026-10-24T22:08:45.156726",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success",
+        "url": "https://arxiv.org/abs/2610.31670v1",
+        "published_at": "2026-10-22T17:59:51",
+        "transcript": null,
+        "body": "Robotic foundation models are typically evaluated through costly closed-loop rollouts, which motivates cheap offline proxies for model capability. The Platonic Representation Hypothesis (PRH) suggests that as representations improve, different modalities such as vision and language converge toward a shared statistical model of reality. We ask whether motion trajectories form another such modality: as embodied models become more capable, should their sensory representations converge toward the structure of physical motion? To examine this, we propose Sensorimotor Alignment ($S^2$), a training-free offline metric that measures how well a model's sensory representation aligns with the geometry of physical motion. We find that $S^2$ correlates positively with downstream robot task success across embodied model families, making it a low-cost offline proxy for prioritizing models before closed-loop evaluation. $S^2$ can also identify promising vision-language model (VLM) backbones even before costly fine-tuning into vision-language-action models (VLAs). Beyond this correlation, $S^2$ offers representation-level explanations for phenomena observed in VLAs and world action models (WAMs). With $S^2$, we extend PRH to embodied models and make sensorimotor alignment empirically measurable, offering insight into why an embodied model succeeds beyond its closed-loop success rate.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "오프라인 정렬 지표로 로봇 모델 효율 선별",
+        "tags": [
+          "Sensorimotor Alignment",
+          "S^2",
+          "Platonic Representation Hypothesis",
+          "Vision-Language Model",
+          "Vision-Language-Action Model"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "시뮬레이션 기반 정책 검증",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "S^2는 훈련‑무료 오프라인 메트릭으로 감각 표현과 물리적 움직임 기하학의 정렬 정도를 측정한다.",
+            "timestamp": null
+          },
+          {
+            "point": "S^2 점수는 다양한 구현 모델군에서 로봇 과제 성공률과 양의 상관관계를 보여 저비용 모델 선별 지표가 된다.",
+            "timestamp": null
+          },
+          {
+            "point": "S^2는 VLM 백본을 미세조정 전에도 식별해 VLAs 개발 비용을 절감하고, 표현 수준 설명을 제공한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 로봇 파운데이션 모델 평가는 비용이 많이 드는 폐쇄형 롤아웃에 의존해 왔으며, 저비용 대체 지표가 부족했다. 본 연구는 센서모터 정렬(S²)이라는 훈련‑무료 오프라인 메트릭을 제안해, 표현이 물리적 움직임 구조와 얼마나 일치하는지를 측정한다. 이는 멀티모달 표현 수렴 가설을 구현형 모델에 확장하고, 모델 선택 단계에서 비용 효율적인 벤치마크 역할을 한다.",
+        "production_ideas": [
+          "자율주행 인식 모델에 S²와 유사한 정렬 지표를 적용해 시각 임베딩을 도로 기하학 궤적과 맞추어 현장 테스트 전 모델을 선별한다.",
+          "산업용 로봇 팔의 힘‑토크 센서 임베딩을 알려진 움직임 매니폴드와 정렬시켜 오프라인에서 캘리브레이션 오류를 탐지한다",
+          "가상 캐릭터 애니메이션 파이프라인에서 모션 캡처 임베딩과 생성된 포즈 임베딩을 정렬해 렌더링 없이 애니메이션 모델을 평가한다"
+        ],
+        "quiz": [
+          {
+            "question": "S^2 메트릭의 주요 목적은 무엇인가?",
+            "options": [
+              "폐쇄형 롤아웃을 완전히 대체한다",
+              "감각 표현과 물리적 움직임 기하학의 정렬을 측정한다",
+              "비전‑언어 모델을 미세조정한다",
+              "계산 효율성을 평가한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 S^2가 감각 표현이 물리적 움직임 구조와 얼마나 일치하는지를 측정하는 훈련‑무료 오프라인 지표라고 설명한다."
+          },
+          {
+            "question": "S^2는 미세조정 전 어떤 모델의 백본을 식별할 수 있다고 언급되었는가?",
+            "options": [
+              "순수 비전 모델",
+              "비전‑언어‑액션 모델",
+              "순수 언어 모델",
+              "강화학습 에이전트"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 S^2가 Vision‑Language‑Action Models(VLAs)로 미세조정하기 전에도 유망한 Vision‑Language Model 백본을 식별한다는 내용이 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "Direct Pass@$k$ Optimization for Thought Pruning: Balancing Quality and Diversity in Test-Time Reasoning",
+        "url": "https://arxiv.org/abs/2610.31667v1",
+        "published_at": "2026-10-22T17:59:48",
+        "transcript": null,
+        "body": "Test-time scaling has emerged as a key inference strategy for reasoning models, where a model generates a large number of candidate solutions in the hope of finding at least one correct solution. Running all candidate solutions to completion can be computationally demanding, so recent work prunes the candidate pool after generating only a short prefix, committing further computation only to the surviving candidates. Existing pruning strategies divide broadly into two categories: Quality-based methods assign a score to each partial solution and discard those predicted to ultimately lead to an incorrect final solution, while diversity-based methods select partial solutions that follow different reasoning trajectories and are therefore likely to cover different final solutions. The tension between these two objectives is an instance of exploration versus exploitation, yet little to no prior work on pruning exposes this trade-off directly, let alone optimizes it. In this paper, we introduce a pruning procedure that addresses this trade-off directly by optimizing pass@$k$ over the selected solution pool. In particular, it chooses the pool to maximize the probability that at least one of its partial solutions, when continued to completion, yields a correct answer. Because this objective simultaneously rewards high-quality partial solutions and penalizes redundancy among them, quality and diversity are naturally balanced by the criterion itself rather than through separate ad-hoc design choices. On eight open-weight reasoning models, our method outperforms existing quality-based and diversity-based pruning strategies. The gains are particularly pronounced when the pruning procedure keeps a moderate number of partial solutions for continued generation, highlighting the value of directly balancing quality and diversity during pruning.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "추론 시 후보 풀이를 효율적으로 선택해 정확도·비용을 동시에 높인다.",
+        "tags": [
+          "pass@k",
+          "test-time scaling",
+          "pruning",
+          "reasoning models",
+          "open-weight models"
+        ],
+        "concepts": [
+          "품질-다양성 균형",
+          "탐색-활용 트레이드오프",
+          "프루닝 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "기존 프루닝은 품질 또는 다양성에만 초점을 맞춰 트레이드오프를 명시적으로 다루지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "본 논문은 pass@k를 직접 최적화해 품질과 중복(다양성)을 동시에 고려하는 프루닝 절차를 제안한다.",
+            "timestamp": null
+          },
+          {
+            "point": "8개 오픈‑weight 모델 실험에서 중간 규모 후보 유지 시 기존 방법보다 크게 성능이 향상된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "테스트‑타임에 다수의 후보 해답을 생성해 정답을 찾는 방식은 계산 비용이 크게 늘어난다. 기존 프루닝은 품질 기반 혹은 다양성 기반으로 각각 한계가 있었다. 이 논문은 pass@k 최적화를 통해 품질·다양성을 동시에 고려하는 프루닝을 제안, 탐색‑활용 트레이드오프를 직접 모델링한다.",
+        "production_ideas": [
+          "코드 생성 모델의 테스트‑타임 후보를 pass@k 최적화 프루닝으로 선택해 정확도와 다양성을 동시에 향상한다.",
+          "멀티모달 이미지 캡션 생성에서 부분 캡션을 pass@k 기반으로 프루닝해 관련성·다양성을 높인다.",
+          "강화학습에서 정책 롤아웃 후보를 pass@k 최적화 프루닝으로 선택해 고보상 최종 상태를 찾는 확률을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "이 논문에서 제안한 프루닝 절차가 기존 방법과 다른 점은 무엇인가?",
+            "options": [
+              "품질 기반 점수만 사용한다",
+              "다양성만 고려한다",
+              "pass@k를 직접 최적화해 품질과 중복을 동시에 고려한다",
+              "후보 수를 고정한다"
+            ],
+            "answer_index": 2,
+            "explanation": "제안 방법은 pass@k를 최적화함으로써 높은 품질의 부분 해답을 유지하면서 중복을 최소화해 다양성을 확보한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤다이소와 키르시, 잘못된 만남은 아닐까요?",
+        "url": "https://trendlite.stibee.com/p/494",
+        "published_at": "2026-10-20T00:00:00",
+        "transcript": null,
+        "body": "2026.10.21 26-042호   |   [잘림 없이 보기](https://stib.ee/W1sO)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. 다이소와 키르시, 잘못된 만남은 아닐까요?\n2. 오늘의집, 시한부 멤버십을 굳이 만든 이유는\n3. Picked\\_ 'NEON의 성공이 시사하는 건' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\n다이소와 키르시, 잘못된 만남은 아닐까요?\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 키르시는 다이소에 깜짝 입점하여 1천~3천 원대 상품으로 인기를 끌고 있지만, 당장의 흥행만으로 브랜드에도 좋은 선택이었다고 판단하기는 어렵습니다.\n2. 저렴한 상품만으로도 체리 로고를 갖는 만족을 얻을 수 있다면 기존 상품 구매로 이어지지 않을 수 있고, 로고를 무분별하게 확장하면 브랜드의 매력도 약해질 수 있기 때문입니다.\n3. 따라서 이번 협업을 장기적인 성과로 이어가려면 다이소 상품과 기존 상품의 차이를 분명히 하고, 고객이 키르시의 다른 상품에도 제값을 지불할 이유를 만들어야 할 겁니다.\n\n이번에도 품절 대란입니다  체리 로고로 10~20대 사이에서 이름을 알린 [패션 브랜드 키르시(KIRSH)가 다이소에 들어왔습니다](https://www.hankyung.com/article/2026101424707). 평소 수만 원대 잡화를 팔던 브랜드의 상품을 다이소에서는 불과 1천~3천 원대에 살 수 있게 된 건데요. 출시 직후 일부 상품이 품절될 정도로 좋은 반응을 얻고 있다고 합니다.    다이소에서 이런 장면을 보는 건 이제 낯설지 않습니다. 화장품에 이어 건강기능식품에서도 비슷한 일이 반복됐죠. 이미 이름이 알려진 브랜드나 믿을 만한 제조사가 다이소 전용 상품을 저렴하게 내놓으면, 파격적인 가격에 끌린 소비자가 몰리고 곧이어 품절 소식이 이어지는 식입니다.    다이소 입장에서는 반가운 일입니다. 화제가 되는 브랜드가 매장을 찾을 새로운 이유를 만들어주고, 이를 사러 온 고객이 다른 상품까지 함께 구매하면 추가 매출도 기대할 수 있으니까요. 다만 브랜드 입장에서는 많이 팔린다고 마냥 좋아할 수만은 없습니다. 낮은 판매 가격에 맞춰 상품을 공급하다 보면, 판매량에 비해 손에 남는 이익은 크지 않을 수도 있기 때문이죠.  그렇다면 브랜드가 얻는 건 무엇일까요?  화장품에서는 비교적 답이 명확했습니다. 다이소에서 저렴하게 제품을 써본 고객이 만족하면 이후 더 큰 용량이나 높은 가격대의 제품을 구매하도록 유도할 수 있거든요. [VT코스메틱의 리들샷이 대표적인 사례](https://www.hankyung.com/article/2026042962941)로 꼽히고요. 건강기능식품 역시 다이소 상품과 기존 상품의 함량이나 구성이 다르고, 고객이 그 차이를 필요로 한다면 비슷한 흐름을 기대할 수 있습니다.    이렇게 보면 다이소는 수많은 사람이 부담 없이 제품을 써보는 곳이 됩니다. 처음부터 큰돈을 쓰기는 망설여졌던 고객도 저렴하게 제품을 경험한 뒤, 그 브랜드의 다른 상품까지 찾아보게 만드는 거죠.    그런데 키르시는 조금 다릅니다. 고객에게는 제품의 기능뿐 아니라 브랜드의 로고와 이미지 자체가 중요한 구매 이유일 수 있거든요. 3천 원짜리 상품만으로도 ‘키르시를 가졌다’는 만족을 충분히 얻는다면, 더 비싼 기존 상품까지 살 필요는 느끼지 못할 수도 있습니다.    그렇다면 키르시는 다른 가능성을 보고 있는지도 모릅니다. 키르시를 운영하는 하이라이트브랜즈 입장에서는 체리 로고 자체로 다양한 상품을 만들 가능성을 시험해 보려는 것일 수 있죠. 좋아하는 캐릭터가 그려진 문구나 생활용품을 찾듯, 체리 로고가 있어서 구매하는 상품을 늘려가는 겁니다. [흔히 말하는 지식재산, 즉 IP를 활용한 사업 확장](https://www.newspim.com/news/view/20261016000186)입니다.    다만 이 대목에서는 과거 라이선스 브랜드의 기억이 스멀스멀 납니다. 이름이 알려진 패션 브랜드가 다른 업체에 이름이나 로고를 사용할 권리를 주고, 그 대가를 받으며 사업을 넓힌 사례는 많았습니다. 이런 방식을 ‘라이선스 사업’이라고 하는데요. 문제는 확장 자체보다 어디까지, 어떤 방식으로 확장하느냐였습니다. 브랜드 이름이 붙은 상품을 어디서나 저렴하게 살 수 있게 되면, 특별하거나 갖고 싶은 브랜드라는 느낌은 약해질 수 있기 때문입니다. 당장 상품은 많이 팔려도 브랜드 이름이 가진 힘은 오히려 줄어들 수 있는 거죠.    키르시 역시 체리 로고를 다양한 상품으로 넓혀갈 때 이 점을 경계해야 합니다. 사람들이 로고가 붙은 상품을 계속 찾으려면, 그 로고에 끌릴 이유가 있어야 하니까요. 캐릭터만의 성격이나 이야기를 쌓아가는 것도 한 가지 방법일 텐데요. 현재 키르시의 체리 로고는 그 자체로 독립적인 매력을 쌓아왔다기보다, 패션 브랜드로서 쌓아온 이미지에 기대는 측면이 큽니다.    그래서 순서가 중요합니다. 키르시라는 브랜드가 계속 매력적으로 느껴져야 체리 로고가 붙은 다른 상품도 갖고 싶어질 수 있겠죠. 반대로 원래 브랜드의 매력이 약해진다면 로고만 따로 떼어내 여러 상품에 붙이는 데도 한계가 생길 수 있습니다. 브랜드를 더 단단히 키워가야 할 키르시 입장에서 이번 시도를 신중하게 바라봐야 하는 이유입니다.  명확한 다음 단계가 있어야 합니다  물론 이번 다이소 협업 때문에 사람들이 키르시를 덜 좋아하게 될 거라고 단정할 수는 없습니다. 오히려 지금까지 키르시를 잘 몰랐던 어린 고객에게 브랜드를 알리고, 체리 로고를 좋아하는 사람을 늘리는 계기가 될지도 모릅니다.    다만 그 기회를 살리려면 다이소에서 무엇을 얻고, 이후 고객이 무엇을 하게 만들 것인지가 명확해야 합니다. 이름과 로고를 알리는 데 성공했다면, 고객이 키르시의 다른 상품에도 관심을 갖고 제값을 지불할 이유까지 만들어야 한다는 거죠.    그러려면 다이소 상품과 기존 상품의 차이부터 분명해야 합니다. 특히 기능보다 갖고 싶은 마음을 파는 브랜드라면, 더 비싼 상품에는 그만큼의 디자인과 품질, 특별함이 있다고 느끼게 해야 하죠. 이 차이가 보이지 않으면 다이소에서 얻은 인기가 오히려 브랜드 전체를 저렴하게 바라보는 시선으로 이어질 수도 있습니다.    이런 점에서 유니클로와 디자이너의 협업은 힌트를 줍니다. 크리스토프 르메르와 사라 린 트란이 이끌어온 ‘유니클로 U’는 디자이너의 감각을 접할 수 있게 하면서도 별도의 이름으로 기존 브랜드와 구분합니다. 대중에게 다가가면서도 디자이너가 운영하는 브랜드와는 다른 상품이라는 점을 드러내는 거죠. 두 디자이너는 올해 가을·겨울 컬렉션을 끝으로 물러나지만, [유니클로와 르메르를 구분하면서도 오랫동안 함께해 왔다는 점](https://hypebeast.kr/2026/8/uniqlo-u-christophe-lemaire-sarah-linh-tran-exit)은 참고할 만합니다.    키르시가 그동안 쌓아온 브랜드의 매력이 다이소에서도 통한다는 건 박수 보낼 만한 일입니다. 이제 중요한 건 그 흥행을 어디로 이어가느냐입니다. 더 많은 사람이 체리 로고를 갖게 하는 데서 그치지 않고, 키르시를 계속 갖고 싶은 브랜드로 남겨야 하기 때문입니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n오늘의집, 시한부 멤버십을 굳이 만든 이유는\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 고객이 오랜 기간 가져다줄 이익을 기대하며 몇 년씩 붙잡아두려는 기존 멤버십과 달리, 오늘의집의 ‘무빙패스’는 오직 이사 전후 큰돈을 쓰는 180일에만 집중합니다.\n2. 가입비만큼의 포인트와 쿠폰, 적립 혜택으로 다른 쇼핑몰로의 이탈을 줄이고, 가구부터 생활용품과 인테리어 시공까지 오늘의집에서 이용할 이유를 만드는 거죠.\n3. 결국 멤버십의 성패는 고객을 얼마나 오래 붙잡느냐뿐 아니라, 고객이 돈을 쓰는 시점을 이해하고 그때 필요한 여러 구매를 얼마나 우리 서비스로 연결하느냐에 달려 있습니다.\n\n180일은 말도 안 됩니다    [오늘의집이 최근 이사를 준비하는 사람들을 위한 멤버십 ‘무빙패스](https://www.etnews.com/20261014000103)’를 선보였습니다. 이용료는 3만 원인데요. 가입하자마자 같은 금액에 해당하는 3만 포인트를 지급하고, 여기에 총 30만 원 규모의 쿠폰 8장과 누적 구매 금액에 따른 추가 적립 혜택까지 제공한다고 합니다. 가입비만큼을 오늘의집에서 쓸 수 있는 포인트로 돌려주고, 추가 혜택까지 얹은 셈이죠.    쿠팡부터 네이버, 최근에는 카카오까지 여러 쇼핑 서비스가 멤버십 경쟁을 벌이고 있으니, 오늘의집도 여기에 뛰어든 것처럼 보일 수 있습니다. 하지만 자세히 보면 이상한 점이 하나 있습니다. 무빙패스는 한 번 가입하면 180일 동안만 유지되는 멤버십이기 때문입니다.    보통 멤버십을 만드는 이유는 정반대입니다. 처음에는 회사가 비용을 부담하더라도 고객을 최대한 오래 붙잡으려 하죠. 이용료보다 큰 혜택을 주면 고객이 더 자주 찾아오고, 주문이 늘어나면 주문 한 건을 처리하는 데 드는 비용도 줄일 수 있기 때문입니다. 여기에 쇼핑뿐 아니라 음식 배달이나 동영상 서비스까지 함께 이용하게 하면 고객 한 명이 쓰는 돈도 늘어날 수 있고요.    대표적인 사례가 쿠팡입니다. 초기 와우 멤버십은 월 2,900원이라는 저렴한 가격에 제공됐습니다. 무료배송을 몇 번만 이용해도 가입비 이상의 혜택을 누릴 수 있었죠. 고객 입장에서는 다른 곳보다 쿠팡을 먼저 찾을 이유가 생기고, 쿠팡은 그렇게 늘어난 주문을 바탕으로 사업을 키울 수 있습니다. 여기에 물류센터와 배송 시스템, 기술에 대한 투자가 더해지면 더 많은 주문을 적은 비용으로 처리할 여지도 커집니다. 이렇게 아낀 비용을 가격과 서비스 개선에 다시 쓸 수도 있고요. 당장 제공하는 멤버십 혜택이 고객과 오래 거래하기 위한 투자가 되는 겁니다.    기업이 고객 한 명과 거래하는 동안 얻을 것으로 기대하는 이익을 ‘고객생애가치’라고 부르는데요. 말은 어렵지만 생각은 단순합니다. 이번 주문에서 얼마를 남기느냐보다, 이 고객이 앞으로 얼마나 자주 찾아오고 얼마나 많은 돈을 쓸지를 함께 보는 겁니다. 멤버십 역시 고객이 몇 년이고 서비스를 이용하며 가져다줄 이익을 기대하고, 이를 바탕으로 지금 제공할 혜택을 설계하는 경우가 많죠.    그런데 오늘의집은 혜택을 제공하는 기간을 고작 180일로 정했습니다. 고객을 오래 붙잡으려는 일반적인 멤버십과는 사뭇 다른 선택이었죠.  멤버십보다는 패스에 가깝습니다  이러한 이유를 이해하려면 오늘의집이 주로 무엇을 파는지부터 살펴봐야 합니다. 가구와 생활용품을 팔고, 인테리어 시공을 연결해 주는 서비스죠. 여기에는 식료품이나 생필품을 살 때와 다른 특징이 하나 있습니다. 특정한 시기에 큰돈을 몰아서 쓰게 된다는 점인데요.    바로 이사입니다. 평소에는 소파나 침대, 식탁을 자주 바꾸지 않습니다. 하지만 이사를 앞두면 이야기가 달라집니다. 가구를 새로 사고, 조명과 생활용품을 바꾸고, 경우에 따라 도배나 시공까지 함께 진행합니다. 평소라면 몇 년에 걸쳐 나눠했을 소비가 짧은 기간에 한꺼번에 발생하기도 하죠.    오늘의집이 성장해 온 방식도 이런 순간과 맞닿아 있습니다. 소셜미디어나 오늘의집에서 다른 사람들이 꾸민 예쁜 집을 구경하고, 우리 집도 이렇게 바꿔보고 싶다는 생각에 상품을 찾아보다가 실제로 구매하게 되는 겁니다. 이사나 인테리어를 준비할 때 가장 먼저 떠올리고 찾아오는 서비스가 되는 것이 중요했던 거죠.    문제는 여기서 정보를 얻었다고 해서 반드시 오늘의집에서 구매하는 것은 아니라는 점입니다. 예쁜 집을 구경하고 마음에 드는 가구를 발견했어도, 막상 살 때는 네이버에서 최저가를 검색하거나 브랜드가 직접 운영하는 쇼핑몰로 이동할 수 있습니다. 사고 싶은 마음은 오늘의집에서 생겼는데, 돈은 다른 곳에서 쓰게 되는 거죠.    더 어려운 건 이런 구매가 자주 일어나지 않는다는 점입니다. 이사가 끝나고 집을 어느 정도 꾸미고 나면 가구와 인테리어에 대한 관심도, 새로 살 물건도 줄어들기 쉽습니다. 매주 장을 보거나 계절이 바뀔 때마다 옷을 사는 것처럼 꾸준한 방문을 기대하기는 어려운 겁니다.    그렇게 보면 180일이라는 기간도 달리 보입니다. 고객을 몇 년 동안 꾸준히 찾아오게 만들기 어렵다면, 이사 전후 몇 달 동안이라도 필요한 물건과 서비스를 최대한 오늘의집에서 구매하게 해야 하니까요. 무빙패스는 이런 사업의 한계를 풀기 위해 내놓은 고육지책으로도 볼 수 있습니다.    그래서 무빙패스란 이름처럼 ‘멤버십’보다는 여행지의 ‘시티패스’에 더 가까워 보입니다. 시티패스는 정해진 기간 동안 교통편과 여러 관광지를 할인받아 이용하는 이용권인데요. 여행객은 요금을 아끼고, 참여 시설은 방문을 유도할 수 있습니다. 짧은 기간에 여러 곳을 이용할 이유를 만들어준다는 점에서 무빙패스와 닮았죠.    무빙패스도 가입비에 해당하는 포인트와 쿠폰, 적립 혜택을 제공해 이사를 준비하는 동안 가구를 살 때도, 생활용품을 살 때도, 인테리어를 고민할 때도 오늘의집을 먼저 찾도록 만듭니다.    이미 오늘의집은 가구와 생활용품 판매를 넘어 이사와 인테리어 시공까지 사업을 넓혀왔습니다. 무빙패스 역시 관련 서비스의 견적을 신청하면 쇼핑 쿠폰을 주는 방식으로 서비스들을 연결하고 있고요. 그 목적은 각각의 서비스를 한 번씩 이용하게 하는 데 그치지 않습니다. 이사에 쓰려고 준비한 예산을 최대한 오늘의집 안에서 쓰게 하는 것이라고 볼 수 있습니다. 결국 180일이라는 짧은 유효기간은 약점이 아니라, 고객이 가장 많은 돈을 쓰는 시기에 집중하겠다는 선택인 셈입니다.  기회보다 고객을 잡아야 합니다    여기서 한 걸음 더 나아가면 무빙패스가 흥미로운 이유가 하나 더 있습니다. 고객을 한 번 데려오는 것과 그 고객이 계속 우리를 선택하게 만드는 것은 다른 일이라는 점입니다.    마케팅에서는 물건을 사려는 고객의 눈에 띄는 일이 중요합니다. 광고나 행사로 관심을 끌어 매장이나 쇼핑몰, 앱을 방문하게 만드는 거죠. 그래서 광고를 본 사람이 몇 명인지, 그중 몇 명이 눌러봤고 실제로 구매했는지를 살펴봅니다.    하지만 가격과 상품을 손쉽게 비교할 수 있는 환경에서는 한 번 방문하게 만드는 것만으로 충분하지 않습니다. 어렵게 데려온 고객도 구매 직전 다른 곳으로 이동하기 쉽기 때문입니다. 새로운 구매 기회를 잡는 것만큼, 이미 찾아온 고객이 다음 물건을 살 때도 우리를 먼저 떠올리게 만드는 일이 중요한 거죠.    오늘의집 무빙패스도 그런 장치로 볼 수 있습니다. 이사를 준비하는 고객이 한 번 가입하면, 이후 180일 동안 여러 물건을 살 때마다 오늘의집을 선택할 이유가 생깁니다. 쿠폰과 포인트가 있으니 “어차피 여기서 사는 게 낫다”라고 생각하게 되는 거죠. 오늘의집 입장에서는 고객이 물건을 살 때마다 광고와 할인으로 다시 불러와야 하는 부담을 줄일 수 있습니다.    비슷한 모습은 백화점에서도 볼 수 있습니다. 신세계백화점은 여행 서비스 ‘[비아신세계’에서 구매한 여행 상품도 상품별 조건에 따라 백화점 VIP 등급을 정하는 구매 실적에 포함](https://www.hankyung.com/article/2026081987521)합니다. 고객 입장에서는 여행을 예약할 때도 VIP 등급을 유지하거나 높이는 데 도움이 되는 비아신세계를 선택할 이유가 생깁니다. 백화점에서 옷이나 가방을 사던 고객이 여행에 쓰는 돈까지 신세계 안에서 쓰도록 유도하는 겁니다.    두 사례 모두 한 번 찾아온 고객이 다른 물건이나 서비스를 구매할 때도 같은 곳을 선택하도록 만든다는 점에서 닮았습니다. 다만 무빙패스는 그 관계를 오래 이어가기보다 이사 전후로 구매가 몰리는 시기에 집중합니다. 멤버십에서 정말 중요한 건 가입 기간 자체보다, 고객이 큰돈을 쓰는 시기에 얼마나 많은 구매를 우리 서비스로 연결할 수 있느냐라는 거죠.    오늘의집에 중요한 건 고객을 10년 동안 매달 방문하게 만드는 일이 아닐 수도 있습니다. 가령 5년에 한 번 찾아오는 고객이라도 이사 전후 6개월 동안 가구부터 생활용품, 시공까지 두루 이용한다면, 자주 방문하지 않아도 회사에 큰 이익을 가져다줄 수 있겠죠.    결국 앞으로의 멤버십 경쟁도 단순히 누가 고객을 오래 붙잡느냐만으로 설명하기 어려워질지 모릅니다. 고객이 언제, 어떤 이유로 큰돈을 쓰는지 이해하고, 그 순간 가장 먼저 찾는 곳이 되는 일이 더 중요해질 수도 있으니까요.\n\n오늘 읽은 글이 마음에 드셨다면 다음 번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대한 의견이나 광고·기고·기타 협업 문의는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 이수만이 떠난 SM과 SM을 나온 이수만](https://www.instagram.com/p/DejExdgE3vT/) A2O LITE와 NEON의 성공이 말해 주는 것    [2. 사러가 슈퍼마켓의 큐레이션 비결은](https://newsroom.kurlycorp.com/k-saruga/) ‘이곳의 추천은 믿을 만하다’는 확신을 주는 법    [3. 프릳츠 커피가 10년 넘게 사랑받는 이유](https://newneek.co/@gosum_beat/article/47385) 그 비결은 브랜딩이 아닌 ‘사람’에 있었습니다    [4. 고객을 움직이는 다섯 가지 감정적 가치](https://www.kakao.vc/blog/B2C-emotional-values) 성취감, 통제감, 정체성, 인정, 의식과 즐거움    [5. W컨셉도 온라인 밖으로 나옵니다](https://news.bizwatch.co.kr/article/consumer/2026/10/19/0034) 첫 오프라인 매장으로 한남동을 선택한 건\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/W1sO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/W1sO \"게시하기\")[웹에서 보기](https://stib.ee/W1sO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "저가 협업이 브랜드 매출·이미지에 미치는 데이터 인사이트",
+        "tags": [
+          "키르시",
+          "다이소",
+          "체리 로고",
+          "VT코스메틱",
+          "유니클로"
+        ],
+        "concepts": [
+          "브랜드 확장 전략",
+          "가격 차별화",
+          "IP 활용"
+        ],
+        "key_points": [
+          {
+            "point": "다이소 저가 상품이 브랜드 인지도는 높이지만 기존 고가 제품 구매로 이어지지 않을 위험이 있다",
+            "timestamp": null
+          },
+          {
+            "point": "브랜드는 저가와 기존 제품 간 차별성을 명확히 하여 고객이 추가 가치를 인식하도록 해야 한다",
+            "timestamp": null
+          },
+          {
+            "point": "IP(로고) 무분별 확장은 브랜드 매력을 약화시킬 수 있으므로 전략적 제한이 필요하다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "SaaS 기업이 무료 체험판을 저가 버전으로 제공해 사용자를 확보하고, 프리미엄 플랜으로 업셀링하는 전략에 적용한다",
+          "B2B 하드웨어 기업이 저가 스타터 키트를 다이소형으로 출시해 초기 고객을 유입하고, 전체 솔루션 구매로 연결시키는 모델에 활용한다",
+          "스트리밍 서비스가 한정된 저가 굿즈를 출시해 브랜드 로열티를 높이고, 구독 전환율을 향상시키는 마케팅에 적용한다"
+        ],
+        "quiz": [
+          {
+            "question": "키르시가 다이소와 협업할 때 가장 큰 위험은 무엇인가?",
+            "options": [
+              "매출 급증",
+              "브랜드 이미지 약화",
+              "공급망 문제",
+              "제품 품질 향상"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 저가 상품이 로고를 무분별하게 확장하면 브랜드 매력이 약해질 수 있다고 경고한다."
+          },
+          {
+            "question": "다이소와의 협업이 브랜드에 긍정적 효과를 주려면 필요한 핵심 조건은?",
+            "options": [
+              "가격 차이 명확화",
+              "무조건 저가 판매",
+              "로고 무제한 사용",
+              "대량 생산"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트는 다이소 상품과 기존 상품의 차이를 분명히 해야 고객이 다른 상품에 제값을 지불할 이유가 생긴다고 강조한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "🦄 2026년 9월 스타트업 투자결산 리포트!",
+        "url": "https://innoforest.stibee.com/p/677",
+        "published_at": "2026-10-18T00:00:00",
+        "transcript": null,
+        "body": "🦄 2026년 9월 스타트업 투자결산:  하이퍼엑셀 1,000억 · 인핸스 512억… 투자 건수는 15% 늘었다    2026년 9월, 투자 건수는 늘고 금액은 줄었습니다. 국내 스타트업 투자는 122건, 7,065억원으로 8월보다 건수는 15.1% 늘었고 금액은 38.7% 줄었습니다. 1,000억원 이상 라운드는 4건에서 1건으로 줄었고, 헬스케어/바이오는 6건에서 16건으로 늘었습니다. 9월 최대 규모 라운드는 어느 기업이 받았을까요? 2023년에 설립한 핵융합 기업은 얼마를 유치했을까요? 토스는 어느 신선식품 기업의 신주를 인수했을까요? 혁신의숲 데이터로 정리한 9월 투자결산에서 확인해 보세요.\n\n[9월 투자결산 보러가기👉🏻](https://www.innoforest.co.kr/report/583)\n\n[**성장 스타트업 이직 솔루션, 혁신의숲 career 베타 공개**](https://career.innoforest.co.kr/)  [2026 혁신의숲 어워즈 3차 후보 기업 공개](https://www.innoforest.co.kr/report/582)\n\n[[업데이트] 혁신의숲 메인페이지와 투자사 페이지가 새로워집니다](https://www.innoforest.co.kr/report/579)  [🐂 \"버려지던 소똥, 자원으로 거듭나다\"  농가의 골칫거리를 발전소의 에너지로 바꾸는 뉴젠](https://www.innoforest.co.kr/report/580)\n\n[더 많은 인사이트 보러가기👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge)10월 19일 기준, 모집중 공고 수: 총 12건\n\n(~10/23) [한국산업단지공단｜KICXUP 챌린지 & 로컬 스타트업 2차 모집](https://www.innoforest.co.kr/growth-bridge/OI00000819/2026-산업단지-오픈이노베이션프로그램-KICXUP-챌린지-로컬-스타트업-2차-모집-공고)\n\n(~11/02) [DB손해보험｜FIN-오픈이노베이션 Meep-up Day 10회차](https://www.innoforest.co.kr/growth-bridge/OI00000818/서울핀테크랩-FIN오픈이노베이션-Meepup-Day-10회차-DB손해보험)\n\n(~11/05) [HL홀딩스｜서초창업스테이션 프리-오픈이노베이션](https://www.innoforest.co.kr/growth-bridge/OI00000821/2026년-서초창업스테이션-프리오픈이노베이션)\n\n[2025년 오픈이노베이션 결산 리포트: 숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\n[Growth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면? 소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ?email=letter)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 순수 AI드라마로 시청률 1위!.. '후서유기'는 어떻게 만들었을까?](https://outstanding.kr/eastfantasy20260928)\n\n[🗯️ 투자금이 많이 남은 벤처펀드 10곳을 살펴봤습니다](https://outstanding.kr/drypowder20260930)\n\n[🔎 유니콘 14곳이 투자한 스타트업들을 확인해 봤습니다](https://outstanding.kr/unicorn20260928)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "투자 규모 감소·건수 증가, 섹터 변화를 데이터로 파악",
+        "tags": [
+          "하이퍼엑셀",
+          "인핸스",
+          "헬스케어",
+          "바이오",
+          "토스"
+        ],
+        "concepts": [
+          "스타트업 성장 지표",
+          "재무 데이터 추적"
+        ],
+        "key_points": [
+          {
+            "point": "9월 국내 스타트업 투자 건수는 122건, 총액 7,065억으로 건수는 15% 늘었지만 금액은 38.7% 감소했다.",
+            "timestamp": null
+          },
+          {
+            "point": "1,000억 이상 라운드는 4건에서 1건으로 감소했으며, 헬스케어·바이오 라운드는 6건에서 16건으로 크게 늘었다.",
+            "timestamp": null
+          },
+          {
+            "point": "Growth Bridge를 통한 오픈이노베이션 공고가 12건 공개돼 대기업과 스타트업의 협업 기회가 확대되고 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "투자 건수와 총액의 역동적 변화를 다른 산업(예: 클라우드 서비스 계약 수와 매출)에도 적용해 시장 포트폴리오 변화를 모니터링한다.",
+          "헬스케어·바이오 라운드 급증을 근거로 의료 AI 파일럿 프로젝트를 우선 선정해 R&D 자원을 재배분한다.",
+          "오픈이노베이션 공고 수를 기업 내부 혁신 파이프라인 지표로 활용해 연간 혁신 목표 달성률을 예측한다."
+        ],
+        "quiz": [
+          {
+            "question": "투자 건수는 늘면서 총 투자액이 감소한 주요 원인은 무엇일 가능성이 높은가?",
+            "options": [
+              "대형 라운드 감소",
+              "소액 다수 투자 확대",
+              "시장 불확실성 증가",
+              "위 모두"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 대형(1,000억 이상) 라운드가 4건에서 1건으로 감소했고, 전체 건수는 늘었으므로 소액 다수 투자와 시장 불확실성이 동시에 작용했을 것으로 판단한다."
+          },
+          {
+            "question": "헬스케어·바이오 분야 라운드가 크게 늘어난 배경으로 가장 타당한 설명은?",
+            "options": [
+              "정부 정책 지원 확대",
+              "해당 분야 기술 성숙",
+              "시장 수요 급증",
+              "위 모두"
+            ],
+            "answer_index": 3,
+            "explanation": "본문은 라운드 수가 6건에서 16건으로 증가했으며, 일반적으로 이런 급증은 정책·기술·수요가 동시에 개선된 결과로 해석된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "ephemeral",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "📈2025년에 이어 2026년에도 성장 가능성 높은 스타트업 15곳",
+        "url": "https://innoforest.stibee.com/p/678",
+        "published_at": "2026-10-20T00:00:00",
+        "transcript": null,
+        "body": "아웃스탠딩의 이주형 기자가 혁신의숲의 스타트업 데이터룸 데이터를 활용하여 올해 성장 가능성이 높은 스타트업 15곳을 선정하여 회원님에게 소개합니다. 📈 모두 2025년 매출이 전년보다 늘었고, 11곳은 영업이익 흑자입니다. 적자가 이어지는 4곳의 리스크도 함께 짚었어요. 15개 스타트업에 대한 인사이트를 지금 바로 확인하세요!\n\n[**인사이트 읽기 👉🏻**](https://www.innoforest.co.kr/report/584)\n\n[🦄 2026년 9월 스타트업 투자결산](https://www.innoforest.co.kr/report/583)  [성장 스타트업 이직 솔루션, 혁신의숲 career 베타 공개](https://career.innoforest.co.kr/)\n\n[2026 혁신의숲 어워즈 3차 후보 기업 공개](https://www.innoforest.co.kr/report/582)  [혁신의숲 메인, 투자사 페이지가 새로워집니다](https://www.innoforest.co.kr/report/579)\n\n[**더 많은 인사이트 찾아보기📚**](https://www.innoforest.co.kr/report/list)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "스타트업 성장·리스크 데이터로 투자 인사이트 제공",
+        "tags": [
+          "이주형",
+          "혁신의숲",
+          "스타트업 데이터룸"
+        ],
+        "concepts": [
+          "스타트업 성장 지표",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "혁신의숲 데이터룸을 활용해 2025·2026 성장 잠재력이 높은 스타트업 15곳을 선정",
+            "timestamp": null
+          },
+          {
+            "point": "모든 스타트업이 2025년 매출 증가, 11곳은 영업이익 흑자, 4곳은 적자 리스크",
+            "timestamp": null
+          },
+          {
+            "point": "자세한 인사이트와 추가 보고서를 링크를 통해 제공",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 기반 성장·리스크 지표를 사내 프로젝트 포트폴리오 평가에 적용해 ROI 높은 과제에 우선순위 부여",
+          "매출 성장과 영업이익 기준을 활용해 기존 제품 라인의 시장 확대 전략을 선정하고 실패 위험을 사전 차단",
+          "스타트업 리스크 평가 모델을 구축해 벤처 투자 포트폴리오의 손실 가능성을 정량화하고 헤징 전략을 설계"
+        ],
+        "quiz": [
+          {
+            "question": "이 콘텐츠가 제공하는 주요 인사이트의 목적은 무엇인가?",
+            "options": [
+              "투자 판단",
+              "제품 개발",
+              "인재 채용",
+              "마케팅 전략"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 성장 지표와 리스크를 기반으로 스타트업을 선정해 투자 판단에 필요한 정보를 제공한다는 점을 강조한다."
+          },
+          {
+            "question": "데이터 기반 스타트업 선정이 데이터 사이언스 현업자에게 중요한 이유는?",
+            "options": [
+              "모델링 연습을 위해",
+              "실제 비즈니스 의사결정에 적용 가능해서",
+              "데이터 시각화 기술을 테스트하기 위해",
+              "코드 최적화 연습을 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "데이터 사이언스는 분석 결과를 비즈니스 의사결정에 직접 연결하는 것이 핵심이며, 이 콘텐츠는 그 사례를 보여준다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "seasonal",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
