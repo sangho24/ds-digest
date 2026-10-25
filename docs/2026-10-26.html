@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 26일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 26일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">불확실성 정량화</span><span class="concept">조건부 확률 모델링</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">모델 파인튜닝</span><span class="concept">AI 기반 진단 보조</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">개발자 경험 개선</span><span class="concept">AI와 인간 협업</span><span class="concept">언어 모델링</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ME</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.31621v1" target="_blank" rel="noopener">Volatility-Corrected Prediction Intervals: Locally Adaptive Uncertainty Quantification for Probabilistic Time-Series Forecasting</a>
+        </h2>
+
+        <p class="summary">시계열 예측 구간을 지역 변동성에 맞게 조정해 신뢰성 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>시계열 예측에서 전역 커버리지는 만족하지만 지역적 변동성에 따라 구간이 과·과소 커버되는 문제를 해결하고자 한다. 기존 컨포멀 보정은 변동성을 반영하지 못한다. 본 논문은 GARCH 기반 변동성 모델링으로 사후 보정해 지역 적응형 예측 구간을 제공, 기존 방법 대비 지역 커버리지를 안정화한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 시계열 모델은 전역 커버리지는 맞지만 지역 변동성에 따라 과·과소 커버리지가 발생한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>VCPI는 예측 스케일을 기준으로 표준화 잔차의 변동성을 GARCH로 모델링하고 곱셈 보정한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 VCPI는 컨포멀 방법보다 지역 커버리지가 더 안정적이며 마진 커버리지는 유지한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>전력 수요 예측 구간에 VCPI 방식을 적용해 급변하는 부하 시점에도 신뢰도 높은 구간을 제공한다.</span></li>
+            
+            <li><span class="box"></span><span>소매 재고 수요 예측의 확률 구간에 GARCH 기반 변동성 보정을 도입해 재주문 시점의 불확실성을 더 정확히 반영한다.</span></li>
+            
+            <li><span class="box"></span><span>네트워크 트래픽 이상 탐지 점수의 신뢰 구간을 VCPI로 보정해 변동성이 큰 기간에 오탐을 감소시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 시계열 모델의 예측 구간은 지역 변동성에서 오버·언더 커버리지를 발생시킬 수 있는가?</div>
+            
+            <div class="q-opt">① 잔차가 독립적이라고 가정한다</div>
+            
+            <div class="q-opt">② 모델이 비선형성을 못 잡는다</div>
+            
+            <div class="q-opt">③ 데이터가 정규분포가 아니다</div>
+            
+            <div class="q-opt">④ 학습 데이터가 부족하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 잔차가 독립적이라고 가정한다</div>
+              <div class="why">기존 방법은 잔차가 일정한 분산을 가진 독립적인 것으로 가정해 전역 커버리지만, 실제로는 이분산(heteroskedastic) 특성이 있어 지역 변동성에서 커버리지가 달라진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">VCPI가 지역 적응형 예측 구간을 만들기 위해 사용하는 핵심 모델은 무엇인가?</div>
+            
+            <div class="q-opt">① LSTM</div>
+            
+            <div class="q-opt">② GARCH</div>
+            
+            <div class="q-opt">③ ARIMA</div>
+            
+            <div class="q-opt">④ Prophet</div>
+            
+            <div class="q-answer">
+              <div class="correct">② GARCH</div>
+              <div class="why">VCPI는 표준화된 예측 잔차의 변동성을 모델링하기 위해 Generalized Autoregressive Conditional Heteroskedasticity (GARCH) 모델을 사용한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">VCPI</span><span class="tag">GARCH</span><span class="tag">Chronos</span><span class="tag">Moirai</span><span class="tag">TimesFM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://lynchlab.net/llm-skin-cancer" target="_blank" rel="noopener">A 10-year-old CNN outperforms frontier LLMs for skin cancer diagnosis</a>
+        </h2>
+
+        <p class="summary">오래된 CNN이 최신 LLM보다 피부암 진단 정확도 높음</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>10년 된 Inception v3 CNN을 20분 정도 파인튜닝해 200개 병변 중 62% 정확도로 최신 LLM을 앞섰다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>테스트는 MILK10k 데이터셋에서 100개 비방출 병변(멜라노마·기저세포암·편평세포암·광각화생)과 100개 방출 가능한 병변을 사용했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM은 멜라노마를 양성 병변으로 오분류해 의료 영상 멀티모달 처리 한계가 드러났다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>레거시 CNN을 빠르게 파인튜닝해 망막 OCT나 폐 CT와 같은 다른 의료 영상 분야에 적용하면 비용 효율적인 진단 모델을 만들 수 있다</span></li>
+            
+            <li><span class="box"></span><span>임상 사진과 특수 영상(예: 적외선, 초음파) 쌍을 입력으로 사용해 제조 현장의 결함 검출 모델을 개선한다</span></li>
+            
+            <li><span class="box"></span><span>다양한 멀티모달 분류 작업에서 LLM과 전용 비전 모델을 체계적으로 벤치마크해 최적 모델 선택 가이드를 제공한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 CNN이 해당 테스트에서 LLM보다 높은 정확도를 보였는가?</div>
+            
+            <div class="q-opt">① CNN이 피부과 이미지에 맞게 파인튜닝되었기 때문이다</div>
+            
+            <div class="q-opt">② LLM은 이미지 입력을 전혀 처리하지 못한다</div>
+            
+            <div class="q-opt">③ CNN이 dermoscopic 이미지를 사용했기 때문이다</div>
+            
+            <div class="q-opt">④ LLM은 낮은 신뢰도 임계값을 가지고 있었다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① CNN이 피부과 이미지에 맞게 파인튜닝되었기 때문이다</div>
+              <div class="why">CNN은 공개 피부과 이미지 데이터에 파인튜닝되어 이미지 특징을 잘 학습했으며, 특히 dermoscopic 뷰를 활용해 정확도를 높였다. 반면 LLM은 멀티모달 처리 능력이 제한적이었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GPT-6 Astra</span><span class="tag">Claude Fable 5.1</span><span class="tag">Inception v3</span><span class="tag">MILK10k</span><span class="tag">ISIC</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">3Blue1Brown</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/V_uq3v6xK-4" target="_blank" rel="noopener">Sphere Intersection Puzzle Corrected</a>
+        </h2>
+
+        <p class="summary">구 교차 부피 기대값, 샘플링·확률 모델링 핵심</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:02</span>
+            
+            <span>두 반지름 1인 구가 교차할 때 교차 부피의 기대값을 묻는다</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:12</span>
+            
+            <span>두 번째 구의 중심을 원점에서 거리 ≤2인 임의의 점으로 선택</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:33</span>
+            
+            <span>해답을 모아 연말에 풀 영상으로 공개 예정</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>무작위 구 중심 선택 방식을 고차원 클러스터 겹침 확률 추정에 적용해 이상치 탐지 민감도 조절</span></li>
+            
+            <li><span class="box"></span><span>구 교차 기대 부피 계산을 시뮬레이션 기반 충돌 감지 임계값 설정에 활용하여 연산 비용 절감</span></li>
+            
+            <li><span class="box"></span><span>임베딩 공간에서 두 벡터 군의 거리 제한을 구의 반경으로 보고 기대 겹침 부피로 유사도 임계값을 정의</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">두 단위 구가 교차하도록 보장하려면 중심 사이 거리는 얼마 이하이어야 하는가?</div>
+            
+            <div class="q-opt">① 1</div>
+            
+            <div class="q-opt">② 2</div>
+            
+            <div class="q-opt">③ √2</div>
+            
+            <div class="q-opt">④ 3</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 2</div>
+              <div class="why">본문에서 두 번째 구의 중심을 원점에서 거리 2 이내로 선택하면 교차가 보장된다(00:12).</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">스피커는 퍼즐 해답을 언제 공개할 계획이라고 했는가?</div>
+            
+            <div class="q-opt">① 다음 달</div>
+            
+            <div class="q-opt">② 연말 휴일에</div>
+            
+            <div class="q-opt">③ 즉시</div>
+            
+            <div class="q-opt">④ 공개 계획 없음</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 연말 휴일에</div>
+              <div class="why">영상 말미에 연말 휴일에 풀 영상을 공개할 예정이라고 언급했다(00:33).</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">3Blue1Brown</span><span class="tag">YouTube</span><span class="tag">Patreon</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/wgYd0dwCo5g" target="_blank" rel="noopener">[10분 테코톡] 커비의 Jetpack Compose에서의 Stale Closure</a>
+        </h2>
+
+        <p class="summary">Jetpack Compose 클로저 오류, DS 핵심</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Stale closure는 캡처된 상태가 오래되어 최신 UI와 불일치하는 현상이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Jetpack Compose에서 recomposition 시 클로저가 오래된 변수에 묶여 발생한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>불변 상태 사용·remember·LaunchedEffect 등으로 문제를 예방하고 디버깅한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Jetpack Compose</span><span class="tag">Stale Closure</span><span class="tag">우아한테크코스</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/9cJnQZOY0cU" target="_blank" rel="noopener">AI 엔지니어가 개발한 목소리 #토스 #AI #tts</a>
+        </h2>
+
+        <p class="summary">AI 음성 비서의 자연스러운 대화 처리 능력 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:22</span>
+            
+            <span>AI 음성이 사람처럼 자연스러워져 시음성이 크게 향상됨을 느낄 수 있음.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:27</span>
+            
+            <span>'고객 끼어들기'는 AI가 발화 중에도 고객이 개입하는 것을 의미함.</span>
+          </li>
+          
+          <li>
+            <span class="ts">00:46</span>
+            
+            <span>고객이 AI와 통화 시 ARS처럼 기다리지 않고 자연스럽게 대화에 주도적으로 참여하게 됨.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고객 끼어들기(customer interruption) 기법을 AI 기반 코드 페어 프로그래밍 환경에 적용한다. 개발자 어시스턴트가 코드를 제안하거나 설명하는 도중에 개발자가 자연스럽게 질문하거나 수정할 수 있는 기능을 만들어, AI 지원 코딩 세션의 몰입감과 효율성을 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>AI의 '자연스러운 대화 참여 유도' 능력을 온라인 교육 플랫폼에 옮겨 붙인다. AI 튜터가 학습자의 발화 패턴이나 음색 변화를 감지하여 혼란이나 질문을 즉시 파악하고, AI 설명 도중에도 실시간으로 개입하여 개인화된 설명을 제공함으로써 학습 효과와 사용자 경험을 개선한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI 음성의 '고객 끼어들기' 기능이 가져온 주된 변화는 무엇인가요?</div>
+            
+            <div class="q-opt">① AI가 상품 가격 조정 제안을 더 쉽게 전달할 수 있게 되었습니다.</div>
+            
+            <div class="q-opt">② 고객이 ARS와 같은 기계적인 느낌 없이 자연스럽게 대화에 참여하게 되었습니다.</div>
+            
+            <div class="q-opt">③ AI 음성의 시음성 자체를 향상시켜 목소리를 더 사람처럼 만들었습니다.</div>
+            
+            <div class="q-opt">④ AI가 고객의 질문에 더 빠르게 응답하여 통화 시간을 단축할 수 있습니다.</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 고객이 ARS와 같은 기계적인 느낌 없이 자연스럽게 대화에 참여하게 되었습니다.</div>
+              <div class="why">본문 [00:46]에 따르면, AI의 개선된 대화 처리 능력으로 '고객이 자연스럽게 대화에 주도적으로 참여하게 됐다'고 명시되어 있습니다. 이는 기계적인 안내음에 대한 불쾌감 없이 대화한다는 느낌을 받게 된 결과입니다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">AI 음성의 '고객 끼어들기' 기능이 개선되기 전, 고객들은 AI와 어떻게 상호작용하는 경향이 있었나요?</div>
+            
+            <div class="q-opt">① 고객은 AI의 발언이 끝날 때까지 기다렸다가 말했다.</div>
+            
+            <div class="q-opt">② 고객은 AI의 제안에 가격 조정 관련 질문을 더 자주 했다.</div>
+            
+            <div class="q-opt">③ 고객은 AI와의 통화에서 불쾌함을 느끼지 않았다.</div>
+            
+            <div class="q-opt">④ 고객은 AI의 음성이 너무 자연스러워 AI임을 인지하지 못했다.</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 고객은 AI의 발언이 끝날 때까지 기다렸다가 말했다.</div>
+              <div class="why">본문 [00:35]에 '이전에는 고객이 ARS 음성을 듣듯이 아니면 기계적인 안내음을 듣듯이 AI가 말할 때까지 기다렸다가 말했다고 한다면'이라는 설명이 있습니다. 이는 개선 전의 상호작용 방식을 나타냅니다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">토스</span><span class="tag">AI</span><span class="tag">tts</span><span class="tag">토스쇼핑</span><span class="tag">ARS</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
