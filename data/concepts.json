@@ -32,21 +32,21 @@
     },
     "AI 기반 진단 보조": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-26"
+      "last_seen": "2026-10-27"
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 39,
+      "count": 40,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-22"
+      "last_seen": "2026-10-27"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 30,
+      "count": 32,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-24"
+      "last_seen": "2026-10-27"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -146,9 +146,9 @@
     },
     "Root Cause Analysis": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-10-10",
-      "last_seen": "2026-10-21"
+      "last_seen": "2026-10-27"
     },
     "SQL 기반 그래프 쿼리": {
       "aliases": [],
@@ -404,9 +404,9 @@
     },
     "데이터 일반화": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-10-01",
-      "last_seen": "2026-10-23"
+      "last_seen": "2026-10-27"
     },
     "데이터 접근 계약": {
       "aliases": [],
@@ -488,9 +488,15 @@
     },
     "멀티모달 표현 학습": {
       "aliases": [],
-      "count": 20,
+      "count": 21,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-25"
+      "last_seen": "2026-10-27"
+    },
+    "멀티비율 비디오 자동 크롭": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-27",
+      "last_seen": "2026-10-27"
     },
     "멀티스케일 샘플링": {
       "aliases": [],
@@ -578,9 +584,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 11,
+      "count": 12,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-10-26"
+      "last_seen": "2026-10-27"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -680,9 +686,9 @@
     },
     "불확실성 정량화": {
       "aliases": [],
-      "count": 17,
+      "count": 19,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-10-26"
+      "last_seen": "2026-10-27"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -896,9 +902,9 @@
     },
     "신경망 기하학 및 개념 매니폴드": {
       "aliases": [],
-      "count": 5,
+      "count": 6,
       "first_seen": "2026-09-03",
-      "last_seen": "2026-10-24"
+      "last_seen": "2026-10-27"
     },
     "신뢰성": {
       "aliases": [],
@@ -1082,9 +1088,9 @@
     },
     "작업 격리": {
       "aliases": [],
-      "count": 10,
+      "count": 11,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-23"
+      "last_seen": "2026-10-27"
     },
     "잠금 메커니즘": {
       "aliases": [],
@@ -1380,6 +1386,12 @@
       "first_seen": "2026-10-25",
       "last_seen": "2026-10-25"
     },
+    "프레셰 평균 기반 공간 예측": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-27",
+      "last_seen": "2026-10-27"
+    },
     "프로모션 효과 분석": {
       "aliases": [],
       "count": 1,
@@ -1500,6 +1512,12 @@
       "first_seen": "2026-10-14",
       "last_seen": "2026-10-14"
     },
+    "활성 화자 감지": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-27",
+      "last_seen": "2026-10-27"
+    },
     "훈련 프리 모델": {
       "aliases": [],
       "count": 1,
@@ -1513,6 +1531,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-26T07:18:56.652058+09:00",
+  "updated_at": "2026-10-27T08:32:11.232323+09:00",
   "version": 1
 }
