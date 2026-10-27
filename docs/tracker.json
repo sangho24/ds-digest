@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-26T00:53:20.897022+00:00",
+ "generated_at": "2026-10-27T01:44:43.614362+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -737,7 +737,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-NVFP4",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-NVFP4",
      "created_at": "2026-10-16T18:30:41+00:00",
-     "last_modified": "2026-10-17T00:16:07+00:00",
+     "last_modified": "2026-10-26T15:01:39+00:00",
      "weights_at": "2026-10-16T18:30:41+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-16T18:30:41+00:00",
@@ -751,7 +751,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-MXFP8",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-MXFP8",
      "created_at": "2026-10-16T18:26:53+00:00",
-     "last_modified": "2026-10-17T00:19:56+00:00",
+     "last_modified": "2026-10-26T15:01:52+00:00",
      "weights_at": "2026-10-16T18:26:53+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-16T18:26:53+00:00",
@@ -765,7 +765,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-BF16",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-BF16",
      "created_at": "2026-10-16T18:25:29+00:00",
-     "last_modified": "2026-10-16T23:54:11+00:00",
+     "last_modified": "2026-10-26T14:57:27+00:00",
      "weights_at": "2026-10-16T18:25:29+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-16T18:25:29+00:00",
@@ -779,7 +779,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-GGUF",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-GGUF",
      "created_at": "2026-10-16T16:25:01+00:00",
-     "last_modified": "2026-10-17T00:30:11+00:00",
+     "last_modified": "2026-10-26T17:39:55+00:00",
      "weights_at": "2026-10-16T16:25:01+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-16T16:25:01+00:00",
@@ -3304,7 +3304,7 @@
      "repo_id": "google/gemma-4-12B-it-assistant",
      "url": "https://huggingface.co/google/gemma-4-12B-it-assistant",
      "created_at": "2026-05-23T01:17:47+00:00",
-     "last_modified": "2026-08-20T21:49:20+00:00",
+     "last_modified": "2026-10-26T09:31:02+00:00",
      "weights_at": "2026-05-23T01:17:47+00:00",
      "has_weights": true,
      "model_card_at": "2026-05-23T01:17:47+00:00",
@@ -6454,6 +6454,21 @@
  ],
  "recent_events": [
   {
+   "org": "openai",
+   "repo_id": "https://openai.com/index/introducing-gpt-6-1-terra",
+   "transition": "announced",
+   "observed_at": "2026-10-27T01:44:43.614362Z",
+   "at": "2026-10-26T00:00:00Z",
+   "source_url": "https://openai.com/index/introducing-gpt-6-1-terra",
+   "method": "official_rss",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "title": "Introducing GPT-6.1 Terra"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
    "transition": "repo_created",
@@ -7906,26 +7921,11 @@
      "2609.21967"
     ]
    }
-  },
-  {
-   "org": "openai",
-   "repo_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna",
-   "transition": "announced",
-   "observed_at": "2026-09-23T01:05:14.929997Z",
-   "at": "2026-09-22T18:00:00Z",
-   "source_url": "https://openai.com/index/introducing-gpt-6-sol-and-luna",
-   "method": "official_rss",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "title": "Introducing GPT-6 Sol and Luna"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
   "models": 644,
-  "events": 653
+  "events": 654
  }
 }
