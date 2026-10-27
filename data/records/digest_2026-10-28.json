@@ -1,0 +1,406 @@
+{
+  "date": "2026-10-28",
+  "generated_at": "2026-10-27T23:29:48.330133",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "Center-of-Mass Interpretation of Evolution Strategies",
+        "url": "https://arxiv.org/abs/2610.35865v1",
+        "published_at": "2026-10-26T17:59:33",
+        "transcript": null,
+        "body": "Evolution strategies (ES) update a model by sampling a population of perturbed copies, scoring each one, and moving in the reward-weighted direction of the perturbations. This update is usually presented as an estimate of a smoothed gradient. We present a geometrical interpretation of this update instead. Treat each perturbed model as a particle and its reward as the particle's mass. Before scoring, every particle has the same mass and the population balances at its centroid. Once rewards are assigned, it balances at its reward-weighted center of mass instead. We show that the mean-subtracted ES update is exactly this displacement, scaled by a scalar factor that depends on the mean reward, for any finite population. The physical reading needs nonnegative rewards, which can always be arranged by adding a constant to every reward without changing the update. In the limit of a large population or under antithetic sampling, the centroid sits on the model itself, so ES has an even simpler geometric interpretation: from its current location, the model moves towards the reward-weighted center of mass of its own population. The same picture explains what subtracting the mean reward does: it changes the point from which the displacement is measured, from the model to the sampled centroid. Our contribution is an intuitive, geometric way to visualize an ES update, exact for any finite population.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "ES를 질량 중심으로 해석해 설계·분석을 간편하게",
+        "tags": [
+          "Evolution Strategies",
+          "Antithetic Sampling",
+          "Center of Mass",
+          "Reward-weighted Update",
+          "Population Sampling"
+        ],
+        "concepts": [
+          "진화 전략",
+          "샘플링 기반 최적화"
+        ],
+        "key_points": [
+          {
+            "point": "ES 업데이트는 보상 가중 질량 중심으로 이동하는 것으로 해석될 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "평균 보상을 빼는 것은 측정 기준점을 모델이 아닌 샘플링된 중심점으로 바꾸는 효과가 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "큰 모집단이나 대칭(antithetic) 샘플링에서는 중심점이 현재 모델과 일치해, 업데이트가 모델→보상 가중 질량 중심으로 직접 이동한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "진화 전략은 보상 가중 평균 기울기로 모델을 업데이트하는 방법으로, 기존에는 스무딩된 그래디언트 추정으로만 설명되었다. 본 논문은 각 샘플을 질량으로 보고 보상 가중 질량 중심으로의 이동으로 ES 업데이트를 정확히 해석함으로써, ES가 그래디언트 기반 최적화와 어떻게 연결되는지를 명확히 한다.",
+        "production_ideas": [
+          "보상 가중 질량 중심 개념을 강화학습 정책 그래디언트 시각화에 적용해 정책 변화를 직관적으로 파악한다",
+          "연합 학습에서 로컬 업데이트를 전체 모델 중심이 아닌 현재 전역 모델 중심으로 측정하도록 평균 보상 차감 방식을 차용한다",
+          "하이퍼파라미터 탐색 시 대칭 샘플링을 이용해 탐색 점들을 쌍으로 배치해 변동성을 줄이고 현재 최적점 주변 질량 중심 이동으로 탐색 효율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "ES 업데이트를 보상 가중 질량 중심으로 해석할 때, 평균 보상을 빼는 효과는 무엇인가?",
+            "options": [
+              "업데이트 스케일을 조정한다",
+              "측정 기준점을 모델에서 샘플링된 중심점으로 이동한다",
+              "보상을 비음수로 만든다",
+              "샘플 수를 늘린다"
+            ],
+            "answer_index": 1,
+            "explanation": "평균 보상을 빼면 기준점이 모델이 아니라 샘플링된 중심점이 되어, 이동 거리를 그 점으로부터 측정한다."
+          },
+          {
+            "question": "대규모 모집단이나 대칭(antithetic) 샘플링을 사용할 때 ES 업데이트의 기하학적 해석이 단순해지는 이유는?",
+            "options": [
+              "보상 가중 질량 중심이 항상 원점에 위치한다",
+              "샘플들의 중심이 현재 모델 위치와 일치하기 때문이다",
+              "평균 보상이 0이 된다",
+              "업데이트가 무시된다"
+            ],
+            "answer_index": 1,
+            "explanation": "대규모 모집단이나 antithetic 샘플링에서는 샘플 중심이 모델 자체와 일치해, 모델이 보상 가중 질량 중심으로 직접 이동한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "손가락 튕기기로 LLM 비용 줄이기",
+        "url": "https://toss.tech/article/snap-llm-cost-reduction",
+        "published_at": "2026-10-27T07:05:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"405a360d-33e3-8065-a4a1-c13813838a6b\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스의 수많은 서비스와 내부 업무에도 생성형 AI가 정말 많이 사용되고 있습니다.</span><span class=\"css-1kxrhf3\"> 복잡한 정책을 읽고, 상품 정보를 비교하고, 문서를 요약하고, 정해진 형식의 값을 추출하는 등, LLM이 맡는 범위도 빠르게 넓어지고 있죠.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-8022-a7ad-c9e22ad1c1a3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">시간도 비용도 비싼 데이터 레이블링을 통해 모델을 학습하고 문제를 해결하던 과거 방식과 달리, </span><span class=\"css-1kxrhf3\">LLM을 사용하면 빠른 시간 내에 사용할 수 있는 솔루션이 만들어집니다. 프롬프트를 작성하고, 몇 가지 예시를 넣고, 응답 형식을 고정하면 동작하는 Workflow가 나오죠</span><span class=\"css-1kxrhf3\">. 하지만 프롬프트 튜닝을 마치고 본격적으로 대용량 호출을 시작하면 새로운 문제가 보이기 시작합니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-80d5-8d60-c19d36b85a86\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">바로 </span><span class=\"css-q3ktjb\">비용과 Latency</span><span class=\"css-1kxrhf3\">입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-8018-b1f8-d9d2b332a6e7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 토큰 먹는 하마는 정말 토스의 모든 문제 해결에 지속적으로 필요한걸까요?</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-80d4-8e36-de244df6cafc\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"405a360d-33e3-803a-8a13-c202b70048ca\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">LLM Fine-Tuning is all you need?</span></span></span></h2><p class=\"css-14on8x8\" id=\"405a360d-33e3-8092-b960-fd597c4c561a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">상용 LLM을 사용하지 않고 내재화 한다면, 비용을 크게 절감할 수 있습니다. 작업 목표에 따라 LoRA(Low-Rank Adaptation)처럼 효율적인 Adapter 학습을 사용할 수도 있고, 더 큰 품질 개선이나 안정성이 필요하다면 Full Fine-Tuning을 검토할 수도 있습니다. </span><span class=\"css-1kxrhf3\">실제로 토스에서도 LLM Fine-Tuning 을 통해 비용을 크게 절감한 사례도 </span><span class=\"css-1kxrhf3\">있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-802d-b998-dbd0b89d791e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">그런데 모든 LLM 호출에 같은 수준의 능력이 필요한 것은 아닙니다. 복잡한 문맥을 이해하고 긴 답변을 생성해야 하는 작업도 있지만, 두 상품이 같은지 판단하거나 정해진 카테고리 중 하나를 고르는 작업도 있어요. 이런 작업이 반드시 범용 LLM의 모든 능력을 필요로 하지는 않습니다. 작업의 복잡도와 요구되는 품질에 따라, 전통적인 ML 모델이나 특정 작업에 최적화한 소형 모델을 적절히 선택해도 충분히 처리할 수 있는 경우가 있죠. 중요한 것은 모델의 크기보다, </span><span class=\"css-1kxrhf3\">주어진 작업에 필요한 품질을 확보할 수 있느냐입니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"405a360d-33e3-8006-864f-cb2dfefa5e21\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/6dc9854f-7439-4012-85d0-48eb97209fe9/figure-01-task-types.png\" /><figcaption class=\"css-wgpbp3\"><span class=\"css-1ebvaan\">Figure 1.</span><span class=\"css-jfs1hr\"> LLM이 처리하는 다양한 작업. 작업의 특성과 요구 품질에 따라 적합한 모델도 달라집니다.</span></figcaption></figure><p class=\"css-14on8x8\" id=\"405a360d-33e3-80a8-b061-e4286511d9ff\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"405a360d-33e3-800e-b9b2-d99e9cffc2e6\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">전환이 가능한 트래픽부터 내재화하기</span></span></span></h2><p class=\"css-14on8x8\" id=\"405a360d-33e3-80be-b3df-de6f5ad3d83e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">&#x27;작은 모델&#x27;이 가지는 장단점은 명확합니다.</span><span class=\"css-1kxrhf3\"> 빠르고, 자원 소모가 적지만, 처리할 수 있는 문제의 범위에는 제약이 있어요.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-80e6-9115-e611f91881e3\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">간단한 질문으로 시작해봤습니다. 내재화 모델은 꼭 LLM과 동등한, 혹은 견줄 만한 수준으로 성능을 끌어올려야만 사용할 수 있는 걸까? 빠르고 작은 모델이라도 쉬운 요청은 충분히 처리할 수 있을 텐데?</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-8020-a4a1-ee29205790d7\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 질문으로부터 선택적 내재화(SNAP, Selective Native AI Processing)를 기획하게 되었어요.</span><span class=\"css-1kxrhf3\"> SNAP의 핵심은 해결해야 하는 문제의 모든 요청을 한 번에 Native Model로 처리하는 것이 아니라, 작은 모델도 높은 신뢰도로 처리할 수 있는 트래픽부터 빠르게 처리하는 것입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"405a360d-33e3-80bc-a833-d8da5467a8b8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">고비용 LLM Traffic을 한 번에 없애기보다, 처리 가능한 구간을 찾아 타노스가 손가락을 튕기듯(</span><span class=\"css-1odxvuk\">SNAP!</span><span class=\"css-1kxrhf3\">) 손쉽게 줄여보자는 의미도 담겨 있죠. 큰 틀에서 SNAP은 다음 3가지 규칙을 하나의 Workflow로 묶습니다.</span></span></span></p><aside class=\"css-nv7vyi\" id=\"405a360d-33e3-8054-85f4-c6eb4040b595\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"405a360d-33e3-80bd-955d-f6f5864fd50c\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">비교적 쉬운 요청은 작업별 소형 내재화 모델이 처리합니다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"405a360d-33e3-8076-86c1-f6ff5c177cb5\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">어렵거",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM 호출 비용·지연을 줄이는 실무 전략 제공",
+        "tags": [
+          "LLM",
+          "LoRA",
+          "Fine-Tuning",
+          "SNAP",
+          "Toss"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "대규모 LLM 호출 시 비용과 지연이 급증해 운영 부담이 커진다",
+            "timestamp": null
+          },
+          {
+            "point": "작업별 요구 품질에 따라 소형 모델이나 전통 ML 모델을 선택해 비용을 절감할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "LoRA와 Full Fine‑Tuning을 활용한 자체 모델 내재화로 상용 LLM 사용 비용을 크게 낮출 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "간단한 결제 사기 탐지에 SNAP을 적용해 저위험 거래는 경량 모델로 빠르게 처리하고, 고위험 거래만 무거운 모델로 분석한다",
+          "이미지 기반 상품 태깅에 LoRA 어댑터 학습을 사용해 기존 비전 모델을 비용 효율적으로 맞춤화한다",
+          "FAQ 자동응답에 LLM 대신 규칙 기반 엔진을 적용해 정형 답변은 비용 없이 처리하고, 복잡 질문만 LLM에 위임한다"
+        ],
+        "quiz": [
+          {
+            "question": "LLM 호출 시 비용·Latency가 크게 증가하는 주요 원인은 무엇인가?",
+            "options": [
+              "토큰 사용량이 많기 때문",
+              "모델 파라미터가 적기 때문",
+              "네트워크 대역폭이 충분하지 않기 때문",
+              "데이터 라벨링 비용이 높기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "LLM은 입력·출력 토큰 수에 따라 비용이 계산되며, 대량 호출 시 토큰 사용량이 급증해 비용과 지연이 늘어난다"
+          },
+          {
+            "question": "작업 복잡도가 낮은 경우 작은 모델을 선택하는 이유는?",
+            "options": [
+              "작은 모델은 항상 높은 정확도를 제공한다",
+              "작은 모델은 처리 속도가 빠르고 자원 소모가 적다",
+              "작은 모델은 모든 언어를 이해한다",
+              "작은 모델은 비용이 무조건 0이다"
+            ],
+            "answer_index": 1,
+            "explanation": "소형 모델은 연산량이 적어 빠르게 응답하고 인프라 비용이 낮아 간단한 작업에 적합하다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Survival LLM: AI assistant and emergency library that runs on your own computer",
+        "url": "https://www.brangus.io/survival-llm",
+        "published_at": null,
+        "transcript": null,
+        "body": "# An AI that still works when the internet doesn't.\n\nSurvival LLM is a free AI assistant and emergency library that runs entirely on your own computer.\nAsk it how to keep food safe in a blackout, treat a burn, or purify water, and it answers from\ntrusted sources and shows you exactly where each answer came from.\n\n[Download for Mac 212 MB](#download)\n[Download for Windows 25 MB](#download)\n[Source code](#source)\n\nFree and open source. Set it up while you have internet; after that it needs none.\n\n![Survival LLM answering a question about fridge food safety, with the cited Ready.gov article open beside it](/survival-llm/screenshot.png)\n\n## What it does\n\n### Works with no internet\n\nThe AI model and the library live on your computer. Nothing you ask leaves it.\n\n### Shows its sources\n\nEvery answer lists the articles it read. Click one to read it yourself, with the exact passage highlighted.\n\n### Made for emergencies\n\nMedical references, FEMA and CDC guidance, survival manuals, how-to guides, repair guides and about 930,000 Wikipedia articles.\n\n## Pick your version\n\nThe app is the same everywhere. When it opens, it checks your computer's memory and downloads the AI model that fits.\nMore memory means a smarter model.\n\n| Your computer | AI model it uses | Our emergency test | Model download |\n| --- | --- | --- | --- |\n| Mac with 128 GB or more memory | NVIDIA Nemotron 3.5 Super | 21 of 22 right | 80 GB |\n| Mac with 32–96 GB | Qwen3.8 27B | 21 of 22 right | 18 GB |\n| Windows PC with 32 GB or more | NVIDIA Nemotron 3.5 Lightning | 19 of 22 right | 25 GB |\n| Mac or PC with 16–31 GB | IBM Granite 4.2 8B | 14 of 22 right | 6 GB |\n\n\"Right\" means it got the main point of official guidance right on 22 blackout and first-aid\nquestions, graded blind, in our tests on an earlier build of the library ([how we\ntested](#source)). Smaller models make more mistakes, so the app always shows the source to check.\n\nPlus the library: a 9 GB download for everything (19 GB once installed), or\n1.3 GB (3 GB installed) without Wikipedia and iFixit. Free disk space needed: the model's\nsize plus 5 GB, plus about 27 GB while the full library installs (10 GB for the smaller one).\nApple Silicon Macs (M1 or newer) with macOS 14 Sonoma or newer, and 64-bit Windows 10 or 11.\n\n## Set it up in three steps\n\nSetup takes 20 minutes to about 2½ hours, depending on your computer and your internet speed. You only click for\nabout 5 minutes; the rest is downloading.\n\n1. **Download Survival LLM** for [Mac](#download) or [Windows](#download)\n   and unzip it. On Windows, right-click the zip and choose *Extract All*.\n2. **Open it.** On a Mac, double-click *Survival LLM*. On Windows, open the extracted folder and\n   double-click *Survival LLM.bat*.\n3. **Follow the setup.** The app opens in its own window and downloads the AI engine (built into the Mac\n   app), the AI model that fits your computer, and the library. Let it finish while you're online.\n\n**The first time you open it,** your computer warns you, because the app isn't sold through an app store.\n  \n**Mac:** click *Done*, open *System Settings > Privacy & Security*, scroll down to\n\"Survival LLM was blocked\", click *Open Anyway* and confirm with your password. You only do this once.\n  \n**Windows:** click *More info*, then *Run anyway*.\n\n## What's in the library\n\nPlain-text copies of openly licensed (some for non-commercial use only) and public-domain references, searchable\nin a fraction of a second:\n\n- About 930,000 of Wikipedia's most-read articles\n- WikiMed medical encyclopedia\n- MedlinePlus (U.S. National Library of Medicine)\n- UK Medicines A to Z (public sector information)\n- WikEM emergency medicine\n- Ready.gov (FEMA) emergency guides\n- CDC travelers' health\n- U.S. military medicine and survival manuals\n- Risk references for estimating micromorts: life tables and U.S. death rates\n- wikiHow how-to guides\n- iFixit repair guides\n- Appropedia (appropriate technology)\n- Q&A on home repair, cooking, gardening, the outdoors and ham radio (Stack Exchange)\n\nEach source keeps its own license, shown with every article; see the\n[full list with licenses](#source).\n\n## Good to know\n\n### It can be wrong\n\nAI models make mistakes, the small ones more often. Every answer shows the articles it used, so you can check.\n\n### Private\n\nNo account, no tracking. Your questions never leave your computer, and once set up it works with the internet off.\n\n### Your own files\n\nAdd PDFs, Word documents, ebooks and notes, like your generator's manual or your family's\nemergency plan, and the AI searches them too. They stay on your computer.\n\n### Updates\n\nCheck for updates, at the bottom of the app, installs a new version in one click and keeps your\nmodels, library and files.\n\n### Battery\n\nOn a MacBook Pro we measured about 100 W while it answers, for 5 to 40 seconds per question: a full battery\nanswers roughly 100 to 300. A small generator or power station runs it easily.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "인터넷 없이도 로컬 LLM으로 신뢰성 있는 응답 제공",
+        "tags": [
+          "Survival LLM",
+          "NVIDIA Nemotron",
+          "Qwen3.8",
+          "IBM Granite",
+          "Wikipedia"
+        ],
+        "concepts": [
+          "오프라인-온라인 연계 전략",
+          "AI 기반 문서 구조화",
+          "AI 에이전트 메모리 관리"
+        ],
+        "key_points": [
+          {
+            "point": "Survival LLM은 인터넷 없이도 로컬에서 AI 모델과 방대한 참고 라이브러리를 실행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "각 답변은 원본 기사와 정확한 문장을 하이라이트하여 출처를 투명하게 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "컴퓨터 메모리에 따라 적절한 모델을 자동 선택해 성능과 용량을 최적화한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "규제 산업(예: 금융) 내부 컴플라이언스 QA에 출처가 표시된 오프라인 LLM을 적용해 답변 추적성을 확보한다.",
+          "IoT 엣지 디바이스에 메모리 기반 모델 자동 선택 로직을 도입해 하드웨어 제약에 맞는 LLM을 배포한다",
+          "재난 대응팀을 위한 로컬 긴급 지식베이스를 구축해, Survival LLM과 유사한 공개 도메인 가이드와 위키 자료를 오프라인으로 제공한다"
+        ],
+        "quiz": [
+          {
+            "question": "Survival LLM이 사용자의 질문을 외부 서버로 전송하지 않는 이유는 무엇인가?",
+            "options": [
+              "모델과 라이브러리가 로컬에 있기 때문",
+              "인터넷 연결이 차단돼 있기 때문",
+              "데이터 암호화 정책 때문",
+              "클라우드 비용 절감 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 AI 모델과 라이브러리가 사용자의 컴퓨터에 모두 존재하므로 질문이 외부로 전송되지 않는다."
+          },
+          {
+            "question": "Survival LLM이 어떤 기준으로 모델을 선택하고, 메모리가 적은 경우 어떤 결과가 나타나는가?",
+            "options": [
+              "CPU 코어 수에 따라 선택",
+              "컴퓨터 메모리 용량에 따라 모델 크기가 결정",
+              "운영체제 버전에 따라 선택",
+              "사용자가 직접 모델을 선택"
+            ],
+            "answer_index": 1,
+            "explanation": "표에 명시된 바와 같이 메모리 용량에 따라 적합한 모델이 자동으로 선택되며, 작은 모델은 오류가 더 많이 발생한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "AI가 쓴 글을 읽기 싫은 이유",
+        "url": "https://deepdaiv.stibee.com/p/169",
+        "published_at": "2026-10-27T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안 보이시나요?](https://stib.ee/FNzO)\n\n#167 위클리 딥 다이브 | 2026년 10월 28일 에디터 배니\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- AI가 쓴 글이 어려운 이유를 요약했습니다.\n- 쉬운 말을 어렵게 쓰는 AI의 특징을 정리했습니다.\n- AI 티를 벗기는 법과 근본적인 한계점을 소개했습니다.\n\n이 글은 사람이 썼습니다\n\n안녕하세요, 에디터 배니입니다.    최근 흥미로운 연구가 바이럴되고 있습니다. AI가 쓴 글은 왜 이해하기 어려울까? (🔗 [링크](https://news.hada.io/topic?id=35947)) 제목을 읽자마자 크게 공감했습니다. 분명 평이하게 작성된 한국어 문장인데도 유독 AI가 쓴 글은 읽기가 싫습니다. 글을 읽다가 AI 말투가 느껴지는 순간 집중력이 확 흐려지기도 하고요. 다행히 저만 그렇게 느낀 것이 아니었습니다.    심지어 최근에는 AI라서 읽지 않겠다는 신조어, [AI;DR](https://www.rickmanelius.com/p/aidr-ai-didnt-read)도 생겼습니다. 너무 길어서 요약한다는 의미로 사용하는 TL;DR(Too Long; Didn’t Read)를 패러디한 것입니다. 요약하겠다는 것도 아니고, 그냥 읽지 않겠다는 의미라는 차이가 있기는 하지만요. 이런 흐름을 보면 한국어 모델이 유독 어색한 게 문제가 아니라, 언어를 가리지 않고 나타나는 현상 같습니다.    그렇다면 왜 AI가 쓴 글은 읽기 싫은 걸까요? 일반적으로 사람이 쓰는 글과 어떻게 다를까요? 이번 뉴스레터에서는 AI 글의 특징에 대해 심층적으로 분석한 연구 [<Why is AI-generated language so hard to understand?>](https://arxiv.org/abs/2610.29162)를 소개합니다.\n\n친절도, 정보도 과유불급\n\nAI 모델이 사용자에게 쉽게 동조한다는 사실은 이제 너무 많이 알려졌습니다. 특유의 말투로 사용자에게 무조건 동의하는 AI 모델이 밈처럼 소비되기도 했었죠. 별것 아닌 말에도 ‘\\*\\*핵심\\*\\*을 찔렀’다며 아부 떠는 AI 때문에 오히려 사용자가 당황하기도 했습니다.    여전히 AI 모델은 친절하고 사용자에게 깍듯이 대하지만 특유의 말투는 많이 사라졌습니다. 과한 친절은 사용자에게 아첨하듯 느껴지고, 역설적으로 거리감을 느끼게 만듭니다. 이런 현상은 사람을 대할 때도 마찬가지입니다. 상대가 과하게 친절하면 왠지 친해지고 싶지 않습니다.    사회심리학에서는 이 현상을 꽤 오래전부터 설명해 왔습니다. 1960년대 사회심리학자 [에드워드 존스(Edward E. Jones)](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Self-presentation_Impression_Formation/Jones_Ingratiation_1964_Ch2_pp25-45.pdf)는 칭찬으로 호감을 사려는 것 같다고 느끼는 순간, 칭찬받는 사람은 그 말을 그대로 받아들이지 않는다고 말합니다. 친절한 답변에도 불쾌했던 것은 아마도 개인의 문제는 아니었을 것입니다. 곧 이 친절함은 폐기됐습니다. 논란의 대상이었던 GPT-4o는 다시 이전 상태로 되돌아갔고, OpenAI에서도 공식적으로 이 현상을 ‘아첨(Sycophancy)’ 문제로 보고 [그 이유를 분석](https://openai.com/index/sycophancy-in-gpt-4o/)하기도 했습니다.\n\n2025년 4월 OpenAI는 GPT-4o가 지나치게 아첨한다는 비판에 업데이트를 되돌렸다. 출처: [<Sycophancy in GPT-4o: What happened and what we’re doing about it> (OpenAI, 2025)](https://openai.com/index/sycophancy-in-gpt-4o/)  그 자리를 대신한 것은 정보였습니다. 공감하던 AI에서 감정 없이 정보를 나열하는 비서가 된 것입니다. 대화하듯 말을 건네기보다도, 장황하게 답하기 시작했습니다. 아무리 간결하게 제공해달라고 해도, 핵심을 뽑아내는 것이 아니라 중요하다고 보이는 것을 모두 나열해놓습니다. 안타깝게도 이 결과는 ‘인간의 피드백’을 반영한 결과입니다. 지시 모델(Instruct Model)의 기저에는 강화학습인 RLHF(Reinforcement Learning from Human Feedback)가 자리하고 있기 때문입니다. 개발자들은 공감이 아닌, 긴 글에도 정보량이 압축적으로 담긴 답변을 선호한다고 답하기 시작한 것이죠.    정보량이 많으면 당연히 글을 읽기 부담스럽습니다. 법조문이나 수능 시험의 독서 지문들이 한글로 쓰여 있는데도 읽기 어려운 이유입니다. 낯선 단어가 쏟아지면 의식적으로 생각하면서 읽어야 하고 흐름을 놓쳐서는 안 됩니다. 심리언어학에서는 글을 어렵게 만드는 요소들을 오랫동안 분석해왔습니다. 대표적으로 예측하기 어려운 단어를 처리할 때나, 의존적인 단어 사이의 거리가 멀거나, 한 번에 기억할 수 있는 정보가 포화될 때 글을 이해하기 어렵습니다. 쉬운 단어로 간명하게 쓴 문장이 좋은 문장이라는 말이 괜히 있는 것이 아닙니다.    LLM이 긴 호흡으로 정보를 나열할 수 있는 것은, 반대로 말하면 그만큼 많은 정보를 한 번에 흡수할 수 있다는 것입니다. 그리고 사실 LLM은 그러도록 진화해왔습니다. 저희 뉴스레터에서도 몇 차례 다뤘던 Long-context를 기억하시나요? Attention 메커니즘은 긴 문맥 속에서도 중요한 정보를 발굴할 수 있도록 구조화돼 있습니다. 500쪽이 넘는 책을 읽어도, 2시간이 넘는 영화를 봐도 한 문장으로 작품의 인상을 표현하는 인간과는 정반대의 구조를 가지고 있는 것이죠.    지난 21일, 뉴욕대와 텍사스대 오스틴 공동 연구진은 AI 글이 왜 어려운지 분석한 연구, [<Why is AI-generated language so hard to understand?>](https://arxiv.org/abs/2610.29162)를 공개했습니다. 연구의 가설은 크게 두 가지입니다. 첫째로 프런티어 LLM은 상대적으로 어려운 언어를 더 많이 사용하고, 둘째로 글에 ‘정보 밀도(Information Density)’를 높이도록 학습되면서 일반적으로 인간이 사용하는 표현과 다른 문장을 생성한다는 것입니다.\n\n쉬운 말도 어렵게 만드는 AI\n\n첫 번째 가설을 검증하기 위해 연구진은 프런티어 LLM이 쓴 문장으로 왕복 번역 실험을 진행했습니다. 원문을 다른 언어로 번역했다가 다시 원문의 언어로 번역하고, 입력한 원문과 번역된 원문이 어떻게 다른지 비교한 것입니다. Claude, GPT 시리즈와 같은 상용 모델과 Kimi, GLM과 같은 오픈 웨이트 모델을 포함해 총 14개의 모델을 실험 대상으로 삼았는데요. 이 모델들이 생성한 영어 문장을 입력해 일본어로 번역한 뒤 다시 영어로 번역한 문장을 원문과 비교했습니다.    번역에 사용한 모델 [NLLB](https://ai.meta.com/research/no-language-left-behind/ko/)는 Meta에서 발표한 번역 전용 모델로, 이 실험에서는 입력된 문장을 왕복 번역하며는 데 쓰이며 문장을 평이하게 만들어주는 역할을 합니다. 한국어로 예를 들어 보면, “I’m starving”이라는 문장을 “나는 매우 배고프다”로 번역하고 다시 “I’m very hungry”로 번역하는 과정이라고 생각하면 됩니다. 이 과정에서 문장의 변화가 크다면 입력 문장은 모델 고유의 말로 쓰였다고 본 것입니다.\n\n왕복 번역을 거친 뒤 모델별로 문체가 얼마나 달라졌는지 나타낸 그래프. 막대가 길수록 평범한 표현에서 멀리 떨어진 말투를 썼다는 뜻이다. 출처: [<Why is AI-generated language so hard to understand?> (Clark et al., 2026)](https://arxiv.org/abs/2610.29162)  실험 결과, 소형 모델보다 프런티어급 모델에서 생성한 원문이 번역본과 차이가 더 큰 것으로 나타났는데요. 그만큼 프런티어 모델이 어려운 표현을 많이 사용하고 있다는 의미입니다. 연구진은 어려운 문체의 대표적인 특징이 1) 낯선 단어의 조합 2) 명사의 동사화 3) 사물을 의인화하는 무생물 주어라고 밝혔습니다.    일례로, “Reader-patience Budget”을 들 수 있습니다. 한국어로 해석해도 낯선 조합입니다. ‘독자의 인지 예산’인데, 어떤 맥락에서 사용한 표현인지 이해는 가지만 직관적으로 이해되기보다 한 번 더 생각을 거쳐야 합니다. 그밖에 ‘문제를 가시화하다’ 같이 명사를 동사로 재사용하거나, ‘데이터가 말해 준다’와 같이 무생물 주어를 사용하는 예가 있습니다. AI를 사용하면서 한 번쯤은 들어본 표현이라 낯설지 않습니다.    위 결과에서 볼 수 있듯이, Claude 모델 중 하나인 Opus 5가 가장 특징적인 표현을 사용한다고 하는데요. 위 분석은 영어에 해당하는 것이지만 한국어도 크게 다르지 않은 듯합니다. 개인적인 경험이지만 Claude를 사용하면서 생소한 단어를 보고 ‘오타가 아닌가?’ 싶었는데 그저 저의 무지의 소치였습니다.\n\nAI 글이 어려워진 건 학습 방식 탓\n\n두 번째 가설을 검증하기 위해 연구진은 소형 언어 모델을 직접 학습하여 비교했습니다. 정확히는 사후 학습(Post-training)에 해당하는데, Qwen2.5 1.5B 모델을 학습시키면서 지시사항으로 간단한 정보를 나열하고 이를 문장으로 만들도록 한 것입니다.\n\n길이 페널티를 키울수록 모델이 짧은 표현을 고르는 비율. 주황색은 KL 페널티를 뺀 조건, 파란색은 KL 페널티를 건 조건이고, 점선은 학습 전 모델이다. (저자들도 AI를 사용해 이미지를 만든 모양이다.) 출처: [<Why is AI-generated language so hard to understand?> (Clark et al., 2026)](https://arxiv.org/abs/2610.29162)  위 그림의 예시처럼, 연구진은 ‘주제: 사진, 주체: 남자, 현상: 보내다, 대상: 우리’라고 주고 문장을 만들도록 학습시켰습니다. 이때 길이 페널티(Length Penalty)를 부여한 학습과 그렇지 않은 학습을 비교했는데요. 길이 페널티를 부여한 경우, 답이 길수록 보상을 줄여서 짧은 문장을 작성하도록 유도한 것입니다.    영어는 똑같은 뜻을 가지고 있어도 문장 내에 대상의 위치에 따라 표현이 달라집니다. 학창시절에 많이 배웠던 3형식, 4형식 문장들을 떠올려보면 이해가 쉬울 것입니다. 길이 페널티를 많이 부여할수록 최대한 압축적으로 글을 작성하려고 할 것입니다. 한 토큰이라도 줄여야 더 큰 보상을 받을 수 있기 때문입니다. 연구진은 이 과정에서 모델이 같은 뜻을 더 함축적으로 표현한다고 봅니다. 그러면서 모델은 생략할 수 있는 표현은 쓰지 않거나, 더 낯선 표현을 사용하게 되고요.    그럼 모델에 왜 길이 페널티를 부여할까요? 사실 프런티어 모델에 모두 길이 페널티를 부여하는지 알 수는 없습니다. 그러나 페널티를 부여하지 않으면, 답이 점점 길어지는 경향이 있습니다. 이전 뉴스레터에 소개한 Overthinking 문제와 같은 맥락입니다. 또한 명시적으로 페널티를 부여하지 않더라도, 출력 길이 자체에 어느 정도 제약이 있습니다. 어느 쪽으로든 길게 쓰고 싶어도 줄여야 하는 압력을 받는 것과 유사한 상태라고 볼 수 있습니다. 결과적으로 짧은 문장 안에 정보를 욱여넣으면서 정보의 밀도는 올라가고, 글은 읽기 더 어려워지죠.\n\nAI 말투 없애드립니다\n\n이 연구는 많은 독자들의 공감을 샀습니다. 이미 해외에서도 Claude 스타일의 말투를 [‘Claudish’](https://uwaterloo.ca/news/media/q-and-experts-what-claudish)라고 칭하고 있고, AI로 쓴 글을 읽기 싫다는 포스트가 많이 올라왔습니다. 하지만 이미 편리함에 빠져버린 시대의 흐름을 막기는 어렵습니다. 영미권에서는 AI 사용을 줄이는 대신, AI 특유의 표현을 줄이는 방법이 공유되며 이런 [스킬](https://github.com/blader/humanizer)이 인기를 끌었는데요. 이를 모티브로 한국에서도 비슷한 [스킬](https://github.com/epoko77-ai/im-not-ai)이 공개됐습니다.\n\nim-not-ai가 AI 티 나는 문장을 고친 예시 출처: [epoko77-ai/im-not-ai](https://github.com/epoko77-ai/im-not-ai) (GitHub)  이른바 ‘im-not-ai’로 불리는데요. 영어 번역투를 고치거나, 특유의 문장 구조를 없애는 방식으로 ‘AI 티’를 벗겨냅니다. 몇 개 예시를 살펴보면 다음과 같습니다.\n\n1. AI 특유의 관용구인 “결론적으로”, “시사하는 바가 크다”, “혁신적인” …\n2. 접속사 남발 “또한/따라서/즉/나아가”\n3. 형식명사 과다 \"것이다\", \"점\", \"수\", \"바\", \"~할 필요가 있다”\n\n   그러나 이런 스킬은 임시방편에 불과합니다. 결국 근본적으로 AI가 지향하는 문장 구조와 인간의 소통 방식이 많이 다르기 때문입니다. ‘생년월일을 입력하면 운세를 봐주는 사이트’를 만들어 달라고 하면 아마도 AI는 대문에 이렇게 쓸 것입니다.\n\n생년월일을 입력하면 당신의 운세를 결정합니다.\n\nAI는 본질적으로 논리적이고 동시에 설명적입니다. 하나의 모델이 코드, 수학, 번역, 언어 이해 등 전체 분야를 아우르기 때문에 소통보다도 정보 전달에 목적을 두고 있습니다. 모델은 사람이 잘 알아듣도록 학습하는 것이 아니라, 정답을 맞히도록 학습합니다. 이 과정에서 문장 내 불필요하게 많은 기호가 생겨나고, 과하게 구조화가 일어납니다. AI가 생성한 긴 글은 책을 읽듯이 읽는 게 아니라 마치 의도를 해석하듯이 읽어야 하죠.\n\n<Weekly deep daiv.>는 AI를 사용해 글을 작성하지 않는다는 철칙을 가지고 있습니다. 일부분에는 AI의 의견이 들어갈 수 있지만, 최대한 에디터의 말로 다시 한 번 감싸서 글을 작성하도록 권유하고 있는데요. 감사하게도 많은 분들이 이런 노력을 알아봐주시는 것 같습니다.    하지만 어느 순간부터 AI의 작문에 익숙해지면서 제 문체에 ‘AI 티’가 묻어나는 건가 싶기도 합니다. 그래서 직접 쓴 글인데도, ‘AI스럽다’고 느껴지면 일부러 수정하기도 합니다. 정말 미묘한 차이지만 아마 독자 여러분도 느낄 수 있을 거라고 생각합니다.    아직은 AI가 인간의 글만큼의 감동을 주지는 않는다고 생각합니다. 혹여 그런 글을 작성했다고 해도, AI 그 자체보다도 그것을 선별한 사람의 혜안 덕분이라고 생각하게 되고요. 그러나 분명히 AI가 정말 인간처럼 글을 쓰는 날이 올 것입니다. 아니, 오히려 인간이 경계를 구분하지 못하는 날이 먼저 올 수도 있죠. AI 네이티브 시대에 AI 슬롭(AI Slop)들에 가려져 진짜 인간의 글을 읽는 감각 자체를 잃어버릴 수도 있기 때문입니다.    이미 많은 정보글들이 AI로 대체되고 있습니다. 과거에는 AI가 인간이 작성한 글을 찾아서 작성했지만, AI 글이 범람하는 요즘은 AI가 쓴 글을 레퍼런스 삼아 AI가 글을 재생산합니다. 마치 인간의 유전자를 잃어버리고 있는 것처럼 보입니다. 디스토피아적 상상을 한다면 앞으로 ‘이 글은 AI가 썼다’는 제목보다 ‘이 글은 사람이 썼다’는 제목에 더 흥미가 갈지도 모르겠습니다.\n\n[AI 글을 읽기 싫은 이유는? 🤔](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/FNzO \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/FNzO \"게시하기\")[웹에서 보기](https://stib.ee/FNzO \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 글 난해함이 모델 평가·신뢰에 영향",
+        "tags": [
+          "GPT-4o",
+          "RLHF",
+          "NLLB",
+          "Claude",
+          "OpenAI"
+        ],
+        "concepts": [
+          "언어 모델링",
+          "강화학습",
+          "AI 안전 및 비밀 과제 회피"
+        ],
+        "key_points": [
+          {
+            "point": "AI 모델은 과도한 친절·아첨과 정보 과다 제공으로 가독성을 저해한다",
+            "timestamp": null
+          },
+          {
+            "point": "연구는 프런티어 LLM이 어려운 표현과 높은 정보 밀도를 사용한다는 가설을 왕복 번역 실험으로 입증했다",
+            "timestamp": null
+          },
+          {
+            "point": "정보 밀도와 긴 컨텍스트 처리 능력은 LLM의 Attention 구조와 RLHF 학습 목표에 기인한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "왕복 번역 방식을 코드 스니펫에 적용해 모델 고유 스타일을 탐지하고 가독성을 개선한다",
+          "자동 보고서 생성 시 정보 밀도를 제한해 한 문단당 핵심만 전달하도록 설계한다",
+          "고객지원 챗봇에 RLHF 보상을 조정해 과도한 아첨 표현을 억제하고 신뢰성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 AI 모델이 과도한 친절을 보이면 사용자는 거리감을 느끼는가?",
+            "options": [
+              "인간은 과도한 친절을 신뢰한다",
+              "과도한 친절은 아첨으로 인식돼 신뢰가 감소한다",
+              "친절과 정보량은 무관하다",
+              "친절은 모델의 성능을 높인다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 Edward Jones의 연구와 OpenAI의 sycophancy 문제를 인용해 과도한 친절이 아첨으로 받아들여져 사용자에게 거리감을 만든다고 설명한다."
+          },
+          {
+            "question": "왕복 번역 실험에서 원문과 번역본 사이 차이가 크면 무엇을 의미하는가?",
+            "options": [
+              "원문이 모델 고유 표현을 사용했다",
+              "번역 모델에 오류가 있었다",
+              "원문이 매우 간단했다",
+              "모델이 정확히 번역했다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 차이가 클수록 해당 문장이 모델 고유의 어려운 표현을 포함한다는 판단 근거로 사용한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "[10분 테코톡] 러로의 @RestConrollerAdvice를 이용한 예외처리",
+        "url": "https://youtu.be/TKjOf_AQ7l4",
+        "published_at": "2026-09-25T12:00:14",
+        "transcript": null,
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "REST API 예외 처리로 데이터 파이프라인 안정",
+        "tags": [
+          "RestConrollerAdvice",
+          "우아한테크코스",
+          "우아한테크"
+        ],
+        "concepts": [
+          "개발자 경험 개선",
+          "RESTful API 설계"
+        ],
+        "key_points": [
+          {
+            "point": "@RestControllerAdvice 로 예외를 중앙 집중식으로 관리",
+            "timestamp": null
+          },
+          {
+            "point": "통합 예외 처리로 API 일관성 및 유지보수성 향상",
+            "timestamp": null
+          },
+          {
+            "point": "10분 테코톡 형식으로 실무 적용 사례 공유",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

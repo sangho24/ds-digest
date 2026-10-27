@@ -1,324 +1,295 @@
 {
   "contract_version": 1,
-  "date": "2026-10-27",
-  "generated_at": "2026-10-27T08:32:26.375905+09:00",
+  "date": "2026-10-28",
+  "generated_at": "2026-10-28T08:29:48.326574+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-27.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-28.html",
   "items": [
     {
-      "id": "d7be5ef6d5b6",
-      "title": "Singular Geometry of Low-Rank Adaptation",
-      "url": "https://arxiv.org/abs/2610.32854v1",
+      "id": "1b1f79e16356",
+      "title": "Center-of-Mass Interpretation of Evolution Strategies",
+      "url": "https://arxiv.org/abs/2610.35865v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:stat.ML"
+        "name": "arXiv:cs.CL"
       },
-      "published_at": "2026-10-23T16:27:30",
-      "summary": "LoRA 학습 복잡성을 정량화해 효율적 파인튜닝 설계 가능",
-      "positioning": "LoRA는 파라미터 효율적 파인튜닝의 표준이지만 저랭크 분해의 비식별성 때문에 학습 난이도를 기존 파라미터 차원만으로는 설명하기 어렵다. 본 연구는 특이 학습 이론의 RLCT를 도입해 forward‑backward 공분산과 연결, 기존 감소 랭크 회귀 이론을 확장함으로써 LoRA의 전역·국부 학습 복잡성을 정량화한다.",
+      "published_at": "2026-10-26T17:59:33",
+      "summary": "ES를 질량 중심으로 해석해 설계·분석을 간편하게",
+      "positioning": "진화 전략은 보상 가중 평균 기울기로 모델을 업데이트하는 방법으로, 기존에는 스무딩된 그래디언트 추정으로만 설명되었다. 본 논문은 각 샘플을 질량으로 보고 보상 가중 질량 중심으로의 이동으로 ES 업데이트를 정확히 해석함으로써, ES가 그래디언트 기반 최적화와 어떻게 연결되는지를 명확히 한다.",
       "tags": [
+        "Evolution Strategies",
+        "Antithetic Sampling",
+        "Center of Mass",
+        "Reward-weighted Update",
+        "Population Sampling"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "ES 업데이트는 보상 가중 질량 중심으로 이동하는 것으로 해석될 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "평균 보상을 빼는 것은 측정 기준점을 모델이 아닌 샘플링된 중심점으로 바꾸는 효과가 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "큰 모집단이나 대칭(antithetic) 샘플링에서는 중심점이 현재 모델과 일치해, 업데이트가 모델→보상 가중 질량 중심으로 직접 이동한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "보상 가중 질량 중심 개념을 강화학습 정책 그래디언트 시각화에 적용해 정책 변화를 직관적으로 파악한다",
+        "연합 학습에서 로컬 업데이트를 전체 모델 중심이 아닌 현재 전역 모델 중심으로 측정하도록 평균 보상 차감 방식을 차용한다",
+        "하이퍼파라미터 탐색 시 대칭 샘플링을 이용해 탐색 점들을 쌍으로 배치해 변동성을 줄이고 현재 최적점 주변 질량 중심 이동으로 탐색 효율을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "ES 업데이트를 보상 가중 질량 중심으로 해석할 때, 평균 보상을 빼는 효과는 무엇인가?",
+          "options": [
+            "업데이트 스케일을 조정한다",
+            "측정 기준점을 모델에서 샘플링된 중심점으로 이동한다",
+            "보상을 비음수로 만든다",
+            "샘플 수를 늘린다"
+          ],
+          "answer_index": 1,
+          "explanation": "평균 보상을 빼면 기준점이 모델이 아니라 샘플링된 중심점이 되어, 이동 거리를 그 점으로부터 측정한다."
+        },
+        {
+          "question": "대규모 모집단이나 대칭(antithetic) 샘플링을 사용할 때 ES 업데이트의 기하학적 해석이 단순해지는 이유는?",
+          "options": [
+            "보상 가중 질량 중심이 항상 원점에 위치한다",
+            "샘플들의 중심이 현재 모델 위치와 일치하기 때문이다",
+            "평균 보상이 0이 된다",
+            "업데이트가 무시된다"
+          ],
+          "answer_index": 1,
+          "explanation": "대규모 모집단이나 antithetic 샘플링에서는 샘플 중심이 모델 자체와 일치해, 모델이 보상 가중 질량 중심으로 직접 이동한다."
+        }
+      ]
+    },
+    {
+      "id": "d8ad1e2efadc",
+      "title": "손가락 튕기기로 LLM 비용 줄이기",
+      "url": "https://toss.tech/article/snap-llm-cost-reduction",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-10-27T07:05:00",
+      "summary": "LLM 호출 비용·지연을 줄이는 실무 전략 제공",
+      "positioning": null,
+      "tags": [
+        "LLM",
         "LoRA",
-        "RLCT",
-        "forward-backward covariance",
-        "multilayer perceptron",
-        "transformer"
+        "Fine-Tuning",
+        "SNAP",
+        "Toss"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "LoRA의 저랭크 행렬 분해는 비식별성으로 인해 파라미터 수만으로 학습 복잡성을 설명할 수 없는 특이 모델이다.",
+          "point": "대규모 LLM 호출 시 비용과 지연이 급증해 운영 부담이 커진다",
           "timestamp": null
         },
         {
-          "point": "학습 복잡성은 실수 로그 정규화 임계값(RLCT)으로 정의되며, 이는 적응 레이어의 활성화와 역전파 민감도에서 만든 forward‑backward 공분산에 의존한다.",
+          "point": "작업별 요구 품질에 따라 소형 모델이나 전통 ML 모델을 선택해 비용을 절감할 수 있다",
           "timestamp": null
         },
         {
-          "point": "forward‑backward 공분산이 저랭크 방향에서 비퇴화하면 학습 복잡성은 감소 랭크 회귀와 동일하고, 퇴화하면 추가적인 특이 기하가 나타난다.",
+          "point": "LoRA와 Full Fine‑Tuning을 활용한 자체 모델 내재화로 상용 LLM 사용 비용을 크게 낮출 수 있다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "forward‑backward 공분산을 계산해 추천 시스템의 특정 레이어에 저랭크 어댑터를 적용하면 적은 파라미터로 성능 향상을 기대한다.",
-        "RLCT 기반 복잡도 추정을 사용해 음성 인식 모델에 어댑터를 삽입할 때 파인튜닝 난이도를 사전에 평가한다.",
-        "곡선 보정 다중 온도 추정기를 그래프 신경망 전이 학습에서 과잉 파라미터화를 진단하는 도구로 활용한다."
+        "간단한 결제 사기 탐지에 SNAP을 적용해 저위험 거래는 경량 모델로 빠르게 처리하고, 고위험 거래만 무거운 모델로 분석한다",
+        "이미지 기반 상품 태깅에 LoRA 어댑터 학습을 사용해 기존 비전 모델을 비용 효율적으로 맞춤화한다",
+        "FAQ 자동응답에 LLM 대신 규칙 기반 엔진을 적용해 정형 답변은 비용 없이 처리하고, 복잡 질문만 LLM에 위임한다"
       ],
       "quiz": [
         {
-          "question": "LoRA가 비식별적인 이유는 무엇인가?",
+          "question": "LLM 호출 시 비용·Latency가 크게 증가하는 주요 원인은 무엇인가?",
           "options": [
-            "파라미터 수가 너무 많다",
-            "저랭크 행렬 분해가 여러 해를 갖는다",
-            "학습 데이터가 부족하다",
-            "활성화 함수가 비선형이다"
-          ],
-          "answer_index": 1,
-          "explanation": "저랭크 행렬 분해는 동일한 출력에 대해 무수히 많은 파라미터 조합을 허용해 비식별성을 만든다."
-        },
-        {
-          "question": "forward‑backward 공분산이 비퇴화할 때 LoRA 학습 복잡성은 어떤 기존 모델과 동일해지는가?",
-          "options": [
-            "완전 연결 신경망",
-            "감소 랭크 회귀",
-            "서포트 벡터 머신",
-            "K-최근접 이웃"
-          ],
-          "answer_index": 1,
-          "explanation": "공분산이 비퇴화하면 학습 복잡성이 감소 랭크 회귀의 고전적 복잡성과 일치한다."
-        }
-      ]
-    },
-    {
-      "id": "97a0aa466cd0",
-      "title": "Making Failure Diagnosis Reliable with Pensive AI",
-      "url": "https://netflixtechblog.com/making-failure-diagnosis-reliable-with-pensive-ai-6b0811a1c015?source=rss----2615bd06b42e---4",
-      "source": {
-        "type": "rss",
-        "name": "Netflix TechBlog - Medium"
-      },
-      "published_at": "2026-10-26T17:04:57",
-      "summary": "대규모 데이터 파이프라인 실패를 AI로 자동 진단해 엔지니어 시간을 크게 절감",
-      "positioning": null,
-      "tags": [
-        "Pensive",
-        "Maestro",
-        "Spark",
-        "Trino",
-        "LLM"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "규칙 기반 Pensive는 50% 실패만 자동 처리하고 절반은 unknown 상태였음",
-          "timestamp": null
-        },
-        {
-          "point": "Pensive AI 도입으로 오류 추출이 100% 커버리지를 달성하고 수동 디버깅 작업이 321% 감소",
-          "timestamp": null
-        },
-        {
-          "point": "결정론적 프로세스와 AI를 결합해 낮은 지연시간, 제어된 비용, 유지보수 용이성을 제공",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "AI 기반 항상‑켜짐 오류 추출을 CI/CD 빌드 로그에 적용해 빌드 실패 원인 자동 파악 및 수동 로그 검토 시간을 단축한다",
-        "보안 사고 로그에 bounded AI 추출과 캐시·오프라인 평가 파이프라인을 도입해 사고 대응 속도와 비용 효율성을 높인다",
-        "데이터 레이크 적재 파이프라인에 온‑디맨드 디버깅 LLM 게이트웨이를 연결해 데이터 품질 이슈를 실시간으로 진단하고 재시도 정책을 자동화한다"
-      ],
-      "quiz": [
-        {
-          "question": "Pensive AI가 기존 규칙 기반 시스템과 LLM을 결합한 주요 이유는 무엇인가?",
-          "options": [
-            "낮은 지연시간과 비용 제어를 유지하기 위해",
-            "LLM만으로 로그를 완전히 처리할 수 없어서",
-            "AI 사용을 최소화하기 위해",
-            "모델 크기를 늘리기 위해"
+            "토큰 사용량이 많기 때문",
+            "모델 파라미터가 적기 때문",
+            "네트워크 대역폭이 충분하지 않기 때문",
+            "데이터 라벨링 비용이 높기 때문"
           ],
           "answer_index": 0,
-          "explanation": "결정론적 규칙은 빠르고 비용 효율적이며, LLM은 커버리지를 확장한다는 설계 목표에 부합한다."
+          "explanation": "LLM은 입력·출력 토큰 수에 따라 비용이 계산되며, 대량 호출 시 토큰 사용량이 급증해 비용과 지연이 늘어난다"
         },
         {
-          "question": "Pensive AI를 사용하지 않은 경우와 사용한 경우의 수동 디버깅 작업량 차이는 어떻게 설명되는가?",
+          "question": "작업 복잡도가 낮은 경우 작은 모델을 선택하는 이유는?",
           "options": [
-            "AI를 사용하지 않으면 수동 작업이 321% 더 많았다",
-            "AI 사용 시 작업량이 50% 감소했다",
-            "두 경우에 차이가 없었다",
-            "AI 사용 시 작업량이 10% 증가했다"
+            "작은 모델은 항상 높은 정확도를 제공한다",
+            "작은 모델은 처리 속도가 빠르고 자원 소모가 적다",
+            "작은 모델은 모든 언어를 이해한다",
+            "작은 모델은 비용이 무조건 0이다"
           ],
-          "answer_index": 0,
-          "explanation": "본문에 따르면 AI를 사용하지 않은 시도에서 수동 로그 탐색 작업이 321% 더 많았다."
+          "answer_index": 1,
+          "explanation": "소형 모델은 연산량이 적어 빠르게 응답하고 인프라 비용이 낮아 간단한 작업에 적합하다"
         }
       ]
     },
     {
-      "id": "ef74df5da6c3",
-      "title": "Fréchet Kriging for Metric Space-Valued Spatial Data",
-      "url": "https://arxiv.org/abs/2610.32979v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:stat.ME"
-      },
-      "published_at": "2026-10-23T17:59:23",
-      "summary": "비유클리드 데이터 예측을 기하학 보존으로 수행",
-      "positioning": "비유클리드 데이터(분포, SPD 행렬, 네트워크 등)의 공간 예측이 기존 벡터 기반 크리깅으로는 어려웠다. 기존 방법은 선형 임베딩에 의존하거나 근사했다. 프레셰 크리깅은 가중 프레셰 평균과 일반화 변곡선을 이용해 내재 기하를 보존하며, 메트릭 공간 전반에 크리깅을 확장한 새로운 접근이다.",
-      "tags": [
-        "Fréchet kriging",
-        "variogram",
-        "symmetric positive definite matrices",
-        "exceedance probabilities",
-        "inter-industry monetary flow networks"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "Fréchet kriging은 가중 평균을 가중 Fréchet 평균으로 대체해 메트릭 공간 데이터의 내재 기하를 보존한다.",
-          "timestamp": null
-        },
-        {
-          "point": "가중치는 일반화 변곡선을 통해 공간 의존성을 특성화하여 결정한다.",
-          "timestamp": null
-        },
-        {
-          "point": "변곡수 오차에도 일관성을 보이며, 온도 초과 확률·공동 밀도·산업 흐름 네트워크 등에서 기존 방법보다 우수한 예측 성능을 보인다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "추천 시스템에서 하이퍼볼릭 임베딩을 가진 사용자 벡터를 프레셰 크리깅으로 보간해 연속적인 추천 품질을 향상한다.",
-        "도시 교통 네트워크에서 여행 시간 분포를 프레셰 크리깅으로 예측해 불확실성을 고려한 경로 안내에 활용한다.",
-        "IoT 센서가 출력하는 공분산 행렬(방향 불확실성)을 프레셰 평균과 변곡수 기반으로 보간해 센서 결측치를 기하학적으로 정확히 복원한다."
-      ],
-      "quiz": [
-        {
-          "question": "왜 기존 크리깅이 메트릭 공간값 데이터에 바로 적용되지 않는가?",
-          "options": [
-            "가중 평균 연산에 벡터 덧셈이 필요하기 때문이다",
-            "시간 연속성을 가정하기 때문이다",
-            "정규분포를 전제로 하기 때문이다",
-            "데이터가 정수여야 하기 때문이다"
-          ],
-          "answer_index": 0,
-          "explanation": "전통적인 크리깅은 가중 평균을 계산하기 위해 벡터 공간의 덧셈과 스칼라 곱을 사용한다. 메트릭 공간은 이러한 연산이 정의되지 않는다."
-        },
-        {
-          "question": "프레셰 크리깅에서 가중 평균을 대체하는 요소는 무엇인가?",
-          "options": [
-            "가중 유클리드 평균",
-            "가중 Fréchet 평균",
-            "가중 중앙값",
-            "가중 최빈값"
-          ],
-          "answer_index": 1,
-          "explanation": "프레셰 크리깅은 메트릭 공간의 중심을 정의하기 위해 가중 Fréchet 평균을 사용한다."
-        }
-      ]
-    },
-    {
-      "id": "e95542c76421",
-      "title": "Multi‑Ratio Video Resizing for Mobile Feed and Marketing",
-      "url": "https://netflixtechblog.com/multi-ratio-video-resizing-for-mobile-feed-and-marketing-2e6b42810f49?source=rss----2615bd06b42e---4",
-      "source": {
-        "type": "rss",
-        "name": "Netflix TechBlog - Medium"
-      },
-      "published_at": "2026-10-26T16:01:02",
-      "summary": "다양한 비율 영상 자동 크롭으로 모바일 콘텐츠 생산성을 크게 높인다",
-      "positioning": null,
-      "tags": [
-        "Netflix",
-        "Clips",
-        "LipFlap",
-        "Active Speaker Detection",
-        "shot boundary detector"
-      ],
-      "relevance": 7,
-      "key_points": [
-        {
-          "point": "Netflix는 9:16, 4:5, 1:1 비율을 한 번에 생성하는 자동 멀티‑비율 크롭 파이프라인을 구축했다",
-          "timestamp": null
-        },
-        {
-          "point": "리사이징을 트래킹·시간 최적화 문제로 정의해 샷 검출·활성 화자 감지·가상 카메라 경로 계획을 순차적으로 수행한다",
-          "timestamp": null
-        },
-        {
-          "point": "신경망 기반 샷 경계 검출기와 내부 얼굴 검출·LipFlap 기반 활성 화자 감지를 활용해 최소한의 수작업으로 고품질 크롭을 만든다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "활성 화자 감지를 이용해 동영상 플랫폼의 썸네일을 자동으로 화자 중심으로 선택해 클릭률을 높인다",
-        "가상 카메라 트래킹을 활용해 전자상거래 제품 영상을 다양한 비율로 자동 재구성해 SNS 광고 효율을 개선한다",
-        "샷 경계 검출과 서브샷 분할을 회의 녹화 요약에 적용해 화자별 핵심 발언을 강조한 하이라이트 영상을 만든다"
-      ],
-      "quiz": [
-        {
-          "question": "Netflix가 연속 샷을 활성 화자 감지로 서브샷으로 나누는 주요 이유는 무엇인가?",
-          "options": [
-            "계산 비용을 절감하기 위해",
-            "가상 카메라가 화자별로 초점을 재조정하도록 하기 위해",
-            "영상 해상도를 낮추기 위해",
-            "자막 삽입을 자동화하기 위해"
-          ],
-          "answer_index": 1,
-          "explanation": "활성 화자 감지를 통해 화자가 바뀔 때 가상 카메라가 재초점을 맞추게 함으로써 각 화자를 강조하는 크롭을 만들 수 있다."
-        },
-        {
-          "question": "비디오 리사이징을 트래킹·시간 최적화 문제로 다루는 주요 장점은 무엇인가?",
-          "options": [
-            "색 보정을 자동화한다",
-            "단일 패스로 여러 비율을 동시에 생성한다",
-            "파일 용량을 크게 줄인다",
-            "오디오 싱크를 간소화한다"
-          ],
-          "answer_index": 1,
-          "explanation": "시간 최적화를 통해 하나의 파이프라인에서 9:16, 4:5, 1:1 등 다양한 비율을 동시에 생성할 수 있다."
-        }
-      ]
-    },
-    {
-      "id": "420101a207f6",
-      "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT",
-      "url": "https://github.com/FrigadeHQ/hob",
+      "id": "62b1fcdba263",
+      "title": "Survival LLM: AI assistant and emergency library that runs on your own computer",
+      "url": "https://www.brangus.io/survival-llm",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "온디바이스 LLM으로 파일·코드·이미지 자동 처리",
+      "summary": "인터넷 없이도 로컬 LLM으로 신뢰성 있는 응답 제공",
       "positioning": null,
       "tags": [
-        "Hob",
-        "Gemma 4",
-        "gpt-oss",
-        "SearXNG",
-        "llama.cpp"
+        "Survival LLM",
+        "NVIDIA Nemotron",
+        "Qwen3.8",
+        "IBM Granite",
+        "Wikipedia"
       ],
-      "relevance": 5,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "Hob은 하드웨어를 자동 감지해 최적의 오픈웨이트 모델을 로컬에서 실행한다.",
+          "point": "Survival LLM은 인터넷 없이도 로컬에서 AI 모델과 방대한 참고 라이브러리를 실행한다.",
           "timestamp": null
         },
         {
-          "point": "파일·코드·이미지 등 다양한 작업을 샌드박스 환경에서 오프라인으로 수행한다.",
+          "point": "각 답변은 원본 기사와 정확한 문장을 하이라이트하여 출처를 투명하게 제공한다.",
           "timestamp": null
         },
         {
-          "point": "웹 검색은 SearXNG 기반이며, 필요 시에만 온라인 연결이 허용된다.",
+          "point": "컴퓨터 메모리에 따라 적절한 모델을 자동 선택해 성능과 용량을 최적화한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Hob의 하드웨어 자동 모델 선택 로직을 데이터 파이프라인에 적용해, 서버 메모리·GPU 상황에 따라 Spark, Dask, 혹은 Pandas 중 최적 엔진을 자동 선택한다.",
-        "샌드박스된 파이썬 실행 환경을 데이터베이스 관리 시스템에 도입해, 사용자가 작성한 변환 스크립트를 파일 시스템과 네트워크 접근이 제한된 격리된 프로세스에서 실행하도록 한다.",
-        "로컬 이미지 인식 모델(Qwen3-VL) 활용을 문서 자동 분류 시스템에 적용해, 외부 API 없이 사내 문서 이미지와 스캔본을 멀티모달로 분류·태깅한다."
+        "규제 산업(예: 금융) 내부 컴플라이언스 QA에 출처가 표시된 오프라인 LLM을 적용해 답변 추적성을 확보한다.",
+        "IoT 엣지 디바이스에 메모리 기반 모델 자동 선택 로직을 도입해 하드웨어 제약에 맞는 LLM을 배포한다",
+        "재난 대응팀을 위한 로컬 긴급 지식베이스를 구축해, Survival LLM과 유사한 공개 도메인 가이드와 위키 자료를 오프라인으로 제공한다"
       ],
       "quiz": [
         {
-          "question": "Hob이 GPU가 호환되는 것으로 보이지만 첫 쿼리에서 충돌할 경우 CPU‑only 로 fallback 하는 이유는 무엇인가?",
+          "question": "Survival LLM이 사용자의 질문을 외부 서버로 전송하지 않는 이유는 무엇인가?",
           "options": [
-            "전력 소비를 줄이기 위해",
-            "GPU 드라이버 호환성 문제로 충돌이 발생하기 때문에",
-            "모델 정확도를 높이기 위해",
-            "오프라인 모드를 활성화하기 위해"
+            "모델과 라이브러리가 로컬에 있기 때문",
+            "인터넷 연결이 차단돼 있기 때문",
+            "데이터 암호화 정책 때문",
+            "클라우드 비용 절감 때문"
           ],
-          "answer_index": 1,
-          "explanation": "본문에 \"GPU가 호환되는 것으로 보이지만 첫 쿼리에서 충돌\"한다는 언급이 있어, 호환성 문제 때문에 CPU‑only 로 전환한다는 설명이 있다."
+          "answer_index": 0,
+          "explanation": "본문에 따르면 AI 모델과 라이브러리가 사용자의 컴퓨터에 모두 존재하므로 질문이 외부로 전송되지 않는다."
         },
         {
-          "question": "Linux에서 Hob이 코드 실행을 격리하기 위해 사용하는 샌드박스 기술은 무엇인가?",
+          "question": "Survival LLM이 어떤 기준으로 모델을 선택하고, 메모리가 적은 경우 어떤 결과가 나타나는가?",
           "options": [
-            "SELinux",
-            "AppArmor",
-            "Landlock",
-            "Docker"
+            "CPU 코어 수에 따라 선택",
+            "컴퓨터 메모리 용량에 따라 모델 크기가 결정",
+            "운영체제 버전에 따라 선택",
+            "사용자가 직접 모델을 선택"
           ],
-          "answer_index": 2,
-          "explanation": "본문에 \"Landlock on Linux\"이라고 명시되어 있어, Linux에서는 Landlock을 사용한다."
+          "answer_index": 1,
+          "explanation": "표에 명시된 바와 같이 메모리 용량에 따라 적합한 모델이 자동으로 선택되며, 작은 모델은 오류가 더 많이 발생한다."
         }
       ]
+    },
+    {
+      "id": "bee41950668e",
+      "title": "AI가 쓴 글을 읽기 싫은 이유",
+      "url": "https://deepdaiv.stibee.com/p/169",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-10-27T00:00:00",
+      "summary": "AI 글 난해함이 모델 평가·신뢰에 영향",
+      "positioning": null,
+      "tags": [
+        "GPT-4o",
+        "RLHF",
+        "NLLB",
+        "Claude",
+        "OpenAI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "AI 모델은 과도한 친절·아첨과 정보 과다 제공으로 가독성을 저해한다",
+          "timestamp": null
+        },
+        {
+          "point": "연구는 프런티어 LLM이 어려운 표현과 높은 정보 밀도를 사용한다는 가설을 왕복 번역 실험으로 입증했다",
+          "timestamp": null
+        },
+        {
+          "point": "정보 밀도와 긴 컨텍스트 처리 능력은 LLM의 Attention 구조와 RLHF 학습 목표에 기인한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "왕복 번역 방식을 코드 스니펫에 적용해 모델 고유 스타일을 탐지하고 가독성을 개선한다",
+        "자동 보고서 생성 시 정보 밀도를 제한해 한 문단당 핵심만 전달하도록 설계한다",
+        "고객지원 챗봇에 RLHF 보상을 조정해 과도한 아첨 표현을 억제하고 신뢰성을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 AI 모델이 과도한 친절을 보이면 사용자는 거리감을 느끼는가?",
+          "options": [
+            "인간은 과도한 친절을 신뢰한다",
+            "과도한 친절은 아첨으로 인식돼 신뢰가 감소한다",
+            "친절과 정보량은 무관하다",
+            "친절은 모델의 성능을 높인다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 Edward Jones의 연구와 OpenAI의 sycophancy 문제를 인용해 과도한 친절이 아첨으로 받아들여져 사용자에게 거리감을 만든다고 설명한다."
+        },
+        {
+          "question": "왕복 번역 실험에서 원문과 번역본 사이 차이가 크면 무엇을 의미하는가?",
+          "options": [
+            "원문이 모델 고유 표현을 사용했다",
+            "번역 모델에 오류가 있었다",
+            "원문이 매우 간단했다",
+            "모델이 정확히 번역했다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 차이가 클수록 해당 문장이 모델 고유의 어려운 표현을 포함한다는 판단 근거로 사용한다."
+        }
+      ]
+    },
+    {
+      "id": "0277deebf34f",
+      "title": "[10분 테코톡] 러로의 @RestConrollerAdvice를 이용한 예외처리",
+      "url": "https://youtu.be/TKjOf_AQ7l4",
+      "source": {
+        "type": "youtube",
+        "name": "우아한테크"
+      },
+      "published_at": "2026-09-25T12:00:14",
+      "summary": "REST API 예외 처리로 데이터 파이프라인 안정",
+      "positioning": null,
+      "tags": [
+        "RestConrollerAdvice",
+        "우아한테크코스",
+        "우아한테크"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "@RestControllerAdvice 로 예외를 중앙 집중식으로 관리",
+          "timestamp": null
+        },
+        {
+          "point": "통합 예외 처리로 API 일관성 및 유지보수성 향상",
+          "timestamp": null
+        },
+        {
+          "point": "10분 테코톡 형식으로 실무 적용 사례 공유",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
     }
   ]
 }

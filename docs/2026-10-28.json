@@ -1,0 +1,295 @@
+{
+  "contract_version": 1,
+  "date": "2026-10-28",
+  "generated_at": "2026-10-28T08:29:48.326574+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-28.html",
+  "items": [
+    {
+      "id": "1b1f79e16356",
+      "title": "Center-of-Mass Interpretation of Evolution Strategies",
+      "url": "https://arxiv.org/abs/2610.35865v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.CL"
+      },
+      "published_at": "2026-10-26T17:59:33",
+      "summary": "ES를 질량 중심으로 해석해 설계·분석을 간편하게",
+      "positioning": "진화 전략은 보상 가중 평균 기울기로 모델을 업데이트하는 방법으로, 기존에는 스무딩된 그래디언트 추정으로만 설명되었다. 본 논문은 각 샘플을 질량으로 보고 보상 가중 질량 중심으로의 이동으로 ES 업데이트를 정확히 해석함으로써, ES가 그래디언트 기반 최적화와 어떻게 연결되는지를 명확히 한다.",
+      "tags": [
+        "Evolution Strategies",
+        "Antithetic Sampling",
+        "Center of Mass",
+        "Reward-weighted Update",
+        "Population Sampling"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "ES 업데이트는 보상 가중 질량 중심으로 이동하는 것으로 해석될 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "평균 보상을 빼는 것은 측정 기준점을 모델이 아닌 샘플링된 중심점으로 바꾸는 효과가 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "큰 모집단이나 대칭(antithetic) 샘플링에서는 중심점이 현재 모델과 일치해, 업데이트가 모델→보상 가중 질량 중심으로 직접 이동한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "보상 가중 질량 중심 개념을 강화학습 정책 그래디언트 시각화에 적용해 정책 변화를 직관적으로 파악한다",
+        "연합 학습에서 로컬 업데이트를 전체 모델 중심이 아닌 현재 전역 모델 중심으로 측정하도록 평균 보상 차감 방식을 차용한다",
+        "하이퍼파라미터 탐색 시 대칭 샘플링을 이용해 탐색 점들을 쌍으로 배치해 변동성을 줄이고 현재 최적점 주변 질량 중심 이동으로 탐색 효율을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "ES 업데이트를 보상 가중 질량 중심으로 해석할 때, 평균 보상을 빼는 효과는 무엇인가?",
+          "options": [
+            "업데이트 스케일을 조정한다",
+            "측정 기준점을 모델에서 샘플링된 중심점으로 이동한다",
+            "보상을 비음수로 만든다",
+            "샘플 수를 늘린다"
+          ],
+          "answer_index": 1,
+          "explanation": "평균 보상을 빼면 기준점이 모델이 아니라 샘플링된 중심점이 되어, 이동 거리를 그 점으로부터 측정한다."
+        },
+        {
+          "question": "대규모 모집단이나 대칭(antithetic) 샘플링을 사용할 때 ES 업데이트의 기하학적 해석이 단순해지는 이유는?",
+          "options": [
+            "보상 가중 질량 중심이 항상 원점에 위치한다",
+            "샘플들의 중심이 현재 모델 위치와 일치하기 때문이다",
+            "평균 보상이 0이 된다",
+            "업데이트가 무시된다"
+          ],
+          "answer_index": 1,
+          "explanation": "대규모 모집단이나 antithetic 샘플링에서는 샘플 중심이 모델 자체와 일치해, 모델이 보상 가중 질량 중심으로 직접 이동한다."
+        }
+      ]
+    },
+    {
+      "id": "d8ad1e2efadc",
+      "title": "손가락 튕기기로 LLM 비용 줄이기",
+      "url": "https://toss.tech/article/snap-llm-cost-reduction",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-10-27T07:05:00",
+      "summary": "LLM 호출 비용·지연을 줄이는 실무 전략 제공",
+      "positioning": null,
+      "tags": [
+        "LLM",
+        "LoRA",
+        "Fine-Tuning",
+        "SNAP",
+        "Toss"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "대규모 LLM 호출 시 비용과 지연이 급증해 운영 부담이 커진다",
+          "timestamp": null
+        },
+        {
+          "point": "작업별 요구 품질에 따라 소형 모델이나 전통 ML 모델을 선택해 비용을 절감할 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "LoRA와 Full Fine‑Tuning을 활용한 자체 모델 내재화로 상용 LLM 사용 비용을 크게 낮출 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "간단한 결제 사기 탐지에 SNAP을 적용해 저위험 거래는 경량 모델로 빠르게 처리하고, 고위험 거래만 무거운 모델로 분석한다",
+        "이미지 기반 상품 태깅에 LoRA 어댑터 학습을 사용해 기존 비전 모델을 비용 효율적으로 맞춤화한다",
+        "FAQ 자동응답에 LLM 대신 규칙 기반 엔진을 적용해 정형 답변은 비용 없이 처리하고, 복잡 질문만 LLM에 위임한다"
+      ],
+      "quiz": [
+        {
+          "question": "LLM 호출 시 비용·Latency가 크게 증가하는 주요 원인은 무엇인가?",
+          "options": [
+            "토큰 사용량이 많기 때문",
+            "모델 파라미터가 적기 때문",
+            "네트워크 대역폭이 충분하지 않기 때문",
+            "데이터 라벨링 비용이 높기 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "LLM은 입력·출력 토큰 수에 따라 비용이 계산되며, 대량 호출 시 토큰 사용량이 급증해 비용과 지연이 늘어난다"
+        },
+        {
+          "question": "작업 복잡도가 낮은 경우 작은 모델을 선택하는 이유는?",
+          "options": [
+            "작은 모델은 항상 높은 정확도를 제공한다",
+            "작은 모델은 처리 속도가 빠르고 자원 소모가 적다",
+            "작은 모델은 모든 언어를 이해한다",
+            "작은 모델은 비용이 무조건 0이다"
+          ],
+          "answer_index": 1,
+          "explanation": "소형 모델은 연산량이 적어 빠르게 응답하고 인프라 비용이 낮아 간단한 작업에 적합하다"
+        }
+      ]
+    },
+    {
+      "id": "62b1fcdba263",
+      "title": "Survival LLM: AI assistant and emergency library that runs on your own computer",
+      "url": "https://www.brangus.io/survival-llm",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "인터넷 없이도 로컬 LLM으로 신뢰성 있는 응답 제공",
+      "positioning": null,
+      "tags": [
+        "Survival LLM",
+        "NVIDIA Nemotron",
+        "Qwen3.8",
+        "IBM Granite",
+        "Wikipedia"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "Survival LLM은 인터넷 없이도 로컬에서 AI 모델과 방대한 참고 라이브러리를 실행한다.",
+          "timestamp": null
+        },
+        {
+          "point": "각 답변은 원본 기사와 정확한 문장을 하이라이트하여 출처를 투명하게 제공한다.",
+          "timestamp": null
+        },
+        {
+          "point": "컴퓨터 메모리에 따라 적절한 모델을 자동 선택해 성능과 용량을 최적화한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "규제 산업(예: 금융) 내부 컴플라이언스 QA에 출처가 표시된 오프라인 LLM을 적용해 답변 추적성을 확보한다.",
+        "IoT 엣지 디바이스에 메모리 기반 모델 자동 선택 로직을 도입해 하드웨어 제약에 맞는 LLM을 배포한다",
+        "재난 대응팀을 위한 로컬 긴급 지식베이스를 구축해, Survival LLM과 유사한 공개 도메인 가이드와 위키 자료를 오프라인으로 제공한다"
+      ],
+      "quiz": [
+        {
+          "question": "Survival LLM이 사용자의 질문을 외부 서버로 전송하지 않는 이유는 무엇인가?",
+          "options": [
+            "모델과 라이브러리가 로컬에 있기 때문",
+            "인터넷 연결이 차단돼 있기 때문",
+            "데이터 암호화 정책 때문",
+            "클라우드 비용 절감 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 AI 모델과 라이브러리가 사용자의 컴퓨터에 모두 존재하므로 질문이 외부로 전송되지 않는다."
+        },
+        {
+          "question": "Survival LLM이 어떤 기준으로 모델을 선택하고, 메모리가 적은 경우 어떤 결과가 나타나는가?",
+          "options": [
+            "CPU 코어 수에 따라 선택",
+            "컴퓨터 메모리 용량에 따라 모델 크기가 결정",
+            "운영체제 버전에 따라 선택",
+            "사용자가 직접 모델을 선택"
+          ],
+          "answer_index": 1,
+          "explanation": "표에 명시된 바와 같이 메모리 용량에 따라 적합한 모델이 자동으로 선택되며, 작은 모델은 오류가 더 많이 발생한다."
+        }
+      ]
+    },
+    {
+      "id": "bee41950668e",
+      "title": "AI가 쓴 글을 읽기 싫은 이유",
+      "url": "https://deepdaiv.stibee.com/p/169",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-10-27T00:00:00",
+      "summary": "AI 글 난해함이 모델 평가·신뢰에 영향",
+      "positioning": null,
+      "tags": [
+        "GPT-4o",
+        "RLHF",
+        "NLLB",
+        "Claude",
+        "OpenAI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "AI 모델은 과도한 친절·아첨과 정보 과다 제공으로 가독성을 저해한다",
+          "timestamp": null
+        },
+        {
+          "point": "연구는 프런티어 LLM이 어려운 표현과 높은 정보 밀도를 사용한다는 가설을 왕복 번역 실험으로 입증했다",
+          "timestamp": null
+        },
+        {
+          "point": "정보 밀도와 긴 컨텍스트 처리 능력은 LLM의 Attention 구조와 RLHF 학습 목표에 기인한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "왕복 번역 방식을 코드 스니펫에 적용해 모델 고유 스타일을 탐지하고 가독성을 개선한다",
+        "자동 보고서 생성 시 정보 밀도를 제한해 한 문단당 핵심만 전달하도록 설계한다",
+        "고객지원 챗봇에 RLHF 보상을 조정해 과도한 아첨 표현을 억제하고 신뢰성을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 AI 모델이 과도한 친절을 보이면 사용자는 거리감을 느끼는가?",
+          "options": [
+            "인간은 과도한 친절을 신뢰한다",
+            "과도한 친절은 아첨으로 인식돼 신뢰가 감소한다",
+            "친절과 정보량은 무관하다",
+            "친절은 모델의 성능을 높인다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 Edward Jones의 연구와 OpenAI의 sycophancy 문제를 인용해 과도한 친절이 아첨으로 받아들여져 사용자에게 거리감을 만든다고 설명한다."
+        },
+        {
+          "question": "왕복 번역 실험에서 원문과 번역본 사이 차이가 크면 무엇을 의미하는가?",
+          "options": [
+            "원문이 모델 고유 표현을 사용했다",
+            "번역 모델에 오류가 있었다",
+            "원문이 매우 간단했다",
+            "모델이 정확히 번역했다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 차이가 클수록 해당 문장이 모델 고유의 어려운 표현을 포함한다는 판단 근거로 사용한다."
+        }
+      ]
+    },
+    {
+      "id": "0277deebf34f",
+      "title": "[10분 테코톡] 러로의 @RestConrollerAdvice를 이용한 예외처리",
+      "url": "https://youtu.be/TKjOf_AQ7l4",
+      "source": {
+        "type": "youtube",
+        "name": "우아한테크"
+      },
+      "published_at": "2026-09-25T12:00:14",
+      "summary": "REST API 예외 처리로 데이터 파이프라인 안정",
+      "positioning": null,
+      "tags": [
+        "RestConrollerAdvice",
+        "우아한테크코스",
+        "우아한테크"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "@RestControllerAdvice 로 예외를 중앙 집중식으로 관리",
+          "timestamp": null
+        },
+        {
+          "point": "통합 예외 처리로 API 일관성 및 유지보수성 향상",
+          "timestamp": null
+        },
+        {
+          "point": "10분 테코톡 형식으로 실무 적용 사례 공유",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    }
+  ]
+}

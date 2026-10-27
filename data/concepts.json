@@ -8,9 +8,9 @@
     },
     "AI 기반 문서 구조화": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-09-24"
+      "last_seen": "2026-10-28"
     },
     "AI 기반 설계 자동화": {
       "aliases": [],
@@ -38,9 +38,9 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 40,
+      "count": 41,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-27"
+      "last_seen": "2026-10-28"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -50,15 +50,15 @@
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
-      "count": 19,
+      "count": 20,
       "first_seen": "2026-09-04",
-      "last_seen": "2026-10-21"
+      "last_seen": "2026-10-28"
     },
     "AI 에이전트 메모리 관리": {
       "aliases": [],
-      "count": 11,
+      "count": 12,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-22"
+      "last_seen": "2026-10-28"
     },
     "AI 에이전트 상태 관리": {
       "aliases": [],
@@ -128,9 +128,9 @@
     },
     "RESTful API 설계": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-12",
-      "last_seen": "2026-10-02"
+      "last_seen": "2026-10-28"
     },
     "RPC 인터페이스": {
       "aliases": [],
@@ -230,9 +230,9 @@
     },
     "강화학습": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-10-12",
-      "last_seen": "2026-10-19"
+      "last_seen": "2026-10-28"
     },
     "강화학습 기반 임베딩 최적화": {
       "aliases": [],
@@ -242,9 +242,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 21,
+      "count": 22,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-10-26"
+      "last_seen": "2026-10-28"
     },
     "개인화 추천": {
       "aliases": [],
@@ -584,9 +584,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 12,
+      "count": 13,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-10-27"
+      "last_seen": "2026-10-28"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -792,6 +792,12 @@
       "first_seen": "2026-09-29",
       "last_seen": "2026-09-29"
     },
+    "샘플링 기반 최적화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-28",
+      "last_seen": "2026-10-28"
+    },
     "생명주기 관리": {
       "aliases": [],
       "count": 1,
@@ -956,9 +962,9 @@
     },
     "언어 모델링": {
       "aliases": [],
-      "count": 12,
+      "count": 13,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-26"
+      "last_seen": "2026-10-28"
     },
     "오토인코더 기반 표현 학습": {
       "aliases": [],
@@ -968,9 +974,9 @@
     },
     "오프라인-온라인 연계 전략": {
       "aliases": [],
-      "count": 11,
+      "count": 12,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-10-17"
+      "last_seen": "2026-10-28"
     },
     "온-폴리시 학습": {
       "aliases": [],
@@ -1217,6 +1223,12 @@
       "count": 1,
       "first_seen": "2026-10-13",
       "last_seen": "2026-10-13"
+    },
+    "진화 전략": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-10-28",
+      "last_seen": "2026-10-28"
     },
     "창의성 인식": {
       "aliases": [],
@@ -1531,6 +1543,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-10-27T08:32:11.232323+09:00",
+  "updated_at": "2026-10-28T08:29:34.852954+09:00",
   "version": 1
 }
