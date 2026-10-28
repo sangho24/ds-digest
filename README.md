@@ -210,7 +210,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 | AI | Gemini 2.5 Flash / Groq | 선정 · 요약 · 퀴즈 생성 |
 | DB | Supabase | 발송 URL 기록(30일), 사용자 프로필 |
 | 발송 | Discord Bot + Resend | Discord 가 정본, 이메일 병행 |
-| 스케줄러 | GitHub Actions | 다이제스트 매일 07:30 KST, 계기판 월요일 09:00 KST |
+| 스케줄러 | GitHub Actions | 다이제스트 매일 07:30 KST 도착 목표(예약은 04:37, GitHub 지연 보정), 계기판 월요일 09:00 KST 예약(실제 발화는 GitHub 지연으로 12~13시 무렵) |
 | 아카이브 | GitHub Pages | `docs/` 자동 push |
 
 ---
