@@ -25,16 +25,40 @@ TTL:
     7일. 다음 주 실행 전에 저절로 사라진다. 지표가 계속 나쁘면 다음 주에 다시
     쓰이고, 회복되면 조용히 없어진다. 만료 없는 자동 지시는 "왜 이런 다이제스트가
     오는지 아무도 모르는 상태"를 만든다.
+
+TTL 과 주간 실행 간격의 경합:
+    TTL 7일과 주간 실행 간격 7일이 같은 길이라, 이번 주 실행이 지난주보다 조금이라도
+    빠르면 지난주 권고가 몇 분 더 살아 있는 상태에서 중복 판정을 받는다. GitHub cron
+    발화 시각은 매주 수십 분에서 수 시간씩 흔들리므로(지난 6주 중앙 지연 204분) 이
+    경합은 운에 달려 있었다. 실측 2026-10-26: 10-19 12:17:15 KST 권고의 만료가
+    10-26 12:17:15 인데 권고 스텝이 12:14:43 에 돌아, 2분 32초 차이로 "이미 있음"이
+    되어 건너뛰었고 곧바로 만료됐다. 경고는 계속 켜져 있는데 되먹임은 한 주 통째로
+    빠졌다. 그래서 남은 수명이 RENEWAL_MARGIN 미만인 권고는 "곧 없어질 것"으로 보고
+    다시 쓴다(갱신).
 """
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from typing import Any
 
 # 사람이 쓴 지시와 구분하는 표지. app.directives 가 이 표지를 보고 LLM 경로에서
 # 아예 빼내 권고(standing_note)로만 잇는다. 두 곳이 갈라지지 않게 한 곳에서 가져온다.
-from app.directives import DASHBOARD_PREFIX as PREFIX  # noqa: E402
+from app.directives import KST, DASHBOARD_PREFIX as PREFIX  # noqa: E402
+
+# 주간 실행 간격과 같다. 더 길면 회복된 뒤에도 권고가 남고, 더 짧으면 다음 주 실행 전에
+# 끊긴다. 간격과 길이가 같아 생기는 경합은 RENEWAL_MARGIN 으로 흡수한다.
 TTL_DAYS = 7
+
+# 살아 있는 같은 권고라도 남은 수명이 이보다 짧으면 "이미 있음"으로 치지 않고 다시 쓴다.
+# 주간 실행과 TTL 이 같은 길이라 발화 시각의 흔들림(수십 분~수 시간)만큼 경합하는데,
+# 1일이면 그 흔들림은 덮는다. 3일로 둔 이유는 지난주 실행이 밀린 경우까지 덮기 위해서다.
+# 월요일 잡이 실패해 수요일에 수동 재실행하면 권고 만료가 다음 수요일이 되고, 다음 월요일
+# 정기 실행 시점에 남은 수명이 2일이라 1일 마진으로는 건너뛰어 5일 공백이 난다. 반대로
+# 같은 날 수동 재실행은 남은 수명이 ~7일이라 여전히 중복으로 걸러진다. 갱신 뒤 두 행이
+# 최대 3일 겹치는데, 그 사이 standing_note 는 app.directives.interpret 가 같은 문장을 한
+# 번만 잇는다.
+RENEWAL_MARGIN = timedelta(days=3)
 
 # (지표 경로, 연산자) → 남길 권고. 프롬프트로 고칠 수 있는 것만 담는다.
 # 출처 식별자(URL, 채널 ID)는 어떤 문구에도 넣지 않는다.
@@ -86,18 +110,85 @@ def build_advice(report: dict[str, Any]) -> list[str]:
     return advice
 
 
-def new_advice(report: dict[str, Any], existing: list[dict[str, Any]]) -> list[str]:
-    """아직 살아 있는 같은 권고는 다시 쓰지 않는다.
+def _remaining_life(row: dict[str, Any], now: datetime) -> timedelta | None:
+    """행의 남은 수명. expires_at 이 없거나 못 읽으면 None(= 알 수 없음).
 
-    매주 같은 줄이 쌓이면 해석 프롬프트에 같은 말이 여러 번 들어가고, 원문 상한
-    (MAX_RAW_MESSAGES)을 자동 생성물이 밀어내 사람이 쓴 지시가 잘려 나간다.
+    load_raw 와 같은 보수적 해석이다. 만료 시각을 못 읽는 행을 "곧 죽는다"고 보면
+    같은 권고가 매주 다시 쌓여 사람 지시를 밀어낸다. 모르면 살아 있는 것으로 본다.
     """
-    live = {str(row.get("text") or "").strip() for row in existing}
-    return [text for text in build_advice(report) if text not in live]
+    try:
+        expires_at = datetime.fromisoformat(str(row["expires_at"]))
+    except (KeyError, TypeError, ValueError):
+        return None
+    if expires_at.tzinfo is None:
+        # capture() 는 항상 tz 가 붙은 ISO 문자열을 쓴다. naive 값은 손으로 넣은 행이라
+        # KST 로 본다. now 도 같은 규칙으로 맞춘다. tz 가 섞이면 뺄셈이 TypeError 로 죽는다.
+        expires_at = expires_at.replace(tzinfo=KST)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=KST)
+    return expires_at - now
+
+
+def classify_advice(
+    report: dict[str, Any],
+    existing: list[dict[str, Any]],
+    *,
+    now: datetime | None = None,
+) -> list[tuple[str, bool]]:
+    """남길 권고를 (문구, 갱신 여부) 로 돌려준다.
+
+    살아 있는 같은 권고는 다시 쓰지 않는다. 매주 같은 줄이 쌓이면 해석 프롬프트에
+    같은 말이 여러 번 들어가고, 원문 상한(MAX_RAW_MESSAGES)을 자동 생성물이 밀어내
+    사람이 쓴 지시가 잘려 나간다.
+
+    단, 남은 수명이 RENEWAL_MARGIN 미만이면 "이미 있음"으로 치지 않고 다시 쓴다
+    (갱신, 두 번째 값 True). 주간 실행과 TTL 이 같은 길이라 이번 실행이 지난주보다
+    몇 분만 빨라도 지난주 권고가 아직 살아 있고, 건너뛰면 곧바로 만료되어 한 주
+    통째로 되먹임이 빠진다(2026-10-26 실측, 2분 32초 차). 같은 날 수동 재실행은
+    남은 수명이 ~7일이라 여전히 중복으로 걸러진다.
+
+    expires_at 이 없거나 못 읽는 행은 load_raw 와 같은 기준으로 "살아 있음"으로
+    본다. 기존 동작 유지.
+    """
+    reference = now or datetime.now(KST)
+    # 같은 문구가 여러 행이면 가장 늦게 만료되는 행 기준으로 판정한다. 갱신 직후에는
+    # 옛 행(곧 만료)과 새 행(~7일)이 같이 살아 있는데, 옛 행만 보고 또 갱신하면 안 된다.
+    # None(알 수 없음)은 "충분히 살아 있음"으로 둔다.
+    longest: dict[str, timedelta | None] = {}
+    for row in existing:
+        text = str(row.get("text") or "").strip()
+        if not text:
+            continue
+        life = _remaining_life(row, reference)
+        if text not in longest:
+            longest[text] = life
+        elif longest[text] is not None and (life is None or life > longest[text]):
+            longest[text] = life
+
+    result: list[tuple[str, bool]] = []
+    for text in build_advice(report):
+        if text not in longest:
+            result.append((text, False))
+            continue
+        life = longest[text]
+        if life is None or life >= RENEWAL_MARGIN:
+            continue
+        result.append((text, True))
+    return result
+
+
+def new_advice(
+    report: dict[str, Any],
+    existing: list[dict[str, Any]],
+    *,
+    now: datetime | None = None,
+) -> list[str]:
+    """남길 권고 문구만 돌려준다(새 권고와 갱신을 구분하지 않음). classify_advice 참조."""
+    return [text for text, _ in classify_advice(report, existing, now=now)]
 
 
 def main(argv: list[str]) -> int:
-    """리포트를 읽어 새 권고만 원문 파일에 남긴다."""
+    """리포트를 읽어 새 권고(와 곧 만료될 권고의 갱신)만 원문 파일에 남긴다."""
     import json
     import sys
     from pathlib import Path
@@ -115,11 +206,12 @@ def main(argv: list[str]) -> int:
 
     # 상한 없이 살아 있는 원문 전체와 비교한다. 최근 30건만 보면 창 밖으로
     # 밀린 권고가 없는 것처럼 보여 같은 줄이 다시 쌓인다.
-    texts = new_advice(report, load_raw(limit=None))
-    for text in texts:
-        capture(text, ttl_days=TTL_DAYS)
-        print(f"권고 기록: {text}")
-    if not texts:
+    now = datetime.now(KST)
+    entries = classify_advice(report, load_raw(now=now, limit=None), now=now)
+    for text, is_renewal in entries:
+        capture(text, ttl_days=TTL_DAYS, now=now)
+        print(f"{'권고 갱신' if is_renewal else '권고 기록'}: {text}")
+    if not entries:
         print("새로 남길 권고가 없습니다.")
     return 0
 

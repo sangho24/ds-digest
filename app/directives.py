@@ -323,7 +323,10 @@ async def interpret(
         text = str(row.get("text") or "")
         if text.startswith(DASHBOARD_PREFIX):
             note = text[len(DASHBOARD_PREFIX):].strip()
-            if note:
+            # 같은 문장은 한 번만 잇는다. evals/directive.py 가 곧 만료될 권고를 갱신하면
+            # 옛 행과 새 행이 최대 하루 같이 살아 있는데, 그대로 이으면 프롬프트에 같은
+            # 말이 두 번 들어가고 300자 상한도 그만큼 먹는다.
+            if note and note not in dashboard_notes:
                 dashboard_notes.append(note)
         else:
             human.append(row)
