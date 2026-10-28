@@ -6,6 +6,8 @@ source_name(자유 표시명)만으로 그룹핑하면 채널/피드가 이름�
 
 실행: pytest tests/test_source_identity.py -v
 """
+from datetime import date
+
 from app.models import RawContent, SourceType
 
 
@@ -93,3 +95,131 @@ def test_source_reach_falls_back_to_source_name_when_no_key():
     result = source_reach(items, window_days=30)
 
     assert "old" in result["sources"]
+
+
+# --- source_reach 의 퇴역 소스 분리 (§50) ---------------------------------------
+# 설정에서 뺀 소스는 정본에 과거 아이템이 남아 있는 한 "미등장 일수"가 커지기만 한다.
+# current_keys 를 주면 그 소스는 stale 이 아니라 retired 로 따로 보여야 한다.
+
+_REACH_ITEMS = [
+    {"date": "2026-01-01", "source_key": "retired", "url": "u1"},   # 설정에서 뺀 소스, 오래됨
+    {"date": "2026-01-01", "source_key": "dead", "url": "u2"},      # 설정에 남아 있는데 오래됨
+    {"date": "2026-03-01", "source_key": "alive", "url": "u3"},     # 최근 등장
+]
+_REFERENCE = date(2026, 3, 2)
+
+
+def test_source_reach_without_current_keys_counts_retired_as_stale():
+    """current_keys 를 안 주면 기존 동작: 퇴역 소스도 stale 로 세고 retired 키는 없다."""
+    from evals.metrics import source_reach
+
+    result = source_reach(_REACH_ITEMS, window_days=30, reference_date=_REFERENCE)
+
+    assert result["stale_source_count"] == 2
+    assert [s["source_name"] for s in result["stale_sources"]] == ["dead", "retired"]
+    assert "retired_sources" not in result
+    assert "retired_source_count" not in result
+
+
+def test_source_reach_with_current_keys_moves_retired_out_of_stale():
+    """current_keys 에 없는 오래된 소스는 retired 로, 있는 오래된 소스는 여전히 stale."""
+    from evals.metrics import source_reach
+
+    result = source_reach(
+        _REACH_ITEMS, window_days=30, reference_date=_REFERENCE, current_keys={"dead", "alive"}
+    )
+
+    assert result["stale_source_count"] == 1
+    assert [s["source_name"] for s in result["stale_sources"]] == ["dead"]
+    assert result["retired_source_count"] == 1
+    assert result["retired_sources"] == [
+        {"source_name": "retired", "item_count": 1, "last_seen": "2026-01-01", "days_since_last_seen": 60}
+    ]
+    # 가시성: sources 와 source_count 는 퇴역 소스까지 전부 담는다.
+    assert result["source_count"] == 3
+    assert set(result["sources"]) == {"retired", "dead", "alive"}
+
+
+def test_source_reach_current_keys_only_narrows_stale_not_recent():
+    """현재 설정에 없어도 최근 등장한 소스는 retired 에 들어가지 않는다(판정 대상이 아니니까)."""
+    from evals.metrics import source_reach
+
+    result = source_reach(
+        _REACH_ITEMS, window_days=30, reference_date=_REFERENCE, current_keys={"dead"}
+    )
+
+    assert [s["source_name"] for s in result["stale_sources"]] == ["dead"]
+    assert [s["source_name"] for s in result["retired_sources"]] == ["retired"]
+
+
+def test_source_reach_empty_current_keys_behaves_like_none():
+    """빈 set 은 None 과 같다. 판정을 비우면 모든 소스가 retired 가 되어 게이트가 꺼진다."""
+    from evals.metrics import source_reach
+
+    with_none = source_reach(_REACH_ITEMS, window_days=30, reference_date=_REFERENCE)
+    with_empty = source_reach(_REACH_ITEMS, window_days=30, reference_date=_REFERENCE, current_keys=set())
+
+    assert with_empty == with_none
+    assert with_empty["stale_source_count"] == 2
+
+
+def test_current_keys_returns_none_when_app_package_unavailable(monkeypatch):
+    """structlog 없는 시스템 파이썬처럼 app.source_stats import 가 실패하면 None."""
+    import sys
+
+    from evals import source_funnel as funnel_module
+
+    # sys.modules 에 None 을 두면 import 문이 ImportError 를 낸다.
+    monkeypatch.setitem(sys.modules, "app.source_stats", None)
+
+    assert funnel_module.current_keys() is None
+
+
+def test_current_keys_returns_none_when_records_empty(monkeypatch):
+    """기록이 비어 있으면(퍼널 도입 전 구간) None. 빈 set 이 아니다."""
+    from app import source_stats
+    from evals import source_funnel as funnel_module
+
+    monkeypatch.setattr(source_stats, "load", lambda path=None, since=None: [])
+
+    assert funnel_module.current_keys() is None
+
+
+def test_current_keys_reads_latest_day_from_records(tmp_path, monkeypatch):
+    """기록이 있으면 가장 최근 날짜의 키 합집합을 돌려준다."""
+    import json
+
+    from app import source_stats
+    from evals import source_funnel as funnel_module
+
+    stats = tmp_path / "source_stats.jsonl"
+    stats.write_text(
+        json.dumps({"date": "2026-01-01", "sources": {"old": {}, "kept": {}}}) + "\n"
+        + json.dumps({"date": "2026-01-02", "sources": {"kept": {}, "new": {}}}) + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(source_stats, "STATS_PATH", stats)
+
+    assert funnel_module.current_keys() == {"kept", "new"}
+
+
+def test_calculate_metrics_passes_current_keys_to_source_reach(monkeypatch):
+    """실행기가 current_keys() 결과를 실제로 source_reach 에 넘긴다."""
+    import evals.run as evals_run
+
+    monkeypatch.setattr(evals_run, "current_keys", lambda: {"dead", "alive"})
+    monkeypatch.setattr(evals_run, "date", _FixedDate)
+
+    reach = evals_run.calculate_metrics(_REACH_ITEMS)["source_reach"]
+
+    assert reach["reference_date"] == _REFERENCE.isoformat()
+    assert [s["source_name"] for s in reach["stale_sources"]] == ["dead"]
+    assert [s["source_name"] for s in reach["retired_sources"]] == ["retired"]
+
+
+class _FixedDate(date):
+    """evals.run 의 date.today() 를 고정한다."""
+
+    @classmethod
+    def today(cls) -> "_FixedDate":
+        return cls(_REFERENCE.year, _REFERENCE.month, _REFERENCE.day)

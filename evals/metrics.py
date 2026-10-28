@@ -160,11 +160,22 @@ def source_reach(
     window_days: int,
     *,
     reference_date: date | None = None,
+    current_keys: set[str] | None = None,
 ) -> dict[str, Any]:
     """소스별 수집량, 최종 등장일과 장기 미등장 여부를 계산한다.
 
     잡아내는 현상: 수집기 장애나 피드 변경 때문에 특정 소스가 조용히 끊기는 현상.
     경보 임계값: 기준일로부터 30일 이상 미등장한 소스가 하나라도 있으면 WARN이다.
+
+    current_keys 를 주면 stale 판정은 **현재 설정된 소스**만 본다. 설정에서 뺀(퇴역) 소스는
+    정본에 과거 아이템이 남아 있는 한 "N일 이상 미등장"이 영영 커지기만 하므로, 그대로 두면
+    소스를 정리해도 WARN 이 사라지지 않는다(2026-10 UCZHmQk67mSJgfCCTn7xBfew 82일, 매주 WARN).
+    app.source_stats.aggregate 가 silent/starved 판정에 current_source_keys 만 쓰는 것과 같은
+    원칙이다. 퇴역 소스는 retired_sources 로 따로 보여주고, sources/source_count 는 가시성을
+    위해 전체를 그대로 담는다. current_keys 가 None 이거나 빈 set 이면(기록이 없는 구간)
+    판정을 좁히지 않아 게이트가 무뎌지지 않는다. source_key 없이 source_name 으로 폴백한
+    옛 아이템은 키 체계가 달라 current_keys 와 대조할 수 없으므로 전부 retired 로 분류된다
+    (옛 archive_items.json 스냅샷을 current_keys 와 함께 쓰면 stale 이 과소 집계된다).
     """
     if window_days < 0:
         raise ValueError("window_days는 0 이상이어야 합니다.")
@@ -186,8 +197,11 @@ def source_reach(
     # 직접 호출에서는 데이터 최종일을 기준으로 삼아 입력만으로 결과가 결정되게 한다.
     # 운영 실행기는 오늘 날짜를 명시적으로 주입한다.
     effective_reference_date = reference_date or (max(valid_dates) if valid_dates else None)
+    # 빈 set 은 None 과 같다. 판정 대상을 비우면 모든 소스가 retired 가 되어 게이트가 꺼진다.
+    active_keys = current_keys if current_keys else None
     sources: dict[str, dict[str, Any]] = {}
     stale_sources: list[dict[str, Any]] = []
+    retired_sources: list[dict[str, Any]] = []
     for source in sorted(counts):
         seen = last_seen.get(source)
         days_since = (effective_reference_date - seen).days if effective_reference_date and seen else None
@@ -197,11 +211,19 @@ def source_reach(
             "days_since_last_seen": days_since,
         }
         sources[source] = details
-        if days_since is not None and days_since >= window_days:
+        if days_since is None or days_since < window_days:
+            continue
+        if active_keys is not None and source not in active_keys:
+            retired_sources.append({"source_name": source, **details})
+        else:
             stale_sources.append({"source_name": source, **details})
 
-    stale_sources.sort(key=lambda source: (-source["days_since_last_seen"], source["source_name"]))
-    return {
+    def _sort_key(source: dict[str, Any]) -> tuple[int, str]:
+        return (-source["days_since_last_seen"], source["source_name"])
+
+    stale_sources.sort(key=_sort_key)
+    retired_sources.sort(key=_sort_key)
+    result: dict[str, Any] = {
         "window_days": window_days,
         "reference_date": effective_reference_date.isoformat() if effective_reference_date else None,
         "source_count": len(counts),
@@ -209,6 +231,11 @@ def source_reach(
         "stale_source_count": len(stale_sources),
         "stale_sources": stale_sources,
     }
+    if active_keys is not None:
+        # current_keys 없이 부른 호출의 반환값은 바꾸지 않는다(기존 baseline/테스트 호환).
+        result["retired_source_count"] = len(retired_sources)
+        result["retired_sources"] = retired_sources
+    return result
 
 
 def duplicate_rate(items: list[Item]) -> dict[str, Any]:

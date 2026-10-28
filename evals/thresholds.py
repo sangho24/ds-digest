@@ -43,7 +43,7 @@ THRESHOLDS: list[dict[str, Any]] = [
     {"scope": "recent", "path": "score_distribution.iqr", "operator": "<", "value": 1.5, "severity": "FAIL", "label": "관련도 점수 IQR"},
     # current: 3
     {"scope": "recent", "path": "score_distribution.distinct_values", "operator": "<", "value": 5, "severity": "FAIL", "label": "관련도 고유값 수"},
-    # current: 2개
+    # current: 0개 (2026-10-28. 퇴역 소스 UCZHmQk67mSJgfCCTn7xBfew 1개는 retired_sources 로 분리, §50)
     {"path": "source_reach.stale_source_count", "operator": ">", "value": 0, "severity": "WARN", "label": "30일 이상 미등장 소스"},
     # current: 0.198381 (49/247)
     {"path": "duplicate_rate.duplicate_url_rate", "operator": ">", "value": 0.05, "severity": "FAIL", "label": "중복 URL 비율"},

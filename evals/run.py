@@ -36,7 +36,7 @@ try:  # 패키지 import와 직접 스크립트 실행을 모두 지원한다.
         THRESHOLDS,
     )
     from .build_items import build_items
-    from .source_funnel import source_funnel
+    from .source_funnel import current_keys, source_funnel
 except ImportError:
     from metrics import (  # type: ignore[no-redef]
         duplicate_rate,
@@ -56,7 +56,7 @@ except ImportError:
         THRESHOLDS,
     )
     from build_items import build_items  # type: ignore[no-redef]
-    from source_funnel import source_funnel  # type: ignore[no-redef]
+    from source_funnel import current_keys, source_funnel  # type: ignore[no-redef]
 
 
 EVALS_DIR = Path(__file__).resolve().parent
@@ -86,7 +86,11 @@ def calculate_metrics(items: list[dict[str, Any]]) -> dict[str, Any]:
         "tag_entropy": tag_entropy(items),
         "tag_concentration": tag_concentration(items),
         "score_distribution": score_distribution(items),
-        "source_reach": source_reach(items, window_days=30, reference_date=date.today()),
+        # 퇴역 소스(설정에서 뺀 키)는 stale 이 아니라 retired 로 분리한다. 기록이 없으면 None 이
+        # 넘어가 기존 동작(전체 소스 판정) 그대로다.
+        "source_reach": source_reach(
+            items, window_days=30, reference_date=date.today(), current_keys=current_keys()
+        ),
         "duplicate_rate": duplicate_rate(items),
         "evidence_proxy": evidence_proxy(items),
         "schema_rigidity": schema_rigidity(items),
@@ -510,6 +514,8 @@ def _print_report(report: dict[str, Any]) -> None:
     evidence = metrics["evidence_proxy"]
     interval = duplicate["reappearance_intervals_days"]
     stale_names = ", ".join(source["source_name"] for source in reach["stale_sources"]) or "없음"
+    # 퇴역 소스(설정에서 뺀 키)는 stale 에서 분리됐지만 보이게는 둔다(§50).
+    retired_note = f", 퇴역 {reach['retired_source_count']}" if reach.get("retired_source_count") else ""
 
     def _cap_hit(field: str) -> str:
         """상한 도달률. recent 창 값을 앞에, 전체 구간 값을 괄호에 둔다(_actual 과 같은 꼴).
@@ -533,7 +539,7 @@ def _print_report(report: dict[str, Any]) -> None:
     print("세부 요약")
     detail_rows = [
         ["관련도 히스토그램", json.dumps(score["histogram"], ensure_ascii=False)],
-        ["소스 수 / 장기 미등장", f"{reach['source_count']} / {reach['stale_source_count']} ({stale_names})"],
+        ["소스 수 / 장기 미등장", f"{reach['source_count']} / {reach['stale_source_count']} ({stale_names}{retired_note})"],
         ["고유 URL / 중복 발생분", f"{duplicate['unique_urls']} / {duplicate['duplicate_occurrences']}"],
         ["재등장 간격(일)", f"{interval['min']}~{interval['max']}, 평균 {interval['mean']}"],
         ["YouTube 타임스탬프", f"{evidence['with_timestamp']}/{evidence['youtube_items']}"],

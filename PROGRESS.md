@@ -961,6 +961,34 @@ GitHub Actions (07:30 KST)
 - **남은 것**: API 키 미확보. 키가 오면 로컬에서 10건 → 323건 소급, 엇갈린 건을 `labeling`
   으로 뽑아 사람 표시, 그 뒤 임베딩 층(DashScope text-embedding, 로컬 모델은 의존성 1GB 라 제외).
 
+### 50. 퇴역 소스가 "30일 이상 미등장"으로 매주 WARN 을 냈다 (`evals/metrics.py`, `evals/source_funnel.py`, `evals/run.py`)
+- **증상**: Weekly Evals 가 매주 `30일 이상 미등장 소스` WARN 을 냈다. 실체는 설정에서 이미 뺀
+  YouTube 채널 `UCZHmQk67mSJgfCCTn7xBfew` 1건(마지막 등장 2026-08-07, 10-28 기준 82일). 정본에
+  과거 아이템 7건이 남아 있는 한 미등장 일수는 커지기만 하므로, 소스를 정리해도 WARN 은 영영
+  꺼지지 않는다. 늘 켜져 있는 경보는 읽히지 않는다.
+- **원인**: `source_reach()` 가 발송 아이템에서 소스 목록을 만들고 전부를 stale 판정 대상으로 삼았다.
+  `aggregate()` 가 §41 에서 고친 것과 같은 결함(현재 설정 키를 안 본다)이 lifetime 지표 쪽에서
+  재현된 것이다. 기준일을 오늘로 주입하는 운영 실행기에서는 퇴역 소스가 매주 하루씩 더 늙는다.
+- **수정**: (1) `source_reach(..., current_keys=None)` 키워드 인자 추가. 주어지면 stale 판정은
+  `current_keys` 에 있는 소스만 보고, 없는 소스는 `retired_sources`/`retired_source_count` 로 분리해
+  보여준다. `sources`/`source_count` 는 가시성을 위해 전체 그대로. None 이면 반환값까지 완전 불변,
+  빈 set 은 None 과 같게 취급해 판정을 비우지 않는다(기록이 없는 구간에서 게이트가 꺼지지 않게).
+  (2) `evals/source_funnel.py` 에 `current_keys()` 헬퍼: `app.source_stats.load()` +
+  `current_source_keys()`. ImportError(structlog 없는 시스템 파이썬)나 빈 기록이면 None.
+  (3) `calculate_metrics()` 가 그 결과를 넘긴다. (4) 텍스트 보고의 "소스 수 / 장기 미등장" 행에
+  퇴역 수를 덧붙인다. 임계값 행과 baseline 회귀 행은 그대로다(`# current` 주석만 0개로 갱신).
+- **검증**: 테스트 8건 추가(총 711). current_keys 없음 = 기존 동작(퇴역도 stale), 있음 = 퇴역은
+  retired 로 빠지고 설정에 남은 오래된 소스는 여전히 stale, 빈 set = None, 헬퍼의 ImportError·빈
+  기록 → None, `calculate_metrics` 가 실제로 넘기는지(monkeypatch). 실측은 같은 입력(정본 443건)에
+  current_keys 없이 돌리면 stale 1(`UCZHmQk67mSJgfCCTn7xBfew`), `evals.run --json --baseline` 은
+  stale 0 / retired 1(82일) / exit_code 0. 현재 설정 키 34개, 정본에만 있는 키는 이 1개뿐이다.
+- **남은 것**:
+  - 소스를 뺀 당일은 옛 설정 행이 같은 날짜에 남아 하루 더 stale 로 잡힐 수 있다(§41 의
+    `current_source_keys` 합집합 규칙과 동일한 하루 지연).
+  - `data/source_stats.jsonl` 기록이 없는 구간(2026-09-01 이전 시점으로 재현하거나 기록 파일이
+    없는 환경)은 current_keys 가 None 이라 기존 동작 그대로, 퇴역 소스도 stale 로 센다.
+  - 이 WARN 이 꺼져도 `수집되나 미발송인 소스 계열` WARN(source_funnel starved) 은 별건으로 남아 있다.
+
 ---
 
 ## 다음 스텝 아이디에이션
