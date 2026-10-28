@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-27T01:44:43.614362+00:00",
+ "generated_at": "2026-10-28T01:56:05.899206+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -655,7 +655,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "nvidia",
-   "tracked": 100,
+   "tracked": 101,
    "models": [
     {
      "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S5_2_s43",
@@ -1188,7 +1188,7 @@
      "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
      "url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Tennis",
      "created_at": "2026-09-01T19:58:31+00:00",
-     "last_modified": "2026-10-02T23:57:32+00:00",
+     "last_modified": "2026-10-28T01:27:51+00:00",
      "weights_at": "2026-09-01T19:58:31+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-01T19:58:31+00:00",
@@ -1196,7 +1196,7 @@
      "arxiv_ids": [],
      "license": "other",
      "gated": "false",
-     "derivative": "finetune"
+     "derivative": null
     },
     {
      "repo_id": "nvidia/Nemotron-3-Diarization",
@@ -1239,7 +1239,7 @@
      "repo_id": "nvidia/Cosmos3-Nano-Sim-Transfer",
      "url": "https://huggingface.co/nvidia/Cosmos3-Nano-Sim-Transfer",
      "created_at": "2026-08-31T19:41:36+00:00",
-     "last_modified": "2026-10-21T03:28:58+00:00",
+     "last_modified": "2026-10-28T00:14:02+00:00",
      "weights_at": "2026-08-31T19:41:36+00:00",
      "has_weights": true,
      "model_card_at": "2026-08-31T19:41:36+00:00",
@@ -3164,7 +3164,7 @@
      "repo_id": "google/embeddinggemma-2",
      "url": "https://huggingface.co/google/embeddinggemma-2",
      "created_at": "2026-09-14T14:53:42+00:00",
-     "last_modified": "2026-10-06T15:29:23+00:00",
+     "last_modified": "2026-10-27T22:47:42+00:00",
      "weights_at": "2026-09-14T14:53:42+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-14T14:53:42+00:00",
@@ -6454,6 +6454,35 @@
  ],
  "recent_events": [
   {
+   "org": "nvidia",
+   "repo_id": "nvidia/nemotron-labs-unified-asr-0.6b",
+   "transition": "repo_created",
+   "observed_at": "2026-10-28T01:56:05.899206Z",
+   "at": "2026-08-21T09:26:40Z",
+   "source_url": "https://huggingface.co/nvidia/nemotron-labs-unified-asr-0.6b",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": true,
+   "detail": {
+    "weights": false,
+    "card": true,
+    "arxiv_ids": [
+     "2005.08100",
+     "2304.09325",
+     "2305.05084",
+     "2505.13404",
+     "2604.19079"
+    ],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-08-21T09:26:40+00:00"
+   }
+  },
+  {
    "org": "openai",
    "repo_id": "https://openai.com/index/introducing-gpt-6-1-terra",
    "transition": "announced",
@@ -7904,28 +7933,11 @@
     "surfaced": true,
     "created_at": "2026-09-01T13:16:57+00:00"
    }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
-   "transition": "report_published",
-   "observed_at": "2026-09-23T01:05:14.929997Z",
-   "at": "2026-09-22T21:49:01Z",
-   "source_url": "https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B",
-   "method": "hf_api",
-   "confidence": "unverified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "arxiv_ids": [
-     "2609.21967"
-    ]
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 644,
-  "events": 654
+  "models": 645,
+  "events": 655
  }
 }
