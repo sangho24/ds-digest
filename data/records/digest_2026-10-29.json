@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-29",
+  "generated_at": "2026-10-28T23:46:06.354102",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Honeycomb-Surfels: Compact Hexagonal Primitives for Efficient Scene Rendering and Reconstruction",
+        "url": "https://arxiv.org/abs/2610.37668v1",
+        "published_at": "2026-10-27T17:59:59",
+        "transcript": null,
+        "body": "Novel view synthesis and 3D reconstruction have advanced rapidly with radiance fields and splatting, yet their memory and computational demands limit their use in resource-constrained settings. We introduce Hexels: novel planar hexagonal surface elements with a first-order spatial color field for efficient 3D scene and 2D image representation. Hexels exploit locally planar regions with smoothly varying appearance using fewer, larger primitives. Their hexagonal support provides an area- and boundary-efficient domain, while the local color field captures appearance variation within each primitive. Across 34 scenes, Hexels improve PSNR over memory-matched 2DGS by 4.53-7.38 dB across datasets while requiring lower training VRAM. We further ablate Hexels by showing that per primitive, Hexels outperform 2DGS by upto 4.74 dB while using lower training VRAM and having 2.31 times faster FPS. Even in unconstrained settings, Hexels offers complementary quality-memory trade-offs. For efficient 3D surface reconstruction, Hexels reduce error by 28.9% compared with memory-matched 2DGS across 15 DTU scans. On 6 Tanks and Temples surface scenes, Hexels achieves the highest mean F1 among compared methods (34.38%, versus 31.72% for 2DGS). We further also show that Hexels, as a general primitive, improves 2D image representation over Image-GS. Hexels push the Pareto frontier on the quality-efficiency trade-off of surface-aligned primitives.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "헥셀로 메모리·연산 절감한 3D 렌더링",
+        "tags": [
+          "Hexels",
+          "2DGS",
+          "DTU",
+          "Tanks and Temples",
+          "Image-GS"
+        ],
+        "concepts": [
+          "표면 정렬 프리미티브 효율화",
+          "메모리 효율적 3D 재구성",
+          "품질-효율성 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "Hexels는 평면 6각형 프리미티브와 1차 색 필드를 사용해 기존 2DGS 대비 PSNR을 4.5‑7.4 dB 향상시킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "동일 메모리 조건에서 Hexels는 훈련 VRAM 사용량이 낮고 FPS가 2.31배 빨라 효율성을 크게 높인다.",
+            "timestamp": null
+          },
+          {
+            "point": "3D 재구성 실험에서 Hexels는 DTU 스캔 오류를 28.9% 감소시키고 Tanks and Temples에서 최고 F1 점수를 기록했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "신경망 기반의 novel view synthesis와 3D 재구성은 방사장(radiance fields)과 splatting 방식이 메모리·연산 부담이 커 제한적이었다. 기존 2DGS는 많은 작은 프리미티브로 표현했지만 효율성에 한계가 있었다. Hexels는 평면 6각형 서피스 엘리먼트와 공간 색 필드를 도입해 표면 정렬 프리미티브 연구 흐름에서 품질‑효율성 트레이드오프를 크게 개선한 최신 접근이다.",
+        "production_ideas": [
+          "Hexels의 6각형 프리미티브와 색 필드 방식을 GIS 지형 데이터에 적용해 메모리 사용량을 줄이면서 세부 지형 표현을 유지한다.",
+          "영상 압축에서 각 프레임을 Hexels 형태의 서피스 엘리먼트로 표현해 공간 색 변화를 효율적으로 저장, 전송 대역폭을 감소시킨다.",
+          "AR/VR 실시간 포인트 클라우드 스트리밍에 Hexels를 사용해 데이터 전송량을 낮추고 렌더링 지연을 최소화한다."
+        ],
+        "quiz": [
+          {
+            "question": "Hexels가 기존 2DGS 대비 PSNR을 크게 향상시킨 핵심 이유는 무엇인가?",
+            "options": [
+              "더 많은 프리미티브 사용",
+              "1차 색 필드로 내부 색 변화를 포착",
+              "고해상도 텍스처 적용",
+              "GPU 전용 최적화"
+            ],
+            "answer_index": 1,
+            "explanation": "Hexels는 각 프리미티브에 1차 공간 색 필드를 두어 동일 영역 내 색 변화를 모델링함으로써 표현 정확도를 높인다."
+          },
+          {
+            "question": "Hexels가 3D 재구성 오류 감소 효과를 보인 실험 데이터셋은?",
+            "options": [
+              "KITTI",
+              "DTU",
+              "Cityscapes",
+              "COCO"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 Hexels는 15개의 DTU 스캔에서 오류를 28.9% 감소시켰다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "Agentic Distributional Regression: Conditional Density Estimation through Agent-Written Programs",
+        "url": "https://arxiv.org/abs/2610.37611v1",
+        "published_at": "2026-10-27T17:41:14",
+        "transcript": null,
+        "body": "In this paper we propose a method for estimating conditional densities from an iid sample using a language-model agent. The agent writes the estimator as a short program that, for each covariate value, returns the estimated conditional distribution of the response. The program is built from a library of probability distributions, so the returned law can be a parametric distribution, a mixture or a multivariate factorization, with parameters given by explicit functions of the covariates. Since the number of operations and constants in the program is limited, the fitted conditional density is a formula that can be inspected and evaluated independently of the agent, while the choice of the model structure and of the fitting procedure is left to the agent. We call this approach agentic distributional regression (ADR). Treating the returned program as a random conditional density estimator, we derive a finite-sample error bound under explicit complexity and optimization assumptions, and an oracle inequality for selection using independent validation data. For a stably selected regular structure with sufficiently accurate fitting, we obtain asymptotic normality of the fitted constants. In simulation studies, on twelve real datasets and on a new dataset collected after the agents' training data, ADR with Claude Opus 5.5 has the best average performance among the methods considered.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM이 만든 프로그램으로 조건부 밀도 추정, 해석 가능",
+        "tags": [
+          "Claude Opus 5.5",
+          "language-model agent",
+          "conditional density estimation",
+          "probability distribution library",
+          "Agentic Distributional Regression"
+        ],
+        "concepts": [
+          "조건부 확률 모델링",
+          "코드 자동생성",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 에이전트가 짧은 프로그램을 작성해 조건부 밀도 추정기를 생성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "프로그램은 제한된 연산과 상수로 구성돼 해석 가능하고 독립적으로 평가 가능하다.",
+            "timestamp": null
+          },
+          {
+            "point": "이론적 오차 경계와 오라클 부등식을 제공하며 실험에서 기존 방법보다 평균 성능이 우수했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "조건부 밀도 추정은 기존에 비정형 모델은 해석이 어렵고, 전통적 파라메트릭 모델은 유연성이 부족했다. 본 논문은 LLM이 프로그램 형태의 추정기를 자동 생성해, 통계적 이론과 해석 가능성을 결합한 새로운 분포 회귀 흐름을 제시한다.",
+        "production_ideas": [
+          "ADR의 프로그램형 추정기를 시계열 예측에 적용해 미래 값의 전체 확률분포를 제공, 불확실성 정량화 향상",
+          "조건부 치료 효과 분포를 추정하도록 LLM이 프로그램을 생성하게 하여 이질적 효과를 해석 가능하게 모델링",
+          "고차원 센서 데이터에 대해 LLM이 생성한 다변량 밀도 모델을 이용해 실시간 이상치 점수를 계산, 빠른 이상 탐지 구현"
+        ],
+        "quiz": [
+          {
+            "question": "ADR이 제안하는 추정기의 주요 장점은 무엇인가?",
+            "options": [
+              "높은 예측 정확도만 제공",
+              "프로그램 형태로 해석 가능하고 독립적으로 평가 가능",
+              "무제한 연산 복잡도",
+              "사전 정의된 고정 파라미터만 사용"
+            ],
+            "answer_index": 1,
+            "explanation": "ADR은 제한된 연산과 상수로 구성된 짧은 프로그램을 반환해, 에이전트와 무관하게 모델을 직접 검사하고 평가할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "댓글: blog",
+        "source_key": "https://tech.kakao.com/blog/feed/",
+        "source_label": "댓글: blog",
+        "title": "팀이 신뢰할 수 있는 AI 분석 환경 만들기: 추천팀의 컨텍스트 설계",
+        "url": "https://tech.kakao.com/posts/844",
+        "published_at": "2026-10-27T15:00:00",
+        "transcript": null,
+        "body": "# 팀이 신뢰할 수 있는 AI 분석 환경 만들기: 추천팀의 컨텍스트 설계\n\n![rupert.kim의 프로필 사진](https://t1.kakaocdn.net/kakao_tech/author/cf1c2eba019e00001.jpg)\n\nrupert.kim[View →](/author/rupert.kim)\n\n\n\n[← Back to Blog](/blog)\n\n[이전 글\n\n문자를 보냈다는데 왜 안 오죠? 길 잃은 국제 MO 메시지 구출 작전](/posts/843)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 분석 환경 신뢰성 위한 컨텍스트 설계",
+        "tags": [
+          "Kakao",
+          "rupert.kim",
+          "추천팀"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "데이터 사용 투명성",
+          "AI 안전 및 비밀 과제 회피"
+        ],
+        "key_points": [
+          {
+            "point": "컨텍스트 설계를 통해 모델 실험과 운영 데이터를 명확히 구분한다",
+            "timestamp": null
+          },
+          {
+            "point": "메타데이터와 버전 관리를 일관되게 적용해 재현성을 확보한다",
+            "timestamp": null
+          },
+          {
+            "point": "팀 간 협업을 위한 표준화된 AI 분석 파이프라인을 구축한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "컨텍스트 격리 방식을 광고 캠페인 A/B 테스트에 적용해 실험 간 교차 오염을 방지한다",
+          "데이터 파이프라인에 메타데이터 기반 접근 제어를 도입해 금융 사기 탐지 모델의 투명성을 높인다",
+          "다중 팀이 공유하는 모델 레지스트리에 컨텍스트 버전 관리 기능을 추가해 배포 위험을 감소시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "컨텍스트 설계가 AI 분석 환경에서 중요한 이유는 무엇인가?",
+            "options": [
+              "모델 성능을 자동으로 향상시킨다",
+              "실험 결과와 운영 데이터를 명확히 구분한다",
+              "데이터 수집 비용을 절감한다",
+              "코드 작성 시간을 줄인다"
+            ],
+            "answer_index": 1,
+            "explanation": "컨텍스트 설계는 실험과 운영 환경을 구분해 재현성과 신뢰성을 확보한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "ai-ml",
+          "data-eng"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "디플릭",
+        "source_key": "dflick.stibee.com",
+        "source_label": "디플릭",
+        "title": "✅ 엔비디아의 GTC 베를린 2026, 주목할 5가지",
+        "url": "https://dflick.stibee.com/p/117",
+        "published_at": "2026-10-27T00:00:00",
+        "transcript": null,
+        "body": "[구독하기](https://page.stibee.com/subscriptions/414972) ‧ [웹에서 보기](https://stib.ee/zGxO)\n\n디플릭 뉴스레터는 AX•UX 디자인 전문 기업 [와키컴퍼니](https://wacky.kr/)가 만들고 발행합니다.\n\nVol.113 ・ 2026.10.27\n\n안녕하세요 디플릭입니다 👋  요즘 길을 걷다 붕어빵 가게가 보이면 괜히 반갑더라고요.  그냥 지나치려다가도 “슈크림이냐 팥이냐” 잠깐 고민하게 되고요.  여러분은 어느 쪽인가요? 🐟  잠깐의 간식 시간처럼, 이번 주 디플릭도 가볍게 즐겨주세요 📮\n\n🔎 오늘 읽을 이야기    👀 [In;D] ✅ 엔비디아 GTC 베를린 2026, 주목할 5가지  🍯 [TMI] 🦖오류 화면에는 왜 귀여운 캐릭터가 나올까?  📚 [Flick Wiki] 시코펀시(Sycophancy)  🗞️ [News] AI가 작업의 앞뒤 맥락까지 챙기기 시작했어요🤓\n\n디자이너의 시선을 넓혀주는 시간  작은 인사이트가 인생의 전환점이 될지도...👀\n\n✅ 엔비디아의 GTC 베를린 2026, 주목할 5가지\n\n© AI Image\n\n🦆 젠슨 황의 발표 무대에 작은 오리 로봇 네 마리가 등장했어요. 가상 공간에서 배운 걸음으로 실제 무대를 누볐는데요. 귀여운 로봇부터 거대한 데이터센터까지, 이번 GTC 베를린에는 AI를 현장에 투입하기 위한 이야기들이 가득했어요.    🏭 AI가 일하려면 똑똑한 모델만으로는 부족해요. 전기와 냉각 설비를 갖춘 공간도, 회사 자료를 찾아 읽는 연결도 필요하죠. 엔비디아는 미리 조립하는 데이터센터와 기업 자료를 연결하는 도구, AI가 어디까지 접근하고 행동할지 정하는 권한 체계를 함께 소개했어요.    🛠️ 로봇과 자동차는 현실에서 움직이기 위한 준비가 한창이에요. 가상 공간에서 익힌 동작을 실제 로봇에 옮기고, 공장과 도로에서 AI의 판단을 시험하는 방식이 나왔어요. 무대 위 시연을 넘어 실제로 쓰이기까지 어떤 과정이 필요한지 보여줬죠.    💡 수많은 발표 중 무엇을 눈여겨봐야 할지 막막했다면, 디플릭과 함께 살펴봐요. 데이터센터·권한·기업 자료·로봇·산업 현장까지, 핵심을 다섯 가지로 알차게 추렸어요. 지금 쓸 수 있는 기술과 앞으로의 계획도 구분해, 변화의 흐름을 쉽게 짚어드릴게요.\n\n[✅  디플릭이 추린 GTC 핵심 5가지 보러 가기 👉](https://dflick.kr/contents/ind/2006)\n\n🍯 TMI: Tips Made Interesting 🍯 재밌고, 흥미롭게 · 디자이너의 TIP, 그리고 TMI 📚\n\n🦖오류 화면에는 왜 귀여운 캐릭터가 나올까?\n\n©AI Image\n\n👀 보고 싶은 페이지는 안 나오고, 처음 보는 귀여운 녀석이 나왔어요. 인터넷이 끊기면 공룡이 나타나고, 없는 페이지에서는 길 잃은 고양이나 상자 속 강아지가 우리를 맞아요. 분명 오류가 났는데, 왜 이렇게 귀여운 걸 내보내는 걸까요?    🦖 크롬 공룡은 와이파이가 없는 상황을 ‘선사시대로 돌아간 것’에 빗대어 탄생했어요. 기다리는 시간을 달리기 게임으로 채웠더니, 학교와 회사에서 게임을 끄는 기능까지 필요해졌대요.    🐋 한때 트위터의 오류 화면을 지키던 고래는 원래 친구에게 보낼 생일 카드였어요. GitHub의 옥토캣은 검색창으로 길을 안내하고, 아마존의 강아지는 회사의 반려견 문화까지 보여줘요. 귀여운 얼굴마다 의외의 사연이 숨어 있어요.    💡 이번 글에서는 평소라면 바로 닫았을 오류 화면을 조금 더 들여다봤어요. 캐릭터들의 탄생 이야기부터, 귀여운 그림 옆에 꼭 있어야 할 안내까지. 익숙한 오류 화면이 조금 다르게 보일 거예요.\n\n[🦖 오류 화면 속 귀여운 녀석들의 사연 보러 가기 👉](https://dflick.kr/contents/tmi/1994)\n\n📚 AI 시대의 낯선 말을 쉽게 풀어보는 디플릭의 용어 노트 📚 한 줄 뜻풀이부터 일상 속 사용 장면, 알아두면 좋은 여담까지 ✏️\n\n개요  사용자의 생각이나 믿음에 과도하게 동조하는 AI의 성향. 영어로는 Sycophancy. 이 글에서는 ‘시코펀시’로 표기한다. “내 말이 다 맞다는 AI, 믿어도 될까?”라는 질문으로 시작하면 쉽다. 기분 좋은 반응은 돌아오는데, 내 판단이 타당한지 확인할 근거는 얻지 못하는 상황이다. AI 연구에서는 사실에 충실한 응답보다 사용자 견해에 맞추는 행동을 가리킨다.[자세히 보기](https://app.notion.com/p/wackyuxteam/4055fca37b3480328f88d109942943db?v=e9c5fca37b348397965a0847a0952325&source=copy_link)\n\n[👀 더 자세하고 재밌는 설명 읽기 👉](https://app.notion.com/p/wackyuxteam/4055fca37b3480328f88d109942943db?v=e9c5fca37b348397965a0847a0952325&source=copy_link)\n\n📰 매일 바뀌는 AX 흐름 📰 빠르고 간결하게 전해드려요!\n\n📰 10월 4주차 뉴스 모음.zip  AI가 작업의 앞뒤 맥락까지 챙기기 시작했어요🤓\n\n• 한 주의 흐름을 아는 AX 뉴스 •\n\nFigma⎥디자인 옆에 기획 문서와 실행되는 코드까지 놓을 수 있게 됐어요. 코드 레이어와 마크다운 Specs가 캔버스에 합류했거든요 🛠️ 사람과 AI가 같은 자료를 보며 설계와 구현을 이어가는 변화예요. 화면을 그리던 공간이 제품을 함께 만드는 공간으로 넓어지고 있어요. [자세히 보기](https://dflick.kr/contents/news/2000)  Claude⎥AI에게 “이것 좀 해줘”라고 말하기 전에, AI가 먼저 할 일을 챙겨준다면요? 앤트로픽의 ‘Claude Duet’은 연결된 업무 앱을 살피고 필요한 일을 먼저 알려줘요 👀 민감한 행동은 승인을 받은 뒤 실행하고요. 요청을 기다리던 AI가 업무에 먼저 손을 내밀기 시작했어요.  [자세히 보기](https://dflick.kr/contents/news/2002)\n\n💡 함께 보면 이번 주 흐름이 선명해져요\n\nCanva⎥[그리기 전에 구도부터! 자체 이미지 모델 ‘Craft’가 구성부터 계획하는 이미지 생성을 선보였어요. 🎨](https://dflick.kr/contents/news/1999)  Gemini⎥[흩어진 업무 자료와 브랜드 자산을 연결해, 우리 브랜드에 맞는 콘텐츠 제작과 운영 분석을 도와요.](https://dflick.kr/contents/news/1995)  Spotify⎥[AI 음악도 다 같은 음악은 아니니까요. 저품질·스팸 음원 5천만 곡을 추천에서 제외하고 제작 주체와 AI 사용 표시를 강화해요. 🎧](https://dflick.kr/contents/news/2003)  ChatGPT⎥[남에게 보이기 조심스러운 대화가 있다면? ‘잠긴 채팅’으로 기록과 검색에서 숨기고, PIN이나 기기 인증으로 열 수 있어요. 🔒](https://dflick.kr/contents/news/1997)\n\n• 이런 뉴스들도 있었어요 •\n\nGrok⎥그록, 이젠 영화까지 만드네요 🎬 Grok Imagine과 Wonder Studios가 협업한 〈오디세이〉 첫 화가 공개됐어요. 바다를 가르는 배부터 인물들의 대화와 전투까지, 약 7분의 이야기로 이어져요. 짧은 생성 영상을 넘어선 AI의 영화 도전, 여러분 눈에는 어떻게 보이나요? 🍿 [자세히 보기](https://www.instagram.com/reels/De8QA3BDepb/)  Dessa⎥이 목소리, 정말 AI라고요? 🎧 Block의 새로운 음성 AI ‘Dessa’가 자연스러운 대화로 눈길을 끌어요. 파리 여행을 선물한다는 말에 웃고, 망설이고, 감탄하는 반응까지 들려주는데요. 사람과 AI가 나누는 대화에서 어느 쪽이 AI인지 직접 맞혀보세요 👀 [자세히 보기](https://www.instagram.com/reel/De6sTw_jrMA/?vrfl=MWQ1ZGUxMzBkMA==&srtk=MWQ1ZGUxMzBkMA==)\n\n[📰 더 많은 뉴스 보러가기 👉](https://dflick.kr/contents/news)\n\n오늘 레터는 어떠셨나요? 바쁜 하루 중 잠깐이라도 즐거운 읽을거리였길 바라요 ☕️ 디플릭은 다음 주에도 흥미로운 소식으로 찾아올게요. 또 만나요 😊\n\n작은 Flick으로 만드는 큰 인사이트  매주 화요일, 꼭 알아야 할 AI·UX·IT 소식을 전합니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI 현장 적용 위한 인프라·권한·산업 인사이트",
+        "tags": [
+          "엔비디아",
+          "GTC 베를린",
+          "데이터센터",
+          "AI 권한 체계",
+          "로봇"
+        ],
+        "concepts": [
+          "AI 인프라 경쟁",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "엔비디아는 사전 조립된 데이터센터와 기업 자료 연동 도구를 소개해 AI 배포에 물리 인프라와 권한 체계의 중요성을 강조했다.",
+            "timestamp": null
+          },
+          {
+            "point": "가상 환경에서 학습한 로봇·자동차 동작을 실제 현장에 적용하는 시뮬레이션‑투‑리얼 파이프라인을 시연했다.",
+            "timestamp": null
+          },
+          {
+            "point": "GTC 베를린에서 제시한 다섯 가지 핵심 영역(데이터센터, 권한, 기업 자료, 로봇, 산업 현장)을 통해 현재 활용 가능한 기술과 향후 계획을 구분했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "모듈형 데이터센터 개념을 활용해 스타트업용 온프레미스 ML 클러스터를 빠르게 구축해 확장성을 높인다.",
+          "AI 권한 체계를 도입해 사내 LLM 접근을 레벨별로 관리함으로써 보안과 사용 효율을 동시에 개선한다.",
+          "시뮬레이션‑투‑리얼 전이 방식을 데이터 파이프라인 자동화에 적용해 테스트 환경에서 최적화한 워크플로를 실제 클라우드 운영에 바로 적용한다."
+        ],
+        "quiz": [
+          {
+            "question": "엔비디아가 GTC 베를린에서 강조한 AI 현장 적용을 위해 필수적인 요소는 무엇인가?",
+            "options": [
+              "모델 크기 확대",
+              "데이터센터와 권한 체계",
+              "UI 디자인 개선",
+              "마케팅 전략 강화"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 AI가 현장에서 작동하려면 물리적 데이터센터와 AI 접근을 제어하는 권한 체계가 필요하다고 설명한다."
+          },
+          {
+            "question": "가상 공간에서 학습한 로봇 동작을 실제에 적용하기 위해 GTC에서 제시한 과정은 무엇을 포함하는가?",
+            "options": [
+              "코드 없이 즉시 배포",
+              "시뮬레이션 검증 후 현장 적용",
+              "클라우드 전용 실행",
+              "데이터 라벨링만 수행"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 가상 환경에서 익힌 동작을 실제 로봇에 옮기기 위해 시뮬레이션 단계와 현장 테스트 단계를 거친다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "news",
+        "half_life": "seasonal",
+        "actionability": 6,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "100만 부모의 필수 앱: '맘맘'의 성장 스토리",
+        "url": "https://innoforest.stibee.com/p/682",
+        "published_at": "2026-10-27T00:00:00",
+        "transcript": null,
+        "body": "육아용품 정보 앱에서 100만 부모의 필수 앱으로 마케팅 PT #104. 맘맘의 성장 스토리    100만 부모가 매주 여는 앱, 맘맘은 어떻게 컸을까요?  육아용품 랭킹 앱으로 시작한 맘맘은 지금 7,000곳 가까운 제휴처의 멤버십을 운영하는 부모들의 필수 앱이 됐습니다. 맘맘의 강경윤 대표님은 조회수보다 '저장'과 그 이후의 행동을 본다고 말합니다. 좋은 콘텐츠는 부모의 다음 행동을 바꾸는 콘텐츠라는 것이죠. 맘맘 앱 안에서 고객을 위한 콘텐츠·쇼케이스·멤버십이 서로를 지탱해주는 성장 구조를 직접 대표님을 만나 들어봤습니다. 지금 바로 확인하세요.  [**맘맘 성장스토리 읽으러 가기** 👉🏻](https://www.innoforest.co.kr/report/586)\n\n[🎖️2026 혁신의숲 어워즈 후보 3차 투표 최종 순위 공개](https://www.innoforest.co.kr/report/585)  [📈2025년에 이어 2026년에도 성장 가능성 높은 스타트업 15곳](https://www.innoforest.co.kr/report/584)\n\n[🦄 2026년 9월 스타트업 투자결산: 하이퍼엑셀 1,000억 · 인핸스 512억… 투자 건수는 15% 늘었다](https://www.innoforest.co.kr/report/583)  [성장 스타트업 이직 솔루션, 혁신의숲 career 베타 공개](https://career.innoforest.co.kr/)\n\n[**더 많은 인사이트 보러가기**👉🏻](https://www.innoforest.co.kr/report/list)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "콘텐츠·멤버십이 사용자 행동을 바꾸는 성장 인사이트",
+        "tags": [
+          "맘맘",
+          "강경윤",
+          "혁신의 숲",
+          "멤버십",
+          "제휴처"
+        ],
+        "concepts": [
+          "고객 데이터 활용",
+          "고객 접점 확대",
+          "스타트업 성장 지표"
+        ],
+        "key_points": [
+          {
+            "point": "맘맘은 육아용품 랭킹 앱에서 시작해 100만 부모가 매주 이용하는 필수 앱으로 성장했다.",
+            "timestamp": null
+          },
+          {
+            "point": "성장의 핵심은 조회수보다 ‘저장’ 등 사용자의 다음 행동을 유도하는 콘텐츠에 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "콘텐츠·쇼케이스·멤버십이 서로를 지탱하는 구조로 7,000여 제휴처와 멤버십을 운영한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "‘저장’ 지표를 활용해 피트니스 앱에서 사용자가 저장한 운동 루틴을 기반으로 맞춤형 추천을 제공해 재방문을 유도한다.",
+          "멤버십 기반 쇼케이스 모델을 B2B SaaS 제품에 적용해 파트너 기업에게 전용 콘텐츠를 제공하고 교차 판매 기회를 확대한다."
+        ],
+        "quiz": [
+          {
+            "question": "맘맘이 성장 전략에서 ‘조회수’보다 더 중요하게 본 행동은 무엇인가?",
+            "options": [
+              "다운로드",
+              "저장",
+              "공유",
+              "댓글"
+            ],
+            "answer_index": 1,
+            "explanation": "기사에서 강경윤 대표는 조회수보다 ‘저장’과 그 이후 행동을 중시한다고 언급했다."
+          },
+          {
+            "question": "맘맘 성장 구조에서 콘텐츠·쇼케이스·멤버십이 서로를 지탱하는 주된 이유는?",
+            "options": [
+              "비용 절감",
+              "사용자 행동 유도",
+              "데이터 수집",
+              "브랜드 홍보"
+            ],
+            "answer_index": 1,
+            "explanation": "세 요소가 상호 지원해 사용자의 다음 행동을 변화시키는 것이 성장의 핵심이라고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "partial",
+        "domain": [
+          "product",
+          "business"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 29일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 29일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">표면 정렬 프리미티브 효율화</span><span class="concept">메모리 효율적 3D 재구성</span><span class="concept">품질-효율성 트레이드오프</span><span class="concept">조건부 확률 모델링</span><span class="concept">코드 자동생성</span><span class="concept">불확실성 정량화</span><span class="concept">AI 생산성 도구</span><span class="concept">데이터 사용 투명성</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">AI 인프라 경쟁</span><span class="concept">AI와 인간 협업</span><span class="concept">고객 데이터 활용</span><span class="concept">고객 접점 확대</span><span class="concept">스타트업 성장 지표</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.37668v1" target="_blank" rel="noopener">Honeycomb-Surfels: Compact Hexagonal Primitives for Efficient Scene Rendering and Reconstruction</a>
+        </h2>
+
+        <p class="summary">헥셀로 메모리·연산 절감한 3D 렌더링</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>신경망 기반의 novel view synthesis와 3D 재구성은 방사장(radiance fields)과 splatting 방식이 메모리·연산 부담이 커 제한적이었다. 기존 2DGS는 많은 작은 프리미티브로 표현했지만 효율성에 한계가 있었다. Hexels는 평면 6각형 서피스 엘리먼트와 공간 색 필드를 도입해 표면 정렬 프리미티브 연구 흐름에서 품질‑효율성 트레이드오프를 크게 개선한 최신 접근이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Hexels는 평면 6각형 프리미티브와 1차 색 필드를 사용해 기존 2DGS 대비 PSNR을 4.5‑7.4 dB 향상시킨다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>동일 메모리 조건에서 Hexels는 훈련 VRAM 사용량이 낮고 FPS가 2.31배 빨라 효율성을 크게 높인다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>3D 재구성 실험에서 Hexels는 DTU 스캔 오류를 28.9% 감소시키고 Tanks and Temples에서 최고 F1 점수를 기록했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Hexels의 6각형 프리미티브와 색 필드 방식을 GIS 지형 데이터에 적용해 메모리 사용량을 줄이면서 세부 지형 표현을 유지한다.</span></li>
+            
+            <li><span class="box"></span><span>영상 압축에서 각 프레임을 Hexels 형태의 서피스 엘리먼트로 표현해 공간 색 변화를 효율적으로 저장, 전송 대역폭을 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>AR/VR 실시간 포인트 클라우드 스트리밍에 Hexels를 사용해 데이터 전송량을 낮추고 렌더링 지연을 최소화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Hexels가 기존 2DGS 대비 PSNR을 크게 향상시킨 핵심 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 더 많은 프리미티브 사용</div>
+            
+            <div class="q-opt">② 1차 색 필드로 내부 색 변화를 포착</div>
+            
+            <div class="q-opt">③ 고해상도 텍스처 적용</div>
+            
+            <div class="q-opt">④ GPU 전용 최적화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 1차 색 필드로 내부 색 변화를 포착</div>
+              <div class="why">Hexels는 각 프리미티브에 1차 공간 색 필드를 두어 동일 영역 내 색 변화를 모델링함으로써 표현 정확도를 높인다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Hexels가 3D 재구성 오류 감소 효과를 보인 실험 데이터셋은?</div>
+            
+            <div class="q-opt">① KITTI</div>
+            
+            <div class="q-opt">② DTU</div>
+            
+            <div class="q-opt">③ Cityscapes</div>
+            
+            <div class="q-opt">④ COCO</div>
+            
+            <div class="q-answer">
+              <div class="correct">② DTU</div>
+              <div class="why">본문에 따르면 Hexels는 15개의 DTU 스캔에서 오류를 28.9% 감소시켰다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Hexels</span><span class="tag">2DGS</span><span class="tag">DTU</span><span class="tag">Tanks and Temples</span><span class="tag">Image-GS</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.37611v1" target="_blank" rel="noopener">Agentic Distributional Regression: Conditional Density Estimation through Agent-Written Programs</a>
+        </h2>
+
+        <p class="summary">LLM이 만든 프로그램으로 조건부 밀도 추정, 해석 가능</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>조건부 밀도 추정은 기존에 비정형 모델은 해석이 어렵고, 전통적 파라메트릭 모델은 유연성이 부족했다. 본 논문은 LLM이 프로그램 형태의 추정기를 자동 생성해, 통계적 이론과 해석 가능성을 결합한 새로운 분포 회귀 흐름을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 에이전트가 짧은 프로그램을 작성해 조건부 밀도 추정기를 생성한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>프로그램은 제한된 연산과 상수로 구성돼 해석 가능하고 독립적으로 평가 가능하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이론적 오차 경계와 오라클 부등식을 제공하며 실험에서 기존 방법보다 평균 성능이 우수했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>ADR의 프로그램형 추정기를 시계열 예측에 적용해 미래 값의 전체 확률분포를 제공, 불확실성 정량화 향상</span></li>
+            
+            <li><span class="box"></span><span>조건부 치료 효과 분포를 추정하도록 LLM이 프로그램을 생성하게 하여 이질적 효과를 해석 가능하게 모델링</span></li>
+            
+            <li><span class="box"></span><span>고차원 센서 데이터에 대해 LLM이 생성한 다변량 밀도 모델을 이용해 실시간 이상치 점수를 계산, 빠른 이상 탐지 구현</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">ADR이 제안하는 추정기의 주요 장점은 무엇인가?</div>
+            
+            <div class="q-opt">① 높은 예측 정확도만 제공</div>
+            
+            <div class="q-opt">② 프로그램 형태로 해석 가능하고 독립적으로 평가 가능</div>
+            
+            <div class="q-opt">③ 무제한 연산 복잡도</div>
+            
+            <div class="q-opt">④ 사전 정의된 고정 파라미터만 사용</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 프로그램 형태로 해석 가능하고 독립적으로 평가 가능</div>
+              <div class="why">ADR은 제한된 연산과 상수로 구성된 짧은 프로그램을 반환해, 에이전트와 무관하게 모델을 직접 검사하고 평가할 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude Opus 5.5</span><span class="tag">language-model agent</span><span class="tag">conditional density estimation</span><span class="tag">probability distribution library</span><span class="tag">Agentic Distributional Regression</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">댓글: blog</div>
+
+        <h2 class="title">
+          <a href="https://tech.kakao.com/posts/844" target="_blank" rel="noopener">팀이 신뢰할 수 있는 AI 분석 환경 만들기: 추천팀의 컨텍스트 설계</a>
+        </h2>
+
+        <p class="summary">AI 분석 환경 신뢰성 위한 컨텍스트 설계</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>컨텍스트 설계를 통해 모델 실험과 운영 데이터를 명확히 구분한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>메타데이터와 버전 관리를 일관되게 적용해 재현성을 확보한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>팀 간 협업을 위한 표준화된 AI 분석 파이프라인을 구축한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>컨텍스트 격리 방식을 광고 캠페인 A/B 테스트에 적용해 실험 간 교차 오염을 방지한다</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인에 메타데이터 기반 접근 제어를 도입해 금융 사기 탐지 모델의 투명성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>다중 팀이 공유하는 모델 레지스트리에 컨텍스트 버전 관리 기능을 추가해 배포 위험을 감소시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">컨텍스트 설계가 AI 분석 환경에서 중요한 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 성능을 자동으로 향상시킨다</div>
+            
+            <div class="q-opt">② 실험 결과와 운영 데이터를 명확히 구분한다</div>
+            
+            <div class="q-opt">③ 데이터 수집 비용을 절감한다</div>
+            
+            <div class="q-opt">④ 코드 작성 시간을 줄인다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 실험 결과와 운영 데이터를 명확히 구분한다</div>
+              <div class="why">컨텍스트 설계는 실험과 운영 환경을 구분해 재현성과 신뢰성을 확보한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kakao</span><span class="tag">rupert.kim</span><span class="tag">추천팀</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">디플릭</div>
+
+        <h2 class="title">
+          <a href="https://dflick.stibee.com/p/117" target="_blank" rel="noopener">✅ 엔비디아의 GTC 베를린 2026, 주목할 5가지</a>
+        </h2>
+
+        <p class="summary">AI 현장 적용 위한 인프라·권한·산업 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>엔비디아는 사전 조립된 데이터센터와 기업 자료 연동 도구를 소개해 AI 배포에 물리 인프라와 권한 체계의 중요성을 강조했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>가상 환경에서 학습한 로봇·자동차 동작을 실제 현장에 적용하는 시뮬레이션‑투‑리얼 파이프라인을 시연했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GTC 베를린에서 제시한 다섯 가지 핵심 영역(데이터센터, 권한, 기업 자료, 로봇, 산업 현장)을 통해 현재 활용 가능한 기술과 향후 계획을 구분했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>모듈형 데이터센터 개념을 활용해 스타트업용 온프레미스 ML 클러스터를 빠르게 구축해 확장성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>AI 권한 체계를 도입해 사내 LLM 접근을 레벨별로 관리함으로써 보안과 사용 효율을 동시에 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>시뮬레이션‑투‑리얼 전이 방식을 데이터 파이프라인 자동화에 적용해 테스트 환경에서 최적화한 워크플로를 실제 클라우드 운영에 바로 적용한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">엔비디아가 GTC 베를린에서 강조한 AI 현장 적용을 위해 필수적인 요소는 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 크기 확대</div>
+            
+            <div class="q-opt">② 데이터센터와 권한 체계</div>
+            
+            <div class="q-opt">③ UI 디자인 개선</div>
+            
+            <div class="q-opt">④ 마케팅 전략 강화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 데이터센터와 권한 체계</div>
+              <div class="why">본문에서는 AI가 현장에서 작동하려면 물리적 데이터센터와 AI 접근을 제어하는 권한 체계가 필요하다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">가상 공간에서 학습한 로봇 동작을 실제에 적용하기 위해 GTC에서 제시한 과정은 무엇을 포함하는가?</div>
+            
+            <div class="q-opt">① 코드 없이 즉시 배포</div>
+            
+            <div class="q-opt">② 시뮬레이션 검증 후 현장 적용</div>
+            
+            <div class="q-opt">③ 클라우드 전용 실행</div>
+            
+            <div class="q-opt">④ 데이터 라벨링만 수행</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 시뮬레이션 검증 후 현장 적용</div>
+              <div class="why">본문에 따르면 가상 환경에서 익힌 동작을 실제 로봇에 옮기기 위해 시뮬레이션 단계와 현장 테스트 단계를 거친다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">엔비디아</span><span class="tag">GTC 베를린</span><span class="tag">데이터센터</span><span class="tag">AI 권한 체계</span><span class="tag">로봇</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/682" target="_blank" rel="noopener">100만 부모의 필수 앱: '맘맘'의 성장 스토리</a>
+        </h2>
+
+        <p class="summary">콘텐츠·멤버십이 사용자 행동을 바꾸는 성장 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>맘맘은 육아용품 랭킹 앱에서 시작해 100만 부모가 매주 이용하는 필수 앱으로 성장했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>성장의 핵심은 조회수보다 ‘저장’ 등 사용자의 다음 행동을 유도하는 콘텐츠에 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>콘텐츠·쇼케이스·멤버십이 서로를 지탱하는 구조로 7,000여 제휴처와 멤버십을 운영한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>‘저장’ 지표를 활용해 피트니스 앱에서 사용자가 저장한 운동 루틴을 기반으로 맞춤형 추천을 제공해 재방문을 유도한다.</span></li>
+            
+            <li><span class="box"></span><span>멤버십 기반 쇼케이스 모델을 B2B SaaS 제품에 적용해 파트너 기업에게 전용 콘텐츠를 제공하고 교차 판매 기회를 확대한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">맘맘이 성장 전략에서 ‘조회수’보다 더 중요하게 본 행동은 무엇인가?</div>
+            
+            <div class="q-opt">① 다운로드</div>
+            
+            <div class="q-opt">② 저장</div>
+            
+            <div class="q-opt">③ 공유</div>
+            
+            <div class="q-opt">④ 댓글</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 저장</div>
+              <div class="why">기사에서 강경윤 대표는 조회수보다 ‘저장’과 그 이후 행동을 중시한다고 언급했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">맘맘 성장 구조에서 콘텐츠·쇼케이스·멤버십이 서로를 지탱하는 주된 이유는?</div>
+            
+            <div class="q-opt">① 비용 절감</div>
+            
+            <div class="q-opt">② 사용자 행동 유도</div>
+            
+            <div class="q-opt">③ 데이터 수집</div>
+            
+            <div class="q-opt">④ 브랜드 홍보</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 사용자 행동 유도</div>
+              <div class="why">세 요소가 상호 지원해 사용자의 다음 행동을 변화시키는 것이 성장의 핵심이라고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">맘맘</span><span class="tag">강경윤</span><span class="tag">혁신의 숲</span><span class="tag">멤버십</span><span class="tag">제휴처</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
