@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 30일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 30일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">개인화 추천</span><span class="concept">생성적 추천</span><span class="concept">계층적 선호 분해</span><span class="concept">멀티모달 표현 학습</span><span class="concept">AI 비용 효율성</span><span class="concept">디자인 트레이드오프</span><span class="concept">선언적 관리</span><span class="concept">in-place 업데이트</span><span class="concept">조정 루프</span><span class="concept">온-폴리시 학습</span><span class="concept">크로스 브랜드 유통 전략</span><span class="concept">고객 데이터 기반 제품 추천</span><span class="concept">브랜드 헤리티지 신뢰</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.37584v1" target="_blank" rel="noopener">REGER: Modeling inter-item Relations with Semantic IDs for Generative Recommendation</a>
+        </h2>
+
+        <p class="summary">아이템 간 관계를 반영한 추천 모델로 성능 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>개인화 추천에서는 아이템 간 의미·협업 관계를 동시에 학습해야 하지만 기존 생성적 추천은 무작위 SID 임베딩으로 의미 관계를 상속하지 못하고, 협업 관계는 토큰‑레벨 어텐션에 묻힌다. REGER는 의미 사전학습과 SID 경계에 맞춘 전·지역 어텐션, 그리고 SID 접두사 트리를 이용한 계층적 선호 분해를 도입해 이러한 한계를 극복하고, 실험에서 기존 GR 베이스라인보다 일관된 성능 향상을 보인다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>REGER는 의미 사전학습과 SID 생성 과정을 통해 아이템 간 의미 유사성을 명시적으로 학습한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SID 경계에 맞춘 전역·지역 어텐션을 결합해 히스토리 컨텍스트와 인접 아이템 전이 정보를 효과적으로 포착한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>계층적 선호 분해 이론을 제시해 협업 선호 분포를 정확히 팩터화하고, KL 발산을 접두사 조건부 형태로 분해한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>생성적 의미 검색 사전학습을 전자상거래 상품 검색에 적용해 카테고리별 의미 ID를 생성, 검색 정확도와 재랭킹 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>SID 접두사 트리를 활용한 계층적 선호 분해를 음악 플레이리스트 자동 생성에 적용해 사용자의 장르·분위기 선호를 단계별로 모델링, 다양성과 만족도를 향상시킨다.</span></li>
+            
+            <li><span class="box"></span><span>전역·지역 어텐션을 세션 기반 광고 클릭 예측에 도입해 장기 행동 히스토리와 즉시 클릭 전이를 동시에 고려, 예측 정확도와 광고 효율을 개선한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">REGER가 기존 생성적 추천 모델 대비 새롭게 도입한 핵심 메커니즘은 무엇인가?</div>
+            
+            <div class="q-opt">① 무작위 초기화된 토큰 임베딩 사용</div>
+            
+            <div class="q-opt">② 전역 및 지역 어텐션을 SID 경계에 맞춰 결합</div>
+            
+            <div class="q-opt">③ 사용자 행동을 직접 라벨링</div>
+            
+            <div class="q-opt">④ 이미지 특징 추출</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전역 및 지역 어텐션을 SID 경계에 맞춰 결합</div>
+              <div class="why">논문은 전역·지역 어텐션을 SID 경계에 맞춰 결합해 히스토리 컨텍스트와 인접 아이템 전이를 효과적으로 포착한다는 점을 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">논문에서 제시한 계층적 선호 분해는 어떤 분포를 정확히 분해한다고 주장하는가?</div>
+            
+            <div class="q-opt">① 사용자 클릭 분포</div>
+            
+            <div class="q-opt">② 협업 선호 분포</div>
+            
+            <div class="q-opt">③ 아이템 인기도 분포</div>
+            
+            <div class="q-opt">④ 검색 쿼리 분포</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 협업 선호 분포</div>
+              <div class="why">연구는 협업 선호 분포를 정확히 팩터화하고, 이를 접두사 조건부 KL 발산 형태로 분해한다는 이론적 결과를 제시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">REGER</span><span class="tag">Semantic IDs</span><span class="tag">generative recommendation</span><span class="tag">global attention</span><span class="tag">local attention</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/J-1J-sAX-zk" target="_blank" rel="noopener">Kanana Vision Encoder: 글로벌 최고 수준에 도전하는 자체 비전 인코더 개발기 | Model & Agent</a>
+        </h2>
+
+        <p class="summary">자체 비전 인코더로 효율·성능 겸비, 온디바이스 적용 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:00</span>
+            
+            <span>빅테크 비전 인코더는 복잡하고 막대한 학습 데이터·연산량을 요구한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:00</span>
+            
+            <span>통합 트랜스포머와 다음 토큰 예측 손실을 이용해 이미지-텍스트를 동시에 학습한다(JELIP)</span>
+          </li>
+          
+          <li>
+            <span class="ts">07:09</span>
+            
+            <span>슬라이딩 윈도우 어텐션으로 고해상도 이미지 처리 시 계산량을 크게 줄인다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>슬라이딩 윈도우 어텐션을 텍스트 LLM에 적용해 긴 문서 처리 시 계산량을 O(N·w)로 낮춰 추론 효율성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>JELIP 방식의 이미지‑텍스트 통합 학습을 오디오‑텍스트 멀티모달 모델에 적용해 오디오 특징을 텍스트 토큰과 함께 학습한다</span></li>
+            
+            <li><span class="box"></span><span>LLM 가중치로 초기화한 비전 인코더를 전자상거래 제품 이미지 인코더에 활용해 언어 지식을 이미지 표현에 전이시켜 검색·추천 정확도를 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">카카오가 자체 비전 인코더를 개발한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 외부 인코더가 한국 문화·한글에 부족했기 때문</div>
+            
+            <div class="q-opt">② 학습 비용 절감</div>
+            
+            <div class="q-opt">③ 라이선스 문제 회피</div>
+            
+            <div class="q-opt">④ 데이터 부족</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 외부 인코더가 한국 문화·한글에 부족했기 때문</div>
+              <div class="why">본문(03:03)에서 외부 비전 인코더가 한국 문화와 한글을 충분히 이해하지 못한다는 점을 들어 자체 인코더 필요성을 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">해상도가 4배 높아지면 풀 어텐션 대비 계산량은 어떻게 변하는가?</div>
+            
+            <div class="q-opt">① 4배 증가</div>
+            
+            <div class="q-opt">② 8배 증가</div>
+            
+            <div class="q-opt">③ 16배 증가</div>
+            
+            <div class="q-opt">④ 변화 없음</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 16배 증가</div>
+              <div class="why">본문(07:02)에서 해상도가 네 배 높아지면 계산량이 16배 늘어난다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">카나나</span><span class="tag">시그립 2</span><span class="tag">펄셉션 인코더</span><span class="tag">젤립</span><span class="tag">슬라이딩 윈도우 어텐션</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/2983631" target="_blank" rel="noopener">사이드카의 선언적 관리: OpenKruise SidecarSet 도입과 운영</a>
+        </h2>
+
+        <p class="summary">DB Pod 사이드카 선언적 업데이트로 운영 효율 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사이드카 이미지만 교체하려면 DB 컨테이너를 재시작하지 않는 in-place 업데이트가 필요하다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Kubernetes는 Pod 템플릿을 수정하면 전체 Pod가 재생성돼 메인 컨테이너까지 재시작돼 사이드카만 교체하기 어렵다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>OpenKruise SidecarSet은 선언적으로 사이드카를 관리·적용·모니터링해 운영 복잡성을 크게 낮춘다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Spark on Kubernetes에서 로그·메트릭 사이드카를 SidecarSet 방식으로 선언해 Spark driver 재시작 없이 사이드카만 업데이트한다</span></li>
+            
+            <li><span class="box"></span><span>VM 군집에 보안 에이전트를 배포할 때 조정 루프 기반 in-place 업데이트를 적용해 재부팅 없이 최신 버전으로 유지한다</span></li>
+            
+            <li><span class="box"></span><span>IoT 엣지 디바이스에 모니터링 사이드카를 선언적으로 관리해 중앙에서 버전 일관성을 확보하고 디바이스 다운타임을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Kubernetes에서 Deployment 템플릿을 수정하면 사이드카만 교체되지 못하는 이유는?</div>
+            
+            <div class="q-opt">① Pod 템플릿 변경 시 전체 Pod가 재생성돼 모든 컨테이너가 재시작된다</div>
+            
+            <div class="q-opt">② kubelet은 사이드카 이미지만 자동으로 교체한다</div>
+            
+            <div class="q-opt">③ 사이드카 이미지는 불변으로 선언된다</div>
+            
+            <div class="q-opt">④ Deployment는 사이드카 스펙을 지원하지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Pod 템플릿 변경 시 전체 Pod가 재생성돼 모든 컨테이너가 재시작된다</div>
+              <div class="why">Pod 템플릿을 바꾸면 Kubernetes는 해당 템플릿을 사용하는 모든 Pod를 새로 만들고, 이 과정에서 메인 컨테이너를 포함한 모든 컨테이너가 재시작된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본문에서 신뢰성 있는 사이드카 업데이트를 위해 컨트롤러가 갖춰야 할 네 가지 요소는?</div>
+            
+            <div class="q-opt">① 완료 판정, 동시성·범위 제어, 진행 집계, 컨트롤러 운영</div>
+            
+            <div class="q-opt">② 이미지 서명, 네트워크 정책, 로그 수집, 자동 스케일링</div>
+            
+            <div class="q-opt">③ Pod 재시작, 서비스 디스커버리, ConfigMap 관리, Helm 차트</div>
+            
+            <div class="q-opt">④ Ingress 설정, Service Mesh, RBAC, PersistentVolume</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 완료 판정, 동시성·범위 제어, 진행 집계, 컨트롤러 운영</div>
+              <div class="why">본문은 사이드카 업데이트를 위해 ‘완료 판정’, ‘동시성·범위 제어’, ‘진행 집계’, ‘컨트롤러 운영’ 네 가지가 필요하다고 명시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kubernetes</span><span class="tag">OpenKruise</span><span class="tag">SidecarSet</span><span class="tag">kubelet</span><span class="tag">mutating webhook</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/pryCaGv8wuo" target="_blank" rel="noopener">DeepSeek's New AI Is An Absolute Monster</a>
+        </h2>
+
+        <p class="summary">자체 피드백 학습으로 비용 효율적인 대규모 LLM 활용 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:38</span>
+            
+            <span>DeepSeek는 소프트웨어를 더 잘 만들고 터미널 조작 능력이 크게 향상되었습니다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:09</span>
+            
+            <span>토큰당 비용보다 작업당 비용을 고려해야 하며, DeepSeek는 같은 작업에 토큰을 2~3배 더 사용합니다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:10</span>
+            
+            <span>‘self-feedback 학습’은 모델이 스스로 결과를 비판하고 개선하는 방식으로, 더 많은 외부 데이터 없이 성능을 높입니다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>자체 피드백 학습 방식을 데이터 라벨링 파이프라인에 적용해 라벨러가 만든 라벨을 모델이 스스로 검증·수정하도록 하여 라벨 품질을 향상시킨다.</span></li>
+            
+            <li><span class="box"></span><span>비용·토큰 기준 대신 작업당 비용 평가 방식을 사내 모델 선택 기준에 도입해, 동일 작업에 필요한 토큰 수 차이를 고려해 최적 모델을 선택한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 오픈 가중치 모델을 활용해 특정 도메인에 맞는 경량 모델을 증류(distill)함으로써 노트북 수준 하드웨어에서도 고성능 추론이 가능하도록 한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">DeepSeek의 토큰당 비용이 낮아 보이지만 실제 작업당 비용이 높을 수 있는 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 같은 작업에 더 많은 토큰을 사용하기 때문이다</div>
+            
+            <div class="q-opt">② 가격표에 오류가 있기 때문이다</div>
+            
+            <div class="q-opt">③ 숨겨진 API 수수료가 있기 때문이다</div>
+            
+            <div class="q-opt">④ 모델 정확도가 낮기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 같은 작업에 더 많은 토큰을 사용하기 때문이다</div>
+              <div class="why">DeepSeek는 동일 작업을 수행할 때 Claude Opus보다 2~3배 더 많은 토큰을 사용하므로, 토큰당 비용이 낮아도 작업당 비용은 상대적으로 높아진다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">‘self-feedback 학습’의 핵심 개념은 무엇인가?</div>
+            
+            <div class="q-opt">① 외부 데이터셋을 추가로 수집한다</div>
+            
+            <div class="q-opt">② 모델이 스스로 출력물을 비판하고 개선한다</div>
+            
+            <div class="q-opt">③ 인간 피드백을 통한 강화학습을 적용한다</div>
+            
+            <div class="q-opt">④ 대규모 사전학습을 진행한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 모델이 스스로 출력물을 비판하고 개선한다</div>
+              <div class="why">‘self-feedback 학습’은 모델이 자신의 결과를 평가·수정하면서 학습하는 방식으로, 외부 데이터 증강 없이 성능을 향상시킨다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">DeepSeek</span><span class="tag">Claude Opus</span><span class="tag">Two Minute Papers</span><span class="tag">API</span><span class="tag">self-feedback</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/496" target="_blank" rel="noopener">🥤옷 잘 파는 자라, 신발은 반스에게 손 내민 건</a>
+        </h2>
+
+        <p class="summary">브랜드 협업이 매출·데이터 활용을 확대하는 사례</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Zara는 Vans의 대표 신발을 공급받아 매장에 판매해 제품 포트폴리오를 보완한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Vans는 Zara의 고객 흐름을 활용해 새로운 판매 채널을 확보하고 이미지 손상을 최소화한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>이 협업은 브랜드 헤리티지를 활용한 교차 판매와 데이터 기반 맞춤 제안으로 확장 가능성을 보여준다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>식료품점이 인기 스낵 브랜드 제품을 매장에 입점시켜 고객 장바구니 규모를 늘린다</span></li>
+            
+            <li><span class="box"></span><span>SaaS 플랫폼이 서드파티 분석 툴을 대시보드에 통합해 기존 사용자 기반으로 기능 채택을 촉진한다</span></li>
+            
+            <li><span class="box"></span><span>스트리밍 서비스가 유명 음악 레이블의 큐레이션 플레이리스트를 제공해 레이블의 헤리티지를 이용해 신규 구독자를 유입한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Zara가 Vans 신발을 직접 제조하지 않고 공급받아 판매한 주요 이유는?</div>
+            
+            <div class="q-opt">① 생산 비용 절감</div>
+            
+            <div class="q-opt">② 브랜드 헤리티지와 신뢰 활용</div>
+            
+            <div class="q-opt">③ 디자인 제한 회피</div>
+            
+            <div class="q-opt">④ 물류 문제 해결</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 브랜드 헤리티지와 신뢰 활용</div>
+              <div class="why">본문에서는 Zara가 Vans의 기존 인기 모델을 활용해 제품 포트폴리오를 보완하고, 소비자가 이미 신뢰하는 헤리티지를 이용한다는 점을 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Vans가 이번 협업을 '협업이 아니다'라고 밝힌 근본적인 이유는?</div>
+            
+            <div class="q-opt">① 공동 디자인이 없어서</div>
+            
+            <div class="q-opt">② 매출 감소를 보완하기 위해</div>
+            
+            <div class="q-opt">③ 브랜드 이미지 보호를 위해</div>
+            
+            <div class="q-opt">④ 공급 관계만 존재하기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">④ 공급 관계만 존재하기 때문</div>
+              <div class="why">Vans는 자라가 일부 제품을 공급받아 판매하는 관계이며, 새로운 신발을 공동으로 만든 것이 아니라고 명시했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Zara</span><span class="tag">Vans</span><span class="tag">VF Corp</span><span class="tag">H&M</span><span class="tag">Uniqlo</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
