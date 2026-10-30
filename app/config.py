@@ -178,6 +178,16 @@ class Settings(BaseSettings):
     # Dry-run: 외부 API 호출 없이 파이프라인 전체 흐름 검증
     dry_run: bool = False
 
+    # LLM 심판(evals/judge.py) 전용 키·설정. 파이프라인은 쓰지 않는다. .env 에 같이 두므로
+    # Settings 가 알아야 한다(모르면 extra_forbidden 으로 Settings 생성 자체가 실패한다).
+    # extra="ignore" 로 풀지 않는 이유: 오타 난 .env 키를 잡아 주는 보호가 사라진다.
+    # judge.py 는 이 값을 os.environ 으로 직접 읽으므로 여기 필드는 등록 목적이다.
+    deepseek_api_key: str | None = None
+    dashscope_api_key: str | None = None
+    judge_deepseek_model: str | None = None
+    judge_qwen_model: str | None = None
+    judge_deepseek_thinking: str | None = None
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
     @property

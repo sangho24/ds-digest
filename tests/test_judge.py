@@ -1072,3 +1072,236 @@ def test_cli_labeling_and_import_labels_roundtrip(tmp_path, monkeypatch, capsys)
     bad.write_text("{not json", encoding="utf-8")
     assert judge.main(["import-labels", str(bad)]) == 2
     assert "라벨 반입 실패" in capsys.readouterr().err
+
+
+# (9) 층화 무작위 표본 --------------------------------------------------------
+
+
+def _judged_row(url, faithful, *, judge_id="deepseek", prompt_hash=PROMPT_HASH, a_hash="h"):
+    """stratified_sample 이 읽는 최소 모양의 캐시 행."""
+    return {
+        "judge_id": judge_id, "model": "m", "prompt_hash": prompt_hash, "date": "2026-10-12", "url": url,
+        "title": "t", "analysis_hash": a_hash, "judged_at": "x", "skipped": False, "reason": None, "error": None,
+        "truncated": False, "usage": None,
+        "verdicts": {"summary": {"text": "s", "faithful": faithful, "quote": None, "quote_verified": False},
+                     "key_points": [], "production_ideas": [], "quiz": []},
+    }
+
+
+def test_source_type_of_splits_youtube_arxiv_article():
+    assert judge.source_type_of("https://www.youtube.com/watch?v=abc") == "youtube"
+    assert judge.source_type_of("https://youtu.be/abc") == "youtube"
+    assert judge.source_type_of("https://m.youtube.com/watch?v=abc") == "youtube"
+    assert judge.source_type_of("https://arxiv.org/abs/2510.00001") == "arxiv"
+    assert judge.source_type_of("http://export.arxiv.org/abs/1") == "arxiv"
+    assert judge.source_type_of("https://example.com/youtube.com-review") == "article"
+    assert judge.source_type_of("https://notarxiv.org/x") == "article"
+    assert judge.source_type_of(None) == "article"
+
+
+def test_allocate_strata_min_one_then_largest_remainder():
+    counts = {(True, "a"): 50, (True, "b"): 30, (True, "c"): 10, (False, "a"): 5, (False, "b"): 3, (False, "c"): 2}
+    # n=10: 최소 1건씩 6 → 나머지 4 를 비례(2.0, 1.2, 0.4, 0.2, 0.12, 0.08) → floor 2,1,0,0,0,0
+    #       잔여 1건은 소수부 가장 큰 (True,"c") .4 → 3,2,2,1,1,1
+    alloc = judge.allocate_strata(counts, 10)
+    assert alloc == {(True, "a"): 3, (True, "b"): 2, (True, "c"): 2, (False, "a"): 1, (False, "b"): 1, (False, "c"): 1}
+    assert sum(alloc.values()) == 10
+    # n=30: 나머지 24 → 12, 7.2, 2.4, 1.2, 0.72, 0.48 → 잔여 2건은 .72 (False,"b"), .48 (False,"c")
+    alloc = judge.allocate_strata(counts, 30)
+    assert alloc == {(True, "a"): 13, (True, "b"): 8, (True, "c"): 3, (False, "a"): 2, (False, "b"): 2, (False, "c"): 2}
+    # n=31: 나머지 25 → 12.5, 7.5, 2.5, 1.25, 0.75, 0.5 → 잔여 3건: .75 (False,"b") 다음 .5 동률은 이름 사전순
+    #       faithful/a, faithful/b 가 faithful/c, unfaithful/c 보다 앞 → 큰 층이 아니라 이름이 결정한다
+    alloc = judge.allocate_strata(counts, 31)
+    assert alloc == {(True, "a"): 14, (True, "b"): 9, (True, "c"): 3, (False, "a"): 2, (False, "b"): 2, (False, "c"): 1}
+    # "큰 층부터" 였다면 n=10 에서 (True,"a") 가 4 였을 것. largest-remainder 는 작은 층의 몫을 지킨다
+    assert judge.allocate_strata(counts, 10)[(True, "a")] == 3
+    # 층 수보다 작은 n 은 큰 층부터 1건씩만
+    assert judge.allocate_strata(counts, 2) == {(True, "a"): 1, (True, "b"): 1}
+    # 모집단보다 큰 n 은 모집단으로 자른다, 빈 층은 받지 않는다, 층 크기를 넘지 않는다
+    alloc = judge.allocate_strata({**counts, (False, "d"): 0}, 1000)
+    assert alloc == {k: v for k, v in counts.items()} and (False, "d") not in alloc
+    # 작은 층이 꽉 차면 초과분은 여유 있는 층으로 간다: 1/1/100 에서 50 → 1,1,48
+    assert judge.allocate_strata({(True, "a"): 1, (True, "b"): 1, (False, "a"): 100}, 50) == {(False, "a"): 48, (True, "a"): 1, (True, "b"): 1}
+    assert judge.allocate_strata({}, 5) == {} and judge.allocate_strata(counts, 0) == {}
+    # 동률(소수부 .5 둘)은 층 이름 사전순: faithful/a 가 받는다. 반환 순서는 크기 내림차순·키 순
+    tie = judge.allocate_strata({(True, "b"): 4, (True, "a"): 4}, 3)
+    assert list(tie) == [(True, "a"), (True, "b")] and tie == {(True, "a"): 2, (True, "b"): 1}
+
+
+def test_stratified_sample_covers_strata_and_is_reproducible():
+    hosts = {"youtube": "https://www.youtube.com/watch?v=", "arxiv": "https://arxiv.org/abs/", "article": "https://ex.com/"}
+    rows = []
+    for source, prefix in hosts.items():
+        for i in range(6):
+            rows.append(_judged_row(f"{prefix}{source}-{i}", faithful=(i % 3 != 0)))  # 층마다 4 참 / 2 거짓
+    # 섞일 행: 다른 심판, 다른 프롬프트, 오류 행
+    rows.append(_judged_row("https://ex.com/other-judge", True, judge_id="qwen"))
+    rows.append(_judged_row("https://ex.com/old-prompt", True, prompt_hash="old"))
+    rows.append({**_judged_row("https://ex.com/error", True), "error": "boom", "verdicts": None})
+    current = {(r["url"], "h") for r in rows}
+
+    picked, summary = judge.stratified_sample(rows, 8, judge_id="deepseek", seed=1, current_keys=current)
+    assert len(picked) == 8 and all(r["judge_id"] == "deepseek" and r["prompt_hash"] == PROMPT_HASH for r in picked)
+    assert set(summary) == {f"{f}/{s}" for f in ("faithful", "unfaithful") for s in hosts}
+    assert all(cell["sampled"] >= 1 for cell in summary.values())
+    assert {k: v["population"] for k, v in summary.items()} == {
+        "faithful/article": 4, "faithful/arxiv": 4, "faithful/youtube": 4,
+        "unfaithful/article": 2, "unfaithful/arxiv": 2, "unfaithful/youtube": 2,
+    }
+    # 8건 = 최소 1건 x6 → 나머지 2 를 비례(.444 x3, .222 x3) → floor 0 → 잔여 2건은 소수부 .444 동률 중 이름 순
+    #       faithful/article, faithful/arxiv 가 받는다
+    assert sum(v["sampled"] for v in summary.values()) == 8
+    assert [summary[f"faithful/{s}"]["sampled"] for s in ("article", "arxiv", "youtube")] == [2, 2, 1]
+    assert all(summary[f"unfaithful/{s}"]["sampled"] == 1 for s in hosts)
+    # 뽑힌 행을 층별로 세면 요약의 sampled 와 맞는다
+    counted: dict[str, int] = {}
+    for r in picked:
+        counted[judge.stratum_label(judge.stratum_of(r))] = counted.get(judge.stratum_label(judge.stratum_of(r)), 0) + 1
+    assert counted == {k: v["sampled"] for k, v in summary.items()}
+    # 같은 seed 는 같은 표본, 입력 순서를 뒤집어도 같다, seed 가 다르면 다르다
+    urls = [r["url"] for r in picked]
+    again, _ = judge.stratified_sample(list(reversed(rows)), 8, judge_id="deepseek", seed=1, current_keys=current)
+    assert [r["url"] for r in again] == urls
+    other, _ = judge.stratified_sample(rows, 8, judge_id="deepseek", seed=2, current_keys=current)
+    assert [r["url"] for r in other] != urls
+    # 정본에서 빠진 아이템은 모집단에서 빠진다
+    fewer, summary2 = judge.stratified_sample(rows, 8, judge_id="deepseek", seed=1, current_keys=current - {("https://ex.com/article-1", "h")})
+    assert summary2["faithful/article"]["population"] == 3
+    # 없는 심판은 빈 결과
+    assert judge.stratified_sample(rows, 8, judge_id="nobody", current_keys=current) == ([], {})
+
+
+def test_sample_items_carry_all_questions_of_one_judge_and_html_survives(tmp_path):
+    _write_record(tmp_path / "records", "2026-10-12", [_entry("https://example.com/a")])
+    answer = _good_answer()
+    answer["production_ideas"][1] = {"index": 1, "grounded": False, "quote": None}
+    _run("deepseek", tmp_path, FakeTransport(answer=answer))
+    rows = load_cache(tmp_path / "cache" / "judgments.jsonl")
+    targets = judge.collect_targets(tmp_path / "records")
+    picked, summary = judge.stratified_sample(rows, 5, judge_id="deepseek", current_keys={(t["url"], t["analysis_hash"]) for t in targets})
+    assert len(picked) == 1 and summary == {"faithful/article": {"population": 1, "sampled": 1}}
+    items = judge.build_sample_items(picked, targets)
+    assert len(items) == 1
+    item = items[0]
+    assert item["judges"] == ["deepseek"] and item["stratum"] == "faithful/article" and item["title"] == "제목 a"
+    kinds = [(q["question"], q["index"]) for q in item["questions"]]
+    assert kinds == [("summary", 0), ("key_points", 0), ("key_points", 1), ("production_ideas", 0), ("production_ideas", 1), ("quiz", 0)]
+    for q in item["questions"]:
+        assert list(q["verdicts"]) == ["deepseek"] and q["human"] is None
+        assert q["id"] == judge.question_id(item["url"], item["analysis_hash"], item["prompt_hash"], q["question"], q["index"])
+    assert item["questions"][4]["verdicts"]["deepseek"]["grounded"] is False
+    assert "300개 과제와 3000개 구현" in item["questions"][0]["excerpt"]
+
+    header = judge.sample_header_line(5, 7, "deepseek", summary)
+    assert header == "층화 무작위 표본 요청 5건 → 1건 (seed 7, 심판 deepseek, 층별 건수 표본/모집단: faithful/article 1/1)"
+    assert judge.sample_header_line(1, 7, "deepseek", summary).startswith("층화 무작위 표본 1건 (seed 7")
+    page = judge.build_labeling_html(items, header=header, hide_verdicts=True)
+    # 심판 하나뿐이어도 섹션·라디오가 온전하다
+    assert page.count('class="q"') == 6 and page.count('type="radio"') == 18
+    assert f'<p class="header">{header}</p>' in page and "표시할 질문 6건 (아이템 1건)" in page
+    # 판정은 토글 뒤에 접혀 있고, 인용문은 밖에 보인다
+    assert page.count("<summary>심판 판정 보기</summary>") == 6
+    assert page.count('<details class="judge-toggle">') == 6
+    assert 'blockquote class="hint">300개 과제와 3000개 구현</blockquote>' in page
+    # 인용이 없는 항목(grounded=False 아이디어)은 토글 밖에 아무 문구도 찍지 않는다: "인용 없음" 은 Fail 판정을 누설한다
+    assert page.count('blockquote class="hint">') == 5 and "심판 인용 없음" not in page
+    outside_toggle = "".join(sec.split('<details class="judge-toggle">')[0] for sec in page.split('class="q"')[1:])
+    assert "인용 없음" not in outside_toggle
+    # 접힌 안쪽에만 판정 문구가 있다: 토글 앞 텍스트에는 "예"/"아니오" 플래그가 없어야 한다
+    first_section = page.split('class="q"')[1].split("</section>")[0]
+    before_toggle = first_section.split('<details class="judge-toggle">')[0]
+    assert 'class="flag' not in before_toggle and 'class="flag' in first_section
+    # 기본(불일치) 모드는 토글이 없고 판정이 바로 보인다
+    plain = judge.build_labeling_html(items)
+    assert "심판 판정 보기" not in plain and 'class="flag yes">' in plain and "두 심판이 엇갈린 질문 6건" in plain
+    # 빈 입력의 표본 모드 문구
+    empty = judge.build_labeling_html([], header="h", empty_message="표본으로 뽑을 판정 행이 없다")
+    assert "표본으로 뽑을 판정 행이 없다" in empty and "엇갈린 항목이 없다" not in empty
+
+
+def test_human_agreement_tpr_tnr(tmp_path):
+    _write_record(tmp_path / "records", "2026-10-12", [_entry("https://example.com/a")])
+    answer = _good_answer()
+    answer["production_ideas"][1] = {"index": 1, "grounded": False, "quote": None}  # 심판 Fail
+    _run("deepseek", tmp_path, FakeTransport(answer=answer))
+    rows = load_cache(tmp_path / "cache" / "judgments.jsonl")
+    targets = judge.collect_targets(tmp_path / "records")
+    picked, _ = judge.stratified_sample(rows, 1, judge_id="deepseek", current_keys={(t["url"], t["analysis_hash"]) for t in targets})
+    questions = {(q["question"], q["index"]): q["id"] for q in judge.build_sample_items(picked, targets)[0]["questions"]}
+    labels = {
+        # 사람 Pass, 심판 Pass → TN
+        questions[("summary", 0)]: {"id": questions[("summary", 0)], "human": "supported", "note": ""},
+        # 사람 Fail, 심판 Pass → 놓침(FN)
+        questions[("key_points", 0)]: {"id": questions[("key_points", 0)], "human": "unsupported", "note": ""},
+        # 사람 Fail, 심판 Fail → TP
+        questions[("production_ideas", 1)]: {"id": questions[("production_ideas", 1)], "human": "unsupported", "note": ""},
+        # 보류는 분모 제외
+        questions[("quiz", 0)]: {"id": questions[("quiz", 0)], "human": "unsure", "note": ""},
+    }
+    report = build_report(rows, until=date(2026, 10, 14), labels=labels)
+    human = report["human"]
+    assert human["labels"] == 4 and human["unsure"] == 1
+    assert human["by_judge"]["deepseek"] == {"compared": 3, "agreed": 2, "rate": round(2 / 3, 6)}
+    assert human["tpr_tnr"]["deepseek"] == {"human_fail": 2, "tp": 1, "human_pass": 1, "tn": 1, "tpr": 0.5, "tnr": 1.0}
+    text = judge.format_report(report)
+    assert "  deepseek: TPR 50.0% (1/2, 사람 Fail n=2) TNR 100.0% (1/1, 사람 Pass n=1)" in text
+    # 사람 Pass 라벨이 없으면 TNR 은 n/a
+    only_fail = {k: v for k, v in labels.items() if v["human"] == "unsupported"}
+    cells = build_report(rows, until=date(2026, 10, 14), labels=only_fail)["human"]["tpr_tnr"]["deepseek"]
+    assert cells["tnr"] is None and cells["human_pass"] == 0 and cells["tpr"] == 0.5
+    assert "TNR n/a (0/0, 사람 Pass n=0)" in judge.format_report(build_report(rows, until=date(2026, 10, 14), labels=only_fail))
+
+
+def test_cli_labeling_in_and_sample_are_exclusive(tmp_path, monkeypatch):
+    monkeypatch.setattr(judge, "load_project_env", lambda *a, **k: False)
+    source = tmp_path / "d.json"
+    source.write_text("[]", encoding="utf-8")
+    with pytest.raises(SystemExit) as exc:
+        judge.main(["labeling", "--out", str(tmp_path / "x.html"), "--in", str(source), "--sample", "3"])
+    assert exc.value.code == 2
+
+
+def test_cli_labeling_sample_mode(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(judge, "load_project_env", lambda *a, **k: False)
+    monkeypatch.setattr(judge, "RECORDS_DIR", tmp_path / "records")
+    monkeypatch.setenv("JUDGE_CACHE_PATH", str(tmp_path / "cache" / "judgments.jsonl"))
+    monkeypatch.setenv("JUDGE_LABELS_PATH", str(tmp_path / "labels.jsonl"))
+    out = tmp_path / "pages" / "sample.html"
+
+    # 캐시가 비어 있으면 표본 모드 빈 문구
+    assert judge.main(["labeling", "--sample", "3", "--out", str(out)]) == 0
+    capsys.readouterr()
+    assert "표본으로 뽑을 판정 행이 없다" in out.read_text(encoding="utf-8")
+    # 0 이하는 거부
+    assert judge.main(["labeling", "--sample", "0", "--out", str(out)]) == 2
+    assert "--sample 은 1 이상" in capsys.readouterr().err
+
+    _write_record(
+        tmp_path / "records", "2026-10-12",
+        [_entry("https://example.com/a"), _entry("https://youtu.be/b"), _entry("https://arxiv.org/abs/c")],
+    )
+    _run("deepseek", tmp_path, FakeTransport(answer=_good_answer()))
+    assert judge.main(["labeling", "--sample", "2", "--seed", "5", "--out", str(out)]) == 0
+    printed = capsys.readouterr().out
+    assert "층화 무작위 표본 2건 (seed 5, 심판 deepseek, 층별 건수 표본/모집단:" in printed
+    assert "질문 12건 (아이템 2건)" in printed
+    page = out.read_text(encoding="utf-8")
+    assert "층화 무작위 표본 2건 (seed 5, 심판 deepseek" in page
+    assert page.count("<summary>심판 판정 보기</summary>") == 12 and page.count('class="q"') == 12
+    # 같은 seed 로 다시 만들면 같은 페이지, 다른 심판은 행이 없다
+    assert judge.main(["labeling", "--sample", "2", "--seed", "5", "--out", str(out)]) == 0
+    assert out.read_text(encoding="utf-8") == page
+    assert judge.main(["labeling", "--sample", "2", "--judge", "qwen", "--out", str(out)]) == 0
+    assert "표본으로 뽑을 판정 행이 없다" in out.read_text(encoding="utf-8")
+    capsys.readouterr()
+
+    # 표본 페이지의 id 로 만든 라벨이 report 의 사람 일치율·TPR/TNR 에 들어간다
+    ids = [line.split('data-id="')[1].split('"')[0] for line in page.split("<section ")[1:]]
+    labels = tmp_path / "copied.json"
+    labels.write_text(json.dumps([{"id": ids[0], "human": "unsupported"}, {"id": ids[1], "human": "supported"}]), encoding="utf-8")
+    assert judge.main(["import-labels", str(labels)]) == 0
+    capsys.readouterr()
+    assert judge.main(["report", "--json"]) == 0
+    human = json.loads(capsys.readouterr().out)["human"]
+    assert human["by_judge"]["deepseek"] == {"compared": 2, "agreed": 1, "rate": 0.5}
+    assert human["tpr_tnr"]["deepseek"] == {"human_fail": 1, "tp": 0, "human_pass": 1, "tn": 1, "tpr": 0.0, "tnr": 1.0}

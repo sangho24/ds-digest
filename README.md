@@ -91,13 +91,15 @@ Discord 에 "논문보다 실무 사례 위주로" 라고 쓰면 다음 날 반�
 (DeepSeek, Qwen)에게 묻고, 모델이 댄 인용이 본문에 정말 있는지는 코드가 대조합니다.
 이것도 **보고 전용**이라 게이트에는 들어가지 않습니다. 심판 자신이 틀릴 수 있으므로
 두 심판이 엇갈린 항목을 사람이 표시하는 페이지(`labeling`)와 그 결과 대비 일치율을
-먼저 쌓습니다. 키는 `DEEPSEEK_API_KEY`, `DASHSCOPE_API_KEY` 두 환경변수이며, CI 는
-최근 14일만 돌리고 소급은 로컬에서 합니다.
+먼저 쌓습니다. 골든 세트 본체는 `labeling --sample N` 으로 뽑는 층화 무작위 표본
+(요약 판정 x 소스 유형, 심판 판정은 접어 둠)이며 `report` 가 이 라벨로 TPR/TNR 을 냅니다.
+키는 `DEEPSEEK_API_KEY`, `DASHSCOPE_API_KEY` 두 환경변수이며, CI 는 최근 14일만 돌리고 소급은 로컬에서 합니다.
 
 ```bash
 .venv/bin/python -m evals.judge run --judge deepseek --since 2026-09-01   # 로컬 소급
 .venv/bin/python -m evals.judge report                                    # 추세·일치율
 .venv/bin/python -m evals.judge labeling --out data/evals/labeling.html   # 사람 표시 페이지
+.venv/bin/python -m evals.judge labeling --sample 30 --out /tmp/sample.html  # 층화 표본(골든 세트)
 ```
 
 ### 4. 조용한 실패를 시끄럽게 만들기

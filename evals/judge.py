@@ -16,11 +16,15 @@
     .venv/bin/python -m evals.judge report --window 14 --json
     .venv/bin/python -m evals.judge disagreements --out data/evals/disagreements.json
     .venv/bin/python -m evals.judge labeling --out data/evals/labeling.html
+    .venv/bin/python -m evals.judge labeling --sample 30 --seed 20261030 --judge deepseek --out /tmp/sample.html
     .venv/bin/python -m evals.judge import-labels labels.json
 
 사람 표시 흐름:
     disagreements → labeling(HTML 한 장, 브라우저에서 표시) → "결과 JSON 복사" →
     import-labels(data/evals/labels.jsonl 에 append) → report 에 심판별 사람 일치율.
+    표본 경로: labeling --sample N 은 불일치 건 대신 심판 하나의 판정을 (요약 faithful x
+    소스 유형) 6층으로 층화 무작위 추출해 모든 질문을 싣는다(심판 판정은 접어 둠). 골든
+    세트 본체는 이쪽이며, report 는 같은 라벨로 사람 일치율과 TPR/TNR 을 낸다.
 
 환경변수:
     CLI 진입 시 프로젝트 루트의 .env 를 읽되, 이미 설정된 변수는 덮지 않는다.
@@ -36,6 +40,7 @@ import html
 import json
 import os
 from pathlib import Path
+import random
 import re
 import sys
 import threading
@@ -1135,28 +1140,55 @@ def compute_human_agreement(
     결정적 해시라 심판 행 쪽에서 같은 규칙으로 계산해 대조하면 되고, 라벨에 실린
     url 등 키 필드는 사람이 읽기 위한 보조 정보일 뿐이다. 심판 행이 없는 라벨은 그
     심판에서 세지 않는다.
+
+    TPR/TNR 은 사람 라벨을 정답으로 둔다. "Fail" 은 심판 주장이 부정(근거 없음)인 것,
+    "Pass" 는 긍정인 것이다(퀴즈는 answerable AND answer_correct, `_claimed_positive`).
+        TPR = 사람 Fail(unsupported) 중 심판도 Fail 로 본 비율 (분모 human_fail)
+        TNR = 사람 Pass(supported) 중 심판도 Pass 로 본 비율 (분모 human_pass)
+    라벨이 불일치 건이든 층화 표본이든 매칭 규칙은 같으므로 두 경로 모두 여기로 모인다.
+    표본이 층화 무작위일 때만 TPR/TNR 이 모집단 추정치로 뜻을 가진다(불일치 건만 표시하면
+    두 심판이 갈린 어려운 항목에 치우친다).
     """
     if not labels:
         return None
     index = _judged_index(rows)
     by_judge = {judge_id: {"compared": 0, "agreed": 0} for judge_id in sorted(index)}
+    # 혼동 집계: human_fail = 사람 Fail 분모, tp = 그중 심판도 Fail; human_pass = 사람 Pass 분모, tn = 그중 심판도 Pass
+    confusion = {judge_id: {"human_fail": 0, "tp": 0, "human_pass": 0, "tn": 0} for judge_id in sorted(index)}
     unsure = sum(1 for label in labels.values() if label.get("human") == "unsure")
     active = {label_id: label for label_id, label in labels.items() if label.get("human") != "unsure"}
     for judge_id, items in index.items():
+        counts, cells = by_judge[judge_id], confusion[judge_id]
         for row in items.values():
             for label_id, kind, entry in _row_question_entries(row):
                 label = active.get(label_id)
                 if label is None:
                     continue
-                by_judge[judge_id]["compared"] += 1
-                if _claimed_positive(kind, entry) == (label.get("human") == "supported"):
-                    by_judge[judge_id]["agreed"] += 1
+                human_pass = label.get("human") == "supported"
+                judge_pass = _claimed_positive(kind, entry)
+                counts["compared"] += 1
+                if judge_pass == human_pass:
+                    counts["agreed"] += 1
+                if human_pass:
+                    cells["human_pass"] += 1
+                    cells["tn"] += 1 if judge_pass else 0
+                else:
+                    cells["human_fail"] += 1
+                    cells["tp"] += 0 if judge_pass else 1
     return {
         "labels": len(labels),
         "unsure": unsure,
         "by_judge": {
             judge_id: {**counts, "rate": _rate(counts["agreed"], counts["compared"])}
             for judge_id, counts in by_judge.items()
+        },
+        "tpr_tnr": {
+            judge_id: {
+                **cells,
+                "tpr": _rate(cells["tp"], cells["human_fail"]),
+                "tnr": _rate(cells["tn"], cells["human_pass"]),
+            }
+            for judge_id, cells in confusion.items()
         },
     }
 
@@ -1281,6 +1313,12 @@ def format_report(report: dict[str, Any]) -> str:
             f"[사람 일치율] 표시 {human['labels']}건 (보류 {human['unsure']}건은 분모 제외) | "
             + (" ".join(parts) if parts else "대조할 심판 행이 없다")
         )
+        # TPR = 사람 Fail 중 심판 Fail, TNR = 사람 Pass 중 심판 Pass. 분모 n 을 심판별로 같이 적는다.
+        for judge_id, cells in (human.get("tpr_tnr") or {}).items():
+            lines.append(
+                f"  {judge_id}: TPR {_fmt(cells['tpr'])} ({cells['tp']}/{cells['human_fail']}, 사람 Fail n={cells['human_fail']})"
+                f" TNR {_fmt(cells['tnr'])} ({cells['tn']}/{cells['human_pass']}, 사람 Pass n={cells['human_pass']})"
+            )
     return "\n".join(lines)
 
 
@@ -1403,6 +1441,170 @@ def find_disagreements(
 
 
 # ──────────────────────────────────────────────
+# 층화 무작위 표본 (골든 세트 본체)
+# ──────────────────────────────────────────────
+#
+# 왜 불일치 건이 아니라 표본인가: 두 심판이 갈린 항목만 사람이 보면 "어려운 항목"에
+# 치우쳐 TPR/TNR 이 모집단을 대표하지 못한다. 심판 하나만 있을 때도 쓸 수 있다.
+# 층은 (심판의 요약 판정 faithful) x (소스 유형) 6칸이다. Fail 이 약 37% 라 faithful
+# 로 층을 나누면 Fail 라벨이 충분히 모인다.
+
+DEFAULT_SAMPLE_SEED = 20261030
+SOURCE_TYPES = ("youtube", "arxiv", "article")
+StratumKey = tuple[bool, str]  # (summary faithful, source_type)
+
+
+def source_type_of(url: Any) -> str:
+    """url 로 소스 유형을 나눈다. youtu.be/youtube.com → youtube, arxiv.org → arxiv, 그 외 article."""
+    host = (re.match(r"^[a-z]+://([^/?#]+)", str(url or "").strip().lower()) or [None, ""])[1]
+    if host in ("youtu.be",) or host == "youtube.com" or host.endswith(".youtube.com"):
+        return "youtube"
+    if host == "arxiv.org" or host.endswith(".arxiv.org"):
+        return "arxiv"
+    return "article"
+
+
+def stratum_of(row: dict[str, Any]) -> StratumKey:
+    summary = (row.get("verdicts") or {}).get("summary") or {}
+    return (bool(summary.get("faithful")), source_type_of(row.get("url")))
+
+
+def stratum_label(key: StratumKey) -> str:
+    return f"{'faithful' if key[0] else 'unfaithful'}/{key[1]}"
+
+
+def allocate_strata(counts: dict[StratumKey, int], n: int) -> dict[StratumKey, int]:
+    """층별 모집단 크기 counts 에 n 건을 비례 배분한다.
+
+    규칙(largest-remainder, 통계 표준):
+      - 비어 있는 층(0건)은 받지 않는다. n 이 모집단 합보다 크면 합으로 자른다.
+      - 각 층 최소 1건을 먼저 보장한다. 단 n 이 층 수보다 작으면 큰 층부터 1건씩만 준다.
+      - 나머지 n - 층수 를 층 크기에 비례해 floor 로 나누고, 잔여는 소수부가 큰 층부터
+        한 건씩 준다(동률은 층 이름 사전순). "큰 층부터" 규칙은 큰 층을 체계적으로
+        과대표집해서 쓰지 않는다.
+      - 어느 층도 자기 크기를 넘지 않는다. 넘치면 깎고, 그만큼을 여유 있는 층에
+        소수부 순으로 다시 준다.
+    같은 입력이면 같은 결과다. 반환 순서는 크기 내림차순(동률은 키 오름차순).
+    """
+    strata = {key: size for key, size in counts.items() if size > 0}
+    if not strata or n <= 0:
+        return {}
+    total = sum(strata.values())
+    n = min(n, total)
+    order = sorted(strata, key=lambda key: (-strata[key], key))
+    if n < len(strata):
+        return {key: 1 for key in order[:n]}
+    rest = n - len(strata)
+    quota = {key: rest * strata[key] / total for key in strata}
+    alloc = {key: 1 + int(quota[key]) for key in strata}
+    # 소수부 큰 순, 동률은 층 이름(stratum_label) 사전순
+    by_fraction = sorted(strata, key=lambda key: (-(quota[key] - int(quota[key])), stratum_label(key)))
+    for key in by_fraction[: rest - sum(int(quota[key]) for key in strata)]:
+        alloc[key] += 1
+    # 층 크기 초과분을 깎고 여유 있는 층에 소수부 순으로 돌린다(n <= 합이라 항상 끝난다)
+    overflow = sum(alloc[key] - strata[key] for key in strata if alloc[key] > strata[key])
+    alloc = {key: min(alloc[key], strata[key]) for key in strata}
+    cursor = 0
+    while overflow > 0:
+        key = by_fraction[cursor % len(by_fraction)]
+        cursor += 1
+        if alloc[key] < strata[key]:
+            alloc[key] += 1
+            overflow -= 1
+    return {key: alloc[key] for key in order}
+
+
+def stratified_sample(
+    rows: list[dict[str, Any]],
+    n: int,
+    *,
+    judge_id: str,
+    seed: int = DEFAULT_SAMPLE_SEED,
+    prompt_hash: str | None = PROMPT_HASH,
+    current_keys: set[tuple[str, str]] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, int]]]:
+    """캐시에서 심판 judge_id 의 성공 행을 (faithful x 소스 유형) 으로 층화해 n 건을 뽑는다.
+
+    report 와 같은 필터(현재 prompt_hash, 정본에 살아 있는 (url, analysis_hash))를 거친 뒤
+    최신 행만 쓴다. 층 안에서는 (url, analysis_hash, prompt_hash) 로 정렬한 뒤
+    random.Random(seed).sample 로 뽑아 캐시 행 순서와 무관하게 재현된다.
+    반환: (뽑힌 행, 층별 {"population": 모집단, "sampled": 표본}).
+    """
+    rows, _ = filter_current_rows(rows, prompt_hash=prompt_hash, current_keys=current_keys)
+    judged = _judged_index(rows).get(judge_id, {})
+    buckets: dict[StratumKey, list[dict[str, Any]]] = {}
+    for key in sorted(judged):
+        row = judged[key]
+        buckets.setdefault(stratum_of(row), []).append(row)
+    alloc = allocate_strata({key: len(bucket) for key, bucket in buckets.items()}, n)
+    rng = random.Random(seed)
+    picked: list[dict[str, Any]] = []
+    summary: dict[str, dict[str, int]] = {}
+    for key in sorted(buckets):  # 층 순서를 고정해야 같은 seed 가 같은 표본을 낸다
+        take = alloc.get(key, 0)
+        chosen = rng.sample(buckets[key], take) if take else []
+        picked.extend(chosen)
+        summary[stratum_label(key)] = {"population": len(buckets[key]), "sampled": len(chosen)}
+    return picked, summary
+
+
+def build_sample_items(
+    rows: list[dict[str, Any]], targets: list[dict[str, Any]] | None = None
+) -> list[dict[str, Any]]:
+    """표본 행을 find_disagreements 와 같은 아이템 형식으로 바꾼다. 심판 한 명의 **모든 질문**을 싣는다.
+
+    questions[*].verdicts 에는 그 행의 심판 하나만 들어간다. build_labeling_html 은 심판 수를
+    가정하지 않으므로 그대로 소비된다.
+    """
+    bodies: dict[tuple[str, str], dict[str, Any]] = {}
+    for target in targets or []:
+        bodies[(str(target["url"]), target["analysis_hash"])] = target
+    items: list[dict[str, Any]] = []
+    for row in rows:
+        judge_id = str(row.get("judge_id"))
+        url, a_hash, p_hash = row.get("url"), row.get("analysis_hash"), row.get("prompt_hash")
+        target = bodies.get((str(url), str(a_hash)))
+        body = target["body"] if target else ""
+        questions: list[dict[str, Any]] = []
+        for position, (label_id, kind, entry) in enumerate(_row_question_entries(row)):
+            index = 0 if kind == "summary" else entry.get("index", position)
+            questions.append(
+                {
+                    "id": label_id,
+                    "question": kind,
+                    "index": index,
+                    "text": entry.get("text"),
+                    "verdicts": {judge_id: _verdict_view(entry, _QUESTION_FIELDS.get(kind, ()))},
+                    "excerpt": body_excerpt(body, [entry.get("quote")]),
+                    "human": None,
+                }
+            )
+        if questions:
+            stratum = stratum_of(row)
+            items.append(
+                {
+                    "date": row.get("date"),
+                    "url": url,
+                    "title": row.get("title") or (target or {}).get("title"),
+                    "analysis_hash": a_hash,
+                    "prompt_hash": p_hash,
+                    "judges": [judge_id],
+                    "stratum": stratum_label(stratum),
+                    "questions": questions,
+                }
+            )
+    return items
+
+
+def sample_header_line(n: int, seed: int, judge_id: str, summary: dict[str, dict[str, int]]) -> str:
+    """HTML 상단 한 줄: "층화 무작위 표본 N건 (seed S, 심판 J, 층별 건수 …)"."""
+    sampled = sum(cell["sampled"] for cell in summary.values())
+    strata = ", ".join(f"{label} {cell['sampled']}/{cell['population']}" for label, cell in summary.items())
+    requested = f"요청 {n}건 → " if sampled != n else ""
+    return f"층화 무작위 표본 {requested}{sampled}건 (seed {seed}, 심판 {judge_id}, 층별 건수 표본/모집단: {strata or '없음'})"
+
+
+# ──────────────────────────────────────────────
 # 사람 표시: labels.jsonl
 # ──────────────────────────────────────────────
 
@@ -1515,12 +1717,33 @@ def _verdict_html(judge_id: str, question: str, view: dict[str, Any]) -> str:
     return f'<div class="verdict"><strong>{_esc(judge_id)}</strong> {flags}{claim_html}{quote_html}</div>'
 
 
-def _question_html(item: dict[str, Any], question: dict[str, Any]) -> str:
+def _quotes_only_html(verdicts: dict[str, Any]) -> str:
+    """판정 숨김 모드에서 보이는 부분: 심판이 댄 인용문만. 사람이 원문 위치를 찾는 데 쓴다."""
+    quotes = [v.get("quote") for v in verdicts.values() if isinstance(v, dict) and v.get("quote")]
+    if not quotes:
+        # 인용이 없을 때 "인용 없음" 을 찍으면 안 된다. 실제 캐시에서 인용 없음은 전부 Fail 판정이라
+        # 그 문구 하나가 판정을 그대로 누설한다. 아무것도 찍지 않아도 blockquote 부재 자체가 약한
+        # 신호로 남는 점은 인용을 보이게 두는 한 피할 수 없다(설계상 알려진 잔여 누설).
+        return ""
+    return "".join(f'<blockquote class="hint">{_esc(q)}</blockquote>' for q in quotes) + (
+        '<small class="qv">심판이 댄 인용(원문 찾기용). 본문에 실제로 있는지는 직접 확인한다.</small>'
+    )
+
+
+def _question_html(item: dict[str, Any], question: dict[str, Any], *, hide_verdicts: bool = False) -> str:
     kind = str(question.get("question"))
     index = question.get("index")
     label_id = _label_id_of(item, question)
     verdicts = question.get("verdicts") or {}
     verdict_blocks = "".join(_verdict_html(j, kind, v or {}) for j, v in verdicts.items())
+    if hide_verdicts:
+        # 사람 편향 방지: 표본 모드에서는 심판의 예/아니오와 근거 설명을 접어 둔다. 사람이 심판
+        # 판정을 먼저 보고 따라가면 사람 라벨이 심판에 끌려가 일치율·TPR/TNR 이 과대평가된다.
+        # 인용문(quote)은 원문을 찾는 데 필요하니 밖에 둔다.
+        verdict_blocks = (
+            f"{_quotes_only_html(verdicts)}"
+            f'<details class="judge-toggle"><summary>심판 판정 보기</summary>{verdict_blocks}</details>'
+        )
     radios = "".join(
         f'<label><input type="radio" name="h-{_esc(label_id)}" value="{choice}"> {HUMAN_LABELS_KO[choice]}</label>'
         for choice in HUMAN_CHOICES
@@ -1553,6 +1776,10 @@ body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.5 -a
 main{max-width:860px;margin:0 auto}
 h1{font-size:20px;margin:0 0 4px}
 .lead{color:var(--muted);margin:0 0 16px}
+.header{margin:0 0 6px;font-size:14px;font-weight:600;word-break:break-word}
+blockquote.hint{border-left-color:var(--muted)}
+.judge-toggle{margin:6px 0 0}
+.judge-toggle>summary{cursor:pointer;color:var(--muted);font-size:13px}
 .q{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:0 0 14px}
 .meta{color:var(--muted);font-size:13px;word-break:break-all}
 .meta a{color:inherit}
@@ -1646,33 +1873,52 @@ def dedupe_label_questions(items: list[dict[str, Any]]) -> tuple[list[dict[str, 
     return cleaned, skipped
 
 
-def build_labeling_html(items: list[dict[str, Any]]) -> str:
-    """disagreements 목록으로 사람 표시용 단일 HTML 을 만든다. 외부 리소스를 쓰지 않는다.
+def build_labeling_html(
+    items: list[dict[str, Any]],
+    *,
+    header: str | None = None,
+    hide_verdicts: bool = False,
+    empty_message: str | None = None,
+) -> str:
+    """disagreements 또는 층화 표본 목록으로 사람 표시용 단일 HTML 을 만든다. 외부 리소스를 쓰지 않는다.
 
     중복 id 는 여기서도 걸러 라디오 name 충돌을 막는다. 건너뛴 수를 알리려면 호출 전에
     dedupe_label_questions 를 직접 부른다(main 이 그렇게 한다).
+    header 가 있으면 안내문 위에 한 줄(표본 모드의 "층화 무작위 표본 N건 …")을 넣고,
+    hide_verdicts 면 심판 판정을 "심판 판정 보기" 토글 뒤에 접는다(편향 방지, _question_html 참고).
+    questions[*].verdicts 의 심판 수는 가정하지 않는다(하나여도 된다).
     """
     items, _ = dedupe_label_questions(items)
     question_count = sum(len(item.get("questions") or []) for item in items)
     if question_count == 0:
-        body = '<p class="empty">엇갈린 항목이 없다. 두 심판이 모두 판정한 아이템에서 판정이 갈린 질문이 없다.</p>'
+        message = empty_message or "엇갈린 항목이 없다. 두 심판이 모두 판정한 아이템에서 판정이 갈린 질문이 없다."
+        body = f'<p class="empty">{_esc(message)}</p>'
         foot = ""
     else:
         sections = "".join(
-            _question_html(item, question) for item in items for question in item.get("questions") or []
+            _question_html(item, question, hide_verdicts=hide_verdicts)
+            for item in items
+            for question in item.get("questions") or []
         )
         body = sections
         foot = (
             '<div class="foot"><button id="copy" type="button">결과 JSON 복사</button>'
             '<span id="status"></span><textarea id="fallback" readonly></textarea></div>'
         )
+    header_html = f'<p class="header">{_esc(header)}</p>' if header else ""
+    lead = (
+        f"표시할 질문 {question_count}건 (아이템 {len(items)}건). "
+        if header
+        else f"두 심판이 엇갈린 질문 {question_count}건 (아이템 {len(items)}건). "
+    )
     return (
         "<!doctype html>\n<html lang=\"ko\"><head><meta charset=\"utf-8\">"
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         "<title>LLM 심판 사람 표시</title>"
         f"<style>{_LABELING_CSS}</style></head><body><main>"
         "<h1>LLM 심판 사람 표시</h1>"
-        f'<p class="lead">두 심판이 엇갈린 질문 {question_count}건 (아이템 {len(items)}건). '
+        f"{header_html}"
+        f'<p class="lead">{lead}'
         "본문 발췌를 보고 산출물에 근거가 있는지 표시한 뒤, 하단에서 결과 JSON 을 복사해"
         " <code>python -m evals.judge import-labels</code> 로 반입한다.</p>"
         f"{body}{foot}"
@@ -1716,10 +1962,19 @@ def build_parser() -> argparse.ArgumentParser:
     dis_p.add_argument("--out", type=Path, default=None)
     dis_p.add_argument("--all-prompts", action="store_true")
 
-    lab_p = sub.add_parser("labeling", help="엇갈린 아이템을 사람이 표시할 HTML 한 장으로 만든다")
+    lab_p = sub.add_parser("labeling", help="엇갈린 아이템 또는 층화 무작위 표본을 사람이 표시할 HTML 한 장으로 만든다")
     lab_p.add_argument("--out", type=Path, required=True)
-    lab_p.add_argument(
+    lab_source = lab_p.add_mutually_exclusive_group()  # --in 과 --sample 은 배타
+    lab_source.add_argument(
         "--in", dest="source", type=Path, default=None, help="disagreements JSON. 없으면 캐시에서 바로 계산한다"
+    )
+    lab_source.add_argument(
+        "--sample", type=int, default=None, metavar="N",
+        help="불일치 건 대신 캐시에서 (요약 판정 x 소스 유형) 층화 무작위 표본 N 아이템을 뽑는다(모든 질문 포함)",
+    )
+    lab_p.add_argument("--seed", type=int, default=DEFAULT_SAMPLE_SEED, help="--sample 의 난수 seed")
+    lab_p.add_argument(
+        "--judge", choices=sorted(JUDGES), default="deepseek", help="--sample 에서 표본을 뽑을 심판"
     )
     lab_p.add_argument("--all-prompts", action="store_true")
 
@@ -1762,7 +2017,30 @@ def main(argv: list[str] | None = None) -> int:
             print(text)
         return 0
     if args.command == "labeling":
-        if args.source is not None:
+        page_options: dict[str, Any] = {}
+        if args.sample is not None:
+            if args.sample <= 0:
+                print("--sample 은 1 이상이어야 한다", file=sys.stderr)
+                return 2
+            # 표본 모드: report 와 같은 필터(현재 prompt, 정본에 살아 있는 analysis)로 심판 하나의 행을 층화 추출
+            targets = collect_targets()
+            picked, strata = stratified_sample(
+                load_cache(),
+                args.sample,
+                judge_id=args.judge,
+                seed=args.seed,
+                prompt_hash=None if args.all_prompts else PROMPT_HASH,
+                current_keys={(str(t["url"]), t["analysis_hash"]) for t in targets if t.get("url")},
+            )
+            items = build_sample_items(picked, targets)
+            header = sample_header_line(args.sample, args.seed, args.judge, strata)
+            page_options = {
+                "header": header,
+                "hide_verdicts": True,
+                "empty_message": f"표본으로 뽑을 판정 행이 없다 (심판 {args.judge}, 현재 프롬프트, 정본에 있는 아이템 기준).",
+            }
+            print(header)
+        elif args.source is not None:
             items = json.loads(args.source.read_text(encoding="utf-8"))
             if not isinstance(items, list):
                 print("disagreements JSON 은 목록이어야 한다", file=sys.stderr)
@@ -1772,7 +2050,7 @@ def main(argv: list[str] | None = None) -> int:
                 load_cache(), collect_targets(), prompt_hash=None if args.all_prompts else PROMPT_HASH
             )
         items, skipped = dedupe_label_questions(items)
-        page = build_labeling_html(items)
+        page = build_labeling_html(items, **page_options)
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(page, encoding="utf-8")
         question_count = sum(len(item.get("questions") or []) for item in items)
