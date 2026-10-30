@@ -316,6 +316,25 @@ def test_parse_json_response_strips_code_fence():
         parse_json_response("[1, 2]")
 
 
+def test_deepseek_request_disables_thinking_by_default(monkeypatch):
+    """DeepSeek Flash 는 thinking 이 기본 켜짐이라 요청에 비활성 파라미터를 실어야 한다.
+    JUDGE_DEEPSEEK_THINKING=1 이면 붙이지 않는다. qwen 요청에는 애초에 없다."""
+    monkeypatch.delenv("JUDGE_DEEPSEEK_THINKING", raising=False)
+    transport = FakeTransport([_ok_response(json.dumps(_good_answer()))])
+    call_judge(judge.JUDGES["deepseek"], "prompt", api_key="k", transport=transport, sleep=_no_sleep)
+    assert transport.requests[0]["json"]["thinking"] == {"type": "disabled"}
+    assert transport.requests[0]["json"]["response_format"] == {"type": "json_object"}
+
+    monkeypatch.setenv("JUDGE_DEEPSEEK_THINKING", "1")
+    transport = FakeTransport([_ok_response(json.dumps(_good_answer()))])
+    call_judge(judge.JUDGES["deepseek"], "prompt", api_key="k", transport=transport, sleep=_no_sleep)
+    assert "thinking" not in transport.requests[0]["json"]
+
+    transport = FakeTransport([_ok_response(json.dumps(_good_answer()))])
+    call_judge(judge.JUDGES["qwen"], "prompt", api_key="k", transport=transport, sleep=_no_sleep)
+    assert "thinking" not in transport.requests[0]["json"]
+
+
 def test_call_judge_parses_fenced_content():
     transport = FakeTransport([_ok_response("```json\n" + json.dumps(_good_answer()) + "\n```")])
     parsed, usage = call_judge(judge.JUDGES["deepseek"], "prompt", api_key="k", transport=transport, sleep=_no_sleep)

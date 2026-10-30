@@ -76,14 +76,24 @@ JUDGEABLE_EVIDENCE_LEVEL = "full"
 
 QUESTION_KINDS = ("summary", "key_points", "production_ideas", "quiz")
 
-# 심판 제공자. model 은 환경변수(model_env)로 덮어쓸 수 있다.
-JUDGES: dict[str, dict[str, str]] = {
+# 심판 제공자. model 은 환경변수(model_env)로 덮어쓸 수 있다. extra_body 는 요청 본문에
+# 그대로 합쳐지는 제공자 전용 파라미터다.
+#
+# DeepSeek Flash 는 thinking 이 기본으로 켜진다(effort high). 2026-10-30 시험 10건에서 출력
+# 36,004 토큰 중 30,601 이 reasoning 토큰이라 출력 비용($0.60/M)이 입력($0.15/M)을 넘었다.
+# 심판은 본문 인용을 코드가 검증하므로 긴 사고 과정의 이득이 작고, 소급 395건을 잔액 안에서
+# 끝내려면 꺼야 한다. 켜서 비교하고 싶으면 JUDGE_DEEPSEEK_THINKING=1 로 돌린다. 캐시 키에는
+# 안 들어가므로 같은 아이템을 두 모드로 받으려면 행을 지우고 다시 돌려야 한다. usage 의
+# reasoning_tokens 로 어느 모드였는지 사후에 구분할 수 있다.
+JUDGES: dict[str, dict[str, Any]] = {
     "deepseek": {
         "id": "deepseek",
         "base_url": "https://api.deepseek.com",
         "model": "deepseek-flash",
         "model_env": "JUDGE_DEEPSEEK_MODEL",
         "api_key_env": "DEEPSEEK_API_KEY",
+        "extra_body": {"thinking": {"type": "disabled"}},
+        "extra_body_off_env": "JUDGE_DEEPSEEK_THINKING",
     },
     "qwen": {
         "id": "qwen",
@@ -555,6 +565,10 @@ def call_judge(
         "temperature": 0,
         "response_format": {"type": "json_object"},
     }
+    # 제공자 전용 파라미터. extra_body_off_env 가 "1" 이면 붙이지 않는다(기본 동작으로 되돌림).
+    off_env = judge.get("extra_body_off_env")
+    if judge.get("extra_body") and not (off_env and os.environ.get(off_env) == "1"):
+        body.update(judge["extra_body"])
     request = {
         "url": judge["base_url"].rstrip("/") + "/chat/completions",
         "headers": {
