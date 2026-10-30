@@ -1,0 +1,359 @@
+{
+  "date": "2026-10-31",
+  "generated_at": "2026-10-30T23:38:23.669333",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "Elucidating the Design Space of LM Data Attribution",
+        "url": "https://arxiv.org/abs/2610.40655v1",
+        "published_at": "2026-10-29T17:59:53",
+        "transcript": null,
+        "body": "Data attribution methods for Language Models (LMs) are typically evaluated using downstream tasks like fact retrieval. However, existing evaluations vary multiple dataset properties simultaneously, making it impossible to isolate exactly why an attribution algorithm fails. To diagnose these failures, we explore the design space of LLM data attribution, with a primary focus on evaluation. We introduce the Controlled Attribution Benchmark (CATT) for fact tracing, in which we fine-tune LLMs on entirely fictitious knowledge, providing unambiguous ground truth for attribution. This synthetic setup allows us to systematically alter one dataset configuration at a time, such as document redundancy and lexical distractors. With this configurable evaluation, we demonstrate that redundancy and distractors consistently degrade attribution performance. Rather than proposing a new estimator, we examine two design choices that are underexplored: the loss used to compute gradients and how per-token attribution scores are aggregated into a document score. We find that the true causal evidence within a training document is highly localized, but standard methods dilute this evidence into noise by averaging attribution scores across the entire document. We find that replacing standard cross-entropy loss gradients with the negative log-odds gradients surfaces the critical tokens from other uninformative ones. We can then aggregate only the top token scores to improve ground truth recall by 35 to 72 percentage points across multiple baselines on our diagnostic benchmark. The negative log-odds correction also generalizes to FTRACE-TREX, improving counterfactual retraining performance for every method we test, by up to 4.9x.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "데이터 기여 원천 추적 정확도 향상 방법 제시",
+        "tags": [
+          "CATT",
+          "negative log-odds gradients",
+          "FTRACE-TREX",
+          "cross-entropy loss",
+          "LLM"
+        ],
+        "concepts": [
+          "데이터 사용 투명성",
+          "손실 함수",
+          "해석 가능성을 통한 모델 제어"
+        ],
+        "key_points": [
+          {
+            "point": "기존 평가는 여러 데이터 속성을 동시에 바꾸어 원인 분석이 어려웠다.",
+            "timestamp": null
+          },
+          {
+            "point": "CATT 벤치마크를 통해 문서 중복과 어휘 방해 요소가 기여 추적 성능을 크게 저하시킨다.",
+            "timestamp": null
+          },
+          {
+            "point": "부정 로그오즈 그라디언트와 상위 토큰 집계가 재현율을 35~72%p 향상시킨다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "이 논문은 기존 LLM 데이터 기여 평가가 데이터 속성 혼재로 원인 파악이 어려운 문제를 해결하고자 한다. 합성 지식으로 학습시킨 모델에 대해 하나씩 데이터 변수를 조절할 수 있는 Controlled Attribution Benchmark(CATT)를 제안한다. 또한 손실 함수와 토큰 점수 집계 방식을 재설계해 평가 정확도를 크게 높이며, 데이터 기여 추적 연구 흐름에서 평가 방법론을 한 단계 앞당긴다.",
+        "production_ideas": [
+          "부정 로그오즈 그라디언트를 추천 시스템에 적용해 사용자‑아이템 상호작용 중 예측에 가장 큰 영향을 미치는 요소를 식별한다, 이는 모델 해석성을 높인다.",
+          "상위 토큰 집계 방식을 코드 생성 모델에 적용해 생성된 코드 조각에 기여한 원본 토큰을 강조함으로써 디버깅과 품질 검증을 용이하게 한다.",
+          "CATT와 유사한 합성 벤치마크를 비전 모델에 도입해 인위적인 이미지 라벨을 학습시킴으로써 데이터 증강이나 레이블 노이즈가 모델 기여 추적에 미치는 영향을 독립적으로 평가한다."
+        ],
+        "quiz": [
+          {
+            "question": "부정 로그오즈 그라디언트를 사용하면 기존 교차 엔트로피 그라디언트와 비교해 어떤 효과가 나타나는가?",
+            "options": [
+              "증거를 더 희석한다",
+              "핵심 토큰을 강조한다",
+              "토큰 집계가 필요 없어진다",
+              "재현율이 감소한다"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 부정 로그오즈 그라디언트가 중요한 토큰을 다른 비정보 토큰으로부터 분리해 내어 기여 추적 성능을 크게 향상시킨다고 보고한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "OpenAI Claims It Just Did The Impossible",
+        "url": "https://youtu.be/CWdTBLsbaQs",
+        "published_at": "2026-10-30T15:57:16",
+        "transcript": "[00:00] I did not think this would happen in my lifetime.\n[00:03] Let me try to explain. For many decades now, computer scientists have been thinking up devilishly difficult problems and found that trying to solve some of them takes incredibly long.\n[00:14] Some of them would take a quadrillion years to solve by brute force.\n[00:19] But we humans have invented so many amazing algorithms. We can write programs that simulate light rays to imagine never before seen scenes.\n[00:28] I love this so much. And we can write physics simulations to create really lifelike or imaginary worlds, absolutely ingenious human developed techniques.\n[00:40] And you are saying that some problems just cannot be solved efficiently? Well, that is exactly what the Exponential Time Hypothesis says.\n[00:50] It says that some problems are cursed and might always remain so. Here is a cursed problem. The cat is sleeping, or the dog is barking, or the robot is dancing.\n[01:02] When is this true? Well, just make the cat sleep. Problem solved. Easy peasy. What is Károly even talking about? Get out of here.\n[01:12] No, no, no, no, wait. Let's add another line. The cat is awake, or the dog is silent, or the robot is dancing.\n[01:21] Now, the first one wants the cat to sleep. The second one wants the cat to be awake. So we have to look for help with a different variable.\n[01:31] Let's look at the dog. Oh my, same problem. The dog is barking in the first, silent in the second.\n[01:39] But wait, the robot is luckily dancing on both, so that can satisfy both lines. Hooray!\n[01:47] But the point here is that one line was very simple, but two lines needed a bit of computation. Still simple, of course.\n[01:56] And now you will see the crazy part. We call this the three satisfiability problem, and if you increase the problem size with more animals and lines, what happens?\n[02:08] Well, just get a processor that goes through a billion combinations per second, and you are done instantly, right?\n[02:15] Not quite. This computer program would take so long, it might never finish. Well, it could take one quadrillion years to finish if we check every combination.\n[02:27] Well then, this is so many combinations. So better write an algorithm that does it a smarter way and do it a lot quicker.\n[02:35] And here comes the crazier part. We couldn't. Nobody had ever been able to do that in the general case.\n[02:42] Yes, we can be quicker than just trying all the combinations. We have smart algorithms, but none of them could defeat the exponential barrier.\n[02:51] This is called the Exponential Time Hypothesis.\n[02:55] So, it's over, right? Do we have no hope left to solve this?\n[03:00] Dear fellow scholars, this is Two-Minute Papers with Dr. Károly Zsolnai-Fehér.\n[03:04] Well, all this drivel means that this problem is cursed. Cursed how?\n[03:09] Well, cursed in a sense that as the problem size grows even just a tiny bit, it gets much harder. In the worst case, exponentially harder. Ewww.\n[03:20] Now, we can't prove it, but so many people believe it to be true that many papers have been written assuming that this is true and building on that.\n[03:29] And then something insane just happened. Hold on to your papers, fellow scholars, because the age of AI has led us into a breakthrough.\n[03:40] OpenAI published a research paper where they say they proved that this hypothesis is not true.\n[03:47] They say that it is possible to defeat the exponential barrier.\n[03:52] I'm gonna be honest, I did not think this would happen within my lifetime, and it just did.\n[03:57] If the proof gets properly verified. It looks increasingly convincing, but the expert review is not 100% done yet.\n[04:07] But if it holds up, then one of the most important assumptions of theoretical computer science has just fallen. That is insanity.\n[04:16] Now, I will note that this is not to be confused by the P question mark equals NP problem. That has not been solved.\n[04:24] Now, you could say, okay, Károly, but who cares about this silly satisfiability problem? Just bring your dogs and cats elsewhere.\n[04:33] Well, I say you have to consider Karp reductions. Before you ask, no, this does not mean shrinking a fish. It means something completely different.\n[04:44] Imagine you have to deliver life-saving medicine to hundreds of hospitals, and you are a bit low on gas. You need the most efficient route.\n[04:53] Or, imagine you have to assign radio frequencies to thousands of transmitters so they can talk without too much interference.\n[05:02] Or, place the fewest number of sensors needed to monitor an entire system.\n[05:08] Or, select the most valuable scientific equipment to load it onto a small spacecraft.\n[05:14] All of these are very different problems.\n[05:17] Except that they are not. All of these problems can be molded to look like our three satisfiability problem with the cats and dogs.\n[05:26] You take your roads and transform them into a dog and cat question. That is Karp reduction.\n[05:33] Wait, and does that mean that? Oh, yes. Yes, it does.\n[05:38] If you can write an algorithm that can do that one problem faster, it could work for all of these problems, and then even more. Not always, but it's often the case.\n[05:50] And that is why this work is so incredibly surprising and valuable.\n[05:55] Plus, it gets better. The paper reveals not just the proof that such an algorithm exists. The paper actually gives us the algorithm.\n[06:05] And it gets even better. It not only finds the solution, but also tells us exactly how many solutions are there.\n[06:13] This is a historic moment in our lives. What a time to be alive!\n[06:18] And just to demonstrate how incredibly efficiently scientists can communicate with each other. All of this summed up in short:\n[06:26] A sub-exponential bound has been claimed for 3-SAT, refuting the Exponential Time Hypothesis.\n[06:33] Very concise and super awesome.\n[06:36] If you enjoyed this, consider subscribing and hitting the bell. We have a lot more papers coming, and if everything goes well, an interview with Spencer Huang as well.\n[06:46] Very fun. I use Lambda to reproduce AI research papers, often in minutes.\n[06:52] It's also great to train your own models, or fine-tune an existing one.\n[06:56] Run inference, or text to image or video. Easy peasy.\n[07:01] Running a deep seek chatbot or agent, super fast, super reliable.\n[07:05] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[07:10] I test ideas from the papers I cover, and moments later, results.\n[07:16] Love it. Seriously, try it out now at lambda.ai/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\n📝 OpenAI's paper is available here:\nhttps://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf\n\nOur paper with the cherry splash ray tracing simulation at 0:17 https://users.cg.tuwien.ac.at/zsolnai/gfx/adaptive_metropolis/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI가 3‑SAT 지수 가설을 뒤집다",
+        "tags": [
+          "OpenAI",
+          "Two Minute Papers",
+          "Exponential Time Hypothesis",
+          "3SAT",
+          "Károly Zsolnai-Fehér"
+        ],
+        "concepts": [
+          "지수적 복잡도",
+          "NP-완전성",
+          "알고리즘 한계"
+        ],
+        "key_points": [
+          {
+            "point": "Exponential Time Hypothesis는 일부 문제는 효율적으로 풀 수 없다고 주장한다.",
+            "timestamp": "00:40"
+          },
+          {
+            "point": "3SAT 문제는 변수와 절이 늘어날수록 조합이 급증해 실용적 해결이 어려워진다.",
+            "timestamp": "01:56"
+          },
+          {
+            "point": "OpenAI는 최신 연구에서 지수 시간 가설을 깨는 증명을 제시했다.",
+            "timestamp": "03:40"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 기반 증명 탐색을 활용해 머신러닝 파이프라인의 하이퍼파라미터 탐색을 자동화해 탐색 비용을 감소시킨다",
+          "AI를 이용해 물류 스케줄링의 조합 최적화 문제에 대한 새로운 휴리스틱을 생성하여 실행 시간을 단축한다",
+          "AI 모델을 적용해 NP‑hard 문제인 작업 배정의 근사 알고리즘을 자동 설계해 기존 휴리스틱보다 품질을 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "Exponential Time Hypothesis가 주로 언급하는 문제 유형은?",
+            "options": [
+              "3SAT",
+              "선형 회귀",
+              "K-최근접 이웃",
+              "의사결정 트리"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Exponential Time Hypothesis는 3SAT과 같은 문제들이 지수적으로 어려워 항상 효율적으로 풀 수 없다고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "foundational",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "kakao tech",
+        "source_key": "UCdQF7F6hwjSpulj_fwB9iDQ",
+        "source_label": "kakao tech",
+        "title": "개발 라이프사이클에서 AI가 변화시킨 것들 | AI시대의 개발자",
+        "url": "https://youtu.be/QMYWRoIlJqs",
+        "published_at": "2026-10-30T07:00:38",
+        "transcript": null,
+        "body": "\"AI의 '완료'와 사람이 느끼는 '끝'은 어떻게 다를까요?\"\n\n[개발 라이프사이클에서 AI가 변화시킨 것들]을 주제로 \n현업 실무자들이 이야기를 나눕니다.\n디자인, 개발, QA 각자의 현장에서 AI에게 직접 업무를 맡겨본 경험을 바탕으로, AI에게 위임할 수 있는 범위와 사람이 최종적으로 판단해야 할 결정적 지점들을 담백하게 짚어봅니다.\n\n#AI #FIRESIDECHAT #KAKAO #ifkakao26\n\n이기택 | 카카오\n[모더레이터] 안녕하세요. Ad도메인테크챕터 리더 이기택(danny.g)입니다.\n\n유호현 | 카카오\n안녕하세요. 카카오 비즈앱개발팀 유호현(sky.woonie)입니다. \n\n염수연 | 카카오\n카카오 AI서비스디자인팀의 프로덕트 디자이너 아냐입니다. \n\n이진석 | 카카오페이손해보험\n안녕하세요. 카카오페이손해보험 QA팀 리더 이진석(daniel.s2)입니다. \n\n김성민 | OpenAI\n안녕하세요. OpenAI 김성민입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI가 개발·디자인·QA 업무 변화와 인간 판단 포인트",
+        "tags": [
+          "Kakao",
+          "OpenAI",
+          "AI",
+          "디자인",
+          "QA"
+        ],
+        "concepts": [
+          "AI와 인간 협업",
+          "AI 생산성 도구",
+          "AI 기반 업무 검증"
+        ],
+        "key_points": [
+          {
+            "point": "AI를 업무에 위임할 수 있는 영역과 한계를 현업 실무자가 직접 경험을 통해 공유한다.",
+            "timestamp": null
+          },
+          {
+            "point": "디자인, 개발, QA 각 단계에서 AI가 수행한 작업과 인간이 최종 판단해야 하는 결정적 지점을 짚는다.",
+            "timestamp": null
+          },
+          {
+            "point": "AI와 인간 협업 모델을 통해 생산성을 높이면서도 품질과 책임을 유지하는 방안을 제시한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "모두가 함께 성장하는 기술 축제, NAVER Engineering Day 10년의 여정",
+        "url": "https://d2.naver.com/news/0907869",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-image se-l-default\" id=\"SE-296bc235-6701-4fe1-89b2-01d4e9481fa6\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\">\n                                <div class=\"se-module se-module-image\">\n                                    <a class=\"se-module-image-link __se_image_link __se_link\" href=\"#\">\n                                        <img alt=\"\" class=\"se-image-resource\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2/SMART_EDITOR/2026/10/30/5d8fa019-da9a-44d8-a8cc-52d003806fe8.png/\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                    \n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-b3991f71-f46f-4907-b4bc-01f81fe2ace7\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-2013e463-9317-4ef1-bf70-e2a830ece0ee\"><span class=\"se-fs-fs19 se-ff-nanumsquare   \" id=\"SE-4919db5e-a537-43c5-ba19-c16b214907b0\"><b>기술은 혼자 완성되지 않습니다. </b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-d6d8ec2d-c11c-4bd4-98d2-a1a9825a8f5a\"><span class=\"se-fs-fs19 se-ff-nanumsquare   \" id=\"SE-825ab5d0-0ecd-4c24-94d6-766592421077\"><b>​</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-53d9a51d-3e5a-4adc-be79-908d5f4a7c91\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-d1d4409e-ea79-41d6-8300-e3cecfd92d4b\"><b>한 사람이 발견한 문제와 해결 과정이 동료에게 전해지고, </b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-830d4181-6bac-416f-a71f-e7e96362b7cf\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-4bc1702a-9f3e-4360-b1c1-59b227c7d4cd\"><b>그 경험이 또 다른 시도와 개선으로 이어질 때 조직의 기술은 앞으로 나아갑니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9a59dbd4-566e-4b17-81eb-0647e7be4ea6\"><span class=\"se-fs-fs16 se-ff-nanumsquare   \" id=\"SE-6d622cc6-d092-4fe2-88a9-326206bc907e\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-4939c1d0-ee34-447d-95a7-c5a2327c2f26\"><span class=\"se-fs-fs16 se-ff-nanumsquare   \" id=\"SE-487b150c-e6b7-4733-bdc0-972543616f8b\"><b>NAVER Engineering Day는 이런 믿음에서 출발했습니다. </b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-93c63a43-638f-47f5-b629-e02bf8608f8a\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-4bfa1eea-e56e-469f-9296-0dd4d2561212\">2016년, 실무에서 얻은 개발 경험과 새로운 기술 및 플랫폼을 도입하며 배운 점을 나누는 사내 개발자 행사로 시작해 올해 10주년을 맞았습니다. 그동안 Engineering Day는 발표자가 정리한 지식을 듣는 자리를 넘어, 서로의 경험을 연결하고 각자의 업무 문제를 함께 해결하는 장으로 꾸준히 확장돼 왔습니다.</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-f2a5d0b4-6113-4206-800f-dd8df563e44e\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-dee4877e-8d12-4419-987a-a1e6ea58cda5\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-95e758b0-da3b-43ed-9080-48b0ef1bdbb4\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-c1afa8d0-e93f-40cc-bb79-5a21fedbcf94\">특히 AI가 특정 직군의 전문 도구를 넘어 일하는 방식 전반을 바꾸기 시작하면서 기술을 나눈다는 말의 의미도 달라졌습니다. 중요한 것은 새로운 도구를 아는 데 그치지 않고, 내 문제에 적용해 보고 막히는 지점을 동료와 함께 풀어 보는 경험입니다. </span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-6dbb819a-c084-4ce0-a35d-b16a804988f2\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-9cc98a9f-84c7-4b06-8074-2053d1711d41\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9fb6740b-ce99-4f98-bc71-fa7eb26eff3a\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-7f8cd41a-9918-4e7b-bf01-338fc7bc7f10\"><b>10주년 Engineering Day는 이러한 변화에 맞춰 전 직군이 함께 온라인 세션, 오프라인 워크숍, AI 오픈 코칭데이로 이어지는 4일간의 여정으로 진행됐습니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9d2a9191-bea0-43fb-8c8a-3679d5bd99a4\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-52df1fb4-75cf-44e4-93c2-b3f1b0725c96\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-quotation se-l-quotation_underl",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "AI 경험 공유가 데이터 사이언스 협업을 강화",
+        "tags": [
+          "NAVER Engineering Day",
+          "AI",
+          "Naver"
+        ],
+        "concepts": [
+          "개발자 경험 개선",
+          "AI 생산성 도구",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "기술은 혼자 완성되지 않으며, 문제와 해결 과정을 동료와 공유할 때 조직 기술이 성장한다.",
+            "timestamp": null
+          },
+          {
+            "point": "NAVER Engineering Day는 2016년 사내 개발자 행사로 시작해 10주년을 맞으며 발표와 경험 연결의 장으로 확대되었다.",
+            "timestamp": null
+          },
+          {
+            "point": "AI가 업무 방식을 바꾸면서 도구 습득을 넘어 실제 문제에 적용하고 동료와 함께 해결하는 경험이 중요해졌다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "내부 AI 도구 공유 세션을 데이터 파이프라인 디버깅에 적용해 문제 해결 속도를 높인다.",
+          "엔지니어링 데이 형식의 크로스‑펑셔널 데이터 사이언스 해커톤을 개최해 분야 간 협업을 촉진한다.",
+          "시니어 데이터 사이언티스트가 AI 도구 활용 경험을 멘토링 프로그램으로 전파해 주니어의 실무 적용 능력을 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 AI 도구를 단순히 아는 것보다 실제 문제에 적용하고 동료와 함께 해결하는 것이 강조되는가?",
+            "options": [
+              "도구 사용만으로는 업무 효율이 크게 개선되지 않기 때문이다",
+              "협업을 통해 다양한 관점을 얻어 문제 해결이 가속화되기 때문이다",
+              "AI 도구는 항상 정확하므로 검증이 필요 없기 때문이다",
+              "개인 학습이 팀 성과에 영향을 주지 않기 때문이다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 AI 도구를 내 문제에 적용하고 막히는 지점을 동료와 함께 풀어 보는 경험이 중요하다고 강조한다."
+          },
+          {
+            "question": "Engineering Day가 발표자 중심에서 경험 연결·협업 중심으로 변한 주요 이유는?",
+            "options": [
+              "발표자 수가 감소했기 때문이다",
+              "조직 내 지식 공유와 실무 문제 해결이 필요했기 때문이다",
+              "외부 강연자를 초청하기 어려워졌기 때문이다",
+              "행사 비용을 절감하기 위해서이다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 행사는 발표를 듣는 자리에서 벗어나 서로의 경험을 연결하고 업무 문제를 함께 해결하는 장으로 확장되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "data-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "우아한테크",
+        "source_key": "UC-mOekGSesms0agFntnQang",
+        "source_label": "우아한테크",
+        "title": "파라디의 경험은 어떻게 기회가 되는가?",
+        "url": "https://youtu.be/AcaDDLAMi_o",
+        "published_at": "2026-10-30T09:00:38",
+        "transcript": null,
+        "body": "🙋‍♀️ 우아한테크코스의 크루들이 진행하는 10분 테크토크입니다. 🙋‍♂️\n\n'10분 테코톡'이란 우아한테크코스 과정을 진행하며 크루(수강생)들이 동료들과 학습한 내용을 공유하고 이야기하는 시간입니다. 서로가 성장하기 위해 지식을 나누고 대화하며 생각해보는 시간으로 자기 주도적인 성장을 지향하는 우아한테크코스의 문화 중 하나입니다.\n\n🌕우아한테크코스란 🌕\n우아한테크코스는 일반 사용자용 서비스를 개발하는 회사가 필요로 하는 역량을 가진 프로그래머를 양성하기 위한 교육입니다. 우리의 목표는 자기 주도적으로 학습하고 성장하고 싶은 개발자를 위한 교육을 만드는 것입니다.\n\n00:00 intro\n00:20 나는 왜 이렇게 일을 많이 벌일까?\n02:10 정말 좋아하는 걸 해도 될까\n07:20 경험은 어떻게 다음 기회가 될까?",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "경험을 기회로 전환해 커리어 성장 전략을 제시",
+        "tags": [
+          "우아한테크코스",
+          "우아한테크",
+          "크루"
+        ],
+        "concepts": [
+          "자기 주도적 성장",
+          "경험 기반 기회 창출",
+          "커리어 개발"
+        ],
+        "key_points": [
+          {
+            "point": "10분 테크토크를 통해 경험을 공유하고 자기 주도적 성장 문화를 형성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "많은 일을 떠안는 이유를 성찰해 의미 있는 일과 열정을 재정의한다.",
+            "timestamp": null
+          },
+          {
+            "point": "개인의 경험을 다음 기회로 연결하는 방법을 고민해 커리어 발전에 활용한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "career"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 10월 31일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 10월 31일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">데이터 사용 투명성</span><span class="concept">손실 함수</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">지수적 복잡도</span><span class="concept">NP-완전성</span><span class="concept">알고리즘 한계</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 생산성 도구</span><span class="concept">AI 기반 업무 검증</span><span class="concept">개발자 경험 개선</span><span class="concept">자기 주도적 성장</span><span class="concept">경험 기반 기회 창출</span><span class="concept">커리어 개발</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.CL</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.40655v1" target="_blank" rel="noopener">Elucidating the Design Space of LM Data Attribution</a>
+        </h2>
+
+        <p class="summary">데이터 기여 원천 추적 정확도 향상 방법 제시</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>이 논문은 기존 LLM 데이터 기여 평가가 데이터 속성 혼재로 원인 파악이 어려운 문제를 해결하고자 한다. 합성 지식으로 학습시킨 모델에 대해 하나씩 데이터 변수를 조절할 수 있는 Controlled Attribution Benchmark(CATT)를 제안한다. 또한 손실 함수와 토큰 점수 집계 방식을 재설계해 평가 정확도를 크게 높이며, 데이터 기여 추적 연구 흐름에서 평가 방법론을 한 단계 앞당긴다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 평가는 여러 데이터 속성을 동시에 바꾸어 원인 분석이 어려웠다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>CATT 벤치마크를 통해 문서 중복과 어휘 방해 요소가 기여 추적 성능을 크게 저하시킨다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>부정 로그오즈 그라디언트와 상위 토큰 집계가 재현율을 35~72%p 향상시킨다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>부정 로그오즈 그라디언트를 추천 시스템에 적용해 사용자‑아이템 상호작용 중 예측에 가장 큰 영향을 미치는 요소를 식별한다, 이는 모델 해석성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>상위 토큰 집계 방식을 코드 생성 모델에 적용해 생성된 코드 조각에 기여한 원본 토큰을 강조함으로써 디버깅과 품질 검증을 용이하게 한다.</span></li>
+            
+            <li><span class="box"></span><span>CATT와 유사한 합성 벤치마크를 비전 모델에 도입해 인위적인 이미지 라벨을 학습시킴으로써 데이터 증강이나 레이블 노이즈가 모델 기여 추적에 미치는 영향을 독립적으로 평가한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">부정 로그오즈 그라디언트를 사용하면 기존 교차 엔트로피 그라디언트와 비교해 어떤 효과가 나타나는가?</div>
+            
+            <div class="q-opt">① 증거를 더 희석한다</div>
+            
+            <div class="q-opt">② 핵심 토큰을 강조한다</div>
+            
+            <div class="q-opt">③ 토큰 집계가 필요 없어진다</div>
+            
+            <div class="q-opt">④ 재현율이 감소한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 핵심 토큰을 강조한다</div>
+              <div class="why">논문에서는 부정 로그오즈 그라디언트가 중요한 토큰을 다른 비정보 토큰으로부터 분리해 내어 기여 추적 성능을 크게 향상시킨다고 보고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">CATT</span><span class="tag">negative log-odds gradients</span><span class="tag">FTRACE-TREX</span><span class="tag">cross-entropy loss</span><span class="tag">LLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/CWdTBLsbaQs" target="_blank" rel="noopener">OpenAI Claims It Just Did The Impossible</a>
+        </h2>
+
+        <p class="summary">AI가 3‑SAT 지수 가설을 뒤집다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:40</span>
+            
+            <span>Exponential Time Hypothesis는 일부 문제는 효율적으로 풀 수 없다고 주장한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:56</span>
+            
+            <span>3SAT 문제는 변수와 절이 늘어날수록 조합이 급증해 실용적 해결이 어려워진다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:40</span>
+            
+            <span>OpenAI는 최신 연구에서 지수 시간 가설을 깨는 증명을 제시했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 증명 탐색을 활용해 머신러닝 파이프라인의 하이퍼파라미터 탐색을 자동화해 탐색 비용을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>AI를 이용해 물류 스케줄링의 조합 최적화 문제에 대한 새로운 휴리스틱을 생성하여 실행 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>AI 모델을 적용해 NP‑hard 문제인 작업 배정의 근사 알고리즘을 자동 설계해 기존 휴리스틱보다 품질을 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Exponential Time Hypothesis가 주로 언급하는 문제 유형은?</div>
+            
+            <div class="q-opt">① 3SAT</div>
+            
+            <div class="q-opt">② 선형 회귀</div>
+            
+            <div class="q-opt">③ K-최근접 이웃</div>
+            
+            <div class="q-opt">④ 의사결정 트리</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 3SAT</div>
+              <div class="why">본문에서 Exponential Time Hypothesis는 3SAT과 같은 문제들이 지수적으로 어려워 항상 효율적으로 풀 수 없다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">OpenAI</span><span class="tag">Two Minute Papers</span><span class="tag">Exponential Time Hypothesis</span><span class="tag">3SAT</span><span class="tag">Károly Zsolnai-Fehér</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/QMYWRoIlJqs" target="_blank" rel="noopener">개발 라이프사이클에서 AI가 변화시킨 것들 | AI시대의 개발자</a>
+        </h2>
+
+        <p class="summary">AI가 개발·디자인·QA 업무 변화와 인간 판단 포인트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI를 업무에 위임할 수 있는 영역과 한계를 현업 실무자가 직접 경험을 통해 공유한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>디자인, 개발, QA 각 단계에서 AI가 수행한 작업과 인간이 최종 판단해야 하는 결정적 지점을 짚는다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI와 인간 협업 모델을 통해 생산성을 높이면서도 품질과 책임을 유지하는 방안을 제시한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kakao</span><span class="tag">OpenAI</span><span class="tag">AI</span><span class="tag">디자인</span><span class="tag">QA</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/news/0907869" target="_blank" rel="noopener">모두가 함께 성장하는 기술 축제, NAVER Engineering Day 10년의 여정</a>
+        </h2>
+
+        <p class="summary">AI 경험 공유가 데이터 사이언스 협업을 강화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기술은 혼자 완성되지 않으며, 문제와 해결 과정을 동료와 공유할 때 조직 기술이 성장한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NAVER Engineering Day는 2016년 사내 개발자 행사로 시작해 10주년을 맞으며 발표와 경험 연결의 장으로 확대되었다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI가 업무 방식을 바꾸면서 도구 습득을 넘어 실제 문제에 적용하고 동료와 함께 해결하는 경험이 중요해졌다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>내부 AI 도구 공유 세션을 데이터 파이프라인 디버깅에 적용해 문제 해결 속도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>엔지니어링 데이 형식의 크로스‑펑셔널 데이터 사이언스 해커톤을 개최해 분야 간 협업을 촉진한다.</span></li>
+            
+            <li><span class="box"></span><span>시니어 데이터 사이언티스트가 AI 도구 활용 경험을 멘토링 프로그램으로 전파해 주니어의 실무 적용 능력을 향상시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 AI 도구를 단순히 아는 것보다 실제 문제에 적용하고 동료와 함께 해결하는 것이 강조되는가?</div>
+            
+            <div class="q-opt">① 도구 사용만으로는 업무 효율이 크게 개선되지 않기 때문이다</div>
+            
+            <div class="q-opt">② 협업을 통해 다양한 관점을 얻어 문제 해결이 가속화되기 때문이다</div>
+            
+            <div class="q-opt">③ AI 도구는 항상 정확하므로 검증이 필요 없기 때문이다</div>
+            
+            <div class="q-opt">④ 개인 학습이 팀 성과에 영향을 주지 않기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 협업을 통해 다양한 관점을 얻어 문제 해결이 가속화되기 때문이다</div>
+              <div class="why">본문은 AI 도구를 내 문제에 적용하고 막히는 지점을 동료와 함께 풀어 보는 경험이 중요하다고 강조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Engineering Day가 발표자 중심에서 경험 연결·협업 중심으로 변한 주요 이유는?</div>
+            
+            <div class="q-opt">① 발표자 수가 감소했기 때문이다</div>
+            
+            <div class="q-opt">② 조직 내 지식 공유와 실무 문제 해결이 필요했기 때문이다</div>
+            
+            <div class="q-opt">③ 외부 강연자를 초청하기 어려워졌기 때문이다</div>
+            
+            <div class="q-opt">④ 행사 비용을 절감하기 위해서이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 조직 내 지식 공유와 실무 문제 해결이 필요했기 때문이다</div>
+              <div class="why">본문에 따르면 행사는 발표를 듣는 자리에서 벗어나 서로의 경험을 연결하고 업무 문제를 함께 해결하는 장으로 확장되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NAVER Engineering Day</span><span class="tag">AI</span><span class="tag">Naver</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/AcaDDLAMi_o" target="_blank" rel="noopener">파라디의 경험은 어떻게 기회가 되는가?</a>
+        </h2>
+
+        <p class="summary">경험을 기회로 전환해 커리어 성장 전략을 제시</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>10분 테크토크를 통해 경험을 공유하고 자기 주도적 성장 문화를 형성한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>많은 일을 떠안는 이유를 성찰해 의미 있는 일과 열정을 재정의한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>개인의 경험을 다음 기회로 연결하는 방법을 고민해 커리어 발전에 활용한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">우아한테크코스</span><span class="tag">우아한테크</span><span class="tag">크루</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

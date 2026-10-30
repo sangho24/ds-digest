@@ -1,324 +1,244 @@
 {
   "contract_version": 1,
-  "date": "2026-10-30",
-  "generated_at": "2026-10-30T08:56:33.267730+09:00",
+  "date": "2026-10-31",
+  "generated_at": "2026-10-31T08:38:23.664889+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-30.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-10-31.html",
   "items": [
     {
-      "id": "0bce9f614bf1",
-      "title": "REGER: Modeling inter-item Relations with Semantic IDs for Generative Recommendation",
-      "url": "https://arxiv.org/abs/2610.37584v1",
+      "id": "daba7b5e4e64",
+      "title": "Elucidating the Design Space of LM Data Attribution",
+      "url": "https://arxiv.org/abs/2610.40655v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.IR"
+        "name": "arXiv:cs.CL"
       },
-      "published_at": "2026-10-27T17:25:12",
-      "summary": "아이템 간 관계를 반영한 추천 모델로 성능 향상",
-      "positioning": "개인화 추천에서는 아이템 간 의미·협업 관계를 동시에 학습해야 하지만 기존 생성적 추천은 무작위 SID 임베딩으로 의미 관계를 상속하지 못하고, 협업 관계는 토큰‑레벨 어텐션에 묻힌다. REGER는 의미 사전학습과 SID 경계에 맞춘 전·지역 어텐션, 그리고 SID 접두사 트리를 이용한 계층적 선호 분해를 도입해 이러한 한계를 극복하고, 실험에서 기존 GR 베이스라인보다 일관된 성능 향상을 보인다.",
+      "published_at": "2026-10-29T17:59:53",
+      "summary": "데이터 기여 원천 추적 정확도 향상 방법 제시",
+      "positioning": "이 논문은 기존 LLM 데이터 기여 평가가 데이터 속성 혼재로 원인 파악이 어려운 문제를 해결하고자 한다. 합성 지식으로 학습시킨 모델에 대해 하나씩 데이터 변수를 조절할 수 있는 Controlled Attribution Benchmark(CATT)를 제안한다. 또한 손실 함수와 토큰 점수 집계 방식을 재설계해 평가 정확도를 크게 높이며, 데이터 기여 추적 연구 흐름에서 평가 방법론을 한 단계 앞당긴다.",
       "tags": [
-        "REGER",
-        "Semantic IDs",
-        "generative recommendation",
-        "global attention",
-        "local attention"
+        "CATT",
+        "negative log-odds gradients",
+        "FTRACE-TREX",
+        "cross-entropy loss",
+        "LLM"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "REGER는 의미 사전학습과 SID 생성 과정을 통해 아이템 간 의미 유사성을 명시적으로 학습한다.",
+          "point": "기존 평가는 여러 데이터 속성을 동시에 바꾸어 원인 분석이 어려웠다.",
           "timestamp": null
         },
         {
-          "point": "SID 경계에 맞춘 전역·지역 어텐션을 결합해 히스토리 컨텍스트와 인접 아이템 전이 정보를 효과적으로 포착한다.",
+          "point": "CATT 벤치마크를 통해 문서 중복과 어휘 방해 요소가 기여 추적 성능을 크게 저하시킨다.",
           "timestamp": null
         },
         {
-          "point": "계층적 선호 분해 이론을 제시해 협업 선호 분포를 정확히 팩터화하고, KL 발산을 접두사 조건부 형태로 분해한다.",
+          "point": "부정 로그오즈 그라디언트와 상위 토큰 집계가 재현율을 35~72%p 향상시킨다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "생성적 의미 검색 사전학습을 전자상거래 상품 검색에 적용해 카테고리별 의미 ID를 생성, 검색 정확도와 재랭킹 효율을 높인다.",
-        "SID 접두사 트리를 활용한 계층적 선호 분해를 음악 플레이리스트 자동 생성에 적용해 사용자의 장르·분위기 선호를 단계별로 모델링, 다양성과 만족도를 향상시킨다.",
-        "전역·지역 어텐션을 세션 기반 광고 클릭 예측에 도입해 장기 행동 히스토리와 즉시 클릭 전이를 동시에 고려, 예측 정확도와 광고 효율을 개선한다."
+        "부정 로그오즈 그라디언트를 추천 시스템에 적용해 사용자‑아이템 상호작용 중 예측에 가장 큰 영향을 미치는 요소를 식별한다, 이는 모델 해석성을 높인다.",
+        "상위 토큰 집계 방식을 코드 생성 모델에 적용해 생성된 코드 조각에 기여한 원본 토큰을 강조함으로써 디버깅과 품질 검증을 용이하게 한다.",
+        "CATT와 유사한 합성 벤치마크를 비전 모델에 도입해 인위적인 이미지 라벨을 학습시킴으로써 데이터 증강이나 레이블 노이즈가 모델 기여 추적에 미치는 영향을 독립적으로 평가한다."
       ],
       "quiz": [
         {
-          "question": "REGER가 기존 생성적 추천 모델 대비 새롭게 도입한 핵심 메커니즘은 무엇인가?",
+          "question": "부정 로그오즈 그라디언트를 사용하면 기존 교차 엔트로피 그라디언트와 비교해 어떤 효과가 나타나는가?",
           "options": [
-            "무작위 초기화된 토큰 임베딩 사용",
-            "전역 및 지역 어텐션을 SID 경계에 맞춰 결합",
-            "사용자 행동을 직접 라벨링",
-            "이미지 특징 추출"
+            "증거를 더 희석한다",
+            "핵심 토큰을 강조한다",
+            "토큰 집계가 필요 없어진다",
+            "재현율이 감소한다"
           ],
           "answer_index": 1,
-          "explanation": "논문은 전역·지역 어텐션을 SID 경계에 맞춰 결합해 히스토리 컨텍스트와 인접 아이템 전이를 효과적으로 포착한다는 점을 강조한다."
-        },
-        {
-          "question": "논문에서 제시한 계층적 선호 분해는 어떤 분포를 정확히 분해한다고 주장하는가?",
-          "options": [
-            "사용자 클릭 분포",
-            "협업 선호 분포",
-            "아이템 인기도 분포",
-            "검색 쿼리 분포"
-          ],
-          "answer_index": 1,
-          "explanation": "연구는 협업 선호 분포를 정확히 팩터화하고, 이를 접두사 조건부 KL 발산 형태로 분해한다는 이론적 결과를 제시한다."
+          "explanation": "논문에서는 부정 로그오즈 그라디언트가 중요한 토큰을 다른 비정보 토큰으로부터 분리해 내어 기여 추적 성능을 크게 향상시킨다고 보고한다."
         }
       ]
     },
     {
-      "id": "94877bdadb39",
-      "title": "Kanana Vision Encoder: 글로벌 최고 수준에 도전하는 자체 비전 인코더 개발기 | Model & Agent",
-      "url": "https://youtu.be/J-1J-sAX-zk",
+      "id": "0fc6b606b49a",
+      "title": "OpenAI Claims It Just Did The Impossible",
+      "url": "https://youtu.be/CWdTBLsbaQs",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-10-30T15:57:16",
+      "summary": "AI가 3‑SAT 지수 가설을 뒤집다",
+      "positioning": null,
+      "tags": [
+        "OpenAI",
+        "Two Minute Papers",
+        "Exponential Time Hypothesis",
+        "3SAT",
+        "Károly Zsolnai-Fehér"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Exponential Time Hypothesis는 일부 문제는 효율적으로 풀 수 없다고 주장한다.",
+          "timestamp": "00:40"
+        },
+        {
+          "point": "3SAT 문제는 변수와 절이 늘어날수록 조합이 급증해 실용적 해결이 어려워진다.",
+          "timestamp": "01:56"
+        },
+        {
+          "point": "OpenAI는 최신 연구에서 지수 시간 가설을 깨는 증명을 제시했다.",
+          "timestamp": "03:40"
+        }
+      ],
+      "ideas": [
+        "AI 기반 증명 탐색을 활용해 머신러닝 파이프라인의 하이퍼파라미터 탐색을 자동화해 탐색 비용을 감소시킨다",
+        "AI를 이용해 물류 스케줄링의 조합 최적화 문제에 대한 새로운 휴리스틱을 생성하여 실행 시간을 단축한다",
+        "AI 모델을 적용해 NP‑hard 문제인 작업 배정의 근사 알고리즘을 자동 설계해 기존 휴리스틱보다 품질을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "Exponential Time Hypothesis가 주로 언급하는 문제 유형은?",
+          "options": [
+            "3SAT",
+            "선형 회귀",
+            "K-최근접 이웃",
+            "의사결정 트리"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서 Exponential Time Hypothesis는 3SAT과 같은 문제들이 지수적으로 어려워 항상 효율적으로 풀 수 없다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "320b3bac0667",
+      "title": "개발 라이프사이클에서 AI가 변화시킨 것들 | AI시대의 개발자",
+      "url": "https://youtu.be/QMYWRoIlJqs",
       "source": {
         "type": "youtube",
         "name": "kakao tech"
       },
-      "published_at": "2026-10-29T18:00:29",
-      "summary": "자체 비전 인코더로 효율·성능 겸비, 온디바이스 적용 가능",
+      "published_at": "2026-10-30T07:00:38",
+      "summary": "AI가 개발·디자인·QA 업무 변화와 인간 판단 포인트",
       "positioning": null,
       "tags": [
-        "카나나",
-        "시그립 2",
-        "펄셉션 인코더",
-        "젤립",
-        "슬라이딩 윈도우 어텐션"
+        "Kakao",
+        "OpenAI",
+        "AI",
+        "디자인",
+        "QA"
       ],
-      "relevance": 8,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "빅테크 비전 인코더는 복잡하고 막대한 학습 데이터·연산량을 요구한다",
-          "timestamp": "02:00"
+          "point": "AI를 업무에 위임할 수 있는 영역과 한계를 현업 실무자가 직접 경험을 통해 공유한다.",
+          "timestamp": null
         },
         {
-          "point": "통합 트랜스포머와 다음 토큰 예측 손실을 이용해 이미지-텍스트를 동시에 학습한다(JELIP)",
-          "timestamp": "04:00"
+          "point": "디자인, 개발, QA 각 단계에서 AI가 수행한 작업과 인간이 최종 판단해야 하는 결정적 지점을 짚는다.",
+          "timestamp": null
         },
         {
-          "point": "슬라이딩 윈도우 어텐션으로 고해상도 이미지 처리 시 계산량을 크게 줄인다",
-          "timestamp": "07:09"
+          "point": "AI와 인간 협업 모델을 통해 생산성을 높이면서도 품질과 책임을 유지하는 방안을 제시한다.",
+          "timestamp": null
         }
       ],
-      "ideas": [
-        "슬라이딩 윈도우 어텐션을 텍스트 LLM에 적용해 긴 문서 처리 시 계산량을 O(N·w)로 낮춰 추론 효율성을 높인다",
-        "JELIP 방식의 이미지‑텍스트 통합 학습을 오디오‑텍스트 멀티모달 모델에 적용해 오디오 특징을 텍스트 토큰과 함께 학습한다",
-        "LLM 가중치로 초기화한 비전 인코더를 전자상거래 제품 이미지 인코더에 활용해 언어 지식을 이미지 표현에 전이시켜 검색·추천 정확도를 높인다"
-      ],
-      "quiz": [
-        {
-          "question": "카카오가 자체 비전 인코더를 개발한 주요 이유는 무엇인가?",
-          "options": [
-            "외부 인코더가 한국 문화·한글에 부족했기 때문",
-            "학습 비용 절감",
-            "라이선스 문제 회피",
-            "데이터 부족"
-          ],
-          "answer_index": 0,
-          "explanation": "본문(03:03)에서 외부 비전 인코더가 한국 문화와 한글을 충분히 이해하지 못한다는 점을 들어 자체 인코더 필요성을 강조한다."
-        },
-        {
-          "question": "해상도가 4배 높아지면 풀 어텐션 대비 계산량은 어떻게 변하는가?",
-          "options": [
-            "4배 증가",
-            "8배 증가",
-            "16배 증가",
-            "변화 없음"
-          ],
-          "answer_index": 2,
-          "explanation": "본문(07:02)에서 해상도가 네 배 높아지면 계산량이 16배 늘어난다고 설명한다."
-        }
-      ]
+      "ideas": [],
+      "quiz": []
     },
     {
-      "id": "59ee81566869",
-      "title": "사이드카의 선언적 관리: OpenKruise SidecarSet 도입과 운영",
-      "url": "https://d2.naver.com/helloworld/2983631",
+      "id": "8769a7a35cb3",
+      "title": "모두가 함께 성장하는 기술 축제, NAVER Engineering Day 10년의 여정",
+      "url": "https://d2.naver.com/news/0907869",
       "source": {
         "type": "rss",
         "name": "D2 Blog"
       },
       "published_at": null,
-      "summary": "DB Pod 사이드카 선언적 업데이트로 운영 효율 향상",
+      "summary": "AI 경험 공유가 데이터 사이언스 협업을 강화",
       "positioning": null,
       "tags": [
-        "Kubernetes",
-        "OpenKruise",
-        "SidecarSet",
-        "kubelet",
-        "mutating webhook"
+        "NAVER Engineering Day",
+        "AI",
+        "Naver"
       ],
-      "relevance": 7,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "사이드카 이미지만 교체하려면 DB 컨테이너를 재시작하지 않는 in-place 업데이트가 필요하다",
+          "point": "기술은 혼자 완성되지 않으며, 문제와 해결 과정을 동료와 공유할 때 조직 기술이 성장한다.",
           "timestamp": null
         },
         {
-          "point": "Kubernetes는 Pod 템플릿을 수정하면 전체 Pod가 재생성돼 메인 컨테이너까지 재시작돼 사이드카만 교체하기 어렵다",
+          "point": "NAVER Engineering Day는 2016년 사내 개발자 행사로 시작해 10주년을 맞으며 발표와 경험 연결의 장으로 확대되었다.",
           "timestamp": null
         },
         {
-          "point": "OpenKruise SidecarSet은 선언적으로 사이드카를 관리·적용·모니터링해 운영 복잡성을 크게 낮춘다",
+          "point": "AI가 업무 방식을 바꾸면서 도구 습득을 넘어 실제 문제에 적용하고 동료와 함께 해결하는 경험이 중요해졌다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Spark on Kubernetes에서 로그·메트릭 사이드카를 SidecarSet 방식으로 선언해 Spark driver 재시작 없이 사이드카만 업데이트한다",
-        "VM 군집에 보안 에이전트를 배포할 때 조정 루프 기반 in-place 업데이트를 적용해 재부팅 없이 최신 버전으로 유지한다",
-        "IoT 엣지 디바이스에 모니터링 사이드카를 선언적으로 관리해 중앙에서 버전 일관성을 확보하고 디바이스 다운타임을 최소화한다"
+        "내부 AI 도구 공유 세션을 데이터 파이프라인 디버깅에 적용해 문제 해결 속도를 높인다.",
+        "엔지니어링 데이 형식의 크로스‑펑셔널 데이터 사이언스 해커톤을 개최해 분야 간 협업을 촉진한다.",
+        "시니어 데이터 사이언티스트가 AI 도구 활용 경험을 멘토링 프로그램으로 전파해 주니어의 실무 적용 능력을 향상시킨다."
       ],
       "quiz": [
         {
-          "question": "Kubernetes에서 Deployment 템플릿을 수정하면 사이드카만 교체되지 못하는 이유는?",
+          "question": "왜 AI 도구를 단순히 아는 것보다 실제 문제에 적용하고 동료와 함께 해결하는 것이 강조되는가?",
           "options": [
-            "Pod 템플릿 변경 시 전체 Pod가 재생성돼 모든 컨테이너가 재시작된다",
-            "kubelet은 사이드카 이미지만 자동으로 교체한다",
-            "사이드카 이미지는 불변으로 선언된다",
-            "Deployment는 사이드카 스펙을 지원하지 않는다"
+            "도구 사용만으로는 업무 효율이 크게 개선되지 않기 때문이다",
+            "협업을 통해 다양한 관점을 얻어 문제 해결이 가속화되기 때문이다",
+            "AI 도구는 항상 정확하므로 검증이 필요 없기 때문이다",
+            "개인 학습이 팀 성과에 영향을 주지 않기 때문이다"
           ],
-          "answer_index": 0,
-          "explanation": "Pod 템플릿을 바꾸면 Kubernetes는 해당 템플릿을 사용하는 모든 Pod를 새로 만들고, 이 과정에서 메인 컨테이너를 포함한 모든 컨테이너가 재시작된다."
+          "answer_index": 1,
+          "explanation": "본문은 AI 도구를 내 문제에 적용하고 막히는 지점을 동료와 함께 풀어 보는 경험이 중요하다고 강조한다."
         },
         {
-          "question": "본문에서 신뢰성 있는 사이드카 업데이트를 위해 컨트롤러가 갖춰야 할 네 가지 요소는?",
+          "question": "Engineering Day가 발표자 중심에서 경험 연결·협업 중심으로 변한 주요 이유는?",
           "options": [
-            "완료 판정, 동시성·범위 제어, 진행 집계, 컨트롤러 운영",
-            "이미지 서명, 네트워크 정책, 로그 수집, 자동 스케일링",
-            "Pod 재시작, 서비스 디스커버리, ConfigMap 관리, Helm 차트",
-            "Ingress 설정, Service Mesh, RBAC, PersistentVolume"
+            "발표자 수가 감소했기 때문이다",
+            "조직 내 지식 공유와 실무 문제 해결이 필요했기 때문이다",
+            "외부 강연자를 초청하기 어려워졌기 때문이다",
+            "행사 비용을 절감하기 위해서이다"
           ],
-          "answer_index": 0,
-          "explanation": "본문은 사이드카 업데이트를 위해 ‘완료 판정’, ‘동시성·범위 제어’, ‘진행 집계’, ‘컨트롤러 운영’ 네 가지가 필요하다고 명시한다."
+          "answer_index": 1,
+          "explanation": "본문에 따르면 행사는 발표를 듣는 자리에서 벗어나 서로의 경험을 연결하고 업무 문제를 함께 해결하는 장으로 확장되었다."
         }
       ]
     },
     {
-      "id": "bf60722217e9",
-      "title": "DeepSeek's New AI Is An Absolute Monster",
-      "url": "https://youtu.be/pryCaGv8wuo",
+      "id": "1c16e218e569",
+      "title": "파라디의 경험은 어떻게 기회가 되는가?",
+      "url": "https://youtu.be/AcaDDLAMi_o",
       "source": {
         "type": "youtube",
-        "name": "Two Minute Papers"
+        "name": "우아한테크"
       },
-      "published_at": "2026-10-28T17:32:40",
-      "summary": "자체 피드백 학습으로 비용 효율적인 대규모 LLM 활용 가능",
+      "published_at": "2026-10-30T09:00:38",
+      "summary": "경험을 기회로 전환해 커리어 성장 전략을 제시",
       "positioning": null,
       "tags": [
-        "DeepSeek",
-        "Claude Opus",
-        "Two Minute Papers",
-        "API",
-        "self-feedback"
+        "우아한테크코스",
+        "우아한테크",
+        "크루"
       ],
-      "relevance": 7,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "DeepSeek는 소프트웨어를 더 잘 만들고 터미널 조작 능력이 크게 향상되었습니다.",
-          "timestamp": "00:38"
-        },
-        {
-          "point": "토큰당 비용보다 작업당 비용을 고려해야 하며, DeepSeek는 같은 작업에 토큰을 2~3배 더 사용합니다.",
-          "timestamp": "01:09"
-        },
-        {
-          "point": "‘self-feedback 학습’은 모델이 스스로 결과를 비판하고 개선하는 방식으로, 더 많은 외부 데이터 없이 성능을 높입니다.",
-          "timestamp": "03:10"
-        }
-      ],
-      "ideas": [
-        "자체 피드백 학습 방식을 데이터 라벨링 파이프라인에 적용해 라벨러가 만든 라벨을 모델이 스스로 검증·수정하도록 하여 라벨 품질을 향상시킨다.",
-        "비용·토큰 기준 대신 작업당 비용 평가 방식을 사내 모델 선택 기준에 도입해, 동일 작업에 필요한 토큰 수 차이를 고려해 최적 모델을 선택한다.",
-        "대규모 오픈 가중치 모델을 활용해 특정 도메인에 맞는 경량 모델을 증류(distill)함으로써 노트북 수준 하드웨어에서도 고성능 추론이 가능하도록 한다."
-      ],
-      "quiz": [
-        {
-          "question": "DeepSeek의 토큰당 비용이 낮아 보이지만 실제 작업당 비용이 높을 수 있는 이유는 무엇인가?",
-          "options": [
-            "같은 작업에 더 많은 토큰을 사용하기 때문이다",
-            "가격표에 오류가 있기 때문이다",
-            "숨겨진 API 수수료가 있기 때문이다",
-            "모델 정확도가 낮기 때문이다"
-          ],
-          "answer_index": 0,
-          "explanation": "DeepSeek는 동일 작업을 수행할 때 Claude Opus보다 2~3배 더 많은 토큰을 사용하므로, 토큰당 비용이 낮아도 작업당 비용은 상대적으로 높아진다."
-        },
-        {
-          "question": "‘self-feedback 학습’의 핵심 개념은 무엇인가?",
-          "options": [
-            "외부 데이터셋을 추가로 수집한다",
-            "모델이 스스로 출력물을 비판하고 개선한다",
-            "인간 피드백을 통한 강화학습을 적용한다",
-            "대규모 사전학습을 진행한다"
-          ],
-          "answer_index": 1,
-          "explanation": "‘self-feedback 학습’은 모델이 자신의 결과를 평가·수정하면서 학습하는 방식으로, 외부 데이터 증강 없이 성능을 향상시킨다."
-        }
-      ]
-    },
-    {
-      "id": "3d7624039e69",
-      "title": "🥤옷 잘 파는 자라, 신발은 반스에게 손 내민 건",
-      "url": "https://trendlite.stibee.com/p/496",
-      "source": {
-        "type": "newsletter",
-        "name": "트렌드라이트"
-      },
-      "published_at": "2026-10-27T00:00:00",
-      "summary": "브랜드 협업이 매출·데이터 활용을 확대하는 사례",
-      "positioning": null,
-      "tags": [
-        "Zara",
-        "Vans",
-        "VF Corp",
-        "H&M",
-        "Uniqlo"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "Zara는 Vans의 대표 신발을 공급받아 매장에 판매해 제품 포트폴리오를 보완한다.",
+          "point": "10분 테크토크를 통해 경험을 공유하고 자기 주도적 성장 문화를 형성한다.",
           "timestamp": null
         },
         {
-          "point": "Vans는 Zara의 고객 흐름을 활용해 새로운 판매 채널을 확보하고 이미지 손상을 최소화한다.",
+          "point": "많은 일을 떠안는 이유를 성찰해 의미 있는 일과 열정을 재정의한다.",
           "timestamp": null
         },
         {
-          "point": "이 협업은 브랜드 헤리티지를 활용한 교차 판매와 데이터 기반 맞춤 제안으로 확장 가능성을 보여준다.",
+          "point": "개인의 경험을 다음 기회로 연결하는 방법을 고민해 커리어 발전에 활용한다.",
           "timestamp": null
         }
       ],
-      "ideas": [
-        "식료품점이 인기 스낵 브랜드 제품을 매장에 입점시켜 고객 장바구니 규모를 늘린다",
-        "SaaS 플랫폼이 서드파티 분석 툴을 대시보드에 통합해 기존 사용자 기반으로 기능 채택을 촉진한다",
-        "스트리밍 서비스가 유명 음악 레이블의 큐레이션 플레이리스트를 제공해 레이블의 헤리티지를 이용해 신규 구독자를 유입한다"
-      ],
-      "quiz": [
-        {
-          "question": "Zara가 Vans 신발을 직접 제조하지 않고 공급받아 판매한 주요 이유는?",
-          "options": [
-            "생산 비용 절감",
-            "브랜드 헤리티지와 신뢰 활용",
-            "디자인 제한 회피",
-            "물류 문제 해결"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서는 Zara가 Vans의 기존 인기 모델을 활용해 제품 포트폴리오를 보완하고, 소비자가 이미 신뢰하는 헤리티지를 이용한다는 점을 강조한다."
-        },
-        {
-          "question": "Vans가 이번 협업을 '협업이 아니다'라고 밝힌 근본적인 이유는?",
-          "options": [
-            "공동 디자인이 없어서",
-            "매출 감소를 보완하기 위해",
-            "브랜드 이미지 보호를 위해",
-            "공급 관계만 존재하기 때문"
-          ],
-          "answer_index": 3,
-          "explanation": "Vans는 자라가 일부 제품을 공급받아 판매하는 관계이며, 새로운 신발을 공동으로 만든 것이 아니라고 명시했다."
-        }
-      ]
+      "ideas": [],
+      "quiz": []
     }
   ]
 }
