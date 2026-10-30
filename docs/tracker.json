@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-10-29T02:01:30.137356+00:00",
+ "generated_at": "2026-10-30T02:17:27.246112+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -997,7 +997,7 @@
      "repo_id": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
      "created_at": "2026-10-07T22:50:21+00:00",
-     "last_modified": "2026-10-28T21:01:32+00:00",
+     "last_modified": "2026-10-29T23:04:39+00:00",
      "weights_at": "2026-10-07T22:50:21+00:00",
      "has_weights": true,
      "model_card_at": "2026-10-07T22:50:21+00:00",
@@ -3855,7 +3855,7 @@
      "repo_id": "LGAI-EXAONE/EXAONE-Path-2.0-rev-EGFR",
      "url": "https://huggingface.co/LGAI-EXAONE/EXAONE-Path-2.0-rev-EGFR",
      "created_at": "2026-03-04T11:42:00+00:00",
-     "last_modified": "2026-10-28T09:04:57+00:00",
+     "last_modified": "2026-10-30T02:17:11+00:00",
      "weights_at": "2026-03-04T11:42:00+00:00",
      "has_weights": true,
      "model_card_at": "2026-03-04T11:42:00+00:00",
@@ -4267,8 +4267,22 @@
    "kind": "weights-open",
    "priority": 2,
    "hf_org": "mistralai",
-   "tracked": 48,
+   "tracked": 49,
    "models": [
+    {
+     "repo_id": "mistralai/Mistral-Large-4-1T-A52B",
+     "url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
+     "created_at": "2026-09-30T18:35:13+00:00",
+     "last_modified": "2026-10-29T14:51:07+00:00",
+     "weights_at": "2026-09-30T18:35:13+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-09-30T18:35:13+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "mistralai/Mistral-Medium-3.5-128B-EAGLE",
      "url": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B-EAGLE",
@@ -4864,20 +4878,6 @@
      "license": "other",
      "gated": "false",
      "derivative": null
-    },
-    {
-     "repo_id": "mistralai/Mistral-7B-Instruct-v0.3",
-     "url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3",
-     "created_at": "2024-05-22T09:57:04+00:00",
-     "last_modified": "2025-12-03T12:13:48+00:00",
-     "weights_at": "2024-05-22T09:57:04+00:00",
-     "has_weights": true,
-     "model_card_at": "2024-05-22T09:57:04+00:00",
-     "report_at": null,
-     "arxiv_ids": [],
-     "license": "apache-2.0",
-     "gated": "false",
-     "derivative": "finetune"
     }
    ]
   },
@@ -6451,6 +6451,29 @@
  ],
  "recent_events": [
   {
+   "org": "mistral",
+   "repo_id": "mistralai/Mistral-Large-4-1T-A52B",
+   "transition": "repo_created",
+   "observed_at": "2026-10-30T02:17:27.246112Z",
+   "at": "2026-10-29T14:51:07Z",
+   "source_url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2026-09-30T18:35:13+00:00"
+   }
+  },
+  {
    "org": "google-open",
    "repo_id": "google/embeddinggemma-2",
    "transition": "report_published",
@@ -7901,26 +7924,11 @@
     "surfaced": true,
     "created_at": "2026-02-19T20:58:31+00:00"
    }
-  },
-  {
-   "org": "openai",
-   "repo_id": "https://openai.com/index/introducing-gpt-6-1-sol",
-   "transition": "announced",
-   "observed_at": "2026-09-30T01:45:58.684189Z",
-   "at": "2026-09-29T10:00:00Z",
-   "source_url": "https://openai.com/index/introducing-gpt-6-1-sol",
-   "method": "official_rss",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "title": "Introducing GPT-6.1 Sol"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 648,
-  "events": 659
+  "models": 649,
+  "events": 660
  }
 }
