@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import date
 import io
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -1013,6 +1014,150 @@ def test_labeling_html_skips_duplicate_ids():
     assert judge.dedupe_label_questions(_fake_disagreements())[1] == 0
 
 
+def _fake_items_with_body() -> list[dict]:
+    """본문이 있는 아이템 2개, 질문 각 3개. 원문 전문(template) 과 강조 인용 테스트용."""
+    body_a = "앞부분 설명.\n\n피어 교차   검증을 쓴다. <script>alert(1)</script> 300개 과제와 3000개 구현이 있다."
+    body_b = "다중 정답을 반영해 300개 과제의 테스트 품질을 측정한다."
+
+    def question(label_id: str, kind: str, index: int, quote: str | None, verified: bool) -> dict:
+        return {
+            "id": label_id,
+            "question": kind,
+            "index": index,
+            "text": f"{kind} {index}",
+            "verdicts": {
+                "deepseek": {
+                    **{f: True for f in judge._QUESTION_FIELDS[kind]},
+                    "quote": quote,
+                    "quote_verified": verified,
+                }
+            },
+            "excerpt": judge.body_excerpt(body_a, [quote]),
+            "human": None,
+        }
+
+    return [
+        {
+            "date": "2026-10-12",
+            "url": "https://example.com/a",
+            "title": "제목 a",
+            "analysis_hash": "aaaaaaaaaaaa",
+            "prompt_hash": PROMPT_HASH,
+            "judges": ["deepseek"],
+            "body": body_a,
+            "truncated": False,
+            "questions": [
+                # 인용에 연속 공백·개행을 섞는다: data-quote 는 정규화된 값이어야 한다
+                question("id-a-sum-0", "summary", 0, "피어  교차\n검증을 쓴다", True),
+                question("id-a-kp-0", "key_points", 0, None, False),
+                question("id-a-quiz-0", "quiz", 0, "300개 과제", True),
+            ],
+        },
+        {
+            "date": "2026-10-11",
+            "url": "https://example.com/b",
+            "title": "제목 b",
+            "analysis_hash": "bbbbbbbbbbbb",
+            "prompt_hash": PROMPT_HASH,
+            "judges": ["deepseek"],
+            "body": body_b,
+            "truncated": True,
+            "questions": [
+                question("id-b-sum-0", "summary", 0, "다중 정답", True),
+                question("id-b-kp-0", "key_points", 0, "없는 인용", False),
+                question("id-b-idea-0", "production_ideas", 0, None, False),
+            ],
+        },
+    ]
+
+
+def test_labeling_html_full_body_template_once_per_item():
+    page = judge.build_labeling_html(_fake_items_with_body())
+    # 아이템 2개 → template 2개, 질문 6개 → details.full 6개
+    assert page.count("<template id=") == 2
+    assert page.count('<details class="full"><summary>원문 전문 보기</summary><div class="fulltext"></div></details>') == 6
+    assert page.count('data-body="body-0"') == 3 and page.count('data-body="body-1"') == 3
+    assert '<template id="body-0">' in page
+    # 잘린 본문은 template 에 표식이 붙는다
+    assert '<template id="body-1" data-truncated="1">' in page
+    assert "(심판이 본 본문은 여기까지다)" in page
+    # template 내용은 normalize_ws 로 공백이 정리된다
+    assert "피어 교차 검증을 쓴다." in page and "피어 교차   검증" not in page
+    # 기존 "본문 발췌" 는 그대로, 안내문은 전문을 언급한다
+    assert page.count("<summary>본문 발췌</summary>") == 6
+    assert "본문 발췌와 원문 전문을 보고" in page
+    # 질문 순서와 id 는 그대로
+    ids = re.findall(r'data-id="([^"]+)"', page)
+    assert ids == ["id-a-sum-0", "id-a-kp-0", "id-a-quiz-0", "id-b-sum-0", "id-b-kp-0", "id-b-idea-0"]
+    # template 은 해당 아이템의 첫 질문 앞에 온다
+    assert page.index('<template id="body-0">') < page.index('data-id="id-a-sum-0"')
+    assert page.index('data-id="id-a-quiz-0"') < page.index('<template id="body-1"') < page.index('data-id="id-b-sum-0"')
+
+
+def test_labeling_html_full_body_escapes_script():
+    page = judge.build_labeling_html(_fake_items_with_body())
+    assert "<script>alert" not in page
+    assert "&lt;script&gt;alert(1)&lt;/script&gt;" in page
+    # JS 는 본문을 innerHTML 로 넣지 않는다
+    assert "innerHTML" not in judge._LABELING_JS
+    assert "createTextNode" in judge._LABELING_JS and "createElement('mark')" in judge._LABELING_JS
+
+
+def test_labeling_html_full_body_highlight_quote_attr():
+    page = judge.build_labeling_html(_fake_items_with_body())
+    sections = re.findall(r"<section [^>]*>", page)
+    by_id = {re.search(r'data-id="([^"]+)"', s).group(1): s for s in sections}
+    # 검증된 인용은 data-quote 로 섹션에 실린다. 값은 normalize_ws 로 정규화돼 있다(연속 공백·개행 → 한 칸)
+    assert 'data-quote="피어 교차 검증을 쓴다"' in by_id["id-a-sum-0"]
+    assert "피어  교차" not in by_id["id-a-sum-0"] and "\n" not in by_id["id-a-sum-0"]
+    # JS 는 인용을 다시 정규화하지 않는다(파이썬 \s 와 JS \s 의 공백 집합이 달라서)
+    assert "/\\s+/g" not in judge._LABELING_JS and "\\s" not in judge._LABELING_JS
+    assert 'data-quote="300개 과제"' in by_id["id-a-quiz-0"]
+    # 인용이 없으면 data-quote 가 없고, 검증되지 않은 인용뿐이면 그 인용을 쓴다
+    assert "data-quote" not in by_id["id-a-kp-0"]
+    assert 'data-quote="없는 인용"' in by_id["id-b-kp-0"]
+    # 여러 심판이면 verified 인용을 우선한다
+    assert judge._highlight_quote_of(
+        {"a": {"quote": "미검증", "quote_verified": False}, "b": {"quote": "검증됨", "quote_verified": True}}
+    ) == "검증됨"
+    assert judge._highlight_quote_of({"a": {"quote": None}, "b": {"quote": "하나뿐", "quote_verified": False}}) == "하나뿐"
+    assert judge._highlight_quote_of({"a": {"quote": None}}) is None
+
+
+def test_labeling_html_without_body_has_no_template():
+    # _fake_disagreements 는 body 가 없는 외부 JSON 형식이다
+    page = judge.build_labeling_html(_fake_disagreements())
+    assert "<template id=" not in page and 'class="full"' not in page and "data-body" not in page
+    assert page.count("<summary>본문 발췌</summary>") == 2  # excerpt 가 None 인 질문은 "본문 발췌 없음"
+    assert "본문 발췌 없음" in page
+    assert page.count('class="q"') == 3
+
+
+def test_labeling_html_same_analysis_hash_different_body_keeps_own_template():
+    """같은 analysis_hash 라도 url 이나 body 가 다르면 각자 자기 본문을 본다. 해시가 None 이어도 섞이지 않는다."""
+    items = _fake_items_with_body()
+    twin = dict(items[0], url="https://example.com/a2", body="쌍둥이 아이템의 다른 본문이다.", questions=[
+        dict(items[0]["questions"][0], id="id-a2-sum-0"),
+    ])
+    none_a = dict(items[1], analysis_hash=None, body="해시 없는 본문 하나", questions=[dict(items[1]["questions"][0], id="id-n1")])
+    none_b = dict(items[1], analysis_hash=None, body="해시 없는 본문 둘", questions=[dict(items[1]["questions"][0], id="id-n2")])
+    page = judge.build_labeling_html([items[0], twin, none_a, none_b])
+    assert page.count("<template id=") == 4
+    # 각 섹션이 가리키는 template 에 자기 본문이 들어 있다
+    for label_id, body_id, text in (
+        ("id-a-sum-0", "body-0", "피어 교차 검증을 쓴다."),
+        ("id-a2-sum-0", "body-1", "쌍둥이 아이템의 다른 본문이다."),
+        ("id-n1", "body-2", "해시 없는 본문 하나"),
+        ("id-n2", "body-3", "해시 없는 본문 둘"),
+    ):
+        section = re.search(rf'<section [^>]*data-id="{label_id}"[^>]*>', page).group(0)
+        assert f'data-body="{body_id}"' in section
+        template = re.search(rf'<template id="{body_id}"[^>]*>(.*?)</template>', page, re.S).group(1)
+        assert text in template
+    assert "쌍둥이 아이템의 다른 본문이다." not in re.search(r'<template id="body-0"[^>]*>(.*?)</template>', page, re.S).group(1)
+    assert page.count('class="q"') == 6  # 질문 3 + 1 + 1 + 1
+
+
 def test_cli_labeling_and_import_labels_roundtrip(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(judge, "load_project_env", lambda *a, **k: False)
     monkeypatch.setattr(judge, "RECORDS_DIR", tmp_path / "records")
@@ -1288,6 +1433,10 @@ def test_cli_labeling_sample_mode(tmp_path, monkeypatch, capsys):
     page = out.read_text(encoding="utf-8")
     assert "층화 무작위 표본 2건 (seed 5, 심판 deepseek" in page
     assert page.count("<summary>심판 판정 보기</summary>") == 12 and page.count('class="q"') == 12
+    # 원문 전문: 아이템당 template 하나(순번 id), 질문마다 "원문 전문 보기"
+    assert page.count("<template id=") == 2 and page.count('class="full"') == 12
+    assert page.count('data-body="body-0"') == 6 and page.count('data-body="body-1"') == 6
+    assert "본문 발췌와 원문 전문을 보고" in page
     # 같은 seed 로 다시 만들면 같은 페이지, 다른 심판은 행이 없다
     assert judge.main(["labeling", "--sample", "2", "--seed", "5", "--out", str(out)]) == 0
     assert out.read_text(encoding="utf-8") == page

@@ -1374,6 +1374,8 @@ def find_disagreements(
     """두 심판이 어느 질문이든 엇갈린 아이템을 사람 표시용으로 낸다.
 
     targets 가 주어지고 current_keys 가 없으면 targets 에서 정본 키를 만들어 옛 analysis 행을 거른다.
+    아이템에는 원문 전문(body)이 통째로 들어가므로 `disagreements --out` JSON 이 커진다. 그 JSON 을
+    `labeling --in` 으로 되읽을 때 "원문 전문 보기" 를 보이려면 전문이 함께 실려 있어야 해서 그렇다.
     """
     if current_keys is None and targets is not None:
         current_keys = {(str(t["url"]), t["analysis_hash"]) for t in targets if t.get("url")}
@@ -1434,6 +1436,9 @@ def find_disagreements(
                     "analysis_hash": key[1],
                     "prompt_hash": key[2],
                     "judges": [first, second],
+                    # 정규화 전 원문. 사람 표시 페이지가 "원문 전문 보기" 에 싣는다. target 이 없으면 None.
+                    "body": body or None,
+                    "truncated": bool((target or {}).get("truncated")),
                     "questions": questions,
                 }
             )
@@ -1590,6 +1595,9 @@ def build_sample_items(
                     "prompt_hash": p_hash,
                     "judges": [judge_id],
                     "stratum": stratum_label(stratum),
+                    # 정규화 전 원문. 사람 표시 페이지가 "원문 전문 보기" 에 싣는다. target 이 없으면 None.
+                    "body": body or None,
+                    "truncated": bool((target or {}).get("truncated")),
                     "questions": questions,
                 }
             )
@@ -1730,7 +1738,41 @@ def _quotes_only_html(verdicts: dict[str, Any]) -> str:
     )
 
 
-def _question_html(item: dict[str, Any], question: dict[str, Any], *, hide_verdicts: bool = False) -> str:
+def _body_template_id(position: int) -> str:
+    """아이템 원문을 담는 <template> 의 id. 페이지 안 아이템 순번으로 만들어 충돌이 없다.
+
+    analysis_hash 나 url 로 만들면 같은 해시에 다른 본문, 혹은 해시가 None 인 아이템끼리 template 을
+    나눠 쓰게 되어 뒤 아이템이 앞 아이템 본문을 보게 된다.
+    """
+    return f"body-{position}"
+
+
+def _highlight_quote_of(verdicts: dict[str, Any]) -> str | None:
+    """전문에서 <mark> 로 강조할 인용 하나. 본문에서 검증된 인용을 먼저, 없으면 첫 인용."""
+    views = [v for v in verdicts.values() if isinstance(v, dict) and v.get("quote")]
+    for view in views:
+        if view.get("quote_verified"):
+            return str(view["quote"])
+    return str(views[0]["quote"]) if views else None
+
+
+def _body_template_html(item: dict[str, Any], body_id: str) -> str:
+    """아이템 원문 전문을 비활성 <template> 에 한 번만 싣는다. 질문 섹션이 data-body 로 가리킨다.
+
+    본문은 normalize_ws 로 공백을 정리하고 이스케이프한다. 잘린 본문(truncated)은 data-truncated
+    로 표시해 JS 가 끝에 안내 한 줄을 붙인다.
+    """
+    body = item.get("body")
+    if not body:
+        return ""
+    truncated = ' data-truncated="1"' if item.get("truncated") else ""
+    return f'<template id="{_esc(body_id)}"{truncated}>{_esc(normalize_ws(body))}</template>'
+
+
+def _question_html(
+    item: dict[str, Any], question: dict[str, Any], *, hide_verdicts: bool = False, body_id: str | None = None
+) -> str:
+    """질문 하나의 섹션. body_id 가 있고 아이템에 body 가 있으면 "원문 전문 보기" 를 붙인다."""
     kind = str(question.get("question"))
     index = question.get("index")
     label_id = _label_id_of(item, question)
@@ -1754,24 +1796,36 @@ def _question_html(item: dict[str, Any], question: dict[str, Any], *, hide_verdi
         if excerpt
         else '<p class="excerpt none">본문 발췌 없음</p>'
     )
+    # 원문 전문: 아이템에 body 가 있을 때만. 내용은 <template> 에 한 번 실리고 처음 펼칠 때 JS 가 채운다.
+    # data-quote 는 template 본문과 같은 규칙(normalize_ws)으로 미리 정규화해 두어 JS 는 indexOf 만 한다.
+    # (파이썬 \s 와 JS \s 의 공백 집합이 달라 JS 쪽에서 다시 정규화하면 어긋날 수 있다.)
+    if item.get("body") and body_id:
+        highlight = normalize_ws(_highlight_quote_of(verdicts))
+        body_attrs = f' data-body="{_esc(body_id)}"' + (
+            f' data-quote="{_esc(highlight)}"' if highlight else ""
+        )
+        full_html = '<details class="full"><summary>원문 전문 보기</summary><div class="fulltext"></div></details>'
+    else:
+        body_attrs = ""
+        full_html = ""
     title = item.get("title") or item.get("url") or "(제목 없음)"
     return (
         f'<section class="q" data-id="{_esc(label_id)}" data-url="{_esc(item.get("url"))}"'
         f' data-analysis-hash="{_esc(item.get("analysis_hash"))}" data-prompt-hash="{_esc(item.get("prompt_hash"))}"'
-        f' data-question="{_esc(kind)}" data-index="{_esc(index)}">'
+        f' data-question="{_esc(kind)}" data-index="{_esc(index)}"{body_attrs}>'
         f'<div class="meta">{_esc(item.get("date"))} · <a href="{_esc(item.get("url"))}" target="_blank" rel="noopener">'
         f"{_esc(title)}</a> · {QUESTION_LABELS_KO.get(kind, _esc(kind))} #{_esc(index)}</div>"
         f'<p class="target">{_esc(question.get("text"))}</p>'
         f'<div class="verdicts">{verdict_blocks}</div>'
-        f"{excerpt_html}"
+        f"{excerpt_html}{full_html}"
         f'<div class="human">{radios} <input type="text" class="note" placeholder="한 줄 메모" maxlength="200"></div>'
         "</section>"
     )
 
 
 _LABELING_CSS = """
-:root{--bg:#fff;--fg:#1b1b1b;--muted:#666;--line:#ddd;--yes:#1a7f37;--no:#b42318;--box:#f6f7f9}
-@media(prefers-color-scheme:dark){:root{--bg:#121417;--fg:#e8e8e8;--muted:#9a9a9a;--line:#333;--yes:#4ade80;--no:#f87171;--box:#1c2026}}
+:root{--bg:#fff;--fg:#1b1b1b;--muted:#666;--line:#ddd;--yes:#1a7f37;--no:#b42318;--box:#f6f7f9;--mark:#fff3a3}
+@media(prefers-color-scheme:dark){:root{--bg:#121417;--fg:#e8e8e8;--muted:#9a9a9a;--line:#333;--yes:#4ade80;--no:#f87171;--box:#1c2026;--mark:#6b5b00}}
 body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
 main{max-width:860px;margin:0 auto}
 h1{font-size:20px;margin:0 0 4px}
@@ -1793,6 +1847,10 @@ blockquote{margin:6px 0 2px;padding-left:10px;border-left:3px solid var(--line);
 details{margin:6px 0}
 .excerpt{white-space:pre-wrap;word-break:break-word;font-size:14px;color:var(--muted)}
 .excerpt.none{font-style:italic}
+details.full>summary{cursor:pointer}
+.fulltext{position:relative;white-space:pre-wrap;word-break:break-word;font-size:14px;max-height:60vh;overflow:auto;padding:8px 10px;background:var(--box);border-radius:6px}
+.fulltext mark{background:var(--mark);color:inherit}
+.fulltext .trunc{color:var(--muted);font-style:italic;margin:10px 0 0}
 .human{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .human label{white-space:nowrap}
 .note{flex:1 1 200px;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
@@ -1825,6 +1883,42 @@ _LABELING_JS = """
   }
   document.addEventListener('change',refresh);
   refresh();
+  // 원문 전문: 처음 펼칠 때 한 번만 <template> 내용을 복사해 채운다. 본문은 textNode 로만 넣는다.
+  // 본문과 data-quote 는 둘 다 파이썬 normalize_ws 로 정규화돼 있어 여기서는 indexOf 만 한다.
+  function fillFull(d){
+    var s=d.closest('.q');
+    var box=d.querySelector('.fulltext');
+    var tpl=s&&s.dataset.body?document.getElementById(s.dataset.body):null;
+    if(!box||!tpl) return;
+    var text=tpl.content?tpl.content.textContent:tpl.textContent;
+    var quote=s.dataset.quote||'';
+    var at=quote?text.indexOf(quote):-1;
+    var mark=null;
+    if(at>=0){
+      box.appendChild(document.createTextNode(text.slice(0,at)));
+      mark=document.createElement('mark');
+      mark.appendChild(document.createTextNode(text.slice(at,at+quote.length)));
+      box.appendChild(mark);
+      box.appendChild(document.createTextNode(text.slice(at+quote.length)));
+    }else{
+      box.appendChild(document.createTextNode(text));
+    }
+    if(tpl.dataset.truncated){
+      var tail=document.createElement('p');
+      tail.className='trunc';
+      tail.textContent='(심판이 본 본문은 여기까지다)';
+      box.appendChild(tail);
+    }
+    // 창 전체가 아니라 .fulltext 박스만 스크롤해 강조를 가운데 둔다(.fulltext 가 position:relative 라 offsetTop 기준이 박스다)
+    if(mark) box.scrollTop=Math.max(0,mark.offsetTop-box.clientHeight/2);
+  }
+  document.querySelectorAll('.q details.full').forEach(function(d){
+    d.addEventListener('toggle',function(){
+      if(!d.open||d.dataset.filled) return;
+      d.dataset.filled='1';
+      fillFull(d);
+    });
+  });
   var btn=document.getElementById('copy');
   if(btn) btn.addEventListener('click',function(){
     var text=JSON.stringify(collect(),null,2);
@@ -1895,12 +1989,18 @@ def build_labeling_html(
         body = f'<p class="empty">{_esc(message)}</p>'
         foot = ""
     else:
-        sections = "".join(
-            _question_html(item, question, hide_verdicts=hide_verdicts)
-            for item in items
-            for question in item.get("questions") or []
-        )
-        body = sections
+        # 원문 전문은 아이템당 한 번만 <template> 로 싣는다(질문마다 반복하면 페이지가 수 MB 가 된다).
+        # id 는 아이템 순번이라 같은 analysis_hash 나 None 해시끼리도 서로 본문이 섞이지 않는다.
+        parts: list[str] = []
+        for position, item in enumerate(items):
+            body_id = _body_template_id(position) if item.get("body") else None
+            if body_id:
+                parts.append(_body_template_html(item, body_id))
+            parts.extend(
+                _question_html(item, question, hide_verdicts=hide_verdicts, body_id=body_id)
+                for question in item.get("questions") or []
+            )
+        body = "".join(parts)
         foot = (
             '<div class="foot"><button id="copy" type="button">결과 JSON 복사</button>'
             '<span id="status"></span><textarea id="fallback" readonly></textarea></div>'
@@ -1919,7 +2019,7 @@ def build_labeling_html(
         "<h1>LLM 심판 사람 표시</h1>"
         f"{header_html}"
         f'<p class="lead">{lead}'
-        "본문 발췌를 보고 산출물에 근거가 있는지 표시한 뒤, 하단에서 결과 JSON 을 복사해"
+        "본문 발췌와 원문 전문을 보고 산출물에 근거가 있는지 표시한 뒤, 하단에서 결과 JSON 을 복사해"
         " <code>python -m evals.judge import-labels</code> 로 반입한다.</p>"
         f"{body}{foot}"
         f"</main><script>{_LABELING_JS}</script></body></html>\n"
