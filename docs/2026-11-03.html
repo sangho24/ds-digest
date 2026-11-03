@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 03일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 03일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">멀티모달 표현 학습</span><span class="concept">강화학습</span><span class="concept">모델 파인튜닝</span><span class="concept">멀티에이전트 시스템</span><span class="concept">AI 생산성 도구</span><span class="concept">AI와 인간 협업</span><span class="concept">작업 격리</span><span class="concept">GPU 가속</span><span class="concept">디자인 트레이드오프</span><span class="concept">스타트업 성장 지표</span><span class="concept">데이터 기반 벤치마킹</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2610.42149v1" target="_blank" rel="noopener">Latent Reasoning in Continuous Space for Unified Multimodal Models</a>
+        </h2>
+
+        <p class="summary">연속 잠재공간 추론으로 이미지 생성 품질·제어 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기존 멀티모달 모델은 이산 토큰 공간에서의 체인‑오브‑생각 추론을 이미지 생성의 연속 공간에 그대로 적용하려다 제어와 스케일링 한계에 봉착했다. LARC는 연속 잠재 상태에서 추론하도록 설계돼 토큰‑이미지 불일치를 해소하고, 커리큘럼 기반 SFT와 정보‑이득 RL을 결합한 두 단계 학습으로 성능을 끌어올린다. 이는 멀티모달 생성 모델이 대형 언어 모델과 동일한 테스트‑타임 확장성을 확보하도록 하는 새로운 연구 흐름이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>UMM은 토큰 기반 추론과 연속 이미지 생성 사이의 모달리티 불일치로 성능 한계가 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LARC는 연속 잠재 상태에서 추론함으로써 토큰 레벨 병목을 해소한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>커리큘럼 SFT와 정보이득 RL 두 단계 학습으로 GenEval에서 7%p 향상 및 테스트‑타임 스케일링을 달성한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>수음 합성에서 연속 음향 잠재 공간에 대한 잠재 추론을 적용해 억양·리듬 제어를 강화한다</span></li>
+            
+            <li><span class="box"></span><span>로봇 제어에서 상징적 플래닝을 연속 잠재 플래닝으로 전이시키는 커리큘럼 SFT를 도입해 정책 학습 안정성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>비디오 합성에서 정보‑이득 RL을 활용해 라벨 없는 프레임 시퀀스의 잠재 코드를 스스로 개선해 시간 일관성을 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 기존 UMM은 이미지 생성에 체인‑오브‑생각 추론을 효과적으로 활용하지 못하는가?</div>
+            
+            <div class="q-opt">① 추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다</div>
+            
+            <div class="q-opt">② 학습 데이터가 부족하기 때문이다</div>
+            
+            <div class="q-opt">③ 구조가 오래된 아키텍처를 사용하기 때문이다</div>
+            
+            <div class="q-opt">④ 언어를 처리하지 못하기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다</div>
+              <div class="why">초록에서 모달리티 불일치(이산 토큰 vs 연속 이미지)로 인해 한계가 있다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LARC의 학습 프레임워크는 어떤 두 단계로 구성되는가?</div>
+            
+            <div class="q-opt">① 지도 학습과 비지도 학습</div>
+            
+            <div class="q-opt">② 커리큘럼 SFT와 정보‑이득 RL</div>
+            
+            <div class="q-opt">③ 적대적 학습과 대조 학습</div>
+            
+            <div class="q-opt">④ 자기 지도 마스킹과 지식 증류</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 커리큘럼 SFT와 정보‑이득 RL</div>
+              <div class="why">논문 요약에 커리큘럼 감독 미세조정(SFT)과 정보‑이득 강화학습(RL) 단계가 있다고 적혀 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LARC</span><span class="tag">UMMs</span><span class="tag">GenEval</span><span class="tag">BAGEL</span><span class="tag">RL</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">한컴 AI</div>
+
+        <h2 class="title">
+          <a href="https://hai-hancom.stibee.com/p/184" target="_blank" rel="noopener">👋게임 속으로 들어온 AI</a>
+        </h2>
+
+        <p class="summary">AI NPC와 데이터 기반 툴이 게임 혁신을 이끈다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI가 NPC의 대화와 행동을 실시간 사용자 음성 입력에 따라 조정한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>게임 개발 전반에 AI 도구(3D 모델링, 음성 합성, 번역, QA 자동화 등)가 도입돼 생산성을 높인다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사용자도 AI 기반 플랫폼으로 직접 게임을 제작·공유하며 창작자가 될 수 있다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 음성 기반 NPC 제어 방식을 산업 안전 시뮬레이터에 적용해 훈련자가 음성 명령으로 AI 에이전트를 조작하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>VARCO 3D와 같은 2D→3D 변환 도구를 전자상거래에서 2D 제품 사진을 3D 모델로 자동 생성해 시각화 비용을 절감한다</span></li>
+            
+            <li><span class="box"></span><span>넷마블의 AI 번역 일관성 검증 기술을 기업 문서 번역 파이프라인에 도입해 다국어 용어 통일성을 자동 확보한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">게임 내 AI 동료 '엘라'가 작동하기 위해 활용된 데이터 수집 방법은 무엇인가?</div>
+            
+            <div class="q-opt">① 온라인 설문 조사</div>
+            
+            <div class="q-opt">② PC방에서 1천 명 이용자와 4만 판 플레이</div>
+            
+            <div class="q-opt">③ 공개된 오픈소스 데이터</div>
+            
+            <div class="q-opt">④ 인게임 로그만 사용</div>
+            
+            <div class="q-answer">
+              <div class="correct">② PC방에서 1천 명 이용자와 4만 판 플레이</div>
+              <div class="why">크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 AI 캐릭터와 약 4만 판을 플레이하도록 하여 실제 플레이 데이터를 학습 자료로 사용했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">크래프톤</span><span class="tag">NC AI</span><span class="tag">VARCO</span><span class="tag">넷마블</span><span class="tag">Playground</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/2265641" target="_blank" rel="noopener">컨테이너처럼 쓰고, VM처럼 격리하기</a>
+        </h2>
+
+        <p class="summary">GPU Kata 컨테이너로 격리와 배포 효율 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Kata-Containers는 컨테이너의 사용 편의성과 VM 수준의 격리를 동시에 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU 지원이 추가돼 격리된 환경에서도 고성능 연산이 가능해졌다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>해당 내용은 NAVER Engineering Day 10th에서 발표된 세션이다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Kata-Containers 기반 GPU 격리 환경을 Jupyter Notebook 서비스에 적용해 다중 사용자의 GPU 사용 충돌을 방지한다.</span></li>
+            
+            <li><span class="box"></span><span>엣지 디바이스에서 AI 추론을 수행할 때 Kata-Containers를 이용해 모델별 격리와 GPU 할당을 자동화한다.</span></li>
+            
+            <li><span class="box"></span><span>서버리스 플랫폼에 Kata-Containers와 GPU를 결합해 함수 단위로 GPU 자원을 안전하게 할당한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Kata-Containers가 제공하는 주요 장점은 무엇인가?</div>
+            
+            <div class="q-opt">① 컨테이너와 같은 빠른 시작</div>
+            
+            <div class="q-opt">② VM 수준의 격리</div>
+            
+            <div class="q-opt">③ 무제한 GPU 공유</div>
+            
+            <div class="q-opt">④ 자동 스케일링</div>
+            
+            <div class="q-answer">
+              <div class="correct">② VM 수준의 격리</div>
+              <div class="why">Kata-Containers는 컨테이너의 경량성은 유지하면서 VM 수준의 강력한 격리를 제공한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">이 발표가 공개된 행사는 어디인가?</div>
+            
+            <div class="q-opt">① Google I/O</div>
+            
+            <div class="q-opt">② NAVER Engineering Day 10th</div>
+            
+            <div class="q-opt">③ AWS re:Invent</div>
+            
+            <div class="q-opt">④ Microsoft Build</div>
+            
+            <div class="q-answer">
+              <div class="correct">② NAVER Engineering Day 10th</div>
+              <div class="why">본문에 따르면 해당 세션은 NAVER Engineering Day 10th에서 발표되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kata-Containers</span><span class="tag">GPU</span><span class="tag">NAVER Engineering Day</span><span class="tag">NAVER D2</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://news.ycombinator.com/item?id=50340088" target="_blank" rel="noopener">Show HN: Subvocal – Talk to your computer without making noise</a>
+        </h2>
+
+        <p class="summary">RF 무음 음성 인식으로 텍스트 변환, 센서·ML 기법 소개</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>EMG 기반 무음 음성 인식은 땀, 전기 간섭, 전극 위치 변동, 착용 불편 등으로 실용성이 떨어졌다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RF 안테나를 안경에 배치해 얼굴을 통과하는 전파가 혀·입술·연부구개와 상호작용하면서 발생하는 미세 변조를 감지한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>수집된 RF 변조 데이터를 기반으로 대규모 foundation model을 학습시켜 실시간 텍스트 디코딩을 구현했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>RF 기반 저노이즈 센서를 활용해 화상 회의에서 얼굴 표정·미세 움직임을 실시간 감정 분석에 적용해 감정 인식 정확도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>RF 무음 음성 감지 기술을 VR 헤드셋에 적용해 사용자가 입을 움직이지 않고도 손쉽게 명령을 입력하도록 하여 마이크 사용을 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>안테나 필드 변조 방식을 이용해 손 제스처를 감지하고 이를 실시간 수화 번역 시스템에 연결해 청각 장애인과 비청각 사용자 간 소통을 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">EMG 방식이 무음 음성 인식에 부적합한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 땀에 의한 신호 변동</div>
+            
+            <div class="q-opt">② 전력 소모가 높음</div>
+            
+            <div class="q-opt">③ 데이터 라벨링이 어려움</div>
+            
+            <div class="q-opt">④ 가격이 비쌈</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 땀에 의한 신호 변동</div>
+              <div class="why">본문에 따르면 EMG는 땀, 전기 간섭, 전극 위치 변동 등으로 신호가 불안정하고, 얼굴에 전극을 부착하는 불편함 때문에 실용성이 떨어졌다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">RF 센싱 시스템이 무음 말하기를 텍스트로 변환하는 원리는 무엇인가?</div>
+            
+            <div class="q-opt">① 음향 진동을 직접 측정한다</div>
+            
+            <div class="q-opt">② 전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다</div>
+            
+            <div class="q-opt">③ 적외선 반사 패턴을 분석한다</div>
+            
+            <div class="q-opt">④ 뇌파(EEG)를 해석한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다</div>
+              <div class="why">본문에 따르면 안경에서 방출된 라디오파가 입 안 구조를 통과하며 말할 때 발생하는 미세 변조를 측정하고, 이를 모델이 텍스트로 디코딩한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Subvocal</span><span class="tag">RF</span><span class="tag">EMG</span><span class="tag">AlterEgo</span><span class="tag">MIT Media Lab</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/684" target="_blank" rel="noopener">📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다</a>
+        </h2>
+
+        <p class="summary">거래액 상승 후 채용 시점이 성장에 미치는 영향 분석</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>거래액이 상승한 스타트업은 평균 3개월 이내에 인력을 추가한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>인력 확대 후 1년 동안 거래액 변화는 다양해 일부는 크게 증가하거나 감소한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>거래액·고용 시점 연계 분석은 성장 전략 수립에 활용 가능하다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>월별 매출과 신규 기능 출시 시점을 연계해 churn 변화를 예측함으로써 제품 출시 타이밍을 최적화한다</span></li>
+            
+            <li><span class="box"></span><span>소매 체인에서 월별 매출과 신규 직원 채용 데이터를 분석해 인력 예산 배분 시점을 정량적으로 결정한다</span></li>
+            
+            <li><span class="box"></span><span>마케팅 비용 급증 시점과 이후 인력 확대 시점을 연결해 기업 성장에 미치는 영향을 평가하고, 마케팅 ROI를 개선한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">거래액 상승 후 인력 확대가 1년 뒤 거래액에 미치는 결과는 무엇인가?</div>
+            
+            <div class="q-opt">① 거래액이 반드시 증가한다</div>
+            
+            <div class="q-opt">② 거래액이 감소하거나 증가할 수 있다</div>
+            
+            <div class="q-opt">③ 거래액 변동과 무관하다</div>
+            
+            <div class="q-opt">④ 인력 확대가 성장에 부정적이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 거래액이 감소하거나 증가할 수 있다</div>
+              <div class="why">본문에서는 인력 확대 후 1년 동안 거래액이 다양하게 변했으며, 일부는 크게 증가하고 일부는 감소했다고 언급한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">데이터와 고용 시점을 연계한 분석이 스타트업 성장 전략에 제공하는 주요 인사이트는?</div>
+            
+            <div class="q-opt">① 인력 규모와 매출 성장 사이의 인과관계 파악</div>
+            
+            <div class="q-opt">② 시장 점유율 예측</div>
+            
+            <div class="q-opt">③ 제품 기능 우선순위 결정</div>
+            
+            <div class="q-opt">④ 고객 만족도 측정</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 인력 규모와 매출 성장 사이의 인과관계 파악</div>
+              <div class="why">본문은 거래액 상승과 채용 시점을 함께 분석해 성장 지표를 이해하는 방법을 제시한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">혁신의숲</span><span class="tag">Growth Bridge</span><span class="tag">Nexus Connect</span><span class="tag">LOTTE</span><span class="tag">LG디스플레이</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

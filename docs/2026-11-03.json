@@ -1,0 +1,312 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-03",
+  "generated_at": "2026-11-03T11:02:08.092919+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-03.html",
+  "items": [
+    {
+      "id": "e318697021c8",
+      "title": "Latent Reasoning in Continuous Space for Unified Multimodal Models",
+      "url": "https://arxiv.org/abs/2610.42149v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-10-30T17:59:43",
+      "summary": "연속 잠재공간 추론으로 이미지 생성 품질·제어 향상",
+      "positioning": "기존 멀티모달 모델은 이산 토큰 공간에서의 체인‑오브‑생각 추론을 이미지 생성의 연속 공간에 그대로 적용하려다 제어와 스케일링 한계에 봉착했다. LARC는 연속 잠재 상태에서 추론하도록 설계돼 토큰‑이미지 불일치를 해소하고, 커리큘럼 기반 SFT와 정보‑이득 RL을 결합한 두 단계 학습으로 성능을 끌어올린다. 이는 멀티모달 생성 모델이 대형 언어 모델과 동일한 테스트‑타임 확장성을 확보하도록 하는 새로운 연구 흐름이다.",
+      "tags": [
+        "LARC",
+        "UMMs",
+        "GenEval",
+        "BAGEL",
+        "RL"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "UMM은 토큰 기반 추론과 연속 이미지 생성 사이의 모달리티 불일치로 성능 한계가 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "LARC는 연속 잠재 상태에서 추론함으로써 토큰 레벨 병목을 해소한다.",
+          "timestamp": null
+        },
+        {
+          "point": "커리큘럼 SFT와 정보이득 RL 두 단계 학습으로 GenEval에서 7%p 향상 및 테스트‑타임 스케일링을 달성한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "수음 합성에서 연속 음향 잠재 공간에 대한 잠재 추론을 적용해 억양·리듬 제어를 강화한다",
+        "로봇 제어에서 상징적 플래닝을 연속 잠재 플래닝으로 전이시키는 커리큘럼 SFT를 도입해 정책 학습 안정성을 높인다",
+        "비디오 합성에서 정보‑이득 RL을 활용해 라벨 없는 프레임 시퀀스의 잠재 코드를 스스로 개선해 시간 일관성을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 기존 UMM은 이미지 생성에 체인‑오브‑생각 추론을 효과적으로 활용하지 못하는가?",
+          "options": [
+            "추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다",
+            "학습 데이터가 부족하기 때문이다",
+            "구조가 오래된 아키텍처를 사용하기 때문이다",
+            "언어를 처리하지 못하기 때문이다"
+          ],
+          "answer_index": 0,
+          "explanation": "초록에서 모달리티 불일치(이산 토큰 vs 연속 이미지)로 인해 한계가 있다고 명시한다."
+        },
+        {
+          "question": "LARC의 학습 프레임워크는 어떤 두 단계로 구성되는가?",
+          "options": [
+            "지도 학습과 비지도 학습",
+            "커리큘럼 SFT와 정보‑이득 RL",
+            "적대적 학습과 대조 학습",
+            "자기 지도 마스킹과 지식 증류"
+          ],
+          "answer_index": 1,
+          "explanation": "논문 요약에 커리큘럼 감독 미세조정(SFT)과 정보‑이득 강화학습(RL) 단계가 있다고 적혀 있다."
+        }
+      ]
+    },
+    {
+      "id": "975a4b5da7f6",
+      "title": "👋게임 속으로 들어온 AI",
+      "url": "https://hai-hancom.stibee.com/p/184",
+      "source": {
+        "type": "newsletter",
+        "name": "한컴 AI"
+      },
+      "published_at": "2026-11-02T00:00:00",
+      "summary": "AI NPC와 데이터 기반 툴이 게임 혁신을 이끈다",
+      "positioning": null,
+      "tags": [
+        "크래프톤",
+        "NC AI",
+        "VARCO",
+        "넷마블",
+        "Playground"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI가 NPC의 대화와 행동을 실시간 사용자 음성 입력에 따라 조정한다",
+          "timestamp": null
+        },
+        {
+          "point": "게임 개발 전반에 AI 도구(3D 모델링, 음성 합성, 번역, QA 자동화 등)가 도입돼 생산성을 높인다",
+          "timestamp": null
+        },
+        {
+          "point": "사용자도 AI 기반 플랫폼으로 직접 게임을 제작·공유하며 창작자가 될 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "AI 음성 기반 NPC 제어 방식을 산업 안전 시뮬레이터에 적용해 훈련자가 음성 명령으로 AI 에이전트를 조작하도록 한다",
+        "VARCO 3D와 같은 2D→3D 변환 도구를 전자상거래에서 2D 제품 사진을 3D 모델로 자동 생성해 시각화 비용을 절감한다",
+        "넷마블의 AI 번역 일관성 검증 기술을 기업 문서 번역 파이프라인에 도입해 다국어 용어 통일성을 자동 확보한다"
+      ],
+      "quiz": [
+        {
+          "question": "게임 내 AI 동료 '엘라'가 작동하기 위해 활용된 데이터 수집 방법은 무엇인가?",
+          "options": [
+            "온라인 설문 조사",
+            "PC방에서 1천 명 이용자와 4만 판 플레이",
+            "공개된 오픈소스 데이터",
+            "인게임 로그만 사용"
+          ],
+          "answer_index": 1,
+          "explanation": "크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 AI 캐릭터와 약 4만 판을 플레이하도록 하여 실제 플레이 데이터를 학습 자료로 사용했다."
+        }
+      ]
+    },
+    {
+      "id": "aac7b3c52b2a",
+      "title": "컨테이너처럼 쓰고, VM처럼 격리하기",
+      "url": "https://d2.naver.com/helloworld/2265641",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "GPU Kata 컨테이너로 격리와 배포 효율 확보",
+      "positioning": null,
+      "tags": [
+        "Kata-Containers",
+        "GPU",
+        "NAVER Engineering Day",
+        "NAVER D2"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "Kata-Containers는 컨테이너의 사용 편의성과 VM 수준의 격리를 동시에 제공한다.",
+          "timestamp": null
+        },
+        {
+          "point": "GPU 지원이 추가돼 격리된 환경에서도 고성능 연산이 가능해졌다.",
+          "timestamp": null
+        },
+        {
+          "point": "해당 내용은 NAVER Engineering Day 10th에서 발표된 세션이다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Kata-Containers 기반 GPU 격리 환경을 Jupyter Notebook 서비스에 적용해 다중 사용자의 GPU 사용 충돌을 방지한다.",
+        "엣지 디바이스에서 AI 추론을 수행할 때 Kata-Containers를 이용해 모델별 격리와 GPU 할당을 자동화한다.",
+        "서버리스 플랫폼에 Kata-Containers와 GPU를 결합해 함수 단위로 GPU 자원을 안전하게 할당한다."
+      ],
+      "quiz": [
+        {
+          "question": "Kata-Containers가 제공하는 주요 장점은 무엇인가?",
+          "options": [
+            "컨테이너와 같은 빠른 시작",
+            "VM 수준의 격리",
+            "무제한 GPU 공유",
+            "자동 스케일링"
+          ],
+          "answer_index": 1,
+          "explanation": "Kata-Containers는 컨테이너의 경량성은 유지하면서 VM 수준의 강력한 격리를 제공한다."
+        },
+        {
+          "question": "이 발표가 공개된 행사는 어디인가?",
+          "options": [
+            "Google I/O",
+            "NAVER Engineering Day 10th",
+            "AWS re:Invent",
+            "Microsoft Build"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 해당 세션은 NAVER Engineering Day 10th에서 발표되었다."
+        }
+      ]
+    },
+    {
+      "id": "a31b3b7224a8",
+      "title": "Show HN: Subvocal – Talk to your computer without making noise",
+      "url": "https://news.ycombinator.com/item?id=50340088",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "RF 무음 음성 인식으로 텍스트 변환, 센서·ML 기법 소개",
+      "positioning": null,
+      "tags": [
+        "Subvocal",
+        "RF",
+        "EMG",
+        "AlterEgo",
+        "MIT Media Lab"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "EMG 기반 무음 음성 인식은 땀, 전기 간섭, 전극 위치 변동, 착용 불편 등으로 실용성이 떨어졌다",
+          "timestamp": null
+        },
+        {
+          "point": "RF 안테나를 안경에 배치해 얼굴을 통과하는 전파가 혀·입술·연부구개와 상호작용하면서 발생하는 미세 변조를 감지한다",
+          "timestamp": null
+        },
+        {
+          "point": "수집된 RF 변조 데이터를 기반으로 대규모 foundation model을 학습시켜 실시간 텍스트 디코딩을 구현했다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "RF 기반 저노이즈 센서를 활용해 화상 회의에서 얼굴 표정·미세 움직임을 실시간 감정 분석에 적용해 감정 인식 정확도를 높인다",
+        "RF 무음 음성 감지 기술을 VR 헤드셋에 적용해 사용자가 입을 움직이지 않고도 손쉽게 명령을 입력하도록 하여 마이크 사용을 최소화한다",
+        "안테나 필드 변조 방식을 이용해 손 제스처를 감지하고 이를 실시간 수화 번역 시스템에 연결해 청각 장애인과 비청각 사용자 간 소통을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "EMG 방식이 무음 음성 인식에 부적합한 주요 이유는 무엇인가?",
+          "options": [
+            "땀에 의한 신호 변동",
+            "전력 소모가 높음",
+            "데이터 라벨링이 어려움",
+            "가격이 비쌈"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 EMG는 땀, 전기 간섭, 전극 위치 변동 등으로 신호가 불안정하고, 얼굴에 전극을 부착하는 불편함 때문에 실용성이 떨어졌다."
+        },
+        {
+          "question": "RF 센싱 시스템이 무음 말하기를 텍스트로 변환하는 원리는 무엇인가?",
+          "options": [
+            "음향 진동을 직접 측정한다",
+            "전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다",
+            "적외선 반사 패턴을 분석한다",
+            "뇌파(EEG)를 해석한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 안경에서 방출된 라디오파가 입 안 구조를 통과하며 말할 때 발생하는 미세 변조를 측정하고, 이를 모델이 텍스트로 디코딩한다."
+        }
+      ]
+    },
+    {
+      "id": "b331b0ce87c9",
+      "title": "📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다",
+      "url": "https://innoforest.stibee.com/p/684",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-11-01T00:00:00",
+      "summary": "거래액 상승 후 채용 시점이 성장에 미치는 영향 분석",
+      "positioning": null,
+      "tags": [
+        "혁신의숲",
+        "Growth Bridge",
+        "Nexus Connect",
+        "LOTTE",
+        "LG디스플레이"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "거래액이 상승한 스타트업은 평균 3개월 이내에 인력을 추가한다",
+          "timestamp": null
+        },
+        {
+          "point": "인력 확대 후 1년 동안 거래액 변화는 다양해 일부는 크게 증가하거나 감소한다",
+          "timestamp": null
+        },
+        {
+          "point": "거래액·고용 시점 연계 분석은 성장 전략 수립에 활용 가능하다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "월별 매출과 신규 기능 출시 시점을 연계해 churn 변화를 예측함으로써 제품 출시 타이밍을 최적화한다",
+        "소매 체인에서 월별 매출과 신규 직원 채용 데이터를 분석해 인력 예산 배분 시점을 정량적으로 결정한다",
+        "마케팅 비용 급증 시점과 이후 인력 확대 시점을 연결해 기업 성장에 미치는 영향을 평가하고, 마케팅 ROI를 개선한다"
+      ],
+      "quiz": [
+        {
+          "question": "거래액 상승 후 인력 확대가 1년 뒤 거래액에 미치는 결과는 무엇인가?",
+          "options": [
+            "거래액이 반드시 증가한다",
+            "거래액이 감소하거나 증가할 수 있다",
+            "거래액 변동과 무관하다",
+            "인력 확대가 성장에 부정적이다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 인력 확대 후 1년 동안 거래액이 다양하게 변했으며, 일부는 크게 증가하고 일부는 감소했다고 언급한다."
+        },
+        {
+          "question": "데이터와 고용 시점을 연계한 분석이 스타트업 성장 전략에 제공하는 주요 인사이트는?",
+          "options": [
+            "인력 규모와 매출 성장 사이의 인과관계 파악",
+            "시장 점유율 예측",
+            "제품 기능 우선순위 결정",
+            "고객 만족도 측정"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 거래액 상승과 채용 시점을 함께 분석해 성장 지표를 이해하는 방법을 제시한다."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,425 @@
+{
+  "date": "2026-11-03",
+  "generated_at": "2026-11-03T02:02:08.098499",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Latent Reasoning in Continuous Space for Unified Multimodal Models",
+        "url": "https://arxiv.org/abs/2610.42149v1",
+        "published_at": "2026-10-30T17:59:43",
+        "transcript": null,
+        "body": "Unified Multimodal Models (UMMs) achieve remarkable success on diverse multimodal understanding and generation tasks, yet they still struggle to effectively leverage language-based chain-of-thought reasoning for image generation. As a result, existing reasoning-augmented UMMs often fail to inherit the test-time scaling and fine-grained controllability observed in large language models. We attribute this failure to a fundamental modality mismatch: reasoning is performed in a discrete token space, whereas image generation operates in a continuous space. To bridge this gap, we introduce a Latent Reasoning framework in Continuous space (LARC), which alleviates the token-level bottleneck by reasoning over continuous hidden states. Specifically, the training framework consists of two stages: (i) curriculum supervised fine-tuning (SFT), and (ii) information-gain reinforcement learning (RL). First, the curriculum SFT stage gradually converts token-level reasoning into latent reasoning. Subsequently, the information-gain RL stage self-evolves latent reasoning without ground truth supervision. Experiments across diverse text-to-image generation benchmarks show that LARC consistently improves generation quality, prompt following, and compositional fidelity. Notably, LARC achieves state-of-the-art performance on GenEval with a 7%p gain over BAGEL and demonstrates clear test-time scaling behavior, outperforming token-based generation under both parallel and sequential test-time scaling strategies.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "연속 잠재공간 추론으로 이미지 생성 품질·제어 향상",
+        "tags": [
+          "LARC",
+          "UMMs",
+          "GenEval",
+          "BAGEL",
+          "RL"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "강화학습",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "UMM은 토큰 기반 추론과 연속 이미지 생성 사이의 모달리티 불일치로 성능 한계가 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "LARC는 연속 잠재 상태에서 추론함으로써 토큰 레벨 병목을 해소한다.",
+            "timestamp": null
+          },
+          {
+            "point": "커리큘럼 SFT와 정보이득 RL 두 단계 학습으로 GenEval에서 7%p 향상 및 테스트‑타임 스케일링을 달성한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기존 멀티모달 모델은 이산 토큰 공간에서의 체인‑오브‑생각 추론을 이미지 생성의 연속 공간에 그대로 적용하려다 제어와 스케일링 한계에 봉착했다. LARC는 연속 잠재 상태에서 추론하도록 설계돼 토큰‑이미지 불일치를 해소하고, 커리큘럼 기반 SFT와 정보‑이득 RL을 결합한 두 단계 학습으로 성능을 끌어올린다. 이는 멀티모달 생성 모델이 대형 언어 모델과 동일한 테스트‑타임 확장성을 확보하도록 하는 새로운 연구 흐름이다.",
+        "production_ideas": [
+          "수음 합성에서 연속 음향 잠재 공간에 대한 잠재 추론을 적용해 억양·리듬 제어를 강화한다",
+          "로봇 제어에서 상징적 플래닝을 연속 잠재 플래닝으로 전이시키는 커리큘럼 SFT를 도입해 정책 학습 안정성을 높인다",
+          "비디오 합성에서 정보‑이득 RL을 활용해 라벨 없는 프레임 시퀀스의 잠재 코드를 스스로 개선해 시간 일관성을 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 UMM은 이미지 생성에 체인‑오브‑생각 추론을 효과적으로 활용하지 못하는가?",
+            "options": [
+              "추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다",
+              "학습 데이터가 부족하기 때문이다",
+              "구조가 오래된 아키텍처를 사용하기 때문이다",
+              "언어를 처리하지 못하기 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "초록에서 모달리티 불일치(이산 토큰 vs 연속 이미지)로 인해 한계가 있다고 명시한다."
+          },
+          {
+            "question": "LARC의 학습 프레임워크는 어떤 두 단계로 구성되는가?",
+            "options": [
+              "지도 학습과 비지도 학습",
+              "커리큘럼 SFT와 정보‑이득 RL",
+              "적대적 학습과 대조 학습",
+              "자기 지도 마스킹과 지식 증류"
+            ],
+            "answer_index": 1,
+            "explanation": "논문 요약에 커리큘럼 감독 미세조정(SFT)과 정보‑이득 강화학습(RL) 단계가 있다고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "한컴 AI",
+        "source_key": "hai-hancom.stibee.com",
+        "source_label": "한컴 AI",
+        "title": "👋게임 속으로 들어온 AI",
+        "url": "https://hai-hancom.stibee.com/p/184",
+        "published_at": "2026-11-02T00:00:00",
+        "transcript": null,
+        "body": "👋 게임 속 캐릭터가 내 말을 알아듣고 상황에 맞춰 움직이기 시작했어. 👋 게임을 만드는 과정에서도 AI를 활용하는 일이 늘고 있어.  👋 AI로 직접 게임을 만들어 공유하는 이용자도 늘고 있지.\n\nHAI! 내가 왔어  , 이달 19일 부산에서 국내 최대 게임 전시회 '지스타(G-STAR) 2026'이 개막해. 올해는 눈에 띄는 변화가 하나 있어. 지스타 역사상 처음으로 게임사가 아닌 AI 서비스 기업이 메인 스폰서를 맡았거든. 게임 전시회의 중심에 AI 기업이 등장했다는 점에서 눈길을 끄는 변화야. 오늘은 게임 속 캐릭터부터 개발 현장, 새로운 AI 놀이까지 게임 산업에 들어온 AI를 살펴볼게.\n\n정해진 대사 대신 내 말에 답하는 캐릭터\n\n• 게임 속 NPC(Non-Player Character)는 이용자가 직접 조종하지 않는 캐릭터야. 마을 주민이나 상점 주인처럼 게임 속에서 특정한 역할을 맡고 있지. 기존 NPC는 주로 개발자가 미리 정해 놓은 대사와 행동에 따라 움직였어. 캐릭터에게 여러 번 말을 걸어도 비슷한 대답이 돌아오곤 했지. 하지만 요즘은 이용자의 말을 이해하고 게임 속 상황에 맞춰 행동하는 AI 캐릭터가 등장하고 있어.\n\n• 크래프톤은 지난 6월 배틀그라운드에 AI 동료와 2인 팀을 이루는 모드 '엘라이 듀오(Ally Duo)'를 선보였어. 6월 17일부터 7월 1일까지 약 2주간 운영된 베타 서비스였지. 이용자가 마이크로 지시하면 AI 캐릭터 '엘라(Ella)'가 말을 알아듣고 함께 이동하거나 아이템을 모아. [실제 팀원과 대화하듯 AI 동료와 소통하며 전투](https://www.pubg.com/ko/news/10179)를 펼칠 수 있도록 한 거야.\n\n• 이런 AI 동료를 만들기 위해 게임 개발 과정에서 실제 이용자들의 플레이도 활용했어. 크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 개발 중인 AI 캐릭터와 약 4만 판을 플레이하도록 했지. [AI 캐릭터가 게임 속에서 자연스럽게 행동하도록 실제 이용자들의 플레이를 학습 자료로 삼은 거야](https://www.digitaltoday.co.kr/news/articleView.html?idxno=684016).\n\n• 현실처럼 집을 꾸미고 사람들과 관계를 맺으며 살아가는 게임 '인조이(inZOI)'에도 AI 캐릭터 '스마트 조이(Smart Zoi)'가 등장해. 스마트 조이는 이용자와 함께 게임을 즐기는 캐릭터를 뜻하는 CPC(Co-Playable Character) 기술을 활용했어. 개발자가 미리 정해 놓은 행동만 반복하는 대신 주변 상황을 분석하고 그에 맞춰 움직이는 것이 특징이지. [이용자가 직접 조작하지 않아도 게임 속 주민들이 주변 상황에 맞춰 행동](https://playinzoi.com/ko/news/8419)하는 거야.\n\n• 위메이드넥스트가 개발 중인 게임 '미르5'에는 AI 보스 '아스테리온'이 등장해. 미르5는 여러 이용자가 같은 가상 세계에 접속해 캐릭터를 성장시키고 다른 이용자와 함께 모험하는 게임이야. 아스테리온은 플레이어의 행동 패턴을 분석하고 전투 상황에 맞춰 전술을 바꿔. [플레이어가 어떻게 싸우느냐에 따라 보스의 대응도 달라지는 거지](https://www.kmib.co.kr/article/20250325500520).\n\n• 이용자와 대화하며 함께 싸우는 동료부터 주변 상황에 맞춰 행동하는 주민, 이용자의 행동 패턴에 따라 전술을 바꾸는 적까지 등장했어. 게임 속 캐릭터가 정해진 역할을 수행하는 데서 나아가 이용자와 더욱 다양한 방식으로 상호작용하고 있는 거야.\n\n게임 개발에는 AI가 어떻게 쓰이고 있을까?\n\n• 지난 6월 열린 넥슨 개발자 콘퍼런스(NDC, Nexon Developers Conference)에서는 전체 51개 발표 가운데 15개가 AI를 주제로 다뤘어. [게임 개발자들이 기술과 경험을 공유하는 자리에서도 AI가 주요 화제](https://www.seoul.co.kr/news/society/2026/06/11/20260611500060)로 떠오른 거야. AI를 활용하는 분야도 캐릭터에만 머물지 않아. 그래픽과 음성, 번역, 테스트까지 게임 제작 과정 곳곳에서 활용되고 있지.\n\n• 엔씨의 AI 기술 자회사 NC AI는 게임 제작을 돕는 AI 도구 '바르코(VARCO)'를 개발했어. 배경이나 사물을 입체로 만드는 '바르코 3D', 캐릭터의 목소리를 만드는 '바르코 보이스' 같은 도구들이 있지. 리니지M 배경 원화 팀은 직접 그린 2D 이미지를 바르코 3D를 이용해 입체 모델로 바꿔. 이렇게 만든 모델을 활용해 배경 구도를 잡는 거야. 덕분에 같은 시간 안에 더 다양한 구도를 시도해볼 수 있게 됐지. 바르코 보이스는 대사를 글로 입력하거나 녹음한 음성을 넣으면 캐릭터의 성격과 상황에 맞는 목소리를 만들어줘. [게임 배경을 그리는 일부터 캐릭터의 목소리를 제작하는 일까지 AI를 활용하는 범위가 넓어진 거야.](https://about.ncsoft.com/news/article/gameai_01_260424)\n\n[출처: 바르코 3D](https://3d.varco.ai/)\n\n• 게임을 해외에 선보이려면 캐릭터의 대사부터 아이템과 스킬 설명까지 현지 언어로 옮겨야 해. 이때 같은 아이템의 이름이 장면마다 다르게 번역되거나 캐릭터의 말투가 뒤섞이지 않도록 확인하는 작업도 필요하지. [넷마블이 개발한 AI 번역 기술은 32개 언어를 지원해.](https://www.newspim.com/news/view/20261016000903) 번역한 문장에서 게임 속 용어와 말투가 일관되게 사용됐는지, 사용하면 안 되는 표현이 들어 있지는 않은지 자동으로 확인하는 기술도 개발하고 있어. 번역과 검수에서 반복되는 일을 AI가 도와, 여러 나라에 게임을 선보이는 데 드는 시간과 수고를 줄이려는 거야.\n\n• '파이널 판타지' 시리즈를 만든 일본 게임사 [스퀘어 에닉스는 2027년 말까지 게임의 품질을 확인하고 오류를 수정하는 작업의 70%를 생성형 AI로 자동화](https://www.hankyung.com/article/2026082648231)하겠다는 목표를 밝혔어. 게임이 제대로 작동하는지 확인하는 작업을 품질보증(QA, Quality Assurance)이라고 해. 개발자는 게임을 여러 번 실행하면서 오류가 없는지 살펴봐야 하는데, 이처럼 반복적인 작업에 AI를 활용하려는 거지.\n\n게임을 즐기는 사람에서 만드는 사람으로\n\n• 게임을 하다가 '나라면 여기에 이런 규칙을 넣을 텐데'라고 생각해본 적 있어? 이제 그 아이디어를 AI와 함께 게임으로 만들어볼 수 있어. 남이 만든 게임을 즐기던 이용자가 직접 게임을 만들어 다른 사람을 초대하는 쪽으로도 나서는 거야.\n\n• 만드는 방식은 대화에 가까워. 원하는 게임을 글로 설명하면 AI가 기본 형태를 만들고, 이용자는 만들어진 게임을 바로 실행해봐. 마음에 들지 않는 규칙이나 캐릭터, 배경은 바꿔달라고 요청하면서 다듬는 거지. 아직 이용 대상이나 기능을 제한해 시험하는 서비스도 있지만, 이렇게 게임을 만들고 공유하도록 돕는 플랫폼들이 늘고 있어.\n\n• 구글이 지난 10월 7일 미국의 성인 이용자를 대상으로 선보인 게임 제작 플랫폼 '플레이그라운드(Playground)'에서는 제작부터 공유까지 할 수 있어. 게임 제작 기능은 구글 AI 구독 등급에 따라 순차적으로 제공돼. [완성한 게임은 링크로 친구에게 보내거나 다른 이용자들이 즐길 수 있도록 공개](https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/)할 수도 있지. 내가 만든 게임을 다른 사람이 플레이하고, 나도 다른 이용자의 게임을 즐길 수 있는 공간이야.\n\n• 좋아하는 게임 속 캐릭터로 나만의 게임을 만들 수도 있어. 지난 6월 게임 제작 플랫폼 '버스8(Verse8)'에 문을 연 'MSU 스페이스(Space)'에서는 창작자로 등록하면 메이플스토리 유니버스가 제공하는 공식 캐릭터와 몬스터, 아이템 자료를 활용할 수 있어. [익숙한 소재를 골라 AI의 도움으로 나만의 게임을 만들고 공개](https://docs.msu.io/msu-space/getting-started-with-msu-space)하는 거야.\n\n• 게임을 만드는 데 꼭 컴퓨터가 있어야 하는 것도 아니야. 로블록스는 지난 7월 모바일 앱에서 AI로 게임을 만드는 기능 '빌드(Build)'를 발표하고, 뉴질랜드에서 일부 기능을 시범적으로 제공했어. [휴대전화에서 게임의 기본 형태를 만들고 수정해 친구와 공유](https://about.roblox.com/newsroom/2026/07/build-without-limits-on-roblox)할 수 있도록 한 거지. 9월에는 시험 지역을 세르비아와 싱가포르로 넓히고, 데스크톱에서도 제작할 수 있도록 지원을 확대한다고 밝혔어.\n\n[출처: 로블록스](https://about.roblox.com/ko/newsroom/2026/07/build-without-limits-on-roblox)\n\n• 이런 서비스들은 코딩을 잘 모르는 사람도 머릿속으로 상상한 게임을 직접 만들어볼 수 있게 도와줘. '이런 게임이 있으면 좋겠다'는 상상을 다른 사람이 플레이할 수 있는 게임으로 옮겨보는 거야. 게임 속 동료부터 개발자의 제작 도구, 이용자의 창작 도구까지. HAI도 AI가 게임을 만들고 즐기는 방식을 어떻게 바꿔가는지 계속 살펴볼게.\n\n디자인은 피그마에, 기획서는 다른 문서에 따로 두고 일하다 보면 최신 버전이 어디 있는지 헷갈릴 때가 있지. [피그마(Figma)의 새 기능 '스펙(Specs)'](https://www.figma.com/ko-kr/blog/introducing-figma-specs/)은 기획 문서를 디자인과 같은 캔버스 위에 두고 팀원, AI 에이전트와 함께 다듬는 문서 기능이야.\n\n| 쓰던 기획서를 끌어다 놓고 AI와 다듬기\n\n[출처: 피그마 블로그](https://www.figma.com/ko-kr/blog/introducing-figma-specs/)\n\n마크다운(.md)으로 써둔 기획서가 있다면 파일을 캔버스에 끌어다 놓기만 해도 스펙 문서로 바뀌어. 피그잼(FigJam)에서 브레인스토밍한 아이디어를 반영해 내용을 넓히고 다듬어 달라고 피그마 에이전트에게 부탁할 수도 있어. 흩어진 메모와 기존 문서를 하나로 모으는 일을 AI가 거드는 거지.\n\n| 팀과 함께 캔버스 위에서 다듬기\n\n스펙 문서는 디자인 시안 바로 옆, 같은 캔버스 위에 놓여. 팀원 여럿이 한 문서에 함께 들어와 진행 상황이나 남은 과제를 같이 적어 나갈 수 있어. 문서 속 다이어그램 같은 요소는 캔버스 밖으로 끌어내 고친 다음 다시 끌어다 넣으면 되고, 새 요소를 끌어와 추가할 수도 있어. 문서와 디자인 파일을 오가며 복사하고 붙여넣을 필요 없이 한 화면에서 함께 다듬는 거지.\n\n[출처: 피그마 블로그](https://www.figma.com/ko-kr/blog/introducing-figma-specs/)\n\n피그마 스펙은 10월 15일 공개 베타로 출시됐고, 유료 플랜을 중심으로 제공돼. 스펙 문서를 직접 작성하고 수정하는 데는 AI 크레딧이 들지 않아. 다만 AI 에이전트를 활용하면 크레딧이 차감돼. 이용할 수 있는 계정이라면 피그마 파일 목록에서 'Spec'을 선택해 새 문서를 만들 수 있어. 회의 때 붙여둔 메모가 쌓여 있다면, 이번엔 AI와 함께 기획서로 정리해 보는 건 어때?\n\n[**더 자세히 알아보기**](https://www.figma.com/ko-kr/blog/introducing-figma-specs/)\n\n오늘의 HAI는 어땠어? 좋았던 부분과 아쉬웠던 부분에 대해 의견을 남겨줘.\n\n[좋았어](https://hform.hancom.com/r/LriUP3vqQJ)  [아쉬워](https://hform.hancom.com/r/4xKCBd3xFT)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI NPC와 데이터 기반 툴이 게임 혁신을 이끈다",
+        "tags": [
+          "크래프톤",
+          "NC AI",
+          "VARCO",
+          "넷마블",
+          "Playground"
+        ],
+        "concepts": [
+          "멀티에이전트 시스템",
+          "AI 생산성 도구",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "AI가 NPC의 대화와 행동을 실시간 사용자 음성 입력에 따라 조정한다",
+            "timestamp": null
+          },
+          {
+            "point": "게임 개발 전반에 AI 도구(3D 모델링, 음성 합성, 번역, QA 자동화 등)가 도입돼 생산성을 높인다",
+            "timestamp": null
+          },
+          {
+            "point": "사용자도 AI 기반 플랫폼으로 직접 게임을 제작·공유하며 창작자가 될 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 음성 기반 NPC 제어 방식을 산업 안전 시뮬레이터에 적용해 훈련자가 음성 명령으로 AI 에이전트를 조작하도록 한다",
+          "VARCO 3D와 같은 2D→3D 변환 도구를 전자상거래에서 2D 제품 사진을 3D 모델로 자동 생성해 시각화 비용을 절감한다",
+          "넷마블의 AI 번역 일관성 검증 기술을 기업 문서 번역 파이프라인에 도입해 다국어 용어 통일성을 자동 확보한다"
+        ],
+        "quiz": [
+          {
+            "question": "게임 내 AI 동료 '엘라'가 작동하기 위해 활용된 데이터 수집 방법은 무엇인가?",
+            "options": [
+              "온라인 설문 조사",
+              "PC방에서 1천 명 이용자와 4만 판 플레이",
+              "공개된 오픈소스 데이터",
+              "인게임 로그만 사용"
+            ],
+            "answer_index": 1,
+            "explanation": "크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 AI 캐릭터와 약 4만 판을 플레이하도록 하여 실제 플레이 데이터를 학습 자료로 사용했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "컨테이너처럼 쓰고, VM처럼 격리하기",
+        "url": "https://d2.naver.com/helloworld/2265641",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-ca162c0f-a0ab-49a1-8e61-3e14d250c858\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-c7c7f2a2-b7d6-48be-9627-b51b0edc3ef5\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-3e74c567-5e25-4253-b129-783776fc6d6d\"><b>네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-1f5db233-a000-45f5-95e7-4da28dd2efbd\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-274bc664-dcac-4385-abcc-bebffdd68bcc\"><b>​</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-e816b897-f19c-42b8-9c1b-b38703f2838b\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-73315a34-b9b6-4653-87f2-11dd22735d92\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oglink se-l-large_image\" id=\"SE-6e1dffa6-e653-4655-95a0-9c8c03a28bfe\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-large_image se-section-align-center\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a class=\"se-oglink-thumbnail __se_link\" href=\"https://naver.me/x4lfCWJ4\" target=\"_blank\">\n                                    <img alt=\"\" class=\"se-oglink-thumbnail-resource\" src=\"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Fs.pstatic.net%2Fdthumb.phinf%2F%3Fsrc%3Dhttps%3A%2F%2Fclip-service-phinf.pstatic.net%2FMjAyNjExMDJfMTY5%2FMDAxNzkzNTg0NjgzODU1.1wbzzgbP-9y6zYbry3KDpaoCIWcJpMUNYrN9NG98oLUg.A4zhfyTxiebqoz_dOMQKL05EEHAvX2RyW0UQzUvguywg.PNG%2Fimage.png%26service%3Dnavermain%26type%3Dclip_500_300_blurfill%402x%22&amp;type&#x3D;ff500_300\" />\n                                </a>\n                                <a class=\"se-oglink-info __se_link\" href=\"https://naver.me/x4lfCWJ4\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">컨테이너처럼 쓰고, VM처럼 격리하기: kata-containers with GPU</strong>\n                                        <p class=\"se-oglink-summary\">NAVER D2 | 컨테이너처럼 쓰고, VM처럼 격리하기: kata-containers with GPU</p>\n                                        <p class=\"se-oglink-url\">naver.me</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-9b9c17e8-dde3-428e-8c61-47f8a093cc0e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-18b82eb4-742f-4410-bc67-54a0157cfbba\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-da85edfb-fea6-41c9-b25d-0157016e6d3f\"><b>​</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b7f9a90f-101e-451a-8dd2-f860d6e7a731\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-9940e2e5-55a2-4f8b-b94b-8fe92052af7f\" style=\"color: #000000;\"><b>발표 내용</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-41a66991-1582-4bc6-8014-a5efe605598e\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-b6452f13-ce57-4eab-98bc-7adde3f1844c\" style=\"color: #000000; background-color: #ffffff;\">Kubernetes GPU 노드를 VM으로 격리해 나눠 쓰면서, 호스트 수준의 성능까지 최적화한 방법을 소개합니다.</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b355038d-887a-431c-b0a7-f861707e1b7f\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-cf97b822-d28d-4f86-8a75-d21bd6d804dd\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-cf7d1dd7-ad63-4370-93bb-aceb4cb96722\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-083dea92-f301-4ac6-a01c-6792b7e47c6d\" style=\"color: #000000; background-color: #ffffff;\"><b>발표 대상</b></span></p>\n<ul class=\"se-text-list se-text-list-type-bullet-disc\"><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-fa82db03-b3a1-4a72",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "GPU Kata 컨테이너로 격리와 배포 효율 확보",
+        "tags": [
+          "Kata-Containers",
+          "GPU",
+          "NAVER Engineering Day",
+          "NAVER D2"
+        ],
+        "concepts": [
+          "작업 격리",
+          "GPU 가속"
+        ],
+        "key_points": [
+          {
+            "point": "Kata-Containers는 컨테이너의 사용 편의성과 VM 수준의 격리를 동시에 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "GPU 지원이 추가돼 격리된 환경에서도 고성능 연산이 가능해졌다.",
+            "timestamp": null
+          },
+          {
+            "point": "해당 내용은 NAVER Engineering Day 10th에서 발표된 세션이다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Kata-Containers 기반 GPU 격리 환경을 Jupyter Notebook 서비스에 적용해 다중 사용자의 GPU 사용 충돌을 방지한다.",
+          "엣지 디바이스에서 AI 추론을 수행할 때 Kata-Containers를 이용해 모델별 격리와 GPU 할당을 자동화한다.",
+          "서버리스 플랫폼에 Kata-Containers와 GPU를 결합해 함수 단위로 GPU 자원을 안전하게 할당한다."
+        ],
+        "quiz": [
+          {
+            "question": "Kata-Containers가 제공하는 주요 장점은 무엇인가?",
+            "options": [
+              "컨테이너와 같은 빠른 시작",
+              "VM 수준의 격리",
+              "무제한 GPU 공유",
+              "자동 스케일링"
+            ],
+            "answer_index": 1,
+            "explanation": "Kata-Containers는 컨테이너의 경량성은 유지하면서 VM 수준의 강력한 격리를 제공한다."
+          },
+          {
+            "question": "이 발표가 공개된 행사는 어디인가?",
+            "options": [
+              "Google I/O",
+              "NAVER Engineering Day 10th",
+              "AWS re:Invent",
+              "Microsoft Build"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 해당 세션은 NAVER Engineering Day 10th에서 발표되었다."
+          }
+        ],
+        "skip_reason": "본문 내용이 부족해 구체적 실행 방안과 깊이 있는 설명이 없습니다.",
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Subvocal – Talk to your computer without making noise",
+        "url": "https://news.ycombinator.com/item?id=50340088",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN, we&#x27;re Aarush and Arnav from The Subvocal Company (YC F26) (<a href=\"https:&#x2F;&#x2F;subvocal.company&#x2F;\">https:&#x2F;&#x2F;subvocal.company&#x2F;</a>). We’re building smart glasses that let you talk to your computer without talking out loud. You can mouth words silently and discreetly and the glasses decode them to text at the speed of speech.<p>Here&#x27;s a video of Dave from YC trying it out: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=9QdX1eObVYI\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=9QdX1eObVYI</a><p>(Edit: you don&#x27;t actually have to move your lips or even open your mouth for this to work! Since the RF can see inside your mouth the system can be fine tuned on &quot;internal speech&quot;. This isn&#x27;t the automatic tongue movements that occur when &quot;thinking&quot; words to yourself, but more like mouthing with your lips closed. It&#x27;s a bit weird to do, but with practice, we have been able to get it down pretty well.)<p>Arnav and I were studying CS at Georgia Tech at the beginning of the year, with no experience in silent speech or sensing. We were both AI-native builders and power users of Wispr Flow. What bugged us was not being able to use these tools in the library (or an office) or in public. At Stanford’s TreeHacks in February, we decided to build the most technically ridiculous thing we could think of. We’d read about AlterEgo, a silent speech system out of MIT’s Media Lab, and wanted to recreate it in 36 hours. We built a crude prototype, sticking EMG electrodes onto my face:<p><a href=\"https:&#x2F;&#x2F;drive.google.com&#x2F;file&#x2F;d&#x2F;1mwhv5HZMz3UTevdrgwS5O7g2jWV0K9r2&#x2F;view?usp=sharing\" rel=\"nofollow\">https:&#x2F;&#x2F;drive.google.com&#x2F;file&#x2F;d&#x2F;1mwhv5HZMz3UTevdrgwS5O7g2jWV...</a><p>We got it to kind of work at a letter level in a very janky way. It wasn’t good enough to win the hackathon, but convinced us to go all in. The first time I typed a sentence without anyone noticing, I felt the magic of the technology.<p>We quickly realized EMG (reading muscle electrical signals) wouldn’t work:<p>- Signal changes due to sweat<p>- Electrical interference<p>- Placement variability<p>- Most importantly, no one wants to stick electrodes onto their face!!<p>So we switched to RF and built the glasses you see now. They emit radio waves, similar to Bluetooth, that pass through your face. As they cross the tongue, lips and soft palate, they’re modulated by silent mouthing. We train foundation models on this data to decode these perturbations to text.<p>Despite prior academic research, getting this to work was a huge engineering challenge. First we built an extremely low noise RF sensing stack. Then we had to place antennas so their fields overlapped maximally with the articulators. Our first attempt on glasses failed completely, so we reverted to old habits and taped antennas on our face:<p><a href=\"https:&#x2F;&#x2F;drive.google.com&#x2F;file&#x2F;d&#x2F;1k",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "RF 무음 음성 인식으로 텍스트 변환, 센서·ML 기법 소개",
+        "tags": [
+          "Subvocal",
+          "RF",
+          "EMG",
+          "AlterEgo",
+          "MIT Media Lab"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "디자인 트레이드오프",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "EMG 기반 무음 음성 인식은 땀, 전기 간섭, 전극 위치 변동, 착용 불편 등으로 실용성이 떨어졌다",
+            "timestamp": null
+          },
+          {
+            "point": "RF 안테나를 안경에 배치해 얼굴을 통과하는 전파가 혀·입술·연부구개와 상호작용하면서 발생하는 미세 변조를 감지한다",
+            "timestamp": null
+          },
+          {
+            "point": "수집된 RF 변조 데이터를 기반으로 대규모 foundation model을 학습시켜 실시간 텍스트 디코딩을 구현했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "RF 기반 저노이즈 센서를 활용해 화상 회의에서 얼굴 표정·미세 움직임을 실시간 감정 분석에 적용해 감정 인식 정확도를 높인다",
+          "RF 무음 음성 감지 기술을 VR 헤드셋에 적용해 사용자가 입을 움직이지 않고도 손쉽게 명령을 입력하도록 하여 마이크 사용을 최소화한다",
+          "안테나 필드 변조 방식을 이용해 손 제스처를 감지하고 이를 실시간 수화 번역 시스템에 연결해 청각 장애인과 비청각 사용자 간 소통을 향상시킨다"
+        ],
+        "quiz": [
+          {
+            "question": "EMG 방식이 무음 음성 인식에 부적합한 주요 이유는 무엇인가?",
+            "options": [
+              "땀에 의한 신호 변동",
+              "전력 소모가 높음",
+              "데이터 라벨링이 어려움",
+              "가격이 비쌈"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 EMG는 땀, 전기 간섭, 전극 위치 변동 등으로 신호가 불안정하고, 얼굴에 전극을 부착하는 불편함 때문에 실용성이 떨어졌다."
+          },
+          {
+            "question": "RF 센싱 시스템이 무음 말하기를 텍스트로 변환하는 원리는 무엇인가?",
+            "options": [
+              "음향 진동을 직접 측정한다",
+              "전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다",
+              "적외선 반사 패턴을 분석한다",
+              "뇌파(EEG)를 해석한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 안경에서 방출된 라디오파가 입 안 구조를 통과하며 말할 때 발생하는 미세 변조를 측정하고, 이를 모델이 텍스트로 디코딩한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다",
+        "url": "https://innoforest.stibee.com/p/684",
+        "published_at": "2026-11-01T00:00:00",
+        "transcript": null,
+        "body": "📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다    \"매출이 오르기 시작했는데, 지금 사람을 더 뽑아도 될까?\" 많은 대표님들께서 이런 고민을 하고 계실 것 같습니다. 오늘은 혁신의숲이 소비자 거래액·방문자·고용 데이터를 같은 달 단위로 묶어, 거래액이 오른 스타트업들은 언제 사람을 채용했고 그 뒤 1년은 어땠는지 확인했습니다. 지난 9월 [「2026년 직원이 늘어난 스타트업 5,064곳」](https://www.innoforest.co.kr/report/578) 리포트에서는 매출이 늘어난 기업이 사람도 늘렸다는 경향을 확인했습니다. 이번에는 순서를 봤습니다. 거래액이 먼저 오른 뒤 언제 사람을 뽑았는지, 그리고 그 뒤 거래액이 어떻게 됐는지입니다. 자세한 내용은 콘텐츠에서 확인하세요!  [콘텐츠 보러가기 👉🏻](https://www.innoforest.co.kr/report/590)\n\n[육아용품 정보 앱에서 100만 부모의 필수 앱으로](https://www.innoforest.co.kr/report/586)  [🎖️2026 혁신의숲 어워즈 후보 3차 투표 최종 순위 공개](https://www.innoforest.co.kr/report/585)\n\n[📈2025년에 이어 2026년에도 성장 가능성 높은 스타트업 15곳](https://www.innoforest.co.kr/report/584)  [🦄 2026년 9월 스타트업 투자결산](https://www.innoforest.co.kr/report/583)\n\n[**더 많은 인사이트 보러가기**👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge) 11월 2일 기준, 모집중 공고 수: 총 9건\n\n(~11/10) [TEL VENTURE CAPITAL｜Nexus Connect 투자 밋업 데이](https://www.innoforest.co.kr/growth-bridge/OI00000829/2026-TEL-VENTURE-CAPITAL-X-충남창조경제혁신센터-Nexus-Connect-투자-밋업-데이)\n\n(~11/11) [롯데벤처스｜LOTTE OPEN INNOVATION DAY](https://www.innoforest.co.kr/growth-bridge/OI00000828/롯데벤처스-LOTTE-OPEN-INNOVATION-DAY)\n\n(~11/13) [LG디스플레이｜2027 Dream Play 스타트업 육성프로그램 9기](https://www.innoforest.co.kr/growth-bridge/OI00000826/2027-Dream-Play-LGD-스타트업-육성프로그램-9기)\n\n[2025년 오픈이노베이션 결산 리포트: 숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\n[Growth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면? 소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 순수 AI드라마로 시청률 1위!.. '후서유기'는 어떻게 만들었을까?](https://outstanding.kr/eastfantasy20260928)\n\n[🗯️ 투자금이 많이 남은 벤처펀드 10곳을 살펴봤습니다](https://outstanding.kr/drypowder20260930)\n\n[🔎 유니콘 14곳이 투자한 스타트업들을 확인해 봤습니다](https://outstanding.kr/unicorn20260928)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "거래액 상승 후 채용 시점이 성장에 미치는 영향 분석",
+        "tags": [
+          "혁신의숲",
+          "Growth Bridge",
+          "Nexus Connect",
+          "LOTTE",
+          "LG디스플레이"
+        ],
+        "concepts": [
+          "스타트업 성장 지표",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "거래액이 상승한 스타트업은 평균 3개월 이내에 인력을 추가한다",
+            "timestamp": null
+          },
+          {
+            "point": "인력 확대 후 1년 동안 거래액 변화는 다양해 일부는 크게 증가하거나 감소한다",
+            "timestamp": null
+          },
+          {
+            "point": "거래액·고용 시점 연계 분석은 성장 전략 수립에 활용 가능하다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "월별 매출과 신규 기능 출시 시점을 연계해 churn 변화를 예측함으로써 제품 출시 타이밍을 최적화한다",
+          "소매 체인에서 월별 매출과 신규 직원 채용 데이터를 분석해 인력 예산 배분 시점을 정량적으로 결정한다",
+          "마케팅 비용 급증 시점과 이후 인력 확대 시점을 연결해 기업 성장에 미치는 영향을 평가하고, 마케팅 ROI를 개선한다"
+        ],
+        "quiz": [
+          {
+            "question": "거래액 상승 후 인력 확대가 1년 뒤 거래액에 미치는 결과는 무엇인가?",
+            "options": [
+              "거래액이 반드시 증가한다",
+              "거래액이 감소하거나 증가할 수 있다",
+              "거래액 변동과 무관하다",
+              "인력 확대가 성장에 부정적이다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 인력 확대 후 1년 동안 거래액이 다양하게 변했으며, 일부는 크게 증가하고 일부는 감소했다고 언급한다."
+          },
+          {
+            "question": "데이터와 고용 시점을 연계한 분석이 스타트업 성장 전략에 제공하는 주요 인사이트는?",
+            "options": [
+              "인력 규모와 매출 성장 사이의 인과관계 파악",
+              "시장 점유율 예측",
+              "제품 기능 우선순위 결정",
+              "고객 만족도 측정"
+            ],
+            "answer_index": 0,
+            "explanation": "본문은 거래액 상승과 채용 시점을 함께 분석해 성장 지표를 이해하는 방법을 제시한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

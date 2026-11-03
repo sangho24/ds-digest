@@ -1,297 +1,312 @@
 {
   "contract_version": 1,
-  "date": "2026-11-02",
-  "generated_at": "2026-11-02T08:20:31.368441+09:00",
+  "date": "2026-11-03",
+  "generated_at": "2026-11-03T11:02:08.092919+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-02.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-03.html",
   "items": [
     {
-      "id": "2b254a7a4825",
-      "title": "카카오톡에서 발생하는 별별 어뷰징 대응기(aka. SMS Pumping) | 거버넌스",
-      "url": "https://youtu.be/80Ia-hjIiuU",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-10-30T06:00:39",
-      "summary": "SMS 펌핑 비용 손실을 데이터로 탐지·예방",
-      "positioning": null,
-      "tags": [
-        "카카오톡",
-        "왓츠앱",
-        "텔레그램",
-        "MVNO",
-        "SMS 펌핑"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "글로벌 인증 문자 비용이 연간 약 220억 달러 수준이다",
-          "timestamp": "01:44"
-        },
-        {
-          "point": "국제 SMS 인증 트래픽의 약 4.8%가 부정 요청이며 연간 약 10억 달러 손실을 초래한다",
-          "timestamp": "02:07"
-        },
-        {
-          "point": "콩고에서 23만 건의 인증 요청 중 85%를 차단했지만 1천만 원 비용이 발생했다",
-          "timestamp": "03:08"
-        }
-      ],
-      "ideas": [
-        "다중 국가 인증 트래픽 이상 탐지를 이메일 OTP 서비스에 적용해 스팸 비용을 줄인다",
-        "MVNO·MVNA 비용 정산 구조 분석을 SaaS 메신저 과금 모델 최적화에 활용한다",
-        "대량 인증 요청 발생 시 API 게이트웨이에서 적응형 레이트 리밋을 적용해 IoT 디바이스 프로비저닝 비용을 억제한다"
-      ],
-      "quiz": [
-        {
-          "question": "SMS 펌핑 공격이 API 해킹보다 구현이 쉬운 이유는 무엇인가?",
-          "options": [
-            "인증 요청 자체가 비용이 없기 때문",
-            "대량 요청만으로 비용이 발생하기 때문",
-            "통신사와 직접 연결이 필요하기 때문",
-            "암호화가 없기 때문"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 따르면 어뷰저는 복잡한 취약점이나 해킹 없이 단순히 인증 문자 요청을 많이 보내 비용을 발생시킨다."
-        },
-        {
-          "question": "다중 국가에서 동시에 인증 요청이 급증하면 어떤 위험이 발생하는가?",
-          "options": [
-            "단일 국가 차단만으로 충분하다",
-            "비용이 급증하고 탐지가 어려워진다",
-            "사용자 경험이 향상된다",
-            "통신사 수익이 감소한다"
-          ],
-          "answer_index": 1,
-          "explanation": "다수 국가에 걸친 대량 요청은 하루에 수억 원 규모 비용을 초래하고, 차단이 어려워 손해가 커진다."
-        }
-      ]
-    },
-    {
-      "id": "978502652aaf",
-      "title": "Propose-Filter-Release: Scaling Noise to Typical Sensitivity via Private Filtering",
-      "url": "https://arxiv.org/abs/2610.40654v1",
+      "id": "e318697021c8",
+      "title": "Latent Reasoning in Continuous Space for Unified Multimodal Models",
+      "url": "https://arxiv.org/abs/2610.42149v1",
       "source": {
         "type": "rss",
         "name": "arXiv:cs.LG"
       },
-      "published_at": "2026-10-29T17:59:49",
-      "summary": "프라이버시 보호 시 노이즈를 실제 민감도에 맞춰 효율화",
-      "positioning": "DP 메커니즘은 최악의 단일 레코드 영향을 기준으로 노이즈를 크게 잡아 효율성을 떨어뜨렸다. 기존 propose‑test‑release는 제한적인 상황에만 적용 가능했다. PFR은 프라이버시 필터링 단계와 친화성 점수를 도입해 일반 레코드에 맞는 스케일을 제공하면서 모든 입력에 대해 표준 DP를 보장하는 새로운 원시로 자리 잡는다.",
+      "published_at": "2026-10-30T17:59:43",
+      "summary": "연속 잠재공간 추론으로 이미지 생성 품질·제어 향상",
+      "positioning": "기존 멀티모달 모델은 이산 토큰 공간에서의 체인‑오브‑생각 추론을 이미지 생성의 연속 공간에 그대로 적용하려다 제어와 스케일링 한계에 봉착했다. LARC는 연속 잠재 상태에서 추론하도록 설계돼 토큰‑이미지 불일치를 해소하고, 커리큘럼 기반 SFT와 정보‑이득 RL을 결합한 두 단계 학습으로 성능을 끌어올린다. 이는 멀티모달 생성 모델이 대형 언어 모델과 동일한 테스트‑타임 확장성을 확보하도록 하는 새로운 연구 흐름이다.",
       "tags": [
-        "propose-filter-release",
-        "friendly-DP",
-        "FriendlyCore",
-        "principal subspace estimation",
-        "KL divergence"
+        "LARC",
+        "UMMs",
+        "GenEval",
+        "BAGEL",
+        "RL"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "기존 DP 메커니즘은 최악의 레코드 영향에 맞춰 노이즈를 스케일링해 과도한 노이즈를 유발한다.",
+          "point": "UMM은 토큰 기반 추론과 연속 이미지 생성 사이의 모달리티 불일치로 성능 한계가 있다.",
           "timestamp": null
         },
         {
-          "point": "PFR은 친화성 점수와 프라이버시 필터링을 이용해 일반 레코드에 맞는 작은 스케일의 노이즈를 적용하면서 전체 DP를 보장한다.",
+          "point": "LARC는 연속 잠재 상태에서 추론함으로써 토큰 레벨 병목을 해소한다.",
           "timestamp": null
         },
         {
-          "point": "PFR은 스칼라 통계, 주성분 추정, KL 발산, 그래프 저항, 치료 규칙 선택 등 다양한 문제에 적용 가능한 일반 프라이버시 원시다.",
+          "point": "커리큘럼 SFT와 정보이득 RL 두 단계 학습으로 GenEval에서 7%p 향상 및 테스트‑타임 스케일링을 달성한다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "프라이버시 필터링을 활용해 연합 학습에서 이상치 클라이언트 업데이트를 사전에 제외하면 노이즈를 줄이고 모델 성능을 높일 수 있다.",
-        "프라이버시 필터링을 적용해 합성 데이터 생성 시 실제 데이터와 맞지 않는 후보 레코드를 걸러내면 필요한 노이즈 양을 감소시켜 유용한 합성 데이터를 만들 수 있다.",
-        "위치 기반 서비스에서 비정형 위치 레코드를 프라이버시 필터링으로 제외하면 일반 사용자 쿼리에 대해 더 적은 노이즈로 정확한 응답을 제공할 수 있다."
+        "수음 합성에서 연속 음향 잠재 공간에 대한 잠재 추론을 적용해 억양·리듬 제어를 강화한다",
+        "로봇 제어에서 상징적 플래닝을 연속 잠재 플래닝으로 전이시키는 커리큘럼 SFT를 도입해 정책 학습 안정성을 높인다",
+        "비디오 합성에서 정보‑이득 RL을 활용해 라벨 없는 프레임 시퀀스의 잠재 코드를 스스로 개선해 시간 일관성을 향상시킨다"
       ],
       "quiz": [
         {
-          "question": "PFR이 차별화하려는 기존 DP 메커니즘의 주요 문제는 무엇인가?",
+          "question": "왜 기존 UMM은 이미지 생성에 체인‑오브‑생각 추론을 효과적으로 활용하지 못하는가?",
           "options": [
-            "계산 비용 과다",
-            "노이즈를 최악의 레코드 영향에 맞춰 스케일링",
-            "모델 정확도 저하",
-            "프라이버시 예산 관리 어려움"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서는 기존 DP 메커니즘이 최악의 레코드 영향에 맞춰 노이즈를 스케일링해 과도한 노이즈를 유발한다는 점을 지적한다."
-        },
-        {
-          "question": "PFR이 동작하기 위해 필요한 추가 요소는 무엇인가?",
-          "options": [
-            "볼록 친화성 점수",
-            "볼록 손실 함수",
-            "공개 키 암호화",
-            "그래디언트 클리핑"
+            "추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다",
+            "학습 데이터가 부족하기 때문이다",
+            "구조가 오래된 아키텍처를 사용하기 때문이다",
+            "언어를 처리하지 못하기 때문이다"
           ],
           "answer_index": 0,
-          "explanation": "PFR은 입력을 프라이버시 필터링하기 위해 ‘concave friendliness score’를 요구한다."
+          "explanation": "초록에서 모달리티 불일치(이산 토큰 vs 연속 이미지)로 인해 한계가 있다고 명시한다."
+        },
+        {
+          "question": "LARC의 학습 프레임워크는 어떤 두 단계로 구성되는가?",
+          "options": [
+            "지도 학습과 비지도 학습",
+            "커리큘럼 SFT와 정보‑이득 RL",
+            "적대적 학습과 대조 학습",
+            "자기 지도 마스킹과 지식 증류"
+          ],
+          "answer_index": 1,
+          "explanation": "논문 요약에 커리큘럼 감독 미세조정(SFT)과 정보‑이득 강화학습(RL) 단계가 있다고 적혀 있다."
         }
       ]
     },
     {
-      "id": "91c176331fa2",
-      "title": "에이전트 하네스로 수백개의 멜론 JSP 포장이사하기 | AI-DLC",
-      "url": "https://youtu.be/A1b4TmZ1jQw",
+      "id": "975a4b5da7f6",
+      "title": "👋게임 속으로 들어온 AI",
+      "url": "https://hai-hancom.stibee.com/p/184",
       "source": {
-        "type": "youtube",
-        "name": "kakao tech"
+        "type": "newsletter",
+        "name": "한컴 AI"
       },
-      "published_at": "2026-10-30T06:00:37",
-      "summary": "AI 하네스로 대규모 코드 마이그레이션 검증",
+      "published_at": "2026-11-02T00:00:00",
+      "summary": "AI NPC와 데이터 기반 툴이 게임 혁신을 이끈다",
       "positioning": null,
       "tags": [
-        "멜론",
-        "JSP",
-        "Astro",
-        "React",
-        "하네스"
+        "크래프톤",
+        "NC AI",
+        "VARCO",
+        "넷마블",
+        "Playground"
       ],
-      "relevance": 8,
+      "relevance": 6,
       "key_points": [
         {
-          "point": "AI 작업의 검증·추적 구조 필요성",
-          "timestamp": "01:03"
+          "point": "AI가 NPC의 대화와 행동을 실시간 사용자 음성 입력에 따라 조정한다",
+          "timestamp": null
         },
         {
-          "point": "5단계 파이프라인과 스킬 기반 실행",
-          "timestamp": "04:14"
+          "point": "게임 개발 전반에 AI 도구(3D 모델링, 음성 합성, 번역, QA 자동화 등)가 도입돼 생산성을 높인다",
+          "timestamp": null
         },
         {
-          "point": "계획·실행·평가자 기반 에이전틱 루프 설계",
-          "timestamp": "06:06"
+          "point": "사용자도 AI 기반 플랫폼으로 직접 게임을 제작·공유하며 창작자가 될 수 있다",
+          "timestamp": null
         }
       ],
       "ideas": [
-        "오케스트레이터가 검증 결과를 보고 다음 ETL 변환 단계를 자동 선택해 데이터 파이프라인 안정성을 높인다",
-        "스킬 기반 플러거블 구조를 도입해 새로운 데이터 소스마다 별도 변환 모듈을 추가하고, 필요 시 조합해 데이터 수집 파이프라인을 구성한다",
-        "에이전트 하네스 개념을 모델 배포 파이프라인에 적용해 각 배포 단계별 검증 기록을 남기고, 실패 시 자동으로 이전 단계로 롤백하도록 설계한다"
+        "AI 음성 기반 NPC 제어 방식을 산업 안전 시뮬레이터에 적용해 훈련자가 음성 명령으로 AI 에이전트를 조작하도록 한다",
+        "VARCO 3D와 같은 2D→3D 변환 도구를 전자상거래에서 2D 제품 사진을 3D 모델로 자동 생성해 시각화 비용을 절감한다",
+        "넷마블의 AI 번역 일관성 검증 기술을 기업 문서 번역 파이프라인에 도입해 다국어 용어 통일성을 자동 확보한다"
       ],
       "quiz": [
         {
-          "question": "왜 기존에 페이지당 직접 마이그레이션하는 방식이 어려웠는가?",
+          "question": "게임 내 AI 동료 '엘라'가 작동하기 위해 활용된 데이터 수집 방법은 무엇인가?",
           "options": [
-            "페이지 수가 적어서 자동화가 불필요했다",
-            "수작업으로는 작업량이 과다했다",
-            "AI가 모든 작업을 자동으로 처리했다",
-            "서버가 JSP를 지원하지 않는다"
+            "온라인 설문 조사",
+            "PC방에서 1천 명 이용자와 4만 판 플레이",
+            "공개된 오픈소스 데이터",
+            "인게임 로그만 사용"
           ],
           "answer_index": 1,
-          "explanation": "본문에서 수백 개 페이지를 모두 수작업으로 처리하기에는 작업량이 너무 많다고 언급한다."
-        },
-        {
-          "question": "하네스 설계에서 오케스트레이터의 역할은 무엇인가?",
-          "options": [
-            "코드 실행만 담당한다",
-            "현재 상태와 결과를 보고 다음 역할을 결정한다",
-            "스킬을 작성한다",
-            "데이터베이스를 관리한다"
-          ],
-          "answer_index": 1,
-          "explanation": "오케스트레이터는 현재 상태와 결과를 참조해 다음에 실행할 역할을 스스로 결정하도록 설계되었다."
+          "explanation": "크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 AI 캐릭터와 약 4만 판을 플레이하도록 하여 실제 플레이 데이터를 학습 자료로 사용했다."
         }
       ]
     },
     {
-      "id": "91d195a114db",
-      "title": "Rethinking Neural Thickets Without Weight Perturbations",
-      "url": "https://arxiv.org/abs/2610.40649v1",
+      "id": "aac7b3c52b2a",
+      "title": "컨테이너처럼 쓰고, VM처럼 격리하기",
+      "url": "https://d2.naver.com/helloworld/2265641",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.LG"
+        "name": "D2 Blog"
       },
-      "published_at": "2026-10-29T17:59:29",
-      "summary": "출력 다양성과 투표로 가중치 교란 없이 성능 향상",
-      "positioning": "Neural Thickets 가설은 사전학습 모델이 작업별 전문가와 가중치 공간에서 밀집해 있으며 무작위 가우시안 교란으로 이를 찾을 수 있다고 주장한다. 기존 연구는 이러한 교란이 성능 향상의 원인이라고 보았지만, 본 논문은 출력 다양성과 검증 기반 선택·투표가 핵심 메커니즘임을 입증한다. 이는 추론 단계에서의 앙상블·셀프‑컨시스턴시와 연결되는 새로운 관점을 제공한다.",
+      "published_at": null,
+      "summary": "GPU Kata 컨테이너로 격리와 배포 효율 확보",
+      "positioning": null,
       "tags": [
-        "Neural Thickets",
-        "Perturb-Select-Vote",
-        "logit PSV",
-        "decoder block",
-        "pretrained language model"
+        "Kata-Containers",
+        "GPU",
+        "NAVER Engineering Day",
+        "NAVER D2"
       ],
-      "relevance": 8,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "단일 디코더 블록 교란이나 로그잇에 무작위 바이어스 추가만으로도 기존 가중치 교란 효과를 대부분 재현한다는 점에서 출력 다양성이 핵심임을 보여준다",
+          "point": "Kata-Containers는 컨테이너의 사용 편의성과 VM 수준의 격리를 동시에 제공한다.",
           "timestamp": null
         },
         {
-          "point": "Perturb-Select-Vote(PSV) 절차는 교란된 예측기들을 생성·작은 검증 세트에서 성능이 높은 모델을 선택·예측을 투표로 집계한다",
+          "point": "GPU 지원이 추가돼 격리된 환경에서도 고성능 연산이 가능해졌다.",
           "timestamp": null
         },
         {
-          "point": "로그잇 수준 PSV는 언어와 비전 모두에서 도메인 이동 상황에 큰 성능 향상을 제공하며, 완전 가중치 교란보다 훈련 없이 적용 가능한 대안을 제시한다",
+          "point": "해당 내용은 NAVER Engineering Day 10th에서 발표된 세션이다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "로그잇 수준의 무작위 바이어스와 PSV 선택·투표 방식을 추천 시스템의 점수 집계에 적용해 다양성을 높이고 클릭‑스루율을 개선한다",
-        "시계열 예측 모델에 PSV를 적용해 여러 변형 예측을 생성·검증 세트에서 최상위 모델을 선택·투표로 최종 예측을 도출해 변동성에 강인한 예측을 만든다",
-        "음성 인식 모델의 디코더 블록에 작은 교란을 가하고 PSV로 선택·투표하면 잡음 환경에서 인식 정확도를 향상시킬 수 있다"
+        "Kata-Containers 기반 GPU 격리 환경을 Jupyter Notebook 서비스에 적용해 다중 사용자의 GPU 사용 충돌을 방지한다.",
+        "엣지 디바이스에서 AI 추론을 수행할 때 Kata-Containers를 이용해 모델별 격리와 GPU 할당을 자동화한다.",
+        "서버리스 플랫폼에 Kata-Containers와 GPU를 결합해 함수 단위로 GPU 자원을 안전하게 할당한다."
       ],
       "quiz": [
         {
-          "question": "왜 로그잇 PSV는 가중치를 전혀 변경하지 않고도 성능을 향상시킬 수 있는가?",
+          "question": "Kata-Containers가 제공하는 주요 장점은 무엇인가?",
           "options": [
-            "모델 구조를 재설계했기 때문이다",
-            "출력 다양성을 도입하고 검증 기반으로 좋은 예측을 선택·투표하기 때문이다",
-            "학습 데이터를 늘렸기 때문이다",
-            "모델 파라미터 수를 증가시켰기 때문이다"
+            "컨테이너와 같은 빠른 시작",
+            "VM 수준의 격리",
+            "무제한 GPU 공유",
+            "자동 스케일링"
           ],
           "answer_index": 1,
-          "explanation": "본문은 로그잇 PSV가 무작위 바이어스로 출력 다양성을 만들고, 작은 검증 세트에서 성능이 좋은 예측기를 선택해 투표함으로써 이득을 얻는다고 설명한다."
+          "explanation": "Kata-Containers는 컨테이너의 경량성은 유지하면서 VM 수준의 강력한 격리를 제공한다."
         },
         {
-          "question": "Neural Thickets 가설에 대한 기존 설명과 달리, 이 논문이 제시한 핵심 발견은 무엇인가?",
+          "question": "이 발표가 공개된 행사는 어디인가?",
           "options": [
-            "전문가 모델이 가중치 공간에 밀집해 있다는 증거가 강화되었다",
-            "전체 가중치 교란이 반드시 필요하다는 것이 입증되었다",
-            "출력 수준의 교란만으로도 비슷한 성능 향상이 가능하다는 것이 밝혀졌다",
-            "새로운 모델 아키텍처가 제안되었다"
+            "Google I/O",
+            "NAVER Engineering Day 10th",
+            "AWS re:Invent",
+            "Microsoft Build"
           ],
-          "answer_index": 2,
-          "explanation": "논문은 전체 가중치 교란 없이도 단일 디코더 블록 교란이나 로그잇 바이어스만으로도 성능 향상이 가능함을 보여, 기존 가설의 핵심 전제를 재해석한다."
+          "answer_index": 1,
+          "explanation": "본문에 따르면 해당 세션은 NAVER Engineering Day 10th에서 발표되었다."
         }
       ]
     },
     {
-      "id": "8d535ecef3e4",
-      "title": "왜 AI/ML 엔지니어 계속 뽑아요? #토스 #AI #ML",
-      "url": "https://youtu.be/x1SPqKDfcBE",
+      "id": "a31b3b7224a8",
+      "title": "Show HN: Subvocal – Talk to your computer without making noise",
+      "url": "https://news.ycombinator.com/item?id=50340088",
       "source": {
-        "type": "youtube",
-        "name": "토스 챌린저스"
+        "type": "rss",
+        "name": "HackerNews"
       },
-      "published_at": "2026-10-20T01:49:27",
-      "summary": "AI·ML·Data 인재 수요 급증, 커리어 기회",
+      "published_at": null,
+      "summary": "RF 무음 음성 인식으로 텍스트 변환, 센서·ML 기법 소개",
       "positioning": null,
       "tags": [
-        "토스",
-        "AI",
-        "ML",
-        "Data",
-        "toss.im"
+        "Subvocal",
+        "RF",
+        "EMG",
+        "AlterEgo",
+        "MIT Media Lab"
       ],
-      "relevance": 4,
+      "relevance": 5,
       "key_points": [
         {
-          "point": "토스가 AI·ML·Data 전직군을 대규모 채용합니다",
+          "point": "EMG 기반 무음 음성 인식은 땀, 전기 간섭, 전극 위치 변동, 착용 불편 등으로 실용성이 떨어졌다",
           "timestamp": null
         },
         {
-          "point": "지원 마감은 10월 25일입니다",
+          "point": "RF 안테나를 안경에 배치해 얼굴을 통과하는 전파가 혀·입술·연부구개와 상호작용하면서 발생하는 미세 변조를 감지한다",
           "timestamp": null
         },
         {
-          "point": "지원 페이지는 https://toss.im/career/event/ai-ml-data-2026 입니다",
+          "point": "수집된 RF 변조 데이터를 기반으로 대규모 foundation model을 학습시켜 실시간 텍스트 디코딩을 구현했다",
           "timestamp": null
         }
       ],
-      "ideas": [],
-      "quiz": []
+      "ideas": [
+        "RF 기반 저노이즈 센서를 활용해 화상 회의에서 얼굴 표정·미세 움직임을 실시간 감정 분석에 적용해 감정 인식 정확도를 높인다",
+        "RF 무음 음성 감지 기술을 VR 헤드셋에 적용해 사용자가 입을 움직이지 않고도 손쉽게 명령을 입력하도록 하여 마이크 사용을 최소화한다",
+        "안테나 필드 변조 방식을 이용해 손 제스처를 감지하고 이를 실시간 수화 번역 시스템에 연결해 청각 장애인과 비청각 사용자 간 소통을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "EMG 방식이 무음 음성 인식에 부적합한 주요 이유는 무엇인가?",
+          "options": [
+            "땀에 의한 신호 변동",
+            "전력 소모가 높음",
+            "데이터 라벨링이 어려움",
+            "가격이 비쌈"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 EMG는 땀, 전기 간섭, 전극 위치 변동 등으로 신호가 불안정하고, 얼굴에 전극을 부착하는 불편함 때문에 실용성이 떨어졌다."
+        },
+        {
+          "question": "RF 센싱 시스템이 무음 말하기를 텍스트로 변환하는 원리는 무엇인가?",
+          "options": [
+            "음향 진동을 직접 측정한다",
+            "전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다",
+            "적외선 반사 패턴을 분석한다",
+            "뇌파(EEG)를 해석한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 안경에서 방출된 라디오파가 입 안 구조를 통과하며 말할 때 발생하는 미세 변조를 측정하고, 이를 모델이 텍스트로 디코딩한다."
+        }
+      ]
+    },
+    {
+      "id": "b331b0ce87c9",
+      "title": "📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다",
+      "url": "https://innoforest.stibee.com/p/684",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-11-01T00:00:00",
+      "summary": "거래액 상승 후 채용 시점이 성장에 미치는 영향 분석",
+      "positioning": null,
+      "tags": [
+        "혁신의숲",
+        "Growth Bridge",
+        "Nexus Connect",
+        "LOTTE",
+        "LG디스플레이"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "거래액이 상승한 스타트업은 평균 3개월 이내에 인력을 추가한다",
+          "timestamp": null
+        },
+        {
+          "point": "인력 확대 후 1년 동안 거래액 변화는 다양해 일부는 크게 증가하거나 감소한다",
+          "timestamp": null
+        },
+        {
+          "point": "거래액·고용 시점 연계 분석은 성장 전략 수립에 활용 가능하다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "월별 매출과 신규 기능 출시 시점을 연계해 churn 변화를 예측함으로써 제품 출시 타이밍을 최적화한다",
+        "소매 체인에서 월별 매출과 신규 직원 채용 데이터를 분석해 인력 예산 배분 시점을 정량적으로 결정한다",
+        "마케팅 비용 급증 시점과 이후 인력 확대 시점을 연결해 기업 성장에 미치는 영향을 평가하고, 마케팅 ROI를 개선한다"
+      ],
+      "quiz": [
+        {
+          "question": "거래액 상승 후 인력 확대가 1년 뒤 거래액에 미치는 결과는 무엇인가?",
+          "options": [
+            "거래액이 반드시 증가한다",
+            "거래액이 감소하거나 증가할 수 있다",
+            "거래액 변동과 무관하다",
+            "인력 확대가 성장에 부정적이다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 인력 확대 후 1년 동안 거래액이 다양하게 변했으며, 일부는 크게 증가하고 일부는 감소했다고 언급한다."
+        },
+        {
+          "question": "데이터와 고용 시점을 연계한 분석이 스타트업 성장 전략에 제공하는 주요 인사이트는?",
+          "options": [
+            "인력 규모와 매출 성장 사이의 인과관계 파악",
+            "시장 점유율 예측",
+            "제품 기능 우선순위 결정",
+            "고객 만족도 측정"
+          ],
+          "answer_index": 0,
+          "explanation": "본문은 거래액 상승과 채용 시점을 함께 분석해 성장 지표를 이해하는 방법을 제시한다."
+        }
+      ]
     }
   ]
 }
