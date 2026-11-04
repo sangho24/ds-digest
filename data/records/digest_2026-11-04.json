@@ -1,0 +1,438 @@
+{
+  "date": "2026-11-04",
+  "generated_at": "2026-11-04T00:28:50.183076",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "ST-GFM: Spectral-Temporal Graph Forecasting with Measured Perturbation Bounds and Masked Spectral Reconstruction",
+        "url": "https://arxiv.org/abs/2611.03512v1",
+        "published_at": "2026-11-02T17:47:20",
+        "transcript": null,
+        "body": "Graph forecasters for sensor networks are trained in one regime and deployed in others, where sensor coupling and signal frequency content both change. We split this spectral shift into an operator channel and a frequency channel, each with a dimensionless measure. ST-GFM (Spectral-Temporal Graph Forecasting Model) filters every input step with Chebyshev and bidirectional diffusion filters on one learned, non-symmetric operator and alternates them with per-node temporal attention. For the operator channel we prove Frobenius-norm perturbation bounds for both graph branches, show that the Chebyshev bound is attained to first order, and compute its constant from the trained weights and the measured operator norm: 17.9 on METR-LA and 21.5 on PEMS-BAY. Under random edge dropout the trained layer moves by 2.0% to 3.1% of this bound. Masked Spectral Reconstruction (MSR), a self-supervised loss active in the first 40 epochs, matches the log power spectrum of the encoder output to that of the input. For small log-spectral residuals on unclamped bins it is proportional to an Itakura-Saito divergence to leading order. Removing it raises the 60-minute MAE by 0.30 on METR-LA, close to the 0.33 lost when all three self-supervised losses go. Under one shared evaluation pipeline, the 60-minute MAE of ST-GFM is 3.5% below a retrained STAEformer on METR-LA and 13.0% below it on PEMS-BAY. Its 60-minute MAE is 3.0980.017 on METR-LA (five seeds) and 1.5760.006 on PEMS-BAY (three seeds), the lowest PEMS-BAY MAE among twelve published baselines.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "센서 네트워크 예측 정확도와 안정성을 크게 향상",
+        "tags": [
+          "ST-GFM",
+          "Chebyshev filter",
+          "bidirectional diffusion",
+          "METR-LA",
+          "PEMS-BAY"
+        ],
+        "concepts": [
+          "그래프 분석",
+          "불확실성 정량화",
+          "손실 함수"
+        ],
+        "key_points": [
+          {
+            "point": "ST‑GFM은 학습된 비대칭 연산자에 Chebyshev와 양방향 확산 필터를 적용하고, 노드별 시간 어텐션과 교대로 사용해 스펙트럼·연산자 변화를 처리한다.",
+            "timestamp": null
+          },
+          {
+            "point": "연산자 채널에 대해 Frobenius‑노름 퍼터베이션 경계를 증명했으며, METR‑LA(17.9)·PEMS‑BAY(21.5)에서 측정된 상수를 제공하고 무작위 엣지 드롭아웃 시 2‑3% 변동을 보였다.",
+            "timestamp": null
+          },
+          {
+            "point": "Masked Spectral Reconstruction 자기지도 손실은 인코더 출력의 로그 파워 스펙트럼을 입력과 맞추며, 이를 제거하면 METR‑LA에서 60분 MAE가 0.30 상승한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "센서 네트워크 예측은 훈련과 배포 환경의 그래프 구조·주파수 변화로 성능 저하가 발생한다. 기존 그래프 시계열 모델은 이러한 스펙트럼 이동을 충분히 다루지 못했다. ST‑GFM은 연산자와 주파수 채널을 분리해 Chebyshev·양방향 확산 필터와 시간 어텐션을 결합하고, 퍼터베이션 경계와 MSR 손실을 제시해 기존 방법 대비 MAE를 크게 낮춘다.",
+        "production_ideas": [
+          "연산자와 주파수 채널을 분리한 스펙트럼‑시간 필터링을 금융 시계열에 적용해 시장 레짐 변화에 대한 예측 강건성을 높인다.",
+          "Frobenius‑노름 퍼터베이션 경계를 실시간 모델 드리프트 모니터링 지표로 활용해 엣지 드롭아웃 비율이 한계치를 초과하면 자동 재학습을 트리거한다.",
+          "Masked Spectral Reconstruction 손실을 오디오 디노이징 모델에 도입해 인코더 출력 스펙트럼을 원본과 정렬, 음질 향상과 학습 안정성을 확보한다."
+        ],
+        "quiz": [
+          {
+            "question": "ST‑GFM이 Chebyshev·양방향 확산 필터와 노드별 시간 어텐션을 교대로 사용하는 주된 이유는?",
+            "options": [
+              "공간 의존성만 포착하기 위해",
+              "스펙트럼 변동과 시간 동역학을 동시에 다루기 위해",
+              "계산 비용을 줄이기 위해",
+              "희소성을 강제하기 위해"
+            ],
+            "answer_index": 1,
+            "explanation": "필터는 공간·스펙트럼 변화를, 시간 어텐션은 시계열 동역학을 담당해 두 종류의 변화를 동시에 모델링한다."
+          },
+          {
+            "question": "Masked Spectral Reconstruction 손실을 제거하면 어떤 현상이 발생하는가?",
+            "options": [
+              "MAE가 개선된다",
+              "성능에 변화가 없다",
+              "METR‑LA에서 60분 MAE가 약 0.30 상승한다",
+              "모델이 수렴하지 않는다"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 따르면 MSR을 없애면 METR‑LA에서 60분 MAE가 0.30 증가해 성능 저하가 확인된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "두 축은 따로 놀지 않습니다.",
+        "url": "https://deepdaiv.stibee.com/p/170",
+        "published_at": "2026-11-03T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안 보이시나요?](https://stib.ee/r16P)\n\n#168 위클리 딥 다이브 | 2026년 11월 4일 에디터 잭잭\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- 이미지 이해와 생성을 하나의 모델로 통합하려는 Unified Multimodal Model(UMM)의 등장 배경을 살펴봅니다.\n- 기존 자기회귀 기반 UMM에서 이미지와 텍스트의 학습 신호가 충돌하는 이유와, 충돌이 주로 발생하는 위치를 알아봅니다.\n- 이미지와 텍스트를 하나의 모델에 완전히 통합하기보다, 필요한 부분만 공유하는 Uni-X 방법을 소개합니다.\n\n하나의 모델로 이미지와 언어를 모두 다뤄도 될까?\n\n안녕하세요, 에디터 잭잭입니다.  요즘 ChatGPT와 같은 AI 서비스의 성능이 나날이 좋아지고 있다는 것을 체감하고 있습니다. 개인적으로 특히 눈에 띄는 것은 이미지를 이해하고 생성하는 능력인데요. 저는 새로운 프로그램을 설치하다가 오류가 발생하면 컴퓨터 화면을 캡처해 ChatGPT에 원인을 물어보곤 합니다. 반대로 발표 자료를 준비할 때는 원하는 그림을 설명하고 이미지를 생성해 달라고 요청하기도 해요.    이처럼 ChatGPT는 하나의 서비스에서 이미지 이해와 생성 기능을 모두 제공합니다. 하지만 내부적으로는 서로 다른 모델을 활용합니다. 예를 들어 이미지에 대한 질문에는 GPT-6와 같은 멀티모달 언어 모델이 답하고, 새로운 이미지를 생성할 때는 별도의 이미지 생성 모델인 ChatGPT Images 2.5를 사용하는 식이죠.    그렇다면 이미지 이해와 이미지 생성을 서로 다른 모델에 맡기는 대신, 하나의 모델에서 두 기능을 모두 수행할 수는 없을까요?    이러한 목표를 가진 연구가 바로 통합 멀티모달 모델(Unified Multimodal Model, UMM)입니다. 하나의 모델로 여러 작업을 수행할 수 있고, 서로 다른 작업에서 학습한 정보를 공유할 수 있다는 장점이 있습니다.    기존의 시각-언어 모델(Vision-Language Model, VLM)은 주로 이미지의 내용을 이해하고 텍스트로 답변하는 데 집중했습니다. 대표적으로 [LLaVA](https://arxiv.org/abs/2304.08485)나 [Qwen-VL](https://arxiv.org/abs/2308.12966) 같은 모델이 있죠. 반면 UMM은 이미지 이해뿐 아니라 이미지 생성까지 하나의 모델 체계로 통합하려는 접근이라는 점에서 기존 VLM과 다르다고 할 수 있어요.\n\n하나의 모델에서 이미지 이해와 이미지 생성을 수행하는 UMM ⓒ deep daiv.\n\n이미지도 언어처럼 다룰 수 있을까?\n\n앞서 소개한 자기회귀 기반 UMM은 언어 모델이 다음 토큰을 예측하는 방식을 이미지 생성까지 확장한 모델입니다. 이미지를 텍스트처럼 토큰의 연속으로 표현하면, 하나의 Transformer에서 이미지와 텍스트를 모두 이해하고 생성할 수 있다는 아이디어죠.\n\n💡 Transformer란?  Transformer는 입력된 정보 사이의 관계를 학습하는 신경망 구조로, 일반적으로 자기회귀(Autoregressive) 방식으로 텍스트를 생성합니다. 예를 들어 \"오늘 날씨가\"라는 문장이 주어지면, 모델은 다음에 올 단어(토큰)를 예측합니다. 이후 새롭게 생성한 단어를 입력에 포함해 그다음 토큰을 예측합니다. 이 과정을 반복하면서 문장을 순차적으로 생성합니다.\n\nChameleon의 자기회귀 기반 멀티모달 학습 및 생성 과정. 이미지와 텍스트를 토큰으로 표현해 하나의 언어 모델에서 처리합니다.  출처: [Chameleon: Mixed-Modal Early-Fusion Foundation Models (Chameleon Team, 2024)](https://arxiv.org/abs/2405.09818)  이러한 접근을 사용하는 대표적인 연구가 [Chameleon](https://arxiv.org/abs/2405.09818)입니다. 이미지와 텍스트는 각각 Image Tokenizer와, 그림에는 안보이지만 Text Tokenizer를 거쳐 토큰으로 변환됩니다. 여기서 토큰은 Transformer 모델이 정보를 처리하는 기본 단위예요. 텍스트는 단어나 단어의 일부로, 이미지는 시각적 특징을 나타내는 작은 단위로 표현하는 것이죠. 이후 이미지 토큰과 텍스트 토큰은 하나의 시퀀스로 결합되어 동일한 Transformer에서 처리됩니다.    그렇다면 모델은 이미지 이해와 이미지 생성이라는 서로 다른 작업을 어떻게 수행할까요? 두 작업은 입력되는 정보와 생성해야 할 출력이 다릅니다.    이미지 이해 작업(Visual Understanding)\n\n- 입력: <BOI>[강아지 이미지]<EOI> 이 사진에서 강아지는 무엇을 하고 있나요?\n- 출력: 강아지가 잔디밭에서 뛰고 있습니다.\n\n   이미지 생성 작업(Visual Generation)\n\n- 입력: 잔디밭에서 뛰어노는 강아지 사진을 만들어줘. <BOI>\n- 출력: [Visual 토큰 1, 2, 3, …] <EOI>\n\n   여기서 <BOI>(Begin of Image)와 <EOI>(End of Image)는 이미지 데이터의 시작과 끝을 표시하는 특수 토큰(Special Token)입니다. 위 예시는 이해를 돕기 위해 단순화한 것으로, 실제 입력 형식과 생성 시작 방식은 모델마다 다를 수 있어요.    이미지에 관한 질문을 받으면 Transformer는 이미지 토큰을 참고해 텍스트 답변을 생성합니다. 반대로 이미지 생성 요청을 받으면 시각 토큰을 차례로 예측하고, Image Decoder가 이를 실제 이미지로 복원합니다. 이러한 방식의 장점은 이미지 이해와 생성을 위해 서로 다른 Transformer 모델을 구축할 필요가 없다는 점입니다. 하나의 Transformer에서 이미지와 텍스트 모두에 다음 토큰 예측이라는 동일한 학습 방식을 적용할 수 있기 때문이죠.\n\n💡 UMM에서의 Visual Token은 VLM에서의 Visual Token과 무엇이 다를까요?  일반적인 VLM과 자기회귀 기반 UMM은 모두 비전 토큰을 사용하지만, 이미지를 표현하는 방식에는 차이가 있습니다.\n\n- 일반적인 VLM (LLaVA, Qwen-VL 등): Vision Encoder가 추출한 연속적인 특징 벡터를 비전 토큰이라고 일컫습니다.\n- UMM (Chameleon, Emu3 등): 이미지의 특징을 미리 학습된 벡터 집합인 Codebook의 항목에 대응시키고, 해당 번호(Index)를 비전 토큰으로 사용합니다.\n\n💥 이미지와 언어의 충돌\n\n앞서 살펴본 자기회귀 기반 UMM은 이미지와 텍스트를 하나의 Transformer에서 처리합니다. 두 종류의 데이터에 동일한 학습 방식을 적용할 수 있다는 점이 매력적인데요. 하지만 [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models (Hao et al., 2026)](https://arxiv.org/abs/2509.24365)는 이미지와 텍스트가 모든 Transformer Layer의 파라미터를 공유하는 방식에 문제가 있을 수 있다고 지적했습니다.    이를 이해하기 위해 딥러닝 모델이 어떻게 학습하는지 간단히 살펴볼게요. 딥러닝 모델은 예측 결과와 정답 사이의 차이를 손실(Loss)로 계산하고, 이를 줄이는 방향으로 내부 파라미터를 조정하는데요. 이때 파라미터를 어느 방향으로 바꿔야 손실이 줄어드는지 판단하는 데 사용하는 값이 그래디언트(Gradient)입니다.    그런데 이미지와 텍스트가 동일한 파라미터를 사용하면 서로 다른 학습 신호가 충돌할 수 있어요. 예를 들어 텍스트를 잘 예측하려면 특정 파라미터의 값을 높이는 것이 유리한데, 이미지를 잘 예측하려면 오히려 낮추는 것이 유리할 수도 있죠. 하나의 파라미터를 두 작업이 서로 반대 방향으로 바꾸려는 셈입니다.    이처럼 서로 다른 작업의 그래디언트가 상충하는 현상을 그래디언트 충돌(Gradient Conflict)이라고 해요. 충돌이 심해지면 두 작업을 함께 학습하는 과정에서 서로 방해가 될 수 있는거죠.    [Uni-X](https://arxiv.org/abs/2509.24365)에서는 이러한 충돌이 Transformer의 어느 부분에서 크게 나타나는지 분석했습니다. 모든 Layer를 공유하는 Transformer에서 텍스트 데이터와 이미지·텍스트 쌍을 각각 학습할 때의 그래디언트를 구하고, 두 그래디언트의 방향이 얼마나 비슷한지 코사인 유사도(Cosine Similarity)를 이용해 비교했죠. 코사인 유사도가 낮을수록 두 학습 신호의 방향이 서로 다르다는 뜻이에요.\n\nTransformer Layer별 그래디언트 충돌 비교.  기존 Shared Transformer는 초반과 후반 Layer에서 충돌이 크게 나타난 반면, Uni-X에서는 충돌이 감소했습니다.  출처: [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models (Hao et al., 2026)](https://arxiv.org/abs/2509.24365)  실험을 통해 확인한 결과 그래디언트 충돌은 모든 Layer에서 동일하게 나타나지 않았습니다. 그래프에서 기존 Shared Transformer를 나타내는 파란색 선을 살펴보면, 입력에 가까운 초반 Layer와 출력에 가까운 후반 Layer에서는 충돌이 상대적으로 컸지만, 중간 Layer에서는 작게 나타났습니다.    즉, 이미지와 텍스트가 모든 Layer의 파라미터를 공유하더라도, Layer의 위치에 따라 그래디언트 충돌의 정도는 달랐다는 건데요. 이러한 차이를 이해하기 위해 [Uni-X](https://arxiv.org/abs/2509.24365) 에서는 이미지와 텍스트가 가진 통계적 특성을 추가로 비교했습니다.\n\n이미지와 텍스트를 같은 언어로 취급해도 될까?\n\n앞서 자기회귀 기반 UMM은 이미지를 토큰으로 변환해 언어처럼 처리한다고 설명했는데요. 하지만 같은 토큰 형식으로 표현한다고 해서, 이미지와 텍스트가 비슷한 특성을 갖는 것은 아닙니다.    이를 확인하기 위해 영어, 독일어, 중국어와 이미지 토큰의 조건부 엔트로피를 비교했습니다. 조건부 엔트로피는 값이 낮을수록 다음 토큰을 예측하기 쉽고, 높을수록 예측하기 어렵다는 의미에요. 실험 결과, 세 가지 자연어는 서로 비슷한 수준을 보인 반면 이미지 토큰은 훨씬 높은 조건부 엔트로피를 보였습니다. 같은 토큰 형식으로 표현하더라도, 이미지와 텍스트의 통계적 특성은 상당히 다르다는 것이죠.\n\n💡 조건부 엔트로피(Conditional Entropy)란?  앞에 주어진 정보를 바탕으로 다음에 무엇이 나올지 얼마나 예측하기 어려운지를 나타내는 값입니다.\n\n- 앞선 정보가 없을 때: 어떤 단어가 나올지 예상하기 어려움 (조건부 엔트로피가 높음)\n- \"오늘 날씨가 너무 좋아서 산책을\"이라는 문장이 주어졌을 때: \"했다\", \"나갔다\" 등 이어질 표현을 어느 정도 예상할 수 있음 (조건부 엔트로피가 낮음)\n\n 즉, 앞에 주어진 정보가 다음 토큰의 불확실성을 얼마나 줄여주는지 이해하는 데 도움이 되는 지표입니다.\n\n이미지와 자연어의 조건부 엔트로피 비교.  앞선 토큰이 주어졌을 때 이미지 토큰은 자연어보다 다음 토큰의 예측 불확실성이 높게 나타납니다.  출처: [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models (Hao et al., 2026)](https://arxiv.org/abs/2509.24365)  결국 이미지와 텍스트를 똑같이 토큰으로 표현할 수는 있지만, 토큰 사이에 존재하는 통계적인 관계까지 같아지는 것은 아니었던 겁니다. 연구진은 이러한 통계적 차이가 앞서 살펴본 그래디언트 충돌과도 관련이 있을 것으로 봤습니다.    강아지 사진과 '강아지'라는 단어를 예로 들어볼게요. 둘 다 같은 대상을 가리키지만, 모델이 처리해야 하는 정보는 상당히 다릅니다. 먼저 Transformer의 초반 Layer에서는 두 모달리티(Modality)의 차이가 크게 드러날 수 있습니다. 텍스트 토큰은 단어 사이의 언어적 규칙을 담고 있지만, 이미지 토큰은 강아지의 털 색깔이나 형태, 주변 배경 같은 시각적 특징을 표현해야 하기 때문이죠.    반면 중간 Layer에서는 공통된 의미를 다룰 가능성이 있습니다. 사진에서 추출한 시각적 정보와 '강아지'라는 단어가 서로 다른 형태로 입력되더라도, 둘 다 강아지라는 같은 대상을 나타낸다는 점은 공유할 수 있겠죠. 연구진은 이러한 의미적 공통점이 중간 Layer에서 그래디언트 충돌이 상대적으로 적게 나타나는 이유 중 하나일 수 있다고 해석했습니다.    출력에 가까운 후반 Layer에서는 다시 두 모달리티의 차이가 중요해집니다. 강아지에 대해 설명하는 문장을 만들 때는 다음 텍스트 토큰을 예측해야 하지만, 강아지 이미지를 생성할 때는 털의 질감이나 형태를 표현하는 다음 시각 토큰을 예측해야 합니다. 같은 강아지를 다루더라도 출력해야 하는 정보의 특성은 다른 셈이죠.    이처럼 이미지와 텍스트는 입력과 출력에 가까운 Layer에서는 서로 다른 특성을 처리하지만, 중간 Layer에서는 의미적인 정보를 공유할 수 있다는 것이 연구진의 해석입니다. 이러한 관찰을 바탕으로 그래디언트 충돌이 크게 나타나는 초반과 후반 Layer는 분리하고, 충돌이 상대적으로 적은 중간 Layer는 공유하는 구조를 제안합니다.\n\n따로 처리하고, 함께 이해하고, 다시 분리하자\n\n출처: [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models (Hao et al., 2026)](https://arxiv.org/abs/2509.24365)  Uni-X의 핵심 아이디어는 초반과 후반 Layer는 이미지와 텍스트를 따로 처리하고, 중간 Layer만 공유하는 것입니다.    기존 Shared Transformer에서는 이미지 토큰과 텍스트 토큰이 처음부터 끝까지 동일한 Layer의 파라미터를 사용합니다. 반면 Uni-X에서는 초반 Layer를 텍스트 전용과 이미지 전용으로 나눠 각각의 정보를 처리하죠. 이후 중간 Layer에서는 두 모달리티가 동일한 파라미터를 사용해 의미적인 정보를 함께 학습하고, 출력에 가까워지면 다시 이미지와 텍스트 전용 Layer로 분리해요. 이처럼 분리(Separate) → 공유(Share) → 분리(Separate)하는 구조가 전체적으로 X자 형태를 이루기 때문에 Uni-X라는 이름이 붙었습니다.    그렇다면 이미지와 텍스트를 분리하는 Layer가 많을수록 더 좋은 결과를 얻을 수 있을까요? 저자들은 분리하는 Layer의 수와 위치를 바꿔가며 실험해 보았는데 너무 적게 분리해도, 너무 많이 분리해도 성능이 낮아지는 경향이 나타났다고 말합니다. 특히 너무 많이 분리하면 두 모달리티가 정보를 함께 학습할 수 있는 공유 Layer가 줄어들기 때문에 성능이 낮아질 수 있어요.    결국 모든 Layer를 공유하는 것도, 모두 분리하는 것도 반드시 최선은 아니라는 것인데요. 다만 어디까지 공유하고 어디서부터 분리해야 할지에 대한 명확한 기준은 아직 없다는 점이 해결되지 않은 문제인 것 같아요.\n\n이걸로 충분할까?\n\n출처: [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models (Hao et al., 2026)](https://arxiv.org/abs/2509.24365)  [Uni-X](https://arxiv.org/abs/2509.24365)는 기존 Shared Transformer보다 텍스트 이해, 이미지 이해, 이미지 생성 평가에서 모두 더 높은 성능을 보였습니다. 특히 이미지 생성 성능을 평가하는 GenEval에서는 33.6점에서 43.3점으로 비교적 큰 개선이 나타났죠. 이는 이미지와 텍스트의 특성에 따라 일부 Layer를 분리하는 설계가 효과적일 수 있음을 보여줍니다.    물론 한계도 있습니다. 일부 Layer를 분리하기 때문에 기존 Shared Transformer보다 전체 파라미터 수가 증가하며, 이미지 이해 능력에서는 별도의 Vision Encoder를 사용하는 일부 모델이 더 높은 성능을 보였습니다. 연구진은 Image Tokenizer가 시각적 정보를 충분히 풍부하게 표현하지 못할 가능성을 그 원인 중 하나로 제시했습니다. 따라서 Transformer에서 어떤 Layer를 공유할 것인지뿐 아니라, 이미지 자체를 어떤 토큰으로 표현하는지도 중요하다는 것을 알 수 있습니다.\n\n하나로 합치는 것만이 정답일까\n\n최근 멀티모달 AI에서는 이미지와 텍스트처럼 서로 다른 종류의 데이터를 하나의 모델에서 이해하고 생성하려는 연구가 활발하게 진행되고 있습니다. 특히 자기회귀 기반 UMM은 이미지를 언어처럼 토큰으로 변환해, 하나의 Transformer에서 이미지 이해와 생성을 수행할 수 있다는 가능성을 보여줬습니다. 기존 언어 모델의 학습 방식을 이미지 생성까지 확장할 수 있다는 점에서 매력적인 접근이죠. 하지만 Uni-X는 이러한 접근에서 이미지와 텍스트가 모든 Transformer Layer를 공유할 필요가 있는지 다시 생각하게 합니다.    서로 다른 데이터를 하나의 형식으로 표현할 수 있다는 사실이, 내부에서도 같은 방식으로 처리해야 한다는 뜻일까요? 개인적으로 이번 연구에서 가장 흥미로웠던 부분은 이미지와 텍스트가 모든 Transformer Layer를 공유하는 것이 정말 최선인지 의문을 제기했다는 점입니다.    이미지와 텍스트를 모두 토큰으로 표현하고, 같은 방식으로 다음 토큰을 예측하도록 학습할 수 있다는 것은 분명 매력적입니다. 하지만 데이터를 같은 형식으로 표현할 수 있다는 것과 그 데이터를 같은 방식으로 처리하는 것이 효과적이라는 것은 별개의 문제라는 생각이 듭니다.    특히 앞으로 AI가 이미지와 텍스트뿐 아니라 음성, 비디오, 로봇의 행동처럼 더 다양한 정보를 다루게 될 텐데요. 서로 다른 정보를 하나의 모델에 통합하는 것도 중요하지만, 각각의 특성을 어디까지 유지하고 어떤 부분에서 공통점을 학습해야 하는지도 고민해야 할 것 같습니다.\n\n[이미지와 텍스트를 같은 언어로 볼 수 있을까?](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/r16P \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/r16P \"게시하기\")[웹에서 보기](https://stib.ee/r16P \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "멀티모달 모델에서 이미지·텍스트 학습 충돌 해결 방안",
+        "tags": [
+          "Chameleon",
+          "Uni-X",
+          "LLaVA",
+          "Qwen-VL",
+          "GPT-6"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "그래디언트 충돌 완화"
+        ],
+        "key_points": [
+          {
+            "point": "이미지·텍스트를 토큰화해 하나의 Transformer에서 처리하는 자기회귀 기반 UMM의 기본 아이디어",
+            "timestamp": null
+          },
+          {
+            "point": "동일 파라미터 공유 시 두 모달리티의 학습 신호가 상충해 Gradient Conflict가 발생한다",
+            "timestamp": null
+          },
+          {
+            "point": "Uni‑X는 양쪽 끝에서 파라미터를 분리해 모달리티 충돌을 완화한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Uni‑X의 양쪽 층 분리 방식을 다중태스크 텍스트 분류 모델에 적용해 각 태스크별 파라미터 충돌을 줄이고 성능을 향상시킨다",
+          "이미지 토큰화를 시계열 데이터에 적용해 복합 시계열·텍스트 예측 모델을 구축한다"
+        ],
+        "quiz": [
+          {
+            "question": "UMM에서 이미지와 텍스트 학습이 충돌하는 주요 원인은 무엇인가?",
+            "options": [
+              "동일 파라미터가 서로 다른 방향의 그래디언트를 받는다",
+              "토큰 길이가 다르다",
+              "모델 용량 부족",
+              "데이터 전처리 오류"
+            ],
+            "answer_index": 0,
+            "explanation": "텍스트와 이미지가 같은 파라미터를 업데이트하려 할 때 그래디언트 방향이 반대가 될 수 있어 충돌이 발생한다"
+          },
+          {
+            "question": "Uni‑X가 제안하는 모달리티 충돌 완화 방법은?",
+            "options": [
+              "모든 레이어 파라미터를 공유한다",
+              "두 모달리티를 별도 엔코더로 분리한다",
+              "두 엔드가 분리된 파라미터 구조를 사용한다",
+              "학습률을 다르게 설정한다"
+            ],
+            "answer_index": 2,
+            "explanation": "Uni‑X는 두 모달리티가 Transformer 전체 레이어를 공유하지 않고 양쪽 끝에서 파라미터를 분리해 충돌을 완화한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "국내 최초 광고 MCP를 출시하며, 개발자의 역할은 어디까지 넓어졌을까?",
+        "url": "https://medium.com/daangn/%EA%B5%AD%EB%82%B4-%EC%B5%9C%EC%B4%88-%EA%B4%91%EA%B3%A0-mcp%EB%A5%BC-%EC%B6%9C%EC%8B%9C%ED%95%98%EB%A9%B0-%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EC%97%AD%ED%95%A0%EC%9D%80-%EC%96%B4%EB%94%94%EA%B9%8C%EC%A7%80-%EB%84%93%EC%96%B4%EC%A1%8C%EC%9D%84%EA%B9%8C-8dea7fe41c07?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-11-03T09:27:47",
+        "transcript": null,
+        "body": "<figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*o_diPNkXrL4mOMOuefHDmg.png\" /></figure><p>안녕하세요. 당근 광고실 광고주플랫폼팀에서 백엔드 엔지니어로 일하는 제이크(Jake)예요.</p><p>얼마 전 저희 팀 엔지니어링 매니저 Iltaek이 <a href=\"https://medium.com/daangn/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C%EC%99%80-%EB%B0%B1%EC%97%94%EB%93%9C%EB%A5%BC-%ED%95%9C-%ED%8C%80%EC%9C%BC%EB%A1%9C-%ED%95%A9%EC%B9%98%EB%A9%B4-%EC%96%B4%EB%96%A4-%EC%9D%BC%EC%9D%B4-%EC%9D%BC%EC%96%B4%EB%82%A0%EA%B9%8C-f8b32edb2eb1\">프론트엔드와 백엔드를 한 팀으로 합친 이야기</a>를 글로 나눴어요. 그 글이 팀의 경계를 넘어 일하는 이야기였다면, 이번 글은 제가 당근 광고 MCP를 만들며 <strong>개발자의 역할을 넓혀 본 이야기</strong>예요.</p><p>MCP(Model Context Protocol)는 AI 서비스가 외부 서비스의 데이터를 불러올 때 쓰는 표준 연결 방식이에요. 광고주가 Claude 같은 AI 서비스에 “지난주 광고 성과 어땠어?”라고 물으면, AI가 광고 MCP를 거쳐 당근 광고의 계정 정보와 광고 정보, 성과 데이터를 가져와서 답해 줘요. 해외 광고 플랫폼에서는 구글, 메타, 아마존이 이미 MCP를 공개했고, 국내에서는 당근이 처음으로 공식 광고 MCP를 출시했어요.</p><p>저는 개발자로 이 프로젝트에 참여하는 줄 알았는데, 하다 보니 로드맵과 PRD부터 출시까지 맡아야 했어요. 이 글에서는 그 과정에서 겪은 일과, 제가 일하는 방식이 어떻게 달라졌는지 이야기해 보려고 해요.</p><h3>로드맵과 PRD를 처음 써 봤어요</h3><p>그동안은 PM과 함께 일하면서 엔지니어로서 개발에 필요한 의견을 나누고, PRD를 어떻게 구현할지 고민했어요. 그런데 이번에는 Iltaek에게 로드맵과 PRD까지 맡아 달라는 요청을 받았어요.</p><p>솔직히 요청을 받았을 때는 “이것도 개발자인 내 일인가?” 싶었어요. 로드맵은 PM이 그리는 거 아닌가, 내가 로드맵을 제시하는 게 맞나 하는 생각이 먼저 들었어요. 해 본 적 없는 일이라 부담도 됐고요.</p><p>그때 Iltaek이 오너라는 마음가짐으로 해 보라고 했어요. 그 말대로 “내 프로젝트”라고 생각하다 보니, 이 프로젝트를 더 잘되게 하려면 뭘 해야 할지 고민하게 되더라고요. 스스로 던지는 질문부터 달라졌어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*kB15h43f5fHJZ6t88xKY_w.png\" /></figure><p>로드맵을 그리려고 하니, 당근 광고 플랫폼은 생각보다 크고 복잡했어요. 전문가모드, 간편모드, 대행사 플랫폼¹까지 합치면 광고주가 할 수 있는 일이 정말 많아요. 광고 보고서, 광고 수정, 소재 만들기, 타겟팅, 전환 추적, 결제와 충전까지요. 이걸 한 번에 다 MCP로 열 수는 없어서, 범위를 좁혀야 했어요.</p><p>혹시나 잘못되더라도 광고주에게 손해가 없는 일인지, 화면보다 AI로 했을 때 더 편한 일인지, 더 많은 광고주에게 도움이 되는 일인지, 이렇게 세 가지 기준을 세워 봤어요. 그래서 리스크가 가장 낮은 조회 기능부터 열었어요. 광고를 수정하는 기능은 충분히 검증한 뒤에 열기로 했어요. AI가 예산이나 입찰가를 바꾸다 실수하면 광고비가 의도와 다르게 나갈 수 있어서요. 결제나 광고 삭제처럼 AI로 하는 게 오히려 불편하거나 위험한 일은 아예 열지 않기로 했어요. 그리고 당근 광고에서 가장 많이 집행되는 디스플레이 광고부터 시작했어요.</p><p>그렇게 로드맵을 그리고, 그 안에서 이번에 할 일의 범위를 정했어요. 그다음 저희 팀에서 쓰는 PTBSMAF라는 프레임워크로 PRD를 썼어요. 문제 정의(Problem Statement), 트레이드오프(Trade-off), 벤치마크(Benchmark), 해결책(Solution), 지표(Metrics), 중단 조건(Andon), 피드백 루프(Feedback Loop)의 앞 글자를 딴 이름이에요.</p><p>그중에서도 문제 정의, 트레이드오프, 벤치마크가 특히 도움이 됐어요. 문제를 제가 이해한 대로 풀어 쓰다 보니 생각이 정리됐고, 조회만 먼저 열면 무엇을 얻고 무엇을 포기하는지 적으면서 트레이드오프가 분명해졌어요. 특히 벤치마크에서는 다른 광고 플랫폼의 사례를 찾아보면서, 그대로 참고할 부분과 우리 상황에 맞게 바꿔야 할 부분이 구분됐어요.</p><p>PRD를 쓰면서 이전에는 생각해 보지 못했던 부분까지 고민하게 됐어요. 이 기능으로 플랫폼이 무엇을 얻을지, 어느 제품부터 고려할지, 뭐가 더 나은 방향인지 같은 제품 관점의 고민은 전부 처음이었어요.</p><p>이렇게 정한 것들이 정답인지 100% 확신할 수는 없었지만, 적어도 근거를 가지고 정했다는 점은 지금 돌아봐도 만족스러워요. 로드맵은 PM이 그리는 거라고 생각했던 것도, 해 보고 나니 제 선입견이었던 것 같아요.</p><h3>API를 그대로 옮기면 될 줄 알았어요</h3><p>로드맵과 PRD로 무엇을 하고 무엇을 하지 않을지 정하고 나니, 이제 도구를 어떻게 만들지 고민할 차례였어요.</p><p>광고주센터 뒤에는 이미 잘 돌아가는 API가 있어서, 그걸 MCP 도구로 하나씩 감싸기만 하면 될 거라고 생각했어요. 그런데 API를 그대로 도구로 만들면, AI가 어떤 도구를 써야 할지 헷갈려하고, 필요한 정보를 놓쳐 잘못된 답을 할 수 있더라고요.</p><p>예를 들어 광고주가 “이 광고 왜 안 나가?”라고 물었다고 해 볼게요. 광고주센터였다면 광고 정보, 노출 상태, 심사 결과가 한 화면에 같이 보였을 거예요. 그런데 API마다 도구를 따로 만들면, AI가 그중 뭘 부를지 스스로 골라야 해요. 광고 정보만 보고 “켜져 있으니 괜찮아요”라고 답하면서, 광고 심사에서 막힌 건 놓치는 식이에요.</p><p>메타 광고 MCP를 직접 연결해 보니, 도구가 많고 설명 방식도 제각각이라 AI가 광고주의 요청을 다르게 이해하는 경우가 있었어요. 로드맵을 그리며 광고주가 AI에게 무엇을 물어볼지 고민했던 게 여기서 도움이 됐어요. API를 그대로 옮기는 대신, 광고주의 질문을 기준으로 도구를 설계하기로 했어요. 그렇게 정리해 보니 좋은 API와 좋은 도구의 기준은 꽤 달랐어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*TuXq9VSDixKNLWXMxkk-Aw.png\" /></figure><p>이 기준으로, 가장 흔한 요청인 “지난주 성과 분석해 줘”를 예시로 도구를 설계해 봤어요. 이 요청은 어느 계정인지 정하고, 대상을 찾고, 성과를 보는 세 단계로 나눌 수 있어요. 그래서 단계마다 도구를 하나씩 두고 광고주센터 뒤의 여러 API를 3개의 도구로 정리했어요. 앞으로 광고 수정처럼 기능이 늘어나면 도구도 함께 늘어나겠지만, 그때도 이 기준을 지켜 가려고 해요.</p><h3>제품으로 내놓으려면 챙길 게 많았어요</h3><p>도구를 다 만들었다고 바로 내놓을 수 있는 건 아니었어요. AI가 광고주의 계정을 대신 다룰 수 있도록 약관을 검토하고 법무팀의 확인을 받아야 했어요. 기존 서버에 부하가 가지 않도록 적절한 호출 한도를 정해야 했고, 광고주용 연결 가이드와 서비스 내 안내 화면도 준비해야 했어요. 그리고 출시 후 운영을 위한 대시보드도 만들어야 했어요.</p><p>처음에는 좀 막막했어요. 일정을 챙기고, 회의를 잡고, 다른 팀과 일정을 맞추는 일은 개발자인 저에게 익숙하지 않았으니까요. 그럴 때마다 함께 진행한 PM인 Moana와 이야기하면서 하나씩 풀어 나갔어요.</p><p>챙길 일 중에서도 가장 걱정했던 건 <strong>인증</strong>이었어요. MCP는 인증 방식이 표준으로 정해져 있어요. OAuth 2.1을 따라야 하고, MCP를 연결할 때 광고주 본인의 동의를 거쳐야 해요. 사내에서만 쓰는 게 아니라 외부 광고주에게 공개하려면, 이러한 표준을 반드시 지원해야 했어요. 다행히 당근의 인증을 맡고 있는 Identity Service Team에서 이미 SSO(Single Sign-On)를 제공하고 있었어요.² 그래서 MCP 인증도 지원해 달라고 요청드렸고, 인증 서버를 표준에 맞게 고쳐 주셨어요.</p><p>그리고 나서 광고 MCP에 인증 서버를 연동하고 AI 서비스에 연결해 봤어요. 그런데 OpenAI의 Codex에서는 로그인을 누르면 에러가 뜨고 그대로 끊겼어요. OpenAI 문서에는 이 표준을 지원한다고 나와 있어서 더 당황했는데, 알고 보니 그때 이 인증 방식에 대한 지원은 Codex 정식 버전에는 아직 들어가지 않았고 알파 버전에만 막 들어온 참이었어요. 이대로 출시하면 Codex에서는 광고 MCP를 연결할 수 없는 상황이었어요. 그래서 틈날 때마다 새 버전이 나왔는지 들여다봤어요. 출시 전에 정식 버전에서도 지원하게 돼서, 그제야 한숨 돌렸어요.</p><p>그렇게 9월 16일, 광고 MCP를 공개 베타로 출시했어요.</p><h3>출시 후엔 광고주가 어떻게 쓰는지 궁금했어요</h3><p>원래라면 개발하고 QA하고 프로덕션에 배포하면 끝났다고 생각했을 것 같아요. 그런데 제품을 맡고 보니, 배포하고 나서 의도한 대로 동작하는지가 궁금했어요. 광고주들이 이걸 실제로 어떻게 쓰는지, 어떻게 하면 더 잘 쓰게 할 수 있을지 계속 고민하게 됐어요. 그래서 도구가 호출될 때마다 어떤 광고주가 어떤 AI 서비스에서 어떤 도구를 불렀는지 남기고, 계속해서 MCP를 쓰는지까지 대시보드에서 볼 수 있게 만들었어요.</p><p>출시 직후에는 틈날 때마다 대시보드를 열어 봤어요. 간편모드 사장님이 많은지 전문가모드 마케터가 많은지, 대행사 마케터도 쓰는지, 어떤 업종에서 많이 쓰는지 살펴보다 보니, 만들 때",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 광고 연결 프로토콜 개발로 엔지니어 역할 확대",
+        "tags": [
+          "MCP",
+          "Claude",
+          "당근 광고",
+          "PTBSMAF",
+          "RESTful API"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "개발자 경험 개선",
+          "RESTful API 설계"
+        ],
+        "key_points": [
+          {
+            "point": "개발자가 로드맵·PRD까지 담당하면서 제품 기획 역할을 확대했다",
+            "timestamp": null
+          },
+          {
+            "point": "AI 질문에 맞춰 도구를 설계해 API를 직접 옮기는 방식의 한계를 극복했다",
+            "timestamp": null
+          },
+          {
+            "point": "출시 전 법무 검토·호출 한도·가이드·운영 대시보드 등 다각적 준비가 필요했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 기반 고객 문의 챗봇에 질문‑도구 매핑 방식을 적용해 답변 정확도를 높인다",
+          "데이터 파이프라인 기능 설계 시 PTBSMAF 프레임워크를 활용해 문제·트레이드오프·벤치마크를 명확히 정의한다",
+          "AI 자동화 대상 업무를 위험도·AI 적합성 기준으로 선별해 안전하게 확대한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 기존 API를 그대로 MCP 도구로 옮기는 것이 AI에게 적합하지 않은가?",
+            "options": [
+              "AI가 올바른 API를 스스로 선택하기 어렵기 때문",
+              "API 호출 속도가 느려서",
+              "라이선스 비용이 증가해서",
+              "보안 정책과 충돌해서"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 AI가 질문에 맞는 도구를 스스로 골라야 하는데, API를 그대로 옮기면 AI가 필요한 정보를 놓치고 잘못된 답을 할 수 있다고 설명한다."
+          },
+          {
+            "question": "저자는 MCP에 노출할 기능을 선택할 때 어떤 기준을 사용했는가?",
+            "options": [
+              "광고주에게 가장 큰 수익을 주는 기능",
+              "리스크가 가장 낮고 AI 활용에 편리한 기능",
+              "개발 속도가 가장 빠른 기능",
+              "팀 내 인기 기능"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 ‘리스크가 가장 낮은 조회 기능부터 열었다’, ‘AI로 했을 때 더 편한 일인지’ 등 위험도와 AI 친화성을 기준으로 삼았다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Revolut moves to self-hosted GLM",
+        "url": "https://twitter.com/guilleflorvs/status/2117379073785696395",
+        "published_at": null,
+        "transcript": null,
+        "body": "[![@guilleflorvs](https://pbs.twimg.com/profile_images/1930737028037021697/ynq4PLyJ_normal.jpg)](/guilleflorvs)\n\n[Guillermo Flor](/guilleflorvs)[@guilleflorvs](/guilleflorvs)\n\nBREAKING: Revolut moved ~2,000 engineers onto self-hosted GLM for coding and pushed Claude Code and Codex to the exception list.\nPer David Abitbol, who leads AI ops there: 56 Nvidia B200s, a blended 30 cents per million tokens, roughly a tenth of what they paid Anthropic and OpenAI. Engineering lead time improved 70%.\nHere's the part that matters: the gains showed up when tokens stopped being rationed. Engineers quit saving AI for the hard tickets and pointed it at everything.\nFrontier models become the exception, open weights become the default. That's a pricing problem for every lab heading to IPO.\nh/t [@OliverMolander](/OliverMolander)\nWould you move your team off frontier APIs if the bill dropped 90%?\n\n![](https://pbs.twimg.com/media/HWJxC2yWEAAWYYO?format=webp&name=large)\n\n[10:11 PM · Nov 2, 2026](/guilleflorvs/status/2117379073785696395)·[808.9K\n\nViews](/guilleflorvs/status/2117379073785696395)\n\n[248](/compose/post?in_reply_to=2117379073785696395)\n\n913\n\n6.9K\n\n3.3K",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "자체 호스팅 GLM으로 AI 비용 90% 절감, 개발 속도 70%↑",
+        "tags": [
+          "Revolut",
+          "GLM",
+          "Claude Code",
+          "Nvidia B200",
+          "Anthropic"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI 생산성 도구",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "Revolut는 2,000명 엔지니어를 자체 호스팅 GLM으로 전환하고 56대 Nvidia B200 GPU를 사용해 토큰당 비용을 0.30달러 수준으로 낮췄다",
+            "timestamp": null
+          },
+          {
+            "point": "토큰 사용 제한을 없애자 엔지니어들의 AI 활용도가 급증해 리드 타임이 70% 개선되었다",
+            "timestamp": null
+          },
+          {
+            "point": "오픈 웨이트 모델을 기본으로 삼고 프론티어 모델은 예외로 두어 비용 구조가 크게 바뀌며 IPO를 준비 중인 랩들의 과제와 직결된다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "내부 데이터 정제 파이프라인에 자체 호스팅 LLM을 도입해 외부 API 비용을 절감한다",
+          "고위험 보고서 작성에만 프론티어 모델을 사용하고 일상적인 보고서는 오픈‑웨이트 모델로 자동 생성해 비용을 최소화한다",
+          "GPU 클러스터를 활용해 대규모 A/B 테스트 시뮬레이션을 배치 추론으로 수행, 저렴한 토큰 비용으로 다양한 시나리오를 빠르게 검증한다"
+        ],
+        "quiz": [
+          {
+            "question": "토큰 사용 제한을 해제했을 때 엔지니어링 리드 타임이 크게 개선된 주요 이유는 무엇인가?",
+            "options": [
+              "AI를 모든 티켓에 적용해 생산성이 상승했기 때문",
+              "모델 정확도가 크게 향상됐기 때문",
+              "GPU 성능이 두 배로 증가했기 때문",
+              "팀 규모가 확대됐기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 토큰이 제한되지 않자 엔지니어들이 AI를 어려운 티켓뿐 아니라 모든 작업에 활용하면서 전체 생산성이 크게 올라 리드 타임이 70% 개선되었다."
+          },
+          {
+            "question": "오픈‑웨이트 모델을 기본으로 전환함으로써 얻을 수 있는 주요 경제적 효과는?",
+            "options": [
+              "라이선스 비용 증가",
+              "토큰당 비용 감소",
+              "하드웨어 유지비 상승",
+              "데이터 엔지니어 채용 확대"
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에서 오픈‑웨이트 모델을 기본으로 삼으면 토큰당 비용이 기존 서비스 대비 약 10% 수준으로 낮아져 전체 비용이 크게 절감된다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "AI 시대의 개발자를 꿈꾸는 학생 개발자에게",
+        "url": "https://d2.naver.com/helloworld/1975819",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-46b284d8-ed6e-4872-ad88-e15e3b4366cd\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-560261e6-a290-4254-8180-8ce683a151d1\"><span class=\"se-fs-fs24 se-ff-nanumsquare  se-style-unset \" id=\"SE-f6969d30-8a96-4d4d-9e6a-3bde70fb85ac\" style=\"color: #000000;\"><b>시작하며: 2018년과 2026년 사이의 간격과 격변기의 고민</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-288c28b8-d608-489d-b2a5-35ac3a987d51\"><span class=\"se-fs-fs11 se-ff-nanumsquare  se-style-unset \" id=\"SE-89a28c11-e89d-48ba-8702-36dda7758f88\" style=\"color: #000000;\"><b>​</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-4d708326-1b5a-4ce1-b86f-9c9e4621d2cb\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-fec4cc2a-bde5-4cb0-a085-36b23414ed27\" style=\"color: #000000;\">2018년에 저는 &#x27;</span><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-9bac94c9-692a-453b-87b7-5a6c548d00b5\" style=\"color: #000000;\"><a class=\"se-link __se_link\" href=\"https://d2.naver.com/news/3435170\" target=\"_blank\">백엔드 개발자를 꿈꾸는 학생개발자에게</a></span><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-6e7cb0cb-b557-4743-9b63-f2f03ceffa8e\" style=\"color: #000000;\">&#x27;라는 글을 이곳 D2 블로그에 공유했습니다. 당시 학생 개발자들과의 미트업 행사에서 나왔던 질문과 답변을 정리한 글이었습니다. 그 후 8년의 시간이 흘렀기에 그 글만 노출된다면 학생들에게 현시점에 적절한 정보를 주지 못할까 봐 걱정되었습니다. 그래서 2025년 말 설문으로 질문을 받아 후속편을 작성했습니다.</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-fb4f5014-2ee0-4247-9774-05260861c4f3\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-b2f9b493-095d-478d-af26-8104700c6545\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-72f4ddc7-7387-49b2-86b4-8a0c5b4d9cdd\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-871d2bbc-6e0b-43fc-8f53-b5b007891705\" style=\"color: #000000;\">그동안 저도 경험과 지식을 더 쌓았습니다. 하지만 지금 학생 개발자들이 한 질문에는 답하기가 더 어려워졌습니다. 개발자의 역할과 같은 큰 주제를 묻는 질문이 많았는데, 지금은 AI로 인한 변화가 큰 시기이기 때문입니다. 스스로도 확신이 없는 시기에 이런 글을 쓰는 것이 적절할지 고민도 했습니다.</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-11daceb2-f1f7-41c5-bfdb-7b6ddccefeae\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-1e41ce22-97af-4ac7-882b-5cb5b9481997\" style=\"color: #000000;\">​</span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-c4211970-57cd-410e-82b8-de7dfdb8a3df\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-6f40a20f-0bf5-4caa-8c3d-54ce47d500aa\" style=\"color: #000000;\">그럼에도 2018년의 글에 보내 주신 관심에 용기를 얻어서 이 글을 발행합니다. 최근의 경험을 나누고 미래를 함께 상상해 보는 일이 지금 시점에는 더 의미가 있다고 생각합니다. 이 글을 목적지가 명확한 안내서보다는 격변기의 스냅샷 정도로 봐 주셨으면 합니다.</span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-horizontalLine se-l-default\" id=\"SE-a7297d81-83d5-4ddd-b420-58d3a8f8bfc7\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-horizontalLine se-l-default se-section-align-left\">\n                            <div class=\"se-module se-module-horizontalLine\">\n                                <hr class=\"se-hr\" />\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-fa59bd74-8e69-419e-bd52-a5c47a39f4eb\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-8600bc33-00dc-485d-aa20-49e948f7781f\"><span class=\"se-fs-fs24 se-ff-nanumsquare  se-style-unset \" id=\"SE-439e731a-490e-42d5-a318-aaa94ebc4b3b\" style=\"color: #000000;\"><b>주요 질문과 답변</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" id=\"SE-d34c4dcb-c20d-4898-8bb2-64007ac2d2ed\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-13566a71-bed4-4617-9e79-23b2659675af\" style=\"color: #000000;\">설문을 통해 들어온 질문들을 비슷한 주제로 모아서 답변을 정리했습니다.</span></p>\n<!-- } SE-TEXT ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 변화가 개발자 역할을 재정의함을 인식하게 함",
+        "tags": [
+          "AI",
+          "백엔드 개발자",
+          "D2 Blog",
+          "학생 개발자",
+          "2025년 설문"
+        ],
+        "concepts": [
+          "AI와 인간 협업",
+          "개발자 경험 개선",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI가 가져온 급격한 변화로 2018년 대비 개발자 역할에 대한 질문에 답하기가 어려워졌다",
+            "timestamp": null
+          },
+          {
+            "point": "2025년 설문을 통해 최신 학생 개발자들의 고민을 수집하고, 이를 반영한 후속 글을 작성했다",
+            "timestamp": null
+          },
+          {
+            "point": "이 글은 확정적인 가이드가 아니라 변혁기의 스냅샷으로, 현재 시점의 흐름을 함께 상상하도록 돕는다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "학생 개발자 설문 결과를 정기적인 데이터 사이언스 교육 커리큘럼 업데이트에 활용한다",
+          "AI 변화에 대한 스냅샷 형식의 문서를 조직 내 기술 로드맵 리뷰에 적용해 최신 트렌드 반영을 촉진한다",
+          "개발자 경험 개선을 위한 AI 도구 도입 사례를 수집해 내부 베스트 프랙티스 가이드라인을 만든다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 저자는 현재 개발자 역할에 대한 질문에 답하기가 더 어려워졌다고 느끼는가?",
+            "options": [
+              "AI 기술의 급격한 발전",
+              "프로그래밍 언어의 변화",
+              "클라우드 비용 상승",
+              "데이터 규제 강화"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 AI가 가져온 큰 변화가 질문을 더 어렵게 만든 주요 원인이라고 언급한다."
+          },
+          {
+            "question": "이 글의 목적은 무엇이라고 저자가 설명했는가?",
+            "options": [
+              "구체적인 커리어 로드맵 제공",
+              "변혁기의 스냅샷 제시",
+              "새로운 프로그래밍 언어 소개",
+              "AI 도구 사용법 상세 안내"
+            ],
+            "answer_index": 1,
+            "explanation": "저자는 글을 ‘격변기의 스냅샷’ 정도로 보아 달라며, 확정적인 안내서가 아니라 현재 상황을 보여주는 것이 목적이라고 밝혔다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "career"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

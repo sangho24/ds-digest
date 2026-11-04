@@ -38,15 +38,15 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 46,
+      "count": 47,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-11-01"
+      "last_seen": "2026-11-04"
     },
     "AI 생산성 도구": {
       "aliases": [],
-      "count": 37,
+      "count": 40,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-04"
     },
     "AI 안전 및 비밀 과제 회피": {
       "aliases": [],
@@ -74,9 +74,9 @@
     },
     "AI와 인간 협업": {
       "aliases": [],
-      "count": 15,
+      "count": 16,
       "first_seen": "2026-10-03",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-04"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -140,9 +140,9 @@
     },
     "RESTful API 설계": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-12",
-      "last_seen": "2026-10-28"
+      "last_seen": "2026-11-04"
     },
     "RPC 인터페이스": {
       "aliases": [],
@@ -266,9 +266,9 @@
     },
     "개발자 경험 개선": {
       "aliases": [],
-      "count": 24,
+      "count": 27,
       "first_seen": "2026-09-08",
-      "last_seen": "2026-11-01"
+      "last_seen": "2026-11-04"
     },
     "개인화 추천": {
       "aliases": [],
@@ -348,11 +348,17 @@
       "first_seen": "2026-09-16",
       "last_seen": "2026-09-16"
     },
+    "그래디언트 충돌 완화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-04",
+      "last_seen": "2026-11-04"
+    },
     "그래프 분석": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-11-02"
+      "last_seen": "2026-11-04"
     },
     "글로벌 인스트럭션": {
       "aliases": [],
@@ -536,9 +542,9 @@
     },
     "멀티모달 표현 학습": {
       "aliases": [],
-      "count": 24,
+      "count": 25,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-04"
     },
     "멀티비율 비디오 자동 크롭": {
       "aliases": [],
@@ -740,9 +746,9 @@
     },
     "불확실성 정량화": {
       "aliases": [],
-      "count": 21,
+      "count": 22,
       "first_seen": "2026-09-17",
-      "last_seen": "2026-11-02"
+      "last_seen": "2026-11-04"
     },
     "브라우저 내 개발 환경": {
       "aliases": [],
@@ -902,9 +908,9 @@
     },
     "손실 함수": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-10-31"
+      "last_seen": "2026-11-04"
     },
     "수 체계 변환": {
       "aliases": [],
@@ -1681,6 +1687,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-11-03T11:01:53.600801+09:00",
+  "updated_at": "2026-11-04T09:28:33.394823+09:00",
   "version": 1
 }

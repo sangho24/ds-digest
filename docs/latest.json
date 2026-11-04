@@ -1,310 +1,321 @@
 {
   "contract_version": 1,
-  "date": "2026-11-03",
-  "generated_at": "2026-11-03T11:02:08.092919+09:00",
+  "date": "2026-11-04",
+  "generated_at": "2026-11-04T09:28:50.177567+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-03.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-04.html",
   "items": [
     {
-      "id": "e318697021c8",
-      "title": "Latent Reasoning in Continuous Space for Unified Multimodal Models",
-      "url": "https://arxiv.org/abs/2610.42149v1",
+      "id": "4996719ee974",
+      "title": "ST-GFM: Spectral-Temporal Graph Forecasting with Measured Perturbation Bounds and Masked Spectral Reconstruction",
+      "url": "https://arxiv.org/abs/2611.03512v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.LG"
+        "name": "arXiv:stat.ML"
       },
-      "published_at": "2026-10-30T17:59:43",
-      "summary": "연속 잠재공간 추론으로 이미지 생성 품질·제어 향상",
-      "positioning": "기존 멀티모달 모델은 이산 토큰 공간에서의 체인‑오브‑생각 추론을 이미지 생성의 연속 공간에 그대로 적용하려다 제어와 스케일링 한계에 봉착했다. LARC는 연속 잠재 상태에서 추론하도록 설계돼 토큰‑이미지 불일치를 해소하고, 커리큘럼 기반 SFT와 정보‑이득 RL을 결합한 두 단계 학습으로 성능을 끌어올린다. 이는 멀티모달 생성 모델이 대형 언어 모델과 동일한 테스트‑타임 확장성을 확보하도록 하는 새로운 연구 흐름이다.",
+      "published_at": "2026-11-02T17:47:20",
+      "summary": "센서 네트워크 예측 정확도와 안정성을 크게 향상",
+      "positioning": "센서 네트워크 예측은 훈련과 배포 환경의 그래프 구조·주파수 변화로 성능 저하가 발생한다. 기존 그래프 시계열 모델은 이러한 스펙트럼 이동을 충분히 다루지 못했다. ST‑GFM은 연산자와 주파수 채널을 분리해 Chebyshev·양방향 확산 필터와 시간 어텐션을 결합하고, 퍼터베이션 경계와 MSR 손실을 제시해 기존 방법 대비 MAE를 크게 낮춘다.",
       "tags": [
-        "LARC",
-        "UMMs",
-        "GenEval",
-        "BAGEL",
-        "RL"
+        "ST-GFM",
+        "Chebyshev filter",
+        "bidirectional diffusion",
+        "METR-LA",
+        "PEMS-BAY"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "ST‑GFM은 학습된 비대칭 연산자에 Chebyshev와 양방향 확산 필터를 적용하고, 노드별 시간 어텐션과 교대로 사용해 스펙트럼·연산자 변화를 처리한다.",
+          "timestamp": null
+        },
+        {
+          "point": "연산자 채널에 대해 Frobenius‑노름 퍼터베이션 경계를 증명했으며, METR‑LA(17.9)·PEMS‑BAY(21.5)에서 측정된 상수를 제공하고 무작위 엣지 드롭아웃 시 2‑3% 변동을 보였다.",
+          "timestamp": null
+        },
+        {
+          "point": "Masked Spectral Reconstruction 자기지도 손실은 인코더 출력의 로그 파워 스펙트럼을 입력과 맞추며, 이를 제거하면 METR‑LA에서 60분 MAE가 0.30 상승한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "연산자와 주파수 채널을 분리한 스펙트럼‑시간 필터링을 금융 시계열에 적용해 시장 레짐 변화에 대한 예측 강건성을 높인다.",
+        "Frobenius‑노름 퍼터베이션 경계를 실시간 모델 드리프트 모니터링 지표로 활용해 엣지 드롭아웃 비율이 한계치를 초과하면 자동 재학습을 트리거한다.",
+        "Masked Spectral Reconstruction 손실을 오디오 디노이징 모델에 도입해 인코더 출력 스펙트럼을 원본과 정렬, 음질 향상과 학습 안정성을 확보한다."
+      ],
+      "quiz": [
+        {
+          "question": "ST‑GFM이 Chebyshev·양방향 확산 필터와 노드별 시간 어텐션을 교대로 사용하는 주된 이유는?",
+          "options": [
+            "공간 의존성만 포착하기 위해",
+            "스펙트럼 변동과 시간 동역학을 동시에 다루기 위해",
+            "계산 비용을 줄이기 위해",
+            "희소성을 강제하기 위해"
+          ],
+          "answer_index": 1,
+          "explanation": "필터는 공간·스펙트럼 변화를, 시간 어텐션은 시계열 동역학을 담당해 두 종류의 변화를 동시에 모델링한다."
+        },
+        {
+          "question": "Masked Spectral Reconstruction 손실을 제거하면 어떤 현상이 발생하는가?",
+          "options": [
+            "MAE가 개선된다",
+            "성능에 변화가 없다",
+            "METR‑LA에서 60분 MAE가 약 0.30 상승한다",
+            "모델이 수렴하지 않는다"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 따르면 MSR을 없애면 METR‑LA에서 60분 MAE가 0.30 증가해 성능 저하가 확인된다."
+        }
+      ]
+    },
+    {
+      "id": "e2f2dc871c22",
+      "title": "두 축은 따로 놀지 않습니다.",
+      "url": "https://deepdaiv.stibee.com/p/170",
+      "source": {
+        "type": "newsletter",
+        "name": "Weekly deep daiv."
+      },
+      "published_at": "2026-11-03T00:00:00",
+      "summary": "멀티모달 모델에서 이미지·텍스트 학습 충돌 해결 방안",
+      "positioning": null,
+      "tags": [
+        "Chameleon",
+        "Uni-X",
+        "LLaVA",
+        "Qwen-VL",
+        "GPT-6"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "UMM은 토큰 기반 추론과 연속 이미지 생성 사이의 모달리티 불일치로 성능 한계가 있다.",
+          "point": "이미지·텍스트를 토큰화해 하나의 Transformer에서 처리하는 자기회귀 기반 UMM의 기본 아이디어",
           "timestamp": null
         },
         {
-          "point": "LARC는 연속 잠재 상태에서 추론함으로써 토큰 레벨 병목을 해소한다.",
+          "point": "동일 파라미터 공유 시 두 모달리티의 학습 신호가 상충해 Gradient Conflict가 발생한다",
           "timestamp": null
         },
         {
-          "point": "커리큘럼 SFT와 정보이득 RL 두 단계 학습으로 GenEval에서 7%p 향상 및 테스트‑타임 스케일링을 달성한다.",
+          "point": "Uni‑X는 양쪽 끝에서 파라미터를 분리해 모달리티 충돌을 완화한다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "수음 합성에서 연속 음향 잠재 공간에 대한 잠재 추론을 적용해 억양·리듬 제어를 강화한다",
-        "로봇 제어에서 상징적 플래닝을 연속 잠재 플래닝으로 전이시키는 커리큘럼 SFT를 도입해 정책 학습 안정성을 높인다",
-        "비디오 합성에서 정보‑이득 RL을 활용해 라벨 없는 프레임 시퀀스의 잠재 코드를 스스로 개선해 시간 일관성을 향상시킨다"
+        "Uni‑X의 양쪽 층 분리 방식을 다중태스크 텍스트 분류 모델에 적용해 각 태스크별 파라미터 충돌을 줄이고 성능을 향상시킨다",
+        "이미지 토큰화를 시계열 데이터에 적용해 복합 시계열·텍스트 예측 모델을 구축한다"
       ],
       "quiz": [
         {
-          "question": "왜 기존 UMM은 이미지 생성에 체인‑오브‑생각 추론을 효과적으로 활용하지 못하는가?",
+          "question": "UMM에서 이미지와 텍스트 학습이 충돌하는 주요 원인은 무엇인가?",
           "options": [
-            "추론이 이산 토큰 공간에서, 이미지 생성은 연속 공간에서 이루어지기 때문이다",
-            "학습 데이터가 부족하기 때문이다",
-            "구조가 오래된 아키텍처를 사용하기 때문이다",
-            "언어를 처리하지 못하기 때문이다"
+            "동일 파라미터가 서로 다른 방향의 그래디언트를 받는다",
+            "토큰 길이가 다르다",
+            "모델 용량 부족",
+            "데이터 전처리 오류"
           ],
           "answer_index": 0,
-          "explanation": "초록에서 모달리티 불일치(이산 토큰 vs 연속 이미지)로 인해 한계가 있다고 명시한다."
+          "explanation": "텍스트와 이미지가 같은 파라미터를 업데이트하려 할 때 그래디언트 방향이 반대가 될 수 있어 충돌이 발생한다"
         },
         {
-          "question": "LARC의 학습 프레임워크는 어떤 두 단계로 구성되는가?",
+          "question": "Uni‑X가 제안하는 모달리티 충돌 완화 방법은?",
           "options": [
-            "지도 학습과 비지도 학습",
-            "커리큘럼 SFT와 정보‑이득 RL",
-            "적대적 학습과 대조 학습",
-            "자기 지도 마스킹과 지식 증류"
+            "모든 레이어 파라미터를 공유한다",
+            "두 모달리티를 별도 엔코더로 분리한다",
+            "두 엔드가 분리된 파라미터 구조를 사용한다",
+            "학습률을 다르게 설정한다"
           ],
-          "answer_index": 1,
-          "explanation": "논문 요약에 커리큘럼 감독 미세조정(SFT)과 정보‑이득 강화학습(RL) 단계가 있다고 적혀 있다."
+          "answer_index": 2,
+          "explanation": "Uni‑X는 두 모달리티가 Transformer 전체 레이어를 공유하지 않고 양쪽 끝에서 파라미터를 분리해 충돌을 완화한다"
         }
       ]
     },
     {
-      "id": "975a4b5da7f6",
-      "title": "👋게임 속으로 들어온 AI",
-      "url": "https://hai-hancom.stibee.com/p/184",
-      "source": {
-        "type": "newsletter",
-        "name": "한컴 AI"
-      },
-      "published_at": "2026-11-02T00:00:00",
-      "summary": "AI NPC와 데이터 기반 툴이 게임 혁신을 이끈다",
-      "positioning": null,
-      "tags": [
-        "크래프톤",
-        "NC AI",
-        "VARCO",
-        "넷마블",
-        "Playground"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "AI가 NPC의 대화와 행동을 실시간 사용자 음성 입력에 따라 조정한다",
-          "timestamp": null
-        },
-        {
-          "point": "게임 개발 전반에 AI 도구(3D 모델링, 음성 합성, 번역, QA 자동화 등)가 도입돼 생산성을 높인다",
-          "timestamp": null
-        },
-        {
-          "point": "사용자도 AI 기반 플랫폼으로 직접 게임을 제작·공유하며 창작자가 될 수 있다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "AI 음성 기반 NPC 제어 방식을 산업 안전 시뮬레이터에 적용해 훈련자가 음성 명령으로 AI 에이전트를 조작하도록 한다",
-        "VARCO 3D와 같은 2D→3D 변환 도구를 전자상거래에서 2D 제품 사진을 3D 모델로 자동 생성해 시각화 비용을 절감한다",
-        "넷마블의 AI 번역 일관성 검증 기술을 기업 문서 번역 파이프라인에 도입해 다국어 용어 통일성을 자동 확보한다"
-      ],
-      "quiz": [
-        {
-          "question": "게임 내 AI 동료 '엘라'가 작동하기 위해 활용된 데이터 수집 방법은 무엇인가?",
-          "options": [
-            "온라인 설문 조사",
-            "PC방에서 1천 명 이용자와 4만 판 플레이",
-            "공개된 오픈소스 데이터",
-            "인게임 로그만 사용"
-          ],
-          "answer_index": 1,
-          "explanation": "크래프톤은 PC방을 빌려 1천 명 넘는 이용자가 AI 캐릭터와 약 4만 판을 플레이하도록 하여 실제 플레이 데이터를 학습 자료로 사용했다."
-        }
-      ]
-    },
-    {
-      "id": "aac7b3c52b2a",
-      "title": "컨테이너처럼 쓰고, VM처럼 격리하기",
-      "url": "https://d2.naver.com/helloworld/2265641",
+      "id": "fbed24373730",
+      "title": "국내 최초 광고 MCP를 출시하며, 개발자의 역할은 어디까지 넓어졌을까?",
+      "url": "https://medium.com/daangn/%EA%B5%AD%EB%82%B4-%EC%B5%9C%EC%B4%88-%EA%B4%91%EA%B3%A0-mcp%EB%A5%BC-%EC%B6%9C%EC%8B%9C%ED%95%98%EB%A9%B0-%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EC%97%AD%ED%95%A0%EC%9D%80-%EC%96%B4%EB%94%94%EA%B9%8C%EC%A7%80-%EB%84%93%EC%96%B4%EC%A1%8C%EC%9D%84%EA%B9%8C-8dea7fe41c07?source=rss----4505f82a2dbd---4",
       "source": {
         "type": "rss",
-        "name": "D2 Blog"
+        "name": "당근 기술 블로그 - Medium"
       },
-      "published_at": null,
-      "summary": "GPU Kata 컨테이너로 격리와 배포 효율 확보",
+      "published_at": "2026-11-03T09:27:47",
+      "summary": "AI 광고 연결 프로토콜 개발로 엔지니어 역할 확대",
       "positioning": null,
       "tags": [
-        "Kata-Containers",
-        "GPU",
-        "NAVER Engineering Day",
-        "NAVER D2"
+        "MCP",
+        "Claude",
+        "당근 광고",
+        "PTBSMAF",
+        "RESTful API"
       ],
-      "relevance": 5,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "Kata-Containers는 컨테이너의 사용 편의성과 VM 수준의 격리를 동시에 제공한다.",
+          "point": "개발자가 로드맵·PRD까지 담당하면서 제품 기획 역할을 확대했다",
           "timestamp": null
         },
         {
-          "point": "GPU 지원이 추가돼 격리된 환경에서도 고성능 연산이 가능해졌다.",
+          "point": "AI 질문에 맞춰 도구를 설계해 API를 직접 옮기는 방식의 한계를 극복했다",
           "timestamp": null
         },
         {
-          "point": "해당 내용은 NAVER Engineering Day 10th에서 발표된 세션이다.",
+          "point": "출시 전 법무 검토·호출 한도·가이드·운영 대시보드 등 다각적 준비가 필요했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Kata-Containers 기반 GPU 격리 환경을 Jupyter Notebook 서비스에 적용해 다중 사용자의 GPU 사용 충돌을 방지한다.",
-        "엣지 디바이스에서 AI 추론을 수행할 때 Kata-Containers를 이용해 모델별 격리와 GPU 할당을 자동화한다.",
-        "서버리스 플랫폼에 Kata-Containers와 GPU를 결합해 함수 단위로 GPU 자원을 안전하게 할당한다."
+        "AI 기반 고객 문의 챗봇에 질문‑도구 매핑 방식을 적용해 답변 정확도를 높인다",
+        "데이터 파이프라인 기능 설계 시 PTBSMAF 프레임워크를 활용해 문제·트레이드오프·벤치마크를 명확히 정의한다",
+        "AI 자동화 대상 업무를 위험도·AI 적합성 기준으로 선별해 안전하게 확대한다"
       ],
       "quiz": [
         {
-          "question": "Kata-Containers가 제공하는 주요 장점은 무엇인가?",
+          "question": "왜 기존 API를 그대로 MCP 도구로 옮기는 것이 AI에게 적합하지 않은가?",
           "options": [
-            "컨테이너와 같은 빠른 시작",
-            "VM 수준의 격리",
-            "무제한 GPU 공유",
-            "자동 스케일링"
+            "AI가 올바른 API를 스스로 선택하기 어렵기 때문",
+            "API 호출 속도가 느려서",
+            "라이선스 비용이 증가해서",
+            "보안 정책과 충돌해서"
           ],
-          "answer_index": 1,
-          "explanation": "Kata-Containers는 컨테이너의 경량성은 유지하면서 VM 수준의 강력한 격리를 제공한다."
+          "answer_index": 0,
+          "explanation": "본문에서 AI가 질문에 맞는 도구를 스스로 골라야 하는데, API를 그대로 옮기면 AI가 필요한 정보를 놓치고 잘못된 답을 할 수 있다고 설명한다."
         },
         {
-          "question": "이 발표가 공개된 행사는 어디인가?",
+          "question": "저자는 MCP에 노출할 기능을 선택할 때 어떤 기준을 사용했는가?",
           "options": [
-            "Google I/O",
-            "NAVER Engineering Day 10th",
-            "AWS re:Invent",
-            "Microsoft Build"
+            "광고주에게 가장 큰 수익을 주는 기능",
+            "리스크가 가장 낮고 AI 활용에 편리한 기능",
+            "개발 속도가 가장 빠른 기능",
+            "팀 내 인기 기능"
           ],
           "answer_index": 1,
-          "explanation": "본문에 따르면 해당 세션은 NAVER Engineering Day 10th에서 발표되었다."
+          "explanation": "본문에 ‘리스크가 가장 낮은 조회 기능부터 열었다’, ‘AI로 했을 때 더 편한 일인지’ 등 위험도와 AI 친화성을 기준으로 삼았다."
         }
       ]
     },
     {
-      "id": "a31b3b7224a8",
-      "title": "Show HN: Subvocal – Talk to your computer without making noise",
-      "url": "https://news.ycombinator.com/item?id=50340088",
+      "id": "5dc6ba520824",
+      "title": "Revolut moves to self-hosted GLM",
+      "url": "https://twitter.com/guilleflorvs/status/2117379073785696395",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "RF 무음 음성 인식으로 텍스트 변환, 센서·ML 기법 소개",
+      "summary": "자체 호스팅 GLM으로 AI 비용 90% 절감, 개발 속도 70%↑",
       "positioning": null,
       "tags": [
-        "Subvocal",
-        "RF",
-        "EMG",
-        "AlterEgo",
-        "MIT Media Lab"
+        "Revolut",
+        "GLM",
+        "Claude Code",
+        "Nvidia B200",
+        "Anthropic"
       ],
-      "relevance": 5,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "EMG 기반 무음 음성 인식은 땀, 전기 간섭, 전극 위치 변동, 착용 불편 등으로 실용성이 떨어졌다",
+          "point": "Revolut는 2,000명 엔지니어를 자체 호스팅 GLM으로 전환하고 56대 Nvidia B200 GPU를 사용해 토큰당 비용을 0.30달러 수준으로 낮췄다",
           "timestamp": null
         },
         {
-          "point": "RF 안테나를 안경에 배치해 얼굴을 통과하는 전파가 혀·입술·연부구개와 상호작용하면서 발생하는 미세 변조를 감지한다",
+          "point": "토큰 사용 제한을 없애자 엔지니어들의 AI 활용도가 급증해 리드 타임이 70% 개선되었다",
           "timestamp": null
         },
         {
-          "point": "수집된 RF 변조 데이터를 기반으로 대규모 foundation model을 학습시켜 실시간 텍스트 디코딩을 구현했다",
+          "point": "오픈 웨이트 모델을 기본으로 삼고 프론티어 모델은 예외로 두어 비용 구조가 크게 바뀌며 IPO를 준비 중인 랩들의 과제와 직결된다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "RF 기반 저노이즈 센서를 활용해 화상 회의에서 얼굴 표정·미세 움직임을 실시간 감정 분석에 적용해 감정 인식 정확도를 높인다",
-        "RF 무음 음성 감지 기술을 VR 헤드셋에 적용해 사용자가 입을 움직이지 않고도 손쉽게 명령을 입력하도록 하여 마이크 사용을 최소화한다",
-        "안테나 필드 변조 방식을 이용해 손 제스처를 감지하고 이를 실시간 수화 번역 시스템에 연결해 청각 장애인과 비청각 사용자 간 소통을 향상시킨다"
+        "내부 데이터 정제 파이프라인에 자체 호스팅 LLM을 도입해 외부 API 비용을 절감한다",
+        "고위험 보고서 작성에만 프론티어 모델을 사용하고 일상적인 보고서는 오픈‑웨이트 모델로 자동 생성해 비용을 최소화한다",
+        "GPU 클러스터를 활용해 대규모 A/B 테스트 시뮬레이션을 배치 추론으로 수행, 저렴한 토큰 비용으로 다양한 시나리오를 빠르게 검증한다"
       ],
       "quiz": [
         {
-          "question": "EMG 방식이 무음 음성 인식에 부적합한 주요 이유는 무엇인가?",
+          "question": "토큰 사용 제한을 해제했을 때 엔지니어링 리드 타임이 크게 개선된 주요 이유는 무엇인가?",
           "options": [
-            "땀에 의한 신호 변동",
-            "전력 소모가 높음",
-            "데이터 라벨링이 어려움",
-            "가격이 비쌈"
+            "AI를 모든 티켓에 적용해 생산성이 상승했기 때문",
+            "모델 정확도가 크게 향상됐기 때문",
+            "GPU 성능이 두 배로 증가했기 때문",
+            "팀 규모가 확대됐기 때문"
           ],
           "answer_index": 0,
-          "explanation": "본문에 따르면 EMG는 땀, 전기 간섭, 전극 위치 변동 등으로 신호가 불안정하고, 얼굴에 전극을 부착하는 불편함 때문에 실용성이 떨어졌다."
+          "explanation": "본문에 따르면 토큰이 제한되지 않자 엔지니어들이 AI를 어려운 티켓뿐 아니라 모든 작업에 활용하면서 전체 생산성이 크게 올라 리드 타임이 70% 개선되었다."
         },
         {
-          "question": "RF 센싱 시스템이 무음 말하기를 텍스트로 변환하는 원리는 무엇인가?",
+          "question": "오픈‑웨이트 모델을 기본으로 전환함으로써 얻을 수 있는 주요 경제적 효과는?",
           "options": [
-            "음향 진동을 직접 측정한다",
-            "전파가 혀·입술·연부구개를 통과하면서 발생하는 변조를 감지한다",
-            "적외선 반사 패턴을 분석한다",
-            "뇌파(EEG)를 해석한다"
+            "라이선스 비용 증가",
+            "토큰당 비용 감소",
+            "하드웨어 유지비 상승",
+            "데이터 엔지니어 채용 확대"
           ],
           "answer_index": 1,
-          "explanation": "본문에 따르면 안경에서 방출된 라디오파가 입 안 구조를 통과하며 말할 때 발생하는 미세 변조를 측정하고, 이를 모델이 텍스트로 디코딩한다."
+          "explanation": "텍스트에서 오픈‑웨이트 모델을 기본으로 삼으면 토큰당 비용이 기존 서비스 대비 약 10% 수준으로 낮아져 전체 비용이 크게 절감된다고 언급한다."
         }
       ]
     },
     {
-      "id": "b331b0ce87c9",
-      "title": "📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다",
-      "url": "https://innoforest.stibee.com/p/684",
+      "id": "a4d1214bbee6",
+      "title": "AI 시대의 개발자를 꿈꾸는 학생 개발자에게",
+      "url": "https://d2.naver.com/helloworld/1975819",
       "source": {
-        "type": "newsletter",
-        "name": "혁신의 숲"
+        "type": "rss",
+        "name": "D2 Blog"
       },
-      "published_at": "2026-11-01T00:00:00",
-      "summary": "거래액 상승 후 채용 시점이 성장에 미치는 영향 분석",
+      "published_at": null,
+      "summary": "AI 변화가 개발자 역할을 재정의함을 인식하게 함",
       "positioning": null,
       "tags": [
-        "혁신의숲",
-        "Growth Bridge",
-        "Nexus Connect",
-        "LOTTE",
-        "LG디스플레이"
+        "AI",
+        "백엔드 개발자",
+        "D2 Blog",
+        "학생 개발자",
+        "2025년 설문"
       ],
-      "relevance": 5,
+      "relevance": 6,
       "key_points": [
         {
-          "point": "거래액이 상승한 스타트업은 평균 3개월 이내에 인력을 추가한다",
+          "point": "AI가 가져온 급격한 변화로 2018년 대비 개발자 역할에 대한 질문에 답하기가 어려워졌다",
           "timestamp": null
         },
         {
-          "point": "인력 확대 후 1년 동안 거래액 변화는 다양해 일부는 크게 증가하거나 감소한다",
+          "point": "2025년 설문을 통해 최신 학생 개발자들의 고민을 수집하고, 이를 반영한 후속 글을 작성했다",
           "timestamp": null
         },
         {
-          "point": "거래액·고용 시점 연계 분석은 성장 전략 수립에 활용 가능하다",
+          "point": "이 글은 확정적인 가이드가 아니라 변혁기의 스냅샷으로, 현재 시점의 흐름을 함께 상상하도록 돕는다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "월별 매출과 신규 기능 출시 시점을 연계해 churn 변화를 예측함으로써 제품 출시 타이밍을 최적화한다",
-        "소매 체인에서 월별 매출과 신규 직원 채용 데이터를 분석해 인력 예산 배분 시점을 정량적으로 결정한다",
-        "마케팅 비용 급증 시점과 이후 인력 확대 시점을 연결해 기업 성장에 미치는 영향을 평가하고, 마케팅 ROI를 개선한다"
+        "학생 개발자 설문 결과를 정기적인 데이터 사이언스 교육 커리큘럼 업데이트에 활용한다",
+        "AI 변화에 대한 스냅샷 형식의 문서를 조직 내 기술 로드맵 리뷰에 적용해 최신 트렌드 반영을 촉진한다",
+        "개발자 경험 개선을 위한 AI 도구 도입 사례를 수집해 내부 베스트 프랙티스 가이드라인을 만든다"
       ],
       "quiz": [
         {
-          "question": "거래액 상승 후 인력 확대가 1년 뒤 거래액에 미치는 결과는 무엇인가?",
+          "question": "왜 저자는 현재 개발자 역할에 대한 질문에 답하기가 더 어려워졌다고 느끼는가?",
           "options": [
-            "거래액이 반드시 증가한다",
-            "거래액이 감소하거나 증가할 수 있다",
-            "거래액 변동과 무관하다",
-            "인력 확대가 성장에 부정적이다"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에서는 인력 확대 후 1년 동안 거래액이 다양하게 변했으며, 일부는 크게 증가하고 일부는 감소했다고 언급한다."
-        },
-        {
-          "question": "데이터와 고용 시점을 연계한 분석이 스타트업 성장 전략에 제공하는 주요 인사이트는?",
-          "options": [
-            "인력 규모와 매출 성장 사이의 인과관계 파악",
-            "시장 점유율 예측",
-            "제품 기능 우선순위 결정",
-            "고객 만족도 측정"
+            "AI 기술의 급격한 발전",
+            "프로그래밍 언어의 변화",
+            "클라우드 비용 상승",
+            "데이터 규제 강화"
           ],
           "answer_index": 0,
-          "explanation": "본문은 거래액 상승과 채용 시점을 함께 분석해 성장 지표를 이해하는 방법을 제시한다."
+          "explanation": "본문에서는 AI가 가져온 큰 변화가 질문을 더 어렵게 만든 주요 원인이라고 언급한다."
+        },
+        {
+          "question": "이 글의 목적은 무엇이라고 저자가 설명했는가?",
+          "options": [
+            "구체적인 커리어 로드맵 제공",
+            "변혁기의 스냅샷 제시",
+            "새로운 프로그래밍 언어 소개",
+            "AI 도구 사용법 상세 안내"
+          ],
+          "answer_index": 1,
+          "explanation": "저자는 글을 ‘격변기의 스냅샷’ 정도로 보아 달라며, 확정적인 안내서가 아니라 현재 상황을 보여주는 것이 목적이라고 밝혔다."
         }
       ]
     }
