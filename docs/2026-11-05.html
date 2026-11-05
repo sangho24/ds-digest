@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 05일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 05일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모델 파인튜닝</span><span class="concept">온-폴리시 학습</span><span class="concept">언어 모델링</span><span class="concept">병렬 처리</span><span class="concept">멀티프로세싱</span><span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">오프라인-온라인 연계 전략</span><span class="concept">고객 접점 확대</span><span class="concept">디자인 트레이드오프</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 기반 업무 검증</span><span class="concept">데이터 사용 투명성</span><span class="concept">AI 안전 및 비밀 과제 회피</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.05373v1" target="_blank" rel="noopener">Aligning Language Models with General Preferences: An Empirical Study of Direct Nash Optimization</a>
+        </h2>
+
+        <p class="summary">일반 선호 함수와 맞춰 LLM 성능을 크게 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>일반 선호 함수를 이용해 LLM을 정렬하는 문제는 기존 DPO 등 대비 이론적 Nash 균형 근사에 초점을 두었지만 실용적 구현이 부족했다. 본 연구는 DNO의 실용 변형 DNO‑Prct를 제안하고, 오픈‑weight 모델을 활용해 두 차례 반복 학습으로 기존 대형 모델을 능가하는 성능을 보였다. 이는 LLM 정렬 연구에서 이론‑실무 격차를 메우는 단계로, 온‑폴리시 샘플링과 대규모 마진 대비를 결합한 새로운 파이프라인이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>DNO는 두 플레이어 선호 게임의 Nash 균형을 근사해 LLM을 일반 선호 함수에 정렬한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실용 변형 DNO‑Prct는 온‑폴리시 샘플링·LLM 평점·대규모 마진 페어 선택·DPO‑스타일 대비 업데이트를 반복해 AlpacaEval 2.0에서 Llama 45.3%, Mistral 18.4% 승률을 달성했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Gold response와 데이터 look‑back을 제거하면 6~10 LC 포인트 감소하고, 샘플 수·마진 변동은 성능에 미미한 영향을 보였다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>온‑폴리시 샘플링·LLM 평점 방식을 추천 시스템에 적용해 사용자 선호와 일치하는 순위 모델을 비용 없이 학습한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 마진 페어 선택을 코드 생성 모델에 도입해 교사‑선호 코드와 비교해 학습 신호를 강화한다.</span></li>
+            
+            <li><span class="box"></span><span>전용 모델 대신 오픈‑weight 모델을 평가자·교사로 활용해 도메인 특화 챗봇 라벨링 비용을 크게 절감한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">DNO‑Prct에서 "large‑margin preference‑pair selection"이 수행하는 주요 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 파라미터 초기화</div>
+            
+            <div class="q-opt">② 샘플 간 차이를 강조해 학습 신호를 강화</div>
+            
+            <div class="q-opt">③ 데이터 증강</div>
+            
+            <div class="q-opt">④ 평가 지표 계산</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 샘플 간 차이를 강조해 학습 신호를 강화</div>
+              <div class="why">대규모 마진을 가진 선호 페어를 선택함으로써 모델이 선호 차이를 명확히 학습하도록 신호를 강화한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Ablation 실험에서 gold response를 제거했을 때 성능 변화는 어떻게 보고되었는가?</div>
+            
+            <div class="q-opt">① 성능이 크게 향상된다</div>
+            
+            <div class="q-opt">② 약간 감소한다</div>
+            
+            <div class="q-opt">③ 6~10 LC 포인트 감소한다</div>
+            
+            <div class="q-opt">④ 변화가 없다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 6~10 LC 포인트 감소한다</div>
+              <div class="why">Gold response를 제외하면 전체 절차 대비 6~10 LC 포인트 정도의 승률 감소가 관찰되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Direct Nash Optimization</span><span class="tag">Llama 3.1 8B Instruct</span><span class="tag">Mistral 7B Instruct v0.1</span><span class="tag">GPT-4o</span><span class="tag">AlpacaEval 2.0</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DC</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.05215v1" target="_blank" rel="noopener">Parallel Sparse Identification of Nonlinear Dynamics in Python: Task- and Data-Parallel SINDy with Numba, OpenMP, Threads and Multiprocessing for the Lorenz and Rössler Systems</a>
+        </h2>
+
+        <p class="summary">대규모 시계열에서 SINDy를 빠르게 적용해 해석 가능한 모델을 얻는다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>SINDy는 시계열 데이터로부터 해석 가능한 방정식을 찾는 희소 회귀 방법인데, 데이터와 후보 라이브러리가 커지면 라이브러리 행렬 계산과 최소제곱 풀이가 병목이 된다. 기존 PySINDy 구현은 CPU 활용이 제한적이었다. 본 논문은 Numba 기반 JIT 커널과 네 가지 병렬 백엔드(OpenMP, PyOMP, 스레드, 멀티프로세싱)를 도입해 다중코어 환경에서 10배 이상 속도를 높인 고성능 SINDy 구현을 제시한다</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Numba 기반 JIT 커널을 네 가지 백엔드(Numba prange, OpenMP via PyOMP, GIL‑해제 스레드, 공유 메모리 멀티프로세싱)로 교체해 실행한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단일 코어 실행이 PySINDy보다 4.3‑5.6배 빠르고, 24코어에서 14.8‑20.3배 가속, 전체 해결 시간은 최대 117배 단축한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Lorenz와 Rössler 시스템에 대해 960개의 독립 식별(작업‑병렬)과 2×10⁷ 샘플·56항 라이브러리(데이터‑병렬) 두 워크로드 모두 정확한 희소 패턴을 복원한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Numba JIT와 다중 백엔드 구조를 이용해 고차원 유전체 데이터의 LASSO 회귀를 가속화해 분석 파이프라인 전체 시간을 단축한다</span></li>
+            
+            <li><span class="box"></span><span>캐시‑블록된 정규 방정식 누적과 tall‑skinny QR 대체 방식을 실시간 센서 융합에 적용해 조건이 나쁜 경우에도 안정적인 파라미터 추정이 가능하도록 한다</span></li>
+            
+            <li><span class="box"></span><span>작업‑병렬 식별 방식을 활용해 딥러닝 하이퍼파라미터 탐색을 다중 코어에서 동시에 수행해 전체 탐색 시간을 크게 줄인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">SINDy 구현에서 라이브러리 행렬과 최소제곱 문제의 계산 비용이 크게 증가하는 주된 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 후보 함수 개수가 적기 때문</div>
+            
+            <div class="q-opt">② 데이터 샘플 수와 후보 항 수가 커지기 때문</div>
+            
+            <div class="q-opt">③ GPU 메모리 부족</div>
+            
+            <div class="q-opt">④ 모델이 비선형이기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 데이터 샘플 수와 후보 항 수가 커지기 때문</div>
+              <div class="why">본문에 따르면 데이터 세트와 후보 라이브러리가 커질수록 라이브러리 행렬 평가와 최소제곱 풀이가 비용을 지배한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">본 논문에서 전역 인터프리터 락(GIL)을 해제하는 병렬 백엔드는 무엇인가?</div>
+            
+            <div class="q-opt">① Numba prange</div>
+            
+            <div class="q-opt">② OpenMP via PyOMP</div>
+            
+            <div class="q-opt">③ Python threads</div>
+            
+            <div class="q-opt">④ Multiprocessing</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ Python threads</div>
+              <div class="why">Python threads 백엔드는 GIL을 해제해 병렬 실행을 가능하게 한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">SINDy</span><span class="tag">Numba</span><span class="tag">OpenMP</span><span class="tag">PySINDy</span><span class="tag">Lorenz system</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/498" target="_blank" rel="noopener">🥤롯데는 왜 라이벌 신세계에 날개를 달아줬을까</a>
+        </h2>
+
+        <p class="summary">데이터 기반 유통 경쟁·협업 전략 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>롯데가 신세계 센텀시티점을 매각한 배경은 현금 확보와 운영 부담 감소 등 전체 사업 효율성을 고려한 전략적 선택이다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>유통업계에서 온라인·오프라인 경계가 흐려지며 경쟁과 협력이 공존하는 상황에서, 경쟁사를 견제하기보다 전체 성장에 기여하는 거래가 중요하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>브랜드와 유통채널 간 협업(예: 스타벅스 입점, 무신사·쿠팡 협력) 사례는 고객 접점 확대와 가치 전달을 위한 새로운 경쟁·협력 모델을 보여준다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>매각·투자 결정을 현금 흐름과 운영 부담을 정량화해 비교하는 프레임워크를 SaaS 기업의 기능 폐기 판단에 적용한다 → 비용 절감과 재투자 효율성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>경쟁사와의 협업을 통해 고객 접점을 확대하는 모델을 금융권에서 핀테크 스타트업과 기존 은행이 공동 프로모션을 진행하는 전략에 활용한다.</span></li>
+            
+            <li><span class="box"></span><span>오프라인-온라인 연계 전략을 물류센터와 전자상거래 플랫폼을 연결하는 하이브리드 배송 네트워크에 적용해 배송 속도와 재고 회전율을 개선한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">롯데가 센텀시티점을 신세계에 매각한 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 경쟁사 성장 억제</div>
+            
+            <div class="q-opt">② 현금 확보와 운영 부담 감소</div>
+            
+            <div class="q-opt">③ 브랜드 이미지 강화</div>
+            
+            <div class="q-opt">④ 해외 진출 자금 마련</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 현금 확보와 운영 부담 감소</div>
+              <div class="why">기사에서는 매각을 통해 현금을 확보하고 운영·투자 부담을 줄여 전체 사업 효율성을 높이는 것이 주요 동기로 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">다음 중 경쟁사와 협력해 고객 접점을 확대한 사례는?</div>
+            
+            <div class="q-opt">① 롯데백화점에 스타벅스 입점</div>
+            
+            <div class="q-opt">② 무신사 일본 팝업에 쿠팡 부스</div>
+            
+            <div class="q-opt">③ 신세계 타운 조성</div>
+            
+            <div class="q-opt">④ 29CM 서체 디자인</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 무신사 일본 팝업에 쿠팡 부스</div>
+              <div class="why">무신사와 쿠팡은 경쟁 관계이지만 일본 팝업에서 협력 부스를 운영해 고객 접점을 확대한 사례로 언급된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">롯데</span><span class="tag">신세계</span><span class="tag">스타벅스</span><span class="tag">무신사</span><span class="tag">쿠팡</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">디플릭</div>
+
+        <h2 class="title">
+          <a href="https://dflick.stibee.com/p/118" target="_blank" rel="noopener">🤨 이거 제 추천 글이야. 세 개나 골라왔어!</a>
+        </h2>
+
+        <p class="summary">AI·UX 최신 트렌드와 디자인 실험 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>디자인·AI 실험 사례(브랜드 로고 오해, 오류 화면 캐릭터, AI 디자인 프롬프트 변형) 를 재조명</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI·UX 관련 최신 뉴스(Discord 검색, Google 위성 AI, GPT‑6.1 Terra, Kodiak 무인 트럭 등)를 요약</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>독자 피드백을 통한 다음 호 기획 및 휴식 일정 안내</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>프롬프트 조건을 달리해 UI 시안을 여러 버전 생성해 내부 디자인 회의에서 빠르게 대안 탐색한다</span></li>
+            
+            <li><span class="box"></span><span>오류 화면에 친근한 캐릭터를 삽입해 사용자 불편을 완화하고 재시도율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>Discord 검색 연동 방식을 사내 Slack·채팅 로그에 적용해 업무 지식 검색 효율을 개선한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">투썸플레이스 로고가 고객에게 ‘쫌’으로 읽힌 주요 원인은?</div>
+            
+            <div class="q-opt">① 색상 대비가 낮아</div>
+            
+            <div class="q-opt">② 기와집 심볼이 ‘쫌’으로 해석돼</div>
+            
+            <div class="q-opt">③ 글꼴이 복잡해</div>
+            
+            <div class="q-opt">④ 로고가 너무 작아</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 기와집 심볼이 ‘쫌’으로 해석돼</div>
+              <div class="why">본문에 ‘기와집을 담았다는 심볼이 고객에게는 ‘쫌’으로 읽혔다’고 명시돼 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">오류 화면에 귀여운 캐릭터를 넣는 목적은?</div>
+            
+            <div class="q-opt">① 페이지 로딩 속도 향상</div>
+            
+            <div class="q-opt">② 사용자 주의 전환</div>
+            
+            <div class="q-opt">③ 보안 강화</div>
+            
+            <div class="q-opt">④ 데이터 압축</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 사용자 주의 전환</div>
+              <div class="why">‘오류 화면에는 왜 귀여운 캐릭터가 나올까?’ 라는 문맥에서 눈길을 끌어 사용자 경험을 완화하려는 의도임을 알 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Twosome Place</span><span class="tag">Discord</span><span class="tag">Google</span><span class="tag">OpenAI</span><span class="tag">Kodiak</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://news.ycombinator.com/item?id=50363461" target="_blank" rel="noopener">Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)</a>
+        </h2>
+
+        <p class="summary">구독 채팅 데이터가 AI 학습에 사용돼 개인정보 위험</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Gemini는 구독자의 저장된 채팅 기록을 모델 학습에 활용하며, Keep Activity를 끄지 않으면 옵트아웃이 불가능하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>일부 채팅은 인간 리뷰어가 검토하며, 사용자가 활동을 삭제해도 최대 3년까지 보관된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Keep Activity를 끄면 72시간 이후 채팅이 사라지므로, 유료 구독이 개인정보 보호를 보장하지 않는다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>기업 내부 채팅 로그에 ‘Keep Activity’와 유사한 토글을 도입해 민감 대화는 저장되지 않게 함으로써 직원 프라이버시와 신뢰를 향상한다.</span></li>
+            
+            <li><span class="box"></span><span>고객 지원 챗봇에 일시적 세션 모드를 적용해 대화 내용이 저장되지 않게 하여 규제 준수와 데이터 최소화를 달성한다.</span></li>
+            
+            <li><span class="box"></span><span>의료 AI 시스템에서 인간 리뷰 로그를 최대 3년 보관하도록 정책을 설정해 감사 가능성을 유지하면서 개인정보 노출 위험을 제한한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">사용자가 Gemini 설정에서 “Keep Activity”를 끄면 채팅 기록은 어떻게 처리되나요?</div>
+            
+            <div class="q-opt">① 채팅이 영구 보관된다</div>
+            
+            <div class="q-opt">② 채팅이 72시간 후 삭제된다</div>
+            
+            <div class="q-opt">③ 채팅이 계속 학습에 사용된다</div>
+            
+            <div class="q-opt">④ 채팅이 자동으로 내보내진다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 채팅이 72시간 후 삭제된다</div>
+              <div class="why">‘Keep Activity’를 끄면 72시간 이후에 채팅 세션이 사라지도록 설계되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Google이 Gemini 채팅에서 사용자가 피해야 할 행동은 무엇인가요?</div>
+            
+            <div class="q-opt">① 이모티콘 사용</div>
+            
+            <div class="q-opt">② 기밀 정보 입력</div>
+            
+            <div class="q-opt">③ 짧은 메시지 전송</div>
+            
+            <div class="q-opt">④ 링크 공유</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 기밀 정보 입력</div>
+              <div class="why">Google은 리뷰어가 볼 수 있는 기밀 정보를 입력하지 말 것을 명시적으로 경고한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Google</span><span class="tag">Gemini</span><span class="tag">Google AI</span><span class="tag">Human reviewers</span><span class="tag">Keep Activity</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

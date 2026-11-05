@@ -1,0 +1,324 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-05",
+  "generated_at": "2026-11-05T09:47:18.064943+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-05.html",
+  "items": [
+    {
+      "id": "a45ea0d1eb58",
+      "title": "Aligning Language Models with General Preferences: An Empirical Study of Direct Nash Optimization",
+      "url": "https://arxiv.org/abs/2611.05373v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-11-03T18:59:15",
+      "summary": "일반 선호 함수와 맞춰 LLM 성능을 크게 향상",
+      "positioning": "일반 선호 함수를 이용해 LLM을 정렬하는 문제는 기존 DPO 등 대비 이론적 Nash 균형 근사에 초점을 두었지만 실용적 구현이 부족했다. 본 연구는 DNO의 실용 변형 DNO‑Prct를 제안하고, 오픈‑weight 모델을 활용해 두 차례 반복 학습으로 기존 대형 모델을 능가하는 성능을 보였다. 이는 LLM 정렬 연구에서 이론‑실무 격차를 메우는 단계로, 온‑폴리시 샘플링과 대규모 마진 대비를 결합한 새로운 파이프라인이다.",
+      "tags": [
+        "Direct Nash Optimization",
+        "Llama 3.1 8B Instruct",
+        "Mistral 7B Instruct v0.1",
+        "GPT-4o",
+        "AlpacaEval 2.0"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "DNO는 두 플레이어 선호 게임의 Nash 균형을 근사해 LLM을 일반 선호 함수에 정렬한다.",
+          "timestamp": null
+        },
+        {
+          "point": "실용 변형 DNO‑Prct는 온‑폴리시 샘플링·LLM 평점·대규모 마진 페어 선택·DPO‑스타일 대비 업데이트를 반복해 AlpacaEval 2.0에서 Llama 45.3%, Mistral 18.4% 승률을 달성했다.",
+          "timestamp": null
+        },
+        {
+          "point": "Gold response와 데이터 look‑back을 제거하면 6~10 LC 포인트 감소하고, 샘플 수·마진 변동은 성능에 미미한 영향을 보였다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "온‑폴리시 샘플링·LLM 평점 방식을 추천 시스템에 적용해 사용자 선호와 일치하는 순위 모델을 비용 없이 학습한다.",
+        "대규모 마진 페어 선택을 코드 생성 모델에 도입해 교사‑선호 코드와 비교해 학습 신호를 강화한다.",
+        "전용 모델 대신 오픈‑weight 모델을 평가자·교사로 활용해 도메인 특화 챗봇 라벨링 비용을 크게 절감한다."
+      ],
+      "quiz": [
+        {
+          "question": "DNO‑Prct에서 \"large‑margin preference‑pair selection\"이 수행하는 주요 역할은 무엇인가?",
+          "options": [
+            "모델 파라미터 초기화",
+            "샘플 간 차이를 강조해 학습 신호를 강화",
+            "데이터 증강",
+            "평가 지표 계산"
+          ],
+          "answer_index": 1,
+          "explanation": "대규모 마진을 가진 선호 페어를 선택함으로써 모델이 선호 차이를 명확히 학습하도록 신호를 강화한다."
+        },
+        {
+          "question": "Ablation 실험에서 gold response를 제거했을 때 성능 변화는 어떻게 보고되었는가?",
+          "options": [
+            "성능이 크게 향상된다",
+            "약간 감소한다",
+            "6~10 LC 포인트 감소한다",
+            "변화가 없다"
+          ],
+          "answer_index": 2,
+          "explanation": "Gold response를 제외하면 전체 절차 대비 6~10 LC 포인트 정도의 승률 감소가 관찰되었다."
+        }
+      ]
+    },
+    {
+      "id": "679d40813e43",
+      "title": "Parallel Sparse Identification of Nonlinear Dynamics in Python: Task- and Data-Parallel SINDy with Numba, OpenMP, Threads and Multiprocessing for the Lorenz and Rössler Systems",
+      "url": "https://arxiv.org/abs/2611.05215v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.DC"
+      },
+      "published_at": "2026-11-03T17:01:26",
+      "summary": "대규모 시계열에서 SINDy를 빠르게 적용해 해석 가능한 모델을 얻는다",
+      "positioning": "SINDy는 시계열 데이터로부터 해석 가능한 방정식을 찾는 희소 회귀 방법인데, 데이터와 후보 라이브러리가 커지면 라이브러리 행렬 계산과 최소제곱 풀이가 병목이 된다. 기존 PySINDy 구현은 CPU 활용이 제한적이었다. 본 논문은 Numba 기반 JIT 커널과 네 가지 병렬 백엔드(OpenMP, PyOMP, 스레드, 멀티프로세싱)를 도입해 다중코어 환경에서 10배 이상 속도를 높인 고성능 SINDy 구현을 제시한다",
+      "tags": [
+        "SINDy",
+        "Numba",
+        "OpenMP",
+        "PySINDy",
+        "Lorenz system"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "Numba 기반 JIT 커널을 네 가지 백엔드(Numba prange, OpenMP via PyOMP, GIL‑해제 스레드, 공유 메모리 멀티프로세싱)로 교체해 실행한다",
+          "timestamp": null
+        },
+        {
+          "point": "단일 코어 실행이 PySINDy보다 4.3‑5.6배 빠르고, 24코어에서 14.8‑20.3배 가속, 전체 해결 시간은 최대 117배 단축한다",
+          "timestamp": null
+        },
+        {
+          "point": "Lorenz와 Rössler 시스템에 대해 960개의 독립 식별(작업‑병렬)과 2×10⁷ 샘플·56항 라이브러리(데이터‑병렬) 두 워크로드 모두 정확한 희소 패턴을 복원한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Numba JIT와 다중 백엔드 구조를 이용해 고차원 유전체 데이터의 LASSO 회귀를 가속화해 분석 파이프라인 전체 시간을 단축한다",
+        "캐시‑블록된 정규 방정식 누적과 tall‑skinny QR 대체 방식을 실시간 센서 융합에 적용해 조건이 나쁜 경우에도 안정적인 파라미터 추정이 가능하도록 한다",
+        "작업‑병렬 식별 방식을 활용해 딥러닝 하이퍼파라미터 탐색을 다중 코어에서 동시에 수행해 전체 탐색 시간을 크게 줄인다"
+      ],
+      "quiz": [
+        {
+          "question": "SINDy 구현에서 라이브러리 행렬과 최소제곱 문제의 계산 비용이 크게 증가하는 주된 이유는 무엇인가?",
+          "options": [
+            "후보 함수 개수가 적기 때문",
+            "데이터 샘플 수와 후보 항 수가 커지기 때문",
+            "GPU 메모리 부족",
+            "모델이 비선형이기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 데이터 세트와 후보 라이브러리가 커질수록 라이브러리 행렬 평가와 최소제곱 풀이가 비용을 지배한다."
+        },
+        {
+          "question": "본 논문에서 전역 인터프리터 락(GIL)을 해제하는 병렬 백엔드는 무엇인가?",
+          "options": [
+            "Numba prange",
+            "OpenMP via PyOMP",
+            "Python threads",
+            "Multiprocessing"
+          ],
+          "answer_index": 2,
+          "explanation": "Python threads 백엔드는 GIL을 해제해 병렬 실행을 가능하게 한다."
+        }
+      ]
+    },
+    {
+      "id": "1d05c03a4654",
+      "title": "🥤롯데는 왜 라이벌 신세계에 날개를 달아줬을까",
+      "url": "https://trendlite.stibee.com/p/498",
+      "source": {
+        "type": "newsletter",
+        "name": "트렌드라이트"
+      },
+      "published_at": "2026-11-03T00:00:00",
+      "summary": "데이터 기반 유통 경쟁·협업 전략 인사이트",
+      "positioning": null,
+      "tags": [
+        "롯데",
+        "신세계",
+        "스타벅스",
+        "무신사",
+        "쿠팡"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "롯데가 신세계 센텀시티점을 매각한 배경은 현금 확보와 운영 부담 감소 등 전체 사업 효율성을 고려한 전략적 선택이다.",
+          "timestamp": null
+        },
+        {
+          "point": "유통업계에서 온라인·오프라인 경계가 흐려지며 경쟁과 협력이 공존하는 상황에서, 경쟁사를 견제하기보다 전체 성장에 기여하는 거래가 중요하다.",
+          "timestamp": null
+        },
+        {
+          "point": "브랜드와 유통채널 간 협업(예: 스타벅스 입점, 무신사·쿠팡 협력) 사례는 고객 접점 확대와 가치 전달을 위한 새로운 경쟁·협력 모델을 보여준다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "매각·투자 결정을 현금 흐름과 운영 부담을 정량화해 비교하는 프레임워크를 SaaS 기업의 기능 폐기 판단에 적용한다 → 비용 절감과 재투자 효율성을 높인다.",
+        "경쟁사와의 협업을 통해 고객 접점을 확대하는 모델을 금융권에서 핀테크 스타트업과 기존 은행이 공동 프로모션을 진행하는 전략에 활용한다.",
+        "오프라인-온라인 연계 전략을 물류센터와 전자상거래 플랫폼을 연결하는 하이브리드 배송 네트워크에 적용해 배송 속도와 재고 회전율을 개선한다."
+      ],
+      "quiz": [
+        {
+          "question": "롯데가 센텀시티점을 신세계에 매각한 주요 이유는 무엇인가?",
+          "options": [
+            "경쟁사 성장 억제",
+            "현금 확보와 운영 부담 감소",
+            "브랜드 이미지 강화",
+            "해외 진출 자금 마련"
+          ],
+          "answer_index": 1,
+          "explanation": "기사에서는 매각을 통해 현금을 확보하고 운영·투자 부담을 줄여 전체 사업 효율성을 높이는 것이 주요 동기로 설명한다."
+        },
+        {
+          "question": "다음 중 경쟁사와 협력해 고객 접점을 확대한 사례는?",
+          "options": [
+            "롯데백화점에 스타벅스 입점",
+            "무신사 일본 팝업에 쿠팡 부스",
+            "신세계 타운 조성",
+            "29CM 서체 디자인"
+          ],
+          "answer_index": 1,
+          "explanation": "무신사와 쿠팡은 경쟁 관계이지만 일본 팝업에서 협력 부스를 운영해 고객 접점을 확대한 사례로 언급된다."
+        }
+      ]
+    },
+    {
+      "id": "387b3e683673",
+      "title": "🤨 이거 제 추천 글이야. 세 개나 골라왔어!",
+      "url": "https://dflick.stibee.com/p/118",
+      "source": {
+        "type": "newsletter",
+        "name": "디플릭"
+      },
+      "published_at": "2026-11-03T00:00:00",
+      "summary": "AI·UX 최신 트렌드와 디자인 실험 인사이트",
+      "positioning": null,
+      "tags": [
+        "Twosome Place",
+        "Discord",
+        "Google",
+        "OpenAI",
+        "Kodiak"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "디자인·AI 실험 사례(브랜드 로고 오해, 오류 화면 캐릭터, AI 디자인 프롬프트 변형) 를 재조명",
+          "timestamp": null
+        },
+        {
+          "point": "AI·UX 관련 최신 뉴스(Discord 검색, Google 위성 AI, GPT‑6.1 Terra, Kodiak 무인 트럭 등)를 요약",
+          "timestamp": null
+        },
+        {
+          "point": "독자 피드백을 통한 다음 호 기획 및 휴식 일정 안내",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "프롬프트 조건을 달리해 UI 시안을 여러 버전 생성해 내부 디자인 회의에서 빠르게 대안 탐색한다",
+        "오류 화면에 친근한 캐릭터를 삽입해 사용자 불편을 완화하고 재시도율을 높인다",
+        "Discord 검색 연동 방식을 사내 Slack·채팅 로그에 적용해 업무 지식 검색 효율을 개선한다"
+      ],
+      "quiz": [
+        {
+          "question": "투썸플레이스 로고가 고객에게 ‘쫌’으로 읽힌 주요 원인은?",
+          "options": [
+            "색상 대비가 낮아",
+            "기와집 심볼이 ‘쫌’으로 해석돼",
+            "글꼴이 복잡해",
+            "로고가 너무 작아"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 ‘기와집을 담았다는 심볼이 고객에게는 ‘쫌’으로 읽혔다’고 명시돼 있다."
+        },
+        {
+          "question": "오류 화면에 귀여운 캐릭터를 넣는 목적은?",
+          "options": [
+            "페이지 로딩 속도 향상",
+            "사용자 주의 전환",
+            "보안 강화",
+            "데이터 압축"
+          ],
+          "answer_index": 1,
+          "explanation": "‘오류 화면에는 왜 귀여운 캐릭터가 나올까?’ 라는 문맥에서 눈길을 끌어 사용자 경험을 완화하려는 의도임을 알 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "150a39b9eb9a",
+      "title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
+      "url": "https://news.ycombinator.com/item?id=50363461",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "구독 채팅 데이터가 AI 학습에 사용돼 개인정보 위험",
+      "positioning": null,
+      "tags": [
+        "Google",
+        "Gemini",
+        "Google AI",
+        "Human reviewers",
+        "Keep Activity"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Gemini는 구독자의 저장된 채팅 기록을 모델 학습에 활용하며, Keep Activity를 끄지 않으면 옵트아웃이 불가능하다.",
+          "timestamp": null
+        },
+        {
+          "point": "일부 채팅은 인간 리뷰어가 검토하며, 사용자가 활동을 삭제해도 최대 3년까지 보관된다.",
+          "timestamp": null
+        },
+        {
+          "point": "Keep Activity를 끄면 72시간 이후 채팅이 사라지므로, 유료 구독이 개인정보 보호를 보장하지 않는다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "기업 내부 채팅 로그에 ‘Keep Activity’와 유사한 토글을 도입해 민감 대화는 저장되지 않게 함으로써 직원 프라이버시와 신뢰를 향상한다.",
+        "고객 지원 챗봇에 일시적 세션 모드를 적용해 대화 내용이 저장되지 않게 하여 규제 준수와 데이터 최소화를 달성한다.",
+        "의료 AI 시스템에서 인간 리뷰 로그를 최대 3년 보관하도록 정책을 설정해 감사 가능성을 유지하면서 개인정보 노출 위험을 제한한다."
+      ],
+      "quiz": [
+        {
+          "question": "사용자가 Gemini 설정에서 “Keep Activity”를 끄면 채팅 기록은 어떻게 처리되나요?",
+          "options": [
+            "채팅이 영구 보관된다",
+            "채팅이 72시간 후 삭제된다",
+            "채팅이 계속 학습에 사용된다",
+            "채팅이 자동으로 내보내진다"
+          ],
+          "answer_index": 1,
+          "explanation": "‘Keep Activity’를 끄면 72시간 이후에 채팅 세션이 사라지도록 설계되어 있다."
+        },
+        {
+          "question": "Google이 Gemini 채팅에서 사용자가 피해야 할 행동은 무엇인가요?",
+          "options": [
+            "이모티콘 사용",
+            "기밀 정보 입력",
+            "짧은 메시지 전송",
+            "링크 공유"
+          ],
+          "answer_index": 1,
+          "explanation": "Google은 리뷰어가 볼 수 있는 기밀 정보를 입력하지 말 것을 명시적으로 경고한다."
+        }
+      ]
+    }
+  ]
+}
