@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-11-04T02:50:12.028290+00:00",
+ "generated_at": "2026-11-05T02:58:26.872723+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -1185,7 +1185,7 @@
      "repo_id": "nvidia/Nemotron-3.5-Parse",
      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
      "created_at": "2026-09-03T06:29:29+00:00",
-     "last_modified": "2026-10-28T04:31:24+00:00",
+     "last_modified": "2026-11-04T22:44:37+00:00",
      "weights_at": "2026-09-03T06:29:29+00:00",
      "has_weights": true,
      "model_card_at": "2026-09-03T06:29:29+00:00",
@@ -4881,8 +4881,22 @@
    "kind": "weights-open",
    "priority": 2,
    "hf_org": "moonshotai",
-   "tracked": 18,
+   "tracked": 19,
    "models": [
+    {
+     "repo_id": "moonshotai/Kimi-K3.1-Pro",
+     "url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+     "created_at": "2026-11-02T04:13:51+00:00",
+     "last_modified": "2026-11-02T04:13:51+00:00",
+     "weights_at": "2026-11-02T04:13:51+00:00",
+     "has_weights": true,
+     "model_card_at": "2026-11-02T04:13:51+00:00",
+     "report_at": null,
+     "arxiv_ids": [],
+     "license": "other",
+     "gated": "false",
+     "derivative": null
+    },
     {
      "repo_id": "moonshotai/Kimi-K3",
      "url": "https://huggingface.co/moonshotai/Kimi-K3",
@@ -6445,6 +6459,29 @@
  ],
  "recent_events": [
   {
+   "org": "moonshot",
+   "repo_id": "moonshotai/Kimi-K3.1-Pro",
+   "transition": "repo_created",
+   "observed_at": "2026-11-05T02:58:26.872723Z",
+   "at": "2026-11-02T04:13:51Z",
+   "source_url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+   "method": "hf_api",
+   "confidence": "verified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "other",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": false,
+    "created_at": "2026-11-02T04:13:51+00:00"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/NVIDIA-NemotronLabs-AI-for-Media-Sports-Basketball",
    "transition": "repo_created",
@@ -7892,34 +7929,11 @@
    "detail": {
     "title": "GPT-6 and Intelligent UI for everyone"
    }
-  },
-  {
-   "org": "google-open",
-   "repo_id": "google/embeddinggemma-2",
-   "transition": "repo_created",
-   "observed_at": "2026-10-07T01:54:55.611437Z",
-   "at": "2026-10-06T15:29:23Z",
-   "source_url": "https://huggingface.co/google/embeddinggemma-2",
-   "method": "hf_api",
-   "confidence": "unverified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "apache-2.0",
-    "gated": "false",
-    "derivative": null,
-    "base_models": [],
-    "surfaced": true,
-    "created_at": "2026-09-14T14:53:42+00:00"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 650,
-  "events": 661
+  "models": 651,
+  "events": 662
  }
 }
