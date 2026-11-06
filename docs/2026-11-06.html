@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 06일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 06일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">Root Cause Analysis</span><span class="concept">AI 기반 진단 보조</span><span class="concept">멀티모달 검색</span><span class="concept">멀티에이전트 시스템</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">AI 생산성 도구</span><span class="concept">문서 기반 지식 관리</span><span class="concept">멀티모달 표현 학습</span><span class="concept">AI와 인간 협업</span><span class="concept">멀티프로세싱</span><span class="concept">가비지 컬렉션</span><span class="concept">컴파일 타깃</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.06777v1" target="_blank" rel="noopener">WISE: An Agentic Framework for Whole-page Multimodal Search Experience Attribution</a>
+        </h2>
+
+        <p class="summary">검색 서비스 품질 원인 추적 방법을 제시해 DS 현업의 문제 해결을 돕는다</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>산업 검색 서비스에서 운영 단계의 품질 모니터링은 결과의 정확성만을 확인해 왔지만, 원인 추적이 부족했다. 기존 연구는 모델 최적화에 초점을 맞추었으며, 시스템 전반의 진단 체계는 부재했다. 본 논문은 SQD라는 새로운 과제를 정의하고, 에이전트 기반 WISE 프레임워크로 원인 추적을 자동화함으로써 검색 품질 진단 흐름에 혁신을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>System Quality Diagnosis(SQD) 개념을 도입해 결과 품질을 원인까지 진단한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>WISE 프레임워크와 ReTrace, AHPO 기법으로 에이전트 기반 진단 정확도를 크게 향상시킨다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실제 멀티모달 검색 벤치마크(WISE-BENCH)에서 75.20% 정확도를 달성하고 프로덕션에 적용한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>ReTrace를 전자상거래 추천 시스템에 적용해 사용자 불만을 개별 모델 단계와 연결, 원인 분석 효율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>AHPO를 온라인 광고 입찰 파이프라인에 도입해 실패 신호 기반 정책을 최적화, 부정확한 입찰을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>WISE와 유사한 에이전트 진단 구조를 자율주행 차량의 센서·인식 스택에 적용해 오류 발생 시 원인 모듈을 빠르게 파악한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">WISE 프레임워크에서 ReTrace의 주요 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 합성 데이터 생성</div>
+            
+            <div class="q-opt">② 증거 일관성 기반 경로 감독 구축</div>
+            
+            <div class="q-opt">③ 하이퍼파라미터 자동 최적화</div>
+            
+            <div class="q-opt">④ 임베딩 시각화</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 증거 일관성 기반 경로 감독 구축</div>
+              <div class="why">ReTrace는 사용자 증거와 시스템 트레이스를 일관되게 연결하는 경로 감독을 만들어 진단 신뢰성을 높인다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Adaptive Harness-Policy Optimization(AHPO)이 에이전트를 개선하는 방식은?</div>
+            
+            <div class="q-opt">① 무작위 탐색을 사용한다</div>
+            
+            <div class="q-opt">② 실패 신호를 활용해 하네스와 정책을 동시에 최적화한다</div>
+            
+            <div class="q-opt">③ 모델 크기를 확대한다</div>
+            
+            <div class="q-opt">④ 지연 시간을 최소화한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 실패 신호를 활용해 하네스와 정책을 동시에 최적화한다</div>
+              <div class="why">AHPO는 실패에 기반한 최적화를 통해 에이전트 하네스와 모델 정책을 동시에 조정해 진단 성능을 향상시킨다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">WISE</span><span class="tag">ReTrace</span><span class="tag">AHPO</span><span class="tag">WISE-BENCH</span><span class="tag">Qwen3.5-35B-A3B</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/rivet-dev/rivet" target="_blank" rel="noopener">Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3</a>
+        </h2>
+
+        <p class="summary">에이전트 워크로드를 저비용·고성능 S3 기반 액터로 대규모 운영 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Rivet는 S3를 백엔드로 하는 경량 액터를 제공해 인‑메모리 상태와 SQLite 기반 영구 저장소, 대기 시 휴면 기능을 지원하며 SSD 수준 속도를 유지한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>액터는 72KB 메모리 사용량과 4.9ms 시작 지연으로 샌드박스(512MB, 1.7s)보다 훨씬 효율적이며 대규모 에이전트 워크로드에 적합하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>기존 FoundationDB에서 S3로 전환해 저장 비용을 10배 절감하면서도 성능을 유지, 대용량 세션 기록·아티팩트 저장에 최적화했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>대규모 모델 학습 시 체크포인트를 S3에 직접 저장하고 로컬 캐시를 SSD처럼 사용해 비용을 크게 낮춘다.</span></li>
+            
+            <li><span class="box"></span><span>데이터 전처리 파이프라인을 액터 기반으로 설계해 bursty 입력에 대해 메모리 효율적으로 처리하고 필요 시 휴면 상태로 전환한다.</span></li>
+            
+            <li><span class="box"></span><span>IoT 디바이스에서 SQLite를 S3와 연동해 로컬에서 빠르게 조회하고, 오래된 데이터는 저비용 S3에 영구 보관한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">샌드박스보다 액터가 에이전트 워크로드에 더 효율적인 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 메모리 사용량이 적다</div>
+            
+            <div class="q-opt">② 시작 지연이 짧다</div>
+            
+            <div class="q-opt">③ 메모리와 시작 지연 모두가 적다</div>
+            
+            <div class="q-opt">④ 두 이유 모두 아니다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 메모리와 시작 지연 모두가 적다</div>
+              <div class="why">본문에 따르면 액터는 72KB 메모리 사용량과 4.9ms p99 시작 지연을 보이며, 샌드박스는 512MB와 1.7s로 훨씬 비효율적이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Rivet가 S3를 기본 저장소로 선택한 주요 장점은?</div>
+            
+            <div class="q-opt">① 레이터시가 감소한다</div>
+            
+            <div class="q-opt">② 스토리지 비용이 10배 저렴하면서 SSD 속도를 유지한다</div>
+            
+            <div class="q-opt">③ 컴퓨팅 파워가 늘어난다</div>
+            
+            <div class="q-opt">④ 보안이 강화된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 스토리지 비용이 10배 저렴하면서 SSD 속도를 유지한다</div>
+              <div class="why">텍스트에 따르면 S3를 사용해 데이터 저장 비용이 10배 낮아졌으며, SSD와 유사한 속도를 유지한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Rivet</span><span class="tag">S3</span><span class="tag">Cloudflare Durable Objects</span><span class="tag">SQLite</span><span class="tag">Redis</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/5037598" target="_blank" rel="noopener">worklog-system 주간보고 자동화 구축 경험기</a>
+        </h2>
+
+        <p class="summary">주간 보고 자동화로 업무 효율 극대화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 시대에 개인 업무 기록·TODO·회의록을 수집하는 시스템을 소개한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NAVER Engineering Day 10th 행사에서 발표된 내용이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>주간보고 자동화를 통해 업무 효율성을 높인다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>스프린트 회고 기록을 수집해 자동으로 스프린트 요약 보고서를 생성한다</span></li>
+            
+            <li><span class="box"></span><span>연구실 실험 로그를 모아 주간 연구 진행 보고서를 자동 생성한다</span></li>
+            
+            <li><span class="box"></span><span>고객 지원 티켓 데이터를 수집해 주간 지원 현황 요약을 자동화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">이 세션이 공개된 행사는 무엇인가?</div>
+            
+            <div class="q-opt">① NAVER Engineering Day 10th</div>
+            
+            <div class="q-opt">② Google I/O</div>
+            
+            <div class="q-opt">③ Microsoft Build</div>
+            
+            <div class="q-opt">④ AWS re:Invent</div>
+            
+            <div class="q-answer">
+              <div class="correct">① NAVER Engineering Day 10th</div>
+              <div class="why">본문에 "NAVER Engineering Day 10th"에서 발표된 세션이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">시스템이 주로 수집하는 데이터 유형은 무엇인가?</div>
+            
+            <div class="q-opt">① 업무 기록, TODO, 회의록</div>
+            
+            <div class="q-opt">② 소스 코드</div>
+            
+            <div class="q-opt">③ 이미지 데이터</div>
+            
+            <div class="q-opt">④ 오디오 녹음</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 업무 기록, TODO, 회의록</div>
+              <div class="why">본문에 "업무 기록을 수집하고 TODO 및 회의록을 기록하는 시스템"이라고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NAVER Engineering Day</span><span class="tag">NAVER D2</span><span class="tag">worklog-system</span><span class="tag">AI</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">댓글: blog</div>
+
+        <h2 class="title">
+          <a href="https://tech.kakao.com/posts/846" target="_blank" rel="noopener">AI 에이전트를 위한 멀티모달 의사결정 모델 ‘Kanana-2-v-decide’ 오픈소스 공개</a>
+        </h2>
+
+        <p class="summary">멀티모달 의사결정 모델 오픈소스로 AI 에이전트 가속</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:20%"></span></span>
+            <span class="axis-num">2</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Kanana-2-v-decide 모델이 멀티모달 의사결정용으로 오픈소스 공개되었습니다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 에이전트가 다양한 모달리티를 활용해 의사결정할 수 있게 지원합니다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>커뮤니티가 코드를 활용·기여할 수 있도록 공개되었습니다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>멀티모달 의사결정 모델을 자율주행 차량의 센서 융합 및 경로 계획에 적용해 상황 인식과 의사결정 정확도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>멀티모달 의사결정 모델을 고객지원 챗봇에 적용해 텍스트와 음성 입력을 동시에 판단해 응답 품질을 향상시킨다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Kanana-2-v-decide 모델은 어떤 목적을 위해 설계되었나요?</div>
+            
+            <div class="q-opt">① 멀티모달 의사결정</div>
+            
+            <div class="q-opt">② 이미지 분류</div>
+            
+            <div class="q-opt">③ 음성 합성</div>
+            
+            <div class="q-opt">④ 시계열 예측</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 멀티모달 의사결정</div>
+              <div class="why">제목과 본문에서 멀티모달 의사결정 모델이라고 명시되어 있다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">이 모델은 어떤 형태로 공개되었나요?</div>
+            
+            <div class="q-opt">① 논문</div>
+            
+            <div class="q-opt">② 오픈소스</div>
+            
+            <div class="q-opt">③ 특허</div>
+            
+            <div class="q-opt">④ 상용 제품</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 오픈소스</div>
+              <div class="why">본문에 오픈소스 공개라고 적혀 있다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kanana-2-v-decide</span><span class="tag">멀티모달</span><span class="tag">AI 에이전트</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/7770448" target="_blank" rel="noopener">2026년과 이후 JavaScript의 동향 - WebAssembly</a>
+        </h2>
+
+        <p class="summary">WebAssembly 최신 기능으로 고성능 데이터·AI 배포 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>wasm 3.0에 GC·예외 처리·64비트 주소·꼬리 호출이 포함돼 언어 런타임 없이 컴파일 가능</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>WASI가 Component Model 기반으로 전환돼 0.3이 2026년 출시, 브라우저 밖 생태계 확대</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>주요 브라우저가 스레드·128비트 SIMD·참조 타입을 지원하지만 명세 위치는 각각 다름</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>WasmGC를 활용해 엣지 서버리스 함수에 Python 데이터 처리 모듈을 배포해 초기 지연 시간을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>Component Model을 데이터 파이프라인의 단계별 마이크로서비스로 모듈화해 재사용성과 배포 속도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>SIMD 지원 wasm 모듈을 이용해 대규모 벡터 연산을 서버리스 환경에서 가속화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">WebAssembly 3.0에서 새롭게 표준화된 기능은 무엇인가?</div>
+            
+            <div class="q-opt">① 스레드</div>
+            
+            <div class="q-opt">② 가비지 컬렉션</div>
+            
+            <div class="q-opt">③ 128비트 SIMD</div>
+            
+            <div class="q-opt">④ 참조 타입</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 가비지 컬렉션</div>
+              <div class="why">본문에 따르면 wasm 3.0에 가비지 컬렉션, 예외 처리, 64비트 주소, 꼬리 호출이 포함됐으며, 스레드·SIMD·참조 타입은 wasm 2.0에 해당한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">2026년 6월에 출시된 WASI 0.3의 주요 변화는?</div>
+            
+            <div class="q-opt">① SIMD 지원 추가</div>
+            
+            <div class="q-opt">② Component Model 기반 전환</div>
+            
+            <div class="q-opt">③ 선형 메모리 제거</div>
+            
+            <div class="q-opt">④ 새로운 파일 시스템 API</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Component Model 기반 전환</div>
+              <div class="why">본문에 따르면 WASI 0.3는 Component Model 기반으로 전환되었다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">WebAssembly</span><span class="tag">WASI</span><span class="tag">WasmGC</span><span class="tag">Component Model</span><span class="tag">SIMD</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

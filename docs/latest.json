@@ -1,322 +1,318 @@
 {
   "contract_version": 1,
-  "date": "2026-11-05",
-  "generated_at": "2026-11-05T09:47:18.064943+09:00",
+  "date": "2026-11-06",
+  "generated_at": "2026-11-06T09:48:23.769143+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-05.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-06.html",
   "items": [
     {
-      "id": "a45ea0d1eb58",
-      "title": "Aligning Language Models with General Preferences: An Empirical Study of Direct Nash Optimization",
-      "url": "https://arxiv.org/abs/2611.05373v1",
+      "id": "40df8606a34e",
+      "title": "WISE: An Agentic Framework for Whole-page Multimodal Search Experience Attribution",
+      "url": "https://arxiv.org/abs/2611.06777v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.LG"
+        "name": "arXiv:cs.IR"
       },
-      "published_at": "2026-11-03T18:59:15",
-      "summary": "일반 선호 함수와 맞춰 LLM 성능을 크게 향상",
-      "positioning": "일반 선호 함수를 이용해 LLM을 정렬하는 문제는 기존 DPO 등 대비 이론적 Nash 균형 근사에 초점을 두었지만 실용적 구현이 부족했다. 본 연구는 DNO의 실용 변형 DNO‑Prct를 제안하고, 오픈‑weight 모델을 활용해 두 차례 반복 학습으로 기존 대형 모델을 능가하는 성능을 보였다. 이는 LLM 정렬 연구에서 이론‑실무 격차를 메우는 단계로, 온‑폴리시 샘플링과 대규모 마진 대비를 결합한 새로운 파이프라인이다.",
+      "published_at": "2026-11-04T16:53:21",
+      "summary": "검색 서비스 품질 원인 추적 방법을 제시해 DS 현업의 문제 해결을 돕는다",
+      "positioning": "산업 검색 서비스에서 운영 단계의 품질 모니터링은 결과의 정확성만을 확인해 왔지만, 원인 추적이 부족했다. 기존 연구는 모델 최적화에 초점을 맞추었으며, 시스템 전반의 진단 체계는 부재했다. 본 논문은 SQD라는 새로운 과제를 정의하고, 에이전트 기반 WISE 프레임워크로 원인 추적을 자동화함으로써 검색 품질 진단 흐름에 혁신을 제공한다.",
       "tags": [
-        "Direct Nash Optimization",
-        "Llama 3.1 8B Instruct",
-        "Mistral 7B Instruct v0.1",
-        "GPT-4o",
-        "AlpacaEval 2.0"
+        "WISE",
+        "ReTrace",
+        "AHPO",
+        "WISE-BENCH",
+        "Qwen3.5-35B-A3B"
       ],
       "relevance": 9,
       "key_points": [
         {
-          "point": "DNO는 두 플레이어 선호 게임의 Nash 균형을 근사해 LLM을 일반 선호 함수에 정렬한다.",
+          "point": "System Quality Diagnosis(SQD) 개념을 도입해 결과 품질을 원인까지 진단한다",
           "timestamp": null
         },
         {
-          "point": "실용 변형 DNO‑Prct는 온‑폴리시 샘플링·LLM 평점·대규모 마진 페어 선택·DPO‑스타일 대비 업데이트를 반복해 AlpacaEval 2.0에서 Llama 45.3%, Mistral 18.4% 승률을 달성했다.",
+          "point": "WISE 프레임워크와 ReTrace, AHPO 기법으로 에이전트 기반 진단 정확도를 크게 향상시킨다",
           "timestamp": null
         },
         {
-          "point": "Gold response와 데이터 look‑back을 제거하면 6~10 LC 포인트 감소하고, 샘플 수·마진 변동은 성능에 미미한 영향을 보였다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "온‑폴리시 샘플링·LLM 평점 방식을 추천 시스템에 적용해 사용자 선호와 일치하는 순위 모델을 비용 없이 학습한다.",
-        "대규모 마진 페어 선택을 코드 생성 모델에 도입해 교사‑선호 코드와 비교해 학습 신호를 강화한다.",
-        "전용 모델 대신 오픈‑weight 모델을 평가자·교사로 활용해 도메인 특화 챗봇 라벨링 비용을 크게 절감한다."
-      ],
-      "quiz": [
-        {
-          "question": "DNO‑Prct에서 \"large‑margin preference‑pair selection\"이 수행하는 주요 역할은 무엇인가?",
-          "options": [
-            "모델 파라미터 초기화",
-            "샘플 간 차이를 강조해 학습 신호를 강화",
-            "데이터 증강",
-            "평가 지표 계산"
-          ],
-          "answer_index": 1,
-          "explanation": "대규모 마진을 가진 선호 페어를 선택함으로써 모델이 선호 차이를 명확히 학습하도록 신호를 강화한다."
-        },
-        {
-          "question": "Ablation 실험에서 gold response를 제거했을 때 성능 변화는 어떻게 보고되었는가?",
-          "options": [
-            "성능이 크게 향상된다",
-            "약간 감소한다",
-            "6~10 LC 포인트 감소한다",
-            "변화가 없다"
-          ],
-          "answer_index": 2,
-          "explanation": "Gold response를 제외하면 전체 절차 대비 6~10 LC 포인트 정도의 승률 감소가 관찰되었다."
-        }
-      ]
-    },
-    {
-      "id": "679d40813e43",
-      "title": "Parallel Sparse Identification of Nonlinear Dynamics in Python: Task- and Data-Parallel SINDy with Numba, OpenMP, Threads and Multiprocessing for the Lorenz and Rössler Systems",
-      "url": "https://arxiv.org/abs/2611.05215v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.DC"
-      },
-      "published_at": "2026-11-03T17:01:26",
-      "summary": "대규모 시계열에서 SINDy를 빠르게 적용해 해석 가능한 모델을 얻는다",
-      "positioning": "SINDy는 시계열 데이터로부터 해석 가능한 방정식을 찾는 희소 회귀 방법인데, 데이터와 후보 라이브러리가 커지면 라이브러리 행렬 계산과 최소제곱 풀이가 병목이 된다. 기존 PySINDy 구현은 CPU 활용이 제한적이었다. 본 논문은 Numba 기반 JIT 커널과 네 가지 병렬 백엔드(OpenMP, PyOMP, 스레드, 멀티프로세싱)를 도입해 다중코어 환경에서 10배 이상 속도를 높인 고성능 SINDy 구현을 제시한다",
-      "tags": [
-        "SINDy",
-        "Numba",
-        "OpenMP",
-        "PySINDy",
-        "Lorenz system"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "Numba 기반 JIT 커널을 네 가지 백엔드(Numba prange, OpenMP via PyOMP, GIL‑해제 스레드, 공유 메모리 멀티프로세싱)로 교체해 실행한다",
-          "timestamp": null
-        },
-        {
-          "point": "단일 코어 실행이 PySINDy보다 4.3‑5.6배 빠르고, 24코어에서 14.8‑20.3배 가속, 전체 해결 시간은 최대 117배 단축한다",
-          "timestamp": null
-        },
-        {
-          "point": "Lorenz와 Rössler 시스템에 대해 960개의 독립 식별(작업‑병렬)과 2×10⁷ 샘플·56항 라이브러리(데이터‑병렬) 두 워크로드 모두 정확한 희소 패턴을 복원한다",
+          "point": "실제 멀티모달 검색 벤치마크(WISE-BENCH)에서 75.20% 정확도를 달성하고 프로덕션에 적용한다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Numba JIT와 다중 백엔드 구조를 이용해 고차원 유전체 데이터의 LASSO 회귀를 가속화해 분석 파이프라인 전체 시간을 단축한다",
-        "캐시‑블록된 정규 방정식 누적과 tall‑skinny QR 대체 방식을 실시간 센서 융합에 적용해 조건이 나쁜 경우에도 안정적인 파라미터 추정이 가능하도록 한다",
-        "작업‑병렬 식별 방식을 활용해 딥러닝 하이퍼파라미터 탐색을 다중 코어에서 동시에 수행해 전체 탐색 시간을 크게 줄인다"
+        "ReTrace를 전자상거래 추천 시스템에 적용해 사용자 불만을 개별 모델 단계와 연결, 원인 분석 효율을 높인다",
+        "AHPO를 온라인 광고 입찰 파이프라인에 도입해 실패 신호 기반 정책을 최적화, 부정확한 입찰을 감소시킨다",
+        "WISE와 유사한 에이전트 진단 구조를 자율주행 차량의 센서·인식 스택에 적용해 오류 발생 시 원인 모듈을 빠르게 파악한다"
       ],
       "quiz": [
         {
-          "question": "SINDy 구현에서 라이브러리 행렬과 최소제곱 문제의 계산 비용이 크게 증가하는 주된 이유는 무엇인가?",
+          "question": "WISE 프레임워크에서 ReTrace의 주요 역할은 무엇인가?",
           "options": [
-            "후보 함수 개수가 적기 때문",
-            "데이터 샘플 수와 후보 항 수가 커지기 때문",
-            "GPU 메모리 부족",
-            "모델이 비선형이기 때문"
+            "합성 데이터 생성",
+            "증거 일관성 기반 경로 감독 구축",
+            "하이퍼파라미터 자동 최적화",
+            "임베딩 시각화"
           ],
           "answer_index": 1,
-          "explanation": "본문에 따르면 데이터 세트와 후보 라이브러리가 커질수록 라이브러리 행렬 평가와 최소제곱 풀이가 비용을 지배한다."
+          "explanation": "ReTrace는 사용자 증거와 시스템 트레이스를 일관되게 연결하는 경로 감독을 만들어 진단 신뢰성을 높인다."
         },
         {
-          "question": "본 논문에서 전역 인터프리터 락(GIL)을 해제하는 병렬 백엔드는 무엇인가?",
+          "question": "Adaptive Harness-Policy Optimization(AHPO)이 에이전트를 개선하는 방식은?",
           "options": [
-            "Numba prange",
-            "OpenMP via PyOMP",
-            "Python threads",
-            "Multiprocessing"
+            "무작위 탐색을 사용한다",
+            "실패 신호를 활용해 하네스와 정책을 동시에 최적화한다",
+            "모델 크기를 확대한다",
+            "지연 시간을 최소화한다"
           ],
-          "answer_index": 2,
-          "explanation": "Python threads 백엔드는 GIL을 해제해 병렬 실행을 가능하게 한다."
+          "answer_index": 1,
+          "explanation": "AHPO는 실패에 기반한 최적화를 통해 에이전트 하네스와 모델 정책을 동시에 조정해 진단 성능을 향상시킨다."
         }
       ]
     },
     {
-      "id": "1d05c03a4654",
-      "title": "🥤롯데는 왜 라이벌 신세계에 날개를 달아줬을까",
-      "url": "https://trendlite.stibee.com/p/498",
-      "source": {
-        "type": "newsletter",
-        "name": "트렌드라이트"
-      },
-      "published_at": "2026-11-03T00:00:00",
-      "summary": "데이터 기반 유통 경쟁·협업 전략 인사이트",
-      "positioning": null,
-      "tags": [
-        "롯데",
-        "신세계",
-        "스타벅스",
-        "무신사",
-        "쿠팡"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "롯데가 신세계 센텀시티점을 매각한 배경은 현금 확보와 운영 부담 감소 등 전체 사업 효율성을 고려한 전략적 선택이다.",
-          "timestamp": null
-        },
-        {
-          "point": "유통업계에서 온라인·오프라인 경계가 흐려지며 경쟁과 협력이 공존하는 상황에서, 경쟁사를 견제하기보다 전체 성장에 기여하는 거래가 중요하다.",
-          "timestamp": null
-        },
-        {
-          "point": "브랜드와 유통채널 간 협업(예: 스타벅스 입점, 무신사·쿠팡 협력) 사례는 고객 접점 확대와 가치 전달을 위한 새로운 경쟁·협력 모델을 보여준다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "매각·투자 결정을 현금 흐름과 운영 부담을 정량화해 비교하는 프레임워크를 SaaS 기업의 기능 폐기 판단에 적용한다 → 비용 절감과 재투자 효율성을 높인다.",
-        "경쟁사와의 협업을 통해 고객 접점을 확대하는 모델을 금융권에서 핀테크 스타트업과 기존 은행이 공동 프로모션을 진행하는 전략에 활용한다.",
-        "오프라인-온라인 연계 전략을 물류센터와 전자상거래 플랫폼을 연결하는 하이브리드 배송 네트워크에 적용해 배송 속도와 재고 회전율을 개선한다."
-      ],
-      "quiz": [
-        {
-          "question": "롯데가 센텀시티점을 신세계에 매각한 주요 이유는 무엇인가?",
-          "options": [
-            "경쟁사 성장 억제",
-            "현금 확보와 운영 부담 감소",
-            "브랜드 이미지 강화",
-            "해외 진출 자금 마련"
-          ],
-          "answer_index": 1,
-          "explanation": "기사에서는 매각을 통해 현금을 확보하고 운영·투자 부담을 줄여 전체 사업 효율성을 높이는 것이 주요 동기로 설명한다."
-        },
-        {
-          "question": "다음 중 경쟁사와 협력해 고객 접점을 확대한 사례는?",
-          "options": [
-            "롯데백화점에 스타벅스 입점",
-            "무신사 일본 팝업에 쿠팡 부스",
-            "신세계 타운 조성",
-            "29CM 서체 디자인"
-          ],
-          "answer_index": 1,
-          "explanation": "무신사와 쿠팡은 경쟁 관계이지만 일본 팝업에서 협력 부스를 운영해 고객 접점을 확대한 사례로 언급된다."
-        }
-      ]
-    },
-    {
-      "id": "387b3e683673",
-      "title": "🤨 이거 제 추천 글이야. 세 개나 골라왔어!",
-      "url": "https://dflick.stibee.com/p/118",
-      "source": {
-        "type": "newsletter",
-        "name": "디플릭"
-      },
-      "published_at": "2026-11-03T00:00:00",
-      "summary": "AI·UX 최신 트렌드와 디자인 실험 인사이트",
-      "positioning": null,
-      "tags": [
-        "Twosome Place",
-        "Discord",
-        "Google",
-        "OpenAI",
-        "Kodiak"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "디자인·AI 실험 사례(브랜드 로고 오해, 오류 화면 캐릭터, AI 디자인 프롬프트 변형) 를 재조명",
-          "timestamp": null
-        },
-        {
-          "point": "AI·UX 관련 최신 뉴스(Discord 검색, Google 위성 AI, GPT‑6.1 Terra, Kodiak 무인 트럭 등)를 요약",
-          "timestamp": null
-        },
-        {
-          "point": "독자 피드백을 통한 다음 호 기획 및 휴식 일정 안내",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "프롬프트 조건을 달리해 UI 시안을 여러 버전 생성해 내부 디자인 회의에서 빠르게 대안 탐색한다",
-        "오류 화면에 친근한 캐릭터를 삽입해 사용자 불편을 완화하고 재시도율을 높인다",
-        "Discord 검색 연동 방식을 사내 Slack·채팅 로그에 적용해 업무 지식 검색 효율을 개선한다"
-      ],
-      "quiz": [
-        {
-          "question": "투썸플레이스 로고가 고객에게 ‘쫌’으로 읽힌 주요 원인은?",
-          "options": [
-            "색상 대비가 낮아",
-            "기와집 심볼이 ‘쫌’으로 해석돼",
-            "글꼴이 복잡해",
-            "로고가 너무 작아"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 ‘기와집을 담았다는 심볼이 고객에게는 ‘쫌’으로 읽혔다’고 명시돼 있다."
-        },
-        {
-          "question": "오류 화면에 귀여운 캐릭터를 넣는 목적은?",
-          "options": [
-            "페이지 로딩 속도 향상",
-            "사용자 주의 전환",
-            "보안 강화",
-            "데이터 압축"
-          ],
-          "answer_index": 1,
-          "explanation": "‘오류 화면에는 왜 귀여운 캐릭터가 나올까?’ 라는 문맥에서 눈길을 끌어 사용자 경험을 완화하려는 의도임을 알 수 있다."
-        }
-      ]
-    },
-    {
-      "id": "150a39b9eb9a",
-      "title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
-      "url": "https://news.ycombinator.com/item?id=50363461",
+      "id": "f0e2e8b6917e",
+      "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
+      "url": "https://github.com/rivet-dev/rivet",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "구독 채팅 데이터가 AI 학습에 사용돼 개인정보 위험",
+      "summary": "에이전트 워크로드를 저비용·고성능 S3 기반 액터로 대규모 운영 가능",
       "positioning": null,
       "tags": [
-        "Google",
-        "Gemini",
-        "Google AI",
-        "Human reviewers",
-        "Keep Activity"
+        "Rivet",
+        "S3",
+        "Cloudflare Durable Objects",
+        "SQLite",
+        "Redis"
       ],
-      "relevance": 6,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "Gemini는 구독자의 저장된 채팅 기록을 모델 학습에 활용하며, Keep Activity를 끄지 않으면 옵트아웃이 불가능하다.",
+          "point": "Rivet는 S3를 백엔드로 하는 경량 액터를 제공해 인‑메모리 상태와 SQLite 기반 영구 저장소, 대기 시 휴면 기능을 지원하며 SSD 수준 속도를 유지한다.",
           "timestamp": null
         },
         {
-          "point": "일부 채팅은 인간 리뷰어가 검토하며, 사용자가 활동을 삭제해도 최대 3년까지 보관된다.",
+          "point": "액터는 72KB 메모리 사용량과 4.9ms 시작 지연으로 샌드박스(512MB, 1.7s)보다 훨씬 효율적이며 대규모 에이전트 워크로드에 적합하다.",
           "timestamp": null
         },
         {
-          "point": "Keep Activity를 끄면 72시간 이후 채팅이 사라지므로, 유료 구독이 개인정보 보호를 보장하지 않는다.",
+          "point": "기존 FoundationDB에서 S3로 전환해 저장 비용을 10배 절감하면서도 성능을 유지, 대용량 세션 기록·아티팩트 저장에 최적화했다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "기업 내부 채팅 로그에 ‘Keep Activity’와 유사한 토글을 도입해 민감 대화는 저장되지 않게 함으로써 직원 프라이버시와 신뢰를 향상한다.",
-        "고객 지원 챗봇에 일시적 세션 모드를 적용해 대화 내용이 저장되지 않게 하여 규제 준수와 데이터 최소화를 달성한다.",
-        "의료 AI 시스템에서 인간 리뷰 로그를 최대 3년 보관하도록 정책을 설정해 감사 가능성을 유지하면서 개인정보 노출 위험을 제한한다."
+        "대규모 모델 학습 시 체크포인트를 S3에 직접 저장하고 로컬 캐시를 SSD처럼 사용해 비용을 크게 낮춘다.",
+        "데이터 전처리 파이프라인을 액터 기반으로 설계해 bursty 입력에 대해 메모리 효율적으로 처리하고 필요 시 휴면 상태로 전환한다.",
+        "IoT 디바이스에서 SQLite를 S3와 연동해 로컬에서 빠르게 조회하고, 오래된 데이터는 저비용 S3에 영구 보관한다."
       ],
       "quiz": [
         {
-          "question": "사용자가 Gemini 설정에서 “Keep Activity”를 끄면 채팅 기록은 어떻게 처리되나요?",
+          "question": "샌드박스보다 액터가 에이전트 워크로드에 더 효율적인 이유는 무엇인가?",
           "options": [
-            "채팅이 영구 보관된다",
-            "채팅이 72시간 후 삭제된다",
-            "채팅이 계속 학습에 사용된다",
-            "채팅이 자동으로 내보내진다"
+            "메모리 사용량이 적다",
+            "시작 지연이 짧다",
+            "메모리와 시작 지연 모두가 적다",
+            "두 이유 모두 아니다"
           ],
-          "answer_index": 1,
-          "explanation": "‘Keep Activity’를 끄면 72시간 이후에 채팅 세션이 사라지도록 설계되어 있다."
+          "answer_index": 2,
+          "explanation": "본문에 따르면 액터는 72KB 메모리 사용량과 4.9ms p99 시작 지연을 보이며, 샌드박스는 512MB와 1.7s로 훨씬 비효율적이다."
         },
         {
-          "question": "Google이 Gemini 채팅에서 사용자가 피해야 할 행동은 무엇인가요?",
+          "question": "Rivet가 S3를 기본 저장소로 선택한 주요 장점은?",
           "options": [
-            "이모티콘 사용",
-            "기밀 정보 입력",
-            "짧은 메시지 전송",
-            "링크 공유"
+            "레이터시가 감소한다",
+            "스토리지 비용이 10배 저렴하면서 SSD 속도를 유지한다",
+            "컴퓨팅 파워가 늘어난다",
+            "보안이 강화된다"
           ],
           "answer_index": 1,
-          "explanation": "Google은 리뷰어가 볼 수 있는 기밀 정보를 입력하지 말 것을 명시적으로 경고한다."
+          "explanation": "텍스트에 따르면 S3를 사용해 데이터 저장 비용이 10배 낮아졌으며, SSD와 유사한 속도를 유지한다."
+        }
+      ]
+    },
+    {
+      "id": "3353434820f9",
+      "title": "worklog-system 주간보고 자동화 구축 경험기",
+      "url": "https://d2.naver.com/helloworld/5037598",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "주간 보고 자동화로 업무 효율 극대화",
+      "positioning": null,
+      "tags": [
+        "NAVER Engineering Day",
+        "NAVER D2",
+        "worklog-system",
+        "AI"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 시대에 개인 업무 기록·TODO·회의록을 수집하는 시스템을 소개한다",
+          "timestamp": null
+        },
+        {
+          "point": "NAVER Engineering Day 10th 행사에서 발표된 내용이다",
+          "timestamp": null
+        },
+        {
+          "point": "주간보고 자동화를 통해 업무 효율성을 높인다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "스프린트 회고 기록을 수집해 자동으로 스프린트 요약 보고서를 생성한다",
+        "연구실 실험 로그를 모아 주간 연구 진행 보고서를 자동 생성한다",
+        "고객 지원 티켓 데이터를 수집해 주간 지원 현황 요약을 자동화한다"
+      ],
+      "quiz": [
+        {
+          "question": "이 세션이 공개된 행사는 무엇인가?",
+          "options": [
+            "NAVER Engineering Day 10th",
+            "Google I/O",
+            "Microsoft Build",
+            "AWS re:Invent"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"NAVER Engineering Day 10th\"에서 발표된 세션이라고 명시되어 있다."
+        },
+        {
+          "question": "시스템이 주로 수집하는 데이터 유형은 무엇인가?",
+          "options": [
+            "업무 기록, TODO, 회의록",
+            "소스 코드",
+            "이미지 데이터",
+            "오디오 녹음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"업무 기록을 수집하고 TODO 및 회의록을 기록하는 시스템\"이라고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "995ee60dddce",
+      "title": "AI 에이전트를 위한 멀티모달 의사결정 모델 ‘Kanana-2-v-decide’ 오픈소스 공개",
+      "url": "https://tech.kakao.com/posts/846",
+      "source": {
+        "type": "rss",
+        "name": "댓글: blog"
+      },
+      "published_at": "2026-11-05T15:00:00",
+      "summary": "멀티모달 의사결정 모델 오픈소스로 AI 에이전트 가속",
+      "positioning": null,
+      "tags": [
+        "Kanana-2-v-decide",
+        "멀티모달",
+        "AI 에이전트"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Kanana-2-v-decide 모델이 멀티모달 의사결정용으로 오픈소스 공개되었습니다",
+          "timestamp": null
+        },
+        {
+          "point": "AI 에이전트가 다양한 모달리티를 활용해 의사결정할 수 있게 지원합니다",
+          "timestamp": null
+        },
+        {
+          "point": "커뮤니티가 코드를 활용·기여할 수 있도록 공개되었습니다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "멀티모달 의사결정 모델을 자율주행 차량의 센서 융합 및 경로 계획에 적용해 상황 인식과 의사결정 정확도를 높인다",
+        "멀티모달 의사결정 모델을 고객지원 챗봇에 적용해 텍스트와 음성 입력을 동시에 판단해 응답 품질을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "Kanana-2-v-decide 모델은 어떤 목적을 위해 설계되었나요?",
+          "options": [
+            "멀티모달 의사결정",
+            "이미지 분류",
+            "음성 합성",
+            "시계열 예측"
+          ],
+          "answer_index": 0,
+          "explanation": "제목과 본문에서 멀티모달 의사결정 모델이라고 명시되어 있다"
+        },
+        {
+          "question": "이 모델은 어떤 형태로 공개되었나요?",
+          "options": [
+            "논문",
+            "오픈소스",
+            "특허",
+            "상용 제품"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 오픈소스 공개라고 적혀 있다"
+        }
+      ]
+    },
+    {
+      "id": "eaf2c20b4de9",
+      "title": "2026년과 이후 JavaScript의 동향 - WebAssembly",
+      "url": "https://d2.naver.com/helloworld/7770448",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "WebAssembly 최신 기능으로 고성능 데이터·AI 배포 가능",
+      "positioning": null,
+      "tags": [
+        "WebAssembly",
+        "WASI",
+        "WasmGC",
+        "Component Model",
+        "SIMD"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "wasm 3.0에 GC·예외 처리·64비트 주소·꼬리 호출이 포함돼 언어 런타임 없이 컴파일 가능",
+          "timestamp": null
+        },
+        {
+          "point": "WASI가 Component Model 기반으로 전환돼 0.3이 2026년 출시, 브라우저 밖 생태계 확대",
+          "timestamp": null
+        },
+        {
+          "point": "주요 브라우저가 스레드·128비트 SIMD·참조 타입을 지원하지만 명세 위치는 각각 다름",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "WasmGC를 활용해 엣지 서버리스 함수에 Python 데이터 처리 모듈을 배포해 초기 지연 시간을 감소시킨다",
+        "Component Model을 데이터 파이프라인의 단계별 마이크로서비스로 모듈화해 재사용성과 배포 속도를 높인다",
+        "SIMD 지원 wasm 모듈을 이용해 대규모 벡터 연산을 서버리스 환경에서 가속화한다"
+      ],
+      "quiz": [
+        {
+          "question": "WebAssembly 3.0에서 새롭게 표준화된 기능은 무엇인가?",
+          "options": [
+            "스레드",
+            "가비지 컬렉션",
+            "128비트 SIMD",
+            "참조 타입"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 wasm 3.0에 가비지 컬렉션, 예외 처리, 64비트 주소, 꼬리 호출이 포함됐으며, 스레드·SIMD·참조 타입은 wasm 2.0에 해당한다."
+        },
+        {
+          "question": "2026년 6월에 출시된 WASI 0.3의 주요 변화는?",
+          "options": [
+            "SIMD 지원 추가",
+            "Component Model 기반 전환",
+            "선형 메모리 제거",
+            "새로운 파일 시스템 API"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 WASI 0.3는 Component Model 기반으로 전환되었다."
         }
       ]
     }

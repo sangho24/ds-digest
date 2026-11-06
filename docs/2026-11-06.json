@@ -1,0 +1,320 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-06",
+  "generated_at": "2026-11-06T09:48:23.769143+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-06.html",
+  "items": [
+    {
+      "id": "40df8606a34e",
+      "title": "WISE: An Agentic Framework for Whole-page Multimodal Search Experience Attribution",
+      "url": "https://arxiv.org/abs/2611.06777v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.IR"
+      },
+      "published_at": "2026-11-04T16:53:21",
+      "summary": "검색 서비스 품질 원인 추적 방법을 제시해 DS 현업의 문제 해결을 돕는다",
+      "positioning": "산업 검색 서비스에서 운영 단계의 품질 모니터링은 결과의 정확성만을 확인해 왔지만, 원인 추적이 부족했다. 기존 연구는 모델 최적화에 초점을 맞추었으며, 시스템 전반의 진단 체계는 부재했다. 본 논문은 SQD라는 새로운 과제를 정의하고, 에이전트 기반 WISE 프레임워크로 원인 추적을 자동화함으로써 검색 품질 진단 흐름에 혁신을 제공한다.",
+      "tags": [
+        "WISE",
+        "ReTrace",
+        "AHPO",
+        "WISE-BENCH",
+        "Qwen3.5-35B-A3B"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "System Quality Diagnosis(SQD) 개념을 도입해 결과 품질을 원인까지 진단한다",
+          "timestamp": null
+        },
+        {
+          "point": "WISE 프레임워크와 ReTrace, AHPO 기법으로 에이전트 기반 진단 정확도를 크게 향상시킨다",
+          "timestamp": null
+        },
+        {
+          "point": "실제 멀티모달 검색 벤치마크(WISE-BENCH)에서 75.20% 정확도를 달성하고 프로덕션에 적용한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "ReTrace를 전자상거래 추천 시스템에 적용해 사용자 불만을 개별 모델 단계와 연결, 원인 분석 효율을 높인다",
+        "AHPO를 온라인 광고 입찰 파이프라인에 도입해 실패 신호 기반 정책을 최적화, 부정확한 입찰을 감소시킨다",
+        "WISE와 유사한 에이전트 진단 구조를 자율주행 차량의 센서·인식 스택에 적용해 오류 발생 시 원인 모듈을 빠르게 파악한다"
+      ],
+      "quiz": [
+        {
+          "question": "WISE 프레임워크에서 ReTrace의 주요 역할은 무엇인가?",
+          "options": [
+            "합성 데이터 생성",
+            "증거 일관성 기반 경로 감독 구축",
+            "하이퍼파라미터 자동 최적화",
+            "임베딩 시각화"
+          ],
+          "answer_index": 1,
+          "explanation": "ReTrace는 사용자 증거와 시스템 트레이스를 일관되게 연결하는 경로 감독을 만들어 진단 신뢰성을 높인다."
+        },
+        {
+          "question": "Adaptive Harness-Policy Optimization(AHPO)이 에이전트를 개선하는 방식은?",
+          "options": [
+            "무작위 탐색을 사용한다",
+            "실패 신호를 활용해 하네스와 정책을 동시에 최적화한다",
+            "모델 크기를 확대한다",
+            "지연 시간을 최소화한다"
+          ],
+          "answer_index": 1,
+          "explanation": "AHPO는 실패에 기반한 최적화를 통해 에이전트 하네스와 모델 정책을 동시에 조정해 진단 성능을 향상시킨다."
+        }
+      ]
+    },
+    {
+      "id": "f0e2e8b6917e",
+      "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
+      "url": "https://github.com/rivet-dev/rivet",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "에이전트 워크로드를 저비용·고성능 S3 기반 액터로 대규모 운영 가능",
+      "positioning": null,
+      "tags": [
+        "Rivet",
+        "S3",
+        "Cloudflare Durable Objects",
+        "SQLite",
+        "Redis"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Rivet는 S3를 백엔드로 하는 경량 액터를 제공해 인‑메모리 상태와 SQLite 기반 영구 저장소, 대기 시 휴면 기능을 지원하며 SSD 수준 속도를 유지한다.",
+          "timestamp": null
+        },
+        {
+          "point": "액터는 72KB 메모리 사용량과 4.9ms 시작 지연으로 샌드박스(512MB, 1.7s)보다 훨씬 효율적이며 대규모 에이전트 워크로드에 적합하다.",
+          "timestamp": null
+        },
+        {
+          "point": "기존 FoundationDB에서 S3로 전환해 저장 비용을 10배 절감하면서도 성능을 유지, 대용량 세션 기록·아티팩트 저장에 최적화했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "대규모 모델 학습 시 체크포인트를 S3에 직접 저장하고 로컬 캐시를 SSD처럼 사용해 비용을 크게 낮춘다.",
+        "데이터 전처리 파이프라인을 액터 기반으로 설계해 bursty 입력에 대해 메모리 효율적으로 처리하고 필요 시 휴면 상태로 전환한다.",
+        "IoT 디바이스에서 SQLite를 S3와 연동해 로컬에서 빠르게 조회하고, 오래된 데이터는 저비용 S3에 영구 보관한다."
+      ],
+      "quiz": [
+        {
+          "question": "샌드박스보다 액터가 에이전트 워크로드에 더 효율적인 이유는 무엇인가?",
+          "options": [
+            "메모리 사용량이 적다",
+            "시작 지연이 짧다",
+            "메모리와 시작 지연 모두가 적다",
+            "두 이유 모두 아니다"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 따르면 액터는 72KB 메모리 사용량과 4.9ms p99 시작 지연을 보이며, 샌드박스는 512MB와 1.7s로 훨씬 비효율적이다."
+        },
+        {
+          "question": "Rivet가 S3를 기본 저장소로 선택한 주요 장점은?",
+          "options": [
+            "레이터시가 감소한다",
+            "스토리지 비용이 10배 저렴하면서 SSD 속도를 유지한다",
+            "컴퓨팅 파워가 늘어난다",
+            "보안이 강화된다"
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 따르면 S3를 사용해 데이터 저장 비용이 10배 낮아졌으며, SSD와 유사한 속도를 유지한다."
+        }
+      ]
+    },
+    {
+      "id": "3353434820f9",
+      "title": "worklog-system 주간보고 자동화 구축 경험기",
+      "url": "https://d2.naver.com/helloworld/5037598",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "주간 보고 자동화로 업무 효율 극대화",
+      "positioning": null,
+      "tags": [
+        "NAVER Engineering Day",
+        "NAVER D2",
+        "worklog-system",
+        "AI"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 시대에 개인 업무 기록·TODO·회의록을 수집하는 시스템을 소개한다",
+          "timestamp": null
+        },
+        {
+          "point": "NAVER Engineering Day 10th 행사에서 발표된 내용이다",
+          "timestamp": null
+        },
+        {
+          "point": "주간보고 자동화를 통해 업무 효율성을 높인다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "스프린트 회고 기록을 수집해 자동으로 스프린트 요약 보고서를 생성한다",
+        "연구실 실험 로그를 모아 주간 연구 진행 보고서를 자동 생성한다",
+        "고객 지원 티켓 데이터를 수집해 주간 지원 현황 요약을 자동화한다"
+      ],
+      "quiz": [
+        {
+          "question": "이 세션이 공개된 행사는 무엇인가?",
+          "options": [
+            "NAVER Engineering Day 10th",
+            "Google I/O",
+            "Microsoft Build",
+            "AWS re:Invent"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"NAVER Engineering Day 10th\"에서 발표된 세션이라고 명시되어 있다."
+        },
+        {
+          "question": "시스템이 주로 수집하는 데이터 유형은 무엇인가?",
+          "options": [
+            "업무 기록, TODO, 회의록",
+            "소스 코드",
+            "이미지 데이터",
+            "오디오 녹음"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"업무 기록을 수집하고 TODO 및 회의록을 기록하는 시스템\"이라고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "995ee60dddce",
+      "title": "AI 에이전트를 위한 멀티모달 의사결정 모델 ‘Kanana-2-v-decide’ 오픈소스 공개",
+      "url": "https://tech.kakao.com/posts/846",
+      "source": {
+        "type": "rss",
+        "name": "댓글: blog"
+      },
+      "published_at": "2026-11-05T15:00:00",
+      "summary": "멀티모달 의사결정 모델 오픈소스로 AI 에이전트 가속",
+      "positioning": null,
+      "tags": [
+        "Kanana-2-v-decide",
+        "멀티모달",
+        "AI 에이전트"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Kanana-2-v-decide 모델이 멀티모달 의사결정용으로 오픈소스 공개되었습니다",
+          "timestamp": null
+        },
+        {
+          "point": "AI 에이전트가 다양한 모달리티를 활용해 의사결정할 수 있게 지원합니다",
+          "timestamp": null
+        },
+        {
+          "point": "커뮤니티가 코드를 활용·기여할 수 있도록 공개되었습니다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "멀티모달 의사결정 모델을 자율주행 차량의 센서 융합 및 경로 계획에 적용해 상황 인식과 의사결정 정확도를 높인다",
+        "멀티모달 의사결정 모델을 고객지원 챗봇에 적용해 텍스트와 음성 입력을 동시에 판단해 응답 품질을 향상시킨다"
+      ],
+      "quiz": [
+        {
+          "question": "Kanana-2-v-decide 모델은 어떤 목적을 위해 설계되었나요?",
+          "options": [
+            "멀티모달 의사결정",
+            "이미지 분류",
+            "음성 합성",
+            "시계열 예측"
+          ],
+          "answer_index": 0,
+          "explanation": "제목과 본문에서 멀티모달 의사결정 모델이라고 명시되어 있다"
+        },
+        {
+          "question": "이 모델은 어떤 형태로 공개되었나요?",
+          "options": [
+            "논문",
+            "오픈소스",
+            "특허",
+            "상용 제품"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 오픈소스 공개라고 적혀 있다"
+        }
+      ]
+    },
+    {
+      "id": "eaf2c20b4de9",
+      "title": "2026년과 이후 JavaScript의 동향 - WebAssembly",
+      "url": "https://d2.naver.com/helloworld/7770448",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "WebAssembly 최신 기능으로 고성능 데이터·AI 배포 가능",
+      "positioning": null,
+      "tags": [
+        "WebAssembly",
+        "WASI",
+        "WasmGC",
+        "Component Model",
+        "SIMD"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "wasm 3.0에 GC·예외 처리·64비트 주소·꼬리 호출이 포함돼 언어 런타임 없이 컴파일 가능",
+          "timestamp": null
+        },
+        {
+          "point": "WASI가 Component Model 기반으로 전환돼 0.3이 2026년 출시, 브라우저 밖 생태계 확대",
+          "timestamp": null
+        },
+        {
+          "point": "주요 브라우저가 스레드·128비트 SIMD·참조 타입을 지원하지만 명세 위치는 각각 다름",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "WasmGC를 활용해 엣지 서버리스 함수에 Python 데이터 처리 모듈을 배포해 초기 지연 시간을 감소시킨다",
+        "Component Model을 데이터 파이프라인의 단계별 마이크로서비스로 모듈화해 재사용성과 배포 속도를 높인다",
+        "SIMD 지원 wasm 모듈을 이용해 대규모 벡터 연산을 서버리스 환경에서 가속화한다"
+      ],
+      "quiz": [
+        {
+          "question": "WebAssembly 3.0에서 새롭게 표준화된 기능은 무엇인가?",
+          "options": [
+            "스레드",
+            "가비지 컬렉션",
+            "128비트 SIMD",
+            "참조 타입"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 wasm 3.0에 가비지 컬렉션, 예외 처리, 64비트 주소, 꼬리 호출이 포함됐으며, 스레드·SIMD·참조 타입은 wasm 2.0에 해당한다."
+        },
+        {
+          "question": "2026년 6월에 출시된 WASI 0.3의 주요 변화는?",
+          "options": [
+            "SIMD 지원 추가",
+            "Component Model 기반 전환",
+            "선형 메모리 제거",
+            "새로운 파일 시스템 API"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 WASI 0.3는 Component Model 기반으로 전환되었다."
+        }
+      ]
+    }
+  ]
+}
