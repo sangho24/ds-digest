@@ -6,6 +6,12 @@
       "first_seen": "2026-08-31",
       "last_seen": "2026-08-31"
     },
+    "AI 기반 개발 도구": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
+    },
     "AI 기반 문서 구조화": {
       "aliases": [],
       "count": 3,
@@ -38,9 +44,9 @@
     },
     "AI 비용 효율성": {
       "aliases": [],
-      "count": 48,
+      "count": 49,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-11-07"
+      "last_seen": "2026-11-08"
     },
     "AI 생산성 도구": {
       "aliases": [],
@@ -92,9 +98,9 @@
     },
     "GPU 가속": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-11-03",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-08"
     },
     "IAM 역할 샤딩": {
       "aliases": [],
@@ -173,6 +179,12 @@
       "count": 2,
       "first_seen": "2026-09-02",
       "last_seen": "2026-10-16"
+    },
+    "Signals 기반 상태 관리": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
     },
     "gradient flow": {
       "aliases": [],
@@ -258,11 +270,17 @@
       "first_seen": "2026-11-06",
       "last_seen": "2026-11-06"
     },
+    "가용성 확보": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
+    },
     "강화학습": {
       "aliases": [],
-      "count": 4,
+      "count": 5,
       "first_seen": "2026-10-12",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-08"
     },
     "강화학습 기반 임베딩 최적화": {
       "aliases": [],
@@ -365,6 +383,12 @@
       "count": 6,
       "first_seen": "2026-09-02",
       "last_seen": "2026-11-07"
+    },
+    "그레이스풀 셧다운": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
     },
     "글로벌 인스트럭션": {
       "aliases": [],
@@ -500,9 +524,9 @@
     },
     "디자인 트레이드오프": {
       "aliases": [],
-      "count": 14,
+      "count": 15,
       "first_seen": "2026-09-23",
-      "last_seen": "2026-11-05"
+      "last_seen": "2026-11-08"
     },
     "디지털 헬스 트래킹": {
       "aliases": [],
@@ -606,6 +630,12 @@
       "first_seen": "2026-10-06",
       "last_seen": "2026-10-06"
     },
+    "메타 프레임워크": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
+    },
     "메타데이터 관리": {
       "aliases": [],
       "count": 1,
@@ -656,9 +686,9 @@
     },
     "모델 파인튜닝": {
       "aliases": [],
-      "count": 16,
+      "count": 17,
       "first_seen": "2026-09-15",
-      "last_seen": "2026-11-05"
+      "last_seen": "2026-11-08"
     },
     "모듈형 신경망 구조": {
       "aliases": [],
@@ -710,9 +740,9 @@
     },
     "버전 호환성": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-09-30",
-      "last_seen": "2026-09-30"
+      "last_seen": "2026-11-08"
     },
     "번들링 전략": {
       "aliases": [],
@@ -998,9 +1028,9 @@
     },
     "신경망 기하학 및 개념 매니폴드": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-09-03",
-      "last_seen": "2026-11-02"
+      "last_seen": "2026-11-08"
     },
     "신뢰성": {
       "aliases": [],
@@ -1145,6 +1175,12 @@
       "count": 1,
       "first_seen": "2026-11-02",
       "last_seen": "2026-11-02"
+    },
+    "인증·인가 흐름": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
     },
     "인지 면역": {
       "aliases": [],
@@ -1620,6 +1656,12 @@
       "first_seen": "2026-09-02",
       "last_seen": "2026-09-09"
     },
+    "필터 체인 순서": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-08",
+      "last_seen": "2026-11-08"
+    },
     "하네스 엔지니어링": {
       "aliases": [],
       "count": 1,
@@ -1705,6 +1747,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-11-07T09:04:44.800430+09:00",
+  "updated_at": "2026-11-08T08:12:18.469093+09:00",
   "version": 1
 }

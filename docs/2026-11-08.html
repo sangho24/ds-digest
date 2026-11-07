@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 08일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 08일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모델 파인튜닝</span><span class="concept">강화학습</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">AI 비용 효율성</span><span class="concept">디자인 트레이드오프</span><span class="concept">GPU 가속</span><span class="concept">인증·인가 흐름</span><span class="concept">필터 체인 순서</span><span class="concept">메타 프레임워크</span><span class="concept">Signals 기반 상태 관리</span><span class="concept">AI 기반 개발 도구</span><span class="concept">가용성 확보</span><span class="concept">그레이스풀 셧다운</span><span class="concept">버전 호환성</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.08414v1" target="_blank" rel="noopener">Spectral and Subspace Dynamics of LoRA in Supervised Fine-Tuning and Reinforcement Learning</a>
+        </h2>
+
+        <p class="summary">LoRA 단계별 스펙트럼·서브스페이스 차이로 성능 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>LoRA는 SFT와 RL에서 널리 쓰이지만 두 단계의 파라미터 업데이트가 어떻게 다르게 진행되는지는 미지였다. 본 논문은 수학 추론 과제에서 LoRA 업데이트의 특잇값 스펙트럼과 서브스페이스 변화를 추적해, 그룹 평균 베이스라인 차감이 스펙트럼 집중과 서브스페이스 회전을 가속한다는 메커니즘을 밝힌다. 이를 바탕으로 SFT와 RL에 각각 최적화된 LoRA 조정 방식을 제안해 기존 방법보다 성능 향상을 입증한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RL에서는 모든 학습률에서 특잇값 스펙트럼이 집중되고, SFT에서는 중간 학습률에서 스펙트럼이 확장된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>그룹 평균 베이스라인 차감이 스펙트럼 집중과 서브스페이스 회전 가속의 원인으로 확인되었다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>SFT에는 전체 업데이트 스펙트럼을 평탄화하고, RL에는 현재 LoRA 증분 스팬 외부를 평탄화하는 맞춤형 전략이 성능을 최고 수준으로 끌어올렸다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>그룹 평균 베이스라인 차감을 이미지 분류용 어댑터 학습에 적용해, 특잇값 스펙트럼을 집중시켜 적은 데이터에서도 빠른 수렴을 유도한다.</span></li>
+            
+            <li><span class="box"></span><span>지속 학습에서 새로운 작업에 대한 LoRA 업데이트가 기존 증분 스팬 외부의 스펙트럼을 평탄화하도록 설계해, 이전 작업의 서브스페이스와 충돌을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>대규모 언어 모델 사전학습 중 LoRA 업데이트의 특잇값 스펙트럼을 실시간 모니터링해, 학습률이 과도하게 낮거나 높을 때를 자동 감지한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">그룹 평균 베이스라인 차감이 LoRA 업데이트에 미치는 주요 효과는 무엇인가?</div>
+            
+            <div class="q-opt">① 스펙트럼 집중과 서브스페이스 회전 가속</div>
+            
+            <div class="q-opt">② 스펙트럼을 균등하게 확장</div>
+            
+            <div class="q-opt">③ 학습률 민감도 감소</div>
+            
+            <div class="q-opt">④ 그라디언트 노이즈 완전 제거</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 스펙트럼 집중과 서브스페이스 회전 가속</div>
+              <div class="why">논문에서는 그룹 평균 베이스라인 차감이 스펙트럼을 집중시키고 서브스페이스 회전을 빠르게 만든다고 밝혀졌다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">SFT 단계에서 성능을 높이기 위해 저자들이 제안한 LoRA 조정 방법은?</div>
+            
+            <div class="q-opt">① 전체 업데이트 스펙트럼을 평탄화</div>
+            
+            <div class="q-opt">② LoRA의 랭크를 증가</div>
+            
+            <div class="q-opt">③ LoRA 가중치에 드롭아웃 적용</div>
+            
+            <div class="q-opt">④ 서브스페이스 고정</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 전체 업데이트 스펙트럼을 평탄화</div>
+              <div class="why">SFT에서는 전체 업데이트의 스펙트럼을 평탄화해 적응을 다양한 특잇값 방향에 고르게 퍼뜨리는 전략을 사용한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LoRA</span><span class="tag">Supervised Fine-Tuning</span><span class="tag">Reinforcement Learning</span><span class="tag">group-mean baseline subtraction</span><span class="tag">quadratic multi-index model</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DC</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.08363v1" target="_blank" rel="noopener">StrataFlux: Memory-Hierarchy-Native Low-Bit LLM Inference</a>
+        </h2>
+
+        <p class="summary">GPU 메모리 절약하면서 저비트 LLM 정확도 회복</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>양자화는 메모리·대역폭을 절감하지만 정확도 저하와 고정밀 데이터 오프로드 시 생성 지연을 초래한다. 기존 연구는 정확도와 속도 사이의 트레이드오프를 해결하지 못했다. StrataFlux는 정밀도 스트리밍과 메모리 계층 공동 설계를 통해 GPU 메모리 한계를 넘어선 정확도 향상을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>StrataFlux는 저비트 가중치·KV 캐시 양자화로 손실된 정확도를 회복하면서 메모리·속도 이점을 유지한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>호스트 RAM·SSD를 활용한 선택적 정밀도 스트리밍으로 전송량을 줄이고 연산과 겹쳐 전달하며, 동일 정밀도를 여러 디코딩 단계에 재사용한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 2비트 Llama‑3.1‑8B는 퍼플렉시티를 9.46→8.40으로 낮추고 95.4% 처리량을 유지했으며, 2비트 가중치·KV로 Qwen3‑8B 정확도를 11%→47.1%로 향상시켰다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>추천 시스템에서 임베딩 캐시를 SSD에 저장하고 필요 시 선택적으로 스트리밍해 GPU 메모리 사용을 최소화하면서 랭킹 정확도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>Diffusion 모델 샘플링 시 고정밀 라티스 업데이트를 CPU 메모리에서 스트리밍해 VRAM 부담을 줄이고 샘플 품질을 유지한다.</span></li>
+            
+            <li><span class="box"></span><span>실시간 영상 분석에서 고해상도 패치만 SSD에서 선택적으로 스트리밍해 객체 탐지 지연을 감소시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">StrataFlux의 선택적 정밀도 스트리밍이 생성 지연을 감소시키는 주요 이유는?</div>
+            
+            <div class="q-opt">① 전송 데이터를 미리 모두 로드한다</div>
+            
+            <div class="q-opt">② 전송을 연산과 겹쳐 수행한다</div>
+            
+            <div class="q-opt">③ GPU 연산량을 증가시킨다</div>
+            
+            <div class="q-opt">④ 모델 크기를 줄인다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전송을 연산과 겹쳐 수행한다</div>
+              <div class="why">스트리밍은 데이터를 필요할 때만 전송하고, 전송을 연산과 겹쳐 수행해 GPU가 대기하지 않게 만든다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">저비트 양자화가 초래하는 문제 중 StrataFlux가 해결하려는 것은?</div>
+            
+            <div class="q-opt">① 메모리 사용량 증가</div>
+            
+            <div class="q-opt">② 정확도 저하</div>
+            
+            <div class="q-opt">③ 학습 속도 감소</div>
+            
+            <div class="q-opt">④ 모델 해석 가능성 향상</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 정확도 저하</div>
+              <div class="why">저비트 양자화는 메모리·대역폭 절감 효과가 있지만 정확도가 떨어지는 단점을 가지고 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">StrataFlux</span><span class="tag">Llama-3.1-8B-Instruct</span><span class="tag">Qwen3-8B</span><span class="tag">RTX 5090</span><span class="tag">vLLM</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/GkbS45V7DqM" target="_blank" rel="noopener">[10분 테코톡] 에버의 Spring security 지도 그리기</a>
+        </h2>
+
+        <p class="summary">보안 필터 순서 파악으로 인증·인가 구현 오류 방지</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:17</span>
+            
+            <span>스프링 시큐리티 의존성 추가 시 DelegatingFilterProxy와 FilterChainProxy 빈이 생성된다</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:59</span>
+            
+            <span>JWT 인증 필터를 인가 필터 앞에 두면 200 정상, 뒤에 두면 401 오류가 발생한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">07:23</span>
+            
+            <span>API 키 인증 필터는 인가 필터 앞, 사용자 로깅 필터는 인증 필터 뒤에 위치해야 함</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>ETL 파이프라인에서 데이터 검증 단계를 변환 단계보다 먼저 배치해 오류를 사전에 차단한다</span></li>
+            
+            <li><span class="box"></span><span>머신러닝 피처 엔지니어링 단계의 순서를 바꾸어 실험함으로써 각 단계가 모델 성능에 미치는 영향을 빠르게 파악한다</span></li>
+            
+            <li><span class="box"></span><span>마이크로서비스에서 DelegatingFilterProxy 패턴을 활용해 로깅 로직을 별도 체인에 위임해 모듈성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Spring Security에서 DelegatingFilterProxy의 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 직접 인증 로직을 수행한다</div>
+            
+            <div class="q-opt">② 요청을 FilterChainProxy 빈에 전달한다</div>
+            
+            <div class="q-opt">③ 데이터베이스 연결을 관리한다</div>
+            
+            <div class="q-opt">④ 스케줄링 작업을 실행한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 요청을 FilterChainProxy 빈에 전달한다</div>
+              <div class="why">DelegatingFilterProxy는 서블릿 필터 단계에서 들어온 요청을 스프링 컨테이너에 있는 FilterChainProxy 빈에게 위임한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">JWT 인증 필터를 인가 필터 뒤에 배치했을 때 발생하는 결과는?</div>
+            
+            <div class="q-opt">① 200 정상 응답</div>
+            
+            <div class="q-opt">② 401 인증 오류</div>
+            
+            <div class="q-opt">③ 403 권한 오류</div>
+            
+            <div class="q-opt">④ 500 서버 오류</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 401 인증 오류</div>
+              <div class="why">인증 정보가 아직 생성되지 않은 상태에서 인가 필터가 실행되어 인증되지 않은 사용자로 판단하고 401 오류를 반환한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Spring Security</span><span class="tag">JWT</span><span class="tag">DelegatingFilterProxy</span><span class="tag">FilterChainProxy</span><span class="tag">API 키 인증 필터</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/0627744" target="_blank" rel="noopener">2026년과 이후 JavaScript의 동향 - 라이브러리와 프레임워크</a>
+        </h2>
+
+        <p class="summary">프론트엔드 변화가 데이터 제품 UI 선택에 영향</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>React 다운로드가 25배 증가해 시장을 주도하고 Vue·Svelte도 급성장했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>프레임워크 선택이 메타 프레임워크·빌드 도구·AI 도구 선택으로 초점이 이동했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Signals 도입, 서버 렌더링 회귀, Rust 기반 빌드 도구 등 공통 흐름이 나타난다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Signals 패턴을 데이터 파이프라인 이벤트 흐름에 적용해 상태 전파를 단순화한다</span></li>
+            
+            <li><span class="box"></span><span>Rust 기반 빌드 도구를 데이터 처리 엔진 컴파일에 활용해 실행 속도와 안전성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>AI 코딩 도구가 제안하는 스택을 데이터 엔지니어링 파이프라인 선택에 적용해 최적화된 도구 조합을 자동 추천한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 최근 프레임워크 선택이 메타 프레임워크·빌드 도구·AI 도구 선택으로 초점이 이동했는가?</div>
+            
+            <div class="q-opt">① React 사용률이 급증했기 때문</div>
+            
+            <div class="q-opt">② SSR과 빌드 효율성이 개발 생산성에 핵심이 되었기 때문</div>
+            
+            <div class="q-opt">③ Angular가 폐기됐기 때문</div>
+            
+            <div class="q-opt">④ Svelte가 가장 많이 사용되기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② SSR과 빌드 효율성이 개발 생산성에 핵심이 되었기 때문</div>
+              <div class="why">본문은 React가 독보적이지만 개발자는 이제 SSR, 빌드 구성, AI 도구 등 전체 스택 효율성을 고려한다고 설명한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">2020년 이후 주요 JavaScript 프레임워크에서 공통적으로 나타난 흐름은 무엇인가?</div>
+            
+            <div class="q-opt">① TypeScript 전환</div>
+            
+            <div class="q-opt">② Signals 도입</div>
+            
+            <div class="q-opt">③ Python 기반 서버 사용</div>
+            
+            <div class="q-opt">④ CSS 프레임워크 통합</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Signals 도입</div>
+              <div class="why">본문은 Signals로의 수렴을 모든 프레임워크에서 공통 흐름으로 언급한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">Angular</span><span class="tag">Vue</span><span class="tag">Svelte</span><span class="tag">Next.js</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">우아한테크</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/ffHZGrQXvT8" target="_blank" rel="noopener">[10분 테코톡] 이프의 가용성 - 배포 중에도 우리 서비스가 멈추지 않는 이유</a>
+        </h2>
+
+        <p class="summary">배포 중 다운타임 없이 서비스 가용성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:02</span>
+            
+            <span>기존 버전 V1을 종료하고 신규 V2를 실행하는 순서는 다운타임을 발생시킨다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:31</span>
+            
+            <span>로드 밸런서와 레디니스 헬스 체크로 V2가 준비될 때까지 트래픽을 V1에 유지한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">06:07</span>
+            
+            <span>무중단 배포 시 V2 장애 시 V1으로 롤백하는 전략이 필요하다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>ETL 파이프라인에 레디니스 헬스 체크를 도입해 새 작업이 시작되기 전에 종속 서비스가 정상인지 검증해 파이프라인 중단을 방지한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 서빙 컨테이너에 그레이스풀 셧다운을 적용해 기존 버전이 처리 중인 추론 요청을 모두 완료한 뒤 종료함으로써 업데이트 시 요청 손실을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>피처 스토어 스키마 변경 시 익스펜드 컨트랙트 패턴을 사용해 기존 필드를 유지하면서 새로운 필드를 추가하고 단계적으로 데이터 마이그레이션해 서비스 중단 없이 호환성을 확보한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">간단히 V1을 종료하고 V2를 시작하면 다운타임이 발생하는 이유는?</div>
+            
+            <div class="q-opt">① V2가 아직 트래픽을 처리할 준비가 안 되었기 때문이다</div>
+            
+            <div class="q-opt">② 로드 밸런서가 잘못 설정돼 있기 때문이다</div>
+            
+            <div class="q-opt">③ 네트워크 지연이 크게 발생하기 때문이다</div>
+            
+            <div class="q-opt">④ V1의 리소스가 잠겨 있기 때문이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① V2가 아직 트래픽을 처리할 준비가 안 되었기 때문이다</div>
+              <div class="why">V2가 실행되기 전까지는 트래픽을 처리할 인스턴스가 없으므로 요청이 실패해 다운타임이 발생한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">무중단 배포에서 그레이스풀 셧다운의 목적은?</div>
+            
+            <div class="q-opt">① 구버전을 즉시 종료한다</div>
+            
+            <div class="q-opt">② 인-플라이트 요청이 모두 완료될 때까지 기다린 후 구버전을 종료한다</div>
+            
+            <div class="q-opt">③ 새 버전이 준비되기 전에 트래픽을 새 버전으로 전환한다</div>
+            
+            <div class="q-opt">④ 자동으로 롤백한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 인-플라이트 요청이 모두 완료될 때까지 기다린 후 구버전을 종료한다</div>
+              <div class="why">그레이스풀 셧다운은 기존 인스턴스가 현재 처리 중인 요청을 모두 마친 뒤에 종료해 서비스 중단을 방지한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">SRE</span><span class="tag">로드 밸런서</span><span class="tag">레디니스 헬스 체크</span><span class="tag">그레이스풀 셧다운</span><span class="tag">롤백</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
