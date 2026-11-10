@@ -1,0 +1,426 @@
+{
+  "date": "2026-11-10",
+  "generated_at": "2026-11-10T02:39:28.261957",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.SE",
+        "source_key": "arxiv:cs.SE",
+        "source_label": "arXiv:cs.SE",
+        "title": "Comparing Write, Read, and Query Performance of General-Purpose and Columnar Data Serialization Formats at Increasing Scale: An Empirical Benchmark Study with Statistical Validation on Synthetic and Real-World Data",
+        "url": "https://arxiv.org/abs/2611.10398v1",
+        "published_at": "2026-11-07T02:10:53",
+        "transcript": null,
+        "body": "This study presents an empirical benchmark comparing nine format and access-method combinations across six data serialization technologies: CSV (including a column-projected variant), gzip CSV, JSON Lines, Python Pickle, SQLite (unindexed and indexed), and Apache Parquet (naive and pyarrow pushdown). A synthetic dataset was generated at four scales (50,000 to 3,000,000 rows), with write time, storage size, read time, and query time measured across twenty trials on two independent hosts, a native 24 GB Apple Silicon machine and a memory-constrained, single-core 4 GB Linux virtual machine. Mean, standard deviation, and 95 percent confidence intervals are reported for each host. The most robust finding, stable across every scale and both hosts, is that flat formats requiring full deserialization before filtering are one to three orders of magnitude more expensive for selective queries than any approach that avoids it. Welch t-tests, corroborated by Mann-Whitney U tests, show SQLite (indexed) is significantly fastest for selective access at every scale on both hosts, with the pushdown path of Parquet significantly cheaper than naive materialization. With the increased trial count, the write-time variance of Pickle narrowed enough to show it is significantly faster than Parquet at write time on both hosts, not the statistical tie an earlier five-trial pilot suggested. These findings were confirmed on a real, public 1.47-million-row e-commerce fraud dataset, which reproduced the same order-of-magnitude gap between flat and non-flat formats and the same SQLite (indexed) advantage. These results offer statistically grounded guidance for format selection in data engineering pipelines.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "플랫 포맷은 선택형 쿼리 비효율, SQLite 최고",
+        "tags": [
+          "CSV",
+          "JSON Lines",
+          "Python Pickle",
+          "SQLite",
+          "Apache Parquet"
+        ],
+        "concepts": [
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "전체 역직렬화가 필요한 플랫 포맷은 선택형 쿼리에서 1~3자리수 정도 느리다",
+            "timestamp": null
+          },
+          {
+            "point": "인덱스가 있는 SQLite가 모든 규모와 환경에서 선택적 접근에 가장 빠른 성능을 보였다",
+            "timestamp": null
+          },
+          {
+            "point": "Trial 수를 늘리니 Pickle의 쓰기 시간 변동성이 감소해 Parquet보다 유의하게 빠름을 확인했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "데이터 파이프라인에서 어떤 직렬화 포맷을 선택해야 할지 실증적 근거가 부족했던 상황을 해결하고자, 기존에는 소규모 실험이나 단일 지표에 의존하던 연구와 달리 다양한 규모·호스트·실제 데이터까지 포괄적으로 벤치마크했다. 통계적 검증을 통해 SQLite 인덱스와 Parquet 푸시다운이 현행 방식보다 우수함을 제시한다.",
+        "production_ideas": [
+          "Parquet의 푸시다운 필터링을 로그 분석 파이프라인에 적용해 선택적 로그 검색 속도를 크게 향상시킨다",
+          "데이터 엔지니어링 팀이 새로운 스토리지 옵션을 도입할 때, 본 연구와 동일한 합성 데이터 규모와 통계 검증 절차를 활용해 사전 성능 평가를 수행한다",
+          "클라우드 기반 ETL 워크플로우에서 다양한 인스턴스 사양을 대상으로 synthetic scaling 테스트를 진행해 비용 대비 최적 포맷을 선정한다"
+        ],
+        "quiz": [
+          {
+            "question": "플랫 포맷이 선택형 쿼리에서 느린 주요 이유는 무엇인가?",
+            "options": [
+              "전체 역직렬화 후 필터링을 해야 하기 때문",
+              "압축률이 낮기 때문",
+              "네트워크 대역폭 제한 때문",
+              "CPU 코어 수가 적기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 플랫 포맷은 필터링 전에 전체 데이터를 역직렬화해야 하므로 선택형 쿼리에서 1~3자리수 정도 비용이 크게 증가한다."
+          },
+          {
+            "question": "선택적 접근 성능이 가장 뛰어난 포맷은 어느 것인가?",
+            "options": [
+              "CSV",
+              "JSON Lines",
+              "인덱스가 있는 SQLite",
+              "Parquet(naive)"
+            ],
+            "answer_index": 2,
+            "explanation": "연구 결과, 인덱스가 있는 SQLite가 모든 규모와 호스트에서 선택적 접근에 가장 빠른 것으로 통계적으로 유의미하게 나타났다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Netflix TechBlog - Medium",
+        "source_key": "https://netflixtechblog.com/feed",
+        "source_label": "Netflix TechBlog - Medium",
+        "title": "Fact-Checking at Scale: Building a More Accurate and Efficient Synopsis Factuality System",
+        "url": "https://netflixtechblog.com/fact-checking-at-scale-building-a-more-accurate-and-efficient-synopsis-factuality-system-d7d85859d808?source=rss----2615bd06b42e---4",
+        "published_at": "2026-11-09T17:01:02",
+        "transcript": null,
+        "body": "<p><em>By </em><a href=\"https://www.linkedin.com/in/shreya-s-ramanujam\"><em>Shreya S Ramanujam</em></a><em>, </em><a href=\"https://www.linkedin.com/in/yongceli\"><em>Yongce Li</em></a><em>, </em><a href=\"https://www.linkedin.com/in/afshineamidi\"><em>Afshine Amidi</em></a><em>, </em><a href=\"https://www.linkedin.com/in/sina-ghiassian-23452b61\"><em>Sina Ghiassian</em></a><em>, </em><a href=\"https://www.linkedin.com/in/benjamin-klein-usa\"><em>Benjamin Klein</em></a><em>.</em></p><h3>Introduction</h3><p>Picture this — you’re home after a long day at work and can’t wait to catch up on Bridgerton. You log on to Netflix, search for “Bridgerton” and land on this screen:</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/466/1*zkhDdQjtUryvyXdFAoMJoQ.png\" /></figure><p>If this sounds familiar, you already know what a synopsis is — it’s a short glimpse into what a viewer can expect to see in a show. We see two types of synopses here: a <em>series-level </em>synopsis describing the overarching plot, and multiple <em>episode-level</em> synopses describing each episode.</p><p>A synopsis plays a very important role for us — it helps viewers decide whether a title is worth watching or not. Every synopsis needs to strike a balance: sharing <em>just</em> enough to give viewers a sense of what to expect, while leaving enough intrigue to draw them in. But of course, we can’t just write <em>anything</em>.</p><blockquote><em>“In the fog-drenched streets of Victorian London, Detective Daphne Bridgerton races to unmask a serial killer known only as the elusive Lady Whistledown.”</em></blockquote><p>Intriguing? Definitely. But it is most certainly <em>not </em>the premise of Bridgerton. Which leads us to the first (and most important) rule of writing a good synopsis: it must be <em>factual</em>. At Netflix’s scale, with thousands of titles, multiple episodes per season and multiple languages, fact-checking all of these by hand simply doesn’t scale. This is where our factuality service comes in: an automated way to judge whether a synopsis is factual or not.</p><p>Our current factuality checker feeds a reasoning model everything we know about a title (like metadata and text assets) and asks it to judge synopsis factuality according to a rigorous rubric. There are two main limitations of this approach that we want to optimize:</p><ol><li><strong>High cost of long-context reasoning calls:</strong> Each decision requires expensive, long-context model calls to reasoning models, which doesn’t scale well when we want to check multiple titles, episodes, languages, and style variants.</li><li><strong>Misaligned rationales:</strong> The model’s explanations often diverge from our annotators’ reasoning, which makes its factuality verdicts less reliable. We want these rationales to be better aligned so that (1) the model can consistently flag nuanced errors, and (2) its explanations can be used downstream to automatically correct issues in the synopsis.</li></ol><p>Our new approach tackles both problems at once. On the cost side, it delivers a <strong>52.4% reduction</strong> per synopsis. On the quality side, it significantly improves both verdict accuracy and reasoning alignment: <strong>Recall–Fail</strong> (<em>“Of all truly non-factual synopses, how many does the system correctly reject?”</em>) rises from <strong>0.77 to 0.86</strong>, and the new factuality service’s explanations now show ~<strong>82% overlap</strong> with human rationales (up from ~<strong>69%</strong>). In other words, it’s not just cheaper and more accurate — it’s also much better aligned with how our expert annotators <em>actually</em> judge synopses.</p><h3>So, what <em>exactly</em> does factuality mean?</h3><p>Let’s go back to the Bridgerton example. Say you see this synopsis about Bridgerton Season 1:</p><blockquote><strong>Synopsis A: </strong><em>“Bridgerton follows Daphne Bridgerton, the eldest daughter of the powerful Bridgerton family as she makes her debut onto Regency London’s competitive marriage market.”</em></blockquote><p>It’s easy to judge that this synopsis is factually correct — no wrong facts, and it gives the reader a clear, accurate glimpse of what to expect from the show.</p><p>Let’s take another example:</p><blockquote><strong>Synopsis B: </strong><em>“Set in modern-day London, this gritty crime drama follows Detective Daphne Bridgerton as she hunts a serial killer while hiding her own criminal past.”</em></blockquote><p>Another easy one — the plot is so blatantly off the mark that it is definitely <em>not</em> factual.</p><p>But what about this?</p><blockquote><strong>Synopsis C:</strong> <em>“Bridgerton follows the mysterious, sharp-tongued Lady Whistledown as she exposes the secrets of London’s high society through her scandalous gossip sheet.”</em></blockquote><p><em>Technically, </em>every statement here is true — Lady Whistledown does indeed publish a gossip sheet, and if there’s one thing she is known for, it’s her scathing ex",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "대규모 시놉시스 사실 검증으로 비용·정확도 개선",
+        "tags": [
+          "Netflix",
+          "Bridgerton",
+          "metadata",
+          "reasoning model",
+          "Recall–Fail"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI와 인간 협업",
+          "AI 기반 업무 검증"
+        ],
+        "key_points": [
+          {
+            "point": "수동 검증이 불가능한 규모에서 시놉시스 사실성 자동 판단이 필요하다",
+            "timestamp": null
+          },
+          {
+            "point": "새 시스템이 기존 대비 비용을 52.4% 절감하고 Recall‑Fail을 0.77→0.86으로 향상시켰다",
+            "timestamp": null
+          },
+          {
+            "point": "모델 설명이 인간 주석과의 겹침 비율을 69%→82%로 높여 downstream 교정에 활용 가능하게 했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "긴 컨텍스트 추론 비용 절감 기법을 고객 리뷰 자동 요약에 적용하면 처리 비용을 크게 낮출 수 있다",
+          "모델 설명과 인간 판단 정렬 방식을 코드 자동 생성 시스템에 적용해 생성 오류를 빠르게 식별하고 수정한다",
+          "Recall‑Fail 지표를 뉴스 기사 사실 검증 파이프라인에 도입하면 비사실적 기사 차단 효율을 정량적으로 평가할 수 있다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 긴 컨텍스트를 사용하는 추론 호출이 비용이 많이 드는가?",
+            "options": [
+              "모델 파라미터 수가 증가하기 때문",
+              "입력 토큰 수가 늘어나 연산량이 비례적으로 증가하기 때문",
+              "GPU 메모리 제한으로 배치 크기가 줄어들기 때문",
+              "모델이 더 많은 레이어를 활성화하기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "입력 토큰이 많아지면 Transformer 연산량이 토큰 수의 제곱에 비례해 늘어나므로 비용이 크게 증가한다."
+          },
+          {
+            "question": "새로운 사실성 서비스에서 인간 주석과 모델 설명의 겹침 비율이 향상된 이유는?",
+            "options": [
+              "모델에 더 큰 파라미터 수를 사용했기 때문",
+              "훈련 데이터에 인간 주석을 포함한 정렬 손실을 추가했기 때문",
+              "추론 시 더 긴 컨텍스트를 제공했기 때문",
+              "모델을 완전히 새로운 아키텍처로 교체했기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "정렬 손실을 통해 모델 설명을 인간 주석과 일치시키도록 학습시켜 겹침 비율을 높였다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "TASTE, 토스의 추천 파운데이션 플랫폼",
+        "url": "https://toss.tech/article/taste",
+        "published_at": "2026-11-09T06:54:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"40ea360d-33e3-8046-9d58-fade6afefbea\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">금융 상품에 관심이 있는 사람을 찾는 모델, 푸시를 클릭할 사람을 찾는 모델, 좋아할 미니앱을 추천하는 모델. 풀어야 할 문제는 다르지만, 이해해야 하는 대상은 모두 같은 토스의 사용자입니다. 토스에 쌓이는 방대하고 서로 다른 데이터를 충분히 학습하여 배운 내용을 여러 추천 문제에 활용할 수는 없을까요?</span></span></span></p><p class=\"css-14on8x8\" id=\"40ea360d-33e3-8035-8a09-f81a0fa8d426\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">TASTE(Toss Automated Standard Targeting Engine)</span><span class=\"css-1kxrhf3\">는 이 질문에서 시작했습니다. 사용자의 다양한 행동을 함께 예측하고, 그 과정에서 배운 ‘사용자 표현’을 다른 서비스 모델에 전달하고자 했습니다. 여러 서비스의 온오프라인 실험에서 이 표현이 예측에 도움이 된다는 것까지 확인했습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"40fa360d-33e3-8019-8235-c52468653afc\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/d7d286fe-a836-45f2-9a6b-f089debb3abb/image.png\" /></figure><p class=\"css-14on8x8\" id=\"40ea360d-33e3-8065-bd6f-e1c7e6c06446\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">이 글에서는 </span><span class=\"css-q3ktjb\">여러 행동을 함께 학습하고, 그 과정에서 얻은 사용자 표현을 다른 추천 모델에 전달하며, 이를 다시 개선하는 과정</span><span class=\"css-1kxrhf3\">을 소개합니다. 한 번 배운 사용자 정보를 여러 추천 문제에 활용하는 것, 이것이 저희가 생각하는 추천 파운데이션 모델의 출발점입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"410a360d-33e3-8073-b8fe-dabeac57ec19\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"40ea360d-33e3-8045-a66f-f70022b789f5\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">같은 사용자를 모델마다 다시 배우고 있었습니다</span></span></span></h2><p class=\"css-14on8x8\" id=\"40ea360d-33e3-80cf-a5f5-eb744e7f0558\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스에는 금융중개, 광고, 쇼핑, 결제, Apps in Toss 등 여러 서비스가 있습니다. 서비스가 늘어날수록 클릭, 구매, 전환 등을 예측하는 모델도 늘어납니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"40ea360d-33e3-80e8-842c-f16380edc0ee\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">모델마다 목표는 달라도 사용하는 사용자 정보는 겹치는 부분이 많습니다. 나이와 같은 속성, 앱에서 이용한 기능, 소비 이력 등이 대표적입니다. 각 모델은 이 정보를 자신의 예측에 필요한 형태로 가공하고 학습합니다. 같은 정보를 모델마다 따로 준비하고 학습하면서 중복 작업이 생겼습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"40ea360d-33e3-80a6-a7ea-d0fdc7dec11d\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/7700b6b4-3b27-4732-8fae-03b1c9baeb86/image.png\" /></figure><p class=\"css-14on8x8\" id=\"40ea360d-33e3-8084-91ff-ff223633105d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">데이터를 충분히 활용하는 일도 쉽지 않았습니다. 토스는 월간 활성 사용자(MAU)가 2천만 명을 넘어, 주요 서버 로그만 해도 하루에 수십억 건 이상 쌓입니다. 사용자 한 명을 이해하기 위해 살펴봐야 할 정보도 방대합니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"40ea360d-33e3-80ad-8016-c3351b41f38d\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">데이터의 성격도 제각각입니다. 마이데이터는 수십 개의 API를 통해 들어오며, 데이터마다 수집 시점과 정보를 확보할 수 있는 사용자 범위가 다릅니다. 외부 앱 이용 정보를 담은 MMP 데이터는 이벤트가 지나치게 많거나, 반대로 너무 적기도 합니다. 서버 로그와 마이데이터, MMP 데이터는 활용하고 분석할 수 있는 동의 조건도 모두 다릅니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"40ea360d-33e3-808f-918d-f4eef4685676\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">결국 각 모델은 예측 문제를 풀기에 앞서, 이 방대하고 서로 다른 데이터를 어떻게 모으고 학습할지부터 해결해야 했습니다. 서비스별 예측 모델은 응답 시간 등 서비스가 요구하는 수준(SLA)을 맞춰야 해서 상대적으로 크기가 작습니다. 이런 제약 아래에서 개별 모델이 방대한 정보를 충분히 학습하기는 쉽지 않습니다. 그래서 서비스 중인 모델들이 예측에 도움이 되는 사용자 정보를 놓치고 있을 수 있다는 가설을 세웠습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"410a360d-33e3-8088-b599-f0c95589abfd\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"40ea360d-33e3-80ee-9428-f90eb9e53d79\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">모델을 합치는 것만으로는 성능이 좋아지지 않았습니다</span></span></span></h2><blockquote class=\"css-2sk6rv\" id=\"40ea360d-33e3-80dd-8c7e-d0c74b2e39f8\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">“</span><span class=\"css-q3ktjb\">여러 모델에 필요한 사용자 표현을 한 번에 학습하고, 그 결과를 여러 목적에 활용할 수 있을까?</span><span class=\"css-1kxrhf3\">”</span></span></span></blockquote><figure class=\"css-of5acw\" id=\"40fa360d-33e3-80b7-88bc-c6dbdba92abe\"><img alt=\"\" class=\"css-1pgssrp\" src=\"https://static.toss.im/ipd-tcs/toss_core/live/3d77b45e-3621-470d-a6be-bcea9747181c/image.png\" /></figure><p class=\"css-14on8x8\" id=\"40ea360d-33e3-8056-ab39-eb27eb2a919f\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">먼저 주요 앱이벤트를 동시에 예측하는 멀티태스크 학습을 시도했습니다. 사용자 정보를 예측에 필요한 표현으로 바꾸는 인코더(Encoder)를 공유하고, 그 뒤에 결제나 특정 서비스 이용 등 과제별 예측을 담당하는 헤드(Head)를 붙이는 방식입니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"40ea360d-33e3-807b-a632-fff53e43db81\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">같은 정보를 받아도 과제마다 필요한 부분은 다릅니다. 과제별로 필요한 정보를 다르게 조합할 수 있도록, 처음에는 MMoE(Multi-gate Mixture-of-Experts) 구조를 시도했습니다.</span></span></span></p><figure class=\"css-of5acw\" id=\"40ea360d-33e3-80c3-8417-ed6dd",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "다중 행동 학습으로 사용자 표현 공유, 추천 효율↑",
+        "tags": [
+          "TASTE",
+          "Toss",
+          "MAU",
+          "MMP",
+          "MyData"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "개인화 추천",
+          "데이터 일반화"
+        ],
+        "key_points": [
+          {
+            "point": "각 서비스별 모델이 동일 사용자 정보를 중복 학습해 비효율이 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "TASTE는 여러 행동을 동시에 학습해 통합 사용자 표현을 생성하고 이를 다른 추천 모델에 전달한다.",
+            "timestamp": null
+          },
+          {
+            "point": "공유된 사용자 표현을 활용해 다양한 서비스에서 예측 성능과 데이터 활용 효율이 향상된다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "다중 행동 학습 방식을 전자상거래 플랫폼에 적용해 카테고리 간 제품 추천 정확도를 높인다.",
+          "금융 서비스 전반에 걸친 사기 탐지를 위해 공유 사용자 임베딩을 활용, 개별 서비스보다 탐지율을 개선한다.",
+          "기업 내부 생산성 도구에 이메일·캘린더·채팅 데이터를 통합 학습시켜 통합 작업 제안 모델을 구축, 사용자 업무 효율을 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 단순히 모델을 합치는 것만으로는 성능 향상이 이루어지지 않았는가?",
+            "options": [
+              "데이터 이질성 때문에 공유 학습이 어려워서",
+              "각 모델의 용량이 부족했기 때문에",
+              "학습된 사용자 표현을 공유하지 않았기 때문에",
+              "손실 함수가 서로 달랐기 때문에"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에서는 각 모델이 같은 사용자 정보를 별도로 학습하고 있어, 통합된 사용자 표현을 공유하지 않아 성능 향상이 제한됐다고 설명한다."
+          },
+          {
+            "question": "통합 사용자 표현을 여러 작업에 활용하는 주요 장점은 무엇인가?",
+            "options": [
+              "학습 시간 감소",
+              "하위 예측 모델의 성능 향상",
+              "모델 크기 증가",
+              "데이터 수집 절차 단순화"
+            ],
+            "answer_index": 1,
+            "explanation": "공유된 사용자 표현을 전달함으로써 다양한 서비스의 예측 정확도가 개선된다고 본문에 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
+        "url": "https://github.com/samir-sarwar/samir-vllm",
+        "published_at": null,
+        "transcript": null,
+        "body": "# samir-vllm\n\n> Teaching LLM inference from first principles by building a small engine in C++ and CUDA.\n\nThe series follows what happens between a prompt and a generated token, from loading model weights to running each part of the transformer on the GPU.\n\n## My inference notes\n\nRead [Inference from Scratch (PDF)](/samir-sarwar/samir-vllm/blob/main/InferenceFromScratch.pdf) for 80+ pages of my handwritten notes and diagrams. I developed all of the writing in this PDF myself, with **NO AI writing**.\n\n## Build series | 6+ Hours of footage\n\n|  |  |\n| --- | --- |\n| [Part 0: AI inference explained **Part 0 · AI inference explained**](https://youtu.be/ef0mOukUE6U \"Follow a prompt through an LLM, from tokenization to predicting the next token.\") | [Part 1: Loading SafeTensor weights **Part 1 · Loading model weights**](https://youtu.be/39_gWVbYgB4 \"Read SafeTensor metadata and load the Llama model weights into GPU memory.\") |\n| [Part 2: Embedding gather kernel **Part 2 · Embedding gather**](https://youtu.be/0V1lVIzGyqs \"Write a CUDA gather kernel that turns token IDs into embedding vectors.\") | [Part 3: RMSNorm kernel **Part 3 · RMSNorm**](https://youtu.be/my8VrOUVWo0 \"Normalize hidden states with RMSNorm and implement the CUDA reduction from scratch.\") |\n| [Part 4: Rotary position embeddings **Part 4 · RoPE**](https://youtu.be/4gL0hd9UEAY \"Understand rotary position embeddings and write the CUDA kernel for rotating query and key vectors.\") | [Part 5: Q, K, and V projections with cuBLAS **Part 5 · Q/K/V with cuBLAS**](https://youtu.be/8_HJH7pbw78 \"Use cuBLAS matrix multiplication to project hidden states into query, key, and value vectors.\") |\n| [Part 6: Multi-head self-attention **Part 6 · Self-attention**](https://youtu.be/tTULacSPXkc \"Build causal self-attention, from query-key scores and softmax to weighted values and the output projection.\") | [Part 7: Feed-forward network and SwiGLU **Part 7 · Feed-forward network**](https://youtu.be/HjllfB1IPrE \"Implement the SwiGLU feed-forward network, complete all transformer layers, and predict the first next token.\") |\n| [Part 8: Decode and KV cache **Part 8 · Decode and KV cache**](https://youtu.be/yFwPpH1Hb14 \"Separate prefill from decode and reuse cached keys and values to generate a response one token at a time.\") | [Part 9: Static and continuous batching **Part 9 · Static and continuous batching**](https://youtu.be/ei3M0Ex0qHA \"Generate for multiple requests together and compare static batching with a continuous scheduler.\") |\n| [Part 10: Paged KV cache **Part 10 · Paged KV cache**](https://youtu.be/As13goWXIx8 \"Build a paged KV cache with logical-to-physical block tables, allocate pages as requests grow, and reuse them on completion.\") | [Finale: Paged attention **Finale · Paged attention**](https://youtu.be/fle2du_R8DI \"Implement paged attention with online softmax, then connect the CUDA kernel to decode, batching, and page reclamation.\") |\n\nCompanion notes for every video are in the [study-notes index](/samir-sarwar/samir-vllm/blob/main/proper_notes/README.md), with separate [Markdown](/samir-sarwar/samir-vllm/blob/main/proper_notes/markdown) and [PDF](/samir-sarwar/samir-vllm/blob/main/proper_notes/pdf) folders. You can also read the [complete PDF collection](/samir-sarwar/samir-vllm/blob/main/proper_notes/pdf/samir_vllm_complete_study_notes.pdf).\n\n## What works so far\n\n- A C++17 / CUDA project, built with CMake and linked with ICU for Unicode-aware tokenization.\n- Direct `model.safetensors` loading: parse metadata, validate tensor offsets, and copy the raw BF16 weights to GPU memory. There is also a memory-mapped loader implementation to avoid an extra CPU-side copy.\n- A fixed Llama 3.2 1B Instruct weight layout, with direct pointers to the embedding, normalization, attention, and MLP tensors across all 16 layers.\n- A local BPE tokenizer that supports Unicode, special tokens, encode/decode, and the Instruct chat prompt format; its expected output is covered by a dedicated test executable.\n- A CUDA embedding-gather kernel and prefill path that copies prompt token IDs to the GPU and allocates activations.\n- A CUDA RMSNorm kernel for the 2,048-wide hidden state: it reduces in FP32 and applies the learned BF16 weights throughout the forward pass.\n- Dense causal prefill now runs all 16 layers: Q/K/V projection, RoPE, grouped-query attention, output projection, the attention residual, post-attention RMSNorm, SwiGLU MLP, and the MLP residual.\n- The final RMSNorm and tied embedding/LM-head projection produce FP32 logits; GPU argmax selects each next token.\n- A shared BF16 KV page pool with a block table per sequence and layer. Each physical page holds 16 tokens of K and V; prefill fills prompt pages and decode appends one new token at its absolute RoPE position.\n- Greedy response generation with Instruct chat formatting, end-of-turn/end-of-text stopping, and configurable output length within the 2,048-token context.\n- Persistent scratch buffers and one cuBLAS handle ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 추론 과정을 C++·CUDA로 직접 구현해 이해",
+        "tags": [
+          "C++",
+          "CUDA",
+          "SafeTensor",
+          "RMSNorm",
+          "RoPE"
+        ],
+        "concepts": [
+          "GPU 가속",
+          "병렬 처리",
+          "언어 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 추론을 토큰화부터 토큰 생성까지 단계별로 구현한다",
+            "timestamp": null
+          },
+          {
+            "point": "SafeTensor 포맷을 파싱해 BF16 가중치를 GPU에 직접 로드한다",
+            "timestamp": null
+          },
+          {
+            "point": "KV 캐시와 페이지드 KV 캐시를 활용해 효율적인 디코딩 및 배칭을 구현한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Paged KV 캐시를 활용해 멀티테넌트 SaaS 서비스에서 사용자별 대화 상태를 효율적으로 관리하고 메모리 파편화를 최소화한다",
+          "RMSNorm CUDA 커널을 비전 트랜스포머에 적용해 정규화 연산을 가속화하고 전체 추론 지연을 감소시킨다",
+          "RoPE 회전 위치 임베딩 커널을 시계열 예측 모델에 도입해 상대적 시간 정보를 효율적으로 인코딩한다"
+        ],
+        "quiz": [
+          {
+            "question": "KV 캐시가 LLM 디코딩에서 수행하는 역할은 무엇인가?",
+            "options": [
+              "토큰 임베딩을 재사용한다",
+              "키와 값 벡터를 캐시해 재계산을 방지한다",
+              "모델 가중치를 GPU에 보관한다",
+              "배치 스케줄링을 관리한다"
+            ],
+            "answer_index": 1,
+            "explanation": "KV 캐시는 이전 토큰들의 키와 값 벡터를 저장해 디코딩 시 재계산을 피함으로써 추론 속도를 높인다."
+          },
+          {
+            "question": "RoPE 기법이 쿼리와 키 벡터에 적용하는 변환은 무엇인가?",
+            "options": [
+              "사인·코사인 오프셋을 더한다",
+              "토큰 위치에 따라 회전시켜 상대적 위치 정보를 인코딩한다",
+              "위치 인덱스로 스케일링한다",
+              "위치 임베딩을 연결한다"
+            ],
+            "answer_index": 1,
+            "explanation": "RoPE는 토큰 위치에 따라 쿼리·키 벡터를 회전시켜 상대적 위치 정보를 자연스럽게 반영한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Spotify Engineering",
+        "source_key": "https://engineering.atspotify.com/feed/",
+        "source_label": "Spotify Engineering",
+        "title": "AI Product Management at Spotify: A View From Three Angles",
+        "url": "https://engineering.atspotify.com/2026/11/ai-product-management-at-spotify-a-view-from-three-angles/",
+        "published_at": "2026-11-09T17:53:35",
+        "transcript": null,
+        "body": "# AI Product Management at Spotify: A View From Three Angles\n\n![Feature Image](https://images.ctfassets.net/p762jor363g1/7JMJtDP8v7jK1szCeMXxlc/7338f41ab1912be8a0d0b077dc700cf7/2__3_.png)\n\nAlmost every article or podcast about product management and AI refers to \"the AI PM\" as one job. But what that job looks like depends on what you’re building.\n\nThe three of us work at the same company, on the same technology stack, and in the same part of the organization. We talk constantly, but our day-to-day work, and what success looks like, is quite different.\n\nHenok leads product in Tech Research, where success might be a team making the right technology choice, a methodology that helps several teams work with greater confidence, or a result that shows the organization what is possible. Divita leads product for a recommendation foundation model, shaping what it learns and how its capabilities help teams build better experiences for listeners. Humberto builds the experience users actually interact with, bringing model capabilities, interaction design, and user feedback together into something users find valuable and trustworthy\n\nWe share more than the technology. We’re working toward the same company priorities, and ultimately, serving the same external users. Our work is deeply connected: an idea from research can become a reusable model capability that opens up a new possibility in the user experience. Getting it to ship takes collaboration across all three.\n\nThat closeness can make the differences between our roles easy to miss, especially when we use the same PM vocabulary. We all talk about “quality”, “evals”, and “shipping”, but their meaning shifts with the problem space each of us owns. Even impact looks different. A shift in what the organization believes or where it invests can be a major research win; for a model PM, the payoff comes when a model improvement translates into better recommendations across multiple user experiences. And for an experience PM, it comes down to whether users love the product and come back.\n\nThe fundamentals of product management still apply. But building AI products requires different kinds of specialization depending on what you own. Below, each of us shares what that looks like in practice.\n\n## **The research layer: where the product is technical leverage**\n\n***Henok, Principal Product Manager, Tech Research, Personalization***\n\nAs the product lead for Tech Research, I work with product teams on today's needs while looking at what might matter next as AI changes what’s possible. I think of our product as technical leverage: applying scientific expertise where it can change what Spotify builds or how confidently we build it.\n\n### 1. AI is changing which problems need research\n\nBetter models and tools mean product teams can increasingly do work that previously required deep involvement from research. This allows research to focus more on shared methods, system design, and emerging capabilities where the right approach remains unclear.\n\nThe questions that matter tend to span several teams, further changing the research-product team dynamic. Two examples are how to evaluate open-ended model behavior, and how to represent users and content in ways that several products can use.\n\nAI makes it easy to build an exciting prototype quickly. However, the gap between that prototype and a product that works reliably for hundreds of millions of users can be significant. Similarly, a more complex model might look great in a demo, without any meaningful difference on the production tasks that matter. With this in mind, evaluation, latency, cost, data, and integration all become part of the research question. This is what helps us make informed investment decisions.\n\n### 2. A promising model architecture is not a roadmap\n\nOne project has made this particularly clear to me. We have been exploring an architecture that brings together capabilities currently spread across different systems. At first, the question was whether it could work. As the evidence grew, a harder product question emerged: what should the organization do with it? A new architecture may affect infrastructure, evaluation, interfaces, and several teams' plans, and it sits alongside systems that already work.\n\nMy job is to turn the bigger idea into decisions the organization can reasonably make: start with a concrete problem, find a useful test, and agree on what evidence would justify the next step. It isn’t all or nothing. The methods and components we develop along the way can already improve existing systems, even while the larger questions stay open.\n\nWhat began as exploration now informs model and experience teams, and its methods and components can improve existing systems even while the larger architecture question remains open. The harder work is finding a credible path through product needs, technical constraints, and existing commitments.\n\n### 3. Long feedback loops in a field that moves quickly\n\nResearch impact can t",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 제품 관리 역할별 성공 요인 파악",
+        "tags": [
+          "Spotify",
+          "Tech Research",
+          "recommendation foundation model",
+          "personalization",
+          "model evaluation"
+        ],
+        "concepts": [
+          "AI와 인간 협업",
+          "개인화 추천",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "AI 제품 관리는 연구, 모델, 경험 세 역할로 나뉘며 각 역할마다 성공 기준이 다르다",
+            "timestamp": null
+          },
+          {
+            "point": "연구 레이어는 기술 레버리지를 제공하고 평가·지연·비용·데이터·통합을 고려해 투자 결정을 내린다",
+            "timestamp": null
+          },
+          {
+            "point": "모델·경험 PM은 모델 개선이 추천 품질과 사용자 신뢰에 미치는 영향을 직접 측정한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "연구 단계에서 사용한 평가·지연·비용 프레임워크를 사내 자동화 도구 프로토타입에 적용해 대규모 배포 전 비용 효율성을 검증한다",
+          "기술 레버리지 개념을 활용해 전사적인 모델 API를 구축, 여러 팀이 공통 데이터 파이프라인에서 재사용하도록 하여 개발 속도를 높인다",
+          "헬스케어 앱의 개인화 기능에 모델‑경험 연계 프로세스를 도입해 모델 업데이트 시 사용자 신뢰 지표를 사전 검증함으로써 서비스 품질을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "Spotify에서 연구 레이어가 중점적으로 고려하는 요소는 무엇인가?",
+            "options": [
+              "사용자 인터페이스 디자인",
+              "모델 평가·지연·비용",
+              "마케팅 전략",
+              "법률 준수"
+            ],
+            "answer_index": 1,
+            "explanation": "연구 레이어는 평가, 지연, 비용, 데이터, 통합 등을 고려해 기술 레버리지를 제공하고 투자 결정을 내린다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "opinion",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

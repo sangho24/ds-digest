@@ -1,322 +1,311 @@
 {
   "contract_version": 1,
-  "date": "2026-11-09",
-  "generated_at": "2026-11-09T08:32:20.140326+09:00",
+  "date": "2026-11-10",
+  "generated_at": "2026-11-10T11:39:28.256642+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-09.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-10.html",
   "items": [
     {
-      "id": "94be6f5cb31c",
-      "title": "“취약점 찾아줘. make no mistakes.\" 소스코드 보안 분석을 위한 하네스 설계와 인사이트 | 신뢰와 안전",
-      "url": "https://youtu.be/s7OlVid3ON0",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-10-30T06:00:38",
-      "summary": "AI와 하네스로 코드 취약점 분석 체계화",
-      "positioning": null,
-      "tags": [
-        "Rust",
-        "TUI",
-        "SAST",
-        "MCP",
-        "카펠라"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "AI 기반 취약점 탐색 시 일관성·커버리지·종료 조건을 명시해야 한다.",
-          "timestamp": "02:05"
-        },
-        {
-          "point": "‘아우리가’는 Rust로 구현된 TUI 하네스로, AI 에이전트와 도구를 한 세션에 묶는다.",
-          "timestamp": "02:47"
-        },
-        {
-          "point": "상태를 데이터베이스와 스키마에 저장해 에이전트 간 충돌을 방지하고 재개 시에도 이어서 분석한다.",
-          "timestamp": "04:18"
-        }
-      ],
-      "ideas": [
-        "AI 기반 데이터 품질 검증 파이프라인에 하네스형 상태 저장소를 도입해 중단·재시작 시점에서도 검증 결과를 이어갈 수 있다.",
-        "멀티에이전트 리뷰 시스템을 도입해 모델 성능 평가 시 서로 다른 에이전트가 탐색·검증·리뷰 역할을 수행하도록 한다.",
-        "서버에서 정책을 승인·배포하는 방식으로 데이터 실험 가이드라인을 관리해 팀별 실험 주제 전환을 원활하게 한다."
-      ],
-      "quiz": [
-        {
-          "question": "헤디 에이전트가 분석 결과를 다른 에이전트에게 제공하지 않는 이유는 무엇인가?",
-          "options": [
-            "앵커링 효과를 방지하기 위해",
-            "네트워크 부하를 줄이기 위해",
-            "결과가 기밀이라서",
-            "다른 에이전트에 권한이 없어서"
-          ],
-          "answer_index": 0,
-          "explanation": "헤디 에이전트는 기존 결과가 있으면 그 결과 위주로 검토하려는 앵커링 효과를 피하기 위해 결과를 공유하지 않는다."
-        },
-        {
-          "question": "하네스 설계에서 상태를 데이터베이스와 스키마에 저장하는 주된 목적은?",
-          "options": [
-            "여러 에이전트가 충돌을 피하고 분석을 재개할 수 있게 하기 위해",
-            "AI 추론 속도를 높이기 위해",
-            "취약점 데이터를 암호화하기 위해",
-            "UI에 결과를 시각화하기 위해"
-          ],
-          "answer_index": 0,
-          "explanation": "상태를 DB와 스키마에 저장하면 에이전트 간 충돌을 방지하고, 스캔이 중단·재개될 때 이전 상태를 읽어 이어서 분석할 수 있다."
-        }
-      ]
-    },
-    {
-      "id": "fb8aae0c0644",
-      "title": "차세대 로깅 플랫폼 구축기: 일 41TB, 200억 건 로그를 Clickstack으로 실시간 처리하기 | 안정성과 인프라",
-      "url": "https://youtu.be/hjc_5C_5p1M",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-11-03T01:23:14",
-      "summary": "실시간 대용량 로그를 저비용·고성능으로 처리하는 방법",
-      "positioning": null,
-      "tags": [
-        "ClickHouse",
-        "OpenTelemetry",
-        "HyperDX",
-        "Kafka",
-        "Grafana Loki"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "로그 양이 4년간 400배 증가해 41TB·200억 건에 도달",
-          "timestamp": "00:53"
-        },
-        {
-          "point": "초당 100만 건을 2분 내 처리·1분 내 조회 응답 목표 설정",
-          "timestamp": "03:04"
-        },
-        {
-          "point": "ClickHouse는 처리량·집계 속도·저장 비용에서 10배 이상 우위",
-          "timestamp": "04:00"
-        }
-      ],
-      "ideas": [
-        "OpenTelemetry 배치 전송을 이용해 IoT 센서 데이터 전송량을 줄여 네트워크 비용을 절감한다.",
-        "수천 개의 마이크로서비스 이벤트 토픽을 몇 개의 서비스 단위 토픽으로 통합해 카프카 컨슈머 지연을 감소시킨다.",
-        "ClickHouse와 HyperDX를 결합해 실시간 게임 플레이 메트릭과 장기 저장된 로그를 하나의 쿼리 인터페이스로 제공한다."
-      ],
-      "quiz": [
-        {
-          "question": "배치 전송이 카프카 CPU 사용량을 절감하는 주된 이유는?",
-          "options": [
-            "메시지 수를 줄여 오버헤드 감소",
-            "메시지 크기를 늘려 압축 효율 상승",
-            "JSON 인코딩으로 전환",
-            "병렬 처리 활성화"
-          ],
-          "answer_index": 0,
-          "explanation": "배치 전송은 한 번에 여러 로그를 하나의 메시지로 묶어 전송하므로 카프카가 처리해야 할 메시지 수가 감소하고, 메시지당 오버헤드가 줄어 CPU 사용량이 절반 수준까지 감소한다."
-        },
-        {
-          "question": "ClickHouse가 OpenSearch 대비 저장 비용을 크게 낮춘 핵심 이유는?",
-          "options": [
-            "컬럼형 압축으로 원본 데이터의 10~20%만 저장",
-            "메모리 전용 저장소 사용",
-            "자동 로그 삭제 정책 적용",
-            "저가 하드웨어 사용"
-          ],
-          "answer_index": 0,
-          "explanation": "ClickHouse는 컬럼형 저장과 고효율 압축을 활용해 원본 데이터의 10~20%만 저장하므로 전체 저장 용량이 80~90% 감소한다."
-        }
-      ]
-    },
-    {
-      "id": "a8c6271771a2",
-      "title": "크림에서 통합 임베딩(Universal Embedding)은 어떻게 쓰일까?",
-      "url": "https://youtu.be/qZ1xIURQd98",
-      "source": {
-        "type": "youtube",
-        "name": "NAVER D2"
-      },
-      "published_at": "2026-11-04T05:06:36",
-      "summary": "통합 임베딩으로 추천 모델 수와 파이프라인을 크게 줄인다",
-      "positioning": null,
-      "tags": [
-        "크림",
-        "유니버설 임베딩",
-        "범용 리트리벌",
-        "로버타 베이스",
-        "BM25"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "범용 성능·콜드 스타트·모델 수 감소를 목표로 설정",
-          "timestamp": "01:19"
-        },
-        {
-          "point": "검색 로그 14일 데이터를 이용해 검색어-상품 쌍을 대조 학습",
-          "timestamp": "04:05"
-        },
-        {
-          "point": "브랜드·카테고리 벡터는 상품 평균, 유저 벡터는 클릭 가중 평균",
-          "timestamp": "07:08"
-        }
-      ],
-      "ideas": [
-        "검색어와 아이템을 동일 인코더로 학습해 신상품·신기사에 즉시 임베딩을 생성한다",
-        "BM25 기반 어려운 부정 예시를 선택해 법률 문서 검색 모델의 대조 학습에 활용한다",
-        "새 광고 캠페인 벡터를 기존 광고들의 평균으로 정의해 모델 재학습 없이 즉시 활용한다"
-      ],
-      "quiz": [
-        {
-          "question": "크림이 검색어와 상품을 같은 인코더로 처리한 주요 이유는?",
-          "options": [
-            "검색어와 상품 텍스트가 유사하기 때문",
-            "GPU 메모리 절약",
-            "모델 파라미터 감소",
-            "데이터 라벨링 비용 감소"
-          ],
-          "answer_index": 0,
-          "explanation": "검색어가 상품명 일부와 겹치므로 동일 인코더로 처리하면 같은 좌표계에서 비교가 가능해진다"
-        },
-        {
-          "question": "대조 학습에서 BM25를 활용한 오답 선택 방식은?",
-          "options": [
-            "가장 유사한 30개를 정답으로 간주",
-            "상위 30개는 제외하고 어려운 오답을 선택",
-            "무작위 샘플링",
-            "전체 후보를 그대로 사용"
-          ],
-          "answer_index": 1,
-          "explanation": "BM25로 텍스트 유사도가 높은 후보를 찾고, 상위 30개는 정답일 가능성이 높아 제외한 뒤 어려운 오답을 만든다"
-        }
-      ]
-    },
-    {
-      "id": "cf26fe972b43",
-      "title": "Decision Models as Retrieval Gates Against Injection and Pollution",
-      "url": "https://arxiv.org/abs/2611.08325v1",
+      "id": "b5fc329e5c9c",
+      "title": "Comparing Write, Read, and Query Performance of General-Purpose and Columnar Data Serialization Formats at Increasing Scale: An Empirical Benchmark Study with Statistical Validation on Synthetic and Real-World Data",
+      "url": "https://arxiv.org/abs/2611.10398v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.IR"
+        "name": "arXiv:cs.SE"
       },
-      "published_at": "2026-11-05T17:19:19",
-      "summary": "검색 결과를 모델이 검증해 악성 주입을 차단한다",
-      "positioning": "검색‑증강 생성(RAG) 시스템에서 주입·오염 공격을 완화하려는 연구 흐름에 속한다. 기존에는 텍스트 정규화·인용 프롬프트 등 사후 완화만 사용했지만, 본 논문은 별도 결정 모델을 검색 단계에 두어 공격을 사전 차단한다는 점에서 차별화된다.",
+      "published_at": "2026-11-07T02:10:53",
+      "summary": "플랫 포맷은 선택형 쿼리 비효율, SQLite 최고",
+      "positioning": "데이터 파이프라인에서 어떤 직렬화 포맷을 선택해야 할지 실증적 근거가 부족했던 상황을 해결하고자, 기존에는 소규모 실험이나 단일 지표에 의존하던 연구와 달리 다양한 규모·호스트·실제 데이터까지 포괄적으로 벤치마크했다. 통계적 검증을 통해 SQLite 인덱스와 Parquet 푸시다운이 현행 방식보다 우수함을 제시한다.",
       "tags": [
-        "Kev-4B",
-        "LLM",
-        "AUROC",
-        "HTML",
-        "open-weight decision model"
+        "CSV",
+        "JSON Lines",
+        "Python Pickle",
+        "SQLite",
+        "Apache Parquet"
       ],
-      "relevance": 8,
+      "relevance": 9,
       "key_points": [
         {
-          "point": "오픈‑weight 결정 모델을 게이트로 사용하면 기존 완화책과 결합해 주입 공격 성공률을 27.9%→5.7%로 낮출 수 있다",
+          "point": "전체 역직렬화가 필요한 플랫 포맷은 선택형 쿼리에서 1~3자리수 정도 느리다",
           "timestamp": null
         },
         {
-          "point": "각 패시지를 평균 76 ms에 판별하고 4/186 정상 페이지만 오탐, 정확도와 응답성에 거의 영향이 없다",
+          "point": "인덱스가 있는 SQLite가 모든 규모와 환경에서 선택적 접근에 가장 빠른 성능을 보였다",
           "timestamp": null
         },
         {
-          "point": "HTML을 직접 읽을 때 탐지율이 높아, 상위 10개 후보를 필터링하면 가짜 페이지 노출을 0.5%로 억제하면서 83% 정확도를 유지한다",
+          "point": "Trial 수를 늘리니 Pickle의 쓰기 시간 변동성이 감소해 Parquet보다 유의하게 빠름을 확인했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "HTML 기반 결정 모델을 코드 검색 파이프라인에 적용해 악성 코드 스니펫 삽입을 방지한다",
-        "이메일 스팸 필터에 HTML‑aware 게이트를 도입해 숨겨진 피싱 명령을 탐지한다",
-        "기업 위키 업데이트 전 오픈‑weight 결정 모델로 문서 내용을 검증해 오염된 정보 유입을 차단한다"
+        "Parquet의 푸시다운 필터링을 로그 분석 파이프라인에 적용해 선택적 로그 검색 속도를 크게 향상시킨다",
+        "데이터 엔지니어링 팀이 새로운 스토리지 옵션을 도입할 때, 본 연구와 동일한 합성 데이터 규모와 통계 검증 절차를 활용해 사전 성능 평가를 수행한다",
+        "클라우드 기반 ETL 워크플로우에서 다양한 인스턴스 사양을 대상으로 synthetic scaling 테스트를 진행해 비용 대비 최적 포맷을 선정한다"
       ],
       "quiz": [
         {
-          "question": "왜 결정 모델이 HTML을 읽을 때 공격 탐지가 더 잘 되는가?",
+          "question": "플랫 포맷이 선택형 쿼리에서 느린 주요 이유는 무엇인가?",
           "options": [
-            "HTML 구조가 숨겨진 텍스트와 메타 정보를 드러내기 때문에",
-            "HTML 압축으로 처리 속도가 빨라지기 때문에",
-            "HTML 문서가 일반 텍스트보다 짧기 때문에",
-            "HTML은 LLM이 이해하기 쉬운 형식이기 때문에"
+            "전체 역직렬화 후 필터링을 해야 하기 때문",
+            "압축률이 낮기 때문",
+            "네트워크 대역폭 제한 때문",
+            "CPU 코어 수가 적기 때문"
           ],
           "answer_index": 0,
-          "explanation": "HTML은 태그와 속성으로 구성돼 숨겨진 스크립트나 스타일 안에 삽입된 명령을 드러낼 수 있어, 텍스트만 볼 때 놓치기 쉬운 공격 패턴을 모델이 포착한다."
+          "explanation": "본문에 따르면 플랫 포맷은 필터링 전에 전체 데이터를 역직렬화해야 하므로 선택형 쿼리에서 1~3자리수 정도 비용이 크게 증가한다."
         },
         {
-          "question": "게이트가 76 ms의 지연을 보이면서도 오탐률이 낮은 이유는?",
+          "question": "선택적 접근 성능이 가장 뛰어난 포맷은 어느 것인가?",
           "options": [
-            "모델이 경량화돼 있어",
-            "HTML을 직접 분석해 공격 신호를 명시적으로 추출하기 때문",
-            "대규모 LLM을 사용해 높은 정확도를 확보했기 때문",
-            "사전 학습 데이터에 모든 공격 패턴이 포함돼 있기 때문"
+            "CSV",
+            "JSON Lines",
+            "인덱스가 있는 SQLite",
+            "Parquet(naive)"
           ],
-          "answer_index": 1,
-          "explanation": "HTML을 읽음으로써 구조적 단서(예: 숨겨진 스크립트, 비정상적인 속성)를 활용해 공격을 명확히 구분하므로, 짧은 처리 시간에도 높은 정밀도를 유지한다."
+          "answer_index": 2,
+          "explanation": "연구 결과, 인덱스가 있는 SQLite가 모든 규모와 호스트에서 선택적 접근에 가장 빠른 것으로 통계적으로 유의미하게 나타났다."
         }
       ]
     },
     {
-      "id": "a469dc7f6ec3",
-      "title": "딸깍으로 안되는 Multi-interest 개발기",
-      "url": "https://youtu.be/8D0CaQrUgCU",
+      "id": "098f893212f3",
+      "title": "Fact-Checking at Scale: Building a More Accurate and Efficient Synopsis Factuality System",
+      "url": "https://netflixtechblog.com/fact-checking-at-scale-building-a-more-accurate-and-efficient-synopsis-factuality-system-d7d85859d808?source=rss----2615bd06b42e---4",
       "source": {
-        "type": "youtube",
-        "name": "NAVER D2"
+        "type": "rss",
+        "name": "Netflix TechBlog - Medium"
       },
-      "published_at": "2026-11-03T04:31:36",
-      "summary": "멀티 인트레스트로 개인화 편향·허브 현상 해결",
+      "published_at": "2026-11-09T17:01:02",
+      "summary": "대규모 시놉시스 사실 검증으로 비용·정확도 개선",
       "positioning": null,
       "tags": [
-        "크림",
-        "멀티 인트레스트",
-        "마이너",
-        "코미렉",
-        "디스어그리먼트"
+        "Netflix",
+        "Bridgerton",
+        "metadata",
+        "reasoning model",
+        "Recall–Fail"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "허브 지표는 상위 N개 추천 상품이 전체에서 차지하는 비율이며, 과노출 상품은 노출 점유가 인기 점유의 10배 초과를 의미한다",
-          "timestamp": "03:26"
+          "point": "수동 검증이 불가능한 규모에서 시놉시스 사실성 자동 판단이 필요하다",
+          "timestamp": null
         },
         {
-          "point": "단일 벡터 모델은 다양한 관심사를 평균화해 개인화에 한계가 있지만, 멀티 인트레스트 모델은 관심사를 분리해 추천 가능하다",
-          "timestamp": "04:55"
+          "point": "새 시스템이 기존 대비 비용을 52.4% 절감하고 Recall‑Fail을 0.77→0.86으로 향상시켰다",
+          "timestamp": null
         },
         {
-          "point": "마이너 모델은 디스어그리먼트 레귤러라이제이션을 도입해 관심사 벡터 간 붕괴를 방지한다",
-          "timestamp": "05:25"
+          "point": "모델 설명이 인간 주석과의 겹침 비율을 69%→82%로 높여 downstream 교정에 활용 가능하게 했다",
+          "timestamp": null
         }
       ],
       "ideas": [
-        "뉴스 피드에서 허브 지표를 활용해 과도히 노출되는 기사군을 식별하고 노출 균형을 조정한다",
-        "광고 타깃팅에서 멀티 인트레스트 벡터를 도입해 사용자의 다양한 구매 의도를 별도 모델링함으로써 전환율을 높인다",
-        "멀티태스크 학습에서 디스어그리먼트 정규화를 적용해 각 태스크별 특성 벡터가 서로 붕괴되는 것을 방지한다"
+        "긴 컨텍스트 추론 비용 절감 기법을 고객 리뷰 자동 요약에 적용하면 처리 비용을 크게 낮출 수 있다",
+        "모델 설명과 인간 판단 정렬 방식을 코드 자동 생성 시스템에 적용해 생성 오류를 빠르게 식별하고 수정한다",
+        "Recall‑Fail 지표를 뉴스 기사 사실 검증 파이프라인에 도입하면 비사실적 기사 차단 효율을 정량적으로 평가할 수 있다"
       ],
       "quiz": [
         {
-          "question": "단일 벡터 사용자 표현이 개인화에 미치는 주요 문제는 무엇인가?",
+          "question": "왜 긴 컨텍스트를 사용하는 추론 호출이 비용이 많이 드는가?",
           "options": [
-            "모든 관심사를 동일하게 반영한다",
-            "평균 벡터가 되어 특정 관심사와 맞지 않는다",
-            "최근 클릭에 과도하게 편향된다",
-            "아이템 인기만을 반영한다"
+            "모델 파라미터 수가 증가하기 때문",
+            "입력 토큰 수가 늘어나 연산량이 비례적으로 증가하기 때문",
+            "GPU 메모리 제한으로 배치 크기가 줄어들기 때문",
+            "모델이 더 많은 레이어를 활성화하기 때문"
           ],
           "answer_index": 1,
-          "explanation": "텍스트에서 단일 벡터는 다양한 관심사를 평균화해 어느 추천에도 맞지 않는 평균 벡터가 된다고 설명한다"
+          "explanation": "입력 토큰이 많아지면 Transformer 연산량이 토큰 수의 제곱에 비례해 늘어나므로 비용이 크게 증가한다."
         },
         {
-          "question": "허브 지표의 목적은 무엇인가?",
+          "question": "새로운 사실성 서비스에서 인간 주석과 모델 설명의 겹침 비율이 향상된 이유는?",
           "options": [
-            "아이템 간 유사도 측정",
-            "상위 N개 추천 상품이 전체에서 차지하는 비중 측정",
-            "모델 응답 시간 평가",
-            "사용자 만족도 계산"
+            "모델에 더 큰 파라미터 수를 사용했기 때문",
+            "훈련 데이터에 인간 주석을 포함한 정렬 손실을 추가했기 때문",
+            "추론 시 더 긴 컨텍스트를 제공했기 때문",
+            "모델을 완전히 새로운 아키텍처로 교체했기 때문"
           ],
           "answer_index": 1,
-          "explanation": "허브 지표는 가장 많이 추천된 상위 N개 상품이 전체에서 차지하는 비율을 의미한다"
+          "explanation": "정렬 손실을 통해 모델 설명을 인간 주석과 일치시키도록 학습시켜 겹침 비율을 높였다."
+        }
+      ]
+    },
+    {
+      "id": "b3bc6eb59091",
+      "title": "TASTE, 토스의 추천 파운데이션 플랫폼",
+      "url": "https://toss.tech/article/taste",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-11-09T06:54:00",
+      "summary": "다중 행동 학습으로 사용자 표현 공유, 추천 효율↑",
+      "positioning": null,
+      "tags": [
+        "TASTE",
+        "Toss",
+        "MAU",
+        "MMP",
+        "MyData"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "각 서비스별 모델이 동일 사용자 정보를 중복 학습해 비효율이 발생한다.",
+          "timestamp": null
+        },
+        {
+          "point": "TASTE는 여러 행동을 동시에 학습해 통합 사용자 표현을 생성하고 이를 다른 추천 모델에 전달한다.",
+          "timestamp": null
+        },
+        {
+          "point": "공유된 사용자 표현을 활용해 다양한 서비스에서 예측 성능과 데이터 활용 효율이 향상된다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "다중 행동 학습 방식을 전자상거래 플랫폼에 적용해 카테고리 간 제품 추천 정확도를 높인다.",
+        "금융 서비스 전반에 걸친 사기 탐지를 위해 공유 사용자 임베딩을 활용, 개별 서비스보다 탐지율을 개선한다.",
+        "기업 내부 생산성 도구에 이메일·캘린더·채팅 데이터를 통합 학습시켜 통합 작업 제안 모델을 구축, 사용자 업무 효율을 향상시킨다."
+      ],
+      "quiz": [
+        {
+          "question": "왜 단순히 모델을 합치는 것만으로는 성능 향상이 이루어지지 않았는가?",
+          "options": [
+            "데이터 이질성 때문에 공유 학습이 어려워서",
+            "각 모델의 용량이 부족했기 때문에",
+            "학습된 사용자 표현을 공유하지 않았기 때문에",
+            "손실 함수가 서로 달랐기 때문에"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에서는 각 모델이 같은 사용자 정보를 별도로 학습하고 있어, 통합된 사용자 표현을 공유하지 않아 성능 향상이 제한됐다고 설명한다."
+        },
+        {
+          "question": "통합 사용자 표현을 여러 작업에 활용하는 주요 장점은 무엇인가?",
+          "options": [
+            "학습 시간 감소",
+            "하위 예측 모델의 성능 향상",
+            "모델 크기 증가",
+            "데이터 수집 절차 단순화"
+          ],
+          "answer_index": 1,
+          "explanation": "공유된 사용자 표현을 전달함으로써 다양한 서비스의 예측 정확도가 개선된다고 본문에 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "5aa2811f45ce",
+      "title": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
+      "url": "https://github.com/samir-sarwar/samir-vllm",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "LLM 추론 과정을 C++·CUDA로 직접 구현해 이해",
+      "positioning": null,
+      "tags": [
+        "C++",
+        "CUDA",
+        "SafeTensor",
+        "RMSNorm",
+        "RoPE"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LLM 추론을 토큰화부터 토큰 생성까지 단계별로 구현한다",
+          "timestamp": null
+        },
+        {
+          "point": "SafeTensor 포맷을 파싱해 BF16 가중치를 GPU에 직접 로드한다",
+          "timestamp": null
+        },
+        {
+          "point": "KV 캐시와 페이지드 KV 캐시를 활용해 효율적인 디코딩 및 배칭을 구현한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Paged KV 캐시를 활용해 멀티테넌트 SaaS 서비스에서 사용자별 대화 상태를 효율적으로 관리하고 메모리 파편화를 최소화한다",
+        "RMSNorm CUDA 커널을 비전 트랜스포머에 적용해 정규화 연산을 가속화하고 전체 추론 지연을 감소시킨다",
+        "RoPE 회전 위치 임베딩 커널을 시계열 예측 모델에 도입해 상대적 시간 정보를 효율적으로 인코딩한다"
+      ],
+      "quiz": [
+        {
+          "question": "KV 캐시가 LLM 디코딩에서 수행하는 역할은 무엇인가?",
+          "options": [
+            "토큰 임베딩을 재사용한다",
+            "키와 값 벡터를 캐시해 재계산을 방지한다",
+            "모델 가중치를 GPU에 보관한다",
+            "배치 스케줄링을 관리한다"
+          ],
+          "answer_index": 1,
+          "explanation": "KV 캐시는 이전 토큰들의 키와 값 벡터를 저장해 디코딩 시 재계산을 피함으로써 추론 속도를 높인다."
+        },
+        {
+          "question": "RoPE 기법이 쿼리와 키 벡터에 적용하는 변환은 무엇인가?",
+          "options": [
+            "사인·코사인 오프셋을 더한다",
+            "토큰 위치에 따라 회전시켜 상대적 위치 정보를 인코딩한다",
+            "위치 인덱스로 스케일링한다",
+            "위치 임베딩을 연결한다"
+          ],
+          "answer_index": 1,
+          "explanation": "RoPE는 토큰 위치에 따라 쿼리·키 벡터를 회전시켜 상대적 위치 정보를 자연스럽게 반영한다."
+        }
+      ]
+    },
+    {
+      "id": "e164236673b9",
+      "title": "AI Product Management at Spotify: A View From Three Angles",
+      "url": "https://engineering.atspotify.com/2026/11/ai-product-management-at-spotify-a-view-from-three-angles/",
+      "source": {
+        "type": "rss",
+        "name": "Spotify Engineering"
+      },
+      "published_at": "2026-11-09T17:53:35",
+      "summary": "AI 제품 관리 역할별 성공 요인 파악",
+      "positioning": null,
+      "tags": [
+        "Spotify",
+        "Tech Research",
+        "recommendation foundation model",
+        "personalization",
+        "model evaluation"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 제품 관리는 연구, 모델, 경험 세 역할로 나뉘며 각 역할마다 성공 기준이 다르다",
+          "timestamp": null
+        },
+        {
+          "point": "연구 레이어는 기술 레버리지를 제공하고 평가·지연·비용·데이터·통합을 고려해 투자 결정을 내린다",
+          "timestamp": null
+        },
+        {
+          "point": "모델·경험 PM은 모델 개선이 추천 품질과 사용자 신뢰에 미치는 영향을 직접 측정한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "연구 단계에서 사용한 평가·지연·비용 프레임워크를 사내 자동화 도구 프로토타입에 적용해 대규모 배포 전 비용 효율성을 검증한다",
+        "기술 레버리지 개념을 활용해 전사적인 모델 API를 구축, 여러 팀이 공통 데이터 파이프라인에서 재사용하도록 하여 개발 속도를 높인다",
+        "헬스케어 앱의 개인화 기능에 모델‑경험 연계 프로세스를 도입해 모델 업데이트 시 사용자 신뢰 지표를 사전 검증함으로써 서비스 품질을 유지한다"
+      ],
+      "quiz": [
+        {
+          "question": "Spotify에서 연구 레이어가 중점적으로 고려하는 요소는 무엇인가?",
+          "options": [
+            "사용자 인터페이스 디자인",
+            "모델 평가·지연·비용",
+            "마케팅 전략",
+            "법률 준수"
+          ],
+          "answer_index": 1,
+          "explanation": "연구 레이어는 평가, 지연, 비용, 데이터, 통합 등을 고려해 기술 레버리지를 제공하고 투자 결정을 내린다"
         }
       ]
     }
