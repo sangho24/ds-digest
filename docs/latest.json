@@ -1,311 +1,311 @@
 {
   "contract_version": 1,
-  "date": "2026-11-10",
-  "generated_at": "2026-11-10T11:39:28.256642+09:00",
+  "date": "2026-11-11",
+  "generated_at": "2026-11-11T11:07:33.440546+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-10.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-11.html",
   "items": [
     {
-      "id": "b5fc329e5c9c",
-      "title": "Comparing Write, Read, and Query Performance of General-Purpose and Columnar Data Serialization Formats at Increasing Scale: An Empirical Benchmark Study with Statistical Validation on Synthetic and Real-World Data",
-      "url": "https://arxiv.org/abs/2611.10398v1",
+      "id": "332469a1ce59",
+      "title": "AI 스킬 만들기 10계명: Figma→Code 자동화 실전기",
+      "url": "https://d2.naver.com/helloworld/8562180",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.SE"
+        "name": "D2 Blog"
       },
-      "published_at": "2026-11-07T02:10:53",
-      "summary": "플랫 포맷은 선택형 쿼리 비효율, SQLite 최고",
-      "positioning": "데이터 파이프라인에서 어떤 직렬화 포맷을 선택해야 할지 실증적 근거가 부족했던 상황을 해결하고자, 기존에는 소규모 실험이나 단일 지표에 의존하던 연구와 달리 다양한 규모·호스트·실제 데이터까지 포괄적으로 벤치마크했다. 통계적 검증을 통해 SQLite 인덱스와 Parquet 푸시다운이 현행 방식보다 우수함을 제시한다.",
+      "published_at": null,
+      "summary": "프롬프트 하나로 디자인 토큰·에셋 자동 적용, UI 코드 품질 향상",
+      "positioning": null,
       "tags": [
-        "CSV",
-        "JSON Lines",
-        "Python Pickle",
-        "SQLite",
-        "Apache Parquet"
+        "Claude",
+        "Figma",
+        "Android",
+        "design-to-ui",
+        "design token"
       ],
       "relevance": 9,
       "key_points": [
         {
-          "point": "전체 역직렬화가 필요한 플랫 포맷은 선택형 쿼리에서 1~3자리수 정도 느리다",
+          "point": "Claude의 Agent Skills를 활용해 Figma 디자인을 Android UI 코드로 자동 변환한다",
           "timestamp": null
         },
         {
-          "point": "인덱스가 있는 SQLite가 모든 규모와 환경에서 선택적 접근에 가장 빠른 성능을 보였다",
+          "point": "프로젝트 맞춤 스킬을 범용 스킬 위에 규칙을 추가해 디자인 토큰 사용과 에셋 추출을 크게 개선한다",
           "timestamp": null
         },
         {
-          "point": "Trial 수를 늘리니 Pickle의 쓰기 시간 변동성이 감소해 Parquet보다 유의하게 빠름을 확인했다",
+          "point": "실험에서 맞춤 스킬은 디자인 토큰 참조 39회, drawable 1개를 생성해 품질 차이를 입증했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Parquet의 푸시다운 필터링을 로그 분석 파이프라인에 적용해 선택적 로그 검색 속도를 크게 향상시킨다",
-        "데이터 엔지니어링 팀이 새로운 스토리지 옵션을 도입할 때, 본 연구와 동일한 합성 데이터 규모와 통계 검증 절차를 활용해 사전 성능 평가를 수행한다",
-        "클라우드 기반 ETL 워크플로우에서 다양한 인스턴스 사양을 대상으로 synthetic scaling 테스트를 진행해 비용 대비 최적 포맷을 선정한다"
+        "Sketch 디자인을 iOS SwiftUI 코드로 변환하는 맞춤 스킬을 만들어 프로젝트 고유 UI 컴포넌트와 색상 토큰을 자동 적용한다",
+        "아키텍처 다이어그램을 입력으로 받아 Terraform 인프라 코드와 네이밍 규칙을 적용하는 맞춤 스킬을 구축한다",
+        "비즈니스 프로세스 플로우차트를 BPMN XML로 변환하면서 회사 고유 작업 ID와 승인 규칙을 삽입하는 맞춤 스킬을 만든다"
       ],
       "quiz": [
         {
-          "question": "플랫 포맷이 선택형 쿼리에서 느린 주요 이유는 무엇인가?",
+          "question": "왜 맞춤 스킬이 범용 스킬보다 더 많은 디자인 토큰을 참조할 수 있었나요?",
           "options": [
-            "전체 역직렬화 후 필터링을 해야 하기 때문",
-            "압축률이 낮기 때문",
-            "네트워크 대역폭 제한 때문",
-            "CPU 코어 수가 적기 때문"
+            "프로젝트 전용 토큰 매핑 규칙을 추가했기 때문",
+            "더 큰 언어 모델을 사용했기 때문",
+            "프롬프트 길이를 늘렸기 때문",
+            "외부 데이터베이스에 접근했기 때문"
           ],
           "answer_index": 0,
-          "explanation": "본문에 따르면 플랫 포맷은 필터링 전에 전체 데이터를 역직렬화해야 하므로 선택형 쿼리에서 1~3자리수 정도 비용이 크게 증가한다."
+          "explanation": "맞춤 스킬은 범용 스킬 위에 프로젝트의 디자인 토큰과 에셋 규칙을 명시적으로 추가했기 때문에 색상 토큰을 더 많이 참조한다."
         },
         {
-          "question": "선택적 접근 성능이 가장 뛰어난 포맷은 어느 것인가?",
+          "question": "실험에서 범용 스킬이 drawable 파일을 생성하지 못한 것을 나타내는 지표는 무엇인가요?",
           "options": [
-            "CSV",
-            "JSON Lines",
-            "인덱스가 있는 SQLite",
-            "Parquet(naive)"
+            "colorScheme 참조 횟수",
+            "drawable 생성 개수",
+            "프롬프트 길이",
+            "모델 버전"
           ],
-          "answer_index": 2,
-          "explanation": "연구 결과, 인덱스가 있는 SQLite가 모든 규모와 호스트에서 선택적 접근에 가장 빠른 것으로 통계적으로 유의미하게 나타났다."
+          "answer_index": 1,
+          "explanation": "표에서 drawable 열이 0으로 표시되어 범용 스킬이 에셋 파일을 생성하지 못했음을 보여준다."
         }
       ]
     },
     {
-      "id": "098f893212f3",
-      "title": "Fact-Checking at Scale: Building a More Accurate and Efficient Synopsis Factuality System",
-      "url": "https://netflixtechblog.com/fact-checking-at-scale-building-a-more-accurate-and-efficient-synopsis-factuality-system-d7d85859d808?source=rss----2615bd06b42e---4",
+      "id": "bf4cabd77855",
+      "title": "NIFT-SQL: Customer-Supervised Table Scoring for Enterprise Text-to-SQL Retrieval",
+      "url": "https://arxiv.org/abs/2611.12731v1",
       "source": {
         "type": "rss",
-        "name": "Netflix TechBlog - Medium"
+        "name": "arXiv:cs.IR"
       },
-      "published_at": "2026-11-09T17:01:02",
-      "summary": "대규모 시놉시스 사실 검증으로 비용·정확도 개선",
+      "published_at": "2026-11-09T17:18:21",
+      "summary": "고객 질문 기반 테이블 검색으로 SQL 자동화 정확도 향상",
+      "positioning": "기업 환경에서 질문에 필요한 테이블을 찾는 것이 스키마가 방대해질수록 어려워진다. 기존에는 일반 검색이나 단일 모델에 의존했지만, NIFT‑SQL은 고객별 질문 데이터와 메타데이터를 활용해 하이브리드 검색과 대규모 크로스 인코더 점수를 로지스틱 회귀로 결합한다. 이는 텍스트‑투‑SQL 파이프라인에서 테이블 검색 정확도를 크게 높이는 최신 접근이다.",
+      "tags": [
+        "NIFT-SQL",
+        "BEAVER",
+        "LiveSQLBench",
+        "cross-encoder",
+        "zero-shot reranker"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "고객별 질문과 스키마 메타데이터만으로 테이블 검색 모델을 학습하면 검색 정확도가 크게 향상된다.",
+          "timestamp": null
+        },
+        {
+          "point": "NIFT‑SQL은 하이브리드 검색과 560M 크로스 인코더 점수를 로지스틱 회귀로 결합해 top‑15 정확도를 69‑90% 수준으로 끌어올렸다.",
+          "timestamp": null
+        },
+        {
+          "point": "라벨이 없는 상황에서도 제로샷 8B 리랭커를 추가 특징으로 활용하면 높은 정확도를 유지할 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "고객 질문 기반 테이블 스코어링을 데이터 레이크 카탈로그 검색에 적용해 관련 데이터셋 발견 효율을 높인다.",
+        "하이브리드 검색·크로스 인코더·로지스틱 회귀 결합 방식을 마이크로서비스 API 추천 시스템에 도입해 적절한 서비스 엔드포인트를 빠르게 찾는다.",
+        "제로샷 대규모 리랭커를 법률 문서 검색에 특징으로 활용해 라벨링 없이도 높은 정밀도 검색을 구현한다."
+      ],
+      "quiz": [
+        {
+          "question": "NIFT‑SQL에서 테이블 필요성을 판단하기 위해 사용된 결합 방식은 무엇인가?",
+          "options": [
+            "단순 평균 점수",
+            "로지스틱 회귀",
+            "SVM",
+            "랜덤 포레스트"
+          ],
+          "answer_index": 1,
+          "explanation": "하이브리드 검색 점수와 크로스 인코더 점수를 로지스틱 회귀 모델에 입력해 최종 스코어를 산출한다."
+        },
+        {
+          "question": "제로샷 8B 리랭커를 추가했을 때 기대되는 주요 효과는?",
+          "options": [
+            "라벨이 없는 상황에서도 정확도 향상",
+            "모델 크기 감소",
+            "학습 시간 증가 없이 성능 저하",
+            "데이터베이스 별 라우팅 불가"
+          ],
+          "answer_index": 0,
+          "explanation": "제로샷 리랭커는 라벨이 없어도 높은 정확도를 제공해 라벨링 비용 없이도 성능을 끌어올릴 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "20eeacfd1d94",
+      "title": "내가 보낸 메세지를 상대방이 받기까지: 전국민이 사용하는 메신저에서 릴레이 서비스 구축하기 | 안정성과 인프라",
+      "url": "https://youtu.be/bgRi3wlOj6Q",
+      "source": {
+        "type": "youtube",
+        "name": "kakao tech"
+      },
+      "published_at": "2026-10-30T06:00:37",
+      "summary": "공용 릴레이 모듈·라우터로 확장·캐시 효율 개선",
       "positioning": null,
       "tags": [
-        "Netflix",
-        "Bridgerton",
-        "metadata",
-        "reasoning model",
-        "Recall–Fail"
+        "카카오톡",
+        "APNS",
+        "FCM",
+        "콘시스턴트 해시",
+        "세션 캐시"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "수동 검증이 불가능한 규모에서 시놉시스 사실성 자동 판단이 필요하다",
-          "timestamp": null
+          "point": "기존 세션 간 요청이 초당 65만 건 규모로 처리되고 있다",
+          "timestamp": "01:06"
         },
         {
-          "point": "새 시스템이 기존 대비 비용을 52.4% 절감하고 Recall‑Fail을 0.77→0.86으로 향상시켰다",
-          "timestamp": null
+          "point": "풀 메시 구조는 하나의 노드 장애가 전체 서비스 지연을 초래한다",
+          "timestamp": "03:10"
         },
         {
-          "point": "모델 설명이 인간 주석과의 겹침 비율을 69%→82%로 높여 downstream 교정에 활용 가능하게 했다",
-          "timestamp": null
+          "point": "그룹 내 서버 고정을 통해 캐시 항목이 3배 감소하고 히트율이 60%→68% 상승했다",
+          "timestamp": "08:01"
         }
       ],
       "ideas": [
-        "긴 컨텍스트 추론 비용 절감 기법을 고객 리뷰 자동 요약에 적용하면 처리 비용을 크게 낮출 수 있다",
-        "모델 설명과 인간 판단 정렬 방식을 코드 자동 생성 시스템에 적용해 생성 오류를 빠르게 식별하고 수정한다",
-        "Recall‑Fail 지표를 뉴스 기사 사실 검증 파이프라인에 도입하면 비사실적 기사 차단 효율을 정량적으로 평가할 수 있다"
+        "콘시스턴트 해시 기반 라우팅을 전자상거래 마이크로서비스의 상품 캐시에 적용해 동일 키 요청이 같은 서버에 머물게 함으로써 캐시 히트율을 높인다",
+        "릴레이 로직을 공유 모듈로 분리하고 로컬 세션 캐시를 두어 IoT 디바이스 명령 전달 시 서비스 간 트래픽을 감소시키고 장애 전파를 최소화한다",
+        "작은 영상은 사용자별 워커가, 큰 영상은 채팅방(채널) 기준 워커 그룹이 처리하도록 그룹 기반 워커 스케일링을 적용해 영상 트랜스코딩 파이프라인의 자원 효율을 개선한다"
       ],
       "quiz": [
         {
-          "question": "왜 긴 컨텍스트를 사용하는 추론 호출이 비용이 많이 드는가?",
+          "question": "릴레이 서버를 직접 호출하도록 하면 발생하는 주요 문제는 무엇인가?",
           "options": [
-            "모델 파라미터 수가 증가하기 때문",
-            "입력 토큰 수가 늘어나 연산량이 비례적으로 증가하기 때문",
-            "GPU 메모리 제한으로 배치 크기가 줄어들기 때문",
-            "모델이 더 많은 레이어를 활성화하기 때문"
+            "서비스가 샤딩 규칙을 알아야 한다",
+            "라우터가 필요 없어 비용이 절감된다",
+            "캐시 히트율이 자동으로 상승한다",
+            "서버 간 연결이 감소한다"
           ],
-          "answer_index": 1,
-          "explanation": "입력 토큰이 많아지면 Transformer 연산량이 토큰 수의 제곱에 비례해 늘어나므로 비용이 크게 증가한다."
-        },
-        {
-          "question": "새로운 사실성 서비스에서 인간 주석과 모델 설명의 겹침 비율이 향상된 이유는?",
-          "options": [
-            "모델에 더 큰 파라미터 수를 사용했기 때문",
-            "훈련 데이터에 인간 주석을 포함한 정렬 손실을 추가했기 때문",
-            "추론 시 더 긴 컨텍스트를 제공했기 때문",
-            "모델을 완전히 새로운 아키텍처로 교체했기 때문"
-          ],
-          "answer_index": 1,
-          "explanation": "정렬 손실을 통해 모델 설명을 인간 주석과 일치시키도록 학습시켜 겹침 비율을 높였다."
+          "answer_index": 0,
+          "explanation": "직접 호출 시 모든 서비스가 적절한 서버를 찾기 위해 샤딩 규칙을 알아야 하고, 서버 주소·구성이 바뀔 때마다 대응이 필요해 운영 복잡도가 증가한다(본문 04:46)."
         }
       ]
     },
     {
-      "id": "b3bc6eb59091",
-      "title": "TASTE, 토스의 추천 파운데이션 플랫폼",
-      "url": "https://toss.tech/article/taste",
+      "id": "7f0d2211ac09",
+      "title": "Skipper, Airbnb’s embedded workflow engine, is now open source",
+      "url": "https://medium.com/airbnb-engineering/skipper-airbnbs-embedded-workflow-engine-is-now-open-source-78dd354f472b?source=rss----53c7c27702d5---4",
       "source": {
         "type": "rss",
-        "name": "토스 기술 블로그, 토스 테크"
+        "name": "The Airbnb Tech Blog - Medium"
       },
-      "published_at": "2026-11-09T06:54:00",
-      "summary": "다중 행동 학습으로 사용자 표현 공유, 추천 효율↑",
+      "published_at": "2026-11-10T18:01:02",
+      "summary": "서비스 내부 워크플로우 내장으로 운영·복구 비용 절감",
       "positioning": null,
       "tags": [
-        "TASTE",
-        "Toss",
-        "MAU",
-        "MMP",
-        "MyData"
+        "Skipper",
+        "Airbnb",
+        "Java",
+        "Kotlin",
+        "Apache 2.0"
       ],
-      "relevance": 7,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "각 서비스별 모델이 동일 사용자 정보를 중복 학습해 비효율이 발생한다.",
+          "point": "Skipper는 Java·Kotlin 클래스로 다단계 비즈니스 프로세스를 정의하고 진행 상황을 영속화·복구하며 서비스 내부에서 실행한다.",
           "timestamp": null
         },
         {
-          "point": "TASTE는 여러 행동을 동시에 학습해 통합 사용자 표현을 생성하고 이를 다른 추천 모델에 전달한다.",
+          "point": "각 서비스 복제본에 워크플로우 런타임과 스케줄러가 내장되어 동일 DB를 공유하고, 리스(lease)로 작업 소유권을 조정한다.",
           "timestamp": null
         },
         {
-          "point": "공유된 사용자 표현을 활용해 다양한 서비스에서 예측 성능과 데이터 활용 효율이 향상된다.",
+          "point": "별도 오케스트레이션 시스템을 없애 운영 복잡성을 낮추지만, 워크플로우 실행·DB 용량·복구 책임을 서비스 팀이 떠안는 트레이드오프가 있다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "다중 행동 학습 방식을 전자상거래 플랫폼에 적용해 카테고리 간 제품 추천 정확도를 높인다.",
-        "금융 서비스 전반에 걸친 사기 탐지를 위해 공유 사용자 임베딩을 활용, 개별 서비스보다 탐지율을 개선한다.",
-        "기업 내부 생산성 도구에 이메일·캘린더·채팅 데이터를 통합 학습시켜 통합 작업 제안 모델을 구축, 사용자 업무 효율을 향상시킨다."
+        "데이터 전처리 파이프라인을 서비스 내부에 임베드해 별도 ETL 오케스트레이터 없이 데이터 흐름을 관리한다",
+        "GPU 노드 간 분산 학습 작업을 리스 기반 스케줄러로 조정해 중앙 스케줄러 없이 장애 복구를 가능하게 한다",
+        "특징 저장소와 워크플로우 상태를 동일 DB에 저장해 피처 엔지니어링 서비스에서 일관성을 유지한다"
       ],
       "quiz": [
         {
-          "question": "왜 단순히 모델을 합치는 것만으로는 성능 향상이 이루어지지 않았는가?",
+          "question": "Skipper가 기존 외부 오케스트레이션 서비스와 다른 주요 특징은?",
           "options": [
-            "데이터 이질성 때문에 공유 학습이 어려워서",
-            "각 모델의 용량이 부족했기 때문에",
-            "학습된 사용자 표현을 공유하지 않았기 때문에",
-            "손실 함수가 서로 달랐기 때문에"
-          ],
-          "answer_index": 2,
-          "explanation": "본문에서는 각 모델이 같은 사용자 정보를 별도로 학습하고 있어, 통합된 사용자 표현을 공유하지 않아 성능 향상이 제한됐다고 설명한다."
-        },
-        {
-          "question": "통합 사용자 표현을 여러 작업에 활용하는 주요 장점은 무엇인가?",
-          "options": [
-            "학습 시간 감소",
-            "하위 예측 모델의 성능 향상",
-            "모델 크기 증가",
-            "데이터 수집 절차 단순화"
+            "워크플로우를 서비스 외부에 배치한다",
+            "워크플로우를 서비스 내부에 임베드한다",
+            "전용 데이터베이스를 사용한다",
+            "클라우드 관리형 서비스를 사용한다"
           ],
           "answer_index": 1,
-          "explanation": "공유된 사용자 표현을 전달함으로써 다양한 서비스의 예측 정확도가 개선된다고 본문에 언급한다."
+          "explanation": "Skipper는 워크플로우 엔진을 라이브러리 형태로 서비스 내부에 포함시켜 별도의 오케스트레이션 클러스터가 필요 없도록 설계되었다."
+        },
+        {
+          "question": "Skipper가 복구 시 사용하는 메커니즘은?",
+          "options": [
+            "타임스탬프 기반 재시도",
+            "리스(lease) 기반 작업 소유권",
+            "메시지 큐 ACK",
+            "트랜잭션 로그"
+          ],
+          "answer_index": 1,
+          "explanation": "스케줄러는 리스를 이용해 작업 소유권을 조정하고, 복제본이 실패하면 다른 복제본이 리스를 획득해 작업을 이어받는다."
         }
       ]
     },
     {
-      "id": "5aa2811f45ce",
-      "title": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
-      "url": "https://github.com/samir-sarwar/samir-vllm",
+      "id": "a6bc643605a2",
+      "title": "한계를 경계로 바꾸다: 대규모 커머스 DB 샤딩 전환기 | 거버넌스",
+      "url": "https://youtu.be/2qmqb3oqG-8",
       "source": {
-        "type": "rss",
-        "name": "HackerNews"
+        "type": "youtube",
+        "name": "kakao tech"
       },
-      "published_at": null,
-      "summary": "LLM 추론 과정을 C++·CUDA로 직접 구현해 이해",
+      "published_at": "2026-10-30T06:00:36",
+      "summary": "데이터·트래픽 급증 시 샤딩으로 확장성과 운영 효율을 확보",
       "positioning": null,
       "tags": [
-        "C++",
-        "CUDA",
-        "SafeTensor",
-        "RMSNorm",
-        "RoPE"
+        "카카오 커머스",
+        "샤드키",
+        "모듈러 샤딩",
+        "컨시스턴트 해싱",
+        "핫콜드 세퍼레이션"
       ],
-      "relevance": 7,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "LLM 추론을 토큰화부터 토큰 생성까지 단계별로 구현한다",
-          "timestamp": null
+          "point": "스케일업만으로 급격한 데이터 증가를 감당하기 어려워 핫콜드 세퍼레이션을 도입",
+          "timestamp": "01:57"
         },
         {
-          "point": "SafeTensor 포맷을 파싱해 BF16 가중치를 GPU에 직접 로드한다",
-          "timestamp": null
+          "point": "샤딩 도입 목표는 용량 확보, 트래픽 분산, 단순·유연한 확장 구조 구축",
+          "timestamp": "03:05"
         },
         {
-          "point": "KV 캐시와 페이지드 KV 캐시를 활용해 효율적인 디코딩 및 배칭을 구현한다",
-          "timestamp": null
+          "point": "모듈러 샤딩을 선택해 핫스팟 위험 낮추고 구현·운영을 단순화, 리샤딩 비용은 논리 샤드로 보완",
+          "timestamp": "06:39"
         }
       ],
       "ideas": [
-        "Paged KV 캐시를 활용해 멀티테넌트 SaaS 서비스에서 사용자별 대화 상태를 효율적으로 관리하고 메모리 파편화를 최소화한다",
-        "RMSNorm CUDA 커널을 비전 트랜스포머에 적용해 정규화 연산을 가속화하고 전체 추론 지연을 감소시킨다",
-        "RoPE 회전 위치 임베딩 커널을 시계열 예측 모델에 도입해 상대적 시간 정보를 효율적으로 인코딩한다"
+        "핫콜드 세퍼레이션 방식을 로그 시스템에 적용해 최신 로그는 빠른 DB에, 오래된 로그는 아카이브 DB에 저장해 조회 지연을 감소시킨다",
+        "모듈러 샤딩과 논리 샤드 결합을 멀티테넌트 SaaS에 적용해 테넌트별 데이터를 논리 샤드로 구분하고 물리 DB를 유연하게 확장한다",
+        "컨시스턴트 해싱 링을 CDN 엣지 캐시 서버에 적용해 노드 추가·제거 시 재배치량을 최소화해 캐시 일관성을 유지한다"
       ],
       "quiz": [
         {
-          "question": "KV 캐시가 LLM 디코딩에서 수행하는 역할은 무엇인가?",
+          "question": "왜 모듈러 샤딩이 레인지 샤딩보다 선호되었나요?",
           "options": [
-            "토큰 임베딩을 재사용한다",
-            "키와 값 벡터를 캐시해 재계산을 방지한다",
-            "모델 가중치를 GPU에 보관한다",
-            "배치 스케줄링을 관리한다"
+            "핫스팟 발생 가능성이 낮다",
+            "노드 추가 시 데이터 이동이 거의 없다",
+            "샤드 수 변경 시 재해시가 필요 없다",
+            "구현 코드가 가장 간단하다"
           ],
-          "answer_index": 1,
-          "explanation": "KV 캐시는 이전 토큰들의 키와 값 벡터를 저장해 디코딩 시 재계산을 피함으로써 추론 속도를 높인다."
+          "answer_index": 0,
+          "explanation": "모듈러 샤딩은 키를 고르게 분산시켜 특정 구간에 트래픽이 몰리는 핫스팟 위험이 낮고 구현·운영이 단순해 선택되었다."
         },
         {
-          "question": "RoPE 기법이 쿼리와 키 벡터에 적용하는 변환은 무엇인가?",
+          "question": "핫콜드 세퍼레이션이 도입된 후에도 해결되지 않은 주요 문제는 무엇인가요?",
           "options": [
-            "사인·코사인 오프셋을 더한다",
-            "토큰 위치에 따라 회전시켜 상대적 위치 정보를 인코딩한다",
-            "위치 인덱스로 스케일링한다",
-            "위치 임베딩을 연결한다"
+            "읽기 전용 콜드 DB의 데이터 일관성",
+            "핫 DB에 집중된 쓰기 부하",
+            "과거 데이터 조회 지연",
+            "스토리지 비용 증가"
           ],
           "answer_index": 1,
-          "explanation": "RoPE는 토큰 위치에 따라 쿼리·키 벡터를 회전시켜 상대적 위치 정보를 자연스럽게 반영한다."
-        }
-      ]
-    },
-    {
-      "id": "e164236673b9",
-      "title": "AI Product Management at Spotify: A View From Three Angles",
-      "url": "https://engineering.atspotify.com/2026/11/ai-product-management-at-spotify-a-view-from-three-angles/",
-      "source": {
-        "type": "rss",
-        "name": "Spotify Engineering"
-      },
-      "published_at": "2026-11-09T17:53:35",
-      "summary": "AI 제품 관리 역할별 성공 요인 파악",
-      "positioning": null,
-      "tags": [
-        "Spotify",
-        "Tech Research",
-        "recommendation foundation model",
-        "personalization",
-        "model evaluation"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "AI 제품 관리는 연구, 모델, 경험 세 역할로 나뉘며 각 역할마다 성공 기준이 다르다",
-          "timestamp": null
-        },
-        {
-          "point": "연구 레이어는 기술 레버리지를 제공하고 평가·지연·비용·데이터·통합을 고려해 투자 결정을 내린다",
-          "timestamp": null
-        },
-        {
-          "point": "모델·경험 PM은 모델 개선이 추천 품질과 사용자 신뢰에 미치는 영향을 직접 측정한다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "연구 단계에서 사용한 평가·지연·비용 프레임워크를 사내 자동화 도구 프로토타입에 적용해 대규모 배포 전 비용 효율성을 검증한다",
-        "기술 레버리지 개념을 활용해 전사적인 모델 API를 구축, 여러 팀이 공통 데이터 파이프라인에서 재사용하도록 하여 개발 속도를 높인다",
-        "헬스케어 앱의 개인화 기능에 모델‑경험 연계 프로세스를 도입해 모델 업데이트 시 사용자 신뢰 지표를 사전 검증함으로써 서비스 품질을 유지한다"
-      ],
-      "quiz": [
-        {
-          "question": "Spotify에서 연구 레이어가 중점적으로 고려하는 요소는 무엇인가?",
-          "options": [
-            "사용자 인터페이스 디자인",
-            "모델 평가·지연·비용",
-            "마케팅 전략",
-            "법률 준수"
-          ],
-          "answer_index": 1,
-          "explanation": "연구 레이어는 평가, 지연, 비용, 데이터, 통합 등을 고려해 기술 레버리지를 제공하고 투자 결정을 내린다"
+          "explanation": "핫콜드 세퍼레이션은 모든 쓰기를 핫 DB에 집중시켜, 트래픽이 계속 증가하면 핫 DB가 병목이 되는 문제가 남았다."
         }
       ]
     }

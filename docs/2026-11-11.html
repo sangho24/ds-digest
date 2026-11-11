@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 11일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 11일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">AI 기반 설계 자동화</span><span class="concept">코드 자동생성</span><span class="concept">프롬프트 협업</span><span class="concept">semantic query processing</span><span class="concept">metadata 활용 검색</span><span class="concept">모델 파인튜닝</span><span class="concept">디자인 트레이드오프</span><span class="concept">레거시 시스템 리팩터링</span><span class="concept">비동기 처리와 트랜잭션</span><span class="concept">내장형 워크플로우 엔진</span><span class="concept">지속 가능한 워크플로우</span><span class="concept">서비스 내부 오케스트레이션</span><span class="concept">데이터 파티셔닝</span><span class="concept">리샤딩 비용</span><span class="concept">운영 복잡도 관리</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/8562180" target="_blank" rel="noopener">AI 스킬 만들기 10계명: Figma→Code 자동화 실전기</a>
+        </h2>
+
+        <p class="summary">프롬프트 하나로 디자인 토큰·에셋 자동 적용, UI 코드 품질 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Claude의 Agent Skills를 활용해 Figma 디자인을 Android UI 코드로 자동 변환한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>프로젝트 맞춤 스킬을 범용 스킬 위에 규칙을 추가해 디자인 토큰 사용과 에셋 추출을 크게 개선한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 맞춤 스킬은 디자인 토큰 참조 39회, drawable 1개를 생성해 품질 차이를 입증했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Sketch 디자인을 iOS SwiftUI 코드로 변환하는 맞춤 스킬을 만들어 프로젝트 고유 UI 컴포넌트와 색상 토큰을 자동 적용한다</span></li>
+            
+            <li><span class="box"></span><span>아키텍처 다이어그램을 입력으로 받아 Terraform 인프라 코드와 네이밍 규칙을 적용하는 맞춤 스킬을 구축한다</span></li>
+            
+            <li><span class="box"></span><span>비즈니스 프로세스 플로우차트를 BPMN XML로 변환하면서 회사 고유 작업 ID와 승인 규칙을 삽입하는 맞춤 스킬을 만든다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 맞춤 스킬이 범용 스킬보다 더 많은 디자인 토큰을 참조할 수 있었나요?</div>
+            
+            <div class="q-opt">① 프로젝트 전용 토큰 매핑 규칙을 추가했기 때문</div>
+            
+            <div class="q-opt">② 더 큰 언어 모델을 사용했기 때문</div>
+            
+            <div class="q-opt">③ 프롬프트 길이를 늘렸기 때문</div>
+            
+            <div class="q-opt">④ 외부 데이터베이스에 접근했기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 프로젝트 전용 토큰 매핑 규칙을 추가했기 때문</div>
+              <div class="why">맞춤 스킬은 범용 스킬 위에 프로젝트의 디자인 토큰과 에셋 규칙을 명시적으로 추가했기 때문에 색상 토큰을 더 많이 참조한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실험에서 범용 스킬이 drawable 파일을 생성하지 못한 것을 나타내는 지표는 무엇인가요?</div>
+            
+            <div class="q-opt">① colorScheme 참조 횟수</div>
+            
+            <div class="q-opt">② drawable 생성 개수</div>
+            
+            <div class="q-opt">③ 프롬프트 길이</div>
+            
+            <div class="q-opt">④ 모델 버전</div>
+            
+            <div class="q-answer">
+              <div class="correct">② drawable 생성 개수</div>
+              <div class="why">표에서 drawable 열이 0으로 표시되어 범용 스킬이 에셋 파일을 생성하지 못했음을 보여준다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">Figma</span><span class="tag">Android</span><span class="tag">design-to-ui</span><span class="tag">design token</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.12731v1" target="_blank" rel="noopener">NIFT-SQL: Customer-Supervised Table Scoring for Enterprise Text-to-SQL Retrieval</a>
+        </h2>
+
+        <p class="summary">고객 질문 기반 테이블 검색으로 SQL 자동화 정확도 향상</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>기업 환경에서 질문에 필요한 테이블을 찾는 것이 스키마가 방대해질수록 어려워진다. 기존에는 일반 검색이나 단일 모델에 의존했지만, NIFT‑SQL은 고객별 질문 데이터와 메타데이터를 활용해 하이브리드 검색과 대규모 크로스 인코더 점수를 로지스틱 회귀로 결합한다. 이는 텍스트‑투‑SQL 파이프라인에서 테이블 검색 정확도를 크게 높이는 최신 접근이다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>고객별 질문과 스키마 메타데이터만으로 테이블 검색 모델을 학습하면 검색 정확도가 크게 향상된다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NIFT‑SQL은 하이브리드 검색과 560M 크로스 인코더 점수를 로지스틱 회귀로 결합해 top‑15 정확도를 69‑90% 수준으로 끌어올렸다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>라벨이 없는 상황에서도 제로샷 8B 리랭커를 추가 특징으로 활용하면 높은 정확도를 유지할 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고객 질문 기반 테이블 스코어링을 데이터 레이크 카탈로그 검색에 적용해 관련 데이터셋 발견 효율을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>하이브리드 검색·크로스 인코더·로지스틱 회귀 결합 방식을 마이크로서비스 API 추천 시스템에 도입해 적절한 서비스 엔드포인트를 빠르게 찾는다.</span></li>
+            
+            <li><span class="box"></span><span>제로샷 대규모 리랭커를 법률 문서 검색에 특징으로 활용해 라벨링 없이도 높은 정밀도 검색을 구현한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">NIFT‑SQL에서 테이블 필요성을 판단하기 위해 사용된 결합 방식은 무엇인가?</div>
+            
+            <div class="q-opt">① 단순 평균 점수</div>
+            
+            <div class="q-opt">② 로지스틱 회귀</div>
+            
+            <div class="q-opt">③ SVM</div>
+            
+            <div class="q-opt">④ 랜덤 포레스트</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 로지스틱 회귀</div>
+              <div class="why">하이브리드 검색 점수와 크로스 인코더 점수를 로지스틱 회귀 모델에 입력해 최종 스코어를 산출한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">제로샷 8B 리랭커를 추가했을 때 기대되는 주요 효과는?</div>
+            
+            <div class="q-opt">① 라벨이 없는 상황에서도 정확도 향상</div>
+            
+            <div class="q-opt">② 모델 크기 감소</div>
+            
+            <div class="q-opt">③ 학습 시간 증가 없이 성능 저하</div>
+            
+            <div class="q-opt">④ 데이터베이스 별 라우팅 불가</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 라벨이 없는 상황에서도 정확도 향상</div>
+              <div class="why">제로샷 리랭커는 라벨이 없어도 높은 정확도를 제공해 라벨링 비용 없이도 성능을 끌어올릴 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NIFT-SQL</span><span class="tag">BEAVER</span><span class="tag">LiveSQLBench</span><span class="tag">cross-encoder</span><span class="tag">zero-shot reranker</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/bgRi3wlOj6Q" target="_blank" rel="noopener">내가 보낸 메세지를 상대방이 받기까지: 전국민이 사용하는 메신저에서 릴레이 서비스 구축하기 | 안정성과 인프라</a>
+        </h2>
+
+        <p class="summary">공용 릴레이 모듈·라우터로 확장·캐시 효율 개선</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:06</span>
+            
+            <span>기존 세션 간 요청이 초당 65만 건 규모로 처리되고 있다</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:10</span>
+            
+            <span>풀 메시 구조는 하나의 노드 장애가 전체 서비스 지연을 초래한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">08:01</span>
+            
+            <span>그룹 내 서버 고정을 통해 캐시 항목이 3배 감소하고 히트율이 60%→68% 상승했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>콘시스턴트 해시 기반 라우팅을 전자상거래 마이크로서비스의 상품 캐시에 적용해 동일 키 요청이 같은 서버에 머물게 함으로써 캐시 히트율을 높인다</span></li>
+            
+            <li><span class="box"></span><span>릴레이 로직을 공유 모듈로 분리하고 로컬 세션 캐시를 두어 IoT 디바이스 명령 전달 시 서비스 간 트래픽을 감소시키고 장애 전파를 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>작은 영상은 사용자별 워커가, 큰 영상은 채팅방(채널) 기준 워커 그룹이 처리하도록 그룹 기반 워커 스케일링을 적용해 영상 트랜스코딩 파이프라인의 자원 효율을 개선한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">릴레이 서버를 직접 호출하도록 하면 발생하는 주요 문제는 무엇인가?</div>
+            
+            <div class="q-opt">① 서비스가 샤딩 규칙을 알아야 한다</div>
+            
+            <div class="q-opt">② 라우터가 필요 없어 비용이 절감된다</div>
+            
+            <div class="q-opt">③ 캐시 히트율이 자동으로 상승한다</div>
+            
+            <div class="q-opt">④ 서버 간 연결이 감소한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 서비스가 샤딩 규칙을 알아야 한다</div>
+              <div class="why">직접 호출 시 모든 서비스가 적절한 서버를 찾기 위해 샤딩 규칙을 알아야 하고, 서버 주소·구성이 바뀔 때마다 대응이 필요해 운영 복잡도가 증가한다(본문 04:46).</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">카카오톡</span><span class="tag">APNS</span><span class="tag">FCM</span><span class="tag">콘시스턴트 해시</span><span class="tag">세션 캐시</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">The Airbnb Tech Blog - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/airbnb-engineering/skipper-airbnbs-embedded-workflow-engine-is-now-open-source-78dd354f472b?source=rss----53c7c27702d5---4" target="_blank" rel="noopener">Skipper, Airbnb’s embedded workflow engine, is now open source</a>
+        </h2>
+
+        <p class="summary">서비스 내부 워크플로우 내장으로 운영·복구 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Skipper는 Java·Kotlin 클래스로 다단계 비즈니스 프로세스를 정의하고 진행 상황을 영속화·복구하며 서비스 내부에서 실행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>각 서비스 복제본에 워크플로우 런타임과 스케줄러가 내장되어 동일 DB를 공유하고, 리스(lease)로 작업 소유권을 조정한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>별도 오케스트레이션 시스템을 없애 운영 복잡성을 낮추지만, 워크플로우 실행·DB 용량·복구 책임을 서비스 팀이 떠안는 트레이드오프가 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 전처리 파이프라인을 서비스 내부에 임베드해 별도 ETL 오케스트레이터 없이 데이터 흐름을 관리한다</span></li>
+            
+            <li><span class="box"></span><span>GPU 노드 간 분산 학습 작업을 리스 기반 스케줄러로 조정해 중앙 스케줄러 없이 장애 복구를 가능하게 한다</span></li>
+            
+            <li><span class="box"></span><span>특징 저장소와 워크플로우 상태를 동일 DB에 저장해 피처 엔지니어링 서비스에서 일관성을 유지한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Skipper가 기존 외부 오케스트레이션 서비스와 다른 주요 특징은?</div>
+            
+            <div class="q-opt">① 워크플로우를 서비스 외부에 배치한다</div>
+            
+            <div class="q-opt">② 워크플로우를 서비스 내부에 임베드한다</div>
+            
+            <div class="q-opt">③ 전용 데이터베이스를 사용한다</div>
+            
+            <div class="q-opt">④ 클라우드 관리형 서비스를 사용한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 워크플로우를 서비스 내부에 임베드한다</div>
+              <div class="why">Skipper는 워크플로우 엔진을 라이브러리 형태로 서비스 내부에 포함시켜 별도의 오케스트레이션 클러스터가 필요 없도록 설계되었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Skipper가 복구 시 사용하는 메커니즘은?</div>
+            
+            <div class="q-opt">① 타임스탬프 기반 재시도</div>
+            
+            <div class="q-opt">② 리스(lease) 기반 작업 소유권</div>
+            
+            <div class="q-opt">③ 메시지 큐 ACK</div>
+            
+            <div class="q-opt">④ 트랜잭션 로그</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 리스(lease) 기반 작업 소유권</div>
+              <div class="why">스케줄러는 리스를 이용해 작업 소유권을 조정하고, 복제본이 실패하면 다른 복제본이 리스를 획득해 작업을 이어받는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Skipper</span><span class="tag">Airbnb</span><span class="tag">Java</span><span class="tag">Kotlin</span><span class="tag">Apache 2.0</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/2qmqb3oqG-8" target="_blank" rel="noopener">한계를 경계로 바꾸다: 대규모 커머스 DB 샤딩 전환기 | 거버넌스</a>
+        </h2>
+
+        <p class="summary">데이터·트래픽 급증 시 샤딩으로 확장성과 운영 효율을 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:57</span>
+            
+            <span>스케일업만으로 급격한 데이터 증가를 감당하기 어려워 핫콜드 세퍼레이션을 도입</span>
+          </li>
+          
+          <li>
+            <span class="ts">03:05</span>
+            
+            <span>샤딩 도입 목표는 용량 확보, 트래픽 분산, 단순·유연한 확장 구조 구축</span>
+          </li>
+          
+          <li>
+            <span class="ts">06:39</span>
+            
+            <span>모듈러 샤딩을 선택해 핫스팟 위험 낮추고 구현·운영을 단순화, 리샤딩 비용은 논리 샤드로 보완</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>핫콜드 세퍼레이션 방식을 로그 시스템에 적용해 최신 로그는 빠른 DB에, 오래된 로그는 아카이브 DB에 저장해 조회 지연을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>모듈러 샤딩과 논리 샤드 결합을 멀티테넌트 SaaS에 적용해 테넌트별 데이터를 논리 샤드로 구분하고 물리 DB를 유연하게 확장한다</span></li>
+            
+            <li><span class="box"></span><span>컨시스턴트 해싱 링을 CDN 엣지 캐시 서버에 적용해 노드 추가·제거 시 재배치량을 최소화해 캐시 일관성을 유지한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 모듈러 샤딩이 레인지 샤딩보다 선호되었나요?</div>
+            
+            <div class="q-opt">① 핫스팟 발생 가능성이 낮다</div>
+            
+            <div class="q-opt">② 노드 추가 시 데이터 이동이 거의 없다</div>
+            
+            <div class="q-opt">③ 샤드 수 변경 시 재해시가 필요 없다</div>
+            
+            <div class="q-opt">④ 구현 코드가 가장 간단하다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 핫스팟 발생 가능성이 낮다</div>
+              <div class="why">모듈러 샤딩은 키를 고르게 분산시켜 특정 구간에 트래픽이 몰리는 핫스팟 위험이 낮고 구현·운영이 단순해 선택되었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">핫콜드 세퍼레이션이 도입된 후에도 해결되지 않은 주요 문제는 무엇인가요?</div>
+            
+            <div class="q-opt">① 읽기 전용 콜드 DB의 데이터 일관성</div>
+            
+            <div class="q-opt">② 핫 DB에 집중된 쓰기 부하</div>
+            
+            <div class="q-opt">③ 과거 데이터 조회 지연</div>
+            
+            <div class="q-opt">④ 스토리지 비용 증가</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 핫 DB에 집중된 쓰기 부하</div>
+              <div class="why">핫콜드 세퍼레이션은 모든 쓰기를 핫 DB에 집중시켜, 트래픽이 계속 증가하면 핫 DB가 병목이 되는 문제가 남았다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">카카오 커머스</span><span class="tag">샤드키</span><span class="tag">모듈러 샤딩</span><span class="tag">컨시스턴트 해싱</span><span class="tag">핫콜드 세퍼레이션</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

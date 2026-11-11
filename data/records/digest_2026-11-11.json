@@ -1,0 +1,429 @@
+{
+  "date": "2026-11-11",
+  "generated_at": "2026-11-11T02:07:33.446128",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "AI 스킬 만들기 10계명: Figma→Code 자동화 실전기",
+        "url": "https://d2.naver.com/helloworld/8562180",
+        "published_at": null,
+        "transcript": null,
+        "body": "<p dir=\"auto\">이 글에서 예로 든 스킬은 <a href=\"https://github.com/naver/design-to-ui\" rel=\"nofollow\">naver/design-to-ui</a>라는 이름의 오픈 소스로 공개되어 있습니다.</p>\n<p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fhero-10-commandments.gif\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"hero-10-commandments\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fhero-10-commandments.gif\" /></a></p>\n<p dir=\"auto\"><a id=\"user-content-intro\"></a></p>\n<h2 dir=\"auto\">들어가며: 같은 모델, 다른 결과</h2>\n<p dir=\"auto\">AI 코딩 도구를 쓰다 보면 프롬프트에서 같은 설명을 매번 반복하게 됩니다. \"이건 아이콘이니까 에셋으로 받아\", \"이건 그래프니까 Canvas로 그려\", \"색상은 하드코딩하지 말고 디자인 토큰을 써\" 같은 설명이 그렇습니다. Figma 디자인을 Android 코드로 옮길 때도 마찬가지였습니다.</p>\n<p dir=\"auto\">그래서 Claude의 스킬(Agent Skills) 기능이 공개되자마자 Figma 디자인을 Android UI로 변환하는 스킬을 만들기 시작했습니다. 목표는 프롬프트 한 번으로 완성도 높은 UI를 얻는 것이었습니다.</p>\n<p dir=\"auto\">스킬의 효과는 생각보다 컸습니다. 2026년 3월, 같은 모델(Claude Opus 4.6)과 같은 프롬프트에 Figma Desktop MCP 서버까지 똑같이 쓰고 스킬만 바꿔 화면 하나를 조건마다 한 번씩 변환해 보았습니다. 그 결과는 다음과 같습니다.</p>\n<table><thead><tr><th>조건</th><th>디자인 토큰(colorScheme) 참조</th><th>생성된 drawable</th></tr></thead><tbody><tr><td>스킬 없음</td><td>8회</td><td>0개</td></tr><tr><td>범용 공식 스킬(Figma implement-design)</td><td>20회</td><td>0개</td></tr><tr><td>프로젝트 맞춤 스킬(figma-to-android)</td><td>39회</td><td>1개</td></tr></tbody></table>\n<p dir=\"auto\">colorScheme 참조가 많을수록 색상을 하드코딩하지 않고 디자인 토큰을 썼다는 뜻이고, drawable은 Figma의 아이콘을 실제 에셋 파일로 받아 왔는지를 보여 줍니다. 이 숫자를 어떻게 얻었는지는 <a href=\"#rule-10\">계명 10</a>에서 다룹니다.</p>\n<p dir=\"auto\">Figma 공식 스킬이 부족해서 생긴 차이는 아닙니다. 범용 스킬은 프로젝트의 디자인 토큰과 에셋 규칙을 알 수 없고, 맞춤 스킬은 바로 그 공식 스킬 위에 프로젝트 규칙을 얹은 것입니다. 이 방식은 <a href=\"#rule-2\">계명 2</a>에서 자세히 다룹니다.</p>\n<p dir=\"auto\">Figma 원본과 세 조건으로 변환한 날씨 화면(오토앱)을 나란히 놓으면 다음과 같습니다. 지역과 날씨 데이터는 Figma 시안의 예시 값이거나 캡처 시점의 실제 값이라 서로 다릅니다.</p>\n<p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-0-figma.png\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"compare-0-figma\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-0-figma.png\" /></a></p>\n<p dir=\"auto\">Figma 원본</p>\n<table><tbody><tr><td><p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-1-no-skill-card.png\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"compare-1-no-skill\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-1-no-skill-card.png\" /></a></p><p dir=\"auto\">① 스킬 없음</p></td><td><p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-2-figma-official-skill-card.png\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"compare-2-figma-official-skill\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-2-figma-official-skill-card.png\" /></a></p><p dir=\"auto\">② 범용 공식 스킬</p></td><td><p dir=\"auto\"><a href=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-3-custom-skill-card.png\" rel=\"noopener noreferrer\" target=\"_blank\"><img alt=\"compare-3-custom-skill\" src=\"https://d2-serving.pstatic.net/v1/images?objectPath=d2%2FEDITOR%2F2026%2Fhelloworld-202610-%EC%84%9C%EC%B1%84%EC%97%B0%2Ffiles%2Fcompare-3-custom-skill-card.png\" /></a></p><p dir=\"auto\">③ 프로젝트 맞춤 스킬</p></td></tr></tbody></table>\n<p dir=\"auto\"><em>그림 1 Figma 원본(위)과 세 조건으로 변환한 날씨 화면(아래)</em></p>\n<p dir=\"auto\">모델은 같았는데 결과물의 디테일은 확연히 달랐습니다. 예를 들어 '서울시 명동' 옆 위치 아이콘은 맞춤 스킬에서만 제대로 나왔고, 시간별 기온 그래프도 맞춤 스킬에서만 그려졌습니다.</p>\n<p dir=\"auto\">다만 이 스킬을 틈틈이 만드는 데 3개월쯤 걸렸습니다. 이 글에서는 3개월 동안 알게 된 원칙 10가지를 정리했습니다. 처음부터 알았다면 그 시간을 크게 줄일 수 있었을 것입니다. 사내 Engineering Day에서 발표한 내용을 글로 옮기면서 발표에서 다 하지 못한 사례를 더했습니다.</p>\n<h2 dir=\"auto\">스킬은 무엇이고 프롬프트와 무엇이 다른가</h2>\n<p dir=\"auto\">스킬은 특정 작업을 어떻게 해야 하는지 적어 둔 폴더입니다. 폴더에는 <code class=\"notranslate\">SKILL.md</code> 파일이 하나 있고, 필요하면 참고 문서(<code class=\"notranslate\">references/</code>)와 스크립트(<code class=\"notranslate\">scripts/</code>)를 함께 넣습니다. Claude는 평소에는 스킬의 이름과 설명만 알고 있다가, 요청이 그 설명과 맞으면 <code class=\"notranslate\">SKILL.md</code> 본문을 읽어 들여 그 지침에 따라 작업합니다.</p>\n<p dir=\"auto\">프롬프트와의 차이는 세 가지입니다.</p>\n<ul dir=\"auto\">\n<li><strong>반복 설명이 사라집니다.</strong> 매번 프롬프트에 붙여 넣던 에셋 규칙과 변환 절차를 스킬에 한 번만 적어 두면 됩니다.</li>\n<li><strong>스크립트를 함께 넣을 수 있습니다.</strong> 말로 설명하기 어렵고 결과가 늘 같아야 하는 작업(예: SVG를 VectorDrawable로 변환)은 스크립트로 만들어 두고 Claude가 실행하게 합니다.</li>\n<li><strong>팀이 같이 키울 수 있습니다.</strong> 파일이라 버전 관리가 되고, 플러그인으로 묶어 배포할 수 있습니다.</li>\n</ul>\n<p dir=\"auto\">이 글의 예시는 Claude Code 기준이지만, 같은 스킬 형식(Agent Skills)을 지원하",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "프롬프트 하나로 디자인 토큰·에셋 자동 적용, UI 코드 품질 향상",
+        "tags": [
+          "Claude",
+          "Figma",
+          "Android",
+          "design-to-ui",
+          "design token"
+        ],
+        "concepts": [
+          "AI 기반 설계 자동화",
+          "코드 자동생성",
+          "프롬프트 협업"
+        ],
+        "key_points": [
+          {
+            "point": "Claude의 Agent Skills를 활용해 Figma 디자인을 Android UI 코드로 자동 변환한다",
+            "timestamp": null
+          },
+          {
+            "point": "프로젝트 맞춤 스킬을 범용 스킬 위에 규칙을 추가해 디자인 토큰 사용과 에셋 추출을 크게 개선한다",
+            "timestamp": null
+          },
+          {
+            "point": "실험에서 맞춤 스킬은 디자인 토큰 참조 39회, drawable 1개를 생성해 품질 차이를 입증했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Sketch 디자인을 iOS SwiftUI 코드로 변환하는 맞춤 스킬을 만들어 프로젝트 고유 UI 컴포넌트와 색상 토큰을 자동 적용한다",
+          "아키텍처 다이어그램을 입력으로 받아 Terraform 인프라 코드와 네이밍 규칙을 적용하는 맞춤 스킬을 구축한다",
+          "비즈니스 프로세스 플로우차트를 BPMN XML로 변환하면서 회사 고유 작업 ID와 승인 규칙을 삽입하는 맞춤 스킬을 만든다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 맞춤 스킬이 범용 스킬보다 더 많은 디자인 토큰을 참조할 수 있었나요?",
+            "options": [
+              "프로젝트 전용 토큰 매핑 규칙을 추가했기 때문",
+              "더 큰 언어 모델을 사용했기 때문",
+              "프롬프트 길이를 늘렸기 때문",
+              "외부 데이터베이스에 접근했기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "맞춤 스킬은 범용 스킬 위에 프로젝트의 디자인 토큰과 에셋 규칙을 명시적으로 추가했기 때문에 색상 토큰을 더 많이 참조한다."
+          },
+          {
+            "question": "실험에서 범용 스킬이 drawable 파일을 생성하지 못한 것을 나타내는 지표는 무엇인가요?",
+            "options": [
+              "colorScheme 참조 횟수",
+              "drawable 생성 개수",
+              "프롬프트 길이",
+              "모델 버전"
+            ],
+            "answer_index": 1,
+            "explanation": "표에서 drawable 열이 0으로 표시되어 범용 스킬이 에셋 파일을 생성하지 못했음을 보여준다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.IR",
+        "source_key": "arxiv:cs.IR",
+        "source_label": "arXiv:cs.IR",
+        "title": "NIFT-SQL: Customer-Supervised Table Scoring for Enterprise Text-to-SQL Retrieval",
+        "url": "https://arxiv.org/abs/2611.12731v1",
+        "published_at": "2026-11-09T17:18:21",
+        "transcript": null,
+        "body": "Enterprise text-to-SQL starts with finding the tables a question needs, which is hard when a schema spans several databases and hundreds of cryptic tables. We ask whether models trained separately on each customer's example questions, reading only table names, column names, and declared keys, improve table retrieval. NIFT-SQL (Necessity-Informed Fusion for Text-to-SQL) fuses hybrid search over a retriever fine-tuned on the customer's questions with a fine-tuned 560M cross-encoder that scores every table for whether the query needs it, through a logistic regression fitted on held-out questions. On BEAVER, LiveSQLBench, and LiveSQLBench-Large (244 to 971 tables; four splits, three trainings), NIFT-SQL places every reference table in the top 15 for 69.2%, 89.5%, and 85.6% of test questions, against 30.4%, 41.0%, and 21.8% for hybrid search and 61.1%, 81.7%, and 70.4% for the fine-tuned retriever with the same labels. With off-the-shelf search, the cross-encoder without fine-tuning is 21 points lower. A zero-shot 8B reranker needs no labels and, routed by database, shows no resolved complete@15 difference on two collections; adding its scores as two fusion features gives a high-accuracy mode that reaches 72.4%, 92.5%, and 88.6%, ahead of the validation-selected zero-shot reranker variant on two collections, with no resolved difference on the third. Rank fusion of the two trained parts, grouped by database, shows no resolved difference from the learned fusion. Scored once on a newer BEAVER release, NIFT-SQL beats search and leads the label-matched retriever at top 8 on the synthetic test, but trails it at top 15 on real questions.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "고객 질문 기반 테이블 검색으로 SQL 자동화 정확도 향상",
+        "tags": [
+          "NIFT-SQL",
+          "BEAVER",
+          "LiveSQLBench",
+          "cross-encoder",
+          "zero-shot reranker"
+        ],
+        "concepts": [
+          "semantic query processing",
+          "metadata 활용 검색",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "고객별 질문과 스키마 메타데이터만으로 테이블 검색 모델을 학습하면 검색 정확도가 크게 향상된다.",
+            "timestamp": null
+          },
+          {
+            "point": "NIFT‑SQL은 하이브리드 검색과 560M 크로스 인코더 점수를 로지스틱 회귀로 결합해 top‑15 정확도를 69‑90% 수준으로 끌어올렸다.",
+            "timestamp": null
+          },
+          {
+            "point": "라벨이 없는 상황에서도 제로샷 8B 리랭커를 추가 특징으로 활용하면 높은 정확도를 유지할 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "기업 환경에서 질문에 필요한 테이블을 찾는 것이 스키마가 방대해질수록 어려워진다. 기존에는 일반 검색이나 단일 모델에 의존했지만, NIFT‑SQL은 고객별 질문 데이터와 메타데이터를 활용해 하이브리드 검색과 대규모 크로스 인코더 점수를 로지스틱 회귀로 결합한다. 이는 텍스트‑투‑SQL 파이프라인에서 테이블 검색 정확도를 크게 높이는 최신 접근이다.",
+        "production_ideas": [
+          "고객 질문 기반 테이블 스코어링을 데이터 레이크 카탈로그 검색에 적용해 관련 데이터셋 발견 효율을 높인다.",
+          "하이브리드 검색·크로스 인코더·로지스틱 회귀 결합 방식을 마이크로서비스 API 추천 시스템에 도입해 적절한 서비스 엔드포인트를 빠르게 찾는다.",
+          "제로샷 대규모 리랭커를 법률 문서 검색에 특징으로 활용해 라벨링 없이도 높은 정밀도 검색을 구현한다."
+        ],
+        "quiz": [
+          {
+            "question": "NIFT‑SQL에서 테이블 필요성을 판단하기 위해 사용된 결합 방식은 무엇인가?",
+            "options": [
+              "단순 평균 점수",
+              "로지스틱 회귀",
+              "SVM",
+              "랜덤 포레스트"
+            ],
+            "answer_index": 1,
+            "explanation": "하이브리드 검색 점수와 크로스 인코더 점수를 로지스틱 회귀 모델에 입력해 최종 스코어를 산출한다."
+          },
+          {
+            "question": "제로샷 8B 리랭커를 추가했을 때 기대되는 주요 효과는?",
+            "options": [
+              "라벨이 없는 상황에서도 정확도 향상",
+              "모델 크기 감소",
+              "학습 시간 증가 없이 성능 저하",
+              "데이터베이스 별 라우팅 불가"
+            ],
+            "answer_index": 0,
+            "explanation": "제로샷 리랭커는 라벨이 없어도 높은 정확도를 제공해 라벨링 비용 없이도 성능을 끌어올릴 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "kakao tech",
+        "source_key": "UCdQF7F6hwjSpulj_fwB9iDQ",
+        "source_label": "kakao tech",
+        "title": "내가 보낸 메세지를 상대방이 받기까지: 전국민이 사용하는 메신저에서 릴레이 서비스 구축하기 | 안정성과 인프라",
+        "url": "https://youtu.be/bgRi3wlOj6Q",
+        "published_at": "2026-10-30T06:00:37",
+        "transcript": "[00:11] 안녕하세요. 톰 메시징 플랫폼에서 카카오톡 메시징 시스템을 개발하고 운영하고 있는 임유혁입니다.\n[00:18] 오늘은 카카오톡 메시지가 상대방에게 도착하기까지 그 사이에 릴레이 서비스를 어떻게 분리하고 발전시켰는지 공유하는 시간을 가지려고 합니다.\n[00:29] 톡 메시징 플랫폼에서는 메시지와 미디어 전송, 채팅방과 메시지 관리, 말풍선 관련 기능 등을 담당합니다.\n[00:38] 오늘은 그 중 메시지가 실제 단말까지 전달되는 경로에 대해 이야기하려고 합니다.\n[00:44] 메시징 백엔드 시스템의 간략한 구조는 다음과 같습니다.\n[00:49] 메신저 서비스를 제공하기 위해 여러 저장소와 비즈니스 서버, 세션 서버가 함께 동작하고 있습니다.\n[00:57] 오늘 볼 부분은 이 노란 영역입니다.\n[01:00] 클라이언트의 연결을 관리하면서 메시지를 실제 수신자에게 릴레이하는 영역입니다.\n[01:06] 기존 세션들이 받는 서버 간 요청은 모두 합쳐 초당 65만 건 정도입니다.\n[01:12] 이는 메시지 전달 및 기기 동기화, 서버 동기화 등 서비스를 제공하기 위한 모든 트래픽을 포함한 규모입니다.\n[01:21] 오늘은 그 중 메시지 전달, 즉 릴레이 기능을 공용 서비스로 분리하면서 풀어야 했던 문제에 대해 말씀드리겠습니다.\n[01:30] 오늘 말씀드릴 내용의 목차는 다음과 같습니다.\n[01:35] 우선 이번 작업 동기에 대해 설명드리고, 구조를 어떻게 설계해 나갔는지, 그 과정 중에 발생했던 이슈들에 대해 어떻게 해결했는지를 공유해 드리고 마무리하겠습니다.\n[01:49] 발신자와 수신자는 서로 다른 세션 서버에 연결될 수 있습니다.\n[01:54] 발신자 쪽 서버는 수신자가 접속한 서버를 찾아 메시지를 릴레이합니다.\n[01:59] 로컬에서 찾지 못하면 세션 조회 서비스에 묻습니다.\n[02:04] 기존에는 연결 상태를 알고 있는 세션 서버가 이 릴레이까지 직접 맡았습니다.\n[02:10] 서버를 늘리면 처리 용량은 커지지만, 릴레이 이벤트를 주고받는 서버 간 연결도 함께 늘어납니다.\n[02:17] 풀 메시라고 부르는 이 구조의 확장 한계는 이미 알고 있었습니다.\n[02:24] 메시지 전달 흐름에 대해 좀 더 자세히 설명드리면, 요청은 먼저 같은 서버에 수신자가 있는지를 보고, 없으면 로컬 세션 캐시를 확인합니다.\n[02:34] 캐시에서도 찾지 못할 때만 세션 조회 서비스에 묻습니다.\n[02:39] 세션이 없으면 APNS나 FCM 같은 네이티브 푸시로 넘어갑니다.\n[02:45] 앞 단계에서 찾은 요청은 다음 단계로 넘어가지 않습니다.\n[02:49] 실제로 약 66%가 로컬 세션 캐시에서 끝났고, 원격 세션 조회까지 가는 요청은 약 14%였습니다.\n[02:58] 기존 릴레이는 이 구조로 충분히 빠르고 안정적으로 동작했습니다.\n[03:04] 다만 풀 메시의 구조는 사실 확장 한계보다도 장애에 취약하다는 단점이 있습니다.\n[03:10] 풀 메시의 노드 하나에 문제가 발생하게 되면, 이를 바라보고 있는 서버에도 응답 지연이 발생해 서비스 전반적으로 영향을 줄 수 있게 됩니다.\n[03:20] 이러한 풀 메시의 단점 때문에라도 서버 간 트래픽의 대부분을 차지하는 릴레이 로직을 걷어내어, 각 서버 간에 발생하는 의존 관계를 끊고 싶었습니다.\n[03:31] 뿐만 아니라 기존에는 세션 서버가 연결 관리와 릴레이를 함께 맡았습니다.\n[03:36] 그런데 세션 서버 밖에 새 API 서버가 생겼고, 여기서 만든 메시지도 클라이언트로 보내야 했습니다.\n[03:44] 처음에는 이 서버 하나에서만 로직이 필요했습니다.\n[03:49] 하지만 릴레이가 필요한 서비스가 점차 늘어나게 됐습니다.\n[03:53] 그렇다고 서비스마다 릴레이 로직을 구현하거나 세션 서버의 내부 구조를 알게 할 수는 없었습니다.\n[04:00] 공용 릴레이 모델\n[04:02] 이런 문제들을 해결하기 위해 공용 릴레이 모듈을 만들기로 했습니다.\n[04:08] 호출 서비스가 공용 모듈 하나만 바라보게 하면 인터페이스는 단순해집니다.\n[04:13] 하지만 공용 모듈이 적합한 세션 서버를 찾기 위해 매번 원격 세션 조회부터 시작하면, 기존 세션 서버에서 로컬 캐시를 통해 줄였던 비용이 다시 생기게 됩니다.\n[04:26] 그래서 공용 모듈에도 로컬 세션 캐시를 두었습니다.\n[04:31] 하지만 로컬 캐시를 재사용하려면 같은 사용자의 요청을 되도록 같은 서버가 처리해야 합니다.\n[04:39] 그렇다면 호출 서비스에서 본인 요청에 맞는 릴레이 서버를 직접 찾아야 할까요?\n[04:46] 릴레이 서버를 직접 호출하게 하면 모든 호출 서비스가 적절한 요청을 처리할 수 있는 서버를 찾기 위해 샤딩 규칙을 알아야 하고, 릴레이 서버의 주소나 구성이 바뀔 때마다 대응해야 합니다.\n[04:59] 그래서 호출 서비스에는 엔드포인트 하나만 열어두고 라우터라는 모듈을 통해 실제 릴레이를 처리하는 서버를 중계하도록 했습니다.\n[05:08] 앞으로 실제 릴레이를 처리하는 서버를 워커라고 부르겠습니다.\n[05:15] 워커는 여러 그룹으로 나눴습니다.\n[05:17] 즉 라우터는 적절한 워커 그룹을 선택하게 됩니다.\n[05:22] 이 구조는 부하가 큰 그룹만 따로 확장할 수 있다는 장점이 있습니다.\n[05:29] 그런데 적절한 그룹이란 건 무엇일까요? 어떻게 고를 수 있을까요?\n[05:35] 라우터는 요청을 구분하기 위한 라우트 키를 사용해 워커 그룹을 선택합니다.\n[05:40] 라우트 키는 콘시스턴트 해시를 통해 워커 그룹을 고르고, 같은 키를 같은 그룹이 맡으면서 관련 세션 정보도 그 안에 모이게 됩니다.\n[05:51] 문제는 라우트 키를 무엇으로 선택하냐는 것입니다.\n[05:56] 저는 메신저 서비스의 특성상 두 가지를 생각하게 됐습니다.\n[06:01] 우선 유저 별로 요청을 그룹핑하면 사용자별 캐시를 재사용하기는 좋지만, 수신자가 많을수록 릴레이 횟수가 늘어나게 되어 패킷이 늘어납니다.\n[06:12] 반면 채팅방 별로 구분하게 되면, 요청당 패킷은 줄어들지만, 사용자별 캐시 활용도가 떨어집니다.\n[06:21] 결국 메시지 특성에 따라 무엇을 줄이고 무엇을 감수할지 선택해야 했습니다.\n[06:28] 처음에는 작은 방은 유저 별로 나눠 캐시를 활용을 하고, 큰 방은 채팅방으로 묶어 패킷 수를 줄였습니다.\n[06:38] 그런데 이것이 정말 최선이었을까요?\n[06:41] Group Routing 문제\n[06:42] 그룹을 정한다는 것은 같은 키가 같은 서버로 간다는 것을 보장한다는 말이 아닙니다.\n[06:49] 그룹 안에서 서버를 임의로 고르면 같은 사용자나 채팅방의 요청이 여러 서버로 흩어집니다.\n[06:56] 그러면 각 서버가 같은 세션 정보를 다시 조회해 본인 캐시에 저장합니다.\n[07:02] 즉 캐시 정보는 분산되고 캐시 미스는 모든 서버가 한 번씩 요청을 받아야지만 발생하지 않게 됩니다.\n[07:11] 그래서 이를 해결하기 위해 그룹을 고른 뒤에도 같은 키의 서버를 일관되게 선택하도록 했습니다.\n[07:20] 이제 어느 쪽이든 같은 키는 같은 서버가 받아 캐시의 이점을 누릴 수 있게 됐습니다.\n[07:27] 그런데 릴레이 대상이 한 패킷 안에 담기지 않을 만큼 많아지면, 패킷을 나눠 보내도 결국 한 서버가 채팅방에 있는 모든 유저에 대한 릴레이를 수행하게 됩니다.\n[07:40] 그래서 한 패킷으로 처리할 수 있는 방을 미디엄으로 따로 나눴습니다.\n[07:46] 타이니는 유저별로 구분해 캐시를 활용하고, 미디엄은 채팅방 기준으로 한 패킷에 묶습니다.\n[07:54] 휴즈는 릴레이 대상을 다시 유저별로 샤딩을 하여 처리 서버를 고르게 됩니다.\n[08:01] 적용해보니 그룹 안에서 서버를 임의로 고르던 때보다 서버 한 대가 들고 있는 캐시 항목이 632만 개에서 214만 개로 약 1/3 수준으로 줄었습니다.\n[08:14] 그런데 캐시 히트율은 오히려 60%에서 68%로 올랐습니다.\n[08:20] 이는 캐시 지역성이 좋아졌기 때문입니다.\n[08:24] 그 덕에 세션 조회를 거쳐 릴레이하던 요청은 절반 넘게 줄었습니다.\n[08:30] 고정 routing의 단점\n[08:31] 라우팅을 고정한다는 건 장점만 있지는 않습니다.\n[08:35] 같은 키를 같은 서버에 보내니 캐시 효율은 좋아졌습니다.\n[08:39] 대신 트래픽이 몰리는 키에 대한 요청도 계속 같은 서버가 받게 됩니다.\n[08:45] 그룹 내의 서버를 직접 고르기 때문에 그룹에 서버를 추가를 해도 그 키의 요청을 받는 서버는 바뀌지 않습니다.\n[08:53] 단순한 스케일 아웃만으로는 한 키에 몰린 부하를 분산할 수 없습니다.\n[09:00] 이를 위해 먼저 키 별 트래픽을 관측해 핫 키 기준을 조정했습니다.\n[09:05] 그래서 실제로 부하가 몰린 키만 서버를 직접 선택하는 것이 아니라, 그룹 안에 여러 서버로 분산하도록 했습니다.\n[09:13] 즉 대부분의 요청은 키의 이점을 그대로 누리고, 부하가 몰리는 일부 키만 예외로 나눠서 안정성까지 챙길 수 있었습니다.\n[09:23] 통신 프로토콜\n[09:24] 여기까지 요청을 어떻게 나눠서 어디로 보낼지를 정했습니다.\n[09:28] 다음은 그 요청 자체를 가볍게 만드는 일입니다.\n[09:33] 먼저 요청을 주고받는 통신 프로토콜부터 보겠습니다.\n[09:39] 기존 세션 서버끼리는 전용 TCP 프로토콜을 사용했습니다.\n[09:43] 하지만 여러 호출 서비스가 이 프로토콜을 직접 구현하게 할 수는 없었습니다.\n[09:50] 새 인터페이스는 계약이 명확하고, 사용처에서 익숙하면서 성능도 충분해야 했습니다.\n[09:56] 자바 코틀린과 스프링을 쓰는 저희 환경에서는 스프링 gRPC가 자연스러운 선택이었습니다.\n[10:05] gRPC의 근간이 되는 HTTP/2는 한 연결에서 여러 요청을 동시에 처리할 수 있고, 스트리밍에도 잘 맞습니다.\n[10:13] 그리고 gRPC는 명확한 RPC 계약도 제공합니다.\n[10:18] 하지만 저희 릴레이는 한 번 요청하고 바로 응답하는 단건 호출이었고 스트리밍은 쓰지 않았습니다.\n[10:26] 그렇다 보니 HTTP가 정말로 gRPC보다 처리량이 뒤쳐지는지 확인이 필요해졌습니다.\n[10:36] HTTP 서버를 구축하기 위한 선택지는 많은데요.\n[10:39] 살펴본 선택지는 크게 세 가지였습니다.\n[10:43] 버처 스레드를 사용한 스프링 MVC와 웹플럭스 그리고 버텍스입니다.\n[10:49] 스프링 MVC는 기존 동기 코드를 유지하면서도 블로킹 I/O를 효율적으로 처리해 주지만 저희가 테스트했을 때는 기대했던 처리량을 보여주지는 못했고, 웹플럭스는 리액티브 스트림을 활용해 비동기 흐름을 제어하기는 좋으나 구현 및 디버깅 경험이 좋지 않았습니다.\n[11:08] 릴레이 모듈에서는 구현 난이도가 높지 않으면서도 낮은 실행 오버헤드와 세밀한 서버 제어가 중요했습니다.\n[11:17] 이런 요구 사항에 맞춰 버텍스를 사용하게 됐습니다.\n[11:23] 버텍스는 네티 위에서 동작하는 가벼운 애플리케이션 개발 툴킷입니다.\n[11:28] 이벤트 루프를 여러 개를 두고 그 위에 HTTP 서버를 여러 개 띄울 수 있어 한 프로세스에서 여러 코어를 고루 사용할 수 있습니다.\n[11:37] 특히 이벤트 루프에서 네트워크 I/O부터 HTTP 서버의 애플리케이션 로직까지 처리하기 때문에 별도의 스레드 전환 없이 적은 수의 스레드로 요청을 처리할 수 있습니다.\n[11:49] 요청을 받자마자 비동기로 넘기고 바로 응답하는 릴레이 모듈에는 이 구조가 잘 맞았습니다.\n[11:58] 버텍스를 적용하면서 라우터와 워커는 그대로 스프링 어플리케이션을 유지했습니다.\n[12:03] 스프링은 빈과 설정, 매트릭, 라이프 사이클을 맡고 버텍스는 HTTP 요청을 처리합니다.\n[12:12] 좀 더 자세히 스프링 gRPC와 버텍스 HTTP의 요청 처리 구조를 비교해 보겠습니다.\n[12:18] 두 방식 모두 네트워크 I/O는 이벤트 루프 기반으로 처리합니다.\n[12:23] 하지만 이벤트 루프 이후 비즈니스 로직에 도달하기까지의 경로에는 차이가 있습니다.\n[12:29] 스프링 gRPC는 HTTP/2 및 처리 과정을 거쳐 콜백 익스큐터로 통해 gRPC 서비스가 호출됩니다.\n[12:38] 반면 버텍스 HTTP는 HTTP 요청을 파싱한 뒤 버텍스 라우터와 핸들러를 거쳐 비즈니스 로직으로 이어집니다.\n[12:46] 이 차이를 크게 두 가지 관점에서 봤습니다.\n[12:49] 스레드 실행 모델과 프로토콜 처리 비용입니다.\n[12:54] 첫 번째 차이는 애플리케이션 로직을 실행하는 방식입니다.\n[12:58] 저희가 테스트한 스프링 gRPC 구성에서는 네티 이벤트 루프가 프로토콜 처리를 담당하고 실제 서비스 로직 수행은 콜백 익스큐터로 전달됩니다.\n[13:08] 따라서 이벤트 루프에서 익스큐터로 작업을 넘기는 핸드오프가 존재합니다.\n[13:15] 반면 버텍스에서는 앞서 말씀드린 것처럼 이런 넘기는 단계 없이 같은 이벤트 루프에서 응답까지 처리합니다.\n[13:26] 그리고 gRPC는 HTTP/2 위에서 동작하기 때문에 프레임, 스트림, HPACK, 플로우 컨트롤과 같은 HTTP/2 처리가 필요하고, 그 위에 다시 gRPC 요청 처리가 추가됩니다.\n[13:39] 반면 릴레이 모듈의 요구 사항에서는 HTTP/2와 gRPC가 제공하는 기능이 필요하지 않았기 때문에 HTTP를 사용을 했고, 덕분에 상대적으로 단순한 HTTP 처리 경로를 구성할 수 있었습니다.\n[13:53] 이를 바탕으로 실제 부하 테스트를 진행해 봤습니다.\n[13:56] 그 결과는 버텍스 HTTP가 기존 스프링 gRPC보다 약 1.4배를 달성했고, 무엇보다 평균 처리 시간은 절반 가까이 줄어든 것을 볼 수 있었습니다.\n[14:08] 이를 바탕으로 HTTP로도 충분한 서비스를 제공할 수 있겠다고 판단했습니다.\n[14:14] 데이터 형식\n[14:15] 요청 처리 비용을 줄이기 위해 통신 프로토콜만 보지 않았습니다.\n[14:19] 릴레이 모듈이 페이로드를 처리를 하는 방식에 대해서도 살펴봤습니다.\n[14:24] 릴레이의 특징은 모든 데이터의 정보를 알 필요가 없다는 것입니다.\n[14:29] 데이터 전달을 위한 정보만 추출할 수 있으면 됩니다.\n[14:34] 일반적으로 HTTP에서는 JSON, gRPC에서는 프로토버프를 사용하게 됩니다.\n[14:40] JSON은 텍스트, 프로토버프는 바이너리를 사용한다는 차이점이 있지만, 두 방식 모두 데이터를 사용하기 위해서는 객체를 역직렬화하는 과정이 필요합니다.\n[14:51] 반면 플랫버퍼는 버퍼에서 필요한 필드만 직접 읽을 수 있습니다.\n[14:57] 릴레이에 필요한 정보는 라우트 키와 타겟입니다.\n[15:00] 메시지 전체를 객체로 만들 필요가 없기 때문에 릴레이 모듈에 적합하다고 판단했습니다.\n[15:08] 극단적인 상황을 가정하여 평균 릴레이 대상이 1000명일 때를 기준으로 부하 테스트를 진행했습니다.\n[15:14] 결과는 평균 소요 시간은 프로토버프가 약 4밀리초, 플랫버퍼가 약 2.5밀리초였습니다.\n[15:23] 약 37% 줄었습니다.\n[15:26] 이를 통해 역직렬화 작업을 줄이는 것만으로도 꽤나 높은 효과를 얻을 수 있었습니다.\n[15:33] Fallback\n[15:34] 마지막으로 요청 실패 처리에 대한 내용입니다.\n[15:38] 호출 서비스에 빠른 응답을 제공하기 위해 라우터와 워커는 비동기로 동작하고 있습니다.\n[15:44] 특히 라우터에서는 워커에 실제로 요청을 했는지와는 상관없이 호출을 접수하면 바로 응답하고 있습니다.\n[15:52] 응답을 했더라도 요청이 실제로 처리된 것은 아니기 때문에 워커에 요청을 하기 전 라우터의 리퀘스트 큐에 요청이 쌓이고, 워커에서도 비동기로 받은 요청을 처리하기 때문에 익스큐터 큐에 작업이 쌓이게 됩니다.\n[16:07] 문제는 트래픽이 급증하면 리퀘스트 큐에 처리 대기 중인 요청이 쌓이게 되면서 메모리 부하를 일으키게 되고, 그 결과 GC가 발생하면서 전체적인 서비스 처리 시간이 늘어져 큐에 요청이 다시 쌓이게 되는 악순환이 발생하게 됩니다.\n[16:23] 이는 비동기 작업을 계속 쌓은 결과였습니다.\n[16:28] 그래서 큐의 한도를 두고, 한도를 넘는 요청은 더 쌓지 않고 카프카에 기록한 뒤 다시 처리하는 폴백을 두었습니다.\n[16:38] 워커가 요청을 익스큐터에 넣지 못하면 429 스테이터스를 응답합니다.\n[16:43] 라우터는 이 요청을 폴백으로 넘깁니다.\n[16:49] 라우터의 큐가 가득 찬 경우에도 더 쌓지 않고 폴백으로 전환합니다.\n[16:56] 카프카에 기록한 요청은 나중에 여유로운 다른 워커가 컨슘하여 처리하게 됩니다.\n[17:02] 이렇게 해서 순간적으로 요청을 받지 못하더라도 메시지를 그냥 버리는 대신 나중에 처리하도록 했습니다.\n[17:10] 마무리\n[17:12] 여기까지가 릴레이 모듈을 만들면서 풀어온 문제들입니다.\n[17:16] 정리하면 세션 서버에 묶여 있던 릴레이는 공용 모듈로 꺼내 라우터와 워커로 역할을 나눴습니다.\n[17:24] 서버마다 같은 세션 정보를 중복으로 채우던 문제는 같은 키를 같은 서버로 보내고 방 크기에 따라 라우트 키를 고르는 방식으로, 한 서버로 몰리는 키는 그 키만 나눠 보내는 방식으로 풀었습니다.\n[17:39] 요청마다 되는 프로토콜과 역직렬화 비용은 버텍스 HTTP와 플랫버퍼로 줄였고, 트래픽이 급증할 때는 큐의 한도를 두고 넘치는 요청은 카프카로 다시 처리하도록 했습니다.\n[17:53] 서비스 현황\n[17:54] 이렇게 구축한 릴레이 서비스는 작년부터 실 서비스에 투입하여 운영 중입니다.\n[18:00] 현재 릴레이 모듈은 초당 약 60만 건의 메시지 전달을 처리하고 있고, 라우터는 약 50마이크로 초로 요청에 응답하며 이렇게 받은 요청은 워커가 약 1.6밀리초로 릴레이를 처리하고 있습니다.\n[18:15] 여러 서비스가 함께 쓰고 트래픽이 늘어나도 안정적으로 메시지를 전달하는 것.\n[18:21] 이것이 저희가 만들고 싶었던 카카오톡의 릴레이였습니다.\n[18:25] 감사합니다.",
+        "body": "\"카카오톡에서 내가 발송한 메시지를 상대방이 어떻게 받고 있을까요?\"\n\n내가 보낸 메시지가 상대방에게 닿기까지, 카카오톡 백엔드에서 일어나는 숨은 과정을 소개합니다. \n세션 서버에 묶여 있던 메시지 전달 기능을 분리해 Router와 Worker로 책임을 나누고,\n Payload 비용 절감부터 실패 요청 복구 설계까지 \n전 국민 메신저의 릴레이 서비스를 구축하며 마주한 기술적 고민과 선택을 공유합니다.\n\n#ifkakao26 #이프카카오 #이프카카오26 #kakao #카카오 #Backend #Engineering\n\n발표자료 보러 가기\nhttps://if.kakao.com/2026/session/time-table?tab=day2&amp;sessionId=78\n\n임유혁 | 카카오\n카카오톡 메시징 서비스 개발을 담당하며, \n레거시 모듈 개선 및 대규모 트래픽 환경에서의 안정적인 서비스 제공을 치열하게 고민하고 있습니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "공용 릴레이 모듈·라우터로 확장·캐시 효율 개선",
+        "tags": [
+          "카카오톡",
+          "APNS",
+          "FCM",
+          "콘시스턴트 해시",
+          "세션 캐시"
+        ],
+        "concepts": [
+          "디자인 트레이드오프",
+          "레거시 시스템 리팩터링",
+          "비동기 처리와 트랜잭션"
+        ],
+        "key_points": [
+          {
+            "point": "기존 세션 간 요청이 초당 65만 건 규모로 처리되고 있다",
+            "timestamp": "01:06"
+          },
+          {
+            "point": "풀 메시 구조는 하나의 노드 장애가 전체 서비스 지연을 초래한다",
+            "timestamp": "03:10"
+          },
+          {
+            "point": "그룹 내 서버 고정을 통해 캐시 항목이 3배 감소하고 히트율이 60%→68% 상승했다",
+            "timestamp": "08:01"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "콘시스턴트 해시 기반 라우팅을 전자상거래 마이크로서비스의 상품 캐시에 적용해 동일 키 요청이 같은 서버에 머물게 함으로써 캐시 히트율을 높인다",
+          "릴레이 로직을 공유 모듈로 분리하고 로컬 세션 캐시를 두어 IoT 디바이스 명령 전달 시 서비스 간 트래픽을 감소시키고 장애 전파를 최소화한다",
+          "작은 영상은 사용자별 워커가, 큰 영상은 채팅방(채널) 기준 워커 그룹이 처리하도록 그룹 기반 워커 스케일링을 적용해 영상 트랜스코딩 파이프라인의 자원 효율을 개선한다"
+        ],
+        "quiz": [
+          {
+            "question": "릴레이 서버를 직접 호출하도록 하면 발생하는 주요 문제는 무엇인가?",
+            "options": [
+              "서비스가 샤딩 규칙을 알아야 한다",
+              "라우터가 필요 없어 비용이 절감된다",
+              "캐시 히트율이 자동으로 상승한다",
+              "서버 간 연결이 감소한다"
+            ],
+            "answer_index": 0,
+            "explanation": "직접 호출 시 모든 서비스가 적절한 서버를 찾기 위해 샤딩 규칙을 알아야 하고, 서버 주소·구성이 바뀔 때마다 대응이 필요해 운영 복잡도가 증가한다(본문 04:46)."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "The Airbnb Tech Blog - Medium",
+        "source_key": "https://medium.com/feed/airbnb-engineering",
+        "source_label": "The Airbnb Tech Blog - Medium",
+        "title": "Skipper, Airbnb’s embedded workflow engine, is now open source",
+        "url": "https://medium.com/airbnb-engineering/skipper-airbnbs-embedded-workflow-engine-is-now-open-source-78dd354f472b?source=rss----53c7c27702d5---4",
+        "published_at": "2026-11-10T18:01:02",
+        "transcript": null,
+        "body": "<h4><em>Durable workflows, running inside your service with no separate orchestration cluster.</em></h4><figure><img alt=\"A white sailboat with its sails raised cruises along the deep blue sea, set against the terraced, hillside villages of Italy’s Amalfi Coast under a clear blue sky with scattered white clouds.\" src=\"https://cdn-images-1.medium.com/max/1024/1*iN_UiC2_U7flSb9jddr8tQ.png\" /></figure><p><strong>By</strong>: <a href=\"https://www.linkedin.com/in/ricardo-gamba\">Ricardo Gamba</a>, <a href=\"https://www.linkedin.com/in/asergiyenko/\">Andriy Sergiyenko</a></p><p><a href=\"https://skipper.airbnb.tech\">Skipper</a>, an embedded workflow engine used in production by teams all across Airbnb, is now available to the open source community. Skipper lets you express multi-step business processes as Java or Kotlin classes, persist their progress, and recover from crashes and transient failures. It runs inside your service and reuses its existing dependencies.</p><p>Skipper is available under the Apache 2.0 license. The code is on <a href=\"https://github.com/airbnb/skipper\">GitHub</a>, alongside documentation and runnable examples. Our <a href=\"https://medium.com/airbnb-engineering/skipper-building-airbnbs-embedded-workflow-engine-f6c34552146f\">earlier engineering deep dive</a> explains how we built it. Here, we’ll focus on the architecture of Skipper and where it fits in the ecosystem of options for development around workflows.</p><h3>Why we developed Skipper</h3><p>A process that spans multiple services, waits for human input, or involves a mix of synchronous and asynchronous steps, needs persistent storage for recording its progress. When a server restarts, it must know what has already happened, what (if anything) should be retried, and what is still awaiting processing. Implementing this separately for each process would mean repeatedly solving the same problems around partial failure, timers, and recovery, with associated testing and debugging; using a proven library is likely to improve quality and reduce toil.</p><p>Existing workflow engines meet these challenges. A common approach relies on a central orchestration service, whether self-hosted or fully managed, to handle durable execution. This setup provides a unified platform for multiple teams, streamlining central operations and monitoring.</p><p>For Airbnb, we wanted a new approach, one in which each service owned its workflows within its existing deployment and database. For critical services, that meant avoiding an additional shared orchestration dependency. It also let workflow execution stay in-process, without a separate coordinator between steps.</p><p>That requirement shaped Skipper’s architecture, as shown in the figure.</p><figure><img alt=\"Diagram comparing two orchestration architectures: on the left, an “External Workflow Service” where the application’s API and workflow code connect to a separate orchestration platform containing a workflow engine and workflow state store, with an external application data store; on the right, “Skipper,” where the workflow engine is embedded as a library directly inside the application service, sharing a single existing data store for both application data and workflow state.\" src=\"https://cdn-images-1.medium.com/max/1024/1*m3nFwk-nMMffahxlTdS5Qw.png\" /></figure><p>With Skipper, the service’s replicas also run the workflow runtime and scheduler. In a typical production deployment, they share a database that holds workflow state and scheduled work. The scheduler polls for runnable tasks and uses leases to coordinate ownership. If a replica fails, another can recover the work; takeover timing depends on scheduling and lease settings.</p><p>This reduces the number of separately deployed systems. It also puts responsibility for workflow execution, database capacity, and recovery with the service’s team. The duty of assuming those responsibilities is part of the tradeoff.</p><p>We believe that Skipper will appeal to teams that have a robust operational environment and need a workflow engine that adapts to their existing ways of working.</p><h3>A workflow is a class</h3><p>Skipper has two main abstractions. A <strong>workflow</strong> describes the orchestration: decisions, ordering, and waits. <strong>Actions</strong> perform work with potential side effects, such as calling an API or updating a database. Skipper records action results so they can be reused during recovery.</p><p>Consider a hypothetical listing-publication process. Some listings require a human review before publication; afterward, the host receives a notification:</p><pre>class PublishListing : Workflow() {<br />  private val listing = actions&lt;ListingActions&gt;()<br /><br />  @StateField var reviewApproved: Boolean? = null<br /><br />  @WorkflowMethod<br />  suspend fun publish(request: PublicationRequest): Boolean {<br />    if (request.requiresReview) {<br />      val reviewed = waitUntil(<br />        { reviewApproved != null },<br ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "서비스 내부 워크플로우 내장으로 운영·복구 비용 절감",
+        "tags": [
+          "Skipper",
+          "Airbnb",
+          "Java",
+          "Kotlin",
+          "Apache 2.0"
+        ],
+        "concepts": [
+          "내장형 워크플로우 엔진",
+          "지속 가능한 워크플로우",
+          "서비스 내부 오케스트레이션"
+        ],
+        "key_points": [
+          {
+            "point": "Skipper는 Java·Kotlin 클래스로 다단계 비즈니스 프로세스를 정의하고 진행 상황을 영속화·복구하며 서비스 내부에서 실행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "각 서비스 복제본에 워크플로우 런타임과 스케줄러가 내장되어 동일 DB를 공유하고, 리스(lease)로 작업 소유권을 조정한다.",
+            "timestamp": null
+          },
+          {
+            "point": "별도 오케스트레이션 시스템을 없애 운영 복잡성을 낮추지만, 워크플로우 실행·DB 용량·복구 책임을 서비스 팀이 떠안는 트레이드오프가 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "데이터 전처리 파이프라인을 서비스 내부에 임베드해 별도 ETL 오케스트레이터 없이 데이터 흐름을 관리한다",
+          "GPU 노드 간 분산 학습 작업을 리스 기반 스케줄러로 조정해 중앙 스케줄러 없이 장애 복구를 가능하게 한다",
+          "특징 저장소와 워크플로우 상태를 동일 DB에 저장해 피처 엔지니어링 서비스에서 일관성을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "Skipper가 기존 외부 오케스트레이션 서비스와 다른 주요 특징은?",
+            "options": [
+              "워크플로우를 서비스 외부에 배치한다",
+              "워크플로우를 서비스 내부에 임베드한다",
+              "전용 데이터베이스를 사용한다",
+              "클라우드 관리형 서비스를 사용한다"
+            ],
+            "answer_index": 1,
+            "explanation": "Skipper는 워크플로우 엔진을 라이브러리 형태로 서비스 내부에 포함시켜 별도의 오케스트레이션 클러스터가 필요 없도록 설계되었다."
+          },
+          {
+            "question": "Skipper가 복구 시 사용하는 메커니즘은?",
+            "options": [
+              "타임스탬프 기반 재시도",
+              "리스(lease) 기반 작업 소유권",
+              "메시지 큐 ACK",
+              "트랜잭션 로그"
+            ],
+            "answer_index": 1,
+            "explanation": "스케줄러는 리스를 이용해 작업 소유권을 조정하고, 복제본이 실패하면 다른 복제본이 리스를 획득해 작업을 이어받는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "kakao tech",
+        "source_key": "UCdQF7F6hwjSpulj_fwB9iDQ",
+        "source_label": "kakao tech",
+        "title": "한계를 경계로 바꾸다: 대규모 커머스 DB 샤딩 전환기 | 거버넌스",
+        "url": "https://youtu.be/2qmqb3oqG-8",
+        "published_at": "2026-10-30T06:00:36",
+        "transcript": "[00:11] 안녕하세요. 한계를 기회로 바꾸다.\n[00:14] 대규모 커머스 DB 샤딩 전환기 발표를 맡은 유정민입니다.\n[00:20] 먼저 샤딩 도입 배경과 목표를 말씀드리고, 이어서 샤딩 아키텍처 설계를 살펴보겠습니다.\n[00:26] 다음으로 데이터 쓰기 전략과 배포 전략을 소개한 뒤, 마지막으로 도입 결과와 회고로 마무리하겠습니다.\n[00:34] 먼저 샤딩을 도입한 배경과 목표입니다.\n[00:39] 카카오 커머스는 2010년 위탁 판매 서비스인 선물하기를 시작으로 서비스를 시작했습니다.\n[00:45] 2017년에 오픈 마켓인 쇼핑하기를 오픈하고, 2019년에는 쇼핑하우 회원 통합을 진행했습니다.\n[00:51] 2020년에는 쇼핑 라이브를 오픈하며 꾸준히 영역을 넓혀가며 성장해왔습니다.\n[00:57] 서비스가 성장하면 데이터와 트래픽이 함께 늘어나고 결국 DB의 확장을 고려하게 됩니다.\n[01:04] 많은 분들의 관심과 이용 덕분에 카카오 커머스는 빠르게 성장해왔습니다.\n[01:09] 저희도 늘어나는 데이터와 트래픽을 안정적으로 처리하기 위해 DB 확장을 고려하게 되었습니다.\n[01:16] 초기에는 별다른 어려움이 없었습니다.\n[01:20] 데이터베이스 장비 스펙을 높이는 스케일업을 통해 해결할 수 있었습니다.\n[01:24] 스케일업은 소스 코드나 애플리케이션의 구조를 변경하지 않고 적용할 수 있습니다.\n[01:30] 가장 빠르고 간단한 대응 방법입니다.\n[01:33] 인프라의 성장에 따라 선택할 수 있는 장비 스펙도 꾸준히 높아져 서비스 초기 단계에 효과적인 방법이었습니다.\n[01:40] 하지만 서비스가 빠르게 성장하게 되면 데이터 증가 속도가 인프라의 성장 속도를 앞지르게 됩니다.\n[01:46] 물리적인 확장만으로는 한계가 있었고, 한 테이블에 데이터가 계속 쌓이면 쿼리 성능 저하와 DDL 수행 시간 증가와 같은 다양한 문제가 함께 나타났습니다.\n[01:57] 스케일업만으로는 급격한 데이터 증가를 감당하기 어려워지면서 두 번째로 도입한 방법이 핫콜드 세퍼레이션입니다.\n[02:04] 핫콜드 세퍼레이션은 최신 데이터는 핫 DB에, 과거 데이터는 별도의 콜드 DB로 나누어 운영하는 것을 말합니다.\n[02:11] 모든 쓰기는 핫 DB에서 단일하게 처리했습니다.\n[02:15] 핫 DB 변경 내역인 CDC를 통해 콜드 DB로 실시간으로 적재했습니다.\n[02:20] 핫 DB에 오래된 데이터들은 주기적으로 삭제했고, 콜드 DB는 읽기 전용으로 운영했습니다.\n[02:26] 대부분의 요청이 핫 DB에서 처리되기 때문에 초기 애플리케이션 변경 범위도 크지 않았습니다.\n[02:33] 하지만 실시간 트래픽과 쓰기 부하는 여전히 핫 DB에 집중됐습니다.\n[02:38] 또한 오래된 데이터에 대한 조회가 늘면서 서비스 로직이 핫 DB와 콜드 DB를 모두 고려해야 했습니다.\n[02:45] 서비스의 지속적인 성장에 따라 데이터 삭제 주기가 짧아졌고, 조회 지연과 같은 운영 문제도 발생했습니다.\n[02:54] 그래서 앞선 문제를 해결하기 위해 데이터를 핫과 콜드로 나누는 것이 아니라 데이터와 트래픽 자체를 여러 DB에 분산하는 샤딩을 도입하기로 했습니다.\n[03:05] 목표는 용량을 확보하고, 트래픽을 나누고, 단순하고 유연하게 확장 가능한 구조를 만드는 것이었습니다.\n[03:13] 정리하면 스케일업은 확장 한계와 비용이 문제가 되었고, 핫콜드 세퍼레이션은 남아있는 병목과 복잡도가 문제였습니다.\n[03:20] 기존 두 방식만으로는 지속적으로 증가하는 데이터와 트래픽에 대응하기 어려워 샤딩을 도입하게 되었습니다.\n[03:28] 샤딩은 데이터와 트래픽을 분산하는 방법으로 개념적으로는 단순합니다.\n[03:32] 서비스에 적용하기 위해서는 데이터를 나누는 기준과 안전한 배포 전략 등 여러 요소를 고려해야 했습니다.\n[03:40] 이런 고민을 어떻게 풀어 나갔을까요?\n[03:44] 아키텍처 설계부터 설명드리겠습니다.\n[03:47] 샤드키 선정 기준, 샤딩 방식, 샤드 개수 선정 과정 순으로 진행하겠습니다.\n[03:52] 먼저 샤드키입니다.\n[03:54] 샤드키는 데이터가 어떤 샤드에 적재될지를 결정하는 기준값입니다.\n[03:58] 어떤 값을 선택하느냐에 따라 데이터 분포와 조회 방식이 달라지기 때문에 샤딩 아키텍처의 핵심 설계 요소입니다.\n[04:07] 샤드키 후보로는 결제 번호, 주문 번호, 구매자의 유저 아이디가 있었습니다.\n[04:12] 세 가지 후보 중에 어떤 것이 가장 적합할까요?\n[04:17] 유즈 케이스를 살펴보며 적합한 샤드키를 선정할 수 있습니다.\n[04:21] 주문 시스템의 대표적인 유즈 케이스로는 구매자가 주문을 하는 로직이 있습니다.\n[04:28] 또한 주문 후 구매자가 자신이 구매한 내역을 확인하기 위한 구매 내역 조회가 있습니다.\n[04:35] 샤딩된 기준에서 어떻게 될까요?\n[04:39] 주문을 하게 되면 한 결제 내에 복수의 주문이 생성될 수 있습니다.\n[04:44] 결제 번호와 구매자의 유저 아이디는 단일 DB로 처리가 가능합니다.\n[04:50] 구매 내역 조회는 구매자의 유저 아이디 기준으로 데이터를 조회해야 합니다.\n[04:55] 이때 결제 번호와 주문 번호를 사용하게 될 경우 하나의 DB로 조회가 불가능하게 됩니다.\n[05:02] 세 샤드키 후보를 비교했을 때 구매자의 유저 아이디가 두 로직을 단일 DB로 처리하여 샤드키로 사용하게 되었습니다.\n[05:10] 다음은 샤딩 방식입니다.\n[05:12] 데이터를 어떤 규칙으로 나눌지 정하는 방법을 의미합니다.\n[05:16] 대표적인 세 가지 방법을 검토했습니다.\n[05:20] 첫 번째는 레인지 샤딩입니다.\n[05:22] 오른쪽 그림과 같이 샤드키를 레인지 단위로 나눠 DB에 저장합니다.\n[05:26] 범위를 지정하며 부분적으로 계속 샤딩할 수 있다는 장점이 있습니다.\n[05:31] 다만 특정 구간에 데이터와 트래픽이 몰릴 수 있습니다.\n[05:35] 최근 데이터의 요청이 집중되기 때문에 마지막 샤드가 핫스팟이 될 가능성이 높았습니다.\n[05:42] 두 번째는 모듈러입니다.\n[05:44] 샤드키를 샤드스로 모듈러 연산한 값을 이용하여 DB에 저장하는 방법입니다.\n[05:49] 구현과 라우팅이 단순하고 데이터가 고르게 분산되어 핫스팟 가능성이 낮습니다.\n[05:55] 다만 샤드 수가 바뀌면 모듈러 연산값이 달라져 대부분의 데이터를 다시 옮겨야 합니다.\n[06:02] 세 번째는 컨시스턴트 해싱 링입니다.\n[06:04] 샤드키와 노드를 같은 링에 올리고 한 방향으로 처음 만나는 노드에 할당합니다.\n[06:10] 노드를 추가하거나 제거해도 영향이 인접 샤드로 제한되어 이동량이 적습니다.\n[06:16] 만약 샤드 K가 추가되면 샤드 B의 데이터였던 노란 구간의 데이터가 샤드 K에 할당되는 방식입니다.\n[06:23] 다만 구현과 라우팅이 복잡하고 데이터가 어느 노드에 있는지 코드만으로 쉽게 확인하기 어렵습니다.\n[06:30] 세 방식을 핫스팟 가능성, 구현 및 운영 난이도, 리샤딩 비용으로 비교했습니다.\n[06:36] 저희는 운영 복잡도를 낮게 유지하는 것을 우선했습니다.\n[06:39] 모듈러가 핫스팟 가능성이 낮고 구현과 운영이 가장 단순했습니다.\n[06:44] 리샤딩 비용이 높은 것은 단점이었는데 이 부분은 뒤에서 설명할 논리 샤드를 함께 사용하여 해결했습니다.\n[06:53] 저희가 선택한 방식은 모듈러와 논리 샤드를 함께 쓰는 방식입니다.\n[06:57] 그림에서 사각형은 물리 DB를 의미하고 실린더는 논리 샤드를 의미합니다.\n[07:02] DB에 오더라는 스키마가 있을 때 이를 여러 개의 스키마로 나눠 각각의 스키마를 하나의 논리 샤드로 다룹니다.\n[07:09] 그다음 샤드키를 모듈러 연산하여 데이터를 여러 논리 샤드에 분배하고 논리 샤드를 물리 DB에 나눠 배치합니다.\n[07:16] 여기서는 논리 샤드 12개를 물리 DB 세 대에 네 개씩 두었습니다.\n[07:21] 이 방법을 사용할 경우 물리 DB 대수를 다양하게 선택할 수 있는 장점이 있습니다.\n[07:26] 물리 DB 여섯 대에 논리 샤드 12개도 가능합니다.\n[07:31] 정리하면 데이터를 샤드키 기준으로 모듈러 연산하여 분배하고, 물리 DB 한 대에 스키마를 여러 개 두는 방식입니다.\n[07:38] 구현과 라우팅이 간단하고 샤드키만으로 데이터 위치를 알 수 있으며 핫스팟 가능성도 낮습니다.\n[07:44] 또한 테이블 용량을 같은 물리 DB로 낮게 유지할 수 있습니다.\n[07:49] 단점은 초기에 정한 논리 샤드 수가 확장의 상한이 된다는 점과 균등한 분포를 위해 물리 DB 수가 논리 샤드 수의 약수여야 한다는 점입니다.\n[07:59] 다음은 샤드 개수 선정입니다.\n[08:01] 몇 개의 샤드로 나누면 좋을까요?\n[08:05] 대수를 정하는 기준은 두 가지였습니다.\n[08:07] 용량을 확보하고 샤딩한 상태에서 트래픽을 문제없이 처리하는 것입니다.\n[08:12] 이 두 가지를 동시에 만족시키는 것은 단순하지 않았습니다.\n[08:16] 먼저 용량입니다.\n[08:18] 안정적인 DDL 및 DML 수행을 위해 테이블 크기를 작게 유지하는 것을 목표로 했습니다.\n[08:24] 논리 샤드 수에 따라 테이블 크기가 분산되고 물리 DB 수에 따라 전체 용량이 확장됩니다.\n[08:30] 예를 들어 가장 큰 테이블 크기가 2테라바이트이면, 논리 샤드를 10개로 둘 경우 200기가바이트 정도로 추정할 수 있습니다.\n[08:37] 또한 물리 DB가 다섯 대인 경우 전체 용량은 25테라바이트가 됩니다.\n[08:42] 다음은 논리 샤드를 물리 DB 한 대에 몇 개까지 둘 수 있는지입니다.\n[08:46] 서버가 각 논리 샤드를 하나의 데이터 소스로 봐 각각 커넥션을 맺습니다.\n[08:51] 샤드를 늘리면 물리 DB와 서버가 맺는 커넥션도 함께 늘어납니다.\n[08:56] 런타임 내 최대 커넥션 수를 의미하는 DB 맥스 유지 커넥션을 확인했고, 샤딩된 스펙에서는 물리 DB 한 대당 논리 샤드 두 개가 한 개였습니다.\n[09:07] 그 다음으로 트래픽입니다.\n[09:09] 샤드키를 이용하지 않은 조회를 하면 어떻게 될까요?\n[09:14] 예를 들어 판매자 아이디로 주문을 조회하려면 어떻게 해야 할까요?\n[09:18] 주요 로직에는 판매자 기준으로 주문 내역을 조회하는 기능이 있습니다.\n[09:23] 구매자 유저 아이디로 샤딩했기 때문에 판매자 아이디로 조회하게 되면 전체 샤드를 조회해야 합니다.\n[09:29] 각각의 쿼리 양은 줄지만 서버가 모든 DB를 조회해야 하고 이를 병합하게 되어 서버 부하가 증가하게 됩니다.\n[09:37] 이를 토대로 판매자 아이디 기준 조회 성능을 직접 측정했습니다.\n[09:42] 기존 핫 DB의 판매자 아이디 기준 조회 1 최대 TPS를 1만으로 둔 상대치입니다.\n[09:49] 물리 DB 12대 24개의 논리 샤드로 한 구성은 1만 5천으로 기존보다 1.5배 높았습니다.\n[09:55] 반면 24대 48개 논리 샤드로 한 구성은 오히려 9천으로 핫 DB보다 성능이 좋지 않았습니다.\n[10:03] 분할이 늘어날수록 이전에 본 서버 부하가 증가하기 때문입니다.\n[10:08] 테이블당 용량도 만족하고 성능은 24개의 논리 샤드로 구성할 경우 안정적이며 높은 TPS를 기록하여, 물리 DB 12대 24개의 논리 샤드로 하는 구성을 최종 선택했습니다.\n[10:21] 다음은 안정적인 배포를 위한 데이터 쓰기 전략과 배포 전략입니다.\n[10:25] 쓰기 전략, 데이터 검증과 보정, 배포 전략 순서로 설명드리겠습니다.\n[10:31] 어떻게 하면 안정적으로 서비스를 전환할 수 있을까요?\n[10:37] 서비스를 중단하고 신규 DB로 읽고 쓰는 형태로 변경하는 것은 가능합니다.\n[10:42] 하지만 로직이 잘못된 경우 롤백을 할 수 있을까요?\n[10:48] 즉시 롤백이 불가능하고 신규 DB에 적재된 데이터를 다시 구 DB에 적재 후에 가능합니다.\n[10:55] 서비스 중단 없이 신규 DB로 전환하고 전환 과정에서 문제가 발생하더라도 기존 DB로 즉시 롤백할 수 있도록 듀얼 라이트를 적용해야 했습니다.\n[11:05] 이 그림은 시간 순서에 따른 DML과 커밋 순서를 의미합니다.\n[11:09] 상단은 구 DB이고 하단은 신규 샤딩 DB입니다.\n[11:13] 체인드 트랜잭션 매니저 사용을 고려해 보았습니다.\n[11:16] 체인드 트랜잭션 매니저는 그림과 같이 두 DB에 DML을 수행하고 신규 DB를 먼저 커밋한 뒤 구 DB를 커밋하는 순서입니다.\n[11:25] 먼저 앞선 커밋이 실패하게 되면 어떻게 될까요?\n[11:30] 구 신규 DB 모두 데이터가 쌓이지 않아 문제가 되지 않습니다.\n[11:35] 다음으로 다음 순서인 구 DB 커밋이 실패하면 어떻게 될까요?\n[11:40] 신규 DB에는 데이터가 쌓이나 구 DB에는 데이터가 쌓이지 않습니다.\n[11:44] 전환 기간에서 기준이 되는 DB는 구 DB이기 때문에 서비스가 보는 데이터가 사라지는 심각한 문제가 발생하게 됩니다.\n[11:52] 그래서 순서를 바꿨습니다.\n[11:53] 구 DB를 먼저 커밋하고 신규 DB를 나중에 커밋합니다.\n[11:57] 앞선 커밋이 실패할 경우 이전 쓰기 전략과 동일하게 데이터가 쌓이지 않습니다.\n[12:03] 이번에는 나중에 진행하는 신규 DB 커밋이 실패한 경우입니다.\n[12:08] 구 DB에는 데이터가 정상적으로 남습니다.\n[12:11] 서비스 로직은 그대로 동작하고 신규 DB의 누락은 이어서 설명드릴 시스템으로 보정합니다.\n[12:17] 같은 듀얼 라이트라도 커밋 순서에 따라 위험이 완전히 달라졌습니다.\n[12:22] 양쪽에 쓰는 동안 두 DB가 실제로 같은지 확인해야 했습니다.\n[12:26] 구 DB와 신규 DB의 변경 내역인 CDC를 이용해 실시간으로는 스트리밍을 통해 검증을 했고 주기적으로는 배치를 통해 검증을 수행했습니다.\n[12:36] 앞에서 설명드린 쓰기 전략을 통해 구 DB에는 신뢰할 수 있는 데이터만 쌓입니다.\n[12:41] 만약 불일치가 발견되면 모니터링 시스템에서 알림을 받아 구 DB 기준으로 보정했습니다.\n[12:48] 배포는 되돌릴 수 있는 순서로 진행했습니다.\n[12:51] 전환 전에는 구 DB만 읽고 썼습니다.\n[12:54] 첫 단계로 두 DB에 함께 쓰는 듀얼 라이트를 배포했고 리드는 구 DB를 유지했습니다.\n[13:00] 쓰기와 동시에 두 개를 검증했습니다.\n[13:04] 불일치가 나오게 되면 그 양에 따라 전략을 구성했습니다.\n[13:08] 양이 적으면 신규 DB를 보정하고 양이 많으면 롤백을 고려했습니다.\n[13:13] 구 DB에는 신뢰할 수 있는 데이터만 쌓이고 서비스는 구 DB 기준으로 동작합니다.\n[13:18] 서비스의 변경 사항은 없습니다.\n[13:21] 검증이 안정된 뒤 리드를 신규 DB로 전환했습니다.\n[13:24] 이때도 쓰기는 양쪽에 유지했기 때문에 문제가 발견되면 리드만 되돌리면 됐습니다.\n[13:30] 마지막으로 구 DB 쓰기를 제거하고 전환을 마쳤습니다.\n[13:34] 이 단계부터는 구 DB에 최신 데이터가 쌓이지 않아 바로 되돌릴 수 없기 때문에 검증 결과를 충분히 확인한 뒤 진행했습니다.\n[13:43] 정리하면 0단계부터 2단계까지는 구 DB에 계속 쓰고 있어 언제든 되돌릴 수 있었고, 바로 되돌릴 수 없게 되는 시점은 마지막 3단계 뿐이었습니다.\n[13:54] 전환 시에 잘못된 데이터에 대해 빠르게 검증하고 이를 바탕으로 보정 및 롤백 전략을 염두에 두어 안전하게 전환하는 것을 중점해 두었습니다.\n[14:03] 마지막으로 결과 및 회고입니다.\n[14:06] 목표로 했던 세 가지를 달성했습니다.\n[14:09] 테이블당 용량을 충분히 낮춰 DML 및 DDL에 유연하게 대응할 수 있게 되었고 10년 이상 용량을 확보했습니다.\n[14:17] 물리 DB 12대로 트래픽을 분산해 단일 DB 조회는 12배, 전체 DB 조회는 기준 대비 1.5배의 처리량을 확보했습니다.\n[14:25] 모듈러와 논리 샤드를 이용하여 단순하고 데이터 재분배 없이 물리 DB만 증설할 수 있는 유연한 구조도 갖췄습니다.\n[14:33] 앞선 결과를 얻기 위해 고려한 사항을 정리해 보겠습니다.\n[14:37] 먼저 서비스 특성을 고려해 구매자의 유저 아이디를 샤드키로 선정하여 주요 로직이 단일 DB로 처리될 수 있게 했습니다.\n[14:45] 구현과 운영을 단순하게 유지하면서 확장할 수 있도록 모듈러와 논리 샤드를 함께 사용했습니다.\n[14:52] 테이블의 크기와 커넥션 수를 고려하고 전체 샤드 조회 성능을 측정해서 샤드 수를 선정했습니다.\n[14:58] 전환 중 문제가 생기면 보정과 롤백할 수 있도록 쓰기 및 배포 전략을 설계했습니다.\n[15:03] 이런 설계와 검증 과정을 거쳐 앞서 말씀드린 결과를 얻을 수 있었습니다.\n[15:09] 그리고 한 가지 더 말씀드리고 싶습니다.\n[15:12] 샤딩이 항상 정답은 아닙니다.\n[15:14] 샤딩은 단순히 DB를 여러 대로 늘리는 것으로 끝나지 않습니다.\n[15:18] 샤드키와 라우팅을 설계해야 하고 분산된 조회와 트랜잭션을 다뤄야 합니다.\n[15:23] 그렇기 때문에 먼저 더 단순한 방법으로 해결할 수 있는지 확인해야 합니다.\n[15:28] 아직 한 대로 충분히 처리할 수 있다면 스케일업이 가장 단순합니다.\n[15:33] 읽기 트래픽만 병목이라면 리드 레플리카로 해결할 수 있습니다.\n[15:37] 데이터 용량이 문제이고 과거 데이터를 분리하는 것으로 충분하다면 핫콜드 세퍼레이션도 좋은 선택입니다.\n[15:44] 하지만 이 방식은 오래된 데이터를 분리할 뿐 신규 데이터와 쓰기 트래픽은 여전히 핫 DB에 집중됩니다.\n[15:51] 쓰기 트래픽 자체가 병목이라면 문제를 늦출 수는 있어도 근본적으로 해결하기는 어렵습니다.\n[15:56] 저희는 오래된 주문도 계속 조회해야 했고 신규 주문 데이터와 쓰기 트래픽도 지속적으로 증가했습니다.\n[16:03] 결국 데이터와 읽기 및 쓰기 트래픽을 함께 여러 DB로 나눠야 했고, 저희는 개발과 전환 운영 비용을 감수하고 샤딩을 선택했습니다.\n[16:12] 이상으로 대규모 커머스 DB 샤딩 전환기 발표를 맡은 유정민이었습니다.\n[16:16] 감사합니다.",
+        "body": "\"데이터베이스는 어떻게 확장해야 할까?\" 스케일업(Scale-up)의 한계를 넘다!\n서비스 급성장으로 마주한 비용과 성능의 벽, 카카오 커머스 주문 시스템은 '샤딩(Sharding)'으로 돌파했습니다. \n샤드 키와 샤드 수 결정 기준부터 데이터 정합성을 지키며 읽기·쓰기 경로를 무사히 전환한 과정까지. \n폭증하는 트래픽을 안정적으로 분산시킨 실전 아키텍처와 운영 노하우를 공유합니다.\n\n#ifkakao26 #이프카카오 #이프카카오26 #kakao #카카오 #Backend #Data #engineering \n\n발표자료 보러 가기\nhttps://if.kakao.com/2026/session/time-table?tab=day2&amp;sessionId=73\n\n유정민 | 카카오\n커머스 주문 시스템 개발을 담당하며, 대규모 주문 데이터베이스의 한계를 극복하기 위한 샤딩 아키텍처 설계 및 전환 프로젝트를 이끌었습니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "데이터·트래픽 급증 시 샤딩으로 확장성과 운영 효율을 확보",
+        "tags": [
+          "카카오 커머스",
+          "샤드키",
+          "모듈러 샤딩",
+          "컨시스턴트 해싱",
+          "핫콜드 세퍼레이션"
+        ],
+        "concepts": [
+          "데이터 파티셔닝",
+          "리샤딩 비용",
+          "운영 복잡도 관리"
+        ],
+        "key_points": [
+          {
+            "point": "스케일업만으로 급격한 데이터 증가를 감당하기 어려워 핫콜드 세퍼레이션을 도입",
+            "timestamp": "01:57"
+          },
+          {
+            "point": "샤딩 도입 목표는 용량 확보, 트래픽 분산, 단순·유연한 확장 구조 구축",
+            "timestamp": "03:05"
+          },
+          {
+            "point": "모듈러 샤딩을 선택해 핫스팟 위험 낮추고 구현·운영을 단순화, 리샤딩 비용은 논리 샤드로 보완",
+            "timestamp": "06:39"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "핫콜드 세퍼레이션 방식을 로그 시스템에 적용해 최신 로그는 빠른 DB에, 오래된 로그는 아카이브 DB에 저장해 조회 지연을 감소시킨다",
+          "모듈러 샤딩과 논리 샤드 결합을 멀티테넌트 SaaS에 적용해 테넌트별 데이터를 논리 샤드로 구분하고 물리 DB를 유연하게 확장한다",
+          "컨시스턴트 해싱 링을 CDN 엣지 캐시 서버에 적용해 노드 추가·제거 시 재배치량을 최소화해 캐시 일관성을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 모듈러 샤딩이 레인지 샤딩보다 선호되었나요?",
+            "options": [
+              "핫스팟 발생 가능성이 낮다",
+              "노드 추가 시 데이터 이동이 거의 없다",
+              "샤드 수 변경 시 재해시가 필요 없다",
+              "구현 코드가 가장 간단하다"
+            ],
+            "answer_index": 0,
+            "explanation": "모듈러 샤딩은 키를 고르게 분산시켜 특정 구간에 트래픽이 몰리는 핫스팟 위험이 낮고 구현·운영이 단순해 선택되었다."
+          },
+          {
+            "question": "핫콜드 세퍼레이션이 도입된 후에도 해결되지 않은 주요 문제는 무엇인가요?",
+            "options": [
+              "읽기 전용 콜드 DB의 데이터 일관성",
+              "핫 DB에 집중된 쓰기 부하",
+              "과거 데이터 조회 지연",
+              "스토리지 비용 증가"
+            ],
+            "answer_index": 1,
+            "explanation": "핫콜드 세퍼레이션은 모든 쓰기를 핫 DB에 집중시켜, 트래픽이 계속 증가하면 핫 DB가 병목이 되는 문제가 남았다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
