@@ -1,0 +1,436 @@
+{
+  "date": "2026-11-12",
+  "generated_at": "2026-11-12T05:30:51.732810",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "OpenAI's Astra Just Opened The Black Box Of AI",
+        "url": "https://youtu.be/GJ6PMUm5oTA",
+        "published_at": "2026-11-07T16:24:47",
+        "transcript": "[00:00] incredible piece of research from MIT. I wanted to make a video about it because it is a potential game changer for AI, and I see people talking about it in the media, and it seems a bit misunderstood.\n[00:14] Okay, what happened? Well, three things.\n[00:17] One: scientists used GPT-6 Astra to read the mind, the weights of a neural network. Now, that is normally extremely difficult, or impossible.\n[00:29] This is a big scoop of numbers that roughly gives you the neurons and their connections in a digital brain, an AI system. They work great, but they are often completely incomprehensible.\n[00:42] Now, hold on to your papers, fellow scholars, because surprisingly, after looking at another AI, Astra was able to identify what games this AI system was trained on. It's Breakout. Yeah. Or Pong, or Pac-Man.\n[01:00] Simplified versions. It recognizes all that from just a bunch of numbers. That is insane.\n[01:07] Two: it can fix a failing AI system by editing these weights. Kind of like brain surgery for AIs.\n[01:15] Changing the numbers so it is able to drive smarter. Before the edit, the car initially got stuck on the ramp.\n[01:23] Whoo. Now, let's see after the edit. Look at that! It now successfully goes through.\n[01:32] So, there was reading, there was fixing, and now three: improving.\n[01:37] You give it Qwen, one of the crowd favorite open-weights AI systems that you can run at home, and before the edit, it could solve about 8% of the tasks on a math benchmark.\n[01:50] Now, after the edit. Whoa, that's super nice. About 48%. That is an insane jump.\n[01:58] So, how did it do that? Well, Astra recognized that Qwen was not necessarily bad at math, it just got into these crazy thinking loops.\n[02:07] It keeps repeating itself and going around in circles, kind of like I do rolling around in bed at night.\n[02:15] It tested the other AI model repeatedly and observed what was going wrong. Then, it recognized which parts of the neural network are responsible for the loop, and edited those to suppress this kind of behavior.\n[02:29] But, not so fast.\n[02:31] Misunderstanding one that I see going around is that Astra taught this AI mathematics. Not quite. Instead, it essentially helped unblock it.\n[02:42] And there are still plenty of limitations, and this is where the coverage that I see elsewhere gets a little carried away.\n[02:50] Real talk here. I'll try to clear up what it can do and cannot do in reality. But I am also just a student who is trying to learn, so I might be wrong.\n[03:01] Another misunderstanding is that this one can read the mind, can fix the mind, and improve the mind of an AI.\n[03:10] This does all three. Yes. But people say that it can do all three at the same time. That is not the case.\n[03:18] It does these three things, but in separate experiments, mostly on small AI systems, each with its own custom setup. That is very different.\n[03:29] And some say that only Open AI's Astra can do that. That is not true.\n[03:35] There are independent experiments already doing the same: reading which game a neural network can play. And they do it with smaller, free, and open models like Qwen that you can run at home yourself.\n[03:49] And there are even more things misunderstood about this work.\n[03:53] Dear fellow scholars, this is Two-Minute Papers with Dr. Károly Zsolnai-Fehér. Here's another one.\n[03:58] They say it always works, and AI systems are automatically improving each other using this. Not really.\n[04:06] Astra tried improving a different language model, Gemma 3, and it couldn't master any meaningful improvements.\n[04:14] So, it can read, it can fix, and it can improve. Sometimes, in narrow cases. And I think that is insane enough.\n[04:23] Amazing piece of work. But there are outlets that I feel overstate the capabilities a bit.\n[04:30] And wait, it does something more. It can even write a game-playing neural network from scratch, which is very surprising.\n[04:39] Because we typically train these with lots and lots of trial and error, called reinforcement learning. That is incredible and could be an absolute game changer for AI.\n[04:50] Do they know? Let's see. Of course they know.\n[04:54] They are building a full benchmark for this kind of weight-space programming as we speak.\n[05:00] So, this might become a thing. Brilliant work.\n[05:04] And yes, we should apply the first law of papers, which says do not look at where we are. Look at where we will be two more papers down the line.\n[05:13] What a time to be alive!\n[05:15] I use Lambda to reproduce AI research papers often in minutes. It's great to train your own models, fine-tune an existing one, run inference, text-to-image or video, easy-peasy.\n[05:28] Running a deep seek chatbot or agent, super fast, super reliable. Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[05:38] I test ideas from papers I cover and moments later, results. Love it.\n[05:44] Seriously, try it out now at lambda.com/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.com/papers\n\n📝 The Weight Space Programming work is available here:\nhttps://rikiyat.github.io/blog/weight-space-programming/\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "신경망 가중치 직접 편집으로 AI 디버깅·성능 향상",
+        "tags": [
+          "GPT-6 Astra",
+          "Qwen",
+          "Gemma 3",
+          "Breakout",
+          "OpenAI"
+        ],
+        "concepts": [
+          "해석 가능성을 통한 모델 제어",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "GPT-6 Astra가 신경망 가중치를 읽어내어 AI의 ‘마음’(weights)을 파악한다",
+            "timestamp": "00:17"
+          },
+          {
+            "point": "가중치를 직접 편집해 자동차 제어 AI가 램프에서 멈추던 문제를 해결한다",
+            "timestamp": "01:07"
+          },
+          {
+            "point": "Qwen 모델의 수학 벤치마크 성능이 8%에서 48%로 급상승한다",
+            "timestamp": "01:50"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "추천 시스템 모델의 가중치를 편집해 인기 편향을 일으키는 피드백 루프를 억제한다",
+          "블랙박스 이탈률 예측 모델의 가중치를 분석해 어떤 사용자 세그먼트에 기반했는지 추론한다",
+          "로봇 강화학습 에이전트에서 반복 행동 루프를 유발하는 가중치를 수정해 학습 효율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "Astra가 Qwen의 수학 성능을 크게 올린 이유는 무엇인가?",
+            "options": [
+              "새로운 수학 지식을 추가했기 때문에",
+              "반복 루프를 억제하도록 가중치를 편집했기 때문에",
+              "모델 크기를 늘렸기 때문에",
+              "학습 데이터를 교체했기 때문에"
+            ],
+            "answer_index": 1,
+            "explanation": "Astra는 Qwen이 수학 문제를 푸는 과정에서 발생하는 무한 반복 루프를 찾아 해당 가중치를 수정해 루프를 억제함으로써 성능을 향상시켰다."
+          },
+          {
+            "question": "Astra의 능력에 대해 발표자가 강조한 제한점은 무엇인가?",
+            "options": [
+              "모든 모델에 대해 동시에 읽고, 고치고, 개선한다",
+              "작은 규모의 실험별 맞춤 설정에서만 동작한다",
+              "어떤 언어 모델도 자동으로 개선한다",
+              "데이터 없이 새 게임 AI를 만든다"
+            ],
+            "answer_index": 1,
+            "explanation": "발표자는 Astra가 읽기·수정·개선 세 가지를 별개의 실험에서, 주로 작은 모델에 대해 맞춤 설정으로 수행한다며 범용성을 과대평가하는 것을 경고했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 4,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:stat.ML",
+        "source_key": "arxiv:stat.ML",
+        "source_label": "arXiv:stat.ML",
+        "title": "A Theory of Policy Optimization in Post-Training: Coverage Collapse and Reference Resets",
+        "url": "https://arxiv.org/abs/2611.14467v1",
+        "published_at": "2026-11-10T18:31:36",
+        "transcript": null,
+        "body": "Policy optimization is central to language model post-training, yet principled guidance remains limited. We revisit its theoretical foundations to identify algorithms that learn near-optimal policies using total samples and gradient steps governed by the base model's response coverage, a measure of how readily it generates optimal responses. We call such algorithms coverage-preserving. This guarantee captures the goal of amplifying capabilities accessible through sampling from the base model.\n  (1) Coverage collapse. REINFORCE, the basis for PPO and GRPO, can drive the probability of optimal responses to near zero, even as reward improves. This coverage collapse stalls optimization, and convergence can require exponentially many steps despite good initial coverage. The failure arises even with exact gradients and persists under KL regularization to the base model.\n  (2) Reference resets. We show that repeatedly resetting the KL reference to the most recent policy mitigates coverage collapse. We formalize this intervention in Approximate Policy Mirror Descent (APMD), a meta-algorithm that approximately solves a sequence of KL-regularized RL subproblems. APMD enables stronger regularization, making each subproblem easier to solve, while reference resets allow convergence to global optimality.\n  (3) Coverage-preserving algorithms. For softmax linear policies over pretrained features, we use APMD to establish the first global convergence guarantees showing that widely used families of post-training algorithms are coverage-preserving. These include stylized PPO and GRPO variants with explicit KL regularization and reference resets, and squared-loss algorithms that implement them implicitly, including those used to train the Kimi models.\n  These results clarify how regularization, clipping, and objective choice affect the sampling and optimization costs of post-training.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "샘플링 효율 유지하면서 정책 최적화",
+        "tags": [
+          "REINFORCE",
+          "PPO",
+          "GRPO",
+          "KL regularization",
+          "APMD"
+        ],
+        "concepts": [
+          "강화학습",
+          "온-폴리시 학습",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "REINFORCE 기반 PPO·GRPO는 최적 응답 확률을 거의 0으로 만들며, KL 정규화에도 불구하고 수렴에 지수적 단계가 필요해 coverage collapse가 발생한다.",
+            "timestamp": null
+          },
+          {
+            "point": "KL 레퍼런스를 최신 정책으로 반복 리셋하는 Approximate Policy Mirror Descent(APMD)는 이 현상을 완화하고, 더 강한 정규화를 허용해 전역 최적 수렴을 가능하게 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "소프트맥스 선형 정책에 APMD를 적용하면 PPO·GRPO 변형과 Kimi 모델 학습에 사용되는 제곱 손실 알고리즘이 coverage‑preserving임을 처음으로 증명한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "이 논문은 LLM 포스트 트레이닝에서 정책 최적화 시 샘플링 효율(coverage) 감소 문제를 해결하고자 한다. 기존 REINFORCE 기반 PPO·GRPO는 KL 정규화에도 불구하고 최적 응답 확률이 급감하는 ‘coverage collapse’를 보였으며, 이를 해결하기 위한 연구가 부족했다. 본 연구는 KL 레퍼런스 리셋을 적용한 Approximate Policy Mirror Descent를 제안해 전통적 방법보다 전역 수렴을 보장함으로써 정책 최적화 이론에 새로운 흐름을 제시한다.",
+        "production_ideas": [
+          "레퍼런스 리셋을 오프라인 추천 시스템의 정책 업데이트에 적용해 로그 데이터 기반 정책 붕괴를 방지한다.",
+          "이미지 생성 diffusion 모델 파인튜닝 시 coverage‑preserving 정규화를 도입해 다양성을 유지한다",
+          "다중 에이전트 협업 시 APMD 프레임워크를 사용해 각 에이전트가 공유 베이스 정책에서 크게 벗어나지 않도록 하여 안정적인 협조를 촉진한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 REINFORCE 기반 알고리즘은 KL 정규화에도 불구하고 coverage collapse가 발생하는가?",
+            "options": [
+              "gradient noise가 최적 응답 확률을 감소시킨다",
+              "보상이 최적 응답에만 집중돼 확률이 감소한다",
+              "KL 제약이 너무 약해 정책이 크게 변한다",
+              "업데이트 스텝이 과도하게 크다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 REINFORCE는 보상이 개선돼도 최적 응답 확률을 거의 0으로 만들며, 이는 보상이 최적 응답에만 집중돼 확률이 감소하기 때문이다."
+          },
+          {
+            "question": "APMD에서 레퍼런스 리셋이 제공하는 주요 이점은?",
+            "options": [
+              "학습 속도 감소",
+              "더 강한 정규화 허용",
+              "정책 다양성 증가",
+              "샘플 효율 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "레퍼런스 리셋을 통해 각 KL‑정규화 서브문제를 더 강하게 정규화할 수 있어 최적화가 쉬워지고 전역 수렴이 가능해진다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+        "url": "https://youtu.be/yY5qf14ddgY",
+        "published_at": "2026-11-11T06:37:19",
+        "transcript": "[00:01] 안녕하십니까.\n[00:03] AI 산출물이 프로덕션이 되기까지라는 주제로 발표를 하게 된 네이버 파이낸셜의 손찬욱입니다.\n[00:15] 어 지금 모두의 관심사면 아마 이거겠죠? AI로 서비스를 만들자.\n[00:21] 어떻게 하면 효과적으로 운영하고 개발 프로세스에 녹일 수 있을까? 이런 부분을 많이 고민하고 있을 것 같습니다.\n[00:30] 어 저희 네이버 파이낸셜에서도 굉장히 많은 서비스를 가지고 있습니다. 뭐 서비스 주요 서비스부터 이제 하이 서비스까지 뭐 한 37개의 홈들이 있을 정도로 광대한 서비스를 가지고 있고요.\n[00:42] 이런 서비스를 실제로 이제 빠르게 변하는 AI 방향에도 맞으면서 많은 서비스를 함께 개발하고 운영해야 되는 게 사실 저희의 실정이기도 합니다.\n[00:56] 그래서 서비스마다도 아니라 디자인 시스템에서 풀어야만 했습니다.\n[01:02] AI 시대에 저희가 원하는 모습. 뭐 흔히 말하는 스펙 드리븐 방식의 개발.\n[01:09] AI에게 말하면 코드까지 짜작 나오는. 네, 이런 모습이죠.\n[01:15] 근데 실상은 어 각자 AI를 굉장히 열심히 활용하고 있습니다. 각자의 영역에서 AI로 생산성을 높이기 위해서 굉장히 많이 노력을 하고 있죠.\n[01:26] 뭐 기획자 같은 경우는 이제 기획서 자체를 이제 AI로 좀 쓰고 그 그렇게 그런 기획서가 이제 뭐 HTML이나 MD 파일 같은 산출물로 나오는 거죠.\n[01:37] 뭐 설계자분들도 마찬가지입니다. 뭐 클로드 디자인 같은 AI 도구를 쓴다든지 그 도구들을 써서 이제 그 설계 요구사항들을 실제로 산출물로 만들고 있습니다.\n[01:49] 근데 실상은 이제 이런 어느 것 하나 이게 프로덕션까지 되지는 잘 못 되는 것 같습니다.\n[01:56] 특히 이제 B2C 같은 경우는 더 그런 거 같고요.\n[02:01] 그래서 뭐 실제로 프로덕션 만들기 위해서는 궁극적으로는 이제 뭐 기획에서는 다시 기획서를 쓰고 그리고 설계에서는 다시 피그마를 정리하는 어떻게 보면 처음부터 다시 시작하는.\n[02:13] 오히려 AI를 쓰는 거는 어 생산성을 좀 높이고 아이디어를 더 빠르게 시험하는 그런 용도로 현재 좀 사용되고 있는 것 같습니다.\n[02:24] 왜 그럴까요? 네.\n[02:26] 뭐 궁극적인 뭐 여러 가지 이유가 있겠죠. 근데 이제 뭐 R&R이 우선 좀 나눠져 있고 그리고 그 R&R에 따라 각각의 전문성이 가지고 있기 때문에 다른 영역에 대한 어떻게 보면 전문성이 좀 부재한 면도 있는 겁니다.\n[02:41] 그리고 뭐 어 각각의 뭐 기획이든 뭐 설계든 각자 개인에 따라서 스펙을 정의하는 형태가 어 일관되지 않기 때문에 이런 것 이런 문제들이 더 있는 것 같습니다.\n[02:54] 물론 뭐 UI UX 표현도 굉장히 다릅니다.\n[02:58] 그리고 특히나 이렇게 AI 프롬프트로 뭔가를 이제 서비스를 만들 때 그 서비스의 요구 사항을 굉장히 세밀하고 제어하고 편집하는 게 어 그렇게 쉽지는 않습니다.\n[03:12] 그 궁극적으로는 이제 뭐 기획 개발의 산출물이 개발 산출물로까지 연결되는 것을 또 뭐 고려하고 진행하는 경우도 좀 드물어서.\n[03:22] 그래서 궁극적으로는 실제 지금 만들어지고 있는 이런 산출물들이 그대로 쓸 수 없고 이제 프로토타입 그 이상을 넘어가기 사실 좀 어려운 면이 있습니다.\n[03:36] 그렇다고 해서 이 프로세스를 싹 다 갈아 엎어서 뭔가 저희가 이제 이상적으로 추구하고 있는 스펙트리 분같이 그런 형태로 바로 급진적으로 바꾸기는 사실상 좀 어려운 것 같습니다.\n[03:50] 뭐 이미 많은 사람들이 지금의 프로세스 위에서 일을 이미 하고 있고 그리고 조직마다 맡은 역할 있기 때문에 이런 걸 한 번에 바꾸는 건 사실 굉장히 좀 어려운 일인 것 같습니다.\n[04:04] 그래서 실제 이런 프로세스 어 이런 프로세스를 경험을 하면서 직접 경험함으로써 이제 보다 나은 방식의 어 방식들을 개선해 나가는 식에 어 경험이 먼저 선행돼야 될 것 같습니다.\n[04:22] 그래서 저희는 좀 질문을 바꿔 봤습니다. 이제 지금의 프로세스 안에서 생산성을 높일 수는 없을까?\n[04:31] 우선 AI로 빨리 시험하고 이제 프로덕션에 옮기는 비용을 한번 최소화해 보죠.\n[04:36] 그래서 뭐 기획자는 비디오를 AI로 빠르게 시험하고 설계자는 이제 디자인 시스템을 이용해서 UX를 빠르게 시험해보고 검증하고 보정하는 역할을 한번 해보고.\n[04:47] 실제로 프로덕션을 옮기는 비용 자체를 이제 자동화해서 보다 빠르게 어 그리고 보다 익숙해지는데 좀 집중해 보려고 방향을 한번 잡아봤습니다.\n[05:00] 그래서 뭐 궁극적으로는 어 기존의 담당은 어느 정도 R&R은 그대로 두고 그리고 하는 일의 단계마다 어떻게 보면 이제 기획에서 만든 이런 HTML 또는 스펙 이런 문서들.\n[05:15] 그리고 설계에서 만든 뭐 스펙 문서, HTML 또는 피그마 문서 이런 것들을 이제 피그마로 하나로 합치는 거죠.\n[05:26] 그래서 이런 스펙 HTML 이미지를 하나로 피그마로 전체 전환을 하고 그 피그마 위에서 실제로 프로덕션에 올라갈 수 있는 플로그를 태워서 어 실제 프로덕션까지 갈 수 있는 방향을 잡아 보는 겁니다.\n[05:39] 그래서 어떻게 보면 기존에 하시는 작업들이 어떻게 보면 다시 만든 작업을 해서 검토하고 확인하는 역할로 많이 바꾸도록 이제 유도를 해 보려고 하고 있습니다.\n[05:53] 근데 왜 하필 피그마 할까요? 뭐 저희 산회에서 가장 이제 기획자나 설계자분들이 가장 많이 쓴 도구이기도 해서 진입 장벽이 낮기도 합니다.\n[06:04] 하지만 이 피그마가 사실 커뮤니케이션이나 또는 뭐 문서 관리라든지 설계 문서라든지 기획 문서 관리하는데 꽤나 유용한 장점들이 있기 때문에 실제로 이 도구를 버리고 뭔가를 새로 하기에는 어 많은 준비가 좀 필요한 상황이긴 합니다.\n[06:22] 그리고 피그마에서는 이제 디자인 시스템 컴포넌트 자체를 좀 제공하고 있어서 컴포넌트 단위로 코드와 매핑되는 구조를 만들 수 있습니다.\n[06:34] 그리고 좀 이제 설계자분들이 특히 그러실 텐데 이런 익숙한 방식으로 굉장히 세밀하게 조정하고 보정할 수 있는 장점이 있죠.\n[06:44] 그래서 저희가 생각한 방식은 우선 지금 단계에서 가장 현실적인 대안은 피그마다. 라고 생각을 했습니다.\n[06:54] 그래서 이 피그마를 중심에 두고 저희가 이제 어떤 식으로 각각의 프로세스를 자동화하지라고 했을 때 좀 넘어야 해야 했던 좀 고민들을 먼저 한번 소개해 보도록 하려고 합니다.\n[07:08] 우선 이 피그마를 중심에 두게 되면 사실 모든 자원 모든 요소들이 이제 피그마로만 잘 오게 되면 마크업의 변화는 오히려 좀 쉬울 수 있습니다.\n[07:18] 근데 그러기 위해서는 준비돼야 될 게 굉장히 많이 있습니다. 우선 첫 번째로 이런 입력, 스펙, HTML, 이미지를 피그마로 옮기는 게 단순하게 이제 그림이나 뭐 형상으로 옮기는 게 아니라 사실 그 의도를 표현한 요소들을 잘 이해하고 옮겨야 되거든요.\n[07:36] 그러기 위해서 저희가 했던 첫 번째 작업은 우선 의도를 표현할 수 있는 어휘인 컴포넌트를 정의를 했습니다.\n[07:43] 그래서 이 컴포넌트가 언제 그리고 무엇을 위해 쓰고 어떻게 쓰는지에 대한 명세들을 좀 정리했고요.\n[07:51] 그래서 이런 것들을 이제 저희가 디자인 MD로 정리를 해서 어 산출물을 만들어 갔습니다.\n[07:58] 그리고 이제 그 일관된 의도를 각각의 컴포넌트 또는 그 UX 또 아니 UX라기보다는 이 UI에 일관된 의도를 전달하기 위해서 사실 디자인 토큰을 정의를 했고요.\n[08:10] 이 디자인 토큰은 W3C 디자인 토큰 표준 체계를 좀 이용해서 토큰 JSON을 만들었습니다.\n[08:17] 그래서 이 토큰을 실제 이런 버튼 컴포넌트 하나에도 컬러라든지 타이포그래피라든지 좀 스페이싱 뭐 레디우스 같은 각각의 요소들에 대해서 균일하고 일관되게 적용하도록 저희가 컴포넌트에 내재화를 했고요.\n[08:34] 그리고 사실 이것뿐만 아니라 이렇게 테마 라이트나 다크 모드 그리고 모바일, 태블릿 그리고 데스크톱 같은 이런 반응형에 대한 요소들에 대해서도 이미 토큰에 다 정의를 해서 컴포넌트가 어 요런 외부 그러니까 이런 테마나 어 반응에 적절하게 동작할 수 있 있도록까지 설계를 같이 했습니다.\n[09:00] 세 번째로는 이런 의도를 좀 더 명확히 드러내려면 사실 대다수의 화면의 구성품들이 빠짐없이 정의돼야지 보다 명확하게 나타낼 수 있습니다.\n[09:10] 저희가 이제 지향했던 방향은 디자인 시스템을 100% 지향하자. 근데 이게 사실 현실적으로는 어려운 면이 있습니다.\n[09:18] 그래서 이 부분을 이런 100%를 지향하기 위해서 사실 어느 정도 규칙과 제약들을 두고 각각의 프레임들을 좀 만들고 구조를 좀 잡아가는 작업들을 했고요.\n[09:29] 그리고 그 구조들을 잡아감으로써 각각의 컴포넌트들을 이제 레고 블록처럼 조립할 수 있게 돼서 사실 화면을 레고 블록처럼 조립할 수 있게 됐죠.\n[09:39] 근데 이제 저희가 여기에 슬라이드는 이 한 장이지만 사실 저희 작업의 대다수가 이런 논의와 협의의 그리고 어 눈높이를 맞추는 데 굉장히 많은 시간을 쏟았습니다.\n[09:52] 이제 어떻게 보면 이제 설계 입장에서는 설계의 관점이 있고 개발 입장에서는 개발의 관점이 있기 때문에 그 관점들을 헬업하고 그리고 맞춰가는 게 굉장히 어려웠고 그리고 그 의도들을 명확하게 개발도 이해할 수 있고 설계도 이해할 수 있도록 만들어 내는 데 많은 시간을 쏟았습니다.\n[10:13] 그래서 이런 앞에 있는 그런 명세들, 토큰들 그리고 컴포넌트 정의가 어느 정도 이루어지면 사실 사람들도 이렇게 어 그 블록 형태로 모든 화면들을 조립할 수 있는 가능성을 저희가 확인했고요.\n[10:29] 그리고 사람에 갈 수 있으니까 당연히 AI도 어 동일한 규칙과 명 명세대로 이제 블록을 조립할 수 있다는 걸 검증을 했습니다.\n[10:38] 그래서 AI도 이제 그림을 그냥 베끼는 게 아니라 컴포넌트와 토큰으로 재조립하고 이제 설계자는 정의된 블록을 이제 레고처럼 쓰고 보정에 집중하는 식으로 어 구조를 잡아 봤습니다.\n[10:52] 그래서 요거는 이제 저희가 제공하는 클로드 코드 플러그인입니다.\n[10:55] 이제 피그마, 투 피그마라는 클로드 코드인데 여기 보시는 게 이제 기획자분이 만들었던 이런 기획 기획 화면이고요.\n[11:04] 그 화면을 이제 이미지로 캡처해 가지고 실제로 저희 플러그인을 통해서 이 디파인 2로 된 피그마 화면들을 이제 구성을 해 봐라고 해서 실제로 만들어지는 화면의 데모 영상입니다.\n[11:18] 이 영상은 이제 15배속으로 됐는데 지금 보면 한 5분 58초 정도 요 영상의 길이가 잡혀 있는데 실제로 이 한 화면을 뽑는 데 한 10분 내외로 모든 화면들이 이제 디파인 저희가 새로 만드는 디자인 시스템 버전 2 형태로 요런 형상으로 잘 뽑아질 수 있는 이제 툴을 만들었습니다.\n[11:44] 그 두 번째 저희 고민인데 사실 지금 요 화면에 보이시는 게 시트라는 컴포넌트입니다.\n[11:50] 이 시트라는 컴포넌트는 어 단순하게 어떤 내용을 보여주는 게 아니라 여기 보신 것 처럼 인터랙션도 굉장히 많이 들어갔고요.\n[12:00] 그리고 어 이런 인터랙션을 할 때 들어가는 뭐 엣지 케이스라든지 또는 크로스 브라우징 이슈라든지 또는 접근성에 관련된 문제들이 사실 많이 녹아져 있습니다.\n[12:11] 그래서 이런 컴포넌트 하나 만들 때 저희의 설계 의도와 기술 의도가 충분히 녹아 들어야지 서비스에서는 어 이런 도구들을 잘 사용해서 오히려 비즈니스에 더 집중할 수 있게 됩니다.\n[12:24] 그래서 저희가 요렇게 했던 거는 이제 일반 요거는 좀 일반적이긴 한데 이런 접근성, 인터랙션, 엣지 케이스들을 들어가는 모듈들을 저희가 제공을 했고 그래서 저희는 이제 디파인이라고 부르고 있고 저희가 전에 1.0이었고 현재는 지금 2.0, AI에 적합한 2.0을 만들고 있고요.\n[12:44] 그리고 이 디파인은 피그마 요소가 짝이 되도록 거의 1대1로 터닝될 수 있도록 컴포넌트와 그리고 토큰으로 구성될 수 있도록 구조를 잡아 놨습니다.\n[12:57] 세 번째는 이제 피그마 컴포넌트 그러면 아까 앞에서 논리적으로 연결했지만 실제 직접적으로 연결할 수 있는 방법이 있을까? 피그마에서 제공하고 있습니다. 예.\n[13:07] 이 키 잘 알고 계시는 이제 코드 커넥트를 이용해서 어 이 피그마 컴포넌트하고 저희 디파인 모듈하고 이제 코드 커넥트를 연결하게 되면 어 쉽게 저희 그 피그마의 산출물이 이제 코드로 변환될 수 있게 되죠.\n[13:23] 이거의 장점은 사실 이제 AI가 어떤 영역들을 만들 때 이제 마음대로 만들지 않고 검증된 컴포넌트 단위로 딱 코드 커넥트에 정의되고 그 연결된 형태로 잘 뽑아집니다.\n[13:38] 그리고 저희가 디자인 시스템을 100% 지향하고 있지만 사실상 100%를 만들 수는 없습니다. 서비스에 특화된 부분들이 있고 그래서 그 부분에 대한 어떤 커스텀 요소나 커스텀 영역들을 제공하는 데 사실 그 부분에 대한 검수 디자인 검수만 하면 어 되고 사실 저희가 제공하는 컴포넌스는 이미 검증되고 디자인 검수가 끝났기 때문에 그런 부분을 고려할 필요가 없습니다.\n[14:02] 그래서 궁극적으로는 마크업 생성 그리고 디자인 검수 비용 자체를 굉장히 줄일 수 있게 됩니다.\n[14:11] 어 이 데모는 저희가 제공하는 그 클로드 코드 플러그인의 피그마 투 마크업입니다.\n[14:18] 아 잠깐 앞에서 너무 빨리 넘어가서 요 화면을 저희가 이제 마크업으로 만드는 화면이 있는데 보시는 것처럼 이런 커맨드니 이 툴 클로드 코드 플러그인 툴을 써 가지고 이걸 만들어 주세요 하게 되면 대략 어 지금 한 여기는 한 4분 21초 정도 걸렸네요.\n[14:39] 4분 21 대략 5 저희가 해 보니까 한 5분 정도의 페이지들이 다 만들어집니다.\n[14:44] 그래서 여기 에파이 만들어 달라고 했더니 요렇게 만들어 주고 실제 화면도 어 굉장히 이렇게 완벽하다 완벽하게 깨끗하게 만들어 줍니다.\n[14:57] 네. 이게 이제 코드 커넥트도 저희가 다 구성을 했고 그리고 각각의 커스텀 요소도 대응할 수 있도록 이 툴에서 제공하고 있기 때문에 이런 형상을 만들 수 있습니다.\n[15:10] 그리고 이렇게 만들어진 상황들을 사실 실제 설계 설계의 피그마와 저희 그 화면하고의 그 차이도 좀 필요해서 그런 어 디프를 좀 확인할 수 있는 마크업 디프 같은 툴도 제공을 합니다.\n[15:27] 그래서 여기는 10배 속으로 했지만 이것도 한 2분 정도 한 1, 2분 정도면 실제로 화면과 피그마의 차이를 이렇게 알아볼 수 있습니다.\n[15:39] 그리고 사실 어 저희가 모든 것들을 이제 피그마 중심으로 지금 현재는 하고 있는데 이 피그마가 자유도가 굉장히 높습니다.\n[15:47] 그래서 저희가 제공하는 컴포넌트를 변형하거나 배치 규칙을 어길 수 있습니다. 그래서 이런 것들을 좀 방지하고 이런 것들에 좀 어려움이 있는 부분에 좀 설계자나 기획자분들 심지어 개발자분들한테도 도움을 주기 위해서 디파인 어시스트라는 피그마 플러그인을 제공합니다.\n[16:07] 그래서 이걸 제공함으로써 이제 실제 설계의 자유도는 유지하고 이제 마크업 생성 규칙은 유지합니다.\n[16:15] 요런 일종의 어 너찌 너찌를 유도하는 이런 플러그인도 제공을 함께 하고 있습니다.\n[16:23] 그래서 앞에서 얘기했던 저희 산 저희의 그 산출물들을 좀 정리해 보면 저희가 피그마 자산이 있습니다.\n[16:30] 피그마 컴포넌트, 디자인 시스템, 코드 커넥트가 있고 그리고 플러그인, 디파인 어시스트 방금 봤던 어시스트가 있고 그리고 디자인 자산 아까 design.md, token.json이 있고요.\n[16:43] 그리고 어 실제 코드화 된 디파인 모듈이 있습니다.\n[16:47] 그리고 앞에서 데모로 좀 보여드렸던 이런 클로드 코드 플러그인들이 있습니다.\n[16:54] 그래서 사실 여기 보시면 제가 피그마하고 플러그인 쪽만 좀 했지만 이거와 별개로 디자인 자산과 디파인 모듈 그리고 어 클로드 코드 플러그인은 독립적으로 좀 동작할 수 있는 형태로 저희가 구성을 했습니다.\n[17:10] 그래서 지금까지 했던 걸 좀 정리를 해 보면 어 기획서와 피그마를 사실 사람이 만들진 않죠, 이제.\n[17:18] 예. 저희가 제공하는 도구들을 이용해서 자동으로 조립하고 사람은 검토하고 보정하는 작업을 하게 되고요.\n[17:24] 두 번째로 이제 설계 의도와 기술 의도를 이제 각 서비스 설계나 기획에 고민할 필요 없이 저희 컴포넌트를 사용하게 되면 이런 고민에서 좀 벗어날 수 있습니다.\n[17:38] 그리고 마크업 작업 자체는 이제 자동화 됐기 때문에 사실상 필요 없는 단계가 되고요.\n[17:43] 마지막으로 디자인 검수 또한 저희가 제공하고 있는 컴포넌트 내에서 이루어지기 때문에 어떻게 보면 커스텀 영역만 이제 디자인 디자인 검수를 좀 하면 되는 겁니다.\n[17:55] 그래서 궁극적으로는 이제 저희가 했던 그런 프로덕션으로 올리기 위해서 다시 했던 그런 작업들을 자동화하고 그 자동화 된 걸 통해서 우리는 어 실제로 잘 만들어졌는지 검토하고 확인하는 역할로 바뀌도록 저희가 프로세스를 좀 유도해 봤습니다.\n[18:16] 앞으로는 어떻게 하느냐? 사실 저희의 이상은 여전히 동일합니다.\n[18:22] 스펙을 넣고 AI에게 요기해서야 딸깍해서 코드를 만드는 모습. 하지만 현실은 녹록지 않다는 걸 앞에서 충분히 어 보셨을 거라고 생각됩니다.\n[18:34] 그래서 저희는 이제 자동화를 경험하기 시킴으로써 구성원의 이해도와 상황 변화를 유도시키고 그 사이에 이제 저희는 디자인 시스템 자산을 계속 축적함으로써 궁극적으로는 이제 피그마 없더라도 이제 스펙에서 코드로 바로 갈 수 있는 환경을 만드는 게 저희의 목표입니다.\n[19:00] 그래서 만약에 어 저희 같은 고민을 같이 있는 조직이 있다면 어 디자인 시스템을 어떤 식으로 만들고 그리고 이 디자인 시스템 자산을 어떤 식으로 유지하고 그리고 구성원들한테 이런 프로세스를 어떤 식으로 전파해서 실제 우리가 원하는 어 스펙에서 코드로 연결할 수 있는 그런 고리를 만들 수 있는 걸 고민해 보면 더 좋을 것 같습니다.\n[19:27] 예. 제 발표는 여기까지입니다.\n[19:30] 감사합니다.",
+        "body": "네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.\n\n[발표 내용]\nAI변화와 함께 성장하는 디자인시스템을 소개합니다.\n\n[발표 대상]\n- AI로 만든 결과물을 실제 서비스로 옮기는 데 드는 재작업이 고민인 기획자·디자이너·개발자\n- 디자인시스템을 AI 시대에 맞게 확장하려는 팀\n- 기존 R&amp;R과 프로세스를 유지하면서 AI 도입 효과를 높이고 싶은 조직\n\n[목차]\n1. 문제 제기: 왜 지금 디자인시스템인가?\n2. 현실: AI 산출물은 왜 프로덕션이 되지 못하나\n3. 접근: 프로세스 안에서 단계 사이를 자동화\n4. 넘어야 했던 고민 3가지\n- 고민 1. 의도를 표현할 어휘가 필요하다\n- 고민 2. 설계 의도와 기술 이슈는 어떻게 처리할 것인가?\n- 고민 3. Figma와 컴포넌트는 어떻게 연결할 것인가?\n5. 우리가 제공하는 것\n6. 정리: 그래서 얻은 것\n7. 앞으로",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "AI 산출물을 디자인 시스템에 연계해 프로덕션 전환 효율화",
+        "tags": [
+          "네이버 파이낸셜",
+          "피그마",
+          "디자인 토큰",
+          "W3C",
+          "HTML"
+        ],
+        "concepts": [
+          "AI 생산성 도구",
+          "AI와 인간 협업",
+          "디자인 트레이드오프"
+        ],
+        "key_points": [
+          {
+            "point": "AI를 활용해 기획·설계 산출물을 빠르게 생성하지만, 프로덕션 단계까지 바로 사용하기는 어렵다.",
+            "timestamp": "01:02"
+          },
+          {
+            "point": "디자인 시스템과 피그마를 중심으로 HTML·스펙을 하나로 통합해 코드 매핑을 자동화한다.",
+            "timestamp": "05:15"
+          },
+          {
+            "point": "AI로 아이디어를 빠르게 시험하고, 피그마 기반 검증·보정 과정을 통해 프로덕션 전환 비용을 최소화한다.",
+            "timestamp": "04:31"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "디자인 시스템 컴포넌트를 활용해 데이터 파이프라인 UI를 피그마에서 직접 코드로 변환해 개발 속도를 높인다.",
+          "W3C 디자인 토큰 표준을 적용해 AI가 생성한 대시보드의 테마와 색상을 일관되게 관리함으로써 다중 디바이스 UI 품질을 유지한다.",
+          "HTML·마크다운 등 다양한 AI 산출물을 피그마에 통합하여 문서 자동화 파이프라인을 구축하고, 검증 과정을 거쳐 내부 위키에 바로 배포한다."
+        ],
+        "quiz": [
+          {
+            "question": "AI 산출물이 바로 프로덕션에 사용되지 못하는 주요 이유는 무엇인가?",
+            "options": [
+              "R&R과 스펙 정의가 일관되지 않아",
+              "컴퓨팅 파워 부족",
+              "법적 제한",
+              "디자인 토큰 부재"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서는 R&R이 분리되고 스펙 정의가 일관되지 않아 AI 산출물을 바로 프로덕션에 적용하기 어렵다고 설명한다."
+          },
+          {
+            "question": "제안된 워크플로에서 피그마의 핵심 역할은 무엇인가?",
+            "options": [
+              "코드 자동 생성 도구",
+              "HTML·스펙을 통합하고 컴포넌트‑코드 매핑을 가능하게 하는 중앙 허브",
+              "AI 모델 학습 플랫폼",
+              "버전 관리 시스템"
+            ],
+            "answer_index": 1,
+            "explanation": "피그마를 중심에 두어 HTML·스펙을 하나로 전환하고, 디자인 시스템 컴포넌트를 통해 코드와 매핑하는 것이 핵심이라고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Attention to Mamba: A Recipe for Cross-Architecture Distillation",
+        "url": "https://machinelearning.apple.com/research/attention-mamba-distillation",
+        "published_at": null,
+        "transcript": null,
+        "body": "[research area Methods and Algorithms](/research/?domain=Methods%20and%20Algorithms), [research area Speech and Natural Language Processing](/research/?domain=Speech%20and%20Natural%20Language%20Processing)[Transactions on Machine Learning Research (TMLR)](/research/?event=Transactions%20on%20Machine%20Learning%20Research%20(TMLR))\n\n[content type paper](/research/)published November 2026\n\n# Attention to Mamba: A Recipe for Cross-Architecture Distillation\n\nAuthorsAbhinav Moudgil†\\*\\*, Ningyuan Huang‡\\*\\*, Eeshan Gunesh Dhekane, Pau Rodríguez Lopez, Luca Zappella, Federico Danieli\n\n[View publication](https://arxiv.org/abs/2604.14191)\n\nCopy Bibtex\n\nState Space Models (SSMs) such as Mamba have become a popular alternative to Transformer models, due to their reduced memory consumption and higher throughput at generation compared to their Attention-based counterparts. On the other hand, the community has built up a considerable body of knowledge on how to train Transformers, and many pretrained Transformer models are readily available. To facilitate the adoption of SSMs while leveraging existing pretrained Transformers, we aim to identify an effective recipe to distill an Attention-based model into a Mamba-like architecture. In prior work on cross-architecture distillation, however, it has been shown that a naïve distillation procedure from Transformers to Mamba fails to preserve the original teacher performance, a limitation often overcome with hybrid solutions combining Attention and SSM blocks. The key argument from our work is that, by equipping Mamba with a principled initialization, we can recover an overall better recipe for cross-architectural distillation. To this end, we propose a principled two-stage approach: first, we distill knowledge from a traditional Transformer into a linearized version of Attention, using an adaptation of the *kernel trick*. Then, we distill the linearized version into an adapted Mamba model that does not use any Attention block. Overall, the distilled Mamba model retains most of the original Pythia-1B Transformer performance, reaching a perplexity of 14.01 close to the teacher’s 13.86. This largely carries over to downstream tasks, although some gaps appear on tasks relying more on in-context recall. To show the efficacy of our recipe, we conduct thorough ablations at 1B scale with 10B tokens varying sequence mixer architecture, scaling analysis on model sizes and total distillation tokens, and a sensitivity analysis on tokens allocation between stages.\n\n- † Concordia University and MILA Research Institute\n- ‡ Johns Hopkins University and Flatiron Institute\n- \\*\\* Work done while at Apple\n\n## Related readings and updates.\n\n[### Understanding Input Selectivity in Mamba](/research/understanding-input)\n\nJuly 4, 2025[research area Methods and Algorithms](/research/?domain=Methods%20and%20Algorithms), [research area Speech and Natural Language Processing](/research/?domain=Speech%20and%20Natural%20Language%20Processing)[conference ICML](/research/?event=ICML)\n\nState-Space Models (SSMs), and particularly Mamba, have recently emerged as a promising alternative to Transformers.\nMamba introduces input selectivity to its SSM layer (S6) and\nincorporates convolution and gating into its block definition.\nWhile these modifications do improve Mamba’s performance over its SSM predecessors, it remains largely unclear how Mamba leverages the additional functionalities provided by input selectivity, and how these…\n\n[Read more](/research/understanding-input)\n\n[### Distillation Scaling Laws](/research/distillation-scaling-laws)\n\nJuly 1, 2025[research area Methods and Algorithms](/research/?domain=Methods%20and%20Algorithms), [research area Speech and Natural Language Processing](/research/?domain=Speech%20and%20Natural%20Language%20Processing)[conference ICML](/research/?event=ICML)\n\nWe propose a distillation scaling law that estimates distilled model performance based on a compute budget and its allocation between the student and teacher. Our findings mitigate the risks associated with large-scale distillation by enabling compute-optimal allocation for both the teacher and student to maximize student performance. We provide compute-optimal distillation recipes for two key scenarios: when a teacher already exists, and when a…\n\n[Read more](/research/distillation-scaling-laws)\n\n![Bottom banner](https://mlr.cdn-apple.com/media/Discover_1440x420_2x_9c465d585e.jpg)\n\n## Discover opportunities in Machine Learning.\n\nOur research in machine learning breaks new ground every day.\n\n[Work with us](/work-with-us)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "Transformer 지식으로 Mamba 효율 구축",
+        "tags": [
+          "Mamba",
+          "State Space Models",
+          "Transformer",
+          "Pythia-1B",
+          "kernel trick"
+        ],
+        "concepts": [
+          "모델 파인튜닝",
+          "모듈형 신경망 구조",
+          "AI 비용 효율성"
+        ],
+        "key_points": [
+          {
+            "point": "단순히 Transformer를 Mamba로 직접 증류하면 성능이 크게 떨어지며, 원활한 전이를 위해서는 원칙적인 초기화가 필요하다.",
+            "timestamp": null
+          },
+          {
+            "point": "저자는 두 단계 증류 방식을 제안한다: Transformer → 커널 트릭을 이용한 선형화된 Attention → Attention 없이 구성된 Mamba 모델.",
+            "timestamp": null
+          },
+          {
+            "point": "제안된 방법으로 만든 Mamba는 교사 모델(Pythia‑1B)과 거의 동일한 perplexity(14.01 vs 13.86)를 달성했으며, 대규모 실험을 통해 확장성과 토큰 할당 민감도를 검증했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "Transformer 기반 대형 언어 모델이 메모리·처리량에서 한계를 보이는 상황에서, SSM 계열인 Mamba를 효율적으로 활용하고 기존 사전학습 지식을 이어받기 위한 연구 흐름에 속한다. 기존 교차‑아키텍처 증류는 하이브리드 구조가 필요했지만, 이 논문은 원칙적인 초기화와 두 단계 증류로 순수 Mamba 모델에서도 교사 성능에 근접하도록 만든 것이 새롭다.",
+        "production_ideas": [
+          "두 단계 증류 방식을 활용해 대형 비전 Transformer의 지식을 경량 CNN으로 옮겨, 엣지 디바이스에서 추론 속도를 크게 높인다.",
+          "SSM 레이어에 원칙적인 초기화를 적용해 음성 인식 모델을 SSM 기반 구조로 전환하면 학습 시간과 메모리 사용량을 감소시킬 수 있다.",
+          "커널 트릭을 이용해 Attention을 선형화한 뒤 SSM으로 변환하면, 실시간 추천 시스템에서 메모리 효율적인 모델을 구현하면서도 정확도를 유지한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 단순한 Transformer→Mamba 증류는 성능 저하를 일으키는가?",
+            "options": [
+              "Mamba가 Attention 블록을 사용하지 않기 때문이다",
+              "토큰 임베딩 형식이 달라서",
+              "학습 데이터가 부족해서",
+              "옵티마이저가 맞지 않아서"
+            ],
+            "answer_index": 0,
+            "explanation": "Mamba는 순수 SSM 구조이며 Attention을 포함하지 않으므로, 직접 증류하면 구조적 차이로 교사 성능을 유지하기 어렵다."
+          },
+          {
+            "question": "제안된 증류 파이프라인에서 커널 트릭의 역할은 무엇인가?",
+            "options": [
+              "Attention을 선형화하여 중간 모델을 만들기 위해",
+              "모델 크기를 줄이기 위해 가중치를 프루닝한다",
+              "Mamba 파라미터를 초기화한다",
+              "데이터를 증강한다"
+            ],
+            "answer_index": 0,
+            "explanation": "커널 트릭을 사용해 Attention 연산을 선형 커널 형태로 변환함으로써, 선형화된 Attention 모델을 중간 단계로 만들 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+        "url": "https://d2.naver.com/helloworld/2568242",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-b773a588-b280-4e1a-a9bb-ceda6469ee41\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-ccdd0417-d0d0-447b-8546-54ef7e8742d0\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-bdab76a9-9ee3-46f1-a608-feb1c0e17e55\" style=\"color: #000000;\"><b>네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-49127f52-05dd-4672-a57a-b3e81c8cc17f\"><span class=\"se-fs-fs13 se-ff-system  se-style-unset \" id=\"SE-13c78b35-7fa8-4667-b41b-671876f30e1f\" style=\"color: #0068c3;\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oembed se-l-default\" id=\"SE-c041db94-4107-4c26-9055-770fb41cf8e6\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-oembed se-section-align- se-l-default\">\n                            <div class=\"se-module se-module-oembed se-is-progress\"></div>\n                        </div>\n                    </div>\n                    \n                </div>\n                \n                <div class=\"se-component se-text se-l-default\" id=\"SE-2c8f904e-27b2-45d4-8456-cfb97d45e5a9\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-c8a165e2-8e7c-4140-9bae-d27be8073cc6\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-fd8e67a3-a358-4fb8-95aa-83b9a162719f\" style=\"color: #000000;\"><b>​</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-264d9cc3-5d24-4b0b-b60b-95f4eda42e19\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-9b1fbbe2-c8ef-40d7-8e7b-cf2288d56c93\" style=\"color: #000000;\"><b>발표 내용</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-57f435f0-fa0e-4d28-a472-210bbb03f661\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-666c546b-970e-40df-bd00-82c3eeb4c71b\" style=\"color: #0f0f0f; background-color: #ffffff;\">AI변화와 함께 성장하는 디자인시스템을 소개합니다.</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-6a9e577c-ba92-4dbc-966b-88469f9b2473\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-ef081220-839c-469d-abc9-721cc91768a1\" style=\"color: #0f0f0f;\">​</span></p>\n<ul class=\"se-text-list se-text-list-type-bullet-disc\"><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-0126ec0c-2822-4032-ba6e-d94a8fd81b09\" style=\"line-height: 1.8;\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-91537fcd-315e-41f1-b2bd-969eda1c9bfa\" style=\"color: #000000; background-color: #ffffff;\">AI 산출물이 프로덕션으로 이어지지 못하는 5가지 이유</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-f6b5de45-a1e5-4e71-8506-2e747e337253\" style=\"line-height: 1.8;\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-9240afca-cd32-403b-8273-bedffe0149b6\" style=\"color: #000000; background-color: #ffffff;\">스펙·HTML·이미지 어떤 입력이든 Figma로 모으는 전략과, Figma를 중심에 둔 이유</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9b210840-9788-41a3-90e5-91cc35221a9b\" style=\"line-height: 1.8;\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-e7f59670-09df-4168-adc6-35860bee9964\" style=\"color: #000000; background-color: #ffffff;\">AI와 설계자가 같은 블록으로 조립하도록 컴포넌트·디자인 토큰·design.md로 설계 의도를 표현하는 방법</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-ee7e52d8-1e26-4cd9-bc44-c528b772cc2e\" style=\"line-height: 1.8;\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-6b4ddb4e-92c2-4139-83ba-e244c9704f84\" style=\"color: #000000; background-color: #ffffff;\">접근성·인터랙션·엣지 케이스가 담긴 코드 컴포넌트와 Code Connect로 Figma와 코드를 잇는 방법</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-7fb760fa-d920-4542-b919-1acc7496b8d8\" style=\"line-height: 1.8;\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "AI 산출물을 디자인시스템에 연결해 실서비스화",
+        "tags": [
+          "NAVER Engineering Day",
+          "Figma",
+          "AI"
+        ],
+        "concepts": [
+          "AI와 인간 협업",
+          "디자인 트레이드오프",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI 산출물이 프로덕션으로 이어지지 못하는 5가지 이유를 제시",
+            "timestamp": null
+          },
+          {
+            "point": "스펙·HTML·이미지 등 모든 입력을 Figma에 모으는 전략을 설명",
+            "timestamp": null
+          },
+          {
+            "point": "AI 변화에 맞춰 성장하는 디자인시스템의 필요성을 강조",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Figma 중심 수집 전략을 문서 관리 시스템에 적용해 다양한 파일 형식을 자동으로 메타데이터와 함께 저장하면 검색·재사용 효율이 높아진다",
+          "AI 산출물 전환 장애 5가지 분석을 다른 AI 파이프라인(예: 음성·영상 생성)에도 적용해 실패 원인을 사전 점검하고 개선 방안을 도출한다",
+          "디자인시스템을 AI와 연동하는 방식을 UI 컴포넌트 라이브러리 구축에 활용해 코드와 디자인을 동시에 자동 업데이트하도록 하면 개발·디자인 협업 속도가 빨라진다"
+        ],
+        "quiz": [
+          {
+            "question": "발표에서 AI 산출물을 프로덕션에 연결하기 위해 강조한 전략은 무엇인가?",
+            "options": [
+              "Figma 중심 수집 전략",
+              "데이터 라벨링 자동화",
+              "모델 압축 기술",
+              "클라우드 배포 파이프라인"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 ‘스펙·HTML·이미지 어떤 입력이든 Figma로 모으는 전략과, Figma를 중심에 둔 이유’라고 명시돼 있다."
+          },
+          {
+            "question": "발표가 강조한 디자인시스템의 핵심 역할은 무엇인가?",
+            "options": [
+              "AI 결과를 디자인시스템에 통합해 실서비스화",
+              "서버 인프라 관리",
+              "데이터베이스 설계",
+              "보안 정책 수립"
+            ],
+            "answer_index": 0,
+            "explanation": "‘AI와 디자인시스템이 함께 일하는 법’이라는 제목과 내용에서 AI 산출물을 디자인시스템에 연결해 실서비스로 전환하는 것이 핵심이라고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

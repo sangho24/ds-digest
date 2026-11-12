@@ -1,0 +1,322 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-12",
+  "generated_at": "2026-11-12T14:30:51.727339+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-12.html",
+  "items": [
+    {
+      "id": "179cab533397",
+      "title": "OpenAI's Astra Just Opened The Black Box Of AI",
+      "url": "https://youtu.be/GJ6PMUm5oTA",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-11-07T16:24:47",
+      "summary": "신경망 가중치 직접 편집으로 AI 디버깅·성능 향상",
+      "positioning": null,
+      "tags": [
+        "GPT-6 Astra",
+        "Qwen",
+        "Gemma 3",
+        "Breakout",
+        "OpenAI"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "GPT-6 Astra가 신경망 가중치를 읽어내어 AI의 ‘마음’(weights)을 파악한다",
+          "timestamp": "00:17"
+        },
+        {
+          "point": "가중치를 직접 편집해 자동차 제어 AI가 램프에서 멈추던 문제를 해결한다",
+          "timestamp": "01:07"
+        },
+        {
+          "point": "Qwen 모델의 수학 벤치마크 성능이 8%에서 48%로 급상승한다",
+          "timestamp": "01:50"
+        }
+      ],
+      "ideas": [
+        "추천 시스템 모델의 가중치를 편집해 인기 편향을 일으키는 피드백 루프를 억제한다",
+        "블랙박스 이탈률 예측 모델의 가중치를 분석해 어떤 사용자 세그먼트에 기반했는지 추론한다",
+        "로봇 강화학습 에이전트에서 반복 행동 루프를 유발하는 가중치를 수정해 학습 효율을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "Astra가 Qwen의 수학 성능을 크게 올린 이유는 무엇인가?",
+          "options": [
+            "새로운 수학 지식을 추가했기 때문에",
+            "반복 루프를 억제하도록 가중치를 편집했기 때문에",
+            "모델 크기를 늘렸기 때문에",
+            "학습 데이터를 교체했기 때문에"
+          ],
+          "answer_index": 1,
+          "explanation": "Astra는 Qwen이 수학 문제를 푸는 과정에서 발생하는 무한 반복 루프를 찾아 해당 가중치를 수정해 루프를 억제함으로써 성능을 향상시켰다."
+        },
+        {
+          "question": "Astra의 능력에 대해 발표자가 강조한 제한점은 무엇인가?",
+          "options": [
+            "모든 모델에 대해 동시에 읽고, 고치고, 개선한다",
+            "작은 규모의 실험별 맞춤 설정에서만 동작한다",
+            "어떤 언어 모델도 자동으로 개선한다",
+            "데이터 없이 새 게임 AI를 만든다"
+          ],
+          "answer_index": 1,
+          "explanation": "발표자는 Astra가 읽기·수정·개선 세 가지를 별개의 실험에서, 주로 작은 모델에 대해 맞춤 설정으로 수행한다며 범용성을 과대평가하는 것을 경고했다."
+        }
+      ]
+    },
+    {
+      "id": "f1611729cf42",
+      "title": "A Theory of Policy Optimization in Post-Training: Coverage Collapse and Reference Resets",
+      "url": "https://arxiv.org/abs/2611.14467v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:stat.ML"
+      },
+      "published_at": "2026-11-10T18:31:36",
+      "summary": "샘플링 효율 유지하면서 정책 최적화",
+      "positioning": "이 논문은 LLM 포스트 트레이닝에서 정책 최적화 시 샘플링 효율(coverage) 감소 문제를 해결하고자 한다. 기존 REINFORCE 기반 PPO·GRPO는 KL 정규화에도 불구하고 최적 응답 확률이 급감하는 ‘coverage collapse’를 보였으며, 이를 해결하기 위한 연구가 부족했다. 본 연구는 KL 레퍼런스 리셋을 적용한 Approximate Policy Mirror Descent를 제안해 전통적 방법보다 전역 수렴을 보장함으로써 정책 최적화 이론에 새로운 흐름을 제시한다.",
+      "tags": [
+        "REINFORCE",
+        "PPO",
+        "GRPO",
+        "KL regularization",
+        "APMD"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "REINFORCE 기반 PPO·GRPO는 최적 응답 확률을 거의 0으로 만들며, KL 정규화에도 불구하고 수렴에 지수적 단계가 필요해 coverage collapse가 발생한다.",
+          "timestamp": null
+        },
+        {
+          "point": "KL 레퍼런스를 최신 정책으로 반복 리셋하는 Approximate Policy Mirror Descent(APMD)는 이 현상을 완화하고, 더 강한 정규화를 허용해 전역 최적 수렴을 가능하게 한다.",
+          "timestamp": null
+        },
+        {
+          "point": "소프트맥스 선형 정책에 APMD를 적용하면 PPO·GRPO 변형과 Kimi 모델 학습에 사용되는 제곱 손실 알고리즘이 coverage‑preserving임을 처음으로 증명한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "레퍼런스 리셋을 오프라인 추천 시스템의 정책 업데이트에 적용해 로그 데이터 기반 정책 붕괴를 방지한다.",
+        "이미지 생성 diffusion 모델 파인튜닝 시 coverage‑preserving 정규화를 도입해 다양성을 유지한다",
+        "다중 에이전트 협업 시 APMD 프레임워크를 사용해 각 에이전트가 공유 베이스 정책에서 크게 벗어나지 않도록 하여 안정적인 협조를 촉진한다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 REINFORCE 기반 알고리즘은 KL 정규화에도 불구하고 coverage collapse가 발생하는가?",
+          "options": [
+            "gradient noise가 최적 응답 확률을 감소시킨다",
+            "보상이 최적 응답에만 집중돼 확률이 감소한다",
+            "KL 제약이 너무 약해 정책이 크게 변한다",
+            "업데이트 스텝이 과도하게 크다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 REINFORCE는 보상이 개선돼도 최적 응답 확률을 거의 0으로 만들며, 이는 보상이 최적 응답에만 집중돼 확률이 감소하기 때문이다."
+        },
+        {
+          "question": "APMD에서 레퍼런스 리셋이 제공하는 주요 이점은?",
+          "options": [
+            "학습 속도 감소",
+            "더 강한 정규화 허용",
+            "정책 다양성 증가",
+            "샘플 효율 감소"
+          ],
+          "answer_index": 1,
+          "explanation": "레퍼런스 리셋을 통해 각 KL‑정규화 서브문제를 더 강하게 정규화할 수 있어 최적화가 쉬워지고 전역 수렴이 가능해진다."
+        }
+      ]
+    },
+    {
+      "id": "b80b02d4c9e3",
+      "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+      "url": "https://youtu.be/yY5qf14ddgY",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-11T06:37:19",
+      "summary": "AI 산출물을 디자인 시스템에 연계해 프로덕션 전환 효율화",
+      "positioning": null,
+      "tags": [
+        "네이버 파이낸셜",
+        "피그마",
+        "디자인 토큰",
+        "W3C",
+        "HTML"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "AI를 활용해 기획·설계 산출물을 빠르게 생성하지만, 프로덕션 단계까지 바로 사용하기는 어렵다.",
+          "timestamp": "01:02"
+        },
+        {
+          "point": "디자인 시스템과 피그마를 중심으로 HTML·스펙을 하나로 통합해 코드 매핑을 자동화한다.",
+          "timestamp": "05:15"
+        },
+        {
+          "point": "AI로 아이디어를 빠르게 시험하고, 피그마 기반 검증·보정 과정을 통해 프로덕션 전환 비용을 최소화한다.",
+          "timestamp": "04:31"
+        }
+      ],
+      "ideas": [
+        "디자인 시스템 컴포넌트를 활용해 데이터 파이프라인 UI를 피그마에서 직접 코드로 변환해 개발 속도를 높인다.",
+        "W3C 디자인 토큰 표준을 적용해 AI가 생성한 대시보드의 테마와 색상을 일관되게 관리함으로써 다중 디바이스 UI 품질을 유지한다.",
+        "HTML·마크다운 등 다양한 AI 산출물을 피그마에 통합하여 문서 자동화 파이프라인을 구축하고, 검증 과정을 거쳐 내부 위키에 바로 배포한다."
+      ],
+      "quiz": [
+        {
+          "question": "AI 산출물이 바로 프로덕션에 사용되지 못하는 주요 이유는 무엇인가?",
+          "options": [
+            "R&R과 스펙 정의가 일관되지 않아",
+            "컴퓨팅 파워 부족",
+            "법적 제한",
+            "디자인 토큰 부재"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서는 R&R이 분리되고 스펙 정의가 일관되지 않아 AI 산출물을 바로 프로덕션에 적용하기 어렵다고 설명한다."
+        },
+        {
+          "question": "제안된 워크플로에서 피그마의 핵심 역할은 무엇인가?",
+          "options": [
+            "코드 자동 생성 도구",
+            "HTML·스펙을 통합하고 컴포넌트‑코드 매핑을 가능하게 하는 중앙 허브",
+            "AI 모델 학습 플랫폼",
+            "버전 관리 시스템"
+          ],
+          "answer_index": 1,
+          "explanation": "피그마를 중심에 두어 HTML·스펙을 하나로 전환하고, 디자인 시스템 컴포넌트를 통해 코드와 매핑하는 것이 핵심이라고 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "f20aa0a9a1f2",
+      "title": "Attention to Mamba: A Recipe for Cross-Architecture Distillation",
+      "url": "https://machinelearning.apple.com/research/attention-mamba-distillation",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "Transformer 지식으로 Mamba 효율 구축",
+      "positioning": "Transformer 기반 대형 언어 모델이 메모리·처리량에서 한계를 보이는 상황에서, SSM 계열인 Mamba를 효율적으로 활용하고 기존 사전학습 지식을 이어받기 위한 연구 흐름에 속한다. 기존 교차‑아키텍처 증류는 하이브리드 구조가 필요했지만, 이 논문은 원칙적인 초기화와 두 단계 증류로 순수 Mamba 모델에서도 교사 성능에 근접하도록 만든 것이 새롭다.",
+      "tags": [
+        "Mamba",
+        "State Space Models",
+        "Transformer",
+        "Pythia-1B",
+        "kernel trick"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "단순히 Transformer를 Mamba로 직접 증류하면 성능이 크게 떨어지며, 원활한 전이를 위해서는 원칙적인 초기화가 필요하다.",
+          "timestamp": null
+        },
+        {
+          "point": "저자는 두 단계 증류 방식을 제안한다: Transformer → 커널 트릭을 이용한 선형화된 Attention → Attention 없이 구성된 Mamba 모델.",
+          "timestamp": null
+        },
+        {
+          "point": "제안된 방법으로 만든 Mamba는 교사 모델(Pythia‑1B)과 거의 동일한 perplexity(14.01 vs 13.86)를 달성했으며, 대규모 실험을 통해 확장성과 토큰 할당 민감도를 검증했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "두 단계 증류 방식을 활용해 대형 비전 Transformer의 지식을 경량 CNN으로 옮겨, 엣지 디바이스에서 추론 속도를 크게 높인다.",
+        "SSM 레이어에 원칙적인 초기화를 적용해 음성 인식 모델을 SSM 기반 구조로 전환하면 학습 시간과 메모리 사용량을 감소시킬 수 있다.",
+        "커널 트릭을 이용해 Attention을 선형화한 뒤 SSM으로 변환하면, 실시간 추천 시스템에서 메모리 효율적인 모델을 구현하면서도 정확도를 유지한다."
+      ],
+      "quiz": [
+        {
+          "question": "왜 단순한 Transformer→Mamba 증류는 성능 저하를 일으키는가?",
+          "options": [
+            "Mamba가 Attention 블록을 사용하지 않기 때문이다",
+            "토큰 임베딩 형식이 달라서",
+            "학습 데이터가 부족해서",
+            "옵티마이저가 맞지 않아서"
+          ],
+          "answer_index": 0,
+          "explanation": "Mamba는 순수 SSM 구조이며 Attention을 포함하지 않으므로, 직접 증류하면 구조적 차이로 교사 성능을 유지하기 어렵다."
+        },
+        {
+          "question": "제안된 증류 파이프라인에서 커널 트릭의 역할은 무엇인가?",
+          "options": [
+            "Attention을 선형화하여 중간 모델을 만들기 위해",
+            "모델 크기를 줄이기 위해 가중치를 프루닝한다",
+            "Mamba 파라미터를 초기화한다",
+            "데이터를 증강한다"
+          ],
+          "answer_index": 0,
+          "explanation": "커널 트릭을 사용해 Attention 연산을 선형 커널 형태로 변환함으로써, 선형화된 Attention 모델을 중간 단계로 만들 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "90292fcfced0",
+      "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+      "url": "https://d2.naver.com/helloworld/2568242",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "AI 산출물을 디자인시스템에 연결해 실서비스화",
+      "positioning": null,
+      "tags": [
+        "NAVER Engineering Day",
+        "Figma",
+        "AI"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "AI 산출물이 프로덕션으로 이어지지 못하는 5가지 이유를 제시",
+          "timestamp": null
+        },
+        {
+          "point": "스펙·HTML·이미지 등 모든 입력을 Figma에 모으는 전략을 설명",
+          "timestamp": null
+        },
+        {
+          "point": "AI 변화에 맞춰 성장하는 디자인시스템의 필요성을 강조",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Figma 중심 수집 전략을 문서 관리 시스템에 적용해 다양한 파일 형식을 자동으로 메타데이터와 함께 저장하면 검색·재사용 효율이 높아진다",
+        "AI 산출물 전환 장애 5가지 분석을 다른 AI 파이프라인(예: 음성·영상 생성)에도 적용해 실패 원인을 사전 점검하고 개선 방안을 도출한다",
+        "디자인시스템을 AI와 연동하는 방식을 UI 컴포넌트 라이브러리 구축에 활용해 코드와 디자인을 동시에 자동 업데이트하도록 하면 개발·디자인 협업 속도가 빨라진다"
+      ],
+      "quiz": [
+        {
+          "question": "발표에서 AI 산출물을 프로덕션에 연결하기 위해 강조한 전략은 무엇인가?",
+          "options": [
+            "Figma 중심 수집 전략",
+            "데이터 라벨링 자동화",
+            "모델 압축 기술",
+            "클라우드 배포 파이프라인"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 ‘스펙·HTML·이미지 어떤 입력이든 Figma로 모으는 전략과, Figma를 중심에 둔 이유’라고 명시돼 있다."
+        },
+        {
+          "question": "발표가 강조한 디자인시스템의 핵심 역할은 무엇인가?",
+          "options": [
+            "AI 결과를 디자인시스템에 통합해 실서비스화",
+            "서버 인프라 관리",
+            "데이터베이스 설계",
+            "보안 정책 수립"
+          ],
+          "answer_index": 0,
+          "explanation": "‘AI와 디자인시스템이 함께 일하는 법’이라는 제목과 내용에서 AI 산출물을 디자인시스템에 연결해 실서비스로 전환하는 것이 핵심이라고 설명한다."
+        }
+      ]
+    }
+  ]
+}

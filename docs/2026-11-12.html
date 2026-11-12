@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 12일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 12일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">해석 가능성을 통한 모델 제어</span><span class="concept">모델 파인튜닝</span><span class="concept">강화학습</span><span class="concept">온-폴리시 학습</span><span class="concept">AI 생산성 도구</span><span class="concept">AI와 인간 협업</span><span class="concept">디자인 트레이드오프</span><span class="concept">모듈형 신경망 구조</span><span class="concept">AI 비용 효율성</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">Two Minute Papers</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/GJ6PMUm5oTA" target="_blank" rel="noopener">OpenAI's Astra Just Opened The Black Box Of AI</a>
+        </h2>
+
+        <p class="summary">신경망 가중치 직접 편집으로 AI 디버깅·성능 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">00:17</span>
+            
+            <span>GPT-6 Astra가 신경망 가중치를 읽어내어 AI의 ‘마음’(weights)을 파악한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:07</span>
+            
+            <span>가중치를 직접 편집해 자동차 제어 AI가 램프에서 멈추던 문제를 해결한다</span>
+          </li>
+          
+          <li>
+            <span class="ts">01:50</span>
+            
+            <span>Qwen 모델의 수학 벤치마크 성능이 8%에서 48%로 급상승한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>추천 시스템 모델의 가중치를 편집해 인기 편향을 일으키는 피드백 루프를 억제한다</span></li>
+            
+            <li><span class="box"></span><span>블랙박스 이탈률 예측 모델의 가중치를 분석해 어떤 사용자 세그먼트에 기반했는지 추론한다</span></li>
+            
+            <li><span class="box"></span><span>로봇 강화학습 에이전트에서 반복 행동 루프를 유발하는 가중치를 수정해 학습 효율을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Astra가 Qwen의 수학 성능을 크게 올린 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 새로운 수학 지식을 추가했기 때문에</div>
+            
+            <div class="q-opt">② 반복 루프를 억제하도록 가중치를 편집했기 때문에</div>
+            
+            <div class="q-opt">③ 모델 크기를 늘렸기 때문에</div>
+            
+            <div class="q-opt">④ 학습 데이터를 교체했기 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 반복 루프를 억제하도록 가중치를 편집했기 때문에</div>
+              <div class="why">Astra는 Qwen이 수학 문제를 푸는 과정에서 발생하는 무한 반복 루프를 찾아 해당 가중치를 수정해 루프를 억제함으로써 성능을 향상시켰다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Astra의 능력에 대해 발표자가 강조한 제한점은 무엇인가?</div>
+            
+            <div class="q-opt">① 모든 모델에 대해 동시에 읽고, 고치고, 개선한다</div>
+            
+            <div class="q-opt">② 작은 규모의 실험별 맞춤 설정에서만 동작한다</div>
+            
+            <div class="q-opt">③ 어떤 언어 모델도 자동으로 개선한다</div>
+            
+            <div class="q-opt">④ 데이터 없이 새 게임 AI를 만든다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 작은 규모의 실험별 맞춤 설정에서만 동작한다</div>
+              <div class="why">발표자는 Astra가 읽기·수정·개선 세 가지를 별개의 실험에서, 주로 작은 모델에 대해 맞춤 설정으로 수행한다며 범용성을 과대평가하는 것을 경고했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">GPT-6 Astra</span><span class="tag">Qwen</span><span class="tag">Gemma 3</span><span class="tag">Breakout</span><span class="tag">OpenAI</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:stat.ML</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.14467v1" target="_blank" rel="noopener">A Theory of Policy Optimization in Post-Training: Coverage Collapse and Reference Resets</a>
+        </h2>
+
+        <p class="summary">샘플링 효율 유지하면서 정책 최적화</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>이 논문은 LLM 포스트 트레이닝에서 정책 최적화 시 샘플링 효율(coverage) 감소 문제를 해결하고자 한다. 기존 REINFORCE 기반 PPO·GRPO는 KL 정규화에도 불구하고 최적 응답 확률이 급감하는 ‘coverage collapse’를 보였으며, 이를 해결하기 위한 연구가 부족했다. 본 연구는 KL 레퍼런스 리셋을 적용한 Approximate Policy Mirror Descent를 제안해 전통적 방법보다 전역 수렴을 보장함으로써 정책 최적화 이론에 새로운 흐름을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>REINFORCE 기반 PPO·GRPO는 최적 응답 확률을 거의 0으로 만들며, KL 정규화에도 불구하고 수렴에 지수적 단계가 필요해 coverage collapse가 발생한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>KL 레퍼런스를 최신 정책으로 반복 리셋하는 Approximate Policy Mirror Descent(APMD)는 이 현상을 완화하고, 더 강한 정규화를 허용해 전역 최적 수렴을 가능하게 한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>소프트맥스 선형 정책에 APMD를 적용하면 PPO·GRPO 변형과 Kimi 모델 학습에 사용되는 제곱 손실 알고리즘이 coverage‑preserving임을 처음으로 증명한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>레퍼런스 리셋을 오프라인 추천 시스템의 정책 업데이트에 적용해 로그 데이터 기반 정책 붕괴를 방지한다.</span></li>
+            
+            <li><span class="box"></span><span>이미지 생성 diffusion 모델 파인튜닝 시 coverage‑preserving 정규화를 도입해 다양성을 유지한다</span></li>
+            
+            <li><span class="box"></span><span>다중 에이전트 협업 시 APMD 프레임워크를 사용해 각 에이전트가 공유 베이스 정책에서 크게 벗어나지 않도록 하여 안정적인 협조를 촉진한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 REINFORCE 기반 알고리즘은 KL 정규화에도 불구하고 coverage collapse가 발생하는가?</div>
+            
+            <div class="q-opt">① gradient noise가 최적 응답 확률을 감소시킨다</div>
+            
+            <div class="q-opt">② 보상이 최적 응답에만 집중돼 확률이 감소한다</div>
+            
+            <div class="q-opt">③ KL 제약이 너무 약해 정책이 크게 변한다</div>
+            
+            <div class="q-opt">④ 업데이트 스텝이 과도하게 크다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 보상이 최적 응답에만 집중돼 확률이 감소한다</div>
+              <div class="why">본문에 따르면 REINFORCE는 보상이 개선돼도 최적 응답 확률을 거의 0으로 만들며, 이는 보상이 최적 응답에만 집중돼 확률이 감소하기 때문이다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">APMD에서 레퍼런스 리셋이 제공하는 주요 이점은?</div>
+            
+            <div class="q-opt">① 학습 속도 감소</div>
+            
+            <div class="q-opt">② 더 강한 정규화 허용</div>
+            
+            <div class="q-opt">③ 정책 다양성 증가</div>
+            
+            <div class="q-opt">④ 샘플 효율 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 더 강한 정규화 허용</div>
+              <div class="why">레퍼런스 리셋을 통해 각 KL‑정규화 서브문제를 더 강하게 정규화할 수 있어 최적화가 쉬워지고 전역 수렴이 가능해진다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">REINFORCE</span><span class="tag">PPO</span><span class="tag">GRPO</span><span class="tag">KL regularization</span><span class="tag">APMD</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">NAVER D2</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/yY5qf14ddgY" target="_blank" rel="noopener">AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법</a>
+        </h2>
+
+        <p class="summary">AI 산출물을 디자인 시스템에 연계해 프로덕션 전환 효율화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">01:02</span>
+            
+            <span>AI를 활용해 기획·설계 산출물을 빠르게 생성하지만, 프로덕션 단계까지 바로 사용하기는 어렵다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:15</span>
+            
+            <span>디자인 시스템과 피그마를 중심으로 HTML·스펙을 하나로 통합해 코드 매핑을 자동화한다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">04:31</span>
+            
+            <span>AI로 아이디어를 빠르게 시험하고, 피그마 기반 검증·보정 과정을 통해 프로덕션 전환 비용을 최소화한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>디자인 시스템 컴포넌트를 활용해 데이터 파이프라인 UI를 피그마에서 직접 코드로 변환해 개발 속도를 높인다.</span></li>
+            
+            <li><span class="box"></span><span>W3C 디자인 토큰 표준을 적용해 AI가 생성한 대시보드의 테마와 색상을 일관되게 관리함으로써 다중 디바이스 UI 품질을 유지한다.</span></li>
+            
+            <li><span class="box"></span><span>HTML·마크다운 등 다양한 AI 산출물을 피그마에 통합하여 문서 자동화 파이프라인을 구축하고, 검증 과정을 거쳐 내부 위키에 바로 배포한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI 산출물이 바로 프로덕션에 사용되지 못하는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① R&R과 스펙 정의가 일관되지 않아</div>
+            
+            <div class="q-opt">② 컴퓨팅 파워 부족</div>
+            
+            <div class="q-opt">③ 법적 제한</div>
+            
+            <div class="q-opt">④ 디자인 토큰 부재</div>
+            
+            <div class="q-answer">
+              <div class="correct">① R&R과 스펙 정의가 일관되지 않아</div>
+              <div class="why">본문에서는 R&R이 분리되고 스펙 정의가 일관되지 않아 AI 산출물을 바로 프로덕션에 적용하기 어렵다고 설명한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">제안된 워크플로에서 피그마의 핵심 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① 코드 자동 생성 도구</div>
+            
+            <div class="q-opt">② HTML·스펙을 통합하고 컴포넌트‑코드 매핑을 가능하게 하는 중앙 허브</div>
+            
+            <div class="q-opt">③ AI 모델 학습 플랫폼</div>
+            
+            <div class="q-opt">④ 버전 관리 시스템</div>
+            
+            <div class="q-answer">
+              <div class="correct">② HTML·스펙을 통합하고 컴포넌트‑코드 매핑을 가능하게 하는 중앙 허브</div>
+              <div class="why">피그마를 중심에 두어 HTML·스펙을 하나로 전환하고, 디자인 시스템 컴포넌트를 통해 코드와 매핑하는 것이 핵심이라고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">네이버 파이낸셜</span><span class="tag">피그마</span><span class="tag">디자인 토큰</span><span class="tag">W3C</span><span class="tag">HTML</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://machinelearning.apple.com/research/attention-mamba-distillation" target="_blank" rel="noopener">Attention to Mamba: A Recipe for Cross-Architecture Distillation</a>
+        </h2>
+
+        <p class="summary">Transformer 지식으로 Mamba 효율 구축</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>Transformer 기반 대형 언어 모델이 메모리·처리량에서 한계를 보이는 상황에서, SSM 계열인 Mamba를 효율적으로 활용하고 기존 사전학습 지식을 이어받기 위한 연구 흐름에 속한다. 기존 교차‑아키텍처 증류는 하이브리드 구조가 필요했지만, 이 논문은 원칙적인 초기화와 두 단계 증류로 순수 Mamba 모델에서도 교사 성능에 근접하도록 만든 것이 새롭다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단순히 Transformer를 Mamba로 직접 증류하면 성능이 크게 떨어지며, 원활한 전이를 위해서는 원칙적인 초기화가 필요하다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>저자는 두 단계 증류 방식을 제안한다: Transformer → 커널 트릭을 이용한 선형화된 Attention → Attention 없이 구성된 Mamba 모델.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>제안된 방법으로 만든 Mamba는 교사 모델(Pythia‑1B)과 거의 동일한 perplexity(14.01 vs 13.86)를 달성했으며, 대규모 실험을 통해 확장성과 토큰 할당 민감도를 검증했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>두 단계 증류 방식을 활용해 대형 비전 Transformer의 지식을 경량 CNN으로 옮겨, 엣지 디바이스에서 추론 속도를 크게 높인다.</span></li>
+            
+            <li><span class="box"></span><span>SSM 레이어에 원칙적인 초기화를 적용해 음성 인식 모델을 SSM 기반 구조로 전환하면 학습 시간과 메모리 사용량을 감소시킬 수 있다.</span></li>
+            
+            <li><span class="box"></span><span>커널 트릭을 이용해 Attention을 선형화한 뒤 SSM으로 변환하면, 실시간 추천 시스템에서 메모리 효율적인 모델을 구현하면서도 정확도를 유지한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 단순한 Transformer→Mamba 증류는 성능 저하를 일으키는가?</div>
+            
+            <div class="q-opt">① Mamba가 Attention 블록을 사용하지 않기 때문이다</div>
+            
+            <div class="q-opt">② 토큰 임베딩 형식이 달라서</div>
+            
+            <div class="q-opt">③ 학습 데이터가 부족해서</div>
+            
+            <div class="q-opt">④ 옵티마이저가 맞지 않아서</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Mamba가 Attention 블록을 사용하지 않기 때문이다</div>
+              <div class="why">Mamba는 순수 SSM 구조이며 Attention을 포함하지 않으므로, 직접 증류하면 구조적 차이로 교사 성능을 유지하기 어렵다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">제안된 증류 파이프라인에서 커널 트릭의 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① Attention을 선형화하여 중간 모델을 만들기 위해</div>
+            
+            <div class="q-opt">② 모델 크기를 줄이기 위해 가중치를 프루닝한다</div>
+            
+            <div class="q-opt">③ Mamba 파라미터를 초기화한다</div>
+            
+            <div class="q-opt">④ 데이터를 증강한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Attention을 선형화하여 중간 모델을 만들기 위해</div>
+              <div class="why">커널 트릭을 사용해 Attention 연산을 선형 커널 형태로 변환함으로써, 선형화된 Attention 모델을 중간 단계로 만들 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Mamba</span><span class="tag">State Space Models</span><span class="tag">Transformer</span><span class="tag">Pythia-1B</span><span class="tag">kernel trick</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/2568242" target="_blank" rel="noopener">AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법</a>
+        </h2>
+
+        <p class="summary">AI 산출물을 디자인시스템에 연결해 실서비스화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 산출물이 프로덕션으로 이어지지 못하는 5가지 이유를 제시</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>스펙·HTML·이미지 등 모든 입력을 Figma에 모으는 전략을 설명</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 변화에 맞춰 성장하는 디자인시스템의 필요성을 강조</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Figma 중심 수집 전략을 문서 관리 시스템에 적용해 다양한 파일 형식을 자동으로 메타데이터와 함께 저장하면 검색·재사용 효율이 높아진다</span></li>
+            
+            <li><span class="box"></span><span>AI 산출물 전환 장애 5가지 분석을 다른 AI 파이프라인(예: 음성·영상 생성)에도 적용해 실패 원인을 사전 점검하고 개선 방안을 도출한다</span></li>
+            
+            <li><span class="box"></span><span>디자인시스템을 AI와 연동하는 방식을 UI 컴포넌트 라이브러리 구축에 활용해 코드와 디자인을 동시에 자동 업데이트하도록 하면 개발·디자인 협업 속도가 빨라진다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">발표에서 AI 산출물을 프로덕션에 연결하기 위해 강조한 전략은 무엇인가?</div>
+            
+            <div class="q-opt">① Figma 중심 수집 전략</div>
+            
+            <div class="q-opt">② 데이터 라벨링 자동화</div>
+            
+            <div class="q-opt">③ 모델 압축 기술</div>
+            
+            <div class="q-opt">④ 클라우드 배포 파이프라인</div>
+            
+            <div class="q-answer">
+              <div class="correct">① Figma 중심 수집 전략</div>
+              <div class="why">본문에 ‘스펙·HTML·이미지 어떤 입력이든 Figma로 모으는 전략과, Figma를 중심에 둔 이유’라고 명시돼 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">발표가 강조한 디자인시스템의 핵심 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① AI 결과를 디자인시스템에 통합해 실서비스화</div>
+            
+            <div class="q-opt">② 서버 인프라 관리</div>
+            
+            <div class="q-opt">③ 데이터베이스 설계</div>
+            
+            <div class="q-opt">④ 보안 정책 수립</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI 결과를 디자인시스템에 통합해 실서비스화</div>
+              <div class="why">‘AI와 디자인시스템이 함께 일하는 법’이라는 제목과 내용에서 AI 산출물을 디자인시스템에 연결해 실서비스로 전환하는 것이 핵심이라고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NAVER Engineering Day</span><span class="tag">Figma</span><span class="tag">AI</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

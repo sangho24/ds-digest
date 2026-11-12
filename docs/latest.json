@@ -1,311 +1,320 @@
 {
   "contract_version": 1,
-  "date": "2026-11-11",
-  "generated_at": "2026-11-11T11:07:33.440546+09:00",
+  "date": "2026-11-12",
+  "generated_at": "2026-11-12T14:30:51.727339+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-11.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-12.html",
   "items": [
     {
-      "id": "332469a1ce59",
-      "title": "AI 스킬 만들기 10계명: Figma→Code 자동화 실전기",
-      "url": "https://d2.naver.com/helloworld/8562180",
+      "id": "179cab533397",
+      "title": "OpenAI's Astra Just Opened The Black Box Of AI",
+      "url": "https://youtu.be/GJ6PMUm5oTA",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-11-07T16:24:47",
+      "summary": "신경망 가중치 직접 편집으로 AI 디버깅·성능 향상",
+      "positioning": null,
+      "tags": [
+        "GPT-6 Astra",
+        "Qwen",
+        "Gemma 3",
+        "Breakout",
+        "OpenAI"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "GPT-6 Astra가 신경망 가중치를 읽어내어 AI의 ‘마음’(weights)을 파악한다",
+          "timestamp": "00:17"
+        },
+        {
+          "point": "가중치를 직접 편집해 자동차 제어 AI가 램프에서 멈추던 문제를 해결한다",
+          "timestamp": "01:07"
+        },
+        {
+          "point": "Qwen 모델의 수학 벤치마크 성능이 8%에서 48%로 급상승한다",
+          "timestamp": "01:50"
+        }
+      ],
+      "ideas": [
+        "추천 시스템 모델의 가중치를 편집해 인기 편향을 일으키는 피드백 루프를 억제한다",
+        "블랙박스 이탈률 예측 모델의 가중치를 분석해 어떤 사용자 세그먼트에 기반했는지 추론한다",
+        "로봇 강화학습 에이전트에서 반복 행동 루프를 유발하는 가중치를 수정해 학습 효율을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "Astra가 Qwen의 수학 성능을 크게 올린 이유는 무엇인가?",
+          "options": [
+            "새로운 수학 지식을 추가했기 때문에",
+            "반복 루프를 억제하도록 가중치를 편집했기 때문에",
+            "모델 크기를 늘렸기 때문에",
+            "학습 데이터를 교체했기 때문에"
+          ],
+          "answer_index": 1,
+          "explanation": "Astra는 Qwen이 수학 문제를 푸는 과정에서 발생하는 무한 반복 루프를 찾아 해당 가중치를 수정해 루프를 억제함으로써 성능을 향상시켰다."
+        },
+        {
+          "question": "Astra의 능력에 대해 발표자가 강조한 제한점은 무엇인가?",
+          "options": [
+            "모든 모델에 대해 동시에 읽고, 고치고, 개선한다",
+            "작은 규모의 실험별 맞춤 설정에서만 동작한다",
+            "어떤 언어 모델도 자동으로 개선한다",
+            "데이터 없이 새 게임 AI를 만든다"
+          ],
+          "answer_index": 1,
+          "explanation": "발표자는 Astra가 읽기·수정·개선 세 가지를 별개의 실험에서, 주로 작은 모델에 대해 맞춤 설정으로 수행한다며 범용성을 과대평가하는 것을 경고했다."
+        }
+      ]
+    },
+    {
+      "id": "f1611729cf42",
+      "title": "A Theory of Policy Optimization in Post-Training: Coverage Collapse and Reference Resets",
+      "url": "https://arxiv.org/abs/2611.14467v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:stat.ML"
+      },
+      "published_at": "2026-11-10T18:31:36",
+      "summary": "샘플링 효율 유지하면서 정책 최적화",
+      "positioning": "이 논문은 LLM 포스트 트레이닝에서 정책 최적화 시 샘플링 효율(coverage) 감소 문제를 해결하고자 한다. 기존 REINFORCE 기반 PPO·GRPO는 KL 정규화에도 불구하고 최적 응답 확률이 급감하는 ‘coverage collapse’를 보였으며, 이를 해결하기 위한 연구가 부족했다. 본 연구는 KL 레퍼런스 리셋을 적용한 Approximate Policy Mirror Descent를 제안해 전통적 방법보다 전역 수렴을 보장함으로써 정책 최적화 이론에 새로운 흐름을 제시한다.",
+      "tags": [
+        "REINFORCE",
+        "PPO",
+        "GRPO",
+        "KL regularization",
+        "APMD"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "REINFORCE 기반 PPO·GRPO는 최적 응답 확률을 거의 0으로 만들며, KL 정규화에도 불구하고 수렴에 지수적 단계가 필요해 coverage collapse가 발생한다.",
+          "timestamp": null
+        },
+        {
+          "point": "KL 레퍼런스를 최신 정책으로 반복 리셋하는 Approximate Policy Mirror Descent(APMD)는 이 현상을 완화하고, 더 강한 정규화를 허용해 전역 최적 수렴을 가능하게 한다.",
+          "timestamp": null
+        },
+        {
+          "point": "소프트맥스 선형 정책에 APMD를 적용하면 PPO·GRPO 변형과 Kimi 모델 학습에 사용되는 제곱 손실 알고리즘이 coverage‑preserving임을 처음으로 증명한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "레퍼런스 리셋을 오프라인 추천 시스템의 정책 업데이트에 적용해 로그 데이터 기반 정책 붕괴를 방지한다.",
+        "이미지 생성 diffusion 모델 파인튜닝 시 coverage‑preserving 정규화를 도입해 다양성을 유지한다",
+        "다중 에이전트 협업 시 APMD 프레임워크를 사용해 각 에이전트가 공유 베이스 정책에서 크게 벗어나지 않도록 하여 안정적인 협조를 촉진한다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 REINFORCE 기반 알고리즘은 KL 정규화에도 불구하고 coverage collapse가 발생하는가?",
+          "options": [
+            "gradient noise가 최적 응답 확률을 감소시킨다",
+            "보상이 최적 응답에만 집중돼 확률이 감소한다",
+            "KL 제약이 너무 약해 정책이 크게 변한다",
+            "업데이트 스텝이 과도하게 크다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 REINFORCE는 보상이 개선돼도 최적 응답 확률을 거의 0으로 만들며, 이는 보상이 최적 응답에만 집중돼 확률이 감소하기 때문이다."
+        },
+        {
+          "question": "APMD에서 레퍼런스 리셋이 제공하는 주요 이점은?",
+          "options": [
+            "학습 속도 감소",
+            "더 강한 정규화 허용",
+            "정책 다양성 증가",
+            "샘플 효율 감소"
+          ],
+          "answer_index": 1,
+          "explanation": "레퍼런스 리셋을 통해 각 KL‑정규화 서브문제를 더 강하게 정규화할 수 있어 최적화가 쉬워지고 전역 수렴이 가능해진다."
+        }
+      ]
+    },
+    {
+      "id": "b80b02d4c9e3",
+      "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+      "url": "https://youtu.be/yY5qf14ddgY",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-11T06:37:19",
+      "summary": "AI 산출물을 디자인 시스템에 연계해 프로덕션 전환 효율화",
+      "positioning": null,
+      "tags": [
+        "네이버 파이낸셜",
+        "피그마",
+        "디자인 토큰",
+        "W3C",
+        "HTML"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "AI를 활용해 기획·설계 산출물을 빠르게 생성하지만, 프로덕션 단계까지 바로 사용하기는 어렵다.",
+          "timestamp": "01:02"
+        },
+        {
+          "point": "디자인 시스템과 피그마를 중심으로 HTML·스펙을 하나로 통합해 코드 매핑을 자동화한다.",
+          "timestamp": "05:15"
+        },
+        {
+          "point": "AI로 아이디어를 빠르게 시험하고, 피그마 기반 검증·보정 과정을 통해 프로덕션 전환 비용을 최소화한다.",
+          "timestamp": "04:31"
+        }
+      ],
+      "ideas": [
+        "디자인 시스템 컴포넌트를 활용해 데이터 파이프라인 UI를 피그마에서 직접 코드로 변환해 개발 속도를 높인다.",
+        "W3C 디자인 토큰 표준을 적용해 AI가 생성한 대시보드의 테마와 색상을 일관되게 관리함으로써 다중 디바이스 UI 품질을 유지한다.",
+        "HTML·마크다운 등 다양한 AI 산출물을 피그마에 통합하여 문서 자동화 파이프라인을 구축하고, 검증 과정을 거쳐 내부 위키에 바로 배포한다."
+      ],
+      "quiz": [
+        {
+          "question": "AI 산출물이 바로 프로덕션에 사용되지 못하는 주요 이유는 무엇인가?",
+          "options": [
+            "R&R과 스펙 정의가 일관되지 않아",
+            "컴퓨팅 파워 부족",
+            "법적 제한",
+            "디자인 토큰 부재"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에서는 R&R이 분리되고 스펙 정의가 일관되지 않아 AI 산출물을 바로 프로덕션에 적용하기 어렵다고 설명한다."
+        },
+        {
+          "question": "제안된 워크플로에서 피그마의 핵심 역할은 무엇인가?",
+          "options": [
+            "코드 자동 생성 도구",
+            "HTML·스펙을 통합하고 컴포넌트‑코드 매핑을 가능하게 하는 중앙 허브",
+            "AI 모델 학습 플랫폼",
+            "버전 관리 시스템"
+          ],
+          "answer_index": 1,
+          "explanation": "피그마를 중심에 두어 HTML·스펙을 하나로 전환하고, 디자인 시스템 컴포넌트를 통해 코드와 매핑하는 것이 핵심이라고 언급한다."
+        }
+      ]
+    },
+    {
+      "id": "f20aa0a9a1f2",
+      "title": "Attention to Mamba: A Recipe for Cross-Architecture Distillation",
+      "url": "https://machinelearning.apple.com/research/attention-mamba-distillation",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "Transformer 지식으로 Mamba 효율 구축",
+      "positioning": "Transformer 기반 대형 언어 모델이 메모리·처리량에서 한계를 보이는 상황에서, SSM 계열인 Mamba를 효율적으로 활용하고 기존 사전학습 지식을 이어받기 위한 연구 흐름에 속한다. 기존 교차‑아키텍처 증류는 하이브리드 구조가 필요했지만, 이 논문은 원칙적인 초기화와 두 단계 증류로 순수 Mamba 모델에서도 교사 성능에 근접하도록 만든 것이 새롭다.",
+      "tags": [
+        "Mamba",
+        "State Space Models",
+        "Transformer",
+        "Pythia-1B",
+        "kernel trick"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "단순히 Transformer를 Mamba로 직접 증류하면 성능이 크게 떨어지며, 원활한 전이를 위해서는 원칙적인 초기화가 필요하다.",
+          "timestamp": null
+        },
+        {
+          "point": "저자는 두 단계 증류 방식을 제안한다: Transformer → 커널 트릭을 이용한 선형화된 Attention → Attention 없이 구성된 Mamba 모델.",
+          "timestamp": null
+        },
+        {
+          "point": "제안된 방법으로 만든 Mamba는 교사 모델(Pythia‑1B)과 거의 동일한 perplexity(14.01 vs 13.86)를 달성했으며, 대규모 실험을 통해 확장성과 토큰 할당 민감도를 검증했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "두 단계 증류 방식을 활용해 대형 비전 Transformer의 지식을 경량 CNN으로 옮겨, 엣지 디바이스에서 추론 속도를 크게 높인다.",
+        "SSM 레이어에 원칙적인 초기화를 적용해 음성 인식 모델을 SSM 기반 구조로 전환하면 학습 시간과 메모리 사용량을 감소시킬 수 있다.",
+        "커널 트릭을 이용해 Attention을 선형화한 뒤 SSM으로 변환하면, 실시간 추천 시스템에서 메모리 효율적인 모델을 구현하면서도 정확도를 유지한다."
+      ],
+      "quiz": [
+        {
+          "question": "왜 단순한 Transformer→Mamba 증류는 성능 저하를 일으키는가?",
+          "options": [
+            "Mamba가 Attention 블록을 사용하지 않기 때문이다",
+            "토큰 임베딩 형식이 달라서",
+            "학습 데이터가 부족해서",
+            "옵티마이저가 맞지 않아서"
+          ],
+          "answer_index": 0,
+          "explanation": "Mamba는 순수 SSM 구조이며 Attention을 포함하지 않으므로, 직접 증류하면 구조적 차이로 교사 성능을 유지하기 어렵다."
+        },
+        {
+          "question": "제안된 증류 파이프라인에서 커널 트릭의 역할은 무엇인가?",
+          "options": [
+            "Attention을 선형화하여 중간 모델을 만들기 위해",
+            "모델 크기를 줄이기 위해 가중치를 프루닝한다",
+            "Mamba 파라미터를 초기화한다",
+            "데이터를 증강한다"
+          ],
+          "answer_index": 0,
+          "explanation": "커널 트릭을 사용해 Attention 연산을 선형 커널 형태로 변환함으로써, 선형화된 Attention 모델을 중간 단계로 만들 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "90292fcfced0",
+      "title": "AI 산출물이 프로덕션이 되기까지-AI와 디자인시스템이 함께 일하는 법",
+      "url": "https://d2.naver.com/helloworld/2568242",
       "source": {
         "type": "rss",
         "name": "D2 Blog"
       },
       "published_at": null,
-      "summary": "프롬프트 하나로 디자인 토큰·에셋 자동 적용, UI 코드 품질 향상",
+      "summary": "AI 산출물을 디자인시스템에 연결해 실서비스화",
       "positioning": null,
       "tags": [
-        "Claude",
+        "NAVER Engineering Day",
         "Figma",
-        "Android",
-        "design-to-ui",
-        "design token"
+        "AI"
       ],
-      "relevance": 9,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "Claude의 Agent Skills를 활용해 Figma 디자인을 Android UI 코드로 자동 변환한다",
+          "point": "AI 산출물이 프로덕션으로 이어지지 못하는 5가지 이유를 제시",
           "timestamp": null
         },
         {
-          "point": "프로젝트 맞춤 스킬을 범용 스킬 위에 규칙을 추가해 디자인 토큰 사용과 에셋 추출을 크게 개선한다",
+          "point": "스펙·HTML·이미지 등 모든 입력을 Figma에 모으는 전략을 설명",
           "timestamp": null
         },
         {
-          "point": "실험에서 맞춤 스킬은 디자인 토큰 참조 39회, drawable 1개를 생성해 품질 차이를 입증했다",
+          "point": "AI 변화에 맞춰 성장하는 디자인시스템의 필요성을 강조",
           "timestamp": null
         }
       ],
       "ideas": [
-        "Sketch 디자인을 iOS SwiftUI 코드로 변환하는 맞춤 스킬을 만들어 프로젝트 고유 UI 컴포넌트와 색상 토큰을 자동 적용한다",
-        "아키텍처 다이어그램을 입력으로 받아 Terraform 인프라 코드와 네이밍 규칙을 적용하는 맞춤 스킬을 구축한다",
-        "비즈니스 프로세스 플로우차트를 BPMN XML로 변환하면서 회사 고유 작업 ID와 승인 규칙을 삽입하는 맞춤 스킬을 만든다"
+        "Figma 중심 수집 전략을 문서 관리 시스템에 적용해 다양한 파일 형식을 자동으로 메타데이터와 함께 저장하면 검색·재사용 효율이 높아진다",
+        "AI 산출물 전환 장애 5가지 분석을 다른 AI 파이프라인(예: 음성·영상 생성)에도 적용해 실패 원인을 사전 점검하고 개선 방안을 도출한다",
+        "디자인시스템을 AI와 연동하는 방식을 UI 컴포넌트 라이브러리 구축에 활용해 코드와 디자인을 동시에 자동 업데이트하도록 하면 개발·디자인 협업 속도가 빨라진다"
       ],
       "quiz": [
         {
-          "question": "왜 맞춤 스킬이 범용 스킬보다 더 많은 디자인 토큰을 참조할 수 있었나요?",
+          "question": "발표에서 AI 산출물을 프로덕션에 연결하기 위해 강조한 전략은 무엇인가?",
           "options": [
-            "프로젝트 전용 토큰 매핑 규칙을 추가했기 때문",
-            "더 큰 언어 모델을 사용했기 때문",
-            "프롬프트 길이를 늘렸기 때문",
-            "외부 데이터베이스에 접근했기 때문"
+            "Figma 중심 수집 전략",
+            "데이터 라벨링 자동화",
+            "모델 압축 기술",
+            "클라우드 배포 파이프라인"
           ],
           "answer_index": 0,
-          "explanation": "맞춤 스킬은 범용 스킬 위에 프로젝트의 디자인 토큰과 에셋 규칙을 명시적으로 추가했기 때문에 색상 토큰을 더 많이 참조한다."
+          "explanation": "본문에 ‘스펙·HTML·이미지 어떤 입력이든 Figma로 모으는 전략과, Figma를 중심에 둔 이유’라고 명시돼 있다."
         },
         {
-          "question": "실험에서 범용 스킬이 drawable 파일을 생성하지 못한 것을 나타내는 지표는 무엇인가요?",
+          "question": "발표가 강조한 디자인시스템의 핵심 역할은 무엇인가?",
           "options": [
-            "colorScheme 참조 횟수",
-            "drawable 생성 개수",
-            "프롬프트 길이",
-            "모델 버전"
-          ],
-          "answer_index": 1,
-          "explanation": "표에서 drawable 열이 0으로 표시되어 범용 스킬이 에셋 파일을 생성하지 못했음을 보여준다."
-        }
-      ]
-    },
-    {
-      "id": "bf4cabd77855",
-      "title": "NIFT-SQL: Customer-Supervised Table Scoring for Enterprise Text-to-SQL Retrieval",
-      "url": "https://arxiv.org/abs/2611.12731v1",
-      "source": {
-        "type": "rss",
-        "name": "arXiv:cs.IR"
-      },
-      "published_at": "2026-11-09T17:18:21",
-      "summary": "고객 질문 기반 테이블 검색으로 SQL 자동화 정확도 향상",
-      "positioning": "기업 환경에서 질문에 필요한 테이블을 찾는 것이 스키마가 방대해질수록 어려워진다. 기존에는 일반 검색이나 단일 모델에 의존했지만, NIFT‑SQL은 고객별 질문 데이터와 메타데이터를 활용해 하이브리드 검색과 대규모 크로스 인코더 점수를 로지스틱 회귀로 결합한다. 이는 텍스트‑투‑SQL 파이프라인에서 테이블 검색 정확도를 크게 높이는 최신 접근이다.",
-      "tags": [
-        "NIFT-SQL",
-        "BEAVER",
-        "LiveSQLBench",
-        "cross-encoder",
-        "zero-shot reranker"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "고객별 질문과 스키마 메타데이터만으로 테이블 검색 모델을 학습하면 검색 정확도가 크게 향상된다.",
-          "timestamp": null
-        },
-        {
-          "point": "NIFT‑SQL은 하이브리드 검색과 560M 크로스 인코더 점수를 로지스틱 회귀로 결합해 top‑15 정확도를 69‑90% 수준으로 끌어올렸다.",
-          "timestamp": null
-        },
-        {
-          "point": "라벨이 없는 상황에서도 제로샷 8B 리랭커를 추가 특징으로 활용하면 높은 정확도를 유지할 수 있다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "고객 질문 기반 테이블 스코어링을 데이터 레이크 카탈로그 검색에 적용해 관련 데이터셋 발견 효율을 높인다.",
-        "하이브리드 검색·크로스 인코더·로지스틱 회귀 결합 방식을 마이크로서비스 API 추천 시스템에 도입해 적절한 서비스 엔드포인트를 빠르게 찾는다.",
-        "제로샷 대규모 리랭커를 법률 문서 검색에 특징으로 활용해 라벨링 없이도 높은 정밀도 검색을 구현한다."
-      ],
-      "quiz": [
-        {
-          "question": "NIFT‑SQL에서 테이블 필요성을 판단하기 위해 사용된 결합 방식은 무엇인가?",
-          "options": [
-            "단순 평균 점수",
-            "로지스틱 회귀",
-            "SVM",
-            "랜덤 포레스트"
-          ],
-          "answer_index": 1,
-          "explanation": "하이브리드 검색 점수와 크로스 인코더 점수를 로지스틱 회귀 모델에 입력해 최종 스코어를 산출한다."
-        },
-        {
-          "question": "제로샷 8B 리랭커를 추가했을 때 기대되는 주요 효과는?",
-          "options": [
-            "라벨이 없는 상황에서도 정확도 향상",
-            "모델 크기 감소",
-            "학습 시간 증가 없이 성능 저하",
-            "데이터베이스 별 라우팅 불가"
+            "AI 결과를 디자인시스템에 통합해 실서비스화",
+            "서버 인프라 관리",
+            "데이터베이스 설계",
+            "보안 정책 수립"
           ],
           "answer_index": 0,
-          "explanation": "제로샷 리랭커는 라벨이 없어도 높은 정확도를 제공해 라벨링 비용 없이도 성능을 끌어올릴 수 있다."
-        }
-      ]
-    },
-    {
-      "id": "20eeacfd1d94",
-      "title": "내가 보낸 메세지를 상대방이 받기까지: 전국민이 사용하는 메신저에서 릴레이 서비스 구축하기 | 안정성과 인프라",
-      "url": "https://youtu.be/bgRi3wlOj6Q",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-10-30T06:00:37",
-      "summary": "공용 릴레이 모듈·라우터로 확장·캐시 효율 개선",
-      "positioning": null,
-      "tags": [
-        "카카오톡",
-        "APNS",
-        "FCM",
-        "콘시스턴트 해시",
-        "세션 캐시"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "기존 세션 간 요청이 초당 65만 건 규모로 처리되고 있다",
-          "timestamp": "01:06"
-        },
-        {
-          "point": "풀 메시 구조는 하나의 노드 장애가 전체 서비스 지연을 초래한다",
-          "timestamp": "03:10"
-        },
-        {
-          "point": "그룹 내 서버 고정을 통해 캐시 항목이 3배 감소하고 히트율이 60%→68% 상승했다",
-          "timestamp": "08:01"
-        }
-      ],
-      "ideas": [
-        "콘시스턴트 해시 기반 라우팅을 전자상거래 마이크로서비스의 상품 캐시에 적용해 동일 키 요청이 같은 서버에 머물게 함으로써 캐시 히트율을 높인다",
-        "릴레이 로직을 공유 모듈로 분리하고 로컬 세션 캐시를 두어 IoT 디바이스 명령 전달 시 서비스 간 트래픽을 감소시키고 장애 전파를 최소화한다",
-        "작은 영상은 사용자별 워커가, 큰 영상은 채팅방(채널) 기준 워커 그룹이 처리하도록 그룹 기반 워커 스케일링을 적용해 영상 트랜스코딩 파이프라인의 자원 효율을 개선한다"
-      ],
-      "quiz": [
-        {
-          "question": "릴레이 서버를 직접 호출하도록 하면 발생하는 주요 문제는 무엇인가?",
-          "options": [
-            "서비스가 샤딩 규칙을 알아야 한다",
-            "라우터가 필요 없어 비용이 절감된다",
-            "캐시 히트율이 자동으로 상승한다",
-            "서버 간 연결이 감소한다"
-          ],
-          "answer_index": 0,
-          "explanation": "직접 호출 시 모든 서비스가 적절한 서버를 찾기 위해 샤딩 규칙을 알아야 하고, 서버 주소·구성이 바뀔 때마다 대응이 필요해 운영 복잡도가 증가한다(본문 04:46)."
-        }
-      ]
-    },
-    {
-      "id": "7f0d2211ac09",
-      "title": "Skipper, Airbnb’s embedded workflow engine, is now open source",
-      "url": "https://medium.com/airbnb-engineering/skipper-airbnbs-embedded-workflow-engine-is-now-open-source-78dd354f472b?source=rss----53c7c27702d5---4",
-      "source": {
-        "type": "rss",
-        "name": "The Airbnb Tech Blog - Medium"
-      },
-      "published_at": "2026-11-10T18:01:02",
-      "summary": "서비스 내부 워크플로우 내장으로 운영·복구 비용 절감",
-      "positioning": null,
-      "tags": [
-        "Skipper",
-        "Airbnb",
-        "Java",
-        "Kotlin",
-        "Apache 2.0"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "Skipper는 Java·Kotlin 클래스로 다단계 비즈니스 프로세스를 정의하고 진행 상황을 영속화·복구하며 서비스 내부에서 실행한다.",
-          "timestamp": null
-        },
-        {
-          "point": "각 서비스 복제본에 워크플로우 런타임과 스케줄러가 내장되어 동일 DB를 공유하고, 리스(lease)로 작업 소유권을 조정한다.",
-          "timestamp": null
-        },
-        {
-          "point": "별도 오케스트레이션 시스템을 없애 운영 복잡성을 낮추지만, 워크플로우 실행·DB 용량·복구 책임을 서비스 팀이 떠안는 트레이드오프가 있다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "데이터 전처리 파이프라인을 서비스 내부에 임베드해 별도 ETL 오케스트레이터 없이 데이터 흐름을 관리한다",
-        "GPU 노드 간 분산 학습 작업을 리스 기반 스케줄러로 조정해 중앙 스케줄러 없이 장애 복구를 가능하게 한다",
-        "특징 저장소와 워크플로우 상태를 동일 DB에 저장해 피처 엔지니어링 서비스에서 일관성을 유지한다"
-      ],
-      "quiz": [
-        {
-          "question": "Skipper가 기존 외부 오케스트레이션 서비스와 다른 주요 특징은?",
-          "options": [
-            "워크플로우를 서비스 외부에 배치한다",
-            "워크플로우를 서비스 내부에 임베드한다",
-            "전용 데이터베이스를 사용한다",
-            "클라우드 관리형 서비스를 사용한다"
-          ],
-          "answer_index": 1,
-          "explanation": "Skipper는 워크플로우 엔진을 라이브러리 형태로 서비스 내부에 포함시켜 별도의 오케스트레이션 클러스터가 필요 없도록 설계되었다."
-        },
-        {
-          "question": "Skipper가 복구 시 사용하는 메커니즘은?",
-          "options": [
-            "타임스탬프 기반 재시도",
-            "리스(lease) 기반 작업 소유권",
-            "메시지 큐 ACK",
-            "트랜잭션 로그"
-          ],
-          "answer_index": 1,
-          "explanation": "스케줄러는 리스를 이용해 작업 소유권을 조정하고, 복제본이 실패하면 다른 복제본이 리스를 획득해 작업을 이어받는다."
-        }
-      ]
-    },
-    {
-      "id": "a6bc643605a2",
-      "title": "한계를 경계로 바꾸다: 대규모 커머스 DB 샤딩 전환기 | 거버넌스",
-      "url": "https://youtu.be/2qmqb3oqG-8",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-10-30T06:00:36",
-      "summary": "데이터·트래픽 급증 시 샤딩으로 확장성과 운영 효율을 확보",
-      "positioning": null,
-      "tags": [
-        "카카오 커머스",
-        "샤드키",
-        "모듈러 샤딩",
-        "컨시스턴트 해싱",
-        "핫콜드 세퍼레이션"
-      ],
-      "relevance": 8,
-      "key_points": [
-        {
-          "point": "스케일업만으로 급격한 데이터 증가를 감당하기 어려워 핫콜드 세퍼레이션을 도입",
-          "timestamp": "01:57"
-        },
-        {
-          "point": "샤딩 도입 목표는 용량 확보, 트래픽 분산, 단순·유연한 확장 구조 구축",
-          "timestamp": "03:05"
-        },
-        {
-          "point": "모듈러 샤딩을 선택해 핫스팟 위험 낮추고 구현·운영을 단순화, 리샤딩 비용은 논리 샤드로 보완",
-          "timestamp": "06:39"
-        }
-      ],
-      "ideas": [
-        "핫콜드 세퍼레이션 방식을 로그 시스템에 적용해 최신 로그는 빠른 DB에, 오래된 로그는 아카이브 DB에 저장해 조회 지연을 감소시킨다",
-        "모듈러 샤딩과 논리 샤드 결합을 멀티테넌트 SaaS에 적용해 테넌트별 데이터를 논리 샤드로 구분하고 물리 DB를 유연하게 확장한다",
-        "컨시스턴트 해싱 링을 CDN 엣지 캐시 서버에 적용해 노드 추가·제거 시 재배치량을 최소화해 캐시 일관성을 유지한다"
-      ],
-      "quiz": [
-        {
-          "question": "왜 모듈러 샤딩이 레인지 샤딩보다 선호되었나요?",
-          "options": [
-            "핫스팟 발생 가능성이 낮다",
-            "노드 추가 시 데이터 이동이 거의 없다",
-            "샤드 수 변경 시 재해시가 필요 없다",
-            "구현 코드가 가장 간단하다"
-          ],
-          "answer_index": 0,
-          "explanation": "모듈러 샤딩은 키를 고르게 분산시켜 특정 구간에 트래픽이 몰리는 핫스팟 위험이 낮고 구현·운영이 단순해 선택되었다."
-        },
-        {
-          "question": "핫콜드 세퍼레이션이 도입된 후에도 해결되지 않은 주요 문제는 무엇인가요?",
-          "options": [
-            "읽기 전용 콜드 DB의 데이터 일관성",
-            "핫 DB에 집중된 쓰기 부하",
-            "과거 데이터 조회 지연",
-            "스토리지 비용 증가"
-          ],
-          "answer_index": 1,
-          "explanation": "핫콜드 세퍼레이션은 모든 쓰기를 핫 DB에 집중시켜, 트래픽이 계속 증가하면 핫 DB가 병목이 되는 문제가 남았다."
+          "explanation": "‘AI와 디자인시스템이 함께 일하는 법’이라는 제목과 내용에서 AI 산출물을 디자인시스템에 연결해 실서비스로 전환하는 것이 핵심이라고 설명한다."
         }
       ]
     }
