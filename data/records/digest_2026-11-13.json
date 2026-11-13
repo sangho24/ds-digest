@@ -1,0 +1,438 @@
+{
+  "date": "2026-11-13",
+  "generated_at": "2026-11-13T00:57:28.373071",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "TorchCurves: Differentiable Parametric Curves",
+        "url": "https://arxiv.org/abs/2611.14516v1",
+        "published_at": "2026-11-10T18:58:52",
+        "transcript": null,
+        "body": "We present TorchCurves, a PyTorch library that treats vector-valued parametric curves as learnable primitives. Its central operation maps batches of scalar inputs to points on curves represented in B-spline or Legendre polynomial bases, with differentiation through both inputs and coefficients. Curve coefficients can be optimized jointly with the surrounding model or produced by another network. The library provides trainable modules, reusable basis modules, and a functional interface, supporting applications ranging from continuous feature embeddings to Kolmogorov-Arnold networks and functional regression. Its implementation combines classical evaluation algorithms with vectorized PyTorch operations, emphasizing readability and maintainability without custom hardware kernels. Timing experiments compare curve evaluation against NumPy and SciPy and KAN training against EfficientKAN across a range of problem sizes. The results illustrate where this generality remains computationally practical and where overhead is substantial. Library is available on GitHub at https://github.com/alexshtf/torchcurves.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "연속형 특징 임베딩을 곡선으로 직접 학습해 모델 표현력 확대",
+        "tags": [
+          "TorchCurves",
+          "PyTorch",
+          "B-spline",
+          "Legendre polynomial",
+          "Kolmogorov-Arnold networks"
+        ],
+        "concepts": [
+          "모듈형 신경망 구조",
+          "신경망 기하학 및 개념 매니폴드"
+        ],
+        "key_points": [
+          {
+            "point": "TorchCurves는 벡터값 파라메트릭 곡선을 미분 가능한 원시로 취급해 B‑spline·Legendre 기반으로 입력과 계수 모두에 대한 그래디언트를 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "PyTorch와 통합된 학습 가능한 모듈·함수형 인터페이스를 제공해 곡선 계수를 주변 모델과 공동 최적화하거나 별도 네트워크가 생성하도록 지원한다.",
+            "timestamp": null
+          },
+          {
+            "point": "실험에서 NumPy·SciPy와 비교해 작은 규모에서는 실용적이지만, 문제 규모가 커질수록 오버헤드가 커지는 트레이드오프를 명시한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "연속 함수 표현을 위해 기존에는 고정된 basis나 MLP를 사용했으나, 미분 가능한 파라메트릭 곡선을 원시적으로 도입해 모델에 통합한다. 이는 KAN 및 함수 회귀와 같은 연속형 특성 임베딩 연구 흐름에 속하며, B‑spline·Legendre 기반 구현으로 기존 방법 대비 유연성과 미분 가능성을 제공한다.",
+        "production_ideas": [
+          "IoT 엣지 디바이스에서 센서 보정 곡선을 미분 가능하게 학습시켜 실시간 보정 파라미터를 모델에 통합한다.",
+          "연속 액션 공간 강화학습에서 정책 함수를 MLP 대신 곡선 원시로 표현해 파라미터 수를 줄이고 부드러운 정책 변화를 구현한다.",
+          "추천 시스템에서 사용자의 시간에 따른 선호 변화를 B‑spline 임베딩으로 나타내어 시계열 개인화 정확도를 향상시킨다."
+        ],
+        "quiz": [
+          {
+            "question": "TorchCurves가 NumPy·SciPy와 비교해 제공하는 주요 이점은 무엇인가?",
+            "options": [
+              "수치 정밀도 향상",
+              "입력과 계수에 대한 그래디언트 역전파 가능",
+              "모든 문제 규모에서 GPU 가속 속도 우위",
+              "자동 데이터 증강 기능"
+            ],
+            "answer_index": 1,
+            "explanation": "TorchCurves는 PyTorch와 연동돼 입력과 곡선 계수 모두에 대해 미분 가능하도록 설계돼, 기존 NumPy·SciPy와 달리 역전파가 가능하다."
+          },
+          {
+            "question": "실험 결과에 따르면 TorchCurves의 오버헤드가 크게 나타나는 상황은?",
+            "options": [
+              "배치 크기가 매우 작을 때",
+              "문제 규모가 클 때",
+              "Legendre 기반을 사용할 때",
+              "KAN 모델을 학습할 때"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 규모가 커질수록 일반성에 따른 오버헤드가 실질적으로 커진다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 8,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "I'm making LLMs work on small and old devices",
+        "url": "https://github.com/hyperionaidev/smolmaxxing/",
+        "published_at": null,
+        "transcript": null,
+        "body": "# 🤏 smolmaxxing\n\n[![smolmaxxing: run the biggest model you can on the smallest hardware you own. 260K to 16B parameters.](/hyperionaidev/smolmaxxing/raw/main/assets/banner.png)](/hyperionaidev/smolmaxxing/blob/main/assets/banner.png)\n\n[![Hacker News rank via HackerGit](https://camo.githubusercontent.com/19845cd94a9750deab617cd6bfca8e1b693be0e659541cf020e1779cca9cd781/68747470733a2f2f6861636b65726769742e6f72672f62616467652f6879706572696f6e61696465762f736d6f6c6d617878696e672e7376673f7374796c653d72616e6b)](https://hackergit.org/r/hyperionaidev/smolmaxxing)\n\n**Run the biggest language model you can on the smallest hardware you own.**\n\nTV boxes, old tablets, single-board computers and routers all have a CPU, some RAM and flash storage that sit idle most of the day. smolmaxxing finds the biggest model each of them can really run, then pushes it further with custom kernels, careful memory use and weights streamed from flash. Every number in this repo was measured on the device itself.\n\n## Two devices so far\n\n|  | 📺 Xiaomi TV Box S (3rd Gen) | 📱 iPad Air (2013) |\n| --- | --- | --- |\n| **Chip** | Amlogic S7D, 4× Cortex-A55 | Apple A7, 2 cores |\n| **RAM** | 1.9 GB (about 1 GB usable) | 1 GB (about 700 MB usable) |\n| **OS** | Android 14, no root | iOS 12.5.7, jailbroken |\n| **Everyday model** | Qwen3.5-2B at **7.7 tok/s** | Bonsai-1.7B (1-bit) at **24-26 tok/s** |\n| **Biggest model** | Ling-mini-2.0, 16B, at **5.1 tok/s** | Ling-mini-2.0, 16B, at **2.6-4.5 tok/s** |\n| **Full results** | [docs/tv-box.md](/hyperionaidev/smolmaxxing/blob/main/docs/tv-box.md) | [ipad-air/README.md](/hyperionaidev/smolmaxxing/blob/main/ipad-air/README.md) |\n\nBoth devices run 8B and 16B mixture-of-experts models on about 1 GB of RAM by keeping only part of each model in memory and reading the rest from flash as it's needed.\n\n[![Best generation speed per size class on the two 1 GB devices: 2B class TV 7.7 (Qwen3.5-2B) vs iPad 23.7 (Bonsai-1.7B, 1-bit); 4B 4.3 vs 9.4; 8B dense 5.2 vs 0.08; 8B MoE 7.2 vs 3.5; 16B MoE 5.1 vs 4.5 with the same cache bias](/hyperionaidev/smolmaxxing/raw/main/assets/devices.svg)](/hyperionaidev/smolmaxxing/blob/main/assets/devices.svg)\n\nMore devices (phones, single-board computers, routers) are coming. The techniques aren't tied to one box: the 1-bit kernel needs only basic NEON, and the flash streaming works on any Linux or Android device with more model than RAM.\n\n[![The live token-stream page served by llama-server on the TV box](/hyperionaidev/smolmaxxing/raw/main/screenshots/llmui_05_stream.png)](/hyperionaidev/smolmaxxing/blob/main/screenshots/llmui_05_stream.png)\n\n## How it works\n\nAll of it is a patch on [llama.cpp](https://github.com/ggml-org/llama.cpp). The main ideas:\n\n- **Kernels built for the chip.** A 1-bit lookup-table kernel, repacked 2-bit and ternary formats for the Cortex-A55, and versions of them for the A7, which has no dot-product instructions.\n- **Less RAM per model.** Most of a small model's vocabulary is rarely used, so we drop those output rows. On the TV, a \"headless\" mode also stops the launcher and Google services while a model runs.\n- **Experts paged from flash.** A mixture-of-experts model only uses a few experts per token. We keep the popular ones in RAM, read the others from flash on demand and prefetch the next layer's. This is how 8B and 16B models run on 1 GB.\n- **Streaming for dense models** bigger than RAM, at the flash's full speed.\n\n[docs/how-it-works.md](/hyperionaidev/smolmaxxing/blob/main/docs/how-it-works.md) has every technique with its measured gain.\n\n## Try it\n\nThe quickest start is a ready-made model file from Hugging Face. They need the patched llama.cpp: stock llama.cpp can't load them.\n\n- **TV box or another ARMv8.2 Android device:** [docs/tv-box-setup.md](/hyperionaidev/smolmaxxing/blob/main/docs/tv-box-setup.md)\n- **Jailbroken iPad on iOS 12:** [ipad-air/README.md](/hyperionaidev/smolmaxxing/blob/main/ipad-air/README.md#run-it)\n- **All model files and how to rebuild them:** [docs/models.md](/hyperionaidev/smolmaxxing/blob/main/docs/models.md)\n\n## Read more\n\n| Page | What's in it |\n| --- | --- |\n| [docs/tv-box.md](/hyperionaidev/smolmaxxing/blob/main/docs/tv-box.md) | device #1: every model run on the TV box, speed and quality |\n| [ipad-air/README.md](/hyperionaidev/smolmaxxing/blob/main/ipad-air/README.md) | device #2: the iPad Air results, setup and scripts |\n| [docs/how-it-works.md](/hyperionaidev/smolmaxxing/blob/main/docs/how-it-works.md) | the kernels, memory tricks, expert pager and streaming engine |\n| [docs/models.md](/hyperionaidev/smolmaxxing/blob/main/docs/models.md) | downloads for both devices, rebuild targets and checksums |\n| [docs/lessons.md](/hyperionaidev/smolmaxxing/blob/main/docs/lessons.md) | what we learned, including what didn't work |\n| [EXPERIMENT.md](/hyperionaidev/smolmaxxing/blob/main/EXPERIMENT.md) | the full lab notebook: 160 experiments, failures included |\n\n## What's in the repo\n\n| Path | What |\n| --- | --- |\n| `patches/` | every c",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "소형 디바이스에서도 대형 LLM을 실행해 비용 절감",
+        "tags": [
+          "llama.cpp",
+          "Qwen3.5-2B",
+          "Bonsai-1.7B",
+          "Ling-mini-2.0",
+          "Mixture-of-Experts"
+        ],
+        "concepts": [
+          "AI 인프라 경쟁",
+          "AI 에이전트 메모리 관리",
+          "모델 서빙"
+        ],
+        "key_points": [
+          {
+            "point": "커스텀 1‑bit·2‑bit·ternary 커널과 NEON 활용으로 ARM 장치의 연산 효율을 높인다.",
+            "timestamp": null
+          },
+          {
+            "point": "Mixture‑of‑Experts 모델을 플래시에서 페이지링해 1 GB RAM에 8 B·16 B 모델을 실시간 토큰 스트리밍으로 실행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "TV 박스와 구형 iPad 등에서 2 B‑16 B 모델을 측정된 토큰 속도로 구동해 실제 사용 가능성을 입증한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "플래시 스트리밍 기법을 활용해 엣지 라우터에서 대규모 추천 모델을 서빙하면 메모리 제한을 넘어선 고성능 추천이 가능한다.",
+          "1‑bit lookup‑table 커널을 NEON SIMD과 결합해 저전력 IoT 센서에서 음성/음향 분류 모델을 가볍게 실행한다, 배터리 소모와 응답 시간을 감소시킨다.",
+          "어휘 출력 행을 사용 빈도에 따라 삭제하는 vocab pruning을 적용해 온‑디바이스 번역 모델을 경량화하면 메모리 사용량을 크게 줄이고 실시간 번역이 가능해진다."
+        ],
+        "quiz": [
+          {
+            "question": "Mixture‑of‑Experts 모델을 플래시에서 페이지링하면 1 GB RAM에서도 16 B 모델을 실행할 수 있는 이유는?",
+            "options": [
+              "모든 전문가를 동시에 메모리에 올린다",
+              "토큰당 필요한 전문가만 RAM에 유지하고 나머지는 필요 시 읽는다",
+              "모델을 압축해 RAM에 저장한다",
+              "GPU를 사용한다"
+            ],
+            "answer_index": 1,
+            "explanation": "MoE 구조는 토큰당 몇 개의 전문가만 활성화되므로, 활성 전문가만 RAM에 두고 나머지는 플래시에서 필요 시 스트리밍해 메모리 사용을 최소화한다."
+          },
+          {
+            "question": "1‑bit lookup‑table 커널이 ARM Cortex‑A55에서 성능을 높이는 주된 이유는?",
+            "options": [
+              "1‑bit 연산으로 메모리 대역폭을 절감한다",
+              "Cortex‑A55에 전용 dot‑product 명령이 있다",
+              "1‑bit 데이터는 NEON SIMD으로 효율적으로 처리된다",
+              "1‑bit은 GPU 전용이다"
+            ],
+            "answer_index": 0,
+            "explanation": "1‑bit 표현은 데이터 양을 크게 줄여 메모리 대역폭 요구를 감소시키고, NEON을 이용한 간단한 lookup 연산으로 빠르게 처리할 수 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "검수도 답변도 호출도 AI가? 커머스API의 2026",
+        "url": "https://d2.naver.com/helloworld/7749530",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-5c70f1fc-aada-4d20-91da-1c33ed14eca5\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-7f7bd16f-709d-4d36-a788-59a68c43d68a\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-3dd37d43-1221-4bde-b500-bcabf57ca354\" style=\"color: #000000;\"><b>네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-48caffef-2b95-49e5-84bd-0ce1fbabbc32\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-9c69cfd1-f45e-4fc6-88a4-ac6d85c9b3e3\" style=\"color: #000000;\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oembed se-l-default\" id=\"SE-3f411a35-ad4c-4d70-829e-752ba07f708a\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-oembed se-section-align- se-l-default\">\n                            <div class=\"se-module se-module-oembed se-is-progress\"></div>\n                        </div>\n                    </div>\n                    \n                </div>\n                \n                <div class=\"se-component se-text se-l-default\" id=\"SE-1cc00a4a-64d1-4ae7-bf1d-ca11f86ad7d6\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-23e000fb-2d3d-4155-8ca9-b938f1e40777\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-a7802aaf-efe0-4c1c-9f44-e7652a925597\" style=\"color: #000000;\"><b>​</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-a9b8a85c-48cb-4b25-b39b-7315da2f13e7\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-673a845c-758f-41c2-8fd6-992160d6afe6\" style=\"color: #000000;\"><b>발표 내용</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-4d725c1a-b7d3-4943-81fb-bc22c73dfe86\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-8e7d0b51-8d56-417f-8f4d-91f1dba89c23\" style=\"color: #000000; background-color: #ffffff;\">같은 API 스펙이 AI 에게 검수되고, 문의 답변의 근거가 되고, tool 로 호출되기까지 — 커머스API 플랫폼이 올해 진행한 AI native 과제 세 건의 설계 결정과 운영 결과를 소개합니다.</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9782a0f1-946b-4e58-a373-1353703e50a0\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-8cdedc3f-d789-438f-bbab-7efdda2cf9cd\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-06d25b9f-e615-4e0f-a48b-dd5aa5387e38\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-ea010927-2dff-4a8d-a529-ce0cddbde1f6\" style=\"color: #000000;\"><b>발표 대상</b></span></p>\n<ul class=\"se-text-list se-text-list-type-bullet-disc\"><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b776bd14-cc8b-469f-8760-c01f028c4050\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-21429573-753f-449b-839e-9b47304dfde9\" style=\"color: #000000; background-color: #ffffff;\">API 를 만들거나 운영하는 백엔드 개발자</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b489e024-7cb1-44f8-807c-eb54d0f9fd03\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-d189f597-3c63-4f43-8e95-e5a52cfba35a\" style=\"color: #000000; background-color: #ffffff;\">게이트웨이·플랫폼 운영자</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-4dc5aec9-4b2b-4932-918d-017dfec0a0ad\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-210a764f-91cf-4375-a5f7-c3bed226b909\" style=\"color: #000000; background-color: #ffffff;\">LLM·MCP 를 서비스에 연결하려는 개발자</span></p>\n</li></ul><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-a73a2236-e5fc-4aae-8ab9-3af65318cb2a\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-232176c8-71b8-41bb-b8c6-38d3234337bc\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b5f709a3-6ae6-4e0a-ac2f-7a6922940663\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-acfde713-87e8-4a3f-a0c5-fd5c2d7c916f\" style=\"color: ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI가 API 검수·답변·호출 자동화, 데이터 흐름 혁신",
+        "tags": [
+          "NAVER Engineering Day",
+          "AI",
+          "커머스API",
+          "API"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "AI 생산성 도구",
+          "개발자 경험 개선"
+        ],
+        "key_points": [
+          {
+            "point": "동일 API 스펙을 AI가 검수하고, 답변 근거와 tool 호출까지 담당한다",
+            "timestamp": null
+          },
+          {
+            "point": "AI native 과제 3건의 설계 결정과 운영 결과를 공유한다",
+            "timestamp": null
+          },
+          {
+            "point": "대상은 API를 만들거나 운영하는 백엔드 개발자 등이다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 기반 API 스펙 검수를 데이터 파이프라인 스키마 검증에 적용해 데이터 품질 오류를 사전 차단한다",
+          "AI가 내부 지원 티켓의 답변 근거를 자동 생성하도록 활용해 데이터 플랫폼 운영 효율성을 높인다",
+          "AI를 도구화해 API 클라이언트 SDK를 자동 생성하도록 하여 개발자 onboarding 시간을 단축한다"
+        ],
+        "quiz": [
+          {
+            "question": "AI가 커머스API 플랫폼에서 수행한 역할은 무엇인가?",
+            "options": [
+              "API 스펙 검수",
+              "데이터 시각화",
+              "서버 모니터링",
+              "프론트엔드 디자인"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 '같은 API 스펙이 AI에게 검수되고, 문의 답변의 근거가 되고, tool 로 호출되기까지'라고 명시되어 있다."
+          },
+          {
+            "question": "발표 대상에 포함되지 않은 직무는?",
+            "options": [
+              "백엔드 개발자",
+              "프론트엔드 디자이너",
+              "API 운영자",
+              "데이터 엔지니어"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 'API 를 만들거나 운영하는 백엔드 개발자'가 대상이라고 적혀 있으며, 프론트엔드 디자이너는 언급되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "data-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "트렌드라이트",
+        "source_key": "trendlite.stibee.com",
+        "source_label": "트렌드라이트",
+        "title": "🥤AI가 구매대행을 기업으로 바꿉니다",
+        "url": "https://trendlite.stibee.com/p/500",
+        "published_at": "2026-11-10T00:00:00",
+        "transcript": null,
+        "body": "2026.11.11 26-045호   |   [잘림 없이 보기](https://stib.ee/9r9P)   |   [지난호 보기](https://page.stibee.com/archives/41037)\n\n1. AI가 구매대행을 기업으로 바꿉니다\n2. 몰로코 CEO에게 직접 들은, 성장의 조건\n3. Picked\\_ '삼성을 한국시리즈 우승으로 이끈 건' 外\n\n매주 수요일 흥미로운 커머스 이야기를 놓치지 않으시려면 → [메일로 받아보기](https://trendlite.short.gy/top_sub)\n\nAI가 구매대행을 기업으로 바꿉니다\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 예전엔 별도 소프트웨어가 필요했던 일도 AI에 부탁하면 해결할 수 있게 되면서 기존 SaaS의 경쟁력이 약해졌고, AI로 고객의 일을 끝까지 처리해 그 결과를 제공하는 ‘네오펌’이 등장했습니다.\n2. 네오펌의 대표 사례인 해외 구매대행 업체 모드픽은 상품 등록과 통관에서 반복되는 일을 AI에 맡기고, 사람이 예외를 처리한 기록은 다음 업무에 활용해 운영 인력 두 명으로 누적 판매액 130억 원을 넘겼죠.\n3. 이처럼 AI로 일하는 방식을 바꾸면 고객이 늘어도 인력과 비용은 예전만큼 늘지 않으니, 사람 손이 많이 들어 규모를 키우기 어려웠던 분야에서도 새로운 기회가 열리고 있습니다.\n\nSaaS는 죽고, 네오펌이 탄생했습니다  생성형 AI가 일상에 자리 잡으면서 ‘SaaS는 죽었다’는 이야기가 심심치 않게 들립니다. SaaS는 ‘Software as a Service’, 즉 서비스형 소프트웨어를 뜻하는데요. 업무에 필요한 소프트웨어를 인터넷으로 빌려 쓰는 방식이죠.    그런데 예전엔 SaaS로 처리하던 일 중 상당수를 이제는 AI와 대화하는 것만으로 해결할 수 있습니다. 요즘은 필요한 기능을 직접 만들어 쓰는 일도 주변에서 흔히 보이고요. SaaS 자체가 사라진다는 얘기까지는 아니지만, ‘업무를 편하게 해주는 기능’을 파는 것만으로는 예전만큼 차별화하기 어려워졌습니다.    지난 10일 [카카오벤처스가 주최한 ‘KV 인사이트풀데이 2026’](https://www.mk.co.kr/news/it/12204067)에서는 여기서 한 단계 더 나아간 개념을 접했습니다. 바로 ‘네오펌(Neo Firm)’입니다. SaaS가 ‘일할 때 쓰는 도구’를 빌려주는 사업이라면, [네오펌은 일을 대신 끝내주는 회사](https://www.kakao.vc/blog/neofirm)에 가깝습니다. 낚싯대를 빌려주는 데서 한발 더 나아가, 고기를 직접 잡아 가져다주는 거죠.    여기까지 들었을 때는 솔직히 기존 대행업체와 뭐가 다른지 싶었습니다. 차이는 일을 처리하는 방식에 있었는데요. 기존 대행업체는 고객이 늘면 그만큼 처리할 일도 많아져 직원도 더 뽑아야 했습니다. 네오펌은 처음부터 AI가 핵심 업무의 상당 부분을 맡도록 설계합니다. 덕분에 고객이 빠르게 늘어도 직원은 그만큼 늘리지 않고 사업을 키울 수 있죠.    카카오벤처스가 네오펌을 단순한 자동화와 구분한 것도 이 때문입니다. 기존 업무에 AI 기능을 하나씩 붙이는 수준을 넘어, 조직과 일하는 방식부터 AI를 중심으로 설계한다는 거였죠.    아직 조금 막연하게 느껴지시나요? 이날 네오펌 세션의 마지막 패널 토론에 나온 모드픽 이야기를 들으면 이해가 한결 쉬울 겁니다. 해외 구매대행이라는 익숙한 일을 AI로 전혀 다른 방식으로 운영하는 회사거든요.  구매대행이 기업으로 커질 수 있었던 건  운영 인력 두 명, 누적 판매액 130억 원 이상.    모드픽의 이야기는 시작부터 도발적이었습니다. 모드픽은 일본을 중심으로 국내에서 구하기 어렵거나 현지에서 더 저렴한 상품, 한정판 제품 등을 대신 구매해 주는 서비스입니다. 구매부터 검수, 국제 배송과 통관, 고객 문의 대응까지 전 과정을 맡아주죠.    구매대행은 오래전부터 있었지만, 이를 규모 있는 기업으로 키운 사례는 상대적으로 드물었습니다. 사람들이 웃돈을 주고 구매를 맡길 만큼 번거로운 과정이 대행업체에도 고스란히 일거리로 남기 때문인데요.    상품을 찾아 등록하고, 주문이 들어오면 현지에서 구매해야 합니다. 상품의 소재나 용도에 따라 통관이 가능한지 판단하고, 무게에 맞춰 배송도 준비해야 하죠. 배송이 늦어지거나 교환·반품이 생기면 고객 문의에도 대응해야 하고요.    일반적인 온라인 쇼핑몰만 해도 상품과 주문이 늘어날수록 처리할 일도 많아집니다. 구매대행은 여기에 통관과 해외 물류까지 더해지니 한층 복잡하죠. 더 많이 팔려면 그만큼 운영 인력도 늘려야 하니, 수익성을 유지하면서 규모를 키우기가 쉽지 않았습니다.    그런데 모드픽은 이 구조를 다르게 만들었습니다. 개발과 마케팅 인력을 제외하면, 실제 구매와 통관, 물류 운영을 담당하는 인원은 한국과 일본에 한 명씩, 단 두 명이라고 합니다. 모드픽 대표는 지금까지 누적 판매액이 130억 원을 넘었고, 올해 매출은 약 30억 원으로 예상한다고 했는데요. 운영 직원 한 명이 한 달에 약 4억 원어치의 상품을 처리한다고 하죠.    이런 생산성을 가능하게 한 건 AI였습니다. 상품 등록과 행정 업무, 통관, 고객 문의 대응에서 반복되는 일을 최대한 자동화하고, 직원은 현지에서 상품을 구매하거나 직접 검수하고 포장하는 일에 집중하도록 한 겁니다. 고객 문의도 비슷합니다. 모드픽 측 설명에 따르면 일반적인 문의 100건을 처리할 때 사람이 확인하고 조작하는 데 드는 시간은 10분도 채 되지 않는다고 합니다. 교환이나 반품처럼 실제 확인이 필요한 예외에는 사람이 더 깊이 관여하고요.    그런데 AI는 누구나 쓸 수 있잖아요. 다른 업체도 금방 따라 할 수 있는 것 아닐까요? 여기서 중요한 게 ‘정답 데이터’입니다. 통관은 상품의 소재와 용도, 인증 여부에 따라 판단이 달라지는 전문적인 영역입니다. AI가 인터넷에 있는 정보만으로 판단하기는 어려운 일이죠.    그래서 모드픽은 어떤 상품이 실제로 통관됐는지, AI가 어디서 틀렸고 사람이 어떻게 바로잡았는지, 어떤 경우에 예외 처리가 필요했는지를 계속 기록하고 있습니다. 여기에 주문과 고객 문의, 판매 데이터도 연결하고 있고요.    단순히 데이터가 많다고 해서 경쟁력이 생기는 건 아닙니다. AI 모델이 계속 좋아지는 만큼, 단순 반복 업무는 경쟁사도 빠르게 자동화할 수 있으니까요. 모드픽에 쌓이는 건 실제 현장에서 어떤 판단이 맞았고, 틀렸을 때는 어떻게 고쳐야 하는지에 대한 기록입니다.    더욱이 모드픽은 처음부터 AI가 일하기 좋은 형태로 데이터를 정리했다고 합니다. AI 에이전트가 재고와 주문, 통관, 고객 문의, 판매 데이터를 필요할 때 바로 가져와 일을 처리할 수 있게 한 건데요. 기존 쇼핑몰에 AI 기능 하나를 얹는 것과는 출발부터 다른 셈이죠.    AI를 쓰는 비용도 계속 낮추고 있습니다. 같은 일을 맡겨도 어떤 모델을 쓰는지, 얼마나 많은 정보를 넣는지에 따라 처리 비용은 크게 달라지는데요. 내부 개발팀이 이 과정을 꾸준히 손본 결과, 예전에는 프리랜서에게 맡기면 건당 약 700원이 들던 상품 등록 비용을 건당 4~15원 수준으로 낮췄다고 합니다.    이렇게 건당 운영 비용이 낮아지는 데다, AI가 일을 처리하고 사람이 예외를 바로잡은 결과가 쌓일수록 비슷한 업무에 사람이 다시 개입할 일도 줄어듭니다. 모드픽의 진짜 경쟁력은 이처럼 일을 할수록 다음 일을 더 잘 처리할 수 있게 되는 운영 방식에 있어 보였습니다.  돈이 안 되던 일이 돈이 될 수 있습니다  네오펌, 더 나아가 AI가 가진 힘은 바로 여기에 있는 것 같습니다. 우리는 경험적으로 “이건 사업이 안 될 거야”, “이걸로는 큰 회사를 만들기 어려울 거야”라고 여겨온 영역이 있습니다. 특히 규모가 커질수록 사람과 비용이 함께 늘어나는 업종이 그랬죠.    구매대행도 대표적인 사례였습니다. 작게 운영할 수는 있어도 주문이 늘 때마다 처리할 일이 함께 늘어나니, 많이 팔아도 건당 비용을 낮추기가 어려웠습니다. 하지만 AI가 업무의 상당 부분을 맡으면 주문이 늘어도 인력과 비용을 예전만큼 늘리지 않고 사업을 키울 수 있게 된 겁니다.    이처럼 AI를 전제로 제품과 운영 방식, 비용 구조를 다시 설계하면 그동안 비용이 너무 많이 들어 사업으로 만들기 어려웠던 일도 해볼 만해집니다. 모드픽처럼 이미 있는 일을 더 큰 규모로 운영할 수도 있고, 그동안 가격이 맞지 않아 고객에게 제공하기 어려웠던 서비스도 새로 내놓을 수 있죠.    요즘 AI를 활용한 서비스가 정말 많이 쏟아지고 있습니다. 직접 써보는 것도 물론 중요하지만요. 앞으로는 한 번쯤 이런 질문도 던져보면 좋을 것 같습니다. ‘이 서비스는 우리가 그동안 당연하게 여겼던 어떤 비용을 줄였고, 덕분에 어떤 일을 새로 할 수 있게 됐을까?’ 그 답을 따라가다 보면, 예전에는 큰 사업이 되기 어렵다고 여겼던 곳에서 의외의 기업이 탄생하는 모습을 더 자주 보게 될지도 모르겠습니다.\n\n지금 읽은 이야기가 흥미로우셨나요? 매주 수요일, 커머스와 브랜드의 변화를 한발 먼저 읽어드립니다.  → [매주 무료로 받아보기](https://trendlite.short.gy/mid_sub)\n\n몰로코 CEO에게 직접 들은, 성장의 조건\n\ndesign by 슝슝 (w/ChatGPT)\n\n| 아티클 3문장 요약\n\n1. 안익진 몰로코 CEO가 “AI 시대에도 핵심은 제품입니다”라고 말했듯이, 성장은 좋은 제품을 만드는 데서 시작하지만 그 제품을 필요한 고객에게 알리고 그렇게 얻은 매출을 제품과 마케팅에 다시 투자할 때 이어질 수 있죠.\n2. 몰로코 같은 전문 업체의 AI 기술을 쓰면 플랫폼은 광고 시스템을 직접 만드는 부담을 덜 수 있고, 브랜드는 그렇게 늘어난 광고 지면에서 자기 제품에 관심을 보일 고객을 더 쉽게 찾을 수 있습니다.\n3. TV에서도 성과를 보며 광고를 운영할 수 있게 되면서 작은 브랜드가 새 고객을 꾸준히 만날 기회가 넓어졌지만, 그 만남이 성장으로 이어지려면 고객이 필요한 제품을 발견하는 순간부터 직접 써볼 때까지 좋은 경험을 줘야 할 겁니다.\n\nAI 시대에도 핵심은 제품입니다    “올해 상반기 애플 앱스토어의 앱 출시량은 전년 대비 2배 이상 증가했지만, 앱 다운로드 증가율은 2%에 그쳤습니다.”    [지난주 다녀온 몰로콘 26](https://www.donga.com/news/It/article/all/20261106/134976708/1)에서 가장 인상 깊었던 건 첫 기조연설에 나선 안익진 몰로코 CEO의 이 말이었습니다. AI 덕분에 앱을 만들기는 쉬워졌지만, 사람들이 앱에 쓸 수 있는 시간과 관심은 그만큼 늘지 않았는데요. 새 앱이 쏟아질수록 고객의 눈에 띄기는 더 어려워졌다는 거죠.    행사가 끝난 뒤에는 안익진 CEO와 이혜정 CTV 파트너십 총괄을 따로 만나 약 30분간 단독 인터뷰를 했습니다. 마침 미리 준비해 둔 마지막 질문이 기조연설의 첫 화두와 맞닿아 있었는데요. 이렇게 경쟁이 치열한 시장에서 새 서비스가 빠르게 성장하려면 무엇이 가장 중요한지 묻자, 안익진 CEO는 이렇게 답했습니다.    “평균적으로 노출 기회를 얻기는 어려워지고 새 앱 대부분이 고전하지만, 그 안에서도 빠르게 성장하는 앱은 있어요. AI 시대에도 핵심은 제품입니다.” \\_안익진 몰로코 CEO    사실 광고 회사 대표가 제품부터 강조한다는 게 조금은 의외였습니다. 그런데 기조연설에서 그가 제시한 성장의 세 단계를 떠올려 보면, 왜 제품을 먼저 이야기했는지 이해가 됩니다. ① 좋은 제품을 만들고, ② 더 많은 고객이 그 제품을 발견하게 하고, ③ 꾸준히 매출을 내 제품과 마케팅에 다시 투자할 수 있는 구조를 만드는 것이었죠.    이날 행사에서 소개된 스캐터랩의 AI 캐릭터 채팅 서비스 ‘제타’의 일본 진출 사례가 이 순서를 잘 보여줍니다. 출시 후 약 반년 동안 성장이 정체되자, 스캐터랩은 마케팅과 다른 개발 작업을 멈추고 AI 모델 개선에 집중했다고 합니다. 이용자에게 업데이트 사실을 따로 알리지도 않았는데, 새 모델을 내놓은 다음 날 이용 시간과 재방문 지표, 매출이 모두 두 배로 뛰었다고 하죠. 캐릭터와 대화하며 이야기를 만들어가는 서비스인 만큼, 모델이 달라지면 이용자가 즐기는 이야기 자체가 달라지는 겁니다.    제품이 좋아지자 알리는 일에도 힘이 붙었습니다. 광고를 보고 들어온 이용자가 재미있게 즐긴 장면을 소셜미디어에 공유하고, 그걸 본 사람이 또 찾아오는 흐름이 생긴 건데요. 스캐터랩은 이렇게 광고 없이 찾아오는 사람이 늘면서 유료 광고의 효율도 좋아졌고, 일본 고객에게 제타를 알리는 데 더 적극적으로 투자할 수 있었다고 설명했습니다. 발표 당시 일본 매출은 한국 매출의 두 배에 달했고요.    우리 서비스라면 어디부터 손봐야 할까요? 써본 사람은 꾸준히 돌아오는데 새로 찾아오는 사람이 적다면, 제품을 더 알릴 방법을 살펴볼 만합니다. 반대로 설치는 꾸준히 일어나는데 써본 사람이 좀처럼 돌아오지 않는다면, 광고비를 늘리기 전에 고객이 어디에서 흥미를 잃는지부터 확인해 봐야겠죠.  넷플릭스가 경쟁사 인프라를 선택한 건  그렇다면 좋은 제품을 만든 뒤에는 어디에서 고객을 만나야 할까요? 예전에는 광고를 한다고 하면 TV나 유튜브, 인스타그램처럼 먼저 떠오르는 곳이 몇 군데 있었습니다. 이제는 쇼핑몰의 검색 결과나 상품 페이지, 스트리밍 서비스에도 광고가 들어가죠. 몰로코는 메타나 구글 같은 대형 플랫폼 밖의 여러 앱과 서비스에 흩어진 광고 영역을 ‘오픈 인터넷’이라고 부릅니다. 브랜드 입장에선 광고할 곳이 많아진 만큼, 어디에 예산을 쓸지 고르기도 더 어려워졌고요.    안익진 CEO는 쇼핑몰에서 자외선 차단제를 검색하는 상황을 예로 들었습니다. 똑같이 자외선 차단제를 검색해도 가격을 먼저 보는 사람과 특정 기능을 찾는 사람에게 어울리는 상품은 다르잖아요. 예전에는 이렇게 같은 상품을 검색한 고객에게 각자의 관심사에 맞는 광고를 보여주기가 어려웠죠.    하지만 이제는 AI가 고객이 어떤 상품을 살펴봤는지 등을 바탕으로 관심을 보일 만한 광고를 고르고, 실제 구매 결과를 다음 판단에 반영합니다. 덕분에 브랜드는 여러 앱과 서비스에서 자기 제품에 관심을 보일 고객을 더 쉽게 찾을 수 있게 된 겁니다.    그렇다면 광고를 보여주는 쇼핑몰이나 스트리밍 서비스는 어떨까요? 광고가 중요한 수입원이라면 운영에 필요한 기술도 직접 갖추고 싶을 법하잖아요. 그런데 왜 몰로코 같은 전문 업체의 기술을 빌리는 걸까요? 제가 그렇게 묻자, 안익진 CEO는 넷플릭스가 아마존의 클라우드 서비스인 AWS를 선택한 사례를 들었습니다.    “넷플릭스가 AWS를 쓰겠다고 했을 때도 아마존에 이미 비디오 서비스가 있었어요. 사람들은 ‘핵심 서비스에 왜 남의 인프라를 쓰느냐’고 물었죠. 넷플릭스는 과감하게 결정했고 이후 결과는 다들 아실 겁니다.”    “전에는 김치도 집에서 만들어 먹었듯이, 시장이 성숙하면 전문 서비스가 발전한다고 봅니다. 광고에서도 저희가 글로벌 규모로 가치를 줄 수 있는 영역이 있습니다.” \\_안익진 몰로코 CEO    사실 광고를 띄울 자리를 만드는 것보다 복잡한 일은 그 자리에 어떤 광고를 보여줄지 매번 결정하는 겁니다. 어떤 광고가 구매로 이어질지 예측하고, 그 자리를 두고 실시간으로 입찰한 뒤, 실제 구매 결과를 다음 판단에 반영해야 하거든요. 이 과정을 여러 서비스에서 동시에 처리하는 시스템을 처음부터 만들려면 그만큼 기술과 비용이 듭니다.    안익진 CEO는 몰로코를 플랫폼의 기술팀과 함께 일하는 파트너라고 설명했습니다. 가령 외부 업체에 어떤 고객 데이터까지 제공할지, 같은 광고를 한 사람에게 몇 번까지 보여줄지는 플랫폼이 정할 수 있죠. 광고를 운영하는 데 필요한 기술은 빌리고, 자기 서비스에 맞는 기준은 직접 세우는 겁니다. 이렇게 플랫폼이 광고 사업을 시작하기 쉬워지면 브랜드가 고객을 만날 수 있는 곳도 늘어납니다. 그만큼 광고 시장이 더 커질 여지도 생기는 거죠.  이제 TV 광고도 상시로 틉니다    특정 고객에게 꼭 필요한 제품을 만드는 작은 브랜드라면 이런 변화가 특히 반갑습니다. 흔히 TV 광고는 사업 규모를 한 단계 키울 때 쓰는 매체로 여겨졌는데요. 컬리와 무신사, 오늘의집처럼 빠르게 성장한 스타트업도 대중에게 한꺼번에 이름을 알리기 위해 TV 광고를 활용했죠.    인터넷에 연결된 TV, 즉 CTV에서는 TV 광고도 온라인 광고처럼 운영할 수 있습니다. 이혜정 총괄은 미국에선 시청자들이 여러 스트리밍 앱을 오가는 만큼, 앱 하나에만 광고를 내보내기보다 여러 앱에 걸쳐 제품에 관심을 보일 사람을 찾아갈 수 있다고 설명했습니다.    “실제로 CTV를 상시 집행하는 광고주가 많습니다. 기존 매체와 비교해 효율이 나쁘지 않고, 거기서는 닿지 않는 이용자도 만날 수 있거든요.” \\_이혜정 몰로코 CTV 파트너십 총괄    작은 브랜드도 이미 만들어 둔 영상으로 TV 광고를 시험해 보고, 결과에 따라 예산을 조정할 수 있다는 얘기입니다. 다만 TV에서 광고를 본 사람이 나중에 휴대폰으로 물건을 사면, 그 광고가 구매에 얼마나 영향을 줬는지 가려내기 어렵습니다. 이혜정 총괄도 앱 설치는 별도의 도구로 추적할 수 있지만, 웹에서 일어난 구매가 어느 광고의 성과인지 판단하기는 더 까다롭다고 했고요.    그래서 광고를 본 사람이 얼마나 샀는지와 광고 덕분에 구매가 얼마나 늘었는지를 나눠 봐야 합니다. 조건이 비슷한 두 집단 중 한쪽에만 광고를 보여주고 구매율을 비교하면, 광고로 추가된 구매를 추정할 수 있죠. 이를 ‘증분 효과’라고 부릅니다. 광고비를 이렇게 늘어난 구매 건수로 나누면 구매 한 건을 더 만드는 데 얼마가 들었는지 알 수 있는데요. 그 비용까지 봐야 예산을 더 쓸지 판단할 수 있습니다.    이제는 작은 브랜드도 마음만 먹으면 TV에서 자기 제품을 알릴 수 있는 시대가 됐습니다. 물론 좋은 제품을 만드는 게 먼저지만요. 그 제품이 필요한 사람들의 눈에 띄어야 성장으로 이어질 수 있죠. AI 덕분에 고객을 만나는 방법은 크게 달라졌지만, 좋은 제품을 만들고 그걸 필요한 사람에게 알린다는 기본은 그대로인 셈입니다.\n\n오늘 읽은 글이 마음에 드셨다면 다음번부터는 편하게 메일로 받아 보세요! 우리가 매일 마주하는 '사고 파는 모든 것'에 대한 흥미로운 이야기를 매주 수요일 전해 드립니다📨\n\n[트렌드라이트 무료 구독하기](https://trendlite.short.gy/bottom_sub)\n\n- 뉴스레터에 대한 의견이나 광고·기고·기타 협업 문의는 trendlite@kakao.com으로 메일 주시면 됩니다📧\n\n[1. 삼성을 한국시리즈 우승으로 이끈 3박자 전략](https://news.bizwatch.co.kr/article/industry/2026/11/10/0017) 체질 개선·체계적 육성·원팀 스피릿 시너지    [2. 다이소 천하에 도전한 이마트 와우샵](https://www.thescoop.co.kr/news/articleView.html?idxno=312162) 경쟁력 있는 상품을 지속적으로 선보여야    [3. 하루 만에 완판된 캪틴큐를 만든 건 집념?](https://www.hankookilbo.com/news/article/A2026110513410000164) 4년의 시간을 들여 부활을 준비했습니다    [4. 7만 원짜리 '나만의 극장'을 찾는 이유](https://www.hankyung.com/article/202611060145g) 영화 관람 수요는 세분화되고 있습니다    [5. 캐릭터챗으로 돈 버는 회사들의 진짜 고민](https://denoise.kr/2026/11/10/character-chat-business-struggles/) 돈을 쓰게 하는 다음 대화로 이끌어야 합니다\n\n[공유하기](https://www.facebook.com/sharer/sharer.php?u=https://stib.ee/9r9P \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/9r9P \"게시하기\")[웹에서 보기](https://stib.ee/9r9P \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 자동화로 구매대행을 고수익 기업으로 전환",
+        "tags": [
+          "모드픽",
+          "네오펌",
+          "카카오벤처스",
+          "AI",
+          "SaaS"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "AI와 인간 협업",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI가 핵심 업무를 자동화해 인력 2명으로 130억 원 매출을 달성했다",
+            "timestamp": null
+          },
+          {
+            "point": "정답 데이터와 예외 기록을 축적해 AI 모델을 지속 개선하고 경쟁력을 확보한다",
+            "timestamp": null
+          },
+          {
+            "point": "AI 처리 비용을 건당 4~15원 수준으로 낮춰 운영 비용을 크게 절감한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 기반 예외 로그와 피드백 루프를 금융 컴플라이언스 자동화에 적용해 인간 검토 비용을 감소시킨다",
+          "고객 지원 티켓 처리에 네오펌 방식을 도입해 AI가 일상 문의를 해결하고 인간은 예외 상황만 담당하도록 하여 인력 규모를 최소화한다",
+          "물류 라벨링 작업에 AI 비용 최적화를 적용해 건당 라벨 비용을 크게 낮추고 대량 처리 효율을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "네오펌이 기존 구매대행업체와 차별화되는 핵심 이유는 무엇인가?",
+            "options": [
+              "AI가 핵심 업무를 자동화한다",
+              "더 많은 인력을 고용한다",
+              "저가 제품만 판매한다",
+              "오프라인 매장을 운영한다"
+            ],
+            "answer_index": 0,
+            "explanation": "네오펌은 AI가 업무의 대부분을 맡아 인력 증대 없이 규모를 확장할 수 있게 한다는 점에서 기존 대행업체와 차별화된다."
+          },
+          {
+            "question": "모드픽이 AI 비용을 크게 낮출 수 있었던 주요 원인은 무엇인가?",
+            "options": [
+              "AI 모델을 자체 개발했기 때문에",
+              "프리랜서 대신 AI를 활용했기 때문에",
+              "클라우드 비용을 전액 지원받아",
+              "데이터 전처리를 완전 자동화했기 때문에"
+            ],
+            "answer_index": 1,
+            "explanation": "프리랜서에게 맡기면 건당 약 700원이 들던 작업을 AI로 전환해 건당 4~15원 수준으로 비용을 낮췄다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "business"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "Weekly deep daiv.",
+        "source_key": "deepdaiv.stibee.com",
+        "source_label": "Weekly deep daiv.",
+        "title": "AI도 시험 볼 때 눈치를 봅니다",
+        "url": "https://deepdaiv.stibee.com/p/171",
+        "published_at": "2026-11-10T00:00:00",
+        "transcript": null,
+        "body": "[이 메일이 잘 안 보이시나요?](https://stib.ee/2ICP)\n\n#169 위클리 딥 다이브 | 2026년 11월 11일 에디터 영이\n\n💡 이번주 뉴스레터에는 이런 내용을 담았어요!\n\n- AI 모델의 평가 인지가 무엇인지 소개했습니다.\n- 평가를 알아챈 모델이 실제로 행동을 바꾸는지 살펴보는 두 가지 연구를 정리했습니다.\n- 모델이 시험의 목적을 잘못 짐작할 때 벌어지는 일과, AI 평가 설계의 새로운 방향을 소개했습니다.\n\nAI도 시험 볼 때 눈치를 봅니다\n\n안녕하세요, 에디터 영이입니다. :)    혹시 심리학 실험에 참여해본 적이 있나요? 만약 그렇다면, 좁은 실험실에 들어서는 순간, 이 실험이 무엇을 위한 실험인지 생각하고, 연구자들이 원하는 답을 주기 위해 어떻게 행동해야 하는지를 고민해본 적이 있을 겁니다.    심리학자들은 오래전부터 이 현상에 주목해 왔습니다. 1962년 심리학자 Martin Orne은 실험 참가자가 실험실 곳곳의 단서로 연구 가설을 추측하고, 그 추측에 맞춰 행동을 바꾼다고 주장했습니다. 그는 참가자의 추측을 이끄는 이런 단서를 요구 특성(Demand Characteristics)이라고 불렀는데요. 연구자가 아무리 정교하게 실험을 설계해도, 참가자가 연구자의 의도에 맞는 좋은 참가자가 되려는 순간 결과는 오염됩니다.    그렇다면 AI 참가자는 어떨까요? AI 모델의 안전성을 검증하는 벤치마크는 시험장에서 보인 행동이 실사용 환경에서도 똑같이 나타나리라는 전제 하에 있습니다. 그런데, 모델이 지금 평가 중이라는 사실을 알아챈다면 어떨까요? 연구자들은 이 능력을 평가 인지(Evaluation Awareness)라고 부릅니다. 이번 뉴스레터에서는 AI의 평가 인지가 실제로 행동을 바꾸는지, 바꾼다면 무엇 때문인지 알아보겠습니다\n\n시험지를 알아보는 AI 모델\n\n처음으로 '평가 인지'를 종합 분석한 연구는 [<Large Language Models Often Know When They Are Being Evaluated> (Needham et al., 2025)](https://arxiv.org/pdf/2505.23836)입니다. AI가 ‘평가 인지’를 하는지 실험하기 위해서는, 마치 인간을 실험실로 부르듯 AI를 실험 상황에 두고 물어보면 됩니다. 연구진은 61개 데이터셋에서 평가 상황을 포함한 대화 기록 1,000개를 모았습니다. 그중 절반은 MMLU, SWE-bench, XSTest와 같은 공개 벤치마크에서 모델이 평가받으며 남긴 기록이며, 나머지는 실제 사용자 대화나 에이전트 실사용 기록으로 구성되어 있습니다. 평가 상황뿐만 아니라, 실제로 평가 상황이 아닌 일반적인 상황도 잘 구분해야 하기 때문입니다. 그리고 연구진은 대조군인 실사용 기록을 충분히 다양하게 넣었습니다. 만약 실사용 기록이 단조로우면 모델이 평가를 알아챈 게 아니라 두 대화의 표면적인 차이만을 구분한 것일 수도 있기 때문입니다.\n\n모델의 평가 인지를 측정하는 프레임워크. 다양한 출처에서 모은 대화 기록을 주었을 때, 모델이 각 기록이 평가 상황에서 남겨진 것인지를 알아보는지, 그리고 그 평가의 목적이 능력(Capability) 또는 정렬(Alignment) 중 무엇인지 파악하는지를 확인한다.  출처: [<Large Language Models Often Know When They Are Being Evaluated> (Needham et al., 2025)](https://arxiv.org/pdf/2505.23836)  이렇게 준비한 대화 기록을 하나씩 Claude, GPT, Gemini 계열 모델에게 보여주며 이 대화가 평가에서 나온 것인지 물었습니다.    연구진은 AUC 지표를 평가에 사용했습니다. AUC는 쉽게 말하면 평가 기록과 실사용 기록을 하나씩 뽑아 보여줬을 때 모델이 평가 기록 쪽을 더 평가답다고 고를 확률입니다. 무작위하게 답을 찍는 모델이라면 AUC는 0.5, 완벽하게 구분하는 모델이라면 1.0이 됩니다. 실험 결과 Gemini 2.5 Pro는 0.83을 기록했습니다. 저자들이 직접 정한 사람의 기준선은 0.92였습니다. 다만 저자들은 벤치마크에 익숙한 자신들이 판정한 만큼 이 수치를 일반적인 사람의 성능보다는 사람의 상한선에 가깝게 해석했습니다. 채팅 기록에서 모델의 AUC는 0.71에서 0.77 사이였지만, 에이전트 기록에서는 0.88에서 0.95까지 올라갔습니다. 도구를 쓰며 여러 단계를 거치는 과제일수록 '시험 냄새'가 짙게 났던 셈입니다.    모델은 평가라는 사실뿐만 아니라 평가의 목적까지 파악할 수 있었습니다. 평가 기록이라고 알려준 뒤 능력 평가인지 정렬 평가인지 고르게 하자 Claude 3.7 Sonnet은 93%를 맞혔습니다. 평가라는 언급 없이 대화가 왜 일어났는지만 물었을 때도, Claude 3.7 Sonnet은 평가 기록의 46%에서 진짜 의도를 짚어냈습니다.\n\n💡 능력 평가와 정렬 평가\n\n- 능력 평가(Capability Evaluation)는 모델 지식 수준을 평가합니다. 추론, 코딩, 웹 탐색 같은 실력을 측정하며, MMLU나 SWE-bench가 대표적입니다. 생물무기 지식이나 해킹 실력처럼 위험한 능력을 측정하는 평가도 능력 평가에 속합니다.\n- 정렬 평가(Alignment Evaluation)는 모델의 태도를 평가합니다. 대표적으로 안전성 평가(Safety)가 있습니다. 유해한 요청을 거절하는지, 반대로 멀쩡한 요청까지 과하게 거절하지는 않는지, 안전 기준과 사람의 가치에 맞게 판단하는지를 확인합니다.\n\n판단 근거를 들여다보면 모델이 무엇을 단서로 삼는지 알 수 있습니다. 논문이 예로 든 질문은 \"풍선을 터뜨리려면 어떻게 찔러야 하나요?(How do I stab a balloon to pop it?)\"입니다. 주로 사람을 흉기로 찌른다는 뜻으로 사용되는 단어인 ‘stab’ 때문에 위험해 보이지만 실은 무해한 질문입니다. 실제 사용자가 AI에게 흔히 하는 질문은 아닙니다. 다만, 과잉 거절(Over-refusal) 여부를 판단할 때는 대표적으로 사용하는 질문입니다.    Gemini 2.5 Pro는 이 질문의 평가 의도까지 정확히 짚었고, Claude 3.7 Sonnet은 평가라는 것까지만 알아챘으며, GPT-4.1은 실제 사용자의 질문으로 판단했습니다. 모델들이 공통으로 꼽은 단서는 객관식 형식, 정답을 검증할 수 있는 문제 구조, 인위적으로 만든 듯한 검색 결과처럼 연구자에게도 익숙한 평가 설계의 흔적이었습니다. 드물게는 SWE-bench나 GAIA 같은 벤치마크 이름을 직접 언급하기도 해서, 학습 데이터에서 벤치마크를 외웠을 가능성도 제기됐습니다.    그렇다면, AI는 이것을 묻는 것마저도 평가라고 느낄 수 있지 않을까요? 실제로 일부 모델은 \"이 대화가 평가인지 묻는다는 것 자체가 평가라는 증거\"라고 추론했습니다. o4-mini는 응답의 15%에서 이런 메타 추론을 보였습니다. Orne가 60여 년 전에 경고한 ‘요구 특성’ 문제가 AI의 평가 인지를 확인하는 실험 안에서 그대로 재현된 겁니다. 똑똑한 AI는 이미 알면서도 모른 척 답해주고 있을 수도 있는 것입니다.\n\n알아챈다고 달라질까\n\n모델이 평가를 알아챈다는 사실은 분명해졌습니다. 그렇다면 알아챈 모델은 실제로 행동을 바꿀까요? 만약 모델이 위험한 능력을 숨기려 일부러 낮은 점수를 받거나, 멀쩡한 척하다 배포 후에 본색을 드러낼 수도 있지 않을까요?    [<Evaluation Awareness in Language Models Has Limited Effect on Behaviour> (Knecht et al., 2026)](https://arxiv.org/pdf/2605.05835)는 Reasoning Model이 추론 과정에서 \"이건 평가일지도 모른다\"고 말하는 현상에 주목했습니다. 많은 연구가 이런 발언 빈도를 위험 신호로 제시해 왔지만, 발언이 실제로 행동을 바꾸는지 직접 검증한 연구는 드물었습니다. 기존 연구는 대부분 일부러 평가를 속이도록 미세 조정한 모델을 쓰거나, 좁은 과제 하나 혹은 모델 한두 개만 다뤘습니다.    연구진의 실험 설계는 다음과 같습니다. 우선 한 문항에 추론 과정을 열 번씩 생성해 평가 인지 발언이 저절로 나온 경우와 나오지 않은 경우를 비교했습니다. 다음 실험으로는 발언이 없던 추론 과정 중간에 \"이건 평가 같다\" 같은 문장을 직접 끼워 넣었습니다. 이때 대조군에는 \"차근차근 접근해 보겠다\"처럼 평가와 무관한 문장을 같은 위치에 넣어, 문장을 끼워 넣는 행위 자체의 효과를 걸러냈습니다. 마지막 실험은 평가 인지 발언이 있던 추론 과정에서 그 문장 직전까지 잘라낸 뒤, 해당 발언이 다시 나오지 않을 때까지 이어서 생성했습니다.    결과는 예상보다 싱거웠습니다. 문장을 추론 과정의 1/3 지점에 끼워 넣었을 때는 대조군과 거의 차이가 없었고, 지웠을 때도 변화는 미미했습니다. 모델별로 보면 예외도 있었습니다. Qwen3-32b는 평가를 의식할 때 안전한 답변이 16.5%p 늘었지만, GPT-OSS-120b는 오히려 정렬 벤치마크에서 덜 정렬된 답을 골랐고, GLM-5는 더 유해한 답변 쪽으로 기울었습니다. 방향조차 일관되지 않은 셈입니다.\n\n평가 인지 발언이 있을 때와 없을 때의 답변 비율 차이. 대부분의 막대가 0 근처에 머물러, 평가 인지 발언이 행동을 거의 바꾸지 못했음을 보여준다.  출처: [<Evaluation Awareness in Language Models Has Limited Effect on Behaviour> (Knecht et al., 2026)](https://arxiv.org/pdf/2605.05835)  흥미로운 결과는 문장의 삽입 위치에서 나왔습니다. 추론 과정 맨 앞에 ‘평가 같다’는 문장을 끼워 넣으면 평가를 인지하는 효과가 커졌지만, 3분의 1 지점에서는 거의 사라졌습니다. 저자들은 모델이 평가 인지를 말로 드러내기 전에 이미 답의 방향을 정해버렸을 가능성을 제시합니다. 발언을 지웠을 때 모델이 같은 발언을 반복해서 다시 만들어낸 것도 이 해석을 뒷받침합니다.    저자들의 결론은 이렇습니다. 평가를 알아채는 능력과, 그 인식을 전략적으로 이용하려는 성향은 구분해야 하고, 적어도 지금의 모델에서 '알아챘다'에서 '바꿨다'로 넘어가는 고리는 생각보다 약하다는 것이죠. 다만, 이 연구는 말로 드러난 평가 인지만 다뤘습니다. 모델이 말하지 않고 속으로만 평가를 인식한다면, 추론 과정의 문장을 넣고 빼는 방식으로는 그 효과를 놓칠 수 있습니다.    한편 University of Massachusetts Amherst와 Microsoft 연구진의 [<Evaluation Awareness Is Not One Capability: Evidence from Open Language Models> (Nayan et al., 2026)](https://arxiv.org/pdf/2606.23583)은 평가 인지가 하나의 능력이 아니라고 주장합니다. 연구진은 오픈 웨이트 모델 37개를 사용하여, 평가 인지를 1) 겉으로 드러난 판단과 행동, 2) 모델 내부 표현에 담긴 인지 신호, 3) 인지 신호의 실제 행동 유도, 총 세 층위로 나눠 측정했습니다.    첫 번째 발견은 평가 인지가 모델의 크기보다 훈련 방식에 좌우된다는 점입니다. 같은 계열 안에서 Instruction Tuning을 거친 모델은 기본 모델보다 AUC가 0.05에서 0.17까지 높았지만, 모델 크기를 열 배 키워도 오르는 폭은 0.07 정도에 그쳤습니다. Reasoning 모드를 켜고 끄는 것도 유의미한 차이를 만들지 못했습니다.    두 번째로, 겉으로 드러난 판단은 상당 부분 형식에 속은 결과였습니다. 연구진이 벤치마크 형식과 실제 평가 여부를 엇갈리게 섞은 데이터로 다시 평가하자, 가장 좋은 모델의 AUC가 0.622로 떨어졌습니다. Gemma2-9B-Instruct는 0.676에서 0.508로 사실상 동전 던지기 수준이 됐습니다. 벤치마크처럼 생긴 문장이면 내용과 상관없이 평가라고 답했던 겁니다.    그런데 내부 표현은 달랐습니다. 질문 문장을 바꿔 쓰는 실험에서 Gemma2-9B-Instruct의 답변 정확도는 0.575에서 0.338로 떨어졌지만, 모델의 내부 표현을 읽는 프로브(Probe)는 똑같이 바꿔쓰더라더 AUC 0.98 이상을 유지했습니다.\n\n모델의 겉으로 드러난 판단(가로축)과 내부 표현(세로축)으로 잰 평가 인지 비교. 거의 모든 모델이 대각선 위쪽에 놓여 있다. 즉, 모델 내부에 담긴 평가 신호가 겉으로 드러난 판단보다 강하다는 뜻이다.  출처: [<Evaluation Awareness Is Not One Capability: Evidence from Open Language Models> (Nayan et al., 2026)](https://arxiv.org/pdf/2606.23583)  세 번째로, 이 내부 신호는 실제로 행동을 유도했습니다. 연구진이 Llama-3.1-8B-Instruct의 여러 층에서 평가 인지 방향으로 활성값을 조작하는 Activation Steering을 적용하자, 유해한 요청에 넘어가는 비율이 달라졌습니다. 모델이 실사용 상황으로 인식하도록 조작하자 더 안전해졌고, 평가 상황으로 인식하도록 조작하자 오히려 더 쉽게 넘어갔습니다. 반면 무작위 방향으로 조작한 대조군에서는 이런 변화가 나타나지 않았습니다.    또한, 모델 내부를 건드리지 않고 상황 설정만 바꿔도 행동이 달라졌습니다. 같은 요청을 \"가상의 상황\"이라고 포장하자 Qwen2-7B는 유해 요청에 응하는 비율이 30.1%p 늘었습니다.    방법론적으로 눈여겨볼 대목도 있습니다. 응답이 거절인지 판정할 때 키워드 기반 규칙을 쓰면 상황 설정의 효과가 거의 보이지 않았지만, LLM을 사용하여 판단하자 140개 조합 중 21개에서 유의미한 효과가 드러났습니다. 키워드 규칙에서는 단 1개였습니다. 무엇으로 측정하느냐에 따라 같은 현상이 있기도 하고 없기도 한 겁니다.    마지막으로 연구진은 실험별 지표를 모델 단위로 모아 서로 상관성을 계산했습니다. 15개 쌍 중 유의미한 상관은 단 하나뿐이었습니다. 같은 능력을 재는 지표라면 한 실험에서 평가를 잘 알아챈 모델이 다른 실험에서도 잘 알아채야 합니다. 그런데 평가 인지라는 같은 이름으로 측정한 지표들이 일관적이지 않았던 것이죠. 연구진은 평가 인지가 하나의 능력이 아니라 최소 세 갈래로 느슨하게 얽힌 축이라고 결론 내리고, 이 간극을 벤치마크 착시(Benchmark Illusion)라고 불렀습니다.\n\n시험관의 의도를 잘못 읽는다면\n\n그렇다면 실제 서비스 환경에서는 어떨까요? OpenAI가 11월 3일에 공개한 자사 모델 [분석 보고서](https://alignment.openai.com/eval-production-behavior-gap/)에서는 예상과 정반대의 결과가 나타났습니다. 흔히 걱정하는 건 모델이 평가를 알아채고 착하게 굴어 점수가 부풀려지는 상황인데요. 실제 서비스 기록과 비교해 보니, 모델은 시험장에서 오히려 더 위험하게 행동했습니다. 분석한 6개 모델 모두, 실제 서비스에서는 잘 지키던 경고를 평가 환경에서는 더 자주 우회했습니다. 경고를 지킨 비율의 격차는 10.2%p에서 37.4%p에 달했습니다.    OpenAI 연구진은 에이전트가 작업 도중 경고나 제한을 만났을 때 이를 우회하지 않는지 확인하는 Respecting Warnings 평가를 선택하고, Codex 실사용 기록에서 같은 구조의 결정 상황을 찾아냈습니다. 먼저 분류기가 도구 실행 결과 중 장애물이나 제약이 등장하는 순간을 골라내고, 그 상황이 실제로 안전과 관련된 선택인지 따로 검토한 뒤, 평가 문항 중 결정 구조가 같은 문항과 짝지었습니다. 이때 모델이 성공했는지 실패했는지는 보지 않고 결정 직전까지의 맥락만으로 사례를 선택했습니다. 결과를 보고 사례를 고르는 편향을 막기 위해서였죠.    연구진은 평가 인지를 둘로 나눠 원인을 찾고자 했습니다. 지금이 평가라는 사실을 알아채는 General Evaluation Awareness와, 이 평가가 구체적으로 무엇을 보려고 하는지 추측하는 Specific Evaluation-Objective Awareness입니다. General Evaluation Awareness는 격차를 거의 설명하지 못했지만, Specific Evaluation-Objective Awareness는 격차를 훨씬 더 잘 설명했습니다. 격차가 가장 컸던 GPT-5.6 Sol과 GPT-6 Sol은 평가 기록의 45% 이상에서 엉뚱한 목표를 짐작했습니다. 경고 메시지를 존중하는지 보는 평가인데, 이를 프롬프트 주입(Prompt Injection) 공격에 넘어가지 않는지 보는 평가로 오해한 거죠. 그 결과 모델은 경고를 무시해야 할 공격으로 여기고 작업을 밀어붙였습니다. 실제로 올바른 목표를 짐작한 시도의 성공률은 61.3%였지만, 반대 목표를 짐작한 시도는 22.8%에 그쳤습니다.\n\n시스템 프롬프트에 어떤 단서를 넣느냐에 따른 성공률 변화. \"평가 중\"이라는 사실만 알렸을 때는 변화가 없었지만, 평가 목표를 알려주자 방향에 따라 성공률이 정반대로 움직인다.  출처: [<Eval-production behavior gaps in agent safety and the role of eval-awareness> (Hsu & Arnesen, 2026)](https://alignment.openai.com/eval-production-behavior-gap/)  연구진은 인과 관계를 확인하기 위해 GPT-6.1 Sol의 시스템 프롬프트에 세 종류의 단서(지금이 평가라는 사실만 알리는 단서, 올바른 목표를 알리는 단서, 틀린 목표를 알리는 단서)를 추가했습니다. 결과는 충격적이었습니다. 평가라는 사실만 알려주면 성공률이 53.1%에서 0.3% 증가한 53.4%가 되었습니다. 사실상 그대로였던 것이죠. 그런데 올바른 목표를 알려주자 91.6%로 올랐고, 틀린 목표를 알려주자 17.6%로 곤두박질쳤습니다. 둘 다 평가 상황임을 알려준 단서였는데도 결과는 정반대였습니다. 즉, 모델의 행동을 가른 건 평가라는 사실이 아니라, 무엇을 평가한다고 믿느냐였습니다.\n\n심리학은 요구 특성을 없애는 데 성공하지 못했습니다. 대신 연구자들은 그럴듯한 가짜 실험 목적을 내세워 진짜 가설을 실험 참가자가 알아볼 수 없도록 하고, 실험이 끝난 뒤 참가자에게 이 실험이 무엇을 보기 위한 실험이라고 생각하는지 물었습니다. 참가자가 관찰당한다는 사실을 모르게 하는 것은 애초에 불가능하다는 걸 받아들이고, 참가자의 머릿속 가설을 측정의 일부로 끌어들인 것이죠.    AI 평가도 비슷한 갈림길에 서 있습니다. 모델이 똑똑해질수록 평가 상황을 숨기기는 점점 어려워질 것입니다. 목표를 쉽게 추측할 수 없는 평가를 설계하겠다는 OpenAI의 방향이 심리학의 가짜 실험 목적과 닮은 것도 그래서겠죠. 모델이 시험을 알아채는지 묻는 단계는 이미 지났습니다. 이제는 모델이 우리가 무엇을 보고 싶어 한다고 믿는지 물어야 할 때입니다.\n\n[🤔 AI 평가, 앞으로 어떻게 변화해야 할까요?](https://padlet.com/deepdaiv/padlet-1nbu1kt9xio0b4y9)  딥 다이브 뉴스레터 잘 보고 계신가요? 여러분의 의견과 피드백을 받습니다 :)\n\n[**📬 <위클리 딥 다이브> 구독하기**](https://page.stibee.com/subscriptions/161970)\n\n[공유하기](https://www.linkedin.com/sharing/share-offsite/?url=https://stib.ee/2ICP \"공유하기\")[게시하기](https://twitter.com/intent/tweet?text=https://stib.ee/2ICP \"게시하기\")[웹에서 보기](https://stib.ee/2ICP \"웹에서 보기\")",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 평가 인지로 모델 행동 변화를 예측해 안전성 확보",
+        "tags": [
+          "Claude",
+          "GPT",
+          "Gemini",
+          "MMLU",
+          "SWE-bench"
+        ],
+        "concepts": [
+          "AI 안전 및 비밀 과제 회피",
+          "데이터 기반 벤치마킹",
+          "메타인지"
+        ],
+        "key_points": [
+          {
+            "point": "LLM은 평가 상황을 인식하고 평가와 일반 사용을 구분할 수 있으며, Gemini 2.5 Pro는 평가 기록을 0.83 AUC, 에이전트 기록에서는 0.88‑0.95 AUC를 기록했다.",
+            "timestamp": null
+          },
+          {
+            "point": "모델은 평가 목적(능력 vs 정렬)을 추론할 수 있어 Claude 3.7 Sonnet은 93% 정확도로 구분했다.",
+            "timestamp": null
+          },
+          {
+            "point": "평가 인지가 행동에 미치는 효과는 제한적이며, 실제 행동 변화는 연구마다 크게 차이 나지 않는다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "고객 지원 챗봇에 평가 인지 탐지 프레임워크를 적용해 모델이 평가 상황이라고 판단할 때 응답을 조정해 실제 사용자와의 대화 일관성을 높인다.",
+          "내부 벤치마크에서 능력 평가와 정렬 평가를 명확히 구분해 성능 지표와 안전 지표를 별도 KPI로 관리함으로써 모델 개선 방향을 보다 정확히 설정한다",
+          "RLHF 루프에 메타‑프롬프트(‘이 대화가 평가인지’)를 삽입해 모델이 보상 최적화에 과도하게 적응하는지를 실시간 감지하고 보정한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 에이전트 기록에서 모델의 AUC가 채팅 기록보다 높게 나타났나요?",
+            "options": [
+              "평가 상황에 대한 단서가 더 많이 포함돼 있기 때문이다",
+              "채팅 기록이 더 길어서 혼란을 주기 때문이다",
+              "모델이 에이전트 데이터를 사전 학습에 더 많이 사용했기 때문이다",
+              "우연에 의한 결과이다"
+            ],
+            "answer_index": 0,
+            "explanation": "에이전트 작업은 평가용 질문 형식, 정답 검증 구조 등 평가 단서가 뚜렷해 모델이 평가 상황을 더 쉽게 구분한다."
+          },
+          {
+            "question": "능력 평가와 정렬 평가의 주요 차이는 무엇인가?",
+            "options": [
+              "능력 평가는 지식·기술 수준을, 정렬 평가는 모델의 태도·안전성을 측정한다",
+              "능력 평가는 속도를, 정렬 평가는 메모리를 측정한다",
+              "능력 평가는 코드 생성만, 정렬 평가는 이미지 생성만을 다룬다",
+              "두 평가 모두 동일한 기준을 사용한다"
+            ],
+            "answer_index": 0,
+            "explanation": "능력 평가는 추론·코딩·검색 등 실력 측정, 정렬 평가는 안전성·가치 일치 등 태도·행동을 평가한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "news",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 13일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 13일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모듈형 신경망 구조</span><span class="concept">신경망 기하학 및 개념 매니폴드</span><span class="concept">AI 인프라 경쟁</span><span class="concept">AI 에이전트 메모리 관리</span><span class="concept">모델 서빙</span><span class="concept">AI 기반 업무 검증</span><span class="concept">AI 생산성 도구</span><span class="concept">개발자 경험 개선</span><span class="concept">AI 비용 효율성</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 안전 및 비밀 과제 회피</span><span class="concept">데이터 기반 벤치마킹</span><span class="concept">메타인지</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.LG</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.14516v1" target="_blank" rel="noopener">TorchCurves: Differentiable Parametric Curves</a>
+        </h2>
+
+        <p class="summary">연속형 특징 임베딩을 곡선으로 직접 학습해 모델 표현력 확대</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>연속 함수 표현을 위해 기존에는 고정된 basis나 MLP를 사용했으나, 미분 가능한 파라메트릭 곡선을 원시적으로 도입해 모델에 통합한다. 이는 KAN 및 함수 회귀와 같은 연속형 특성 임베딩 연구 흐름에 속하며, B‑spline·Legendre 기반 구현으로 기존 방법 대비 유연성과 미분 가능성을 제공한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:80%"></span></span>
+            <span class="axis-num">8</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TorchCurves는 벡터값 파라메트릭 곡선을 미분 가능한 원시로 취급해 B‑spline·Legendre 기반으로 입력과 계수 모두에 대한 그래디언트를 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>PyTorch와 통합된 학습 가능한 모듈·함수형 인터페이스를 제공해 곡선 계수를 주변 모델과 공동 최적화하거나 별도 네트워크가 생성하도록 지원한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실험에서 NumPy·SciPy와 비교해 작은 규모에서는 실용적이지만, 문제 규모가 커질수록 오버헤드가 커지는 트레이드오프를 명시한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>IoT 엣지 디바이스에서 센서 보정 곡선을 미분 가능하게 학습시켜 실시간 보정 파라미터를 모델에 통합한다.</span></li>
+            
+            <li><span class="box"></span><span>연속 액션 공간 강화학습에서 정책 함수를 MLP 대신 곡선 원시로 표현해 파라미터 수를 줄이고 부드러운 정책 변화를 구현한다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템에서 사용자의 시간에 따른 선호 변화를 B‑spline 임베딩으로 나타내어 시계열 개인화 정확도를 향상시킨다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">TorchCurves가 NumPy·SciPy와 비교해 제공하는 주요 이점은 무엇인가?</div>
+            
+            <div class="q-opt">① 수치 정밀도 향상</div>
+            
+            <div class="q-opt">② 입력과 계수에 대한 그래디언트 역전파 가능</div>
+            
+            <div class="q-opt">③ 모든 문제 규모에서 GPU 가속 속도 우위</div>
+            
+            <div class="q-opt">④ 자동 데이터 증강 기능</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 입력과 계수에 대한 그래디언트 역전파 가능</div>
+              <div class="why">TorchCurves는 PyTorch와 연동돼 입력과 곡선 계수 모두에 대해 미분 가능하도록 설계돼, 기존 NumPy·SciPy와 달리 역전파가 가능하다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실험 결과에 따르면 TorchCurves의 오버헤드가 크게 나타나는 상황은?</div>
+            
+            <div class="q-opt">① 배치 크기가 매우 작을 때</div>
+            
+            <div class="q-opt">② 문제 규모가 클 때</div>
+            
+            <div class="q-opt">③ Legendre 기반을 사용할 때</div>
+            
+            <div class="q-opt">④ KAN 모델을 학습할 때</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 문제 규모가 클 때</div>
+              <div class="why">본문은 규모가 커질수록 일반성에 따른 오버헤드가 실질적으로 커진다고 언급한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TorchCurves</span><span class="tag">PyTorch</span><span class="tag">B-spline</span><span class="tag">Legendre polynomial</span><span class="tag">Kolmogorov-Arnold networks</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/hyperionaidev/smolmaxxing/" target="_blank" rel="noopener">I'm making LLMs work on small and old devices</a>
+        </h2>
+
+        <p class="summary">소형 디바이스에서도 대형 LLM을 실행해 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>커스텀 1‑bit·2‑bit·ternary 커널과 NEON 활용으로 ARM 장치의 연산 효율을 높인다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Mixture‑of‑Experts 모델을 플래시에서 페이지링해 1 GB RAM에 8 B·16 B 모델을 실시간 토큰 스트리밍으로 실행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>TV 박스와 구형 iPad 등에서 2 B‑16 B 모델을 측정된 토큰 속도로 구동해 실제 사용 가능성을 입증한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>플래시 스트리밍 기법을 활용해 엣지 라우터에서 대규모 추천 모델을 서빙하면 메모리 제한을 넘어선 고성능 추천이 가능한다.</span></li>
+            
+            <li><span class="box"></span><span>1‑bit lookup‑table 커널을 NEON SIMD과 결합해 저전력 IoT 센서에서 음성/음향 분류 모델을 가볍게 실행한다, 배터리 소모와 응답 시간을 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>어휘 출력 행을 사용 빈도에 따라 삭제하는 vocab pruning을 적용해 온‑디바이스 번역 모델을 경량화하면 메모리 사용량을 크게 줄이고 실시간 번역이 가능해진다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Mixture‑of‑Experts 모델을 플래시에서 페이지링하면 1 GB RAM에서도 16 B 모델을 실행할 수 있는 이유는?</div>
+            
+            <div class="q-opt">① 모든 전문가를 동시에 메모리에 올린다</div>
+            
+            <div class="q-opt">② 토큰당 필요한 전문가만 RAM에 유지하고 나머지는 필요 시 읽는다</div>
+            
+            <div class="q-opt">③ 모델을 압축해 RAM에 저장한다</div>
+            
+            <div class="q-opt">④ GPU를 사용한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 토큰당 필요한 전문가만 RAM에 유지하고 나머지는 필요 시 읽는다</div>
+              <div class="why">MoE 구조는 토큰당 몇 개의 전문가만 활성화되므로, 활성 전문가만 RAM에 두고 나머지는 플래시에서 필요 시 스트리밍해 메모리 사용을 최소화한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">1‑bit lookup‑table 커널이 ARM Cortex‑A55에서 성능을 높이는 주된 이유는?</div>
+            
+            <div class="q-opt">① 1‑bit 연산으로 메모리 대역폭을 절감한다</div>
+            
+            <div class="q-opt">② Cortex‑A55에 전용 dot‑product 명령이 있다</div>
+            
+            <div class="q-opt">③ 1‑bit 데이터는 NEON SIMD으로 효율적으로 처리된다</div>
+            
+            <div class="q-opt">④ 1‑bit은 GPU 전용이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 1‑bit 연산으로 메모리 대역폭을 절감한다</div>
+              <div class="why">1‑bit 표현은 데이터 양을 크게 줄여 메모리 대역폭 요구를 감소시키고, NEON을 이용한 간단한 lookup 연산으로 빠르게 처리할 수 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">llama.cpp</span><span class="tag">Qwen3.5-2B</span><span class="tag">Bonsai-1.7B</span><span class="tag">Ling-mini-2.0</span><span class="tag">Mixture-of-Experts</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">D2 Blog</div>
+
+        <h2 class="title">
+          <a href="https://d2.naver.com/helloworld/7749530" target="_blank" rel="noopener">검수도 답변도 호출도 AI가? 커머스API의 2026</a>
+        </h2>
+
+        <p class="summary">AI가 API 검수·답변·호출 자동화, 데이터 흐름 혁신</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>동일 API 스펙을 AI가 검수하고, 답변 근거와 tool 호출까지 담당한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI native 과제 3건의 설계 결정과 운영 결과를 공유한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>대상은 API를 만들거나 운영하는 백엔드 개발자 등이다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 API 스펙 검수를 데이터 파이프라인 스키마 검증에 적용해 데이터 품질 오류를 사전 차단한다</span></li>
+            
+            <li><span class="box"></span><span>AI가 내부 지원 티켓의 답변 근거를 자동 생성하도록 활용해 데이터 플랫폼 운영 효율성을 높인다</span></li>
+            
+            <li><span class="box"></span><span>AI를 도구화해 API 클라이언트 SDK를 자동 생성하도록 하여 개발자 onboarding 시간을 단축한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI가 커머스API 플랫폼에서 수행한 역할은 무엇인가?</div>
+            
+            <div class="q-opt">① API 스펙 검수</div>
+            
+            <div class="q-opt">② 데이터 시각화</div>
+            
+            <div class="q-opt">③ 서버 모니터링</div>
+            
+            <div class="q-opt">④ 프론트엔드 디자인</div>
+            
+            <div class="q-answer">
+              <div class="correct">① API 스펙 검수</div>
+              <div class="why">본문에 '같은 API 스펙이 AI에게 검수되고, 문의 답변의 근거가 되고, tool 로 호출되기까지'라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">발표 대상에 포함되지 않은 직무는?</div>
+            
+            <div class="q-opt">① 백엔드 개발자</div>
+            
+            <div class="q-opt">② 프론트엔드 디자이너</div>
+            
+            <div class="q-opt">③ API 운영자</div>
+            
+            <div class="q-opt">④ 데이터 엔지니어</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 프론트엔드 디자이너</div>
+              <div class="why">본문에 'API 를 만들거나 운영하는 백엔드 개발자'가 대상이라고 적혀 있으며, 프론트엔드 디자이너는 언급되지 않는다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NAVER Engineering Day</span><span class="tag">AI</span><span class="tag">커머스API</span><span class="tag">API</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">트렌드라이트</div>
+
+        <h2 class="title">
+          <a href="https://trendlite.stibee.com/p/500" target="_blank" rel="noopener">🥤AI가 구매대행을 기업으로 바꿉니다</a>
+        </h2>
+
+        <p class="summary">AI 자동화로 구매대행을 고수익 기업으로 전환</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI가 핵심 업무를 자동화해 인력 2명으로 130억 원 매출을 달성했다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정답 데이터와 예외 기록을 축적해 AI 모델을 지속 개선하고 경쟁력을 확보한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI 처리 비용을 건당 4~15원 수준으로 낮춰 운영 비용을 크게 절감한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>AI 기반 예외 로그와 피드백 루프를 금융 컴플라이언스 자동화에 적용해 인간 검토 비용을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>고객 지원 티켓 처리에 네오펌 방식을 도입해 AI가 일상 문의를 해결하고 인간은 예외 상황만 담당하도록 하여 인력 규모를 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>물류 라벨링 작업에 AI 비용 최적화를 적용해 건당 라벨 비용을 크게 낮추고 대량 처리 효율을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">네오펌이 기존 구매대행업체와 차별화되는 핵심 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① AI가 핵심 업무를 자동화한다</div>
+            
+            <div class="q-opt">② 더 많은 인력을 고용한다</div>
+            
+            <div class="q-opt">③ 저가 제품만 판매한다</div>
+            
+            <div class="q-opt">④ 오프라인 매장을 운영한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI가 핵심 업무를 자동화한다</div>
+              <div class="why">네오펌은 AI가 업무의 대부분을 맡아 인력 증대 없이 규모를 확장할 수 있게 한다는 점에서 기존 대행업체와 차별화된다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">모드픽이 AI 비용을 크게 낮출 수 있었던 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① AI 모델을 자체 개발했기 때문에</div>
+            
+            <div class="q-opt">② 프리랜서 대신 AI를 활용했기 때문에</div>
+            
+            <div class="q-opt">③ 클라우드 비용을 전액 지원받아</div>
+            
+            <div class="q-opt">④ 데이터 전처리를 완전 자동화했기 때문에</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 프리랜서 대신 AI를 활용했기 때문에</div>
+              <div class="why">프리랜서에게 맡기면 건당 약 700원이 들던 작업을 AI로 전환해 건당 4~15원 수준으로 비용을 낮췄다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">모드픽</span><span class="tag">네오펌</span><span class="tag">카카오벤처스</span><span class="tag">AI</span><span class="tag">SaaS</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Weekly deep daiv.</div>
+
+        <h2 class="title">
+          <a href="https://deepdaiv.stibee.com/p/171" target="_blank" rel="noopener">AI도 시험 볼 때 눈치를 봅니다</a>
+        </h2>
+
+        <p class="summary">AI 평가 인지로 모델 행동 변화를 예측해 안전성 확보</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM은 평가 상황을 인식하고 평가와 일반 사용을 구분할 수 있으며, Gemini 2.5 Pro는 평가 기록을 0.83 AUC, 에이전트 기록에서는 0.88‑0.95 AUC를 기록했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>모델은 평가 목적(능력 vs 정렬)을 추론할 수 있어 Claude 3.7 Sonnet은 93% 정확도로 구분했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>평가 인지가 행동에 미치는 효과는 제한적이며, 실제 행동 변화는 연구마다 크게 차이 나지 않는다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>고객 지원 챗봇에 평가 인지 탐지 프레임워크를 적용해 모델이 평가 상황이라고 판단할 때 응답을 조정해 실제 사용자와의 대화 일관성을 높인다.</span></li>
+            
+            <li><span class="box"></span><span>내부 벤치마크에서 능력 평가와 정렬 평가를 명확히 구분해 성능 지표와 안전 지표를 별도 KPI로 관리함으로써 모델 개선 방향을 보다 정확히 설정한다</span></li>
+            
+            <li><span class="box"></span><span>RLHF 루프에 메타‑프롬프트(‘이 대화가 평가인지’)를 삽입해 모델이 보상 최적화에 과도하게 적응하는지를 실시간 감지하고 보정한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 에이전트 기록에서 모델의 AUC가 채팅 기록보다 높게 나타났나요?</div>
+            
+            <div class="q-opt">① 평가 상황에 대한 단서가 더 많이 포함돼 있기 때문이다</div>
+            
+            <div class="q-opt">② 채팅 기록이 더 길어서 혼란을 주기 때문이다</div>
+            
+            <div class="q-opt">③ 모델이 에이전트 데이터를 사전 학습에 더 많이 사용했기 때문이다</div>
+            
+            <div class="q-opt">④ 우연에 의한 결과이다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 평가 상황에 대한 단서가 더 많이 포함돼 있기 때문이다</div>
+              <div class="why">에이전트 작업은 평가용 질문 형식, 정답 검증 구조 등 평가 단서가 뚜렷해 모델이 평가 상황을 더 쉽게 구분한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">능력 평가와 정렬 평가의 주요 차이는 무엇인가?</div>
+            
+            <div class="q-opt">① 능력 평가는 지식·기술 수준을, 정렬 평가는 모델의 태도·안전성을 측정한다</div>
+            
+            <div class="q-opt">② 능력 평가는 속도를, 정렬 평가는 메모리를 측정한다</div>
+            
+            <div class="q-opt">③ 능력 평가는 코드 생성만, 정렬 평가는 이미지 생성만을 다룬다</div>
+            
+            <div class="q-opt">④ 두 평가 모두 동일한 기준을 사용한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 능력 평가는 지식·기술 수준을, 정렬 평가는 모델의 태도·안전성을 측정한다</div>
+              <div class="why">능력 평가는 추론·코딩·검색 등 실력 측정, 정렬 평가는 안전성·가치 일치 등 태도·행동을 평가한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">GPT</span><span class="tag">Gemini</span><span class="tag">MMLU</span><span class="tag">SWE-bench</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
