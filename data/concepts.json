@@ -8,9 +8,9 @@
     },
     "AI 기반 개발 도구": {
       "aliases": [],
-      "count": 1,
+      "count": 2,
       "first_seen": "2026-11-08",
-      "last_seen": "2026-11-08"
+      "last_seen": "2026-11-15"
     },
     "AI 기반 문서 구조화": {
       "aliases": [],
@@ -26,9 +26,9 @@
     },
     "AI 기반 수학 증명": {
       "aliases": [],
-      "count": 9,
+      "count": 10,
       "first_seen": "2026-09-11",
-      "last_seen": "2026-11-01"
+      "last_seen": "2026-11-15"
     },
     "AI 기반 업무 검증": {
       "aliases": [],
@@ -80,9 +80,9 @@
     },
     "AI와 인간 협업": {
       "aliases": [],
-      "count": 26,
+      "count": 27,
       "first_seen": "2026-10-03",
-      "last_seen": "2026-11-13"
+      "last_seen": "2026-11-15"
     },
     "Critical-State 강화학습": {
       "aliases": [],
@@ -98,9 +98,9 @@
     },
     "GPU 가속": {
       "aliases": [],
-      "count": 3,
+      "count": 4,
       "first_seen": "2026-11-03",
-      "last_seen": "2026-11-10"
+      "last_seen": "2026-11-15"
     },
     "IAM 역할 샤딩": {
       "aliases": [],
@@ -476,9 +476,9 @@
     },
     "데이터 기반 벤치마킹": {
       "aliases": [],
-      "count": 32,
+      "count": 33,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-11-13"
+      "last_seen": "2026-11-15"
     },
     "데이터 사용 투명성": {
       "aliases": [],
@@ -614,9 +614,9 @@
     },
     "멀티에이전트 시스템": {
       "aliases": [],
-      "count": 19,
+      "count": 20,
       "first_seen": "2026-09-09",
-      "last_seen": "2026-11-09"
+      "last_seen": "2026-11-15"
     },
     "멀티컨커런시": {
       "aliases": [],
@@ -698,9 +698,9 @@
     },
     "모델 서빙": {
       "aliases": [],
-      "count": 2,
+      "count": 3,
       "first_seen": "2026-10-20",
-      "last_seen": "2026-11-13"
+      "last_seen": "2026-11-15"
     },
     "모델 파인튜닝": {
       "aliases": [],
@@ -776,9 +776,9 @@
     },
     "병렬 처리": {
       "aliases": [],
-      "count": 17,
+      "count": 18,
       "first_seen": "2026-09-01",
-      "last_seen": "2026-11-10"
+      "last_seen": "2026-11-15"
     },
     "보안 패치 관리": {
       "aliases": [],
@@ -1010,9 +1010,9 @@
     },
     "스타트업 성장 지표": {
       "aliases": [],
-      "count": 11,
+      "count": 12,
       "first_seen": "2026-08-31",
-      "last_seen": "2026-11-03"
+      "last_seen": "2026-11-15"
     },
     "스트리밍 파이프라인": {
       "aliases": [],
@@ -1284,6 +1284,12 @@
       "first_seen": "2026-09-20",
       "last_seen": "2026-09-20"
     },
+    "잠재 공간에서 픽셀 공간으로 변환": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-15",
+      "last_seen": "2026-11-15"
+    },
     "재귀적 자기 개선": {
       "aliases": [],
       "count": 1,
@@ -1514,9 +1520,9 @@
     },
     "코드 자동생성": {
       "aliases": [],
-      "count": 15,
+      "count": 16,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-11-11"
+      "last_seen": "2026-11-15"
     },
     "콘텐츠 큐레이션": {
       "aliases": [],
@@ -1758,6 +1764,12 @@
       "first_seen": "2026-09-04",
       "last_seen": "2026-09-04"
     },
+    "확산 기반 비디오 생성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-15",
+      "last_seen": "2026-11-15"
+    },
     "활성 CPU 청구": {
       "aliases": [],
       "count": 1,
@@ -1783,6 +1795,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-11-14T09:40:16.327579+09:00",
+  "updated_at": "2026-11-15T08:35:00.881244+09:00",
   "version": 1
 }

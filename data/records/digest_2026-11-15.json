@@ -1,0 +1,427 @@
+{
+  "date": "2026-11-15",
+  "generated_at": "2026-11-14T23:35:12.966261",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "DeepMind’s AI Just Did The Impossible",
+        "url": "https://youtu.be/gPNiuyYirfw",
+        "published_at": "2026-11-12T13:41:41",
+        "transcript": "[00:00] Every day, billions of messages zip around across the internet, protected by thousands of lines of code that we are not entirely sure work perfectly.\n[00:10] One little mistake and millions of private lives spill out at once.\n[00:14] There is a mathematical algorithm to encrypt these messages, and there is a piece of code implementing that.\n[00:21] Apps like Signal run this code while WhatsApp and Facebook Messenger rely on variants of the same protocol.\n[00:29] But here is the problem. The mathematics can be proven to be good.\n[00:33] However, the code was not.\n[00:35] And the code may never be proved to be good.\n[00:38] This piece of code is called libsignal and it was audited by independent researchers.\n[00:44] That's great, but we are scientists here. We'd like to know for sure, because in the age of AI, thousands of dormant security vulnerabilities are discovered in code bases where we least expect.\n[00:57] So, how do we know that this does not have any of them?\n[01:00] Can we do the impossible?\n[01:02] Can we use AI to actually prove that our messages are safe?\n[01:07] Well, enter DeepMind's new research: AlphaProof Code.\n[01:11] Let's see if it did the impossible.\n[01:13] First, we codify how an encryption algorithm should keep our messages safe using a mathematical language called Lean.\n[01:20] Then, we take the compiled software that implements it.\n[01:24] Then, DeepMind scientists unleash a team of AI agents to prove that the program executes the mathematical rules properly.\n[01:33] Not to see if they roughly match. No, to prove that it is correct.\n[01:38] That is devilishly difficult.\n[01:40] So, what happened?\n[01:42] Dear fellow scholars, this is Two Minute Papers with Dr. Károly Zsolnai-Fehér.\n[01:46] Well, four weeks, five scientists and their AI agents produced 6.5 million lines of mathematical proofs.\n[01:54] They proved that the software encrypts and decrypts messages correctly.\n[01:59] Hah! Bravo! Perfection is not easy in this area.\n[02:04] But they found out more.\n[02:05] They also proved that if someone steals your encryption key, it does not automatically reveal your older messages.\n[02:13] And they even showed that the system can recover its security after certain compromises.\n[02:19] But how?\n[02:20] How is that possible?\n[02:21] Well, every message gets a fresh encryption key, and old keys are thrown away.\n[02:27] And here's the best part: if the attacker steals your current keys, the system introduces new secrets that the attacker might not know, and thus heal itself over time.\n[02:38] Proven to work under the assumptions of their security model.\n[02:43] That is awesome. What I also loved in the paper is that they stress tested their own system by putting back two older known bugs into the system.\n[02:53] And, what happened?\n[02:55] Yep, the AI team caught them both.\n[02:58] So good, love it.\n[03:00] Now, hold on to your papers, fellow scholars, for a fun tidbit from the paper.\n[03:04] These AI agents love to cheat.\n[03:07] They just love it.\n[03:08] In an earlier experiment, when things got a little too hard, an agent quietly made the question easier.\n[03:15] It rigged the definition of the theorem so that it became trivially true.\n[03:20] And other agents were like, less work, love that.\n[03:24] I'll copy that too.\n[03:25] So, scientists had to introduce separate referees to check whether the proven theorem is actually the one that we are looking to prove.\n[03:34] When an exam is written, you need a teacher in the room, or the students will start grading their own tests.\n[03:41] Now, limitations. This work is not perfect.\n[03:45] We do the real talk here: good and bad.\n[03:48] Signal can still be hacked.\n[03:49] The proof covers security properties under a given set of assumptions.\n[03:54] Also, low-level cryptography like AES are assumed secure.\n[03:59] And group chats are not covered in this project.\n[04:02] Also, this is just the cryptography part, not the whole app.\n[04:06] So, careful there.\n[04:07] But this work is one of the most incredible uses for AI benefiting humanity.\n[04:13] Oh, and the published proofs and specifications are open source and free for all of us.\n[04:18] And, believe it or not, this was just the beginning of something beautiful.\n[04:23] Having computer code that is verifiable is a complete game changer.\n[04:28] Just imagine a world where the software running our hospitals, banks, and our digital lives doesn't just kind of look like it works.\n[04:37] No, they will come with mathematical proof that they do exactly what they are supposed to do.\n[04:43] Wow, I have goosebumps just thinking about that.\n[04:47] Thank you so much to DeepMind and Pushmeet.\n[04:50] You are heroes. What a time to be alive.\n[04:53] I use Lambda to reproduce AI research papers often in minutes.\n[04:57] It's great to train your own models, fine-tune an existing one, run inference, text to image or video, easy-peasy.\n[05:06] Running a deep seek chatbot or agent, super fast, super reliable.\n[05:11] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[05:15] I test ideas from papers I cover and moments later, results.\n[05:20] Love it.\n[05:21] Seriously, try it out now at lambda.com/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.com/papers\n\n📝 The DeepMind paper AlphaProof Code is available here:\nhttps://deepmind.google/blog/introducing-alphaproof-code/\nhttps://deepmind.google/documents/36/Formal_Verification_of_Signal_4.pdf\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "AI가 암호 코드 검증으로 보안 신뢰성을 높인다",
+        "tags": [
+          "DeepMind",
+          "AlphaProof",
+          "Lean",
+          "libsignal",
+          "Signal"
+        ],
+        "concepts": [
+          "AI 기반 수학 증명",
+          "멀티에이전트 시스템",
+          "AI와 인간 협업"
+        ],
+        "key_points": [
+          {
+            "point": "DeepMind가 AlphaProof Code를 소개하며 AI 에이전트가 암호 구현을 수학적으로 증명하도록 한다",
+            "timestamp": "01:07"
+          },
+          {
+            "point": "4주·5명·AI 에이전트가 650만 줄의 증명을 생성해 암호·복호화가 올바른지 증명했다",
+            "timestamp": "01:54"
+          },
+          {
+            "point": "키를 주기적으로 교체하고 공격자가 현재 키를 탈취해도 시스템이 새로운 비밀을 도입해 스스로 회복한다",
+            "timestamp": "02:27"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 에이전트를 활용해 데이터 파이프라인 변환 로직에 형식 검증을 자동 생성·검증함으로써 데이터 무결성을 보장한다",
+          "키 회전·자기 치유 메커니즘을 마이크로서비스 API 토큰 관리에 적용해 토큰 유출 시 피해를 제한하고 자동 복구하도록 설계한다",
+          "AI 에이전트가 생성한 증명 결과를 별도 검증 AI(레프리)에게 검토하게 하여 자동 모델 감사 보고서의 신뢰성을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "AlphaProof가 증명한 보안 특성 중, 공격자가 현재 키를 탈취했을 때 시스템이 어떻게 대응하는가?",
+            "options": [
+              "이전 메시지도 바로 복호화 가능",
+              "시스템이 새로운 비밀을 도입해 시간이 지나면 복구한다",
+              "키를 재사용해 계속 암호화한다",
+              "공격자를 즉시 차단한다"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 공격자가 현재 키를 빼앗아도 시스템이 새로운 비밀을 도입해 시간이 지나면 보안을 회복한다는 자기 치유 메커니즘을 증명했다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CV",
+        "source_key": "arxiv:cs.CV",
+        "source_label": "arXiv:cs.CV",
+        "title": "Back to Pixels: Lifting Latent Video Diffusion into Pixel Space",
+        "url": "https://arxiv.org/abs/2611.17336v1",
+        "published_at": "2026-11-12T18:59:55",
+        "transcript": null,
+        "body": "Frontier video generation models work in a VAE latent space that compresses video in both space and time. This compression made training tractable, but now limits high-resolution, controllable, and interactive generation -- doubling resolution quadruples token count, conditions apply to groups of frames rather than individual ones, and each response must wait for the rest of its multi-frame block. We present PixVid, a simple yet effective method that lifts a pretrained latent video model to directly generate every frame in pixel space. PixVid keeps the diffusion transformer and replaces the VAE decoder with a convolutional head that renders its outputs into pixels. We find that predicting clean video rather than velocity, together with a larger noise shift, is key to quality. Finetuned from Wan2.1-14B, PixVid is competitive with the latent baseline within $\\sim 1.3$M training clips. Working framewise in pixels, it generates at $2\\times$ higher resolution with the same per-frame token count, keeps depth-conditioned video editing aligned under fast motion, and responds to each action at the next frame. Project page: https://chenshuo20.github.io/PixVid/",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "픽셀 직접 생성으로 고해상도 비디오 합성 가능",
+        "tags": [
+          "PixVid",
+          "VAE",
+          "diffusion transformer",
+          "convolutional head",
+          "Wan2.1-14B"
+        ],
+        "concepts": [
+          "확산 기반 비디오 생성",
+          "잠재 공간에서 픽셀 공간으로 변환"
+        ],
+        "key_points": [
+          {
+            "point": "기존 비디오 생성 모델은 VAE 잠재 공간 압축으로 고해상도와 인터랙티브 제어에 제한이 있었다",
+            "timestamp": null
+          },
+          {
+            "point": "PixVid는 사전 학습된 잠재 비디오 모델의 디코더를 컨볼루션 헤드로 교체해 픽셀 공간에서 직접 프레임을 생성한다",
+            "timestamp": null
+          },
+          {
+            "point": "깨끗한 비디오 예측과 큰 노이즈 시프트가 품질 향상의 핵심이며, 1.3M 클립으로 기존 잠재 모델과 경쟁한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "비디오 생성 연구에서 기존 VAE 기반 잠재 확산 모델은 해상도와 응답성에 한계가 있었으며, PixVid는 디코더를 픽셀‑공간 컨볼루션 헤드로 교체해 고해상도·프레임별 즉시 응답을 가능하게 함으로써 확산 기반 비디오 생성 흐름의 다음 단계로 자리한다.",
+        "production_ideas": [
+          "VAE 디코더를 컨볼루션 헤드로 교체해 픽셀 공간에서 직접 생성하면 의료 영상 합성에서 해상도를 크게 향상시킬 수 있다",
+          "깨끗한 비디오 예측과 큰 노이즈 시프트 기법을 오디오 확산 모델에 적용하면 고품질 음성 합성이 가능해진다",
+          "프레임별 픽셀 생성 방식을 실시간 아바타 애니메이션에 활용하면 사용자 행동에 즉각적인 반응을 제공하는 인터랙티브 캐릭터를 만들 수 있다"
+        ],
+        "quiz": [
+          {
+            "question": "PixVid가 기존 잠재 비디오 모델보다 같은 프레임당 토큰 수로도 높은 해상도를 유지할 수 있는 이유는?",
+            "options": [
+              "픽셀 공간에서 직접 생성하기 때문에 토큰 수가 프레임당 동일하게 유지된다",
+              "VAE 디코더가 압축을 줄여준다",
+              "큰 노이즈 시프트가 토큰 수를 감소시킨다",
+              "컨볼루션 헤드가 토큰을 압축한다"
+            ],
+            "answer_index": 0,
+            "explanation": "PixVid는 VAE 디코더 대신 컨볼루션 헤드로 픽셀을 직접 생성하므로 토큰 수는 프레임당 동일하게 유지되면서 해상도만 두 배로 늘릴 수 있다"
+          },
+          {
+            "question": "PixVid가 품질 향상을 위해 선택한 핵심 요소는 무엇인가?",
+            "options": [
+              "깨끗한 비디오 예측과 작은 노이즈 시프트",
+              "속도 예측과 큰 노이즈 시프트",
+              "깨끗한 비디오 예측과 큰 노이즈 시프트",
+              "속도 예측과 작은 노이즈 시프트"
+            ],
+            "answer_index": 2,
+            "explanation": "논문에서는 깨끗한 비디오를 직접 예측하고, 기존보다 큰 노이즈 시프트를 적용하는 것이 품질 향상의 핵심이라고 강조한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Serving GLM-5.3 at 607.8 tok/s across two Nvidia DGX stations with vLLM",
+        "url": "https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/",
+        "published_at": null,
+        "transcript": null,
+        "body": "[Agentic AI / Generative AI](https://developer.nvidia.com/blog/category/generative-ai/)\n\n# When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM\n\n![](https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-3-1024x576-png.webp)\n\nNov 13, 2026\n\nBy [Fatima Fall](https://developer.nvidia.com/blog/author/ffall/ \"Posts by Fatima Fall\")\n\nLike\n\n[Discuss (0)](#entry-content-comments)\n\n- [L](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdeveloper.nvidia.com%2Fblog%2Fwhen-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm%2F)\n- [T](https://twitter.com/intent/tweet?text=When+One+GPU+Isn%E2%80%99t+Enough%3A+Serving+GLM-5.3+Across+Two+NVIDIA+DGX+Stations+with+vLLM+%7C+NVIDIA+Technical+Blog+https%3A%2F%2Fdeveloper.nvidia.com%2Fblog%2Fwhen-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm%2F)\n- [F](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.nvidia.com%2Fblog%2Fwhen-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm%2F)\n- [R](https://www.reddit.com/submit?url=https%3A%2F%2Fdeveloper.nvidia.com%2Fblog%2Fwhen-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm%2F&title=When+One+GPU+Isn%E2%80%99t+Enough%3A+Serving+GLM-5.3+Across+Two+NVIDIA+DGX+Stations+with+vLLM+%7C+NVIDIA+Technical+Blog)\n- [E](mailto:?subject=I'd like to share a link with you&body=https%3A%2F%2Fdeveloper.nvidia.com%2Fblog%2Fwhen-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm%2F)\n\n## AI-Generated Summary\n\n- [GLM-5.3 NVFP4](https://huggingface.co/nvidia/GLM-5.3-NVFP4), a quantized mixture-of-experts model with 753 billion parameters and 40 billion activated per token, requires about 464 GB of GPU memory, exceeding the 252 GB HBM3e on a single GB300 GPU.\n- Two NVIDIA DGX Stations connected over ConnectX-8 RDMA serve the model through one OpenAI-compatible endpoint using tensor parallelism (TP=2), with each GPU holding and computing roughly half the weights.\n- vLLM launches a distributed service across both Stations, enabling multi-token prediction, FP8 KV-cache storage, and prefix caching to maximize throughput under concurrent load.\n- AIPerf benchmarks on the SPEED-Bench Coding dataset show overall output throughput peaking at 607.8 tokens per second at concurrency 16, then falling to 385.0 tokens per second at concurrency 32 with mean request latency of 453.5 seconds.\n\n### Next Steps\n\n- Follow the [Connect Two DGX Stations playbook](https://build.nvidia.com/station/connect-two-stations) to link and validate the hardware before deployment.\n- Review the [NVIDIA Local AI recipe repository](https://nvidia.github.io/local-ai-inference-recipes/hardware/dgx-station-2gpu/index.html) for the latest recommended configurations.\n- Connect an application using the [vLLM serving documentation](https://docs.vllm.ai/en/v0.30.0/serving/online_serving/) and rerun AIPerf with custom prompts to find the optimal concurrency for the workload.\n\nPowered by NVIDIA Nemotron. AI-generated content may summarize information incompletely. Verify important information. [Learn more](https://www.nvidia.com/en-us/agreements/trustworthy-ai/terms/)\n\nRunning a frontier-scale model locally means keeping all its weights in GPU memory; the largest models no longer fit on one machine. Two NVIDIA DGX Stations connected over ConnectX-8 RDMA serve one model through a single endpoint, with tensor parallelism splitting the model weights and computation across both GPUs.\n\nThe NVIDIA [GLM-5.3 NVFP4](https://huggingface.co/nvidia/GLM-5.3-NVFP4) model, a quantized version of [Z.ai](http://z.ai)’s mixture-of-experts (MoE) model, has 753 billion parameters, with 40 billion activated per token. Sparse activation reduces computation, but all model weights still need to remain available because each token can be routed to different experts. At about 464 GB, the checkpoint exceeds the 252 GB of HBM3e on a single GB300 GPU. This tutorial uses two DGX Stations to keep the weights in GPU memory, with CPU weight offload disabled.\n\nBefore starting, connect the two Stations with the [Connect Two DGX Stations playbook](https://build.nvidia.com/station/connect-two-stations).\n\nThis post shows how to serve GLM-5.3 locally across two NVIDIA DGX Stations with vLLM, send a request, and measure behavior under concurrent load. Tensor parallelism (TP=2) splits the model’s tensors across the two GB300 GPUs. Both Stations compute every request, and Station A returns the answer through one OpenAI-compatible API. By the end, you’ll have a working endpoint and a baseline for how it behaves under load.\n\n![Two stations serve one model: each GPU holds and computes part of the model over the selected RDMA connection. Their memories remain distinct.](https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image1-4.webp)![Two stations serve one model: each GPU holds and computes part of the model over the selected RDM",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "두 DGX 스테이션으로 초대형 LLM을 분산 서빙, 600 tok/s 달성",
+        "tags": [
+          "GLM-5.3",
+          "NVIDIA DGX Station",
+          "vLLM",
+          "ConnectX-8 RDMA",
+          "AIPerf"
+        ],
+        "concepts": [
+          "모델 서빙",
+          "병렬 처리",
+          "GPU 가속"
+        ],
+        "key_points": [
+          {
+            "point": "GLM-5.3은 753 B 파라미터와 464 GB 메모리를 요구해 단일 GPU에 적재할 수 없다.",
+            "timestamp": null
+          },
+          {
+            "point": "Tensor Parallelism TP=2를 사용해 두 DGX 스테이션의 GPU에 모델을 반씩 분산 저장·계산한다.",
+            "timestamp": null
+          },
+          {
+            "point": "vLLM 기반 서비스에서 FP8 KV‑cache와 prefix caching을 활용해 동시성 16에서 607.8 tok/s, 평균 지연 453.5 s를 기록했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Tensor Parallelism을 두 대의 온‑프레미스 서버에 적용해 대규모 추천 모델을 분산 서빙하면 처리량이 크게 향상된다.",
+          "FP8 KV‑cache를 활용해 엣지 데이터센터의 제한된 GPU 메모리에서도 더 큰 LLM을 서비스할 수 있다.",
+          "CI 파이프라인에서 코드 생성 모델에 prefix caching을 도입하면 배치 추론 시 지연 시간이 감소한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 GLM-5.3 모델에 Tensor Parallelism이 필요했나요?",
+            "options": [
+              "메모리 초과로 모델 가중치를 GPU에 나눠 저장하기 위해",
+              "모델 정확도를 높이기 위해",
+              "파라미터 수를 줄이기 위해",
+              "FP8 정밀도를 사용하기 위해"
+            ],
+            "answer_index": 0,
+            "explanation": "모델 전체 가중치가 464 GB로 단일 GPU 메모리(252 GB)를 초과하므로, Tensor Parallelism으로 가중치를 두 GPU에 나눠 저장·계산한다."
+          },
+          {
+            "question": "동시성 16에서 32로 늘렸을 때 토큰 처리량은 어떻게 변했나요?",
+            "options": [
+              "증가했다",
+              "감소했다",
+              "같았다",
+              "0이 되었다"
+            ],
+            "answer_index": 1,
+            "explanation": "벤치마크 결과, 동시성 16에서 607.8 tok/s였으나 32로 늘리면 385.0 tok/s로 감소했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "Is Software Over?",
+        "url": "https://youtu.be/vug73goPJaM",
+        "published_at": "2026-11-10T10:15:57",
+        "transcript": "[00:00] I see some spicy videos and articles saying that software is over.\n[00:05] We will see if that is true. They say that because modern AI tools are so powerful that they can just look at a video game and reproduce it.\n[00:15] Give you a playable version just by looking. And, yes, hundreds of such AI-assisted reverse engineering projects have appeared, some of which are playable in your browser.\n[00:27] Even Photoshop and other Adobe tools are being reproduced.\n[00:32] Okay, how does that happen? Well, an AI system can look at the program itself, not the source code, compiled code.\n[00:40] Figure out what it does and write a new program that does the same.\n[00:45] But, it gets crazier. It can even just look at the behavior of the program, or the game and reproduce it from that too.\n[00:54] Then, it finds differences, mistakes and keeps improving until they are nearly the same.\n[01:01] Now, is that legal? I am not a lawyer, but courts have ruled that the functionality of software isn't necessarily protected by copyright.\n[01:11] So, if you are an ambitious engineer, independent reimplementations can be legal.\n[01:17] Now, models, textures, game characters, now those can be copyrighted.\n[01:22] Now, as always, we are here to talk about the scientific aspect of this. So, let's cut through the noise and look at what the actual research works say.\n[01:33] One piece of research tested the ability of AI systems to reconstruct entire software projects without source code.\n[01:42] And, on one particular program, it didn't start out too well. It only passed 15% of the tests.\n[01:49] But, hold on to your papers, fellow scholars, because in just nine months, it jumped to nearly 100%.\n[01:57] And you see that even these are older models. Newer ones are way better.\n[02:02] And, it gets crazier. Researchers took a tiny 12 million parameter AI model that could almost run on a toaster these days.\n[02:11] And, it could recover mathematical equations with around 90% accuracy on specifically constructed tests with software we don't have the source code for.\n[02:22] But wait, so it can reconstruct the mathematical rules based on observations.\n[02:29] That's kind of like doing science.\n[02:31] Now, that was reproducing functionality. What about appearance?\n[02:36] Well, researchers also used AI to reconstruct webpages by just looking at them.\n[02:42] And got incredibly high visual similarity scores, 0.938.\n[02:47] That basically means nearly identical layouts and visual elements.\n[02:52] And, get this. It did that while using 95% less code than the original website.\n[03:00] Probably by pulling the ads and tracking out of it. I wish I was kidding.\n[03:05] Okay. So with these research results in mind, here is why this is working so well.\n[03:11] One, we have near infinite training data. Clone an open-source repository and run the app.\n[03:18] You now have a training pair of source code and a working app, and you can learn to translate between the two.\n[03:26] Second, now you have a new piece of software or game you wish to recreate.\n[03:31] Then you have a ground truth oracle right there. What does that mean?\n[03:36] Well, the AI writes a first version, and we start playing hot or cold.\n[03:41] Are we close or are we far? You can run and test the original software to your liking for as long as you wish.\n[03:49] Then, the AI adjusts, tries something new, and tests until everything matches.\n[03:55] But, there is a problem. What is the problem?\n[03:57] Well, Frontier Labs are pulling the brakes.\n[04:01] For instance, Anthropic updated their Claude 5.5 Opus AI to discourage recreating existing games.\n[04:08] And some developers reported that it also refuses legitimate reverse engineering tasks too.\n[04:15] That is another argument for us to own our compute and have free and local models that nobody can take from us.\n[04:24] Something that we talk about here all the time. Super important.\n[04:28] So, I think flat out saying that software is over is a bit dramatic.\n[04:33] But, there definitely is a drastic increase in AI capabilities in this area.\n[04:38] And, that means, yes, it seems likely that you will be able to run your own Photoshop and Final Cut Pro variants that are written for you and tailored specifically to your taste.\n[04:51] Now, there is a wider industry question on how useful that is.\n[04:55] After all, if you wish to work at a graphic design company, you need to have skills using standard industry tools like Adobe's apps.\n[05:04] We don't quite know what the value is in skills with homebrew software that no one else has heard about.\n[05:10] But, on the other side, we could say that as long as the work is done and you can collaborate with others well, just use what you like.\n[05:18] So, homebrew software with interchangeable formats could get really big in the future.\n[05:24] For free or for nearly free. That's amazing.\n[05:27] Now, we mainly talk about the scientific aspect of things here. We do the papers.\n[05:34] But, I just wanted to mention this because there is some external context to this question as well that I think we should know and think about.\n[05:42] So, I think there is so much to be excited about.\n[05:45] Software tailored specifically for you. That sounds amazing.\n[05:51] What a time to be alive!\n[05:52] I use Lambda to reproduce AI research papers often in minutes.\n[05:57] It's great to train your own models, fine-tune an existing one, run inference, text-to-image or video, easy peasy.\n[06:05] Running a deep seek chatbot or agent, super fast, super reliable.\n[06:10] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[06:15] I test ideas from papers I cover, and moments later, results.\n[06:20] Love it. Seriously, try it out now at lambda.com/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.com/papers\n\n📝 The papers and sources are available here:\nMirrorCode: https://arxiv.org/abs/2606.30182\nREMEND: https://huggingface.co/udiboy1209/REMEND\nWebUI-95: https://tommasocalo.github.io/papers/26-webui95-chiea.pdf\nPhotocraft: https://github.com/storytold/photocraft\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi\n\n0:00 AI reverse engineering\n1:01 Legal landscape\n1:22 Scientific research\n2:11 Visual reconstruction\n3:05 How AI learns software\n3:55 The problem with restrictions\n4:26 The future of software",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "AI가 행동만으로 소프트웨어를 재구성, 개발·보안 변혁",
+        "tags": [
+          "Claude 5.5 Opus",
+          "Anthropic",
+          "Adobe Photoshop",
+          "Two Minute Papers",
+          "AI"
+        ],
+        "concepts": [
+          "코드 자동생성",
+          "AI 기반 개발 도구"
+        ],
+        "key_points": [
+          {
+            "point": "AI가 소스코드 없이 소프트웨어를 재구성, 9개월 만에 테스트 통과율 15%→≈100%",
+            "timestamp": "01:42"
+          },
+          {
+            "point": "12M 파라미터 모델이 수학 방정식을 약 90% 정확도로 복원",
+            "timestamp": "02:11"
+          },
+          {
+            "point": "무한에 가까운 학습 데이터와 오라클 피드백 루프로 AI가 점진적 개선",
+            "timestamp": "03:11"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "행동만 관찰해 블랙박스 ETL 파이프라인을 재구성해 마이그레이션 비용을 절감한다",
+          "스크린샷을 입력으로 UI 레이아웃을 고시각 유사도로 재생성해 프론트엔드 개발 시간을 단축한다",
+          "오라클(원본 소프트웨어)와의 핫/콜드 피드백을 이용해 자동 생성된 모델 코드를 반복 개선해 성능 최적화를 가속한다"
+        ],
+        "quiz": [
+          {
+            "question": "AI가 소스코드 없이 소프트웨어를 재구성할 수 있는 주요 이유는?",
+            "options": [
+              "무한에 가까운 학습 데이터와 오라클 피드백 사용",
+              "숨겨진 소스코드에 접근",
+              "무작위 추측",
+              "양자 컴퓨팅 활용"
+            ],
+            "answer_index": 0,
+            "explanation": "영상에서 AI가 오픈소스 레포를 실행해 소스‑코드와 실행 결과 쌍을 만들고 이를 학습·피드백에 활용한다는 설명이 있다."
+          },
+          {
+            "question": "스피커가 언급한 법적 관점에서 기능 자체는?",
+            "options": [
+              "항상 저작권 보호 대상",
+              "저작권 보호가 반드시 되지는 않음",
+              "모든 자산이 퍼블릭 도메인",
+              "역공학이 불법"
+            ],
+            "answer_index": 1,
+            "explanation": "영상에서 기능은 반드시 저작권으로 보호되지 않으며, 독립 재구현은 법적으로 가능할 수 있다고 언급한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "software-eng"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "글로벌과 인재 매칭으로 넓히는 스타트업 생태계, 혁신의숲 5주년 리포트",
+        "url": "https://innoforest.stibee.com/p/687",
+        "published_at": "2026-11-08T00:00:00",
+        "transcript": null,
+        "body": "혁신의숲 런칭 5주년 리포트:  국내를 넘어 글로벌로, 투자를 넘어 인재로    2021년 문을 연 혁신의숲이 올해 5주년을 맞았습니다. 그동안 쌓인 데이터와 혁신의숲이 진행해온 사항들에 대해 회원 여러분과 나누기 위해 이번 리포트를 준비했습니다.    리포트 핵심 내용👇  1️⃣국내, 글로벌 투자, 채용 데이터로 본 2026년  국내 투자금의 흐름부터 글로벌 초기투자에서 먼저 보인 기술 신호, 해외 자본과의 간극, 스타트업 인재의 이동까지 숫자로 담았습니다.  2️⃣ 올해 혁신의숲이 한 일 글로벌 초기투자 흐름을 보는 'Pathfinder'와 문장으로 기업을 찾는 'AI 검색', 펀드 현황까지 볼 수 있도록 투자사 페이지 개편, 글로벌 데이터 플랫폼 '딜룸'과의 파트너십, 구직자향 '혁신의숲 career' 베타 공개에 대해 담았습니다.  3️⃣ 내년에 나아갈 방향 내년의 스타트업 생태계에 대한 전망과 혁신의숲이 추구하는 다음 목표와 방향성을 담았습니다.  [**리포트 보러가기 👉🏻**](https://www.innoforest.co.kr/report/591)\n\n[**투표하고 리워드 추첨 응모하기** 👉🏻](https://www.innoforest.co.kr/awards/2026)\n\n[📈거래액 오르고 3개월 안에 채용한 스타트업, 1년 뒤 거래액이 달랐다](https://www.innoforest.co.kr/report/590)  [육아용품 정보 앱에서 100만 부모의 필수 앱으로](https://www.innoforest.co.kr/report/586)\n\n[🎖️2026 혁신의숲 어워즈 후보 3차 투표 최종 순위 공개](https://www.innoforest.co.kr/report/585)  [📈2025년에 이어 2026년에도 성장 가능성 높은 스타트업 15곳](https://www.innoforest.co.kr/report/584)\n\n[**더 많은 인사이트 보러가기**👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge) 11월 9일 기준, 모집중 공고 수: 총 8건\n\n(~11/11) [롯데벤처스｜LOTTE OPEN INNOVATION DAY](https://www.innoforest.co.kr/growth-bridge/OI00000828/롯데벤처스-LOTTE-OPEN-INNOVATION-DAY)\n\n(~11/13) [LG디스플레이｜2027 Dream Play 스타트업 육성프로그램 9기](https://www.innoforest.co.kr/growth-bridge/OI00000826/2027-Dream-Play-LGD-스타트업-육성프로그램-9기)\n\n(~12/31) [제주창조경제혁신센터｜상시매칭 오픈이노베이션 플랫폼](https://www.innoforest.co.kr/growth-bridge/OI00000823/2026-상시매칭-오픈이노베이션-플랫폼)\n\n[2025년 오픈이노베이션 결산 리포트: 숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\n[Growth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면? 소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 순수 AI드라마로 시청률 1위!.. '후서유기'는 어떻게 만들었을까?](https://outstanding.kr/eastfantasy20260928)\n\n[🗯️ 투자금이 많이 남은 벤처펀드 10곳을 살펴봤습니다](https://outstanding.kr/drypowder20260930)\n\n[🔎 유니콘 14곳이 투자한 스타트업들을 확인해 봤습니다](https://outstanding.kr/unicorn20260928)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "글로벌 투자·채용 데이터로 스타트업 성장 파악",
+        "tags": [
+          "혁신의숲",
+          "Pathfinder",
+          "딜룸",
+          "Growth Bridge",
+          "LOTTE OPEN INNOVATION DAY"
+        ],
+        "concepts": [
+          "스타트업 성장 지표",
+          "데이터 기반 벤치마킹"
+        ],
+        "key_points": [
+          {
+            "point": "2026년 국내·글로벌 투자 흐름과 기술 신호를 데이터로 정리",
+            "timestamp": null
+          },
+          {
+            "point": "혁신의숲이 Pathfinder, AI 검색, 딜룸 파트너십, career 베타 등 신규 서비스를 출시",
+            "timestamp": null
+          },
+          {
+            "point": "내년 스타트업 생태계 전망과 혁신의숲의 향후 목표를 제시",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "AI 검색 기술을 연구자 매칭 플랫폼에 적용해 연구 주제와 역량 기반 매칭을 강화한다",
+          "Pathfinder 투자 흐름 시각화를 스타트업 재무 리스크 모니터링 대시보드에 적용해 실시간 트렌드와 리스크를 추적한다",
+          "Growth Bridge 오픈이노베이션 매칭 시스템을 대기업 내부 아이디어 공모에 적용해 사내 혁신 아이디어와 부서 필요를 자동 매칭한다"
+        ],
+        "quiz": [
+          {
+            "question": "혁신의숲이 소개한 'Pathfinder' 서비스의 주요 목적은 무엇인가?",
+            "options": [
+              "투자 흐름 분석",
+              "인재 매칭",
+              "제품 디자인",
+              "고객 지원"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에서 Pathfinder는 글로벌 초기투자 흐름을 보는 서비스로 소개된다."
+          },
+          {
+            "question": "다음 중 2025년 11월에 진행되지 않는 오픈 이노베이션 프로그램은?",
+            "options": [
+              "LOTTE OPEN INNOVATION DAY",
+              "LG디스플레이 2027 Dream Play 스타트업 육성프로그램 9기",
+              "제주창조경제혁신센터 상시매칭 오픈이노베이션 플랫폼",
+              "삼성 AI 챌린지"
+            ],
+            "answer_index": 3,
+            "explanation": "본문에 언급된 프로그램은 LOTTE, LG디스플레이, 제주창조경제혁신센터이며 삼성 AI 챌린지는 언급되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business",
+          "career"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 4,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}
