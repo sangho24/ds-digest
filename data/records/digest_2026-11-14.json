@@ -1,0 +1,422 @@
+{
+  "date": "2026-11-14",
+  "generated_at": "2026-11-14T00:40:29.834070",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "Unbundling Multimodal Vision Encoding",
+        "url": "https://arxiv.org/abs/2611.17334v1",
+        "published_at": "2026-11-12T18:59:54",
+        "transcript": null,
+        "body": "How multimodal language models should encode visual input remains up for debate. Most models use a pretrained vision encoder, while some recent recipes train the encoder from scratch with the language model or remove it entirely. Vision encoders bundle together three design choices: a visual prior from upstream pretraining, dedicated vision capacity, and pre-fusion placement of that capacity (i.e., before the multimodal backbone). Because published models also differ in data, architecture, and compute, comparing them cannot isolate the effect of each choice. We disentangle these choices via a controlled framework where we pretrain all models from scratch on common data and compare them on visual question answering and language benchmarks at matched lifetime compute. We find that the visual prior is not necessary; an encoder trained jointly from scratch is on par with a pretrained one, without a separate training stage. What matters instead is dedicated vision capacity: an encoder-free model trails on visual understanding even when its backbone is enlarged by the encoder's parameter count. Yet that capacity need not precede multimodal fusion, as vision-only modules added in-fusion to early backbone layers perform comparably to a pre-fusion encoder and can lower time to first token. These results also hold across backbone sizes, when encoder pretraining is treated as free, and when starting from a pretrained language model. Overall, our findings favor dedicated vision capacity trained jointly with the backbone and placed early within it.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 9,
+        "one_line_summary": "멀티모달 모델에서 시각 인코더 없이도 성능 유지 가능",
+        "tags": [
+          "visual question answering",
+          "multimodal language models",
+          "vision encoder"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "디자인 트레이드오프",
+          "모델 파인튜닝"
+        ],
+        "key_points": [
+          {
+            "point": "시각 사전(프리트레인된 인코더)은 필요 없으며, 스크래치로 공동 학습한 인코더가 동등한 성능을 보인다.",
+            "timestamp": null
+          },
+          {
+            "point": "전용 시각 용량이 핵심이며, 인코더 없이 백본 파라미터를 늘려도 시각 이해력이 뒤처진다.",
+            "timestamp": null
+          },
+          {
+            "point": "시각 용량을 멀티모달 백본 초기 레이어에 인-퓨전 방식으로 삽입해도 사전‑퓨전 인코더와 동등하고 첫 토큰 지연을 줄일 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "멀티모달 언어 모델에서 시각 입력을 어떻게 인코딩할지에 대한 설계 선택이 혼재해 왔으며, 기존 연구는 사전학습된 비전 인코더 사용 여부와 위치를 비교했지만 데이터·아키텍처·컴퓨팅 차이로 인한 혼란이 있었다. 본 논문은 동일 데이터·컴퓨팅 조건에서 설계 요소를 분리해 실험함으로써, 시각 사전이 불필요하고 전용 시각 용량이 핵심이며, 초기 백본 레이어에 인‑퓨전으로 배치해도 성능이 유지된다는 점을 밝혀냈다.",
+        "production_ideas": [
+          "음성‑텍스트 멀티모달 모델에 인‑퓨전 음성 전용 모듈을 삽입해 초기 레이어에서 처리함으로써 응답 지연을 감소시킨다.",
+          "추천 시스템에서 텍스트와 함께 사용되는 표형 특성 인코더를 전용 용량으로 설계하고 텍스트 백본과 공동 학습해 예측 정확도를 높인다.",
+          "의료 보고서 생성 모델에서 사전학습된 이미지 인코더를 제거하고 텍스트‑이미지 공동 학습을 통해 파이프라인을 단순화하고 학습 비용을 절감한다."
+        ],
+        "quiz": [
+          {
+            "question": "논문에서 제시한 시각 인코더 설계 선택 중 모델 성능에 가장 큰 영향을 미치는 요소는?",
+            "options": [
+              "시각 사전(프리트레인)",
+              "전용 시각 용량",
+              "사전‑퓨전 위치",
+              "백본 크기"
+            ],
+            "answer_index": 1,
+            "explanation": "실험 결과 전용 시각 용량이 없으면 시각 이해력이 크게 떨어지며, 사전학습된 인코더는 필요 없다는 것이 확인되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.CL",
+        "source_key": "arxiv:cs.CL",
+        "source_label": "arXiv:cs.CL",
+        "title": "Learning When Diffusion Language Models Should Regenerate",
+        "url": "https://arxiv.org/abs/2611.17320v1",
+        "published_at": "2026-11-12T18:58:50",
+        "transcript": null,
+        "body": "Remasking allows diffusion language models to revisit generated text, but effective correction requires knowing when and what to revise. Our diagnosis on Sudoku reveals two gaps. Hidden states contain error information that token confidence does not reliably expose, and remasking an isolated error usually reproduces it when the surrounding context remains fixed. These findings motivate DiVR , a verifier that predicts whether a partially generated sequence will reach a correct answer. Trained on the final correctness of the model's own trajectories, DiVR decides when to regenerate a block and which alternative to retain, while the generator itself stays unchanged. On five reasoning benchmarks with LLaDA-8B-Base, DiVR raises the average accuracy of the fine-tuned generator from 35.3\\% to 43.4\\% at $1.9$-$3.5\\times$ the cost of greedy decoding, above search baselines that use $3.8$-$7.4\\times$. It also complements post-training such as supervised fine-tuning and reinforcement learning, and generalizes to other generators, including Dream.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "디퓨전 LM 오류 재생성 자동 판단으로 정확도 ↑",
+        "tags": [
+          "DiVR",
+          "LLaDA-8B-Base",
+          "Dream",
+          "Sudoku",
+          "remasking"
+        ],
+        "concepts": [
+          "AI 기반 업무 검증",
+          "언어 모델링",
+          "불확실성 정량화"
+        ],
+        "key_points": [
+          {
+            "point": "Remasking만으로는 오류를 교정하기 어려우며, 숨겨진 상태에 오류 정보가 존재하고 토큰 신뢰도는 이를 드러내지 않는다.",
+            "timestamp": null
+          },
+          {
+            "point": "DiVR 검증자는 부분 생성 시퀀스의 최종 정답 가능성을 예측해 재생성 시점을 결정하고, 유지할 대안을 선택한다.",
+            "timestamp": null
+          },
+          {
+            "point": "DiVR를 LLaDA-8B-Base와 결합하면 평균 정확도가 35.3%에서 43.4%로 상승하고, 탐색 기반 방법보다 비용 효율성이 높다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "이 논문은 디퓨전 언어 모델이 생성 과정에서 언제 재생성해야 하는지를 판단하지 못하는 문제를 해결한다. 기존에는 토큰 신뢰도에 의존했지만 오류 정보를 숨은 상태에서 활용하지 못했다. DiVR 검증자를 도입해 재생성 정책을 학습함으로써 기존 반복 생성 연구 흐름에 정확도 향상을 위한 새로운 검증 단계를 추가한다.",
+        "production_ideas": [
+          "코드 생성 모델에 DiVR과 유사한 검증자를 적용해 컴파일 오류 가능성을 예측하고, 오류가 예상되는 코드 블록을 자동으로 재생성한다.",
+          "자동 보고서 생성 파이프라인에 검증 기반 재생성 메커니즘을 도입해 각 문단의 사실 일관성을 판단하고, 불일치가 감지되면 해당 문단을 다시 생성하도록 한다.",
+          "음성 인식 모델에서 숨겨진 상태의 오류 신호를 활용해 특정 구간의 전사 오류를 감지하고, 해당 구간만 선택적으로 재디코딩한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 단일 오류에 대한 remasking을 수행하면 주변 컨텍스트가 고정된 상태에서 동일한 오류가 재생성되는가?",
+            "options": [
+              "숨겨진 상태에 오류 정보가 남아 있기 때문이다",
+              "토큰 신뢰도가 높은 오류를 선택하기 때문이다",
+              "재생성 블록이 너무 작아 전체 문맥을 반영하지 못한다",
+              "모델이 무작위성을 사용하지 않기 때문이다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 숨겨진 상태에 오류 정보가 포함되어 있어, 주변 컨텍스트가 변하지 않으면 동일한 오류가 재생성된다."
+          },
+          {
+            "question": "DiVR 검증자가 수행하는 주요 역할은 무엇인가?",
+            "options": [
+              "전체 텍스트를 다시 생성한다",
+              "부분 생성 시퀀스가 최종 정답에 도달할 확률을 예측한다",
+              "토큰별 신뢰도를 재계산한다",
+              "모델 파라미터를 미세조정한다"
+            ],
+            "answer_index": 1,
+            "explanation": "DiVR는 부분 생성된 시퀀스가 올바른 답에 도달할지를 예측해 재생성 시점을 결정한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.SE",
+        "source_key": "arxiv:cs.SE",
+        "source_label": "arXiv:cs.SE",
+        "title": "Where LLM Agents Get Stuck Debugging Databases: Access More Than Reasoning",
+        "url": "https://arxiv.org/abs/2611.17304v1",
+        "published_at": "2026-11-12T18:56:22",
+        "transcript": null,
+        "body": "Large language model (LLM) coding agents are increasingly asked not only to write code but to debug running systems from live runtime data. We report a field observation of one such agent (Claude Code) as it diagnosed eight database incidents in a production message-dispatch engine. In every incident whose root cause depended on runtime concurrency, the agent announced a cause, shipped a fix, and later walked it back, and each wrong guess cost a deploy-and-observe cycle. Mapping each incident to what the agent lacked, we find that access to production state was the most pervasive bottleneck. The missing access included live lock views, untruncated deadlock reports, read-only execution, and an explicit environment context. An access gap was present in all five concurrency-dependent incidents: alone in one, and in four combined with a reasoning error such as anchoring on an early cause, incomplete exploration of the configuration, or a misreading of the code's transaction semantics. The three incidents that did not depend on concurrency needed nothing beyond what the agent already had. Within the incidents, the agent's wrong hypotheses were consistent with the evidence it could see; they were not fabrications. We argue that the next step for production-debugging agents is a forensics layer that gives the agent the access it lacks inside existing security controls. Such a layer would combine a safe interrogation API, a lock-and-deadlock flight recorder, and a production replay harness.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "LLM이 DB 디버깅 시 실시간 상태 접근 부족",
+        "tags": [
+          "Claude Code",
+          "LLM",
+          "deadlock",
+          "lock-and-deadlock flight recorder",
+          "production replay harness"
+        ],
+        "concepts": [
+          "Root Cause Analysis",
+          "비동기 처리와 트랜잭션",
+          "AI 에이전트 상태 관리"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 에이전트는 동시성 관련 DB 사고에서 실시간 상태 접근이 없어 원인 추정과 수정에 실패한다.",
+            "timestamp": null
+          },
+          {
+            "point": "필요한 접근에는 라이브 락 뷰, 전체 데드락 보고서, 읽기 전용 실행, 환경 컨텍스트가 포함된다.",
+            "timestamp": null
+          },
+          {
+            "point": "제안된 포렌식 레이어는 안전 인터로게이션 API, 락·데드락 플라이트 레코더, 프로덕션 재생 하니스를 제공한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "실시간 시스템 디버깅을 위해 LLM 코딩 에이전트를 활용하려는 연구 흐름에서 기존은 코드 생성·정적 분석에 머물렀다. 본 논문은 프로덕션 데이터베이스에서 동시성 오류를 진단할 때 상태 접근 부족이 주요 장애임을 실증하고, 포렌식 레이어 도입을 제안한다.",
+        "production_ideas": [
+          "안전 인터로게이션 API를 마이크로서비스 관찰에 적용해 LLM 기반 자동 원인 분석을 가능하게 한다.",
+          "락·데드락 플라이트 레코더를 분산 트랜잭션 시스템에 도입해 스트리밍 파이프라인 오류 디버깅을 지원한다.",
+          "프로덕션 재생 하니스를 머신러닝 모델 서빙 플랫폼에 적용해 추론 요청 재현으로 성능 회귀 디버깅을 개선한다."
+        ],
+        "quiz": [
+          {
+            "question": "LLM 에이전트가 잘못된 원인 추정으로 인한 배포‑관찰 사이클을 겪은 주요 원인은 무엇인가?",
+            "options": [
+              "코드 생성 능력 부족",
+              "런타임 동시성 상태 접근 부족",
+              "모델 파라미터 부족",
+              "데이터 전처리 오류"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 접근 부족, 특히 라이브 락 뷰·데드락 보고서 등 프로덕션 상태에 대한 접근이 가장 큰 병목이라고 언급한다."
+          },
+          {
+            "question": "논문에서 제안하는 포렌식 레이어에 포함되지 않은 구성 요소는?",
+            "options": [
+              "안전 인터로게이션 API",
+              "락·데드락 플라이트 레코더",
+              "프로덕션 재생 하니스",
+              "자동 코드 리팩터링 엔진"
+            ],
+            "answer_index": 3,
+            "explanation": "제안된 레이어는 API, 플라이트 레코더, 재생 하니스이며 자동 코드 리팩터링 엔진은 언급되지 않는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Chaos Mesh로 Kubernetes 앱의 장애 내구성 검증하기",
+        "url": "https://d2.naver.com/helloworld/6523094",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-0abf4147-27ca-4780-9f27-cc5eaa1ed4dd\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-0775de21-c824-4fb6-83e9-742f011a196b\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-ce9ab75f-bc8d-42b5-b906-aced344b332e\" style=\"color: #000000;\"><b>네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-0cc01406-3278-4ec6-9ec0-4ecb267a49c6\"><span class=\"se-fs-fs13 se-ff-system  se-style-unset \" id=\"SE-b81ad4a3-d7c5-406c-9054-69f541bc0fa6\" style=\"color: #0068c3;\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oembed se-l-default\" id=\"SE-dfa64f2f-5dc7-4d08-ba9a-a562956cbcb8\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-oembed se-section-align- se-l-default\">\n                            <div class=\"se-module se-module-oembed se-is-progress\"></div>\n                        </div>\n                    </div>\n                    \n                </div>\n                \n                <div class=\"se-component se-text se-l-default\" id=\"SE-bf08f26f-3d80-4c2c-ab0e-40198c7c88a4\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-15f9f5fe-eb1d-4abe-acac-312b028a1a37\"><span class=\"se-fs-fs13 se-ff-system  se-style-unset \" id=\"SE-6a2ba070-3a1c-4567-911d-110d889ca3bd\" style=\"color: #0068c3;\"><b>​</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-14c090d0-9ad2-4010-b846-6bc441dcfdeb\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-ee12c660-5e85-49ec-80f1-72a0318ba9b3\" style=\"color: #000000;\"><b>발표 내용</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-8044b4cd-ee47-4986-a295-3672d7370a28\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-606992e0-febd-4995-b81f-b6e44682ae8f\" style=\"color: #000000;\">Kubernetes 상에서 가상 인프라 장애를 통해 시스템을 사전에 검증하고 장애를 예방하는 기술을 소개합니다.</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b0a06757-6b2b-483c-92bc-2a02010f86fc\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-11c132af-3137-4e80-9cc0-aecbc46c6ed2\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-7ac5a59e-4107-47c3-b85c-a861b56b0fb7\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-133b7b0c-faa7-4e72-8c0c-4d54fd20aaf2\" style=\"color: #000000;\"><b>발표 대상</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-c05f5d96-2471-4ff0-a7f9-47a404697da6\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-57b48218-7430-4907-950b-706f87f643d9\" style=\"color: #000000;\">Chaos Engineering 도입을 고민중인 개발자</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-e5677e76-af68-46ee-b08b-85bbfe7ccbcb\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-822e817a-7a01-40c2-81f0-3bc286ec21e9\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-6a1fe46f-42a7-4f51-8ed8-0007f262d9f4\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-0ad7a45d-90e2-420e-af65-729a3e00cd27\" style=\"color: #000000;\"><b>목차</b></span></p>\n<ul class=\"se-text-list se-text-list-type-bullet-disc\"><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-dc4acb9d-bf81-43a6-9c91-eb822c97badb\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-c38561dc-54a1-4a31-bfba-85866610913c\" style=\"color: #000000;\">도입 : Chaos Engineering</span></p>\n</li><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-67d376af-c48a-425c-94d7-cd1742bf1264\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-9a8494c4-98c4-49df-b590-165481633f1b\" style=\"color: #000000;\">PART 1. Chaos Mesh 소개</span></p>\n<ul class=\"se-text-list se-text-list-type-bullet-circle\"><li class=\"se-text-list-item\"><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "K8s에서 장애 시뮬레이션으로 데이터 파이프라인 신뢰성 검증",
+        "tags": [
+          "Chaos Mesh",
+          "Kubernetes",
+          "NAVER Engineering Day",
+          "Chaos Engineering",
+          "NAVER"
+        ],
+        "concepts": [
+          "시뮬레이션 기반 정책 검증"
+        ],
+        "key_points": [
+          {
+            "point": "Kubernetes 상에서 가상 인프라 장애를 시뮬레이션해 시스템을 사전에 검증하고 장애를 예방하는 기술을 소개한다.",
+            "timestamp": null
+          },
+          {
+            "point": "발표는 NAVER Engineering Day 10th에서 진행된 세션이며, Chaos Engineering 도입을 고민 중인 개발자를 대상으로 한다.",
+            "timestamp": null
+          },
+          {
+            "point": "Chaos Mesh를 활용해 Kubernetes 애플리케이션의 장애 내구성을 검증하는 방법을 설명한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "Chaos Mesh의 가상 네트워크 장애 실험을 CI 파이프라인에 적용해 마이크로서비스 간 통신 회복력을 자동 검증한다.",
+          "데이터 파이프라인 단계별로 디스크 I/O 지연을 시뮬레이션해 배치 작업의 시간 초과 위험을 사전에 파악한다.",
+          "ML 모델 서빙 환경에 CPU/메모리 압박 장애를 주입해 서비스 레이턴시와 오류율이 급증하는 임계점을 찾는다."
+        ],
+        "quiz": [
+          {
+            "question": "이 발표에서 소개된 기술은 어떤 환경에서 시스템을 사전에 검증하는가?",
+            "options": [
+              "Kubernetes",
+              "Docker",
+              "VMware",
+              "AWS"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 \"Kubernetes 상에서 가상 인프라 장애를 통해 시스템을 사전에 검증\"이라고 명시되어 있다."
+          },
+          {
+            "question": "발표 대상은 누구인가?",
+            "options": [
+              "데이터 과학자",
+              "Chaos Engineering 도입을 고민중인 개발자",
+              "프로덕트 매니저",
+              "시스템 관리자"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 \"발표 대상: Chaos Engineering 도입을 고민중인 개발자\"라고 적혀 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "D2 Blog",
+        "source_key": "https://d2.naver.com/d2.atom",
+        "source_label": "D2 Blog",
+        "title": "Socket.IO 서버를 여러 Pod에서 운영하기",
+        "url": "https://d2.naver.com/helloworld/3517874",
+        "published_at": null,
+        "transcript": null,
+        "body": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    \n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-ccaf354e-fa03-4765-8159-a67c933e5b85\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-5b043b84-41b9-48b2-ad1b-e436a2a7bb5f\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-714b2079-28c4-40f1-a894-c112979e44dc\" style=\"color: #000000;\"><b>네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.</b></span></p>\n<!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-f4a694d6-da09-4d83-9b18-d31fc7d336fe\"><span class=\"se-fs-fs13 se-ff-system  se-style-unset \" id=\"SE-e32f104e-2170-4d69-a480-e589f67aca52\" style=\"color: #0068c3;\"><b>​</b></span></p>\n<!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                    \n                </div>                <div class=\"se-component se-oembed se-l-default\" id=\"SE-21e56d66-859b-4214-afba-7714cded1b22\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-oembed se-section-align- se-l-default\">\n                            <div class=\"se-module se-module-oembed se-is-progress\"></div>\n                        </div>\n                    </div>\n                    \n                </div>\n                \n                <div class=\"se-component se-text se-l-default\" id=\"SE-33069fcd-a669-4b22-900e-7dd21025bb38\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-bc7e3d9d-389f-4805-9acf-d0ac9ce705d4\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-b0298a3e-5351-450d-96dc-d4bdbe1424e5\" style=\"color: #000000;\"><b>​</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-59a0b6ca-3199-47cb-9b12-9bd21aba8ddc\"><span class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-c215e986-6a6e-4748-9b2d-6825c03f2871\" style=\"color: #000000;\"><b>발표 내용</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-6d5eada3-7a76-40de-ae70-6fbe0b4c3fce\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-c5aec3ea-8b83-4743-a900-ef2edb7275d2\" style=\"color: #000000;\">Socket.IO와 n3r 기반의 소켓 서버를 자체 구축하면서, 여러 Pod 사이의 이벤트 전달과 안정적인 연결 유지를 위한 설계와 검증 과정, 운영 경험을 정리해 공유합니다.</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-9975eec5-cb5e-4585-b96b-57af60031a10\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-f37c8b28-3beb-4985-8596-af97acdf39b9\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-ce9ac480-e523-4f7c-9bc6-6325eea4cab8\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-7ab7ba89-9aed-4c99-a537-0b3ed63f0c89\" style=\"color: #000000;\"><b>&lt;참고&gt;</b></span><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-a3db6101-21e6-4e26-9323-8b3cab86c1fa\" style=\"color: #000000;\"> 영상속 사내용어</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-df81d8dd-b6c4-427b-ae6d-ce1a9cdd15a2\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-d6686b19-dfb3-41a4-8123-bcd89df9e7aa\" style=\"color: #000000;\">n3r  &#x3d; 네이버 사내 쿠버네티스 기반 컨테이너 플랫폼</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-20567c07-8c08-4322-9866-cedd532b34ba\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-c1887ccc-5e7c-46a1-aade-0af60891f359\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-68452817-50db-4aff-99c0-591fdff44e7a\"><span class=\"se-fs- se-ff-nanumsquare  se-style-unset \" id=\"SE-148c3e24-a189-4e27-a987-0c7a7ed03101\" style=\"color: #000000;\"><b>발표 대상</b></span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-b1992343-3b21-46ff-bdfc-44f1e5d15804\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-b68dfc53-7def-49b0-825d-31f911381a8b\" style=\"color: #000000;\">WebSocket이나 Socket.IO 서버를 Kubernetes 위에서 여러 인스턴스로 운영하려는 백엔드 개발자</span></p>\n<p class=\"se-text-paragraph se-text-paragraph-align- \" id=\"SE-453736bf-b832-4b61-9860-77ec1c7db47b\"><span class=\"se-fs- se-ff-nanumsquare se-weight-unset se-style-unset \" id=\"SE-3de813aa-95e7-4c8d-8602-a14d71c85f79\" style=\"color: #000000;\">​</span></p>\n<p class=\"se-text-paragraph se-text-pa",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "다중 Pod 실시간 소켓 서버 운영 핵심",
+        "tags": [
+          "Socket.IO",
+          "n3r",
+          "Kubernetes",
+          "Pod",
+          "NAVER"
+        ],
+        "concepts": [
+          "비동기 처리와 트랜잭션",
+          "멀티프로세싱",
+          "스트림 파이프라인"
+        ],
+        "key_points": [
+          {
+            "point": "Socket.IO와 n3r 기반 소켓 서버를 자체 구축하여 다중 Pod 환경에서 운영",
+            "timestamp": null
+          },
+          {
+            "point": "여러 Pod 사이 이벤트 전달과 연결 안정성을 위한 설계·검증 과정을 공유",
+            "timestamp": null
+          },
+          {
+            "point": "운영 경험을 바탕으로 실시간 서비스의 가용성과 확장성을 확보하는 방법 제시",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "실시간 모델 서빙 결과를 다중 Pod에 브로드캐스트하여 사용자에게 즉시 알림을 제공한다",
+          "협업 데이터 라벨링 툴에서 라벨 변경 이벤트를 모든 워커 Pod에 전파해 일관성을 유지한다"
+        ],
+        "quiz": [
+          {
+            "question": "이 발표에서 사용된 네이버 내부 쿠버네티스 플랫폼의 이름은?",
+            "options": [
+              "n3r",
+              "GKE",
+              "EKS",
+              "AKS"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 n3r이 네이버 사내 쿠버네티스 기반 컨테이너 플랫폼이라고 명시되어 있다."
+          },
+          {
+            "question": "다중 Pod에서 Socket.IO 서버를 운영할 때 핵심으로 고려한 요소는?",
+            "options": [
+              "이벤트 전달",
+              "데이터베이스 스키마",
+              "이미지 처리",
+              "배치 스케줄링"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 여러 Pod 사이의 이벤트 전달과 안정적인 연결 유지가 설계·검증 과정의 핵심이라고 언급된다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 5,
+        "scores": null,
+        "notes": [],
+        "triplets": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-14",
+  "generated_at": "2026-11-14T09:40:29.829104+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-14.html",
+  "items": [
+    {
+      "id": "4f73e28532cc",
+      "title": "Unbundling Multimodal Vision Encoding",
+      "url": "https://arxiv.org/abs/2611.17334v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-11-12T18:59:54",
+      "summary": "멀티모달 모델에서 시각 인코더 없이도 성능 유지 가능",
+      "positioning": "멀티모달 언어 모델에서 시각 입력을 어떻게 인코딩할지에 대한 설계 선택이 혼재해 왔으며, 기존 연구는 사전학습된 비전 인코더 사용 여부와 위치를 비교했지만 데이터·아키텍처·컴퓨팅 차이로 인한 혼란이 있었다. 본 논문은 동일 데이터·컴퓨팅 조건에서 설계 요소를 분리해 실험함으로써, 시각 사전이 불필요하고 전용 시각 용량이 핵심이며, 초기 백본 레이어에 인‑퓨전으로 배치해도 성능이 유지된다는 점을 밝혀냈다.",
+      "tags": [
+        "visual question answering",
+        "multimodal language models",
+        "vision encoder"
+      ],
+      "relevance": 9,
+      "key_points": [
+        {
+          "point": "시각 사전(프리트레인된 인코더)은 필요 없으며, 스크래치로 공동 학습한 인코더가 동등한 성능을 보인다.",
+          "timestamp": null
+        },
+        {
+          "point": "전용 시각 용량이 핵심이며, 인코더 없이 백본 파라미터를 늘려도 시각 이해력이 뒤처진다.",
+          "timestamp": null
+        },
+        {
+          "point": "시각 용량을 멀티모달 백본 초기 레이어에 인-퓨전 방식으로 삽입해도 사전‑퓨전 인코더와 동등하고 첫 토큰 지연을 줄일 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "음성‑텍스트 멀티모달 모델에 인‑퓨전 음성 전용 모듈을 삽입해 초기 레이어에서 처리함으로써 응답 지연을 감소시킨다.",
+        "추천 시스템에서 텍스트와 함께 사용되는 표형 특성 인코더를 전용 용량으로 설계하고 텍스트 백본과 공동 학습해 예측 정확도를 높인다.",
+        "의료 보고서 생성 모델에서 사전학습된 이미지 인코더를 제거하고 텍스트‑이미지 공동 학습을 통해 파이프라인을 단순화하고 학습 비용을 절감한다."
+      ],
+      "quiz": [
+        {
+          "question": "논문에서 제시한 시각 인코더 설계 선택 중 모델 성능에 가장 큰 영향을 미치는 요소는?",
+          "options": [
+            "시각 사전(프리트레인)",
+            "전용 시각 용량",
+            "사전‑퓨전 위치",
+            "백본 크기"
+          ],
+          "answer_index": 1,
+          "explanation": "실험 결과 전용 시각 용량이 없으면 시각 이해력이 크게 떨어지며, 사전학습된 인코더는 필요 없다는 것이 확인되었다."
+        }
+      ]
+    },
+    {
+      "id": "03e1ce70f112",
+      "title": "Learning When Diffusion Language Models Should Regenerate",
+      "url": "https://arxiv.org/abs/2611.17320v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.CL"
+      },
+      "published_at": "2026-11-12T18:58:50",
+      "summary": "디퓨전 LM 오류 재생성 자동 판단으로 정확도 ↑",
+      "positioning": "이 논문은 디퓨전 언어 모델이 생성 과정에서 언제 재생성해야 하는지를 판단하지 못하는 문제를 해결한다. 기존에는 토큰 신뢰도에 의존했지만 오류 정보를 숨은 상태에서 활용하지 못했다. DiVR 검증자를 도입해 재생성 정책을 학습함으로써 기존 반복 생성 연구 흐름에 정확도 향상을 위한 새로운 검증 단계를 추가한다.",
+      "tags": [
+        "DiVR",
+        "LLaDA-8B-Base",
+        "Dream",
+        "Sudoku",
+        "remasking"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Remasking만으로는 오류를 교정하기 어려우며, 숨겨진 상태에 오류 정보가 존재하고 토큰 신뢰도는 이를 드러내지 않는다.",
+          "timestamp": null
+        },
+        {
+          "point": "DiVR 검증자는 부분 생성 시퀀스의 최종 정답 가능성을 예측해 재생성 시점을 결정하고, 유지할 대안을 선택한다.",
+          "timestamp": null
+        },
+        {
+          "point": "DiVR를 LLaDA-8B-Base와 결합하면 평균 정확도가 35.3%에서 43.4%로 상승하고, 탐색 기반 방법보다 비용 효율성이 높다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "코드 생성 모델에 DiVR과 유사한 검증자를 적용해 컴파일 오류 가능성을 예측하고, 오류가 예상되는 코드 블록을 자동으로 재생성한다.",
+        "자동 보고서 생성 파이프라인에 검증 기반 재생성 메커니즘을 도입해 각 문단의 사실 일관성을 판단하고, 불일치가 감지되면 해당 문단을 다시 생성하도록 한다.",
+        "음성 인식 모델에서 숨겨진 상태의 오류 신호를 활용해 특정 구간의 전사 오류를 감지하고, 해당 구간만 선택적으로 재디코딩한다."
+      ],
+      "quiz": [
+        {
+          "question": "왜 단일 오류에 대한 remasking을 수행하면 주변 컨텍스트가 고정된 상태에서 동일한 오류가 재생성되는가?",
+          "options": [
+            "숨겨진 상태에 오류 정보가 남아 있기 때문이다",
+            "토큰 신뢰도가 높은 오류를 선택하기 때문이다",
+            "재생성 블록이 너무 작아 전체 문맥을 반영하지 못한다",
+            "모델이 무작위성을 사용하지 않기 때문이다"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 따르면 숨겨진 상태에 오류 정보가 포함되어 있어, 주변 컨텍스트가 변하지 않으면 동일한 오류가 재생성된다."
+        },
+        {
+          "question": "DiVR 검증자가 수행하는 주요 역할은 무엇인가?",
+          "options": [
+            "전체 텍스트를 다시 생성한다",
+            "부분 생성 시퀀스가 최종 정답에 도달할 확률을 예측한다",
+            "토큰별 신뢰도를 재계산한다",
+            "모델 파라미터를 미세조정한다"
+          ],
+          "answer_index": 1,
+          "explanation": "DiVR는 부분 생성된 시퀀스가 올바른 답에 도달할지를 예측해 재생성 시점을 결정한다."
+        }
+      ]
+    },
+    {
+      "id": "46dad60fd351",
+      "title": "Where LLM Agents Get Stuck Debugging Databases: Access More Than Reasoning",
+      "url": "https://arxiv.org/abs/2611.17304v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.SE"
+      },
+      "published_at": "2026-11-12T18:56:22",
+      "summary": "LLM이 DB 디버깅 시 실시간 상태 접근 부족",
+      "positioning": "실시간 시스템 디버깅을 위해 LLM 코딩 에이전트를 활용하려는 연구 흐름에서 기존은 코드 생성·정적 분석에 머물렀다. 본 논문은 프로덕션 데이터베이스에서 동시성 오류를 진단할 때 상태 접근 부족이 주요 장애임을 실증하고, 포렌식 레이어 도입을 제안한다.",
+      "tags": [
+        "Claude Code",
+        "LLM",
+        "deadlock",
+        "lock-and-deadlock flight recorder",
+        "production replay harness"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "LLM 에이전트는 동시성 관련 DB 사고에서 실시간 상태 접근이 없어 원인 추정과 수정에 실패한다.",
+          "timestamp": null
+        },
+        {
+          "point": "필요한 접근에는 라이브 락 뷰, 전체 데드락 보고서, 읽기 전용 실행, 환경 컨텍스트가 포함된다.",
+          "timestamp": null
+        },
+        {
+          "point": "제안된 포렌식 레이어는 안전 인터로게이션 API, 락·데드락 플라이트 레코더, 프로덕션 재생 하니스를 제공한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "안전 인터로게이션 API를 마이크로서비스 관찰에 적용해 LLM 기반 자동 원인 분석을 가능하게 한다.",
+        "락·데드락 플라이트 레코더를 분산 트랜잭션 시스템에 도입해 스트리밍 파이프라인 오류 디버깅을 지원한다.",
+        "프로덕션 재생 하니스를 머신러닝 모델 서빙 플랫폼에 적용해 추론 요청 재현으로 성능 회귀 디버깅을 개선한다."
+      ],
+      "quiz": [
+        {
+          "question": "LLM 에이전트가 잘못된 원인 추정으로 인한 배포‑관찰 사이클을 겪은 주요 원인은 무엇인가?",
+          "options": [
+            "코드 생성 능력 부족",
+            "런타임 동시성 상태 접근 부족",
+            "모델 파라미터 부족",
+            "데이터 전처리 오류"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 접근 부족, 특히 라이브 락 뷰·데드락 보고서 등 프로덕션 상태에 대한 접근이 가장 큰 병목이라고 언급한다."
+        },
+        {
+          "question": "논문에서 제안하는 포렌식 레이어에 포함되지 않은 구성 요소는?",
+          "options": [
+            "안전 인터로게이션 API",
+            "락·데드락 플라이트 레코더",
+            "프로덕션 재생 하니스",
+            "자동 코드 리팩터링 엔진"
+          ],
+          "answer_index": 3,
+          "explanation": "제안된 레이어는 API, 플라이트 레코더, 재생 하니스이며 자동 코드 리팩터링 엔진은 언급되지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "e67fec0aa34e",
+      "title": "Chaos Mesh로 Kubernetes 앱의 장애 내구성 검증하기",
+      "url": "https://d2.naver.com/helloworld/6523094",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "K8s에서 장애 시뮬레이션으로 데이터 파이프라인 신뢰성 검증",
+      "positioning": null,
+      "tags": [
+        "Chaos Mesh",
+        "Kubernetes",
+        "NAVER Engineering Day",
+        "Chaos Engineering",
+        "NAVER"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Kubernetes 상에서 가상 인프라 장애를 시뮬레이션해 시스템을 사전에 검증하고 장애를 예방하는 기술을 소개한다.",
+          "timestamp": null
+        },
+        {
+          "point": "발표는 NAVER Engineering Day 10th에서 진행된 세션이며, Chaos Engineering 도입을 고민 중인 개발자를 대상으로 한다.",
+          "timestamp": null
+        },
+        {
+          "point": "Chaos Mesh를 활용해 Kubernetes 애플리케이션의 장애 내구성을 검증하는 방법을 설명한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Chaos Mesh의 가상 네트워크 장애 실험을 CI 파이프라인에 적용해 마이크로서비스 간 통신 회복력을 자동 검증한다.",
+        "데이터 파이프라인 단계별로 디스크 I/O 지연을 시뮬레이션해 배치 작업의 시간 초과 위험을 사전에 파악한다.",
+        "ML 모델 서빙 환경에 CPU/메모리 압박 장애를 주입해 서비스 레이턴시와 오류율이 급증하는 임계점을 찾는다."
+      ],
+      "quiz": [
+        {
+          "question": "이 발표에서 소개된 기술은 어떤 환경에서 시스템을 사전에 검증하는가?",
+          "options": [
+            "Kubernetes",
+            "Docker",
+            "VMware",
+            "AWS"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 \"Kubernetes 상에서 가상 인프라 장애를 통해 시스템을 사전에 검증\"이라고 명시되어 있다."
+        },
+        {
+          "question": "발표 대상은 누구인가?",
+          "options": [
+            "데이터 과학자",
+            "Chaos Engineering 도입을 고민중인 개발자",
+            "프로덕트 매니저",
+            "시스템 관리자"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 \"발표 대상: Chaos Engineering 도입을 고민중인 개발자\"라고 적혀 있다."
+        }
+      ]
+    },
+    {
+      "id": "1582b160e955",
+      "title": "Socket.IO 서버를 여러 Pod에서 운영하기",
+      "url": "https://d2.naver.com/helloworld/3517874",
+      "source": {
+        "type": "rss",
+        "name": "D2 Blog"
+      },
+      "published_at": null,
+      "summary": "다중 Pod 실시간 소켓 서버 운영 핵심",
+      "positioning": null,
+      "tags": [
+        "Socket.IO",
+        "n3r",
+        "Kubernetes",
+        "Pod",
+        "NAVER"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Socket.IO와 n3r 기반 소켓 서버를 자체 구축하여 다중 Pod 환경에서 운영",
+          "timestamp": null
+        },
+        {
+          "point": "여러 Pod 사이 이벤트 전달과 연결 안정성을 위한 설계·검증 과정을 공유",
+          "timestamp": null
+        },
+        {
+          "point": "운영 경험을 바탕으로 실시간 서비스의 가용성과 확장성을 확보하는 방법 제시",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "실시간 모델 서빙 결과를 다중 Pod에 브로드캐스트하여 사용자에게 즉시 알림을 제공한다",
+        "협업 데이터 라벨링 툴에서 라벨 변경 이벤트를 모든 워커 Pod에 전파해 일관성을 유지한다"
+      ],
+      "quiz": [
+        {
+          "question": "이 발표에서 사용된 네이버 내부 쿠버네티스 플랫폼의 이름은?",
+          "options": [
+            "n3r",
+            "GKE",
+            "EKS",
+            "AKS"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 n3r이 네이버 사내 쿠버네티스 기반 컨테이너 플랫폼이라고 명시되어 있다."
+        },
+        {
+          "question": "다중 Pod에서 Socket.IO 서버를 운영할 때 핵심으로 고려한 요소는?",
+          "options": [
+            "이벤트 전달",
+            "데이터베이스 스키마",
+            "이미지 처리",
+            "배치 스케줄링"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 여러 Pod 사이의 이벤트 전달과 안정적인 연결 유지가 설계·검증 과정의 핵심이라고 언급된다."
+        }
+      ]
+    }
+  ]
+}
