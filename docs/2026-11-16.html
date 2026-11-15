@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 16일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 16일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">그래프 분석</span><span class="concept">개인화 추천</span><span class="concept">모듈형 신경망 구조</span><span class="concept">언어 모델링</span><span class="concept">AI 기반 업무 검증</span><span class="concept">AI 기반 개발 도구</span><span class="concept">RESTful API 설계</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 생산성 도구</span><span class="concept">멀티에이전트 시스템</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.17226v1" target="_blank" rel="noopener">Sheaf-Inspired Structured Scoring Extensions of LightGCN for Collaborative Filtering</a>
+        </h2>
+
+        <p class="summary">그래프 기반 추천에서 스코어링 구조를 바꿔 커버리지를 개선 가능</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>그래프 기반 협업 필터링에서 LightGCN 같은 모델은 임베딩 전파에 집중했지만 스코어링은 단순 내적에 머물렀다. 본 연구는 스코어링 단계에 sheaf‑inspired 구조적 변환을 도입해 기존 흐름에 점층적 확장을 시도한다. 이는 그래프 추천 연구에서 스코어링 설계의 새로운 방향을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Sheaf‑inspired scoring은 LightGCN 위에 쌍‑의존 변환을 추가해 전파 방식을 바꾸지 않는다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>다양한 스코어러(내적, 대각, rank‑one, full‑matrix, residual MLP)를 여러 데이터셋에 적용해 순위 품질은 데이터셋에 따라 다소 변하고 커버리지는 크게 변한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>방법은 sheaf 기하학에서 영감을 얻었지만 실제 sheaf‑Laplacian 확산을 구현하지 않아 기하학적 이득을 입증하지는 않는다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Sheaf‑inspired pair‑dependent scoring을 전자상거래 검색 랭킹에 적용해 아이템 커버리지를 확대한다</span></li>
+            
+            <li><span class="box"></span><span>Sheaf‑inspired 구조를 지식 그래프 링크 예측에 적용해 관계별 변환을 학습, 예측 정확도를 높인다</span></li>
+            
+            <li><span class="box"></span><span>Residual MLP 스코어러를 세션 기반 추천에 적용해 세션 특성을 반영, 실시간 순위 변동성을 개선한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">이 논문에서 제안한 스코어링 확장은 그래프 전파 단계가 아닌 무엇을 변경한다?</div>
+            
+            <div class="q-opt">① 노드 특성 초기화</div>
+            
+            <div class="q-opt">② 임베딩 전파 방식</div>
+            
+            <div class="q-opt">③ 사용자·아이템 임베딩의 쌍 의존 변환</div>
+            
+            <div class="q-opt">④ 그래프 구조 자체</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 사용자·아이템 임베딩의 쌍 의존 변환</div>
+              <div class="why">논문은 전파는 LightGCN 그대로 두고 스코어링 레이어에 쌍‑의존 변환을 추가한다는 점을 강조한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">실험 결과에 따르면 구조화된 스코어러가 제공한 가장 큰 효과는 무엇인가?</div>
+            
+            <div class="q-opt">① 일관된 순위 품질 향상</div>
+            
+            <div class="q-opt">② 데이터셋에 따라 순위 품질 변화와 큰 카탈로그 커버리지 변화</div>
+            
+            <div class="q-opt">③ 학습 속도 가속</div>
+            
+            <div class="q-opt">④ 파라미터 수 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 데이터셋에 따라 순위 품질 변화와 큰 카탈로그 커버리지 변화</div>
+              <div class="why">결과는 순위 품질이 데이터셋에 따라 다소 변하고, 특히 커버리지가 크게 변하는 경우가 있었다는 점을 보고한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">LightGCN</span><span class="tag">sheaf</span><span class="tag">Amazon-Book</span><span class="tag">Gowalla</span><span class="tag">MovieLens-1M</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://magazine.sebastianraschka.com/p/understanding-positional-embeddings" target="_blank" rel="noopener">Understanding Positional Embeddings in Modern LLMs</a>
+        </h2>
+
+        <p class="summary">LLM 토큰 위치 인코딩 이해로 성능·해석력 향상</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>절대 및 상대 방식(예: RoPE)을 포함한 다양한 위치 임베딩 기법을 소개한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RoPE 작동 원리를 수학적 설명과 PyTorch 구현 예제로 상세히 풀이한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>2026년 공개 모델들의 위치 인코딩 선택 현황을 조사·비교한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>RoPE 회전 변환을 시계열 트랜스포머에 적용해 시간 순서 정보를 효율적으로 인코딩한다</span></li>
+            
+            <li><span class="box"></span><span>그래프 신경망에서 노드 간 상대 거리 표현을 위해 RoPE와 유사한 회전 임베딩을 도입한다</span></li>
+            
+            <li><span class="box"></span><span>코드 생성 모델에 RoPE 기반 위치 인코딩 시각화를 활용해 토큰 수준 해석 가능성을 높인다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">RoPE는 토큰 위치 정보를 어떻게 인코딩하나요?</div>
+            
+            <div class="q-opt">① 절대 인덱스 벡터를 더한다</div>
+            
+            <div class="q-opt">② 쿼리·키 벡터에 회전 변환을 적용한다</div>
+            
+            <div class="q-opt">③ 각 위치마다 별도 임베딩 테이블을 사용한다</div>
+            
+            <div class="q-opt">④ 위치 정보를 무시한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 쿼리·키 벡터에 회전 변환을 적용한다</div>
+              <div class="why">RoPE는 쿼리와 키 벡터에 회전 연산을 적용해 상대적인 거리 정보를 인코딩한다</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">전통적인 절대 위치 인코딩과 RoPE의 주요 차이점은 무엇인가요?</div>
+            
+            <div class="q-opt">① RoPE는 상대적 거리 정보를 제공한다</div>
+            
+            <div class="q-opt">② 절대 인코딩은 회전 변환을 사용한다</div>
+            
+            <div class="q-opt">③ RoPE는 학습되지 않는다</div>
+            
+            <div class="q-opt">④ 절대 인코딩은 토큰 간 상관관계를 고려한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① RoPE는 상대적 거리 정보를 제공한다</div>
+              <div class="why">절대 위치 인코딩은 고정된 위치 벡터를 더하지만, RoPE는 회전 변환을 통해 토큰 간 상대 거리 정보를 캡처한다</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">RoPE</span><span class="tag">GPT</span><span class="tag">PyTorch</span><span class="tag">LLM</span><span class="tag">self-attention</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">NAVER D2</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/-jiSMqYOHKA" target="_blank" rel="noopener">검수도 답변도 호출도 AI가? 커머스API의 2026</a>
+        </h2>
+
+        <p class="summary">AI 자동 검수·툴로 API 운영 효율 상승</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">02:14</span>
+            
+            <span>검수는 엑셀 점검표로 수작업했으며 병목이 되었다.</span>
+          </li>
+          
+          <li>
+            <span class="ts">02:40</span>
+            
+            <span>AI로 규칙 22개 자동 검수 가능.</span>
+          </li>
+          
+          <li>
+            <span class="ts">07:06</span>
+            
+            <span>AI 검수 도입으로 소요 시간 1분 이하로 단축.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>데이터 파이프라인 스키마에 AI 기반 자동 검증을 적용해 오류 탐지 시간을 단축한다.</span></li>
+            
+            <li><span class="box"></span><span>마이크로서비스 호출을 AI 에이전트가 중재하도록 하여 동적 라우팅을 최적화한다.</span></li>
+            
+            <li><span class="box"></span><span>고객 FAQ 문서를 AI가 학습해 자동 응답 시스템을 구축한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">AI 검수가 기존 수작업 검수보다 시간을 크게 단축한 주요 이유는?</div>
+            
+            <div class="q-opt">① AI가 명세를 자동으로 읽고 규칙을 적용한다</div>
+            
+            <div class="q-opt">② AI가 네트워크 지연을 없앤다</div>
+            
+            <div class="q-opt">③ AI가 하드웨어 성능을 높인다</div>
+            
+            <div class="q-opt">④ AI가 검수 인력을 추가한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① AI가 명세를 자동으로 읽고 규칙을 적용한다</div>
+              <div class="why">AI는 OAS3 명세를 파싱해 규칙을 자동 적용하므로 사람이 일일이 확인할 필요가 없어 시간이 크게 감소한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">발표에서 언급된 두 종류의 검수기는 무엇인가?</div>
+            
+            <div class="q-opt">① 결정적 검수기와 비결정적 검수기</div>
+            
+            <div class="q-opt">② 정적 검수기와 동적 검수기</div>
+            
+            <div class="q-opt">③ 사전 검수기와 사후 검수기</div>
+            
+            <div class="q-opt">④ 자동 검수기와 수동 검수기</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 결정적 검수기와 비결정적 검수기</div>
+              <div class="why">결정적 검수기는 코드 기반 규칙을, 비결정적 검수기는 문맥을 LLM으로 판단한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI</span><span class="tag">LLM</span><span class="tag">OAS3</span><span class="tag">MCP 게이트웨이</span><span class="tag">LLMS.TXT</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/uW5SSxwafGs" target="_blank" rel="noopener">AI와 함께 일하는 보안팀 : 취약점 관리부터 도구 개발까지 | GUARDIANS 26</a>
+        </h2>
+
+        <p class="summary">AI 에이전트로 보안 취약점 자동 관리 사례</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>AI Agent Team을 활용한 취약점 점검·관리 방법 소개</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>VulnOps와 협업해 AI에게 보안 업무를 맡기는 사례</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>소규모 보안팀이 AI로 자체 보안 도구를 개발한 과정</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">AI Agent Team</span><span class="tag">Toss</span><span class="tag">VulnOps</span><span class="tag">GUARDIANS 26</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/Jjz5F9rZhDU" target="_blank" rel="noopener">잘 만들었다면, 잘 배운 것일까?: 카카오테크 캠퍼스가 고민한 주니어 개발자의 성장 | 상생과 성장</a>
+        </h2>
+
+        <p class="summary">코딩 에이전트 활용 교육에서 학습 효과와 결과 검증 방법을 탐구</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="ts">04:00</span>
+            
+            <span>커리큘럼을 AI 서비스 개발 과정으로 개편, 트랙 없이 엔드‑투‑엔드 학습 설계</span>
+          </li>
+          
+          <li>
+            <span class="ts">05:19</span>
+            
+            <span>6주 클론 코딩에서 LLM 툴콜부터 멀티 에이전트 구축까지 단계별 학습</span>
+          </li>
+          
+          <li>
+            <span class="ts">06:22</span>
+            
+            <span>코딩 에이전트를 과제에 도입해 AI와 협업하도록 가이드 제공</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>코딩 에이전트와 4단계 가이드를 데이터 사이언스 과제에 적용해 학생들이 분석·모델링·검증 과정을 스스로 설계하도록 유도한다</span></li>
+            
+            <li><span class="box"></span><span>멀티 에이전트 구조를 활용해 기업 내부 업무 자동화 파이프라인을 설계, 각 서브 에이전트가 특정 데이터 처리 역할을 담당하도록 만든다</span></li>
+            
+            <li><span class="box"></span><span>RAG 기법을 사내 문서 검색 시스템에 적용해 최신 기술 문서를 자동으로 요약·제공함으로써 엔지니어의 정보 탐색 시간을 단축한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">코딩 에이전트를 도입하면서 학생들의 PR 리뷰 과정에서 나타난 주요 변화는 무엇인가?</div>
+            
+            <div class="q-opt">① 리뷰 질문이 많아졌다</div>
+            
+            <div class="q-opt">② 승인만 빠르게 이루어졌다</div>
+            
+            <div class="q-opt">③ 코드 길이가 늘어났다</div>
+            
+            <div class="q-opt">④ 멘토가 없었다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 승인만 빠르게 이루어졌다</div>
+              <div class="why">본문에 따르면 코딩 에이전트 도입 후 PR을 올리자 바로 승인이 나왔고 질문이나 재리뷰가 없었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">클론 코딩 단계에서 4주차에 학습하는 기술은 무엇인가?</div>
+            
+            <div class="q-opt">① 툴콜</div>
+            
+            <div class="q-opt">② RAG</div>
+            
+            <div class="q-opt">③ MCP</div>
+            
+            <div class="q-opt">④ 슈퍼바이저와 서브 에이전트</div>
+            
+            <div class="q-answer">
+              <div class="correct">② RAG</div>
+              <div class="why">4주차에는 참고 자료를 검색하는 RAG를 학습한다는 내용이 언급된다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">코딩 에이전트</span><span class="tag">LLM</span><span class="tag">RAG</span><span class="tag">MCP</span><span class="tag">멀티 에이전트</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
