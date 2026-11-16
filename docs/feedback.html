@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; base-uri 'none'; form-action 'none'">
+<title>DS Digest 표시 반영</title>
+<style>
+  :root {
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --line: #e8e8e0;
+    --ink: #1a1a1a;
+    --mute: #6b6b66;
+    --accent: #1a1a1a;
+    --accent-ink: #ffffff;
+    --ok: #2e7d32;
+    --warn: #b26a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614;
+      --card: #20201d;
+      --line: #34342f;
+      --ink: #ecece6;
+      --mute: #a3a39b;
+      --accent: #ecece6;
+      --accent-ink: #161614;
+      --ok: #7fc784;
+      --warn: #e0a955;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+  }
+  .brand {
+    margin: 0 0 18px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  h1[data-tone="ok"] { color: var(--ok); }
+  h1[data-tone="warn"] { color: var(--warn); }
+  p {
+    margin: 0;
+    font-size: 15px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .detail {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--mute);
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .actions:empty { display: none; }
+  button {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  button:disabled { opacity: 0.55; cursor: default; }
+  button:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">DS Digest</p>
+  <div id="status" role="status" aria-live="polite">
+    <h1 id="title">잠시만 기다려 주세요</h1>
+    <p id="message">표시를 반영하고 있습니다.</p>
+    <p id="detail" class="detail" hidden></p>
+  </div>
+  <noscript>
+    <p class="detail">이 페이지는 자바스크립트가 필요합니다. 자바스크립트를 켠 뒤 메일의 링크를 다시 눌러 주세요.</p>
+  </noscript>
+  <div id="actions" class="actions"></div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  // 화면에 쓰는 값은 전부 textContent 로만 넣는다. token 과 원문 주소는 화면에 내지 않는다.
+  var titleEl = document.getElementById("title");
+  var messageEl = document.getElementById("message");
+  var detailEl = document.getElementById("detail");
+  var actionsEl = document.getElementById("actions");
+
+  var LABELS = { want: "더 보고 싶어요", skip: "관심 없어요" };
+  var OPPOSITE = { want: "skip", skip: "want" };
+  var REQUEST_TIMEOUT_MS = 15000;
+
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get("t") || "";
+  var linkAction = params.get("a") || "";
+  var itemUrl = params.get("u") || "";
+  var digestDate = params.get("d") || "";
+  var hasValidDate = /^\d{4}-\d{2}-\d{2}$/.test(digestDate);
+
+  var endpointCache = null;
+
+  // 화면 한 장을 그린다. buttons 는 { label, primary, onClick } 목록.
+  function render(view) {
+    titleEl.textContent = view.title;
+    if (view.tone) {
+      titleEl.setAttribute("data-tone", view.tone);
+    } else {
+      titleEl.removeAttribute("data-tone");
+    }
+    messageEl.textContent = view.message;
+    if (view.detail) {
+      detailEl.textContent = view.detail;
+      detailEl.hidden = false;
+    } else {
+      detailEl.textContent = "";
+      detailEl.hidden = true;
+    }
+    while (actionsEl.firstChild) {
+      actionsEl.removeChild(actionsEl.firstChild);
+    }
+    (view.buttons || []).forEach(function (spec) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.textContent = spec.label;
+      if (spec.primary) button.className = "primary";
+      button.addEventListener("click", spec.onClick);
+      actionsEl.appendChild(button);
+    });
+  }
+
+  function setBusy(title, message) {
+    render({ title: title, message: message });
+  }
+
+  function isAllowedEndpoint(value) {
+    if (typeof value !== "string" || value.length === 0) return false;
+    try {
+      var url = new URL(value);
+      if (url.protocol === "https:") return true;
+      // 로컬 확인용(supabase functions serve)만 http 를 허용한다.
+      return url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // 같은 디렉터리의 feedback-config.json 에서 보낼 곳을 읽는다. 실패하면 "config" 로 거절.
+  function loadEndpoint() {
+    if (endpointCache) return Promise.resolve(endpointCache);
+    return fetch("feedback-config.json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("config");
+        return res.json();
+      })
+      .then(function (config) {
+        if (!config || !isAllowedEndpoint(config.endpoint)) throw new Error("config");
+        endpointCache = config.endpoint;
+        return endpointCache;
+      })
+      .catch(function () {
+        throw new Error("config");
+      });
+  }
+
+  // POST 한 번. 성공이면 resolve, 실패면 원인 이름(config, network, unsubscribed, badlink, server)으로 reject.
+  function send(action) {
+    return loadEndpoint().then(function (endpoint) {
+      var payload = { token: token, action: action };
+      if (action !== "unsubscribe") {
+        payload.item_url = itemUrl;
+        if (hasValidDate) payload.digest_date = digestDate;
+      }
+      var controller = typeof AbortController === "function" ? new AbortController() : null;
+      var timer = controller
+        ? setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS)
+        : null;
+      return fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "omit",
+        cache: "no-store",
+        referrerPolicy: "no-referrer",
+        signal: controller ? controller.signal : undefined
+      }).then(function (res) {
+        if (timer) clearTimeout(timer);
+        if (res.status === 409) throw new Error("unsubscribed");
+        if (res.status === 400 || res.status === 404 || res.status === 413) throw new Error("badlink");
+        if (!res.ok) throw new Error("server");
+        return res.json().then(function (body) {
+          if (!body || body.ok !== true) throw new Error("server");
+        }, function () {
+          throw new Error("server");
+        });
+      }, function () {
+        if (timer) clearTimeout(timer);
+        throw new Error("network");
+      });
+    });
+  }
+
+  function failureView(reason, retry) {
+    var retryButton = { label: "다시 시도", primary: true, onClick: retry };
+    if (reason === "config") {
+      return {
+        title: "아직 설정되지 않았습니다",
+        tone: "warn",
+        message: "표시를 받는 쪽이 아직 준비되지 않았습니다. 잠시 뒤에 다시 시도해 주세요.",
+        detail: "계속 이 화면이 보이면 다이제스트를 보내 준 사람에게 알려 주세요.",
+        buttons: [retryButton]
+      };
+    }
+    if (reason === "unsubscribed") {
+      return {
+        title: "수신을 그만둔 구독입니다",
+        tone: "warn",
+        message: "이미 수신을 그만둔 상태라 표시를 반영하지 않았습니다.",
+        detail: "다시 받고 싶으면 다이제스트를 보내 준 사람에게 알려 주세요.",
+        buttons: [retryButton]
+      };
+    }
+    if (reason === "badlink") {
+      return {
+        title: "잘못된 링크입니다",
+        tone: "warn",
+        message: "링크가 잘렸거나 더 이상 쓸 수 없는 링크입니다.",
+        detail: "메일에 있는 링크를 다시 눌러 주세요.",
+        buttons: [retryButton]
+      };
+    }
+    if (reason === "network") {
+      return {
+        title: "연결하지 못했습니다",
+        tone: "warn",
+        message: "네트워크 상태를 확인한 뒤 다시 시도해 주세요.",
+        buttons: [retryButton]
+      };
+    }
+    return {
+      title: "반영하지 못했습니다",
+      tone: "warn",
+      message: "일시적인 문제가 생겼습니다. 잠시 뒤에 다시 시도해 주세요.",
+      buttons: [retryButton]
+    };
+  }
+
+  function reasonOf(error) {
+    return error && typeof error.message === "string" ? error.message : "server";
+  }
+
+  // 관심도 표시(want, skip). 반영 뒤에는 반대로 바꾸는 버튼 하나를 둔다.
+  function submitFeedback(action) {
+    setBusy("잠시만 기다려 주세요", "표시를 반영하고 있습니다.");
+    send(action).then(function () {
+      var other = OPPOSITE[action];
+      render({
+        title: "표시가 반영됐습니다",
+        tone: "ok",
+        message: "이 글에 '" + LABELS[action] + "' 표시를 남겼습니다.",
+        detail: hasValidDate
+          ? digestDate + " 다이제스트의 글입니다. 다음 다이제스트를 고를 때 참고합니다."
+          : "다음 다이제스트를 고를 때 참고합니다.",
+        buttons: [{
+          label: "'" + LABELS[other] + "'로 바꾸기",
+          primary: false,
+          onClick: function () { submitFeedback(other); }
+        }]
+      });
+    }).catch(function (error) {
+      render(failureView(reasonOf(error), function () { submitFeedback(action); }));
+    });
+  }
+
+  // 수신거부는 자동으로 실행하지 않는다. 버튼을 눌러야 보낸다.
+  function showUnsubscribeConfirm() {
+    render({
+      title: "수신을 그만둘까요?",
+      message: "아래 버튼을 누르면 DS Digest 메일을 더 이상 보내지 않습니다.",
+      detail: "누르기 전까지는 아무것도 바뀌지 않습니다.",
+      buttons: [{ label: "수신을 그만둔다", primary: true, onClick: submitUnsubscribe }]
+    });
+  }
+
+  function submitUnsubscribe() {
+    setBusy("잠시만 기다려 주세요", "수신 중단을 처리하고 있습니다.");
+    send("unsubscribe").then(function () {
+      render({
+        title: "수신을 그만뒀습니다",
+        tone: "ok",
+        message: "앞으로 DS Digest 메일을 보내지 않습니다.",
+        detail: "다시 받고 싶으면 다이제스트를 보내 준 사람에게 알려 주세요. 이 창은 닫아도 됩니다."
+      });
+    }).catch(function (error) {
+      var reason = reasonOf(error);
+      // 수신거부에서는 409 가 나오지 않는다. 혹시 나와도 일반 실패로 안내한다.
+      if (reason === "unsubscribed") reason = "server";
+      render(failureView(reason, submitUnsubscribe));
+    });
+  }
+
+  function showBadLink() {
+    render({
+      title: "잘못된 링크입니다",
+      tone: "warn",
+      message: "링크가 잘렸거나 올바르지 않습니다.",
+      detail: "메일에 있는 링크를 다시 눌러 주세요."
+    });
+  }
+
+  if (!token) {
+    showBadLink();
+  } else if (linkAction === "unsubscribe") {
+    showUnsubscribeConfirm();
+  } else if ((linkAction === "want" || linkAction === "skip") && itemUrl) {
+    submitFeedback(linkAction);
+  } else {
+    showBadLink();
+  }
+})();
+</script>
+</body>
+</html>

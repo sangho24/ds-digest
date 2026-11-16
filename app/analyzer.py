@@ -6,7 +6,7 @@ httpx로 Gemini REST API 직접 호출 — google-generativeai SDK 불필요
 import asyncio
 from collections import Counter
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import json
 import re
 import time
@@ -290,6 +290,15 @@ async def _call_llm_with_fallback(
     raise RuntimeError("사용 가능한 LLM 제공자가 없습니다 (GROQ_API_KEY / GEMINI_API_KEY 미설정)")
 
 
+def _system_note(directive: Directive | None) -> str:
+    """공용 프롬프트에 넣을 수 있는 지시. 품질 계기판이 남긴 시스템 권고뿐이다.
+
+    분석 결과는 모든 수신자가 공유하므로 한 사람의 지시(personal_note)가 프롬프트에
+    들어가면 다른 사람이 받는 요약과 점수가 그 사람 기준으로 만들어진다.
+    """
+    return directive.system_note if directive else ""
+
+
 async def resolve_directives(items: list[RawContent]) -> Directive:
     """축적된 자연어 지시를 구조화한다. 런당 한 번만 부르고 결과를 내려 쓴다.
 
@@ -442,12 +451,15 @@ async def _select_top_youtube_items(
     signal = build_signal(profile.liked_item_ids, profile.disliked_item_ids)
     liked_tags, disliked_tags = describe_for_prompt(signal)
 
+    # 어느 영상을 전사할지는 모든 수신자가 공유하는 결정이다. 그래서 개인 지시와
+    # 요청 키워드는 넣지 않고 시스템 권고(품질 계기판)만 넣는다. 키워드 자리는
+    # 프롬프트 문자열이 흔들리지 않게 남겨 두고 늘 "없음"으로 채운다.
     prompt = _METADATA_RANKING_PROMPT.format(
         budget=budget,
-        keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
+        keywords="없음",
         liked_tags=liked_tags,
         disliked_tags=disliked_tags,
-        standing_note=(directive.standing_note if directive else "") or "없음",
+        standing_note=_system_note(directive) or "없음",
         listing="\n".join(listing_lines),
     )
 
@@ -686,7 +698,9 @@ def _parse_ratings(data: dict, item_count: int) -> dict[int, int]:
 
 
 async def apply_relative_rating(
-    analyzed: list[DigestItem], standing_note: str = ""
+    analyzed: list[DigestItem],
+    standing_note: str = "",
+    ratings_out: dict[int, int] | None = None,
 ) -> int:
     """후보 전체를 한 번에 비교시켜 relevance_score를 다시 매긴다.
 
@@ -702,6 +716,12 @@ async def apply_relative_rating(
     실패해도 파이프라인은 멈추지 않는다. 호출·파싱이 깨지면 절대 점수가 그대로
     남고, 일부 index만 오면 온 것만 반영된다.
 
+    standing_note 에는 시스템 권고만 넘긴다(호출부가 _system_note 로 고른다). 이
+    점수는 풀에 저장돼 모든 수신자가 공유하므로 개인 지시가 들어가면 안 된다.
+
+    ratings_out 에 dict 를 넘기면 반영된 원점수를 {analyzed 의 index: rating} 으로
+    채운다. 난이도 지시가 있는 사용자의 선정 점수를 다시 섞는 데 쓴다(select_for_user).
+
     반환: 상대 평가가 반영된 건수(로깅용).
     """
     # 후보가 2건 이하면 비교의 의미가 없다.
@@ -715,8 +735,10 @@ async def apply_relative_rating(
         f"     핵심: {' | '.join(kp.point for kp in d.analysis.key_points[:2]) or '없음'}"
         for i, d in enumerate(analyzed)
     )
-    # 사용자 지시는 점수를 벌리는 이 단계에도 들어가야 한다. 분석 프롬프트에만
+    # 지시는 점수를 벌리는 이 단계에도 들어가야 한다. 분석 프롬프트에만
     # 있으면 글쓰기는 바뀌어도 순위는 그대로다(실측 2026-09-03).
+    # 제목("사용자 지시")은 프롬프트 문자열을 유지하려고 그대로 둔 것이고,
+    # 실제로 들어오는 것은 시스템 권고뿐이다.
     directive_block = (
         f"## 사용자 지시\n{standing_note}\n"
         "이 지시에 맞는 후보를 위로 두세요. 단, 근거가 얇은 후보를 지시만으로 "
@@ -745,6 +767,8 @@ async def apply_relative_rating(
         d.analysis.relevance_score = blend_relevance(
             d.analysis.relevance_score, ratings.get(i), d.analysis.evidence_level
         )
+    if ratings_out is not None:
+        ratings_out.update(ratings)
 
     # 모델이 분포 규칙(최고-최저 4점 이상)을 실제로 지켰는지 남긴다.
     # 이 단계의 효과 전체가 "모델이 시킨 대로 벌려주는가"에 걸려 있고, 그건
@@ -763,8 +787,12 @@ async def apply_relative_rating(
     return len(ratings)
 
 
-def depth_weight_for(directive) -> float:
-    """난이도 지시 → depth 가중. 지시가 없으면 기본 배합."""
+def depth_weight_for(directive: Directive | None) -> float:
+    """난이도 지시 → depth 가중. 지시가 없으면 기본 배합.
+
+    이 가중은 그 지시를 낸 사용자의 **선정 점수**에만 쓴다(_personal_relevance).
+    풀에 저장되고 지면에 표시되는 relevance_score 는 언제나 기본 배합이다.
+    """
     bias = getattr(directive, "depth_bias", 0) if directive else 0
     if bias > 0:
         return DEPTH_WEIGHT_HARDER
@@ -801,9 +829,14 @@ def _build_analysis_prompt(
     concept_vocabulary: str = "(아직 없음 — 자유롭게 만드세요)",
     standing_note: str = "",
 ) -> str:
-    """공통 분석 프롬프트에 근거 수준상 허용된 출력만 추가한다."""
+    """공통 분석 프롬프트에 근거 수준상 허용된 출력만 추가한다.
+
+    분석 결과는 모든 수신자가 공유한다. 그래서 profile 의 요청 키워드는 넣지 않고
+    (자리는 "없음"으로 채워 프롬프트 문자열을 유지한다), standing_note 에는 시스템
+    권고만 들어와야 한다. 개인 신호는 select_for_user 가 선정에서 쓴다.
+    """
     prompt = ANALYSIS_PROMPT.format(
-        keywords=", ".join(profile.keyword_requests[-5:]) if profile.keyword_requests else "없음",
+        keywords="없음",
         standing_note=standing_note or "없음",
         concept_vocabulary=concept_vocabulary,
         title=item.title,
@@ -1498,6 +1531,10 @@ async def analyze_content(
     concept_vocabulary는 기존 개념 목록 문자열이다. 프롬프트에 넣어 재사용을
     유도하는 것이 엔티티 해소의 예방책이다(app/concepts.py). 호출부가 런당 한 번
     읽어 넘긴다 — 아이템마다 파일을 읽을 이유가 없다.
+
+    결과는 풀에 저장돼 모든 수신자가 공유한다. standing_note 에는 시스템 권고만
+    넘기고 depth_weight 는 기본값으로 둔다(filter_and_analyze 가 그렇게 부른다).
+    난이도 지시의 배합은 select_for_user 가 선정 점수에만 적용한다.
     """
     settings = get_settings()
 
@@ -1703,7 +1740,8 @@ def _interest_adjustments(
                 adjustments[id(d)] = (value, reasons)
         logger.info(
             "interest_model_applied",
-            user_id=user_id,
+            # 저장소가 공개라 Actions 로그도 공개다. 구독자 id 는 앞 8자만 남긴다.
+            user_id=user_id[:8],
             labels=model.label_count,
             base_rate=round(model.base_rate, 3),
             adjusted=len(adjustments),
@@ -1711,8 +1749,49 @@ def _interest_adjustments(
         )
         return adjustments
     except Exception as e:
-        logger.warning("interest_model_failed", user_id=user_id, error=str(e))
+        logger.warning("interest_model_failed", user_id=user_id[:8], error=str(e))
         return {}
+
+
+def _personal_relevance(candidate: ScoredCandidate, depth_weight: float) -> float:
+    """난이도 지시가 있는 사용자의 선정용 점수. 공용 relevance_score 는 바꾸지 않는다.
+
+    공용 점수는 기본 배합 절대 점수와 상대 평가를 섞은 값이다. 여기서는 저장된
+    actionability, depth 로 그 사용자의 배합 절대 점수를 만들고 같은 상대 평가와 다시
+    섞는다. 분석 단계에서 배합을 바꾸던 때의 relevance_score 와 같은 값이 나온다.
+    """
+    analysis = candidate.item.analysis
+    if depth_weight == DEPTH_WEIGHT:
+        return analysis.relevance_score
+    neutral = derive_relevance_score(analysis.actionability, analysis.depth)
+    personal = derive_relevance_score(analysis.actionability, analysis.depth, depth_weight)
+    if candidate.relative_rating is not None:
+        return blend_relevance(personal, candidate.relative_rating, analysis.evidence_level)
+    # 상대 평가 원점수가 없다. 평가가 걸리지 않은 후보면 공용 점수가 곧 절대 점수라
+    # 배합 차이를 그대로 더하면 된다. 원점수를 저장하기 전의 풀 파일이면 이미 섞인
+    # 점수이므로 절대 점수 몫만큼만 옮긴다(근사).
+    share = 1.0 if analysis.relevance_score == candidate.absolute_score else ABSOLUTE_WEIGHT
+    return analysis.relevance_score + (personal - neutral) * share
+
+
+def _with_keyword_boost(
+    directive: Directive | None, profile: UserProfile, user_id: str
+) -> Directive | None:
+    """운영자가 /keyword 로 요청한 키워드를 지시의 boost 에 얹는다.
+
+    요청 키워드는 예전에 분석 프롬프트에 들어갔다. 분석이 공용이 되면서 빠졌고, 대신
+    선정 단계의 기존 경로(boost 타이브레이크)로 잇는다. 프롬프트에 넣던 것과 같은
+    최근 5개만 쓴다. 운영자 개인 기록이므로 user_id 가 default 일 때만 적용한다.
+    넘어온 directive 는 바꾸지 않는다.
+    """
+    if user_id != DEFAULT_USER_ID or not profile.keyword_requests:
+        return directive
+    keywords = {str(k).strip().lower() for k in profile.keyword_requests[-5:] if str(k).strip()}
+    if not keywords:
+        return directive
+    if directive is None:
+        return Directive(boost=keywords)
+    return replace(directive, boost=set(directive.boost) | keywords)
 
 
 @dataclass
@@ -1733,8 +1812,21 @@ def select_for_user(
     profile: UserProfile,
     directive: Directive | None = None,
     user_id: str = DEFAULT_USER_ID,
+    apply_interest: bool = True,
 ) -> SelectionResult:
     """분석이 끝난 후보에서 한 사용자의 다이제스트 아이템을 고른다.
+
+    개인 신호는 전부 여기서만 쓰인다. 분석(요약, 점수, 퀴즈)은 모든 수신자가 공유하고
+    이 함수가 사람마다 다르게 고른다.
+        - directive.drop_sources: 그 출처를 후보에서 뺀다. 풀에는 남는다.
+        - directive.depth_bias: 선정 점수의 배합만 옮긴다(_personal_relevance). 표시되는
+          relevance_score 와 발송 순서(표시 점수순)는 기본 배합 그대로다.
+        - directive.boost/suppress, 👍/👎: 동점 처리.
+        - 운영자 개인 기록(퀴즈 약점, 요청 키워드): user_id 가 default 일 때만.
+
+    apply_interest 를 False 로 주면 관심도 조정만 끄고 나머지(바닥값, 타이브레이크,
+    지시, 출처 다양성)는 그대로 둔다. 개인화 효과를 재는 기준 선정이 이 경로다
+    (app/subscriber_delivery.py). 라벨도 읽지 않는다. 기본값은 기존 동작이다.
 
     LLM 도 네트워크도 쓰지 않는다. 같은 후보 목록에 사용자 맥락(profile, directive,
     user_id)만 바꿔 다시 부를 수 있고, 저장된 풀(app/pool.py 의 load_pool)을 그대로
@@ -1750,7 +1842,14 @@ def select_for_user(
     floor = settings.relevance_floor
     # 퀴즈에서 반복해서 틀린 개념을 선정에 되먹인다 — 여기가 §4.2 ⑥→⑦이
     # 닫히는 지점이다. 응답이 없거나 표본이 부족하면 빈 집합이라 무해하다.
-    review = weak_concepts()
+    # 퀴즈 기록은 운영자 한 사람의 것이다. 다른 수신자의 선정에 새면 안 된다.
+    review = weak_concepts() if user_id == DEFAULT_USER_ID else set()
+    directive = _with_keyword_boost(directive, profile, user_id)
+    # 끊은 출처는 분석 전이 아니라 여기서 뺀다. 그 출처도 분석은 되어 풀에 남고,
+    # 끊은 사람의 선정에서만 빠진다. 제외 후 0건이면 제외를 포기한다(filter_sources).
+    if directive is not None and directive.drop_sources:
+        kept = {id(raw) for raw in filter_sources([c.item.raw for c in scored], directive)}
+        scored = [c for c in scored if id(c.item.raw) in kept]
     signal = build_signal(
         profile.liked_item_ids, profile.disliked_item_ids, review=review
     )
@@ -1764,15 +1863,25 @@ def select_for_user(
     # 정렬만 혼합 점수로 한다.
     candidates = [c.item for c in scored if c.absolute_score >= floor]
 
+    # 난이도 지시는 이 사용자의 선정 점수 배합만 옮긴다. 지시가 없으면 dict 가 비어
+    # 공용 relevance_score 를 그대로 쓴다.
+    depth_weight = depth_weight_for(directive)
+    personal: dict[int, float] = (
+        {id(c.item): _personal_relevance(c, depth_weight) for c in scored}
+        if depth_weight != DEPTH_WEIGHT
+        else {}
+    )
+
     # 관심도 표시(want/skip)에서 학습한 조정값. 런당 한 번 만든다.
     # 👍/👎 타이브레이크와 달리 점수 차를 넘어 순서를 바꾸지만(최대 ±1.5점),
     # relevance_score 자체와 위의 바닥값 판정은 건드리지 않는다. 근거 점수에
     # 취향을 넣지 않는다는 원칙(app/preferences.py)은 그대로다.
-    interest = _interest_adjustments(candidates, user_id)
+    interest = _interest_adjustments(candidates, user_id) if apply_interest else {}
 
     def selection_score(d: DigestItem) -> float:
         adjustment = interest.get(id(d))
-        return d.analysis.relevance_score + (adjustment[0] if adjustment else 0.0)
+        base = personal.get(id(d), d.analysis.relevance_score)
+        return base + (adjustment[0] if adjustment else 0.0)
 
     candidates.sort(
         key=lambda d: (
@@ -1830,17 +1939,18 @@ async def filter_and_analyze(
     """
     settings = get_settings()
 
-    # 지시의 하드 필터를 분석 **전에** 적용한다. 어차피 뺄 아이템을 분석하면
-    # LLM 호출만 낭비된다. filter_sources는 제외 후 0건이 되면 제외를 포기한다.
-    if directive is not None:
-        items = filter_sources(items, directive)
+    # 분석은 모든 수신자가 공유한다(PROGRESS §58). 그래서 지시 가운데 이 단계에
+    # 닿는 것은 시스템 권고(품질 계기판)뿐이다. 끊은 출처(drop_sources)도 여기서
+    # 빼지 않는다. 분석해서 풀에 남기고 select_for_user 가 그 사람의 선정에서만 뺀다.
+    system_note = _system_note(directive)
 
     # 개념 어휘는 런당 한 번만 읽는다. 프롬프트에 넣어 기존 개념 재사용을
     # 유도하는 것이 엔티티 해소의 1차 방어선이다(app/concepts.py).
     vocabulary = load_vocabulary()
     vocabulary_text = vocabulary_for_prompt(vocabulary)
     # 난이도 지시는 점수 축의 배합을 옮긴다("더 어렵게" = depth를 더 세게).
-    # 단 **정렬에만** 쓴다. 바닥값 판정은 아래에서 기본 배합으로 따로 잰다.
+    # 단 그 사용자의 **선정 점수에만** 쓴다(select_for_user). 여기서 만드는 점수는
+    # 풀에 저장되는 공용 값이라 언제나 기본 배합이다. 이 값은 로그용이다.
     depth_weight = depth_weight_for(directive)
 
     # 1) 모든 아이템을 먼저 분석한다(선정은 전체 점수를 본 뒤 상대적으로 결정).
@@ -1855,8 +1965,7 @@ async def filter_and_analyze(
             item,
             profile,
             concept_vocabulary=vocabulary_text,
-            standing_note=directive.standing_note if directive else "",
-            depth_weight=depth_weight,
+            standing_note=system_note,
         )
         analyzed.append(DigestItem(raw=item, analysis=analysis))
 
@@ -1870,25 +1979,17 @@ async def filter_and_analyze(
     # 편이 어떤 경로로 만들어진 점수든 정확하다.
     absolute_score = {id(d): d.analysis.relevance_score for d in analyzed}
 
-    # 난이도 지시가 걸린 런에서는 바닥값을 **기본 배합 점수**로 잰다.
-    # 지시가 정렬을 바꾸는 것은 의도지만, 탈락 기준까지 바꾸면 "더 어렵게" 한
+    # 난이도 지시가 있어도 바닥값은 기본 배합 점수로 잰다. 분석을 기본 배합으로만
+    # 하므로 위 스냅샷이 곧 그 값이다. 지시가 탈락 기준까지 바꾸면 "더 어렵게" 한
     # 마디에 얇은 후보가 무더기로 바닥 아래로 떨어진다(실측: 제목만 아이템이
     # 4점 → 3점). 후보가 전부 얇은 날엔 그대로 빈 다이제스트다.
-    #
-    # 여기서만 actionability·depth로 되계산하는 이유: 바로 위 analyze_content가
-    # 그 두 값에 depth_weight만 적용해 점수를 만들었으므로, 이 지점에서는
-    # 파생 불변식이 실제로 성립한다(§23이 경계한 것은 상대 평가로 값이 섞인
-    # **뒤에** 되계산하는 경우다). 분석이 실패한 아이템은 두 값이 0이라
-    # 결과도 0으로 남는다.
-    if depth_weight != DEPTH_WEIGHT:
-        absolute_score = {
-            id(d): derive_relevance_score(d.analysis.actionability, d.analysis.depth)
-            for d in analyzed
-        }
 
+    # 상대 평가 원점수도 붙잡아 둔다. 난이도 지시가 있는 사용자의 선정 점수를
+    # 그 사람의 배합으로 다시 섞는 데 쓴다(_personal_relevance).
+    ratings: dict[int, int] = {}
     if not settings.dry_run:
         rated = await apply_relative_rating(
-            analyzed, standing_note=directive.standing_note if directive else ""
+            analyzed, standing_note=system_note, ratings_out=ratings
         )
         if rated:
             logger.info("relative_rating_applied", rated=rated, total=len(analyzed))
@@ -1896,7 +1997,10 @@ async def filter_and_analyze(
     # 3) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정(select_for_user).
     floor = settings.relevance_floor
     scored = [
-        ScoredCandidate(item=d, absolute_score=absolute_score[id(d)]) for d in analyzed
+        ScoredCandidate(
+            item=d, absolute_score=absolute_score[id(d)], relative_rating=ratings.get(i)
+        )
+        for i, d in enumerate(analyzed)
     ]
     result = select_for_user(scored, profile, directive, user_id)
     selected = result.selected

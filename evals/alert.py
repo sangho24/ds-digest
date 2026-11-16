@@ -97,14 +97,54 @@ def send_discord(text: str, env: dict[str, str]) -> tuple[str, bool, str]:
     return "discord", 200 <= status < 300, f"status={status} {detail}".strip()
 
 
+def alert_recipients(env: dict[str, str]) -> list[str]:
+    """운영 알림 수신자. ALERT_EMAIL_TO 가 있으면 그것만, 없으면 EMAIL_TO 로 폴백한다.
+
+    다이제스트 수신자(EMAIL_TO)와 갈라 둔 이유: 지인 구독자가 생긴 뒤로 다이제스트를
+    받는 사람과 "워크플로가 실패했다"를 받아야 하는 사람이 같지 않다. 구독자 명단
+    (Supabase subscribers)은 여기서 읽지 않으므로 구독자 주소는 알림에 들어갈 수 없다.
+    """
+    raw = (env.get("ALERT_EMAIL_TO") or "").strip() or (env.get("EMAIL_TO") or "")
+    return [t.strip() for t in raw.split(",") if t.strip()]
+
+
+def _send_email_smtp(
+    text: str, env: dict[str, str], subject: str, sender: str, to: list[str]
+) -> tuple[str, bool, str]:
+    """EMAIL_PROVIDER=smtp 일 때의 알림 발송. 수신자마다 한 통씩 보낸다."""
+    host = env.get("SMTP_HOST")
+    if not host:
+        return "email", True, "설정 없음, 건너뜀"
+    # 표준 라이브러리만 쓰는 모듈이라 의존성 설치가 실패한 뒤에도 가져올 수 있다.
+    from app.smtp_transport import parse_port, send_smtp
+
+    failed = 0
+    detail = ""
+    for addr in to:
+        try:
+            send_smtp(
+                host, parse_port(env.get("SMTP_PORT")), env.get("SMTP_USER") or "",
+                env.get("SMTP_PASSWORD") or "", sender, addr, subject, text=text,
+            )
+        except Exception as e:  # 인증 실패, 망 오류, 타임아웃
+            failed += 1
+            detail = f"{type(e).__name__}"
+    return "email", failed == 0, f"smtp sent={len(to) - failed}/{len(to)} {detail}".strip()
+
+
 def send_email(text: str, env: dict[str, str], subject: str = DEFAULT_SUBJECT) -> tuple[str, bool, str]:
-    key, sender, to = env.get("RESEND_API_KEY"), env.get("EMAIL_FROM"), env.get("EMAIL_TO")
-    if not key or not sender or not to:
+    sender, to = env.get("EMAIL_FROM"), alert_recipients(env)
+    if not sender or not to:
+        return "email", True, "설정 없음, 건너뜀"
+    # 빈 값은 기본 경로(resend)다. 워크플로가 시크릿이 없어도 빈 문자열을 내려보낸다.
+    if (env.get("EMAIL_PROVIDER") or "").strip().lower() == "smtp":
+        return _send_email_smtp(text, env, subject, sender, to)
+    key = env.get("RESEND_API_KEY")
+    if not key:
         return "email", True, "설정 없음, 건너뜀"
     status, detail = _post(
         RESEND_API,
-        {"from": sender, "to": [t.strip() for t in to.split(",") if t.strip()],
-         "subject": subject, "text": text},
+        {"from": sender, "to": to, "subject": subject, "text": text},
         {"Authorization": f"Bearer {key}"},
     )
     return "email", 200 <= status < 300, f"status={status} {detail}".strip()

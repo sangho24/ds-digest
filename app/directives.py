@@ -16,6 +16,16 @@
         boost ────────► 타이브레이크 가점    (코드, 확정적)
         standing_note ► 랭킹·분석 프롬프트   (프롬프트, 재량적)
 
+공용 분석과 개인 선정 (PROGRESS §58):
+    분석 결과(요약, 점수, 퀴즈)는 하루 한 번 만들어 모든 수신자가 공유한다. 그래서
+    프롬프트에 들어가는 것은 **시스템 권고(system_note, 품질 계기판 줄)** 뿐이다.
+    사람이 보낸 메시지에서 해석된 것은 전부 그 사람의 선정(select_for_user)에서만
+    쓰인다. drop_sources 도 분석 전 필터가 아니라 선정 단계의 후보 제외다.
+
+        system_note ──► 랭킹·분석 프롬프트   (모든 수신자 공통)
+        personal_note ► 어디에도 적용하지 않음 (표시용. 깊이 지시는 depth_bias 로 선정에 반영)
+        drop_sources, boost, suppress, depth_bias ► 그 사용자의 선정
+
 만료가 왜 필수인가:
     3개월 전 "arxiv 그만"이 영원히 살아 있으면 왜 arxiv가 안 오는지 아무도
     모르게 된다. 안 보이는 상태값이 조용히 쌓이는 게 이런 시스템에서 가장
@@ -71,6 +81,14 @@ class Directive:
     # "더 어려운 내용" 지시가 해석까지는 됐는데 선정은 점수·다양성만으로 돌았다.
     # 자유 텍스트는 정렬 키가 될 수 없으므로 해석 단계에서 이 축을 따로 뽑는다.
     depth_bias: int = 0
+    # standing_note 를 출처별로 나눈 것. standing_note 는 둘을 이은 표시용 값으로 남는다.
+    # system_note 는 품질 계기판이 남긴 권고로, 특정 사용자와 무관해 공용 분석
+    # 프롬프트에 들어간다. personal_note 는 사람이 보낸 메시지에서 해석된 것이라
+    # 프롬프트에 넣지 않는다(분석 결과를 모든 수신자가 공유한다).
+    # Directive(standing_note=...) 로 직접 만든 값은 출처를 모르므로 어느 쪽에도
+    # 들어가지 않는다. 공용 프롬프트에는 출처가 확인된 권고만 싣는다.
+    system_note: str = ""
+    personal_note: str = ""
 
     def is_empty(self) -> bool:
         return not (
@@ -90,7 +108,15 @@ class Directive:
             parts.append(f"➖ {', '.join(sorted(self.suppress))}")
         if self.drop_sources:
             parts.append(f"🚫 {', '.join(sorted(self.drop_sources))}")
-        if self.standing_note:
+        # 품질 계기판 권고(system_note)만 분석 프롬프트에 들어간다. 사람이 남긴 글쓰기
+        # 지시(personal_note)는 요약이 모두에게 공용이 된 뒤로 적용되지 않으므로,
+        # 적용 중인 것처럼 보이지 않게 따로 표시한다.
+        if self.system_note:
+            parts.append(f"📌 {self.system_note}")
+        if self.personal_note:
+            parts.append(f"💤 요약 문체 지시는 반영되지 않음: {self.personal_note}")
+        # 출처를 모른 채 standing_note 만으로 만든 값은 기존처럼 그대로 보인다.
+        if self.standing_note and not (self.system_note or self.personal_note):
             parts.append(f"📌 {self.standing_note}")
         if self.depth_bias:
             parts.append("🎚 더 깊게" if self.depth_bias > 0 else "🎚 더 쉽게")
@@ -291,6 +317,8 @@ def parse_directive(data: dict, known_sources: Iterable[str] | None = None) -> D
         drop_sources=drops,
         standing_note=note,
         depth_bias=depth_bias,
+        # 이 함수의 입력은 사람 지시를 해석한 LLM 응답뿐이다.
+        personal_note=note,
     )
 
 
@@ -333,9 +361,13 @@ async def interpret(
 
     human = human[-MAX_RAW_MESSAGES:]
 
+    # 시스템 권고는 사람 지시와 따로 잇는다. 사람 지시가 길어도 권고가 300자 상한에서
+    # 밀려나지 않고, 사람 지시가 없는 날의 standing_note 와 같은 문자열이 된다.
+    system_note = _merge_notes("", dashboard_notes)
+
     # 사람이 쓴 지시가 없으면 LLM 을 부르지 않는다. 권고만 얹어 돌려준다.
     if not human:
-        return Directive(standing_note=_merge_notes("", dashboard_notes))
+        return Directive(standing_note=system_note, system_note=system_note)
 
     raws = human
 
@@ -354,10 +386,11 @@ async def interpret(
         logger.warning("directive_interpret_failed", error=str(error)[:200])
         # 계기판 권고는 LLM 을 거치지 않는 경로다. 해석이 실패했다고 같이 버리면
         # 모델 장애가 그 주 권고까지 조용히 지운다.
-        return Directive(standing_note=_merge_notes("", dashboard_notes))
+        return Directive(standing_note=system_note, system_note=system_note)
 
     directive = parse_directive(data, sources)
-    directive.standing_note = _merge_notes(directive.standing_note, dashboard_notes)
+    directive.system_note = system_note
+    directive.standing_note = _merge_notes(directive.personal_note, dashboard_notes)
     logger.info(
         "directive_interpreted",
         messages=len(raws),
@@ -376,6 +409,9 @@ async def interpret(
 
 def filter_sources(items: list, directive: Directive) -> list:
     """drop_sources에 해당하는 아이템을 후보에서 뺀다.
+
+    분석 전이 아니라 선정 단계(analyzer.select_for_user)에서 부른다. 한 사람이 끊은
+    출처도 분석은 되어 풀에 남고, 그 사람의 선정에서만 빠진다.
 
     **안전판**: 제외 후 후보가 하나도 안 남으면 제외를 포기한다. 상대 랭킹 설계
     자체가 "빈 다이제스트를 구조적으로 없앤다"는 목적이었는데, 지시 한 줄이

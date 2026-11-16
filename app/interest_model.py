@@ -23,6 +23,7 @@ import json
 from collections import Counter
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 
 import structlog
@@ -31,6 +32,9 @@ logger = structlog.get_logger()
 
 ROOT = Path(__file__).resolve().parent.parent
 RECORDS_DIR = ROOT / "data" / "records"
+# 후보 풀(app/pool.py). 정본에는 운영자에게 발송된 것만 있어서, 구독자가 표시한 아이템
+# (운영자에게는 탈락한 후보일 수 있다)의 특징은 여기서 찾는다.
+POOL_DIR = ROOT / "data" / "pool"
 DEFAULT_LABELS_PATH = ROOT / "data" / "evals" / "interest_labels.jsonl"
 
 # 다중 사용자 확장용 키. 레코드에 user_id 가 없으면 이 값으로 본다(지금 쌓이는 라벨은 전부 한 사람 것이다).
@@ -146,14 +150,17 @@ def item_features(
     )
 
 
-def load_interest_labels(
-    user_id: str = DEFAULT_USER_ID, path: Path | str | None = None
-) -> dict[str, dict[str, object]]:
-    """interest_labels.jsonl 을 읽어 url → 레코드. unsure 와 다른 사용자의 표시는 뺀다.
+def _parse_time(value: object) -> datetime:
+    """ISO 시각을 비교 가능한 값으로. 없거나 못 읽으면 가장 오래된 것으로 친다."""
+    try:
+        parsed = datetime.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return datetime.min.replace(tzinfo=timezone.utc)
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
 
-    같은 url 이 여러 번이면 뒤의 것이 이긴다(evals.interest.load_labels 와 같은 규칙).
-    나중에 unsure 로 고친 표시는 앞의 want/skip 을 지운다. 파일이 없거나 깨진 줄은 조용히 넘어간다.
-    """
+
+def _load_local_labels(user_id: str, path: Path | str | None) -> dict[str, dict[str, object]]:
+    """jsonl 의 url 별 마지막 레코드(unsure 포함). 다른 사용자의 표시는 뺀다."""
     labels_path = Path(path) if path is not None else DEFAULT_LABELS_PATH
     latest: dict[str, dict[str, object]] = {}
     if not labels_path.is_file():
@@ -179,17 +186,101 @@ def load_interest_labels(
         if owner != user_id:
             continue
         latest[url] = record
-    return {url: record for url, record in latest.items() if record.get("human") in LEARNED_CHOICES}
+    return latest
+
+
+def _load_subscriber_labels(user_id: str) -> dict[str, dict[str, object]]:
+    """Supabase feedback_events 에서 이 사용자의 url 별 최신 want/skip 을 읽는다.
+
+    user_id 가 "default" 면 is_owner 구독자(운영자 본인)의 표시를, 그 밖이면 그 값을
+    subscriber id 로 보고 읽는다. Supabase 미설정, 드라이런, 조회 실패는 전부 빈 dict 다
+    (fail-open: 라벨을 못 읽으면 조정 없이 선정한다).
+    """
+    try:
+        from app.config import get_settings
+
+        settings = get_settings()
+        if settings.dry_run or not settings.subscribers_enabled:
+            return {}
+        from app.db import fetch_feedback_events, fetch_subscribers
+
+        if user_id == DEFAULT_USER_ID:
+            rows = fetch_subscribers() or []
+            subscriber_ids = [str(r["id"]) for r in rows if r.get("is_owner") and r.get("id")]
+        else:
+            subscriber_ids = [user_id]
+        events = fetch_feedback_events(subscriber_ids) or []
+    except Exception as e:
+        from app.subscribers import scrub_error
+
+        logger.warning("interest_subscriber_labels_failed", error=scrub_error(e))
+        return {}
+
+    latest: dict[str, dict[str, object]] = {}
+    # 오래된 것부터 온다. 그래도 시각을 비교해, 순서가 섞여 와도 늦은 쪽이 이기게 한다.
+    for event in events:
+        url = str(event.get("item_url") or "").strip()
+        action = event.get("action")
+        if not url or action not in LEARNED_CHOICES:
+            continue
+        record: dict[str, object] = {
+            "url": url,
+            "human": action,
+            "user_id": user_id,
+            "date": event.get("digest_date"),
+            "labeled_at": event.get("created_at"),
+        }
+        previous = latest.get(url)
+        if previous is None or _parse_time(record["labeled_at"]) >= _parse_time(
+            previous.get("labeled_at")
+        ):
+            latest[url] = record
+    return latest
+
+
+def load_interest_labels(
+    user_id: str = DEFAULT_USER_ID, path: Path | str | None = None
+) -> dict[str, dict[str, object]]:
+    """url → 표시 레코드. unsure 와 다른 사용자의 표시는 뺀다.
+
+    출처는 둘이다.
+      - interest_labels.jsonl: 운영자가 evals/interest.py 로 남긴 표시. 같은 url 이 여러
+        번이면 뒤의 것이 이긴다(evals.interest.load_labels 와 같은 규칙). 나중에 unsure 로
+        고친 표시는 앞의 want/skip 을 지운다. 파일이 없거나 깨진 줄은 조용히 넘어간다.
+      - Supabase feedback_events: 구독자가 메일의 "읽고 싶다 / 아니다" 로 남긴 표시.
+
+    user_id 가 "default" 면 jsonl 에 is_owner 구독자의 feedback_events 를 합치고, 같은
+    url 은 시각이 늦은 쪽이 이긴다. 그 밖의 user_id(구독자 id)는 jsonl 에 표시가 없으므로
+    사실상 feedback_events 만 쓴다. Supabase 조회가 실패하면 jsonl 만으로 계속 간다.
+    """
+    merged = _load_local_labels(user_id, path)
+    for url, record in _load_subscriber_labels(user_id).items():
+        previous = merged.get(url)
+        if previous is None or _parse_time(record.get("labeled_at")) >= _parse_time(
+            previous.get("labeled_at")
+        ):
+            merged[url] = record
+    return {url: record for url, record in merged.items() if record.get("human") in LEARNED_CHOICES}
 
 
 def _record_features(
-    urls: set[str], records_dir: Path
+    urls: set[str], records_dir: Path, pool_dir: Path | None = None
 ) -> dict[str, ItemFeatures]:
-    """라벨된 url 을 정본에서 찾아 특징으로. 같은 url 이 여러 날 실렸으면 최신 날짜가 이긴다."""
+    """라벨된 url 을 정본과 후보 풀에서 찾아 특징으로.
+
+    같은 url 이 여러 날 실렸으면 최신 날짜가 이긴다. 풀을 먼저 읽고 정본을 나중에 읽어,
+    둘 다에 있으면 실제로 발송된 정본 쪽 값이 남는다. 풀은 구독자 라벨용이다: 정본에는
+    운영자에게 발송된 것만 있어, 구독자만 받은 아이템은 풀에서만 찾을 수 있다.
+    """
     found: dict[str, ItemFeatures] = {}
-    if not urls or not records_dir.is_dir():
+    if not urls:
         return found
-    for path in sorted(records_dir.glob("digest_????-??-??.json")):
+    paths: list[Path] = []
+    if pool_dir is not None and pool_dir.is_dir():
+        paths.extend(sorted(pool_dir.glob("pool_????-??-??.json")))
+    if records_dir.is_dir():
+        paths.extend(sorted(records_dir.glob("digest_????-??-??.json")))
+    for path in paths:
         try:
             record = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
@@ -217,14 +308,16 @@ def build_interest_model(
     labels: Mapping[str, Mapping[str, object]],
     records_dir: Path | str | None = None,
     user_id: str = DEFAULT_USER_ID,
+    pool_dir: Path | str | None = None,
 ) -> InterestModel:
-    """라벨(url → 레코드)을 정본과 조인해 특징별 수축 비율을 계산한다.
+    """라벨(url → 레코드)을 정본·후보 풀과 조인해 특징별 수축 비율을 계산한다.
 
     rate = (want + K * p0) / (n + K), 편차 = rate - p0.
     p0 는 전체 want 비율이다. 표본이 적은 값일수록 p0 쪽으로 끌려가 편차가 0 에 가까워진다.
 
     want + skip 이 MIN_LABELS 미만이면 비활성 모델을 돌려주고 정본은 읽지 않는다.
-    정본에서 못 찾은 url 은 라벨에 적힌 source_key 만으로 출처 특징을 낸다.
+    정본과 풀 어디에서도 못 찾은 url 은 라벨에 적힌 source_key 만으로 출처 특징을 낸다.
+    pool_dir 를 넘기지 않으면 기본 풀 경로(data/pool)를 본다.
     """
     learned = {
         url: record for url, record in labels.items() if record.get("human") in LEARNED_CHOICES
@@ -237,7 +330,8 @@ def build_interest_model(
         return model
 
     directory = Path(records_dir) if records_dir is not None else RECORDS_DIR
-    by_url = _record_features(set(learned), directory)
+    pool_directory = Path(pool_dir) if pool_dir is not None else POOL_DIR
+    by_url = _record_features(set(learned), directory, pool_directory)
 
     counts: dict[str, dict[str, Counter[str]]] = {kind: {} for kind in FEATURE_KINDS}
     for url, record in learned.items():

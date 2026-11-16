@@ -13,7 +13,6 @@ from unittest.mock import patch
 
 from app.models import FeedbackPayload, UserProfile
 from app.feedback import process_feedback, load_profile, save_profile
-from app.analyzer import ANALYSIS_PROMPT
 
 
 # ──────────────────────────────────────────────
@@ -141,11 +140,18 @@ def test_profile_file_is_valid_json(isolated_profile):
 
 
 # ──────────────────────────────────────────────
-# 프롬프트 반영 (핵심: 피드백이 분석에 실제로 영향을 주는가)
+# 키워드 반영 (핵심: 피드백이 선정에 닿되, 공용 분석 프롬프트에는 닿지 않는가)
 # ──────────────────────────────────────────────
 
-def test_keyword_appears_in_analysis_prompt():
-    """keyword_request가 다음 날 분석 프롬프트에 반영되는지 확인."""
+def test_keyword_stays_out_of_the_shared_analysis_prompt():
+    """keyword_request 는 프로필에 쌓이지만 분석 프롬프트에는 들어가지 않는다.
+
+    분석 결과는 모든 수신자가 공유한다(PROGRESS §58). 키워드는 운영자의 선정 단계
+    타이브레이크로만 쓰인다(tests/test_shared_analysis.py 가 그쪽을 본다).
+    """
+    from app.analyzer import _build_analysis_prompt
+    from app.models import EvidenceLevel, RawContent, SourceType
+
     process_feedback(FeedbackPayload(
         item_url="https://example.com/h",
         action="keyword_request",
@@ -155,19 +161,18 @@ def test_keyword_appears_in_analysis_prompt():
     profile = load_profile()
     assert "llm evaluation" in profile.keyword_requests
 
-    # 프롬프트 포맷팅 시 keyword_requests가 포함되는지 검증
-    prompt = ANALYSIS_PROMPT.format(
-        topics=", ".join(profile.preferred_topics) or "data science",
-        keywords=", ".join(profile.keyword_requests[-5:]),
-        concept_vocabulary="(아직 없음)",
-        standing_note="없음",
-        title="Test Article",
-        source_name="Test",
-        source_type="rss",
-        content="some content",
+    prompt = _build_analysis_prompt(
+        item=RawContent(
+            source_type=SourceType.RSS, source_name="Test", title="Test Article",
+            url="https://example.com/h", body="some content",
+        ),
+        profile=profile,
+        content_text="some content",
         timestamp_instruction="   - timestamp는 null.",
+        evidence_level=EvidenceLevel.PARTIAL,
     )
-    assert "llm evaluation" in prompt
+    assert "llm evaluation" not in prompt
+    assert "- 최근 요청 키워드: 없음" in prompt
 
 
 def test_multiple_feedbacks_accumulate():

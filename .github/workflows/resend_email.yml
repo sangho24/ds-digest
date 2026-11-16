@@ -40,12 +40,19 @@ jobs:
 
       - name: Resend digest email
         # Settings(app/config.py)의 모든 필드에 기본값이 있어 필수 env 는 없다.
-        # 이메일 발송에 실제로 쓰이는 세 개만 넘긴다. Discord/Telegram/Supabase/
+        # 이메일 발송에 실제로 쓰이는 것만 넘긴다. Discord/Telegram/Supabase/
         # AI 키는 넘기지 않는다 - 이 잡은 그 채널을 호출하지 않는다.
+        # Supabase 를 넘기지 않으므로 구독자에게는 가지 않는다(EMAIL_TO 만).
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # 발송 경로(resend | smtp). 비어 있으면 config 가 기본값으로 되돌린다.
+          EMAIL_PROVIDER: ${{ secrets.EMAIL_PROVIDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           # 재발송은 항상 실전이다. 드라이런이 필요하면 로컬에서 DRY_RUN=true 로 돈다.
           DRY_RUN: 'false'
         run: |

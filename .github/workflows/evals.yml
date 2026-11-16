@@ -113,6 +113,25 @@ jobs:
             echo "::warning::심판 판정 push 실패"
           fi
 
+      # 개인화 효과 보고서(evals/effect.py)도 **보고 전용**이다. 구독자별 비교군
+      # (sent_items.arm)의 반응 차이를 스텝 로그에만 찍고, 게이트에도 알림에도 쓰지 않는다.
+      # Supabase 미설정, 빈 테이블, 조회 실패는 전부 exit 0 이고, 그 밖의 예외도
+      # continue-on-error 로 품질 게이트(위 Run evals 의 성패)를 건드리지 않는다.
+      # --anonymize: 저장소가 공개라 Actions 로그는 누구에게나 보인다. 구독자별 표를
+      # 통째로 생략하고 전체, 비교군, 주차 집계만 찍는다(id 만 가려도 사람별 수치로 누구인지
+      # 짐작할 수 있다). 구독자별 표는 로컬에서 본다. 이메일과 token 은 보고서가 읽지 않는다.
+      # 파일로 남기지 않는다(--out 없음). 커밋되면 지인의 반응 기록이 저장소에 남는다.
+      - name: Personalization effect report (report only)
+        if: always()
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          python -m evals.effect report --anonymize || \
+            echo "::warning::개인화 효과 보고서 생성 실패"
+
       # 계측은 재기만 해서는 아무것도 바꾸지 못한다. 프롬프트로 고칠 수 있는
       # 위반은 다음 날 큐레이션에 권고 한 줄로 남긴다. 게이트가 실패했든
       # 통과했든(WARN) 돌아야 하므로 always() 다.
@@ -158,6 +177,14 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # 운영 알림 수신자. 없으면 EMAIL_TO 로 폴백한다(evals/alert.py).
+          # 구독자 주소는 여기에 넣지 않는다.
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          EMAIL_PROVIDER: ${{ secrets.EMAIL_PROVIDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           # 전송 결과를 그대로 남긴다. 예전처럼 `|| true` 로 삼키면 "알림이 안 온 것"과

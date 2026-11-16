@@ -21,6 +21,8 @@ from app.analyzer import (
 )
 from app.newsletter import TEMPLATE_DIR, send_digest, render_digest_web, kst_date_label
 from app.feedback import load_profile
+from app.models import DigestItem
+from app.subscribers import Subscriber, scrub_error
 from app.deliverers.telegram import send_telegram_digest
 from app.deliverers.discord import send_discord_digest, send_discord_text
 
@@ -192,6 +194,68 @@ def digest_items_raw(digest_items: list) -> list:
     return [d.raw for d in digest_items]
 
 
+def _load_subscribers() -> list[Subscriber]:
+    """활성 구독자 명단. 어떤 실패도 빈 목록으로 삼킨다(운영자 흐름을 막지 않는다).
+
+    드라이런은 명단을 읽지 않는다. 빈 목록이면 뒤의 구독자 단계가 전부 꺼져 동작이
+    구독자 기능이 없던 때와 완전히 같다(Supabase 미설정, 테이블 없음, 0명 모두 이 경우다).
+    """
+    try:
+        settings = get_settings()
+        if settings.dry_run or not settings.subscribers_enabled:
+            return []
+        from app.subscribers import list_active_subscribers
+        return list_active_subscribers()
+    except Exception as e:
+        logger.warning("subscribers_load_failed", error=scrub_error(e))
+        return []
+
+
+async def _deliver_to_subscribers(
+    subscribers: list[Subscriber],
+    pool_entries: list[dict[str, Any]],
+    digest_items: list[DigestItem],
+    date_str: str,
+    owner_delivered: set[str],
+    owner_profile: Any = None,
+    owner_directive: Any = None,
+) -> dict[str, int] | None:
+    """운영자 흐름 뒤에 덧붙는 구독자 발송. 어떤 실패도 경고 로그로만 남긴다.
+
+    여기서 예외가 올라가면 워크플로가 실패로 끝나 그날 docs 커밋까지 막힌다. 구독자
+    쪽 문제로 운영자 산출물이 사라지면 안 되므로 통째로 감싼다.
+    """
+    try:
+        from app.pool import candidates_from_entries
+        from app.subscriber_delivery import OwnerContext, deliver_to_subscribers
+
+        # 운영자 선정에 쓴 프로필과 지시. is_owner 의 비교군 표시(기준 선정 계산)에만 쓴다.
+        owner_context = (
+            OwnerContext(profile=owner_profile, directive=owner_directive)
+            if owner_profile is not None
+            else None
+        )
+        summary = deliver_to_subscribers(
+            subscribers,
+            candidates_from_entries(pool_entries),
+            date_str,
+            owner_items=digest_items,
+            already_delivered=owner_delivered,
+            owner_context=owner_context,
+        )
+        counts = summary.as_dict()
+        if summary.failed:
+            # 주소는 싣지 않는다. 운영 알림 채널에는 구독자 정보가 가지 않는다.
+            await _send_error_alert(
+                f"구독자 발송 실패 {summary.failed}/{counts['total']}명. 재발송: "
+                f"python -m app.jobs.send_subscribers --date {date_str}"
+            )
+        return counts
+    except Exception as e:
+        logger.warning("subscriber_delivery_failed", error=scrub_error(e))
+        return None
+
+
 async def run_daily_digest() -> dict:
     """메인 파이프라인 실행"""
     settings = get_settings()
@@ -336,8 +400,20 @@ async def run_daily_digest() -> dict:
     if "discord" in channels:
         sent_results["discord"] = await send_discord_digest(digest_items)
 
+    # 구독자 명단은 발송 전에 한 번 읽는다. is_owner 구독자의 주소가 EMAIL_TO 에 있으면
+    # 그 한 통을 링크 든 구독자용 메일로 바꿔 보내야 같은 사람이 두 통을 받지 않는다.
+    # 구독자가 없으면(미설정·0명·조회 실패) owners 가 비어 아래는 예전 호출 그대로다.
+    subscribers = _load_subscribers()
+    owners = {s.email: s.token for s in subscribers if s.is_owner}
+    owner_delivered: set[str] = set()
+
     if "email" in channels:
-        sent_results["email"] = await send_digest(digest_items)
+        if owners:
+            sent_results["email"] = await send_digest(
+                digest_items, owners=owners, owner_delivered=owner_delivered
+            )
+        else:
+            sent_results["email"] = await send_digest(digest_items)
 
     any_sent = any(sent_results.values())
 
@@ -399,6 +475,14 @@ async def run_daily_digest() -> dict:
     # HTML을 파싱하면 디자인 변경이 곧 파손이므로, 버전 박힌 JSON을 따로 낸다.
     publish_contract(digest_items, today_str, docs_dir)
 
+    # 7.2. 구독자 메일의 피드백 페이지(docs/feedback.html)가 읽는 Edge Function 주소.
+    # SUPABASE_URL 이 있을 때만 쓰고, 값은 주소뿐이다(키 금지). 실패해도 계속 간다.
+    try:
+        from app.subscriber_delivery import write_feedback_config
+        write_feedback_config(docs_dir)
+    except Exception as e:
+        logger.warning("feedback_config_write_failed", error=str(e)[:200])
+
     # 7.5. 구조화 정본 저장 — 로컬 JSON(정본) + Supabase 미러(best-effort)
     # 발송 성공 여부와 무관하게 분석 결과가 남도록 HTML 저장과 같은 지점에 둔다.
     # (기존엔 HTML만 저장되고 구조화 분석 결과는 발송 후 폐기됐다.)
@@ -440,6 +524,15 @@ async def run_daily_digest() -> dict:
     if pool_file is not None:
         logger.info("pool_saved", path=str(pool_file), count=len(pool_entries))
 
+    # 8. 구독자별 선정과 발송. 운영자 흐름(발송, 정본, 풀, 아카이브)이 전부 끝난 뒤다.
+    # 구독자가 없으면 아무것도 하지 않는다. 실패는 _deliver_to_subscribers 가 삼킨다.
+    subscriber_counts: dict[str, int] | None = None
+    if subscribers:
+        subscriber_counts = await _deliver_to_subscribers(
+            subscribers, pool_entries, digest_items, today_str, owner_delivered,
+            owner_profile=profile, owner_directive=directive,
+        )
+
     elapsed = (datetime.now() - start).total_seconds()
     result = {
         "status": "ok",
@@ -448,6 +541,8 @@ async def run_daily_digest() -> dict:
         "delivery": sent_results,
         "elapsed_seconds": round(elapsed, 1),
     }
+    if subscriber_counts is not None:
+        result["subscribers"] = subscriber_counts
     logger.info("digest_complete", **result)
     return result
 

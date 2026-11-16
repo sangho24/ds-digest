@@ -1,22 +1,84 @@
 """
 뉴스레터 렌더링 + 발송
-Jinja2로 HTML 이메일 생성 → Resend로 발송
+Jinja2로 HTML 이메일 생성 → app/mailer.py(Resend 또는 SMTP)로 발송
 """
 import re
+from collections.abc import Mapping
+from dataclasses import dataclass
+from urllib.parse import quote
 
-import resend
 import structlog
 from datetime import date
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 
+from app import mailer
 from app.config import get_settings
 from app.contract import ARCHIVE_BASE, today_kst
 from app.models import DigestItem
+from app.subscribers import scrub_error
 
 logger = structlog.get_logger()
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
+
+# 구독자 메일 안의 링크가 여는 페이지(docs/feedback.html, GitHub Pages).
+# 그 페이지가 feedback-config.json 의 endpoint 로 POST 한다.
+FEEDBACK_PAGE = f"{ARCHIVE_BASE}/feedback.html"
+# 구독자 메일의 원문 링크가 거치는 페이지(docs/go.html). 클릭을 기록하고 원문으로 보낸다.
+CLICK_PAGE = f"{ARCHIVE_BASE}/go.html"
+# 원클릭 수신거부(List-Unsubscribe-Post)가 직접 POST 하는 Edge Function 경로.
+FEEDBACK_FUNCTION_PATH = "/functions/v1/digest-feedback"
+
+
+@dataclass(frozen=True)
+class RecipientLinks:
+    """수신자 한 명의 링크를 만드는 데 필요한 값. 넘기면 메일에 피드백·수신거부 링크가 붙는다."""
+
+    token: str
+    date_iso: str
+
+
+def feedback_link(
+    token: str, action: str, item_url: str | None = None, date_iso: str | None = None
+) -> str:
+    """피드백 페이지 주소. action 은 want | skip | unsubscribe. u, d 는 있을 때만 붙는다."""
+    link = f"{FEEDBACK_PAGE}?t={quote(token, safe='')}&a={action}"
+    if item_url:
+        link += f"&u={quote(item_url, safe='')}"
+    if date_iso:
+        link += f"&d={date_iso}"
+    return link
+
+
+def click_link(token: str, item_url: str, date_iso: str | None = None) -> str:
+    """원문 이동 페이지 주소. go.html 이 클릭을 기록한 뒤 u 의 원문으로 보낸다."""
+    link = f"{CLICK_PAGE}?t={quote(token, safe='')}&u={quote(item_url, safe='')}"
+    if date_iso:
+        link += f"&d={date_iso}"
+    return link
+
+
+def feedback_endpoint() -> str | None:
+    """Edge Function 주소. SUPABASE_URL 이 없으면 None."""
+    base = get_settings().supabase_url.strip().rstrip("/")
+    return f"{base}{FEEDBACK_FUNCTION_PATH}" if base else None
+
+
+def unsubscribe_headers(token: str) -> dict[str, str]:
+    """원클릭 수신거부 헤더(RFC 8058). 주소는 https 하나만 넣는다(mailto 없음).
+
+    Gmail·Yahoo 는 List-Unsubscribe 와 List-Unsubscribe-Post 가 함께 있어야 원클릭으로
+    취급하고, 그 주소로 본문 `List-Unsubscribe=One-Click` 을 POST 한다. GitHub Pages 는
+    POST 를 받지 못하므로 페이지가 아니라 Edge Function 을 직접 가리킨다.
+    """
+    endpoint = feedback_endpoint()
+    if not endpoint or not endpoint.startswith("https://"):
+        return {}
+    return {
+        "List-Unsubscribe": f"<{endpoint}?t={quote(token, safe='')}&a=unsubscribe>",
+        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    }
 
 
 def _template_env() -> Environment:
@@ -64,8 +126,9 @@ def render_digest_email(
     items: list[DigestItem],
     date_str: str | None = None,
     archive_url: str | None = None,
+    recipient: RecipientLinks | None = None,
 ) -> str:
-    """다이제스트를 이메일(Resend 발송)용 HTML 로 렌더링한다.
+    """다이제스트를 이메일 발송용 HTML 로 렌더링한다.
 
     웹 템플릿과 분리한 이유: 메일 클라이언트(Gmail·네이버·Outlook·iOS Mail)는
     CSS 변수를 버리고 <style> 을 무시하거나 일부만 적용하며 flex/gap/<details> 를
@@ -76,13 +139,40 @@ def render_digest_email(
 
     archive_url 을 넘기지 않으면 오늘(KST) 호의 GitHub Pages 주소를 쓴다.
     daily_digest.py 가 docs/{today_kst}.html 로 저장하는 경로와 같은 규칙이다.
+
+    recipient 를 넘기면 아이템마다 "읽고 싶다 / 아니다" 링크와 하단 수신거부 링크가
+    붙는다(구독자 발송). 넘기지 않으면 링크 없는 기존 모습 그대로다.
+
+    recipient 가 있고 설정 TRACK_CLICKS 가 켜져 있으면 아이템 제목의 원문 링크도
+    클릭 기록 페이지(go.html) 주소로 바뀐다. recipient 가 없는 렌더(EMAIL_TO 기존 경로)는
+    늘 원문 주소 그대로다.
     """
+    feedback_links: dict[str, dict[str, str]] | None = None
+    unsubscribe_url: str | None = None
+    item_links: dict[str, str] | None = None
+    if recipient is not None:
+        if get_settings().track_clicks:
+            item_links = {
+                item.raw.url: click_link(recipient.token, item.raw.url, recipient.date_iso)
+                for item in items
+            }
+        feedback_links = {
+            item.raw.url: {
+                action: feedback_link(recipient.token, action, item.raw.url, recipient.date_iso)
+                for action in ("want", "skip")
+            }
+            for item in items
+        }
+        unsubscribe_url = feedback_link(recipient.token, "unsubscribe")
     template = _template_env().get_template("digest_email.html")
     html = template.render(
         items=items,
         date_str=_default_date_str(date_str),
         archive_url=archive_url or f"{ARCHIVE_BASE}/{today_kst()}.html",
         archive_index_url=f"{ARCHIVE_BASE}/",
+        feedback_links=feedback_links,
+        unsubscribe_url=unsubscribe_url,
+        item_links=item_links,
     )
     return _compact_email_html(html)
 
@@ -108,6 +198,8 @@ async def send_digest(
     items: list[DigestItem],
     date_iso: str | None = None,
     subject_prefix: str = "",
+    owners: Mapping[str, str] | None = None,
+    owner_delivered: set[str] | None = None,
 ) -> bool:
     """렌더링된 뉴스레터를 이메일로 발송한다.
 
@@ -122,25 +214,31 @@ async def send_digest(
     반환값은 기존 계약 그대로 bool 이다: 한 명 이상 성공하면 True, 전원 실패면
     False. 호출부(daily_digest.py)는 이 값으로 채널 성공 여부와 _mark_sent 를
     판단하므로, 부분 실패는 별도 경고 로그(email_partial_failure)로만 남긴다.
+
+    owners 는 {소문자 이메일: token} 이다. EMAIL_TO 주소가 is_owner 구독자와 같으면
+    그 한 통만 피드백·수신거부 링크가 든 구독자용 메일로 바꿔 보낸다. 같은 사람이
+    기존 메일과 구독자 메일을 두 통 받지 않게 하려는 것이고, 따로 빼서 나중에 보내지
+    않는 이유는 이 함수의 성공 여부(= 채널 성공, _mark_sent)가 실제 발송을 그대로
+    반영해야 하기 때문이다. 그렇게 보낸 주소는 owner_delivered 에 담아 구독자 단계가
+    다시 보내지 않게 한다. owners 가 비어 있으면 동작은 예전과 완전히 같다.
     """
     settings = get_settings()
 
-    resend.api_key = settings.resend_api_key
     # 머리말·제목·아카이브 링크가 같은 날짜를 가리키도록 KST 날짜를 한 번만 잡는다.
     today_iso = date_iso or today_kst()
-    html = render_digest_email(
-        items,
-        date_str=kst_date_label(today_iso),
-        archive_url=f"{ARCHIVE_BASE}/{today_iso}.html",
-    )
+    date_label = kst_date_label(today_iso)
+    archive_url = f"{ARCHIVE_BASE}/{today_iso}.html"
+    html = render_digest_email(items, date_str=date_label, archive_url=archive_url)
     item_count = len(items)
 
     if settings.dry_run:
         logger.info("dry_run_skip_email", to=settings.email_to, items=item_count)
         return True
 
-    if not settings.resend_api_key:
-        logger.warning("resend_api_key_missing", msg="이메일 발송 스킵")
+    # resend 는 API 키, smtp 는 호스트가 없으면 보낼 수 없다.
+    problem = mailer.configuration_problem(settings)
+    if problem is not None:
+        logger.warning(problem, msg="이메일 발송 스킵")
         return False
 
     # EMAIL_TO는 쉼표 구분 복수 수신자 허용
@@ -154,18 +252,38 @@ async def send_digest(
     # Resend 한도는 초당 10건이라 수십 명 이하 직렬 발송에는 지연이 필요 없다.
     failed: list[str] = []
     for addr in recipients:
-        try:
-            resend.Emails.send({
-                "from": settings.email_from,
-                "to": [addr],
-                "subject": subject,
-                "html": html,
-            })
-            logger.info("email_sent", to=addr, items=item_count)
-        except Exception as e:
+        body, headers = html, None
+        owner_token = (owners or {}).get(addr.lower())
+        # is_owner 구독자의 주소는 구독자 정보다. 공개 로그에 남기지 않는다(주소 대신 표식).
+        # 그 밖의 EMAIL_TO 수신자는 기존 운영자 경로 그대로다.
+        is_subscriber = owner_token is not None
+        shown = "(구독자)" if is_subscriber else addr
+        if owner_token:
+            try:
+                body = render_digest_email(
+                    items,
+                    date_str=date_label,
+                    archive_url=archive_url,
+                    recipient=RecipientLinks(token=owner_token, date_iso=today_iso),
+                )
+                headers = unsubscribe_headers(owner_token)
+            except Exception as e:
+                # 링크 붙이기에 실패해도 운영자 메일은 기존 모습으로 나가야 한다.
+                logger.warning("owner_email_links_failed", error=scrub_error(e, addr))
+                body, headers, owner_token = html, None, None
+        result = mailer.send(addr, subject, body, headers)
+        if result.ok:
+            logger.info("email_sent", to=shown, items=item_count)
+            if owner_token and owner_delivered is not None:
+                owner_delivered.add(addr.lower())
+        else:
             # 한 명의 실패가 다음 수신자 발송을 막지 않는다.
-            failed.append(addr)
-            logger.error("email_send_failed", to=addr, error=str(e)[:200])
+            failed.append(shown)
+            logger.error(
+                "email_send_failed",
+                to=shown,
+                error=scrub_error(result.error, addr) if is_subscriber else result.error,
+            )
 
     sent_count = len(recipients) - len(failed)
     if failed and sent_count:

@@ -38,11 +38,17 @@ class ScoredCandidate:
     absolute_score 는 상대 평가가 섞이기 전의 절대 점수다. 바닥값 판정은 이 값으로
     한다(app/analyzer.py 의 select_for_user). selected_default 는 풀을 저장한 런에서
     default 사용자에게 선정됐는지의 기록이며 선정 계산에는 쓰지 않는다.
+
+    relative_rating 은 상대 평가가 이 후보에 준 원점수(0~10)다. 상대 평가가 없었거나
+    이 후보가 응답에서 빠졌으면 None 이다. item 의 relevance_score 는 기본 배합으로
+    섞은 공용 값이고, 난이도 지시가 있는 사용자의 선정 점수는 이 값으로 그 사람의
+    배합을 다시 섞어 만든다(select_for_user). 이 필드가 생기기 전의 풀 파일에는 없다.
     """
 
     item: DigestItem
     absolute_score: int
     selected_default: bool = False
+    relative_rating: int | None = None
 
 
 def pool_dir(base_dir: Path | None = None) -> Path:
@@ -70,6 +76,7 @@ def snapshot_pool(
             "analysis": c.item.analysis.model_dump(mode="json"),
             "absolute_score": c.absolute_score,
             "selected_default": id(c.item) in selected_ids,
+            "relative_rating": c.relative_rating,
         }
         for c in candidates
     ]
@@ -131,6 +138,26 @@ def save_pool(
     return path
 
 
+def candidates_from_entries(entries: list[dict[str, Any]]) -> list[ScoredCandidate]:
+    """snapshot_pool 이 만든 dict 목록을 select_for_user 입력으로 되돌린다.
+
+    파일에서 읽은 풀(load_pool)과 런 메모리에 있는 스냅샷(구독자 발송)이 같은 변환을
+    거치게 한다. 순서는 그대로 둔다.
+    """
+    return [
+        ScoredCandidate(
+            item=DigestItem(
+                raw=RawContent.model_validate(entry["raw"]),
+                analysis=ContentAnalysis.model_validate(entry["analysis"]),
+            ),
+            absolute_score=entry["absolute_score"],
+            selected_default=bool(entry.get("selected_default", False)),
+            relative_rating=entry.get("relative_rating"),
+        )
+        for entry in entries
+    ]
+
+
 def load_pool(date_str: str, base_dir: Path | None = None) -> list[ScoredCandidate]:
     """저장된 풀을 읽어 select_for_user 에 그대로 넣을 수 있는 후보 목록으로 돌려준다.
 
@@ -141,14 +168,4 @@ def load_pool(date_str: str, base_dir: Path | None = None) -> list[ScoredCandida
     if not path.exists():
         raise FileNotFoundError(f"풀 파일이 없다: {path}")
     data = json.loads(path.read_text(encoding="utf-8"))
-    return [
-        ScoredCandidate(
-            item=DigestItem(
-                raw=RawContent.model_validate(entry["raw"]),
-                analysis=ContentAnalysis.model_validate(entry["analysis"]),
-            ),
-            absolute_score=entry["absolute_score"],
-            selected_default=bool(entry.get("selected_default", False)),
-        )
-        for entry in data.get("items", [])
-    ]
+    return candidates_from_entries(data.get("items", []))

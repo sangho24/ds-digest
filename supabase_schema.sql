@@ -51,3 +51,5 @@ create table if not exists digest_records (
   created_at timestamptz default now()
 );
 create index if not exists idx_digest_records_date on digest_records(digest_date);
+
+-- 구독자 관련 테이블(subscribers, feedback_events, sent_items)은 supabase/migrations 를 보라.

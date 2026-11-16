@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
@@ -41,11 +42,26 @@ class Settings(BaseSettings):
     # Database
     supabase_url: str = ""
     supabase_key: str = ""
+    # 구독자 테이블(subscribers, feedback_events, sent_items)은 RLS 로 anon 접근이
+    # 막혀 있어 service role 키로만 읽고 쓴다. 비어 있으면 supabase_key 로 폴백한다
+    # (아래 supabase_service_key_effective).
+    supabase_service_key: str = ""
 
     # Email
     resend_api_key: str = ""
     email_from: str = "digest@yourdomain.com"
     email_to: str = "you@example.com"
+    # 운영 알림(워크플로 실패, 품질 게이트) 수신자. 비어 있으면 EMAIL_TO 로 폴백한다.
+    # 실제로 읽는 곳은 evals/alert.py(os.environ 직접)이고, 여기 필드는 .env 등록용이다.
+    # 구독자 주소는 여기에 절대 넣지 않는다.
+    alert_email_to: str = ""
+    # 발송 경로: "resend"(기본) | "smtp". app/mailer.py 가 읽는다.
+    email_provider: str = "resend"
+    # SMTP 발송 설정(EMAIL_PROVIDER=smtp 일 때만 쓴다). 587 은 STARTTLS, 465 는 SSL.
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
 
     # App (피드백 링크 기반 URL — 배포 후 Railway/Render URL로 교체)
     base_url: str = "http://localhost:8000"
@@ -178,6 +194,17 @@ class Settings(BaseSettings):
     # Dry-run: 외부 API 호출 없이 파이프라인 전체 흐름 검증
     dry_run: bool = False
 
+    # 개인화 효과 측정(PROGRESS §57). 구독자 선정에서 개인화 목록 대신 기준 선정(관심도
+    # 조정을 끈 것)의 아이템으로 바꿔 넣는 자리 수. 0 이면 바꿔 넣지 않는다.
+    # 관심도 모델이 켜져 있고 두 선정이 다른 날에만 쓰인다(app/subscriber_delivery.py).
+    effect_holdout_slots: int = 1
+    # 실험 대상 자리 하나가 기준 선정 쪽 아이템으로 나갈 확률(0~1). 나머지는 개인화 쪽이
+    # 나간다. 구독자, 날짜, 자리 번호로 정해지는 결정적 난수라 재실행해도 결과가 같다.
+    effect_holdout_rate: float = 0.5
+    # 구독자 메일의 원문 링크를 클릭 기록 페이지(docs/go.html)로 돌릴지.
+    # 끄면 원문 주소 그대로 나간다. EMAIL_TO, 웹 아카이브, Discord, Telegram 은 늘 원문이다.
+    track_clicks: bool = True
+
     # LLM 심판(evals/judge.py) 전용 키·설정. 파이프라인은 쓰지 않는다. .env 에 같이 두므로
     # Settings 가 알아야 한다(모르면 extra_forbidden 으로 Settings 생성 자체가 실패한다).
     # extra="ignore" 로 풀지 않는 이유: 오타 난 .env 키를 잡아 주는 보호가 사라진다.
@@ -189,6 +216,63 @@ class Settings(BaseSettings):
     judge_deepseek_thinking: str | None = None
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+
+    # 워크플로는 `X: ${{ secrets.X }}` 로 항상 내려보내므로 시크릿이 없으면 빈 문자열이
+    # 온다. 빈 값이 기본값을 덮으면 SMTP_PORT 는 int 파싱에서 Settings 생성 자체가
+    # 죽고(= 다이제스트 전체 실패), EMAIL_PROVIDER 는 알 수 없는 발송 경로가 된다.
+    # 그래서 빈 값은 기본값으로 되돌린다(arxiv_category_list 와 같은 사고의 예방).
+    @field_validator("email_provider", mode="before")
+    @classmethod
+    def _default_email_provider(cls, value: object) -> object:
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return "resend"
+        return value.strip().lower() if isinstance(value, str) else value
+
+    @field_validator("smtp_port", mode="before")
+    @classmethod
+    def _default_smtp_port(cls, value: object) -> object:
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return 587
+        return value
+
+    @field_validator("effect_holdout_slots", mode="before")
+    @classmethod
+    def _default_effect_holdout_slots(cls, value: object) -> object:
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return 1
+        return value
+
+    @field_validator("effect_holdout_rate", mode="before")
+    @classmethod
+    def _clamp_effect_holdout_rate(cls, value: object) -> object:
+        # 빈 값과 숫자가 아닌 값은 기본값으로, 범위를 벗어난 값은 0~1 로 자른다.
+        # 측정용 설정 하나가 Settings 생성(= 다이제스트 전체)을 죽이면 안 된다.
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return 0.5
+        try:
+            rate = float(value)  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            return 0.5
+        if rate != rate:  # NaN
+            return 0.5
+        return max(0.0, min(1.0, rate))
+
+    @field_validator("track_clicks", mode="before")
+    @classmethod
+    def _default_track_clicks(cls, value: object) -> object:
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return True
+        return value
+
+    @property
+    def supabase_service_key_effective(self) -> str:
+        """구독자 테이블용 키. SUPABASE_SERVICE_KEY 가 없으면 SUPABASE_KEY 로 폴백한다."""
+        return self.supabase_service_key.strip() or self.supabase_key
+
+    @property
+    def subscribers_enabled(self) -> bool:
+        """구독자 발송을 시도할 수 있는 설정인가(Supabase 주소와 키가 있는가)."""
+        return bool(self.supabase_url and self.supabase_service_key_effective)
 
     @property
     def youtube_channel_list(self) -> list[str]:

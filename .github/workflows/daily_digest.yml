@@ -82,10 +82,20 @@ jobs:
           # Database
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          # 구독자 테이블(subscribers, feedback_events, sent_items)은 RLS 로 anon 이
+          # 막혀 있어 service role 키로 읽는다. 없으면 SUPABASE_KEY 로 폴백한다.
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           # Email
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # 발송 경로(resend | smtp). 폴백 문자열을 두지 않는다: 시크릿이 없으면 빈 값이
+          # 내려가고 config 가 기본값(resend, 587)으로 되돌린다(Settings 의 validator).
+          EMAIL_PROVIDER: ${{ secrets.EMAIL_PROVIDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           # Telegram (발송 폴백용 — 피드백 수거는 Discord로 한정)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -172,6 +182,14 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # 운영 알림 수신자. 없으면 EMAIL_TO 로 폴백한다(evals/alert.py).
+          # 구독자 주소는 여기에 넣지 않는다.
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          EMAIL_PROVIDER: ${{ secrets.EMAIL_PROVIDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           python -m evals.alert \

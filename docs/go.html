@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; base-uri 'none'; form-action 'none'">
+<title>DS Digest 원문으로 이동</title>
+<style>
+  :root {
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --line: #e8e8e0;
+    --ink: #1a1a1a;
+    --mute: #6b6b66;
+    --accent: #1a1a1a;
+    --accent-ink: #ffffff;
+    --ok: #2e7d32;
+    --warn: #b26a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614;
+      --card: #20201d;
+      --line: #34342f;
+      --ink: #ecece6;
+      --mute: #a3a39b;
+      --accent: #ecece6;
+      --accent-ink: #161614;
+      --ok: #7fc784;
+      --warn: #e0a955;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+  }
+  .brand {
+    margin: 0 0 18px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  h1[data-tone="warn"] { color: var(--warn); }
+  p {
+    margin: 0;
+    font-size: 15px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .detail {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--mute);
+  }
+  .host {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 15px;
+    font-weight: 600;
+    word-break: break-all;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  a.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.button:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">DS Digest</p>
+  <div id="status" role="status" aria-live="polite">
+    <h1 id="title">원문으로 이동하고 있습니다</h1>
+    <p id="message">잠시만 기다려 주세요.</p>
+    <p id="detail" class="detail" hidden></p>
+  </div>
+  <noscript>
+    <p class="detail">이 페이지는 자바스크립트가 있어야 원문으로 넘어갑니다. 자바스크립트를 켠 뒤 메일의 링크를 다시 눌러 주세요.</p>
+  </noscript>
+  <p id="host" class="host" hidden></p>
+  <div id="actions" class="actions" hidden>
+    <a id="open" class="button" rel="noopener noreferrer" referrerpolicy="no-referrer">원문 열기</a>
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  // 이 페이지는 메일의 원문 링크가 거쳐 가는 곳이다.
+  // 서버가 "이 구독자에게 보낸 글이 맞다"고 답한 주소로만 자동으로 넘어간다.
+  // 그 밖의 모든 경우(확인 실패, 시간 초과, 설정 없음)에는 넘어가지 않고,
+  // 어디로 가는 링크인지 글자로 보여 준 뒤 사람이 직접 누르게 한다.
+  // 그래야 이 페이지가 아무 주소로나 넘겨 주는 열린 리다이렉트로 쓰이지 않는다.
+  var titleEl = document.getElementById("title");
+  var messageEl = document.getElementById("message");
+  var detailEl = document.getElementById("detail");
+  var hostEl = document.getElementById("host");
+  var actionsEl = document.getElementById("actions");
+  var openEl = document.getElementById("open");
+
+  // 설정 파일 읽기와 클릭 기록을 합쳐 이 시간 안에 끝나지 않으면 수동 화면으로 바꾼다.
+  var DEADLINE_MS = 2000;
+  var MAX_URL_LENGTH = 2048;
+
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get("t") || "";
+  var rawUrl = params.get("u") || "";
+  var digestDate = params.get("d") || "";
+  var hasValidDate = /^\d{4}-\d{2}-\d{2}$/.test(digestDate);
+
+  // 한 번 정해진 뒤(이동했거나 수동 화면을 띄운 뒤)에는 늦게 온 응답이 화면을 바꾸지 못한다.
+  var settled = false;
+
+  // http, https 주소만 받는다. javascript:, data: 같은 주소는 여기서 걸러진다.
+  function parseTarget(value) {
+    if (value.length === 0 || value.length > MAX_URL_LENGTH) return null;
+    try {
+      var url = new URL(value);
+      if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+      if (!url.hostname) return null;
+      return url;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function isAllowedEndpoint(value) {
+    if (typeof value !== "string" || value.length === 0) return false;
+    try {
+      var url = new URL(value);
+      if (url.protocol === "https:") return true;
+      // 로컬 확인용(supabase functions serve)만 http 를 허용한다.
+      return url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setStatus(title, tone, message, detail) {
+    titleEl.textContent = title;
+    if (tone) {
+      titleEl.setAttribute("data-tone", tone);
+    } else {
+      titleEl.removeAttribute("data-tone");
+    }
+    messageEl.textContent = message;
+    if (detail) {
+      detailEl.textContent = detail;
+      detailEl.hidden = false;
+    } else {
+      detailEl.textContent = "";
+      detailEl.hidden = true;
+    }
+  }
+
+  function showBadLink() {
+    settled = true;
+    setStatus(
+      "잘못된 링크입니다",
+      "warn",
+      "링크가 잘렸거나 올바르지 않습니다.",
+      "메일에 있는 링크를 다시 눌러 주세요."
+    );
+  }
+
+  // 자동으로 넘어가지 않는 화면. 호스트를 글자로 보여 주고 링크는 사람이 누른다.
+  function showManual(target) {
+    if (settled) return;
+    settled = true;
+    setStatus(
+      "원문을 직접 열어 주세요",
+      null,
+      "자동으로 넘어가지 않았습니다. 아래 주소가 가려던 곳이 맞으면 '원문 열기'를 눌러 주세요.",
+      "모르는 주소이거나 메일에서 본 글과 다르면 열지 말고 이 창을 닫아 주세요."
+    );
+    // hostname 은 브라우저가 정리한 값이다(국제 도메인은 xn-- 표기로 나와 비슷한 글자로 속이기 어렵다).
+    hostEl.textContent = target.protocol === "https:" ? target.host : "http://" + target.host;
+    hostEl.hidden = false;
+    openEl.href = target.href;
+    actionsEl.hidden = false;
+  }
+
+  function go(target) {
+    if (settled) return;
+    settled = true;
+    // replace 라서 이 페이지가 방문 기록에 남지 않는다(뒤로 가기로 token 이 든 주소에 돌아오지 않는다).
+    window.location.replace(target.href);
+  }
+
+  var target = parseTarget(rawUrl);
+  if (target === null) {
+    showBadLink();
+    return;
+  }
+  // token 이 없으면 확인할 방법이 없으므로 요청을 보내지 않고 수동 화면을 띄운다.
+  if (!token) {
+    showManual(target);
+    return;
+  }
+
+  var controller = typeof AbortController === "function" ? new AbortController() : null;
+  var signal = controller ? controller.signal : undefined;
+  var deadline = setTimeout(function () {
+    showManual(target);
+    if (controller) controller.abort();
+  }, DEADLINE_MS);
+
+  fetch("feedback-config.json", { cache: "no-store", signal: signal })
+    .then(function (res) {
+      if (!res.ok) throw new Error("config");
+      return res.json();
+    })
+    .then(function (config) {
+      if (!config || !isAllowedEndpoint(config.endpoint)) throw new Error("config");
+      // item_url 은 쿼리에서 받은 글자 그대로 보낸다. 서버가 발송 이력과 글자 단위로 비교한다.
+      var payload = { token: token, action: "click", item_url: rawUrl };
+      if (hasValidDate) payload.digest_date = digestDate;
+      return fetch(config.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "omit",
+        cache: "no-store",
+        referrerPolicy: "no-referrer",
+        signal: signal
+      });
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error("rejected");
+      return res.json();
+    })
+    .then(function (body) {
+      clearTimeout(deadline);
+      if (body && body.ok === true) {
+        go(target);
+      } else {
+        showManual(target);
+      }
+    })
+    .catch(function () {
+      clearTimeout(deadline);
+      showManual(target);
+    });
+})();
+</script>
+</body>
+</html>

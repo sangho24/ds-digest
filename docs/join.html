@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; base-uri 'none'; form-action 'none'">
+<title>DS Digest 받아 보기</title>
+<style>
+  :root {
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --line: #e8e8e0;
+    --ink: #1a1a1a;
+    --mute: #6b6b66;
+    --accent: #1a1a1a;
+    --accent-ink: #ffffff;
+    --ok: #2e7d32;
+    --warn: #b26a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614;
+      --card: #20201d;
+      --line: #34342f;
+      --ink: #ecece6;
+      --mute: #a3a39b;
+      --accent: #ecece6;
+      --accent-ink: #161614;
+      --ok: #7fc784;
+      --warn: #e0a955;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+  }
+  .brand {
+    margin: 0 0 18px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  h1[data-tone="ok"] { color: var(--ok); }
+  h1[data-tone="warn"] { color: var(--warn); }
+  p {
+    margin: 0;
+    font-size: 15px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .detail {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--mute);
+  }
+  .notice {
+    margin: 18px 0 0;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .notice div + div { margin-top: 10px; }
+  .notice dt {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mute);
+  }
+  .notice dd {
+    margin: 2px 0 0;
+    font-size: 14px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  form {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .field + .field { margin-top: 14px; }
+  label.caption {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  input[type="email"],
+  input[type="text"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    /* 16px 보다 작으면 iOS 가 입력할 때 화면을 확대한다. */
+    font-size: 16px;
+  }
+  input[aria-invalid="true"] { border-color: var(--warn); }
+  input:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .consent input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+  }
+  .error {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--warn);
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  button {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  button:disabled { opacity: 0.55; cursor: default; }
+  button:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">DS Digest</p>
+  <div id="status" role="status" aria-live="polite">
+    <h1 id="title">DS Digest 받아 보기</h1>
+    <p id="message">초대받은 분만 가입할 수 있습니다.</p>
+    <p id="detail" class="detail" hidden></p>
+  </div>
+  <noscript>
+    <p class="detail">이 페이지는 자바스크립트가 필요합니다. 자바스크립트를 켠 뒤 다시 열어 주세요.</p>
+  </noscript>
+
+  <dl id="notice" class="notice">
+    <div>
+      <dt>무엇을 받나요</dt>
+      <dd>매일 아침, 데이터와 AI 분야 글 5건을 요약한 메일 한 통을 받습니다.</dd>
+    </div>
+    <div>
+      <dt>무엇을 수집하나요</dt>
+      <dd>이메일, 이름, 받은 글 목록, 글마다 남긴 "읽고 싶다/아니다" 표시, 원문 링크를 눌렀는지를 기록합니다.</dd>
+    </div>
+    <div>
+      <dt>왜 수집하나요</dt>
+      <dd>받는 글을 취향에 맞추고, 그렇게 맞춘 것이 실제로 도움이 되는지 확인하려는 것입니다.</dd>
+    </div>
+    <div>
+      <dt>누가 보나요</dt>
+      <dd>운영자 한 사람만 봅니다.</dd>
+    </div>
+    <div>
+      <dt>그만두려면</dt>
+      <dd>메일 하단의 수신거부를 누르면 됩니다. 기록을 지우고 싶으면 운영자에게 요청해 주세요.</dd>
+    </div>
+  </dl>
+
+  <form id="join-form" novalidate hidden>
+    <div class="field">
+      <label class="caption" for="email">이메일</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required>
+    </div>
+    <div class="field">
+      <label class="caption" for="name">이름 또는 별명</label>
+      <input id="name" name="name" type="text" autocomplete="nickname" maxlength="40" required>
+    </div>
+    <div class="field">
+      <label class="caption" for="code">초대 코드</label>
+      <input id="code" name="code" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="200" required>
+    </div>
+    <label class="consent" for="consent">
+      <input id="consent" name="consent" type="checkbox" required>
+      <span>위 내용을 읽었고, 메일을 받는 것과 기록을 남기는 것에 동의합니다.</span>
+    </label>
+    <p id="form-error" class="error" role="alert" hidden></p>
+    <div class="actions">
+      <button id="submit" type="submit" class="primary">가입하기</button>
+    </div>
+  </form>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  // 화면에 쓰는 값은 전부 textContent 와 input.value 로만 넣는다.
+  // 쿼리에서 온 값(초대 코드)을 HTML 로 해석하게 두지 않는다.
+  var titleEl = document.getElementById("title");
+  var messageEl = document.getElementById("message");
+  var detailEl = document.getElementById("detail");
+  var noticeEl = document.getElementById("notice");
+  var formEl = document.getElementById("join-form");
+  var emailEl = document.getElementById("email");
+  var nameEl = document.getElementById("name");
+  var codeEl = document.getElementById("code");
+  var consentEl = document.getElementById("consent");
+  var errorEl = document.getElementById("form-error");
+  var submitEl = document.getElementById("submit");
+
+  var REQUEST_TIMEOUT_MS = 15000;
+  var FEEDBACK_SUFFIX = "/digest-feedback";
+  var JOIN_SUFFIX = "/digest-join";
+  var MAX_EMAIL_LENGTH = 254;
+  var MAX_NAME_LENGTH = 40;
+  var MAX_CODE_LENGTH = 200;
+  // 서버(digest-join/logic.ts)와 같은 규칙이다. 최종 판정은 서버가 한다.
+  var EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/;
+
+  var joinEndpoint = null;
+  var busy = false;
+
+  function setStatus(view) {
+    titleEl.textContent = view.title;
+    if (view.tone) {
+      titleEl.setAttribute("data-tone", view.tone);
+    } else {
+      titleEl.removeAttribute("data-tone");
+    }
+    messageEl.textContent = view.message;
+    if (view.detail) {
+      detailEl.textContent = view.detail;
+      detailEl.hidden = false;
+    } else {
+      detailEl.textContent = "";
+      detailEl.hidden = true;
+    }
+  }
+
+  function showError(text, field) {
+    errorEl.textContent = text;
+    errorEl.hidden = false;
+    [emailEl, nameEl, codeEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+    if (field) {
+      field.setAttribute("aria-invalid", "true");
+      field.focus();
+    }
+  }
+
+  function clearError() {
+    errorEl.textContent = "";
+    errorEl.hidden = true;
+    [emailEl, nameEl, codeEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+  }
+
+  function setBusy(value) {
+    busy = value;
+    submitEl.disabled = value;
+    submitEl.textContent = value ? "보내는 중입니다" : "가입하기";
+  }
+
+  function isAllowedEndpoint(value) {
+    if (typeof value !== "string" || value.length === 0) return false;
+    try {
+      var url = new URL(value);
+      if (url.protocol === "https:") return true;
+      // 로컬 확인용(supabase functions serve)만 http 를 허용한다.
+      return url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // feedback-config.json 의 endpoint 끝 "/digest-feedback" 을 "/digest-join" 으로 바꾼다.
+  // 끝이 그 모양이 아니면 추측하지 않고 null(설정 없음으로 취급).
+  function deriveJoinEndpoint(feedbackEndpoint) {
+    if (!isAllowedEndpoint(feedbackEndpoint)) return null;
+    var trimmed = feedbackEndpoint.replace(/\/+$/, "");
+    if (trimmed.slice(-FEEDBACK_SUFFIX.length) !== FEEDBACK_SUFFIX) return null;
+    var derived = trimmed.slice(0, trimmed.length - FEEDBACK_SUFFIX.length) + JOIN_SUFFIX;
+    return isAllowedEndpoint(derived) ? derived : null;
+  }
+
+  function loadEndpoint() {
+    return fetch("feedback-config.json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("config");
+        return res.json();
+      })
+      .then(function (config) {
+        var derived = config ? deriveJoinEndpoint(config.endpoint) : null;
+        if (!derived) throw new Error("config");
+        return derived;
+      })
+      .catch(function () {
+        throw new Error("config");
+      });
+  }
+
+  function showClosed() {
+    formEl.hidden = true;
+    setStatus({
+      title: "아직 열리지 않았습니다",
+      tone: "warn",
+      message: "가입을 받는 쪽이 아직 준비되지 않았습니다. 잠시 뒤에 다시 열어 주세요.",
+      detail: "계속 이 화면이 보이면 초대해 준 사람에게 알려 주세요."
+    });
+  }
+
+  function showSuccess() {
+    formEl.hidden = true;
+    noticeEl.hidden = true;
+    // 입력한 값을 화면과 폼에 남겨 두지 않는다.
+    formEl.reset();
+    setStatus({
+      title: "가입됐습니다",
+      tone: "ok",
+      message: "다음 발송부터 DS Digest 메일을 받습니다.",
+      detail: "메일이 보이지 않으면 스팸함을 확인해 주세요. 이 창은 닫아도 됩니다."
+    });
+  }
+
+  // 입력을 정리하고 확인한다. 문제가 있으면 안내를 띄우고 null.
+  function readForm() {
+    var email = emailEl.value.trim().toLowerCase();
+    var name = nameEl.value.trim();
+    var code = codeEl.value.trim();
+
+    if (email.length === 0 || email.length > MAX_EMAIL_LENGTH || !EMAIL_PATTERN.test(email)) {
+      showError("이메일 주소를 다시 확인해 주세요.", emailEl);
+      return null;
+    }
+    var nameLength = Array.from(name).length;
+    if (nameLength < 1 || nameLength > MAX_NAME_LENGTH) {
+      showError("이름은 1자에서 40자 사이로 적어 주세요.", nameEl);
+      return null;
+    }
+    if (code.length === 0) {
+      showError("초대 코드를 적어 주세요.", codeEl);
+      return null;
+    }
+    if (!consentEl.checked) {
+      showError("동의에 체크해야 가입할 수 있습니다.", null);
+      consentEl.focus();
+      return null;
+    }
+    return { email: email, name: name, invite_code: code, consent: true };
+  }
+
+  // 서버가 준 상태와 error 값으로 안내 문구를 고른다.
+  function explainFailure(status, errorCode) {
+    if (status === 403 && errorCode === "invalid_code") {
+      return { text: "초대 코드가 맞지 않습니다. 받은 코드를 다시 확인해 주세요.", field: codeEl };
+    }
+    if (status === 409) {
+      return { text: "정원이 찼습니다. 자리가 나면 초대해 준 사람이 알려 줄 것입니다.", field: null };
+    }
+    if (status === 400 || status === 413) {
+      if (errorCode === "invalid_email") {
+        return { text: "이메일 주소를 다시 확인해 주세요.", field: emailEl };
+      }
+      if (errorCode === "invalid_name") {
+        return { text: "이름은 1자에서 40자 사이로 적어 주세요.", field: nameEl };
+      }
+      if (errorCode === "consent_required") {
+        return { text: "동의에 체크해야 가입할 수 있습니다.", field: null };
+      }
+      return { text: "입력한 내용의 형식이 맞지 않습니다. 다시 확인해 주세요.", field: null };
+    }
+    if (status === 503) {
+      return { text: "지금은 가입을 받지 않습니다. 초대해 준 사람에게 알려 주세요.", field: null };
+    }
+    if (status === 403) {
+      return { text: "이 주소에서는 가입할 수 없습니다. 초대받은 링크로 다시 열어 주세요.", field: null };
+    }
+    return { text: "일시적인 문제가 생겼습니다. 잠시 뒤에 다시 시도해 주세요.", field: null };
+  }
+
+  function submit(payload) {
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = controller
+      ? setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS)
+      : null;
+    return fetch(joinEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      credentials: "omit",
+      cache: "no-store",
+      referrerPolicy: "no-referrer",
+      signal: controller ? controller.signal : undefined
+    }).then(function (res) {
+      if (timer) clearTimeout(timer);
+      return res.json().then(function (body) {
+        return { status: res.status, body: body };
+      }, function () {
+        return { status: res.status, body: null };
+      });
+    }, function () {
+      if (timer) clearTimeout(timer);
+      throw new Error("network");
+    });
+  }
+
+  formEl.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (busy || !joinEndpoint) return;
+    clearError();
+    var payload = readForm();
+    if (!payload) return;
+
+    setBusy(true);
+    submit(payload).then(function (result) {
+      setBusy(false);
+      var body = result.body;
+      if (result.status === 200 && body && body.ok === true) {
+        showSuccess();
+        return;
+      }
+      var errorCode = body && typeof body.error === "string" ? body.error : "";
+      var failure = explainFailure(result.status, errorCode);
+      showError(failure.text, failure.field);
+    }).catch(function () {
+      setBusy(false);
+      showError("연결하지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.", null);
+    });
+  });
+
+  // 초대 링크(join.html?code=...)로 왔으면 코드를 미리 채운다. value 로만 넣는다.
+  var presetCode = new URLSearchParams(window.location.search).get("code") || "";
+  if (presetCode) {
+    codeEl.value = presetCode.trim().slice(0, MAX_CODE_LENGTH);
+  }
+
+  loadEndpoint().then(function (endpoint) {
+    joinEndpoint = endpoint;
+    formEl.hidden = false;
+  }).catch(function () {
+    showClosed();
+  });
+})();
+</script>
+</body>
+</html>

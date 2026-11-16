@@ -1117,6 +1117,139 @@ GitHub Actions (07:30 KST)
   (`weak_concepts`)과 설정값(바닥값, 정원)도 아직 사용자별이 아니다. 전부 바닥 미달로 발송이 없는 날은 풀을
   저장하지 않는다(저장 지점이 정본 저장 옆이다).
 
+### 56. 지인 초대제 구독자 발송의 파이프라인 쪽 (`app/subscribers.py`, `app/mailer.py`, `app/subscriber_delivery.py`, `app/jobs/send_subscribers.py`)
+- **문제**: 수신자는 `EMAIL_TO` 에 적힌 주소뿐이고 전원이 같은 HTML 을 받았다. 지인에게 보내려면 사람마다
+  다른 선정, 피드백 링크, 수신거부가 필요한데 명단도 발송 경로도 Resend SDK 한 곳에 묶여 있었다. 운영 알림도
+  `EMAIL_TO` 를 써서, 명단을 늘리면 "워크플로 실패" 메일이 지인에게 갈 구조였다.
+- **구현**: 운영자 흐름(Discord, Telegram, `EMAIL_TO`, 정본, 풀, 아카이브)은 그대로 두고 그 뒤에 구독자 단계를
+  붙였다. 명단은 Supabase `subscribers`(스키마와 Edge Function 은 `supabase/` 담당)에 있고
+  `python -m app.subscribers list|add|remove` 로 관리한다(token 은 `secrets.token_urlsafe(24)`, 출력은 앞 4자).
+  `is_owner` 는 user_id `default`, 나머지는 subscriber id 다. 구독자 테이블은 `SUPABASE_SERVICE_KEY`(없으면
+  `SUPABASE_KEY`)로 읽는다(`app/db.py` 의 `get_supabase_service`). 발송은 `app/mailer.py` 의 `send(to, subject,
+  html, headers) -> SendResult` 한 통 단위로 추상화했고 `EMAIL_PROVIDER` 가 `resend`(기본) 또는 `smtp`
+  (`app/smtp_transport.py`, 587 STARTTLS / 465 SSL)를 고른다. `send_digest` 도 이 경로를 쓴다. 구독자마다 그날
+  풀에서 이미 받은 url(`sent_items`)을 뺀 후보로 `select_for_user`(빈 프로필, 지시 없음)를 돌리고, 아이템마다
+  "읽고 싶다 / 아니다" 링크와 하단 수신거부, `List-Unsubscribe`(https 하나) + `List-Unsubscribe-Post` 헤더를
+  붙여 보낸 뒤 성공한 것만 `sent_items` 에 남긴다. `is_owner` 는 재선정하지 않고 운영자 선정을 그대로 받으며,
+  그 주소가 `EMAIL_TO` 에 있으면 `send_digest` 가 그 한 통만 링크 든 메일로 바꿔 보낸다(두 통 방지).
+  `load_interest_labels` 는 구독자면 `feedback_events` 의 최신 want/skip 을, `default` 면 jsonl 에 `is_owner` 의
+  표시를 시각이 늦은 쪽 우선으로 합쳐 읽고, 특징 조인은 `data/pool` 도 본다. 런마다 `docs/feedback-config.json`
+  (Edge Function 주소만)을 쓴다. 운영 알림은 `ALERT_EMAIL_TO`(없으면 `EMAIL_TO`)로 가고 `evals/alert.py` 도
+  smtp 경로를 탄다. `python -m app.jobs.send_subscribers --date D [--dry-run] [--only EMAIL]` 이 저장된 풀로
+  구독자 단계만 다시 돈다.
+- **안전장치**: 구독자 단계의 모든 실패는 경고 로그와 Discord 알림(주소 없음)으로만 남고 런 결과와 종료 코드를
+  바꾸지 않는다. 명단이 비었거나 Supabase 가 없거나 조회가 실패하면 `send_digest(digest_items)` 호출 인자까지
+  예전과 같다. 링크 없는 렌더는 변경 전 템플릿과 바이트 단위로 같다(정본 3일치로 대조). 같은 날짜 호를 이미
+  받은 구독자는 건너뛴다(`has_sent_on_date`): `sent_items` 가 받은 url 을 빼므로 이 확인이 없으면 재실행이
+  "남은 후보로 만든 다른 메일"을 한 통 더 보낸다. 워크플로가 시크릿이 없을 때 내려보내는 빈 문자열은
+  `EMAIL_PROVIDER` → resend, `SMTP_PORT` → 587 로 되돌린다(안 그러면 `SMTP_PORT=""` 가 Settings 생성을 죽인다).
+  주소와 token 은 로그에 전체가 남지 않는다(구독자 id 앞 8자, `a***@domain`).
+- **검증**: `tests/test_mailer.py` 19건, `tests/test_subscriber_delivery.py` 43건, 워크플로 배선 4건.
+  실제 Supabase, Resend, SMTP 호출은 없다(`tests/conftest.py` 가 service role 클라이언트 생성을 막는다).
+  테스트 798 → 864.
+- **남은 것**: 풀 아이템의 분석은 여전히 default 사용자의 지시가 섞인 값이고, 퀴즈 약점 개념(`weak_concepts`)과
+  정원·바닥값도 구독자별이 아니다(§55 와 같다). 풀 보존이 30일이라 그보다 오래된 구독자 표시는 특징을 잃는다.
+  `feedback_events` 는 최신 1000건만 읽는다. 전부 바닥 미달이라 발송이 없는 날은 구독자도 받지 않는다.
+  실물 메일 클라이언트에서 버튼 행과 원클릭 수신거부를 확인하지 않았다. 구독자용 재발송 워크플로는 없다
+  (로컬 CLI 만).
+
+### 57. 구독자별 개인화의 효과를 재는 장치 (`app/subscriber_delivery.py`, `evals/effect.py`, `app/newsletter.py`, `app/subscribers.py`)
+- **문제**: 관심도 표시가 선정을 바꾸고는 있지만(§54, §56) 그 결과가 더 나은지 말할 근거가 없었다. 구독자가
+  받는 목록은 개인화 선정 하나뿐이라 "조정이 없었다면 무엇을 받았고 그것에는 어떻게 반응했을까"를 볼 수 없고,
+  원문 링크는 원문으로 바로 가서 클릭도 남지 않았다.
+- **구현**: `select_for_user` 에 `apply_interest`(기본 True)를 추가해, 같은 후보로 개인화 선정 P 와 기준 선정
+  B(관심도 조정만 끈 것)를 둘 다 계산한다. 모델이 꺼져 있거나 두 목록이 같으면 전부 `shared`. 다르면 P 전용
+  (개인화 순위 낮은 순)과 B 전용(기준 순위 높은 순)을 순서대로 짝짓고, 앞에서부터 `EFFECT_HOLDOUT_SLOTS`
+  (기본 1, 0 이면 끔)개의 짝을 실험 대상으로 삼는다. 실험 대상 짝마다 sha256(구독자 id, 날짜, 짝 번호)로 만든
+  결정적 난수로 한쪽만 보낸다: 확률 `EFFECT_HOLDOUT_RATE`(기본 0.5, 0~1 로 자름)로 기준 쪽(`baseline`),
+  아니면 개인화 쪽(`personal`). 양쪽에 다 있는 것은 `shared`, 실험 밖의 P 전용 아이템은 그대로 보내되 arm 은
+  null 이다. personal 과 baseline 은 같은 짝에서 무작위로 갈린 표본만 된다. 같은 구독자와 날짜로 다시 계산하면
+  결과가 같다. `sent_items.arm` 과 `position`(지면 순서, 1부터)에 남긴다. 순위는 선정 점수, 동점은 후보 풀
+  순서다. 지면 순서는 표시 점수순 그대로이고 동점도 풀 순서라 비교군이 메일에서 드러나지 않는다. `is_owner` 는
+  목록을 바꾸지 않으므로 무작위 배정이 없다: 운영자의 프로필과 지시(`OwnerContext`, `daily_digest` 가 넘긴다)로
+  풀에서 개인화 선정을 다시 계산해 넘어온 목록과 같을 때 양쪽에 다 있는 것만 `shared` 를 붙이고, 나머지와
+  재현되지 않는 날은 null 이다. 구독자 메일(`recipient` 가 있는 렌더)의 제목 링크는 `go.html?t=&u=&d=` 로
+  바뀐다(`TRACK_CLICKS`, 기본 true). `EMAIL_TO` 기존 경로, 웹 아카이브, Discord, Telegram 은 원문 그대로다.
+  `python -m evals.effect report [--json] [--since D] [--out PATH] [--anonymize]` 가 전체 요약, 비교군별
+  (Wilson 95%), personal 대 baseline 판정(차이의 구간은 Newcombe hybrid score, 비교군별 분모 30 미만이면
+  판단 보류), 두 비교군의 평균 지면 위치(차이가 1 이상이면 경고), 구독자별, ISO 주차별, 해석 주의를 낸다.
+  수집(`collect`)과 계산(`compute_report`, 순수 함수)을 나눴고 이메일과 token 은 수집 단계에서 버린다.
+  `python -m app.subscribers purge EMAIL --yes` 가 구독자 행과 cascade 로 연결 기록을 지운다.
+- **공개 로그**: 저장소가 공개라 Actions 로그는 누구에게나 보인다. 주간 evals 워크플로의 보고 전용 스텝은
+  `--anonymize` 로 돌아 구독자별 표를 통째로 생략하고 전체, 비교군, 주차 집계만 남긴다(파일 없음). 구독자
+  경로(`app/subscriber_delivery.py`, `app/db.py` 의 구독자 함수, `send_digest` 의 is_owner 주소, 구독자 단계의
+  경고)의 로그와 알림에는 주소(가린 형태 포함)와 이름이 없고 구독자 id 앞 8자만 쓴다. 오류 문구는
+  `scrub_error` 를 거친다: 아는 주소를 지우고 200자로 자른 뒤에도 `@` 가 남으면 "(주소 포함 오류, 생략)" 으로
+  통째로 바꾼다.
+- **안전장치**: 기준 선정이나 배정 계산이 실패하면 개인화 목록을 그대로 보내고 arm 만 비운다. `arm`, `position`
+  컬럼이 없어 upsert 가 거절되면 두 컬럼 없이 한 번 더 써서 발송 기록은 남긴다(경고 로그
+  `sent_items_arm_columns_rejected`). 보고서는 Supabase 미설정, 빈 테이블, 조회 실패 모두 무엇이 없는지 적고
+  exit 0 이다. `click_events` 를 못 읽으면 클릭 지표만 비운다. purge 는 `--yes` 없이는 아무것도 지우지 않는다.
+  `EFFECT_HOLDOUT_RATE` 가 비었거나 숫자가 아니면 0.5 로 되돌린다. 구독자 0명이거나 Supabase 가 없으면 운영자
+  흐름은 §56 과 같다(링크 없는 렌더는 그대로).
+- **검증**: `tests/test_effect.py`(Wilson, Newcombe 의 알려진 값, 판정 네 경로, 최신 표시 우선, 클릭 중복
+  제거, 이메일 미노출, 지면 위치 경고, `--anonymize` 의 표 생략, 수집 실패 경로),
+  `tests/test_subscriber_delivery.py`(한 건만 다른 날의 양쪽 배정, 결정성, 확률 0 과 1, 운영자 규칙, 폴백,
+  링크, purge, 로그에 `@` 없음), 워크플로 배선 2건. 실제 Supabase, 메일 호출은 없다. 전체 954 통과(같은 시기에 진행된 다른 작업의 테스트 포함).
+- **남은 것**: 실험 대상 자리는 구독자와 날마다 최대 1건이라 비교군별 30건이 차기까지 오래 걸린다(절반은
+  기준 쪽으로 나가므로 그만큼 개인화의 이득을 내준다). 구간은 발송 건을 독립으로 본 것이라 몇 사람의 반복
+  응답이 만드는 군집을 반영하지 않는다. 지면 위치 차이는 경고만 하고 보정하지 않는다. 운영자는 비교에서
+  빠진다. 기준 선정도 지난 표시가 만든 `sent_items` 제외 이후의 후보에서 고르므로 "개인화가 전혀 없던 세계"는
+  아니다. 클릭의 스캐너 잡음은 걸러내지 않는다. `EMAIL_TO` 에만 있는 주소(is_owner 가 아닌 수신자)는 기존
+  운영자 경로라 로그에 주소가 그대로 남고, `app/analyzer.py` 의 `interest_model_applied` 로그는 구독자 id
+  전체를 찍는다. `go.html` 과 마이그레이션(`supabase/`)이 먼저 배포돼야 한다.
+
+### 58. 분석은 공용으로, 개인 신호는 선정에서만 (`app/analyzer.py`, `app/directives.py`, `app/pool.py`)
+- **문제**: 분석 결과(요약, 점수, 퀴즈)는 하루 한 번 만들어 풀에 저장하고 사람마다 선정만 다시 한다(§55, §56).
+  그런데 분석 프롬프트와 점수에 운영자 한 사람의 신호가 섞여 있었다. 요청 키워드와 지시의 `standing_note` 가
+  분석, 상대 평가, YouTube 1차 랭킹 프롬프트에 들어갔고, `drop_sources` 는 분석 전에 출처를 버렸고,
+  `depth_bias` 는 `relevance_score` 의 배합 자체를 바꿨다. 다른 수신자가 받는 요약과 점수가 운영자 기준이었다.
+- **결정**: 요약은 모두 같고 선정만 사람마다 다르게 한다.
+- **구현**:
+  - `Directive` 에 `system_note`(품질 계기판 줄, 사용자와 무관)와 `personal_note`(사람 메시지에서 해석된 것)를
+    더했다. `standing_note` 는 둘을 이은 표시용 값으로 그대로 남는다(직렬화, `describe()`, 기존 테스트 유지).
+    `system_note` 는 사람 지시와 따로 잇기 때문에 사람 지시가 300자 상한을 다 써도 밀려나지 않는다.
+  - 세 프롬프트에는 `system_note` 만 들어간다(`_system_note`). 키워드 자리는 늘 "없음"이다. 프롬프트 틀과
+    제목 문구("사용자가 직접 남긴 지시", "## 사용자 지시")는 문자열을 유지하려고 손대지 않았다. 품질 계기판
+    되먹임(evals 주간 권고)은 전과 같은 경로로 요약에 닿는다.
+  - `drop_sources` 는 `filter_and_analyze` 의 분석 전 필터에서 빠지고 `select_for_user` 의 후보 제외가 됐다.
+    `filter_sources` 를 그대로 써서 "제외하면 0건이면 포기" 안전판도 같다. 끊은 출처도 풀에는 남는다.
+  - `depth_bias`: 분석은 언제나 기본 배합(A 0.6 / D 0.4)이다. 풀의 `relevance_score`, `absolute_score` 와 지면에
+    표시되는 점수는 중립 값이다. 예전에 배합이 걸리던 곳은 **상대 평가와 섞이기 전의 절대 점수**였고 바닥값은
+    그때도 기본 배합이었다. 그래서 상대 평가 원점수를 `ScoredCandidate.relative_rating` 으로 풀에 같이 싣고
+    (`apply_relative_rating` 의 새 인자 `ratings_out`), `_personal_relevance` 가 그 사용자의 배합 절대 점수와 같은
+    원점수를 `blend_relevance` 로 다시 섞는다. 예전 분석 단계가 만들던 점수와 같은 값이 선정 점수로만 쓰인다.
+    원점수가 없는 옛 풀 파일은 배합 차이에 절대 점수 몫(0.4)을 곱해 더하는 근사다.
+  - 운영자 개인 기록은 `user_id == "default"` 일 때만 선정에 쓴다. `weak_concepts()`(퀴즈 약점)가 그렇고,
+    프롬프트에서 빠진 요청 키워드(최근 5개)는 지시의 `boost` 에 얹어 동점 타이브레이크(+3)로 잇는다
+    (`_with_keyword_boost`). 넘어온 지시 객체는 바꾸지 않는다.
+- **바뀌지 않는 것**: 사람이 보낸 유효한 지시가 없고 요청 키워드도 없는 날의 프롬프트 문자열과 선정 결과는
+  한 글자도 다르지 않다. 분리 전 코드로 뽑은 프롬프트 해시와 선정 목록을 `tests/test_shared_analysis.py` 에
+  박아 두었다(품질 계기판 줄만 있는 날, 지시가 아예 없는 날). LLM 호출 종류와 횟수 구조도 같다.
+- **달라지는 것**:
+  - 개인 지시의 글쓰기 요구("요약을 더 짧게", "실무 사례 위주로" 가 `standing_note` 로만 해석된 경우)는 이제
+    어디에도 적용되지 않는다. Discord 의 "적용 중인 지시" 알림에는 여전히 보인다. 깊이 지시는 `depth_bias` 로,
+    주제 지시는 `boost`/`suppress` 로 선정에 반영된다.
+  - "더 어렵게/쉽게" 가 걸린 날 운영자가 받는 목록은 같지만(같은 LLM 응답 기준) 표시 점수는 중립 값이고,
+    발송 순서는 그 표시 점수순이라 예전(배합 점수순)과 순서가 바뀔 수 있다. 요약 문체도 지시를 따르지 않는다.
+  - 요청 키워드가 프로필에 있으면 프롬프트에서 빠지는 만큼 문자열이 달라지고, 대신 동점에서 가점이 붙는다.
+  - 끊은 출처가 있는 날에는 그 출처 후보도 분석한다. 최근 30런 실측(`data/source_stats.jsonl`)으로 하루 후보는
+    평균 29.1건(최대 46)이고, `drop_sources` 는 source_key 단위라 한 키당 늘어나는 호출은 hackernews 평균
+    2.2건(최대 6), 블로그 피드 최대 5건, YouTube 채널 최대 3건, arXiv 카테고리 1~2건이다. 지금 살아 있는
+    drop 지시는 없어 오늘 기준 증가는 0건이다. 상대 평가 목록에도 그 후보가 실린다(호출 수는 그대로 1회).
+  - 드라이런에서 `depth_bias` 가 걸리면 mock 점수에도 선정 배합이 적용된다(예전에는 mock 이 배합을 무시했다).
+- **검증**: `tests/test_shared_analysis.py` 15건(분리 전 해시와 선정 목록 고정, 개인 지시와 키워드가 있어도
+  프롬프트 해시와 풀의 공용 부분이 같음, 끊은 출처가 풀에 남고 다른 수신자는 받음, 0건이면 제외 포기,
+  난이도 지시별 선정이 분리 전과 같고 저장 점수는 중립, 퀴즈 약점과 키워드는 default 만).
+  `tests/test_feedback_loop.py` 의 키워드 프롬프트 테스트는 "프롬프트에 없다"로 뒤집었고,
+  `tests/test_pool.py` 는 엔트리 키에 `relative_rating` 을 더했다. 테스트 939 → 954.
+- **남은 것**: 풀에 아직 남아 있는 운영자 고유 신호. (1) YouTube 1차 랭킹 프롬프트의 👍/👎 태그(어느 영상이
+  전사를 얻는지, 곧 근거 수준을 정한다). (2) 분석 전 dedup 의 `seen_urls` 는 운영자에게 나간 URL 이라, 운영자가
+  받은 것은 30일간 풀에 다시 오르지 않는다. (3) 분석 프롬프트의 기존 개념 어휘(`data/concepts.json`)는 운영자
+  선정분에서만 등록된다. (4) 풀의 `selected_default`. (5) 수집 소스와 전사 예산 설정. 그리고 해석 프롬프트
+  (`INTERPRET_PROMPT`)는 여전히 "standing_note 는 글쓰기에 쓰인다"고 말한다. 개인 글쓰기 지시를 알림에서
+  "미적용"으로 표시할지, 해석 단계에서 받지 않을지는 정하지 않았다.
+
 ---
 
 ## 다음 스텝 아이디에이션

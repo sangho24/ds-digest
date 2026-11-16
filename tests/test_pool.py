@@ -236,7 +236,9 @@ def test_pool_file_has_metadata_and_no_source_text(monkeypatch, tmp_path: Path):
     assert data["generated_at"]
     assert len(data["items"]) == len(_SPECS)
     for entry in data["items"]:
-        assert set(entry) == {"raw", "analysis", "absolute_score", "selected_default"}
+        assert set(entry) == {
+            "raw", "analysis", "absolute_score", "selected_default", "relative_rating",
+        }
         assert set(entry["raw"]) == {
             "source_type", "source_name", "source_key", "source_label",
             "title", "url", "published_at", "duration_seconds",
