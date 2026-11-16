@@ -174,8 +174,9 @@ def _rate(successes: int, total: int) -> float | None:
 class EffectData:
     """보고서 계산의 입력. 행은 Supabase 가 돌려주는 dict 모양 그대로다.
 
-    subscribers 행에는 id, name, status, is_owner, created_at 만 쓴다. 이메일과 token 은
-    collect() 가 넣지 않는다(넣어도 계산은 읽지 않는다).
+    subscribers 행에는 id, name, status, is_owner, created_at, has_style_note(문체 요청의
+    유무, 내용은 없다)만 쓴다. 이메일과 token 은 collect() 가 넣지 않는다(넣어도 계산은
+    읽지 않는다).
     owner_local_labels 는 is_owner 의 로컬 표시(interest_labels.jsonl)다. 관심도 모델의
     활성 여부를 실제와 같게 세는 데만 쓰고 반응률에는 넣지 않는다.
     clicks_available 이 False 면 click_events 를 읽지 못한 것이라 클릭 지표를 비운다.
@@ -490,6 +491,8 @@ def compute_report(
                 "subscriber": display_name(row),
                 "status": str(row.get("status") or "active"),
                 "is_owner": bool(row.get("is_owner")),
+                # 문체 요청의 유무만 싣는다(내용은 수집 단계에서 버린다).
+                "has_style_note": bool(row.get("has_style_note")),
                 "joined": _kst_date(row.get("created_at")),
                 **tally.metrics(available),
                 "interest_model_active": labels >= MIN_LABELS,
@@ -661,7 +664,7 @@ def _subscriber_lines(report: Mapping[str, Any]) -> list[str]:
         "  " + line
         for line in _table(
             ["구독자", "상태", "가입일", "받은 건", "반응률", "읽고 싶다 비율", "클릭률",
-             "관심도 모델", "최근 반응일"],
+             "관심도 모델", "문체 요청", "최근 반응일"],
             [
                 [
                     row["subscriber"] + (" (운영자)" if row["is_owner"] else ""),
@@ -673,6 +676,7 @@ def _subscriber_lines(report: Mapping[str, Any]) -> list[str]:
                     _pct(row["click_rate"], row["clicked"], row["sent"]),
                     f"{'활성' if row['interest_model_active'] else '비활성'} "
                     f"({row['interest_labels']}/{row['interest_labels_needed']})",
+                    "있음" if row.get("has_style_note") else "없음",
                     row["last_response"] or "-",
                 ]
                 for row in report["subscribers"]
@@ -733,7 +737,14 @@ def collect(since: str | None = None) -> EffectData:
     if not rows:
         raise NoData(["subscribers 가 비어 있다(구독자 0명)"])
     # 이메일과 token 은 여기서 버린다. 뒤 단계 어디에도 넘어가지 않는다.
-    subscribers = [{name: row.get(name) for name in _SUBSCRIBER_FIELDS} for row in rows]
+    # 문체 요청(style_note)도 내용은 버리고 유무만 남긴다(컬럼이 없으면 전원 없음).
+    subscribers = [
+        {
+            **{name: row.get(name) for name in _SUBSCRIBER_FIELDS},
+            "has_style_note": bool(str(row.get("style_note") or "").strip()),
+        }
+        for row in rows
+    ]
 
     sent = db.fetch_sent_items_for_report(since)
     if sent is None:

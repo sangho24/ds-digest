@@ -514,7 +514,8 @@ def test_collect_drops_email_and_token(monkeypatch):
 
     data = effect.collect()
 
-    assert set(data.subscribers[0]) == set(effect._SUBSCRIBER_FIELDS)
+    # 문체 요청은 유무(has_style_note)만 남고 내용은 넘어오지 않는다.
+    assert set(data.subscribers[0]) == set(effect._SUBSCRIBER_FIELDS) | {"has_style_note"}
     assert "@" not in repr(data) and "SECRET" not in repr(data)
     assert any("arm 이 하나도 없다" in note for note in data.notes)
 
@@ -597,3 +598,44 @@ def test_report_fetch_failures_are_none():
     assert db.fetch_sent_items_for_report() is None
     assert db.fetch_feedback_events_for_report() is None
     assert db.fetch_click_events_for_report() is None
+
+
+# ── 문체 요청 열 (PROGRESS §59) ──────────────────────────────────────────
+
+
+def test_subscriber_table_shows_only_whether_a_style_request_exists(monkeypatch):
+    data = EffectData(
+        [_subscriber(ALICE, "앨리스", has_style_note=True), _subscriber(BOB, "밥")],
+        [_sent(ALICE, 1), _sent(BOB, 1)],
+    )
+
+    report = effect.compute_report(data)
+    text = effect.render_text(report)
+
+    assert [row["has_style_note"] for row in report["subscribers"]] == [True, False]
+    header = next(line for line in text.splitlines() if "관심도 모델" in line)
+    assert "문체 요청" in header
+    alice_line = next(line for line in text.splitlines() if line.strip().startswith("앨리스"))
+    bob_line = next(line for line in text.splitlines() if line.strip().startswith("밥"))
+    assert "있음" in alice_line and "없음" in bob_line
+
+    # 익명 모드에서는 지금처럼 표 전체가 생략된다.
+    anonymous = effect.render_text(effect.compute_report(data, anonymize=True))
+    assert "문체 요청" not in anonymous and "있음" not in anonymous
+
+
+def test_collect_keeps_only_the_presence_of_the_style_note(monkeypatch):
+    _supabase(monkeypatch)
+    _fake_tables(
+        monkeypatch,
+        [
+            _subscriber(ALICE, "앨리스", style_note="비밀스러운 문체 요청"),
+            _subscriber(BOB, "밥", style_note="  "),
+        ],
+        [_sent(ALICE, 1)], [], [],
+    )
+
+    data = effect.collect()
+
+    assert [row["has_style_note"] for row in data.subscribers] == [True, False]
+    assert "비밀스러운" not in repr(data) and "style_note'" not in repr(data).replace("has_style_note'", "")

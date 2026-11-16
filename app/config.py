@@ -205,6 +205,13 @@ class Settings(BaseSettings):
     # 끄면 원문 주소 그대로 나간다. EMAIL_TO, 웹 아카이브, Discord, Telegram 은 늘 원문이다.
     track_clicks: bool = True
 
+    # 구독자별 요약 문체 다듬기(PROGRESS §59, app/restyle.py). 문체 요청이 있는 사람의 메일
+    # 본문에만 적용한다. 끄면 전원이 공용 요약을 받고 LLM 호출이 생기지 않는다.
+    restyle_enabled: bool = True
+    # 한 번의 실행에서 문체를 다듬어 줄 구독자 수 상한. 한 사람당 LLM 호출 1회라 Groq
+    # 8K TPM 에서 1명에 20초 안팎이 든다. 넘는 사람은 공용 요약으로 보내고 경고를 남긴다.
+    restyle_max_users_per_run: int = 15
+
     # LLM 심판(evals/judge.py) 전용 키·설정. 파이프라인은 쓰지 않는다. .env 에 같이 두므로
     # Settings 가 알아야 한다(모르면 extra_forbidden 으로 Settings 생성 자체가 실패한다).
     # extra="ignore" 로 풀지 않는 이유: 오타 난 .env 키를 잡아 주는 보호가 사라진다.
@@ -263,6 +270,25 @@ class Settings(BaseSettings):
         if value is None or (isinstance(value, str) and not value.strip()):
             return True
         return value
+
+    @field_validator("restyle_enabled", mode="before")
+    @classmethod
+    def _default_restyle_enabled(cls, value: object) -> object:
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return True
+        return value
+
+    @field_validator("restyle_max_users_per_run", mode="before")
+    @classmethod
+    def _default_restyle_max_users(cls, value: object) -> object:
+        # 빈 값과 숫자가 아닌 값은 기본값으로, 음수는 0(전원 공용 요약)으로 둔다.
+        # 부가 기능의 설정 하나가 Settings 생성(= 다이제스트 전체)을 죽이면 안 된다.
+        if value is None or (isinstance(value, str) and not value.strip()):
+            return 15
+        try:
+            return max(0, int(value))  # type: ignore[call-overload]
+        except (TypeError, ValueError):
+            return 15
 
     @property
     def supabase_service_key_effective(self) -> str:

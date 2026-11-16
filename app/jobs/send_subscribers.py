@@ -1,16 +1,24 @@
 """저장된 후보 풀로 구독자 발송 단계만 다시 돈다.
 
-    python -m app.jobs.send_subscribers --date 2026-11-16 [--dry-run] [--only EMAIL]
+    python -m app.jobs.send_subscribers --date 2026-11-16 [--dry-run] [--only EMAIL] [--no-restyle]
 
 크론이 풀 저장까지 끝내고 구독자 발송에서 실패한 날의 재발송용이다. data/pool/
 pool_{date}.json 을 읽어 daily_digest 의 구독자 단계(app/subscriber_delivery.py)와
 같은 선정, 렌더, 발송, sent_items 기록을 한다.
 
-수집·분석은 하지 않고 LLM 도 부르지 않는다. 운영자 채널(Discord, Telegram, EMAIL_TO),
-seen_urls, 정본, 아카이브는 건드리지 않는다.
+수집·분석은 하지 않는다. 운영자 채널(Discord, Telegram, EMAIL_TO), seen_urls, 정본,
+아카이브는 건드리지 않는다.
+
+LLM 은 문체 요청(subscribers.style_note)이 있는 구독자에게만, 한 사람당 1회 부른다
+(app/restyle.py, PROGRESS §59). 요청이 없으면 호출이 없다. --no-restyle 을 붙이면 전원이
+공용 요약을 받고 LLM 을 부르지 않는다. 운영자의 글쓰기 지시(Directive.personal_note)는
+그날의 해석 결과를 저장하지 않으므로 재발송에서는 알 수 없다. is_owner 는 style_note
+컬럼이 있을 때만 다듬어진다.
 
 --dry-run 은 메일을 보내지 않고 DB 에 쓰지도 않는다. 명단과 sent_items 는 읽고,
 수신자별 HTML 을 data/dryrun/subscribers/{date}/ 아래에 쓴다(파일명은 구독자 id 앞 8자).
+문체 다듬기도 같은 경로로 돌아(LLM 호출 포함) 실제로 나갈 본문을 미리 볼 수 있다.
+환경의 DRY_RUN=true 는 외부 호출을 전부 끄는 모드라 문체 다듬기도 하지 않는다.
 
 그 날짜 호를 이미 받은 구독자는 건너뛴다(sent_items 의 digest_date 로 판단). 그래서
 일부만 실패한 날 그대로 다시 돌려도 받은 사람에게 두 번 가지 않는다.
@@ -58,8 +66,12 @@ def run(
     dry_run: bool = False,
     only: str | None = None,
     base_dir: Path | None = None,
+    restyle: bool = True,
 ) -> DeliverySummary | None:
-    """구독자 단계를 돈다. 풀 파일이 없으면 FileNotFoundError, 대상이 없으면 None."""
+    """구독자 단계를 돈다. 풀 파일이 없으면 FileNotFoundError, 대상이 없으면 None.
+
+    restyle=False 면 문체 다듬기를 하지 않는다(LLM 호출 없음).
+    """
     scored = load_pool(date_iso, base_dir=base_dir)
     subscribers = list_active_subscribers()
     if only:
@@ -76,6 +88,7 @@ def run(
         date_iso,
         owner_items=owner_items_for(date_iso, scored, base_dir),
         dry_run_dir=dry_run_dir,
+        restyle=restyle,
     )
 
 
@@ -87,13 +100,20 @@ def main(argv: list[str] | None = None, base_dir: Path | None = None) -> int:
         "--dry-run", action="store_true", help="발송·DB 기록 없이 수신자별 HTML 만 쓴다"
     )
     parser.add_argument("--only", default="", help="이 주소의 구독자 한 명만")
+    parser.add_argument(
+        "--no-restyle", action="store_true",
+        help="문체 요청을 무시하고 전원에게 공용 요약을 보낸다(LLM 호출 없음)",
+    )
     args = parser.parse_args(argv)
     date_iso = args.date.strip() or today_kst()
     # 환경의 DRY_RUN=true 도 드라이런으로 본다. 실수로 실발송되는 쪽보다 안전하다.
     dry_run = args.dry_run or get_settings().dry_run
 
     try:
-        summary = run(date_iso, dry_run=dry_run, only=args.only.strip() or None, base_dir=base_dir)
+        summary = run(
+            date_iso, dry_run=dry_run, only=args.only.strip() or None, base_dir=base_dir,
+            restyle=not args.no_restyle,
+        )
     except FileNotFoundError as e:
         print(f"{e}\n풀은 다이제스트 실행 때 data/pool/ 에 저장된다.", file=sys.stderr)
         return 1

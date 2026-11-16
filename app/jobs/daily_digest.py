@@ -154,15 +154,18 @@ async def _send_help() -> None:
     await send_discord_text(HELP_TEXT)
 
 
-async def _send_directive_status(directive) -> None:
-    """현재 적용 중인 지시를 Telegram으로 알린다."""
+async def _send_directive_status(directive, note_in_mail: bool = False) -> None:
+    """현재 적용 중인 지시를 Telegram으로 알린다.
+
+    note_in_mail 은 글쓰기 지시가 이번 실행의 운영자 메일 문체로 적용되는가다(describe 참조).
+    """
     settings = get_settings()
     if not settings.discord_bot_token or not settings.discord_channel_id or settings.dry_run:
         return
 
     text = (
         "🗒 <b>적용 중인 지시</b>\n"
-        f"{directive.describe()}\n"
+        f"{directive.describe(note_in_mail)}\n"
         "<i>취소하려면 반대로 말씀하시면 됩니다 (지시는 14일 후 자동 만료)</i>"
     )
     await send_discord_text(text)
@@ -194,6 +197,11 @@ def digest_items_raw(digest_items: list) -> list:
     return [d.raw for d in digest_items]
 
 
+def _delivery_channels(settings) -> list[str]:
+    """DELIVERY_CHANNELS 를 소문자 목록으로. 발송 단계와 지시 표시가 같은 값을 본다."""
+    return [c.strip().lower() for c in settings.delivery_channels.split(",") if c.strip()]
+
+
 def _load_subscribers() -> list[Subscriber]:
     """활성 구독자 명단. 어떤 실패도 빈 목록으로 삼킨다(운영자 흐름을 막지 않는다).
 
@@ -219,6 +227,7 @@ async def _deliver_to_subscribers(
     owner_delivered: set[str],
     owner_profile: Any = None,
     owner_directive: Any = None,
+    operator_mail: Any = None,
 ) -> dict[str, int] | None:
     """운영자 흐름 뒤에 덧붙는 구독자 발송. 어떤 실패도 경고 로그로만 남긴다.
 
@@ -227,15 +236,22 @@ async def _deliver_to_subscribers(
     """
     try:
         from app.pool import candidates_from_entries
-        from app.subscriber_delivery import OwnerContext, deliver_to_subscribers
+        from app.subscriber_delivery import OwnerContext, deliver_to_subscribers_async
 
-        # 운영자 선정에 쓴 프로필과 지시. is_owner 의 비교군 표시(기준 선정 계산)에만 쓴다.
+        # 운영자 선정에 쓴 프로필과 지시. is_owner 의 비교군 표시(기준 선정 계산)와 문체
+        # 요청(personal_note)에 쓴다. 운영자 메일 단계가 이미 다듬은 목록이 있으면 같이
+        # 넘겨, is_owner 구독자가 같은 요청문으로 받을 때 LLM 을 다시 부르지 않게 한다.
         owner_context = (
-            OwnerContext(profile=owner_profile, directive=owner_directive)
+            OwnerContext(
+                profile=owner_profile,
+                directive=owner_directive,
+                restyled_items=getattr(operator_mail, "restyled", None),
+                restyled_note=getattr(operator_mail, "note", ""),
+            )
             if owner_profile is not None
             else None
         )
-        summary = deliver_to_subscribers(
+        summary = await deliver_to_subscribers_async(
             subscribers,
             candidates_from_entries(pool_entries),
             date_str,
@@ -339,12 +355,26 @@ async def run_daily_digest() -> dict:
     # 아는 출처 목록을 넘겨야 drop_sources가 실재하는 값에만 걸리므로, dedup을
     # 마친 전체 후보를 넘긴다.
     directive = await resolve_directives(yt_items + rss_items)
+    # 글쓰기 지시(personal_note)가 오늘 운영자 메일의 문체로 적용되는지(표시용, §59).
+    # 이메일 채널로 받거나 is_owner 구독자로 받을 때다. 뒤쪽을 알려면 명단이 필요해서,
+    # 지시가 있고 이메일 채널이 꺼진 날에만 명단을 여기서 먼저 읽는다(아래 5단계가 재사용).
+    # 글쓰기 지시가 없는 날은 명단을 읽는 시점과 횟수가 예전과 같다.
+    early_subscribers: list[Subscriber] | None = None
+    note_in_mail = False
+    if getattr(directive, "personal_note", ""):
+        from app.restyle import restyle_active
+        if restyle_active():
+            if "email" in _delivery_channels(settings) and settings.email_to.strip():
+                note_in_mail = True
+            else:
+                early_subscribers = _load_subscribers()
+                note_in_mail = any(s.is_owner for s in early_subscribers)
     if not directive.is_empty():
-        logger.info("directive_active", summary=directive.describe())
+        logger.info("directive_active", summary=directive.describe(note_in_mail))
         # 적용 중인 지시를 매일 노출한다. 안 보이는 상태값이 조용히 큐레이션을
         # 끌고 가는 것이 이런 시스템에서 가장 위험하다 — 왜 arxiv가 안 오는지
         # 아무도 모르게 되면 지시가 아니라 버그처럼 보인다.
-        await _send_directive_status(directive)
+        await _send_directive_status(directive, note_in_mail)
 
     # 3.5. Stage 1 메타 랭킹 → Stage 2 상위 N건만 Gemini 전사 (rate-limit 보호)
     yt_items = await resolve_youtube_transcripts(
@@ -381,7 +411,7 @@ async def run_daily_digest() -> dict:
     # 안 나갔다**. 실측: 2026-09-01 실행이 수집·분석·선정을 다 끝내고
     # delivery={} 로 끝났다. 사람이 값을 넣는 자리라 대문자는 언제든 들어온다.
     KNOWN_CHANNELS = {"telegram", "discord", "email"}
-    channels = [c.strip().lower() for c in settings.delivery_channels.split(",") if c.strip()]
+    channels = _delivery_channels(settings)
     unknown = [c for c in channels if c not in KNOWN_CHANNELS]
     if unknown or not channels:
         # 값 자체는 시크릿이라 로그에서 마스킹된다. 그래서 "몇 개가 인식됐고
@@ -403,17 +433,28 @@ async def run_daily_digest() -> dict:
     # 구독자 명단은 발송 전에 한 번 읽는다. is_owner 구독자의 주소가 EMAIL_TO 에 있으면
     # 그 한 통을 링크 든 구독자용 메일로 바꿔 보내야 같은 사람이 두 통을 받지 않는다.
     # 구독자가 없으면(미설정·0명·조회 실패) owners 가 비어 아래는 예전 호출 그대로다.
-    subscribers = _load_subscribers()
+    subscribers = early_subscribers if early_subscribers is not None else _load_subscribers()
     owners = {s.email: s.token for s in subscribers if s.is_owner}
     owner_delivered: set[str] = set()
 
+    # 운영자 메일 본문의 문체(§59). 글쓰기 지시(personal_note)나 is_owner 의 style_note 가
+    # 있을 때만 LLM 을 1회 부르고, 없으면 digest_items 를 그대로 돌려준다(호출 없음).
+    # 다듬은 목록은 메일 본문에만 쓴다. 위의 Discord, Telegram 과 아래의 아카이브, 정본,
+    # 풀은 전부 digest_items(공용 요약)를 쓴다.
+    operator_mail = None
     if "email" in channels:
+        from app.subscriber_delivery import prepare_operator_mail
+        operator_mail = await prepare_operator_mail(
+            digest_items, directive, subscribers, settings.email_to
+        )
         if owners:
+            # owner_items 는 있을 때만 넘긴다(없는 날의 호출 모양은 예전 그대로다).
+            extra = {"owner_items": operator_mail.owner_items} if operator_mail.owner_items else {}
             sent_results["email"] = await send_digest(
-                digest_items, owners=owners, owner_delivered=owner_delivered
+                operator_mail.items, owners=owners, owner_delivered=owner_delivered, **extra
             )
         else:
-            sent_results["email"] = await send_digest(digest_items)
+            sent_results["email"] = await send_digest(operator_mail.items)
 
     any_sent = any(sent_results.values())
 
@@ -531,6 +572,7 @@ async def run_daily_digest() -> dict:
         subscriber_counts = await _deliver_to_subscribers(
             subscribers, pool_entries, digest_items, today_str, owner_delivered,
             owner_profile=profile, owner_directive=directive,
+            operator_mail=operator_mail,
         )
 
     elapsed = (datetime.now() - start).total_seconds()

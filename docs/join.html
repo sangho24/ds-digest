@@ -126,6 +126,25 @@
     font-size: 16px;
   }
   input[aria-invalid="true"] { border-color: var(--warn); }
+  .hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--mute);
+  }
+  .hint-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .hint-row .count {
+    flex: none;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--mute);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
   input:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
   .consent {
     display: flex;
@@ -196,11 +215,11 @@
     </div>
     <div>
       <dt>무엇을 수집하나요</dt>
-      <dd>이메일, 이름, 받은 글 목록, 글마다 남긴 "읽고 싶다/아니다" 표시, 원문 링크를 눌렀는지를 기록합니다.</dd>
+      <dd>이메일, 이름, 요약 문체 요청(입력한 경우), 받은 글 목록, 글마다 남긴 "읽고 싶다/아니다" 표시, 원문 링크를 눌렀는지를 기록합니다.</dd>
     </div>
     <div>
       <dt>왜 수집하나요</dt>
-      <dd>받는 글을 취향에 맞추고, 그렇게 맞춘 것이 실제로 도움이 되는지 확인하려는 것입니다.</dd>
+      <dd>받는 글을 취향에 맞추고, 그렇게 맞춘 것이 실제로 도움이 되는지 확인하려는 것입니다. 요약 문체 요청은 요약을 다듬는 데 쓰이도록 AI 모델에 전달됩니다.</dd>
     </div>
     <div>
       <dt>누가 보나요</dt>
@@ -224,6 +243,14 @@
     <div class="field">
       <label class="caption" for="code">초대 코드</label>
       <input id="code" name="code" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="200" required>
+    </div>
+    <div class="field">
+      <label class="caption" for="style-note">요약을 어떻게 받고 싶은가요? (선택)</label>
+      <input id="style-note" name="style_note" type="text" autocomplete="off" maxlength="200" placeholder="예: 더 짧게, 비전공자도 알 수 있게" aria-describedby="style-note-hint style-note-count">
+      <div class="hint-row">
+        <p id="style-note-hint" class="hint">비워 두면 기본 요약으로 받습니다. 나중에 바꾸려면 운영자에게 요청해 주세요.</p>
+        <span id="style-note-count" class="count">200자 남음</span>
+      </div>
     </div>
     <label class="consent" for="consent">
       <input id="consent" name="consent" type="checkbox" required>
@@ -250,6 +277,8 @@
   var emailEl = document.getElementById("email");
   var nameEl = document.getElementById("name");
   var codeEl = document.getElementById("code");
+  var styleNoteEl = document.getElementById("style-note");
+  var styleNoteCountEl = document.getElementById("style-note-count");
   var consentEl = document.getElementById("consent");
   var errorEl = document.getElementById("form-error");
   var submitEl = document.getElementById("submit");
@@ -260,6 +289,10 @@
   var MAX_EMAIL_LENGTH = 254;
   var MAX_NAME_LENGTH = 40;
   var MAX_CODE_LENGTH = 200;
+  var MAX_STYLE_NOTE_LENGTH = 200;
+  // 서버(normalizeStyleNote)와 같은 규칙으로 걸러 낸다. 줄바꿈과 탭은 공백, 나머지 제어 문자는 지운다.
+  var LINE_BREAK_PATTERN = /[\t\n\u000b\u000c\r\u0085\u2028\u2029]+/g;
+  var CONTROL_CHAR_PATTERN = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g;
   // 서버(digest-join/logic.ts)와 같은 규칙이다. 최종 판정은 서버가 한다.
   var EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/;
 
@@ -286,7 +319,7 @@
   function showError(text, field) {
     errorEl.textContent = text;
     errorEl.hidden = false;
-    [emailEl, nameEl, codeEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+    [emailEl, nameEl, codeEl, styleNoteEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
     if (field) {
       field.setAttribute("aria-invalid", "true");
       field.focus();
@@ -296,7 +329,14 @@
   function clearError() {
     errorEl.textContent = "";
     errorEl.hidden = true;
-    [emailEl, nameEl, codeEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+    [emailEl, nameEl, codeEl, styleNoteEl].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+  }
+
+  // 남은 글자 수. 입력란의 maxlength 와 같은 기준(UTF-16 단위)으로 센다.
+  // 서버는 코드 포인트로 세므로 여기서 통과한 글은 서버에서도 통과한다.
+  function updateStyleNoteCount() {
+    var left = MAX_STYLE_NOTE_LENGTH - styleNoteEl.value.length;
+    styleNoteCountEl.textContent = left >= 0 ? left + "자 남음" : (-left) + "자 넘침";
   }
 
   function setBusy(value) {
@@ -358,6 +398,7 @@
     noticeEl.hidden = true;
     // 입력한 값을 화면과 폼에 남겨 두지 않는다.
     formEl.reset();
+    updateStyleNoteCount();
     setStatus({
       title: "가입됐습니다",
       tone: "ok",
@@ -371,6 +412,7 @@
     var email = emailEl.value.trim().toLowerCase();
     var name = nameEl.value.trim();
     var code = codeEl.value.trim();
+    var styleNote = styleNoteEl.value.replace(LINE_BREAK_PATTERN, " ").replace(CONTROL_CHAR_PATTERN, "").trim();
 
     if (email.length === 0 || email.length > MAX_EMAIL_LENGTH || !EMAIL_PATTERN.test(email)) {
       showError("이메일 주소를 다시 확인해 주세요.", emailEl);
@@ -390,7 +432,14 @@
       consentEl.focus();
       return null;
     }
-    return { email: email, name: name, invite_code: code, consent: true };
+    if (styleNote.length > MAX_STYLE_NOTE_LENGTH) {
+      showError("요약 요청은 200자 안으로 적어 주세요.", styleNoteEl);
+      return null;
+    }
+    var payload = { email: email, name: name, invite_code: code, consent: true };
+    // 적었을 때만 보낸다. 비워 두면 필드 자체를 싣지 않는다.
+    if (styleNote.length > 0) payload.style_note = styleNote;
+    return payload;
   }
 
   // 서버가 준 상태와 error 값으로 안내 문구를 고른다.
@@ -407,6 +456,9 @@
       }
       if (errorCode === "invalid_name") {
         return { text: "이름은 1자에서 40자 사이로 적어 주세요.", field: nameEl };
+      }
+      if (errorCode === "invalid_style_note") {
+        return { text: "요약 요청은 200자 안으로 적어 주세요.", field: styleNoteEl };
       }
       if (errorCode === "consent_required") {
         return { text: "동의에 체크해야 가입할 수 있습니다.", field: null };
@@ -471,6 +523,9 @@
       showError("연결하지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.", null);
     });
   });
+
+  styleNoteEl.addEventListener("input", updateStyleNoteCount);
+  updateStyleNoteCount();
 
   // 초대 링크(join.html?code=...)로 왔으면 코드를 미리 채운다. value 로만 넣는다.
   var presetCode = new URLSearchParams(window.location.search).get("code") || "";

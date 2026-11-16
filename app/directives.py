@@ -23,7 +23,9 @@
     쓰인다. drop_sources 도 분석 전 필터가 아니라 선정 단계의 후보 제외다.
 
         system_note ──► 랭킹·분석 프롬프트   (모든 수신자 공통)
-        personal_note ► 어디에도 적용하지 않음 (표시용. 깊이 지시는 depth_bias 로 선정에 반영)
+        personal_note ► 운영자 메일 본문의 문체 (app/restyle.py, PROGRESS §59. 공용 분석,
+                        Discord, 아카이브, 정본에는 적용하지 않음. 깊이 지시는 depth_bias 로
+                        선정에 반영)
         drop_sources, boost, suppress, depth_bias ► 그 사용자의 선정
 
 만료가 왜 필수인가:
@@ -99,8 +101,13 @@ class Directive:
             or self.depth_bias
         )
 
-    def describe(self) -> str:
-        """사용자에게 보여줄 한 줄 요약. 보이지 않는 상태값을 만들지 않기 위함."""
+    def describe(self, note_in_mail: bool = False) -> str:
+        """사용자에게 보여줄 한 줄 요약. 보이지 않는 상태값을 만들지 않기 위함.
+
+        note_in_mail 은 이번 실행에서 글쓰기 지시(personal_note)가 운영자 메일 본문에
+        적용되는가다(이메일로 받고 문체 다듬기가 켜져 있을 때). 이 모듈은 발송 채널을
+        모르므로 호출부(daily_digest)가 판단해 넘긴다.
+        """
         parts: list[str] = []
         if self.boost:
             parts.append(f"➕ {', '.join(sorted(self.boost))}")
@@ -109,11 +116,13 @@ class Directive:
         if self.drop_sources:
             parts.append(f"🚫 {', '.join(sorted(self.drop_sources))}")
         # 품질 계기판 권고(system_note)만 분석 프롬프트에 들어간다. 사람이 남긴 글쓰기
-        # 지시(personal_note)는 요약이 모두에게 공용이 된 뒤로 적용되지 않으므로,
-        # 적용 중인 것처럼 보이지 않게 따로 표시한다.
+        # 지시(personal_note)는 공용 요약에는 적용되지 않고, 운영자가 메일로 받는 날에만
+        # 그 메일 본문의 문체로 적용된다(app/restyle.py). 적용되는 곳을 그대로 보여 준다.
         if self.system_note:
             parts.append(f"📌 {self.system_note}")
-        if self.personal_note:
+        if self.personal_note and note_in_mail:
+            parts.append(f"✉️ 메일 요약 문체: {self.personal_note}")
+        elif self.personal_note:
             parts.append(f"💤 요약 문체 지시는 반영되지 않음: {self.personal_note}")
         # 출처를 모른 채 standing_note 만으로 만든 값은 기존처럼 그대로 보인다.
         if self.standing_note and not (self.system_note or self.personal_note):

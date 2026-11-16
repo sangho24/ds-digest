@@ -32,6 +32,8 @@ interface Harness {
   logs: string[];
   /** 저장소 메서드가 불린 순서. */
   calls: string[];
+  /** 구독자 id 별 style_note 컬럼 값. 행 모양을 바꾸지 않으려고 따로 둔다. */
+  styleNotes: Map<string, string | null>;
 }
 
 interface HarnessOptions {
@@ -85,6 +87,11 @@ function createHarness(options: HarnessOptions = {}): Harness {
   const rows = seedRows();
   const logs: string[] = [];
   const calls: string[] = [];
+  const styleNotes = new Map<string, string | null>([
+    ["sub-owner", null],
+    ["sub-active", "원래 요청"],
+    ["sub-gone", "예전 요청"],
+  ]);
 
   const failIf = (step: string): void => {
     if (options.failAt === step) throw new StoreError(step, "XX000");
@@ -106,6 +113,7 @@ function createHarness(options: HarnessOptions = {}): Harness {
       calls.push("insert");
       failIf("insert_subscriber");
       if (options.insertConflict === true) return Promise.resolve("conflict");
+      styleNotes.set(`sub-new-${rows.length}`, subscriber.styleNote);
       rows.push({
         id: `sub-new-${rows.length}`,
         email: subscriber.email,
@@ -119,13 +127,18 @@ function createHarness(options: HarnessOptions = {}): Harness {
       });
       return Promise.resolve("inserted");
     },
-    reactivateSubscriber(subscriberId: string, consentedAt: Date): Promise<void> {
+    reactivateSubscriber(
+      subscriberId: string,
+      consentedAt: Date,
+      styleNote: string | null,
+    ): Promise<void> {
       calls.push("reactivate");
       failIf("reactivate_subscriber");
       for (const row of rows) {
         if (row.id === subscriberId && row.status === "unsubscribed") {
           row.status = "active";
           row.consentedAt = consentedAt.toISOString();
+          if (styleNote !== null) styleNotes.set(row.id, styleNote);
         }
       }
       return Promise.resolve();
@@ -141,7 +154,7 @@ function createHarness(options: HarnessOptions = {}): Harness {
     generateToken: () => FIXED_TOKEN,
     logError: (step, code) => logs.push(`${step}:${code}`),
   });
-  return { handle, rows, logs, calls };
+  return { handle, rows, logs, calls, styleNotes };
 }
 
 function joinBody(overrides: Record<string, unknown> = {}): Record<string, unknown> {
@@ -508,4 +521,135 @@ Deno.test("모든 응답은 JSON 이고 캐시하지 않는다", async () => {
   const res = await h.handle(jsonPost(joinBody()));
   assert.match(res.headers.get("content-type") ?? "", /^application\/json/);
   assert.equal(res.headers.get("cache-control"), "no-store");
+});
+
+Deno.test("문체 요청: 신규 가입이면 정리한 값을 저장하고 응답은 {ok:true} 그대로다", async () => {
+  const h = createHarness();
+  const res = await h.handle(jsonPost(joinBody({ style_note: "  더 짧게,\n비전공자도 알 수 있게\u0007  " })));
+  assert.equal(res.status, 200);
+  assert.deepEqual(await readJson(res), { ok: true });
+  assert.equal(h.styleNotes.get("sub-new-3"), "더 짧게, 비전공자도 알 수 있게");
+  assert.deepEqual(h.calls, ["count", "find", "insert"]);
+});
+
+Deno.test("문체 요청: 없거나 null 이거나 비어 있으면 null 로 저장한다", async () => {
+  for (const styleNote of [undefined, null, "", "   ", "\n\t", "\u0000\u001f"]) {
+    const h = createHarness();
+    const body = joinBody();
+    if (styleNote !== undefined) body.style_note = styleNote;
+    const res = await h.handle(jsonPost(body));
+    assert.equal(res.status, 200);
+    assert.equal(h.styleNotes.has("sub-new-3"), true);
+    assert.equal(h.styleNotes.get("sub-new-3"), null);
+  }
+});
+
+Deno.test("문체 요청: 200자는 받고 201자와 문자열이 아닌 값은 400, 저장소를 보지 않는다", async () => {
+  const ok = createHarness();
+  const exact = await ok.handle(jsonPost(joinBody({ style_note: "가".repeat(200) })));
+  assert.equal(exact.status, 200);
+  assert.equal(ok.styleNotes.get("sub-new-3"), "가".repeat(200));
+
+  const h = createHarness();
+  for (const styleNote of ["가".repeat(201), "😀".repeat(201), 123, true, ["짧게"], { a: 1 }]) {
+    const res = await h.handle(jsonPost(joinBody({ style_note: styleNote })));
+    assert.equal(res.status, 400);
+    assert.deepEqual(await readJson(res), { ok: false, error: "invalid_style_note" });
+  }
+  assert.deepEqual(h.calls, []);
+  assert.equal(h.rows.length, 3);
+});
+
+Deno.test("문체 요청: 해지한 이메일의 재가입은 적었을 때만 덮어쓴다", async () => {
+  const filled = createHarness();
+  const first = await filled.handle(
+    jsonPost(joinBody({ email: "gone@example.com", style_note: " 새 요청 " })),
+  );
+  assert.equal(first.status, 200);
+  assert.equal(filled.styleNotes.get("sub-gone"), "새 요청");
+  assert.equal(rowByEmail(filled, "gone@example.com").status, "active");
+
+  for (const styleNote of [undefined, null, "", "   "]) {
+    const h = createHarness();
+    const body = joinBody({ email: "gone@example.com" });
+    if (styleNote !== undefined) body.style_note = styleNote;
+    const res = await h.handle(jsonPost(body));
+    assert.equal(res.status, 200);
+    assert.equal(h.styleNotes.get("sub-gone"), "예전 요청");
+    assert.equal(rowByEmail(h, "gone@example.com").status, "active");
+  }
+});
+
+Deno.test("문체 요청: 이미 받고 있는 이메일과 운영자의 값은 바뀌지 않는다", async () => {
+  const h = createHarness();
+  const before = new Map(h.styleNotes);
+  for (const email of ["active@example.com", "owner@example.com"]) {
+    const res = await h.handle(jsonPost(joinBody({ email, style_note: "남이 바꾼 요청" })));
+    assert.equal(res.status, 200);
+    assert.deepEqual(await readJson(res), { ok: true });
+  }
+  assert.deepEqual(h.styleNotes, before);
+  assert.deepEqual(h.calls, ["count", "find", "count", "find"]);
+});
+
+Deno.test("문체 요청: 코드, 동의, 이메일, 이름을 먼저 본다", async () => {
+  const h = createHarness();
+  const long = "가".repeat(201);
+  const cases: Array<[Record<string, unknown>, number, string]> = [
+    [{ invite_code: "wrong", style_note: long }, 403, "invalid_code"],
+    [{ consent: false, style_note: long }, 400, "consent_required"],
+    [{ email: "nope", style_note: long }, 400, "invalid_email"],
+    [{ name: "", style_note: long }, 400, "invalid_name"],
+  ];
+  for (const [overrides, status, error] of cases) {
+    const res = await h.handle(jsonPost(joinBody(overrides)));
+    assert.equal(res.status, status);
+    assert.deepEqual(await readJson(res), { ok: false, error });
+  }
+  assert.deepEqual(h.calls, []);
+});
+
+Deno.test("문체 요청: 정원이 차면 요청이 있어도 409 이고 값은 그대로다", async () => {
+  const h = createHarness({ maxSubscribers: 2 });
+  const before = new Map(h.styleNotes);
+  const res = await h.handle(jsonPost(joinBody({ email: "gone@example.com", style_note: "새 요청" })));
+  assert.equal(res.status, 409);
+  assert.deepEqual(h.styleNotes, before);
+});
+
+Deno.test("문체 요청: 4바이트 글자 200자를 꽉 채워도 본문 상한 안이다", async () => {
+  const h = createHarness();
+  const body = joinBody({
+    email: `${"a".repeat(64)}@${"b".repeat(180)}.example`,
+    name: "😀".repeat(40),
+    style_note: "😀".repeat(200),
+  });
+  assert.ok(new TextEncoder().encode(JSON.stringify(body)).byteLength < MAX_BODY_BYTES);
+  const res = await h.handle(jsonPost(body));
+  assert.equal(res.status, 200);
+  assert.equal(h.styleNotes.get("sub-new-3"), "😀".repeat(200));
+});
+
+Deno.test("문체 요청: 어떤 응답과 로그에도 드러나지 않는다", async () => {
+  const note = "유출되면안되는문체요청";
+  const scenarios: Array<{ options: HarnessOptions; body: Record<string, unknown> }> = [
+    { options: {}, body: joinBody({ style_note: note }) },
+    { options: {}, body: joinBody({ email: "gone@example.com", style_note: note }) },
+    { options: {}, body: joinBody({ email: "active@example.com", style_note: note }) },
+    { options: {}, body: joinBody({ style_note: note.repeat(30) }) },
+    { options: { maxSubscribers: 0 }, body: joinBody({ style_note: note }) },
+    { options: { inviteCode: null }, body: joinBody({ style_note: note }) },
+    { options: { failAt: "insert_subscriber" }, body: joinBody({ style_note: note }) },
+    {
+      options: { failAt: "reactivate_subscriber" },
+      body: joinBody({ email: "gone@example.com", style_note: note }),
+    },
+    { options: {}, body: joinBody({ invite_code: "wrong", style_note: note }) },
+  ];
+  for (const scenario of scenarios) {
+    const h = createHarness(scenario.options);
+    const res = await h.handle(jsonPost(scenario.body));
+    const visible = `${await readText(res)} ${[...res.headers.values()].join(" ")} ${h.logs.join(" ")}`;
+    assert.equal(visible.includes(note), false, `status=${res.status} 에서 값이 드러났다`);
+  }
 });

@@ -4,6 +4,8 @@
     python -m app.subscribers add EMAIL [--name N] [--owner]
     python -m app.subscribers remove EMAIL
     python -m app.subscribers purge EMAIL --yes
+    python -m app.subscribers set-style EMAIL "요청문"
+    python -m app.subscribers clear-style EMAIL
 
 명단은 Supabase subscribers 테이블에 있다(스키마와 RLS 는 supabase/ 가 정본).
 가입 화면은 없고 운영자가 이 CLI 로 직접 넣는다. token 은 메일 안의 피드백 링크와
@@ -12,6 +14,13 @@
 user_id 규칙:
     is_owner 인 구독자는 기존 단일 사용자와 같은 사람이라 user_id "default" 를 쓴다
     (프로필, 관심도 라벨, 퀴즈 기록이 전부 그 키에 쌓여 있다). 나머지는 subscriber.id 다.
+
+style_note (PROGRESS §59):
+    그 사람이 받을 요약의 문체 요청("더 짧게", "쉬운 말로")이다. 200자 이하, 없으면 None.
+    발송 직전에 app/restyle.py 가 그 사람의 메일 본문에만 입힌다. 컬럼이 아직 없는
+    테이블에서는 행에 키가 없을 뿐이라 전원이 None 이 되고(조회는 select * 라 깨지지
+    않는다), 경고 로그 subscribers_style_note_column_missing 이 한 번 남는다.
+    요청문은 list 출력에 앞 20자까지만 보이고 로그에는 남기지 않는다.
 """
 from __future__ import annotations
 
@@ -34,6 +43,7 @@ STATUS_ACTIVE = "active"
 STATUS_UNSUBSCRIBED = "unsubscribed"
 OWNER_USER_ID = "default"
 _TOKEN_VISIBLE = 4
+_STYLE_VISIBLE = 20
 
 
 class Subscriber(BaseModel):
@@ -45,6 +55,8 @@ class Subscriber(BaseModel):
     status: str = STATUS_ACTIVE
     token: str
     is_owner: bool = False
+    # 요약 문체 요청(원문 그대로). 쓰는 쪽(app/restyle.py)이 정규화한다.
+    style_note: str | None = None
 
     @property
     def user_id(self) -> str:
@@ -94,6 +106,14 @@ def mask_token(token: str) -> str:
     return f"{token[:_TOKEN_VISIBLE]}…" if token else ""
 
 
+def _style_note_of(row: dict[str, Any]) -> str | None:
+    """행의 style_note. 컬럼이 없거나 문자열이 아니거나 비어 있으면 None."""
+    value = row.get("style_note")
+    if not isinstance(value, str) or not value.strip():
+        return None
+    return value
+
+
 def _to_subscriber(row: dict[str, Any]) -> Subscriber | None:
     """행 하나를 모델로. 필수 컬럼이 빠진 행은 건너뛴다(한 행이 전체를 막지 않는다)."""
     try:
@@ -104,6 +124,7 @@ def _to_subscriber(row: dict[str, Any]) -> Subscriber | None:
             status=str(row.get("status") or STATUS_ACTIVE),
             token=str(row["token"]),
             is_owner=bool(row.get("is_owner")),
+            style_note=_style_note_of(row),
         )
     except Exception as e:
         logger.warning("subscriber_row_invalid", error=type(e).__name__)
@@ -119,6 +140,9 @@ def _list(active_only: bool) -> list[Subscriber] | None:
     rows = fetch_subscribers(active_only=active_only)
     if rows is None:
         return None
+    if rows and not any("style_note" in row for row in rows):
+        # 마이그레이션 전 테이블이다. 조회는 그대로 되고 문체 요청만 전원 없음이 된다.
+        logger.warning("subscribers_style_note_column_missing", rows=len(rows))
     return [s for s in (_to_subscriber(row) for row in rows) if s is not None]
 
 
@@ -159,6 +183,28 @@ def set_status(email: str, status: str) -> bool:
         ),
     }
     return update_subscriber(subscriber.id, fields)
+
+
+def set_style_note(email: str, note: str | None) -> bool:
+    """문체 요청을 저장한다(None 이면 지운다). 대상이 없거나 저장에 실패하면 False.
+
+    저장 전에 발송 때와 같은 규칙으로 정규화한다(제어 문자 제거, trim, 200자 상한).
+    정규화하고 나서 남는 것이 없으면 ValueError 다(지우려면 None 을 넘긴다).
+    style_note 컬럼이 아직 없는 테이블에서는 update 가 실패해 False 가 된다.
+    """
+    value: str | None = None
+    if note is not None:
+        from app.restyle import normalize_style_note
+
+        value = normalize_style_note(note)
+        if not value:
+            raise ValueError("문체 요청이 비어 있다(지우려면 clear-style)")
+    subscriber = find_subscriber(email)
+    if subscriber is None:
+        return False
+    from app.db import update_subscriber
+
+    return update_subscriber(subscriber.id, {"style_note": value})
 
 
 def add_subscriber(
@@ -214,13 +260,21 @@ def purge_subscriber(email: str) -> Subscriber | None:
 # ──────────────────────────────────────────────
 
 def _format_list(subscribers: list[Subscriber]) -> str:
-    lines = [f"{'상태':<14}{'소유자':<6}{'token':<8}{'이름':<14}이메일", "-" * 70]
+    lines = [f"{'상태':<14}{'소유자':<6}{'token':<8}{'이름':<14}{'이메일':<30}문체 요청", "-" * 90]
     for s in subscribers:
         lines.append(
             f"{s.status:<14}{'예' if s.is_owner else '':<6}{mask_token(s.token):<8}"
-            f"{(s.name or ''):<14}{s.email}"
+            f"{(s.name or ''):<14}{s.email:<30}{_style_preview(s.style_note)}"
         )
     return "\n".join(lines)
+
+
+def _style_preview(note: str | None) -> str:
+    """list 출력용. 요청이 있으면 앞 20자까지만, 없으면 "-" 다."""
+    text = " ".join((note or "").split())
+    if not text:
+        return "-"
+    return text[:_STYLE_VISIBLE] + ("…" if len(text) > _STYLE_VISIBLE else "")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -239,6 +293,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     purge.add_argument("email")
     purge.add_argument("--yes", action="store_true", help="확인 없이 지운다(이 플래그가 없으면 지우지 않는다)")
+    set_style = sub.add_parser(
+        "set-style", help="요약 문체 요청을 저장한다(200자까지, 그 사람의 메일 본문에만 적용)"
+    )
+    set_style.add_argument("email")
+    set_style.add_argument("note", help='예: "더 짧게, 쉬운 말로"')
+    clear_style = sub.add_parser("clear-style", help="요약 문체 요청을 지운다")
+    clear_style.add_argument("email")
     args = parser.parse_args(argv)
 
     if not get_settings().subscribers_enabled:
@@ -283,6 +344,26 @@ def main(argv: list[str] | None = None) -> int:
             print("대상이 없거나 삭제에 실패했다.", file=sys.stderr)
             return 1
         print(f"지웠다: {target} (구독자 {purged.short_id}, 연결 기록 포함)")
+        return 0
+
+    if args.command in ("set-style", "clear-style"):
+        target = mask_email(normalize_email(args.email))
+        try:
+            saved = set_style_note(args.email, args.note if args.command == "set-style" else None)
+        except ValueError as e:
+            print(str(e), file=sys.stderr)
+            return 1
+        if not saved:
+            print(
+                "대상이 없거나 저장에 실패했다. subscribers 테이블에 style_note 컬럼이 "
+                "있는지(supabase/ 의 마이그레이션) 확인하라.",
+                file=sys.stderr,
+            )
+            return 1
+        if args.command == "set-style":
+            print(f"문체 요청을 저장했다: {target} (다음 발송부터 그 사람의 메일에만 적용)")
+        else:
+            print(f"문체 요청을 지웠다: {target}")
         return 0
 
     if set_status(args.email, STATUS_UNSUBSCRIBED):

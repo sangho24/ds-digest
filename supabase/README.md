@@ -7,6 +7,7 @@
 | `supabase/config.toml` | CLI 설정. 두 함수의 JWT 검증을 끈다 |
 | `supabase/migrations/20261116000000_subscribers.sql` | `subscribers`, `feedback_events`, `sent_items` 테이블 |
 | `supabase/migrations/20261116010000_tracking.sql` | `click_events` 테이블, `sent_items.arm`/`position`, `subscribers.signup_source`/`consented_at` |
+| `supabase/migrations/20261116020000_style_note.sql` | `subscribers.style_note`(구독자 문체 요청) |
 | `supabase/functions/digest-feedback/` | 관심도 표시, 원문 클릭, 수신거부를 받는 함수 |
 | `supabase/functions/digest-join/` | 초대 코드로 가입을 받는 함수 |
 | `docs/feedback.html` | 관심도 표시와 수신거부 링크가 여는 페이지(GitHub Pages) |
@@ -43,16 +44,18 @@
 
 1. 초대 링크: `{PAGES_BASE}/join.html?code={초대 코드}`. 코드 칸이 미리 채워진다. `?code=` 없이 열고 코드를 직접 적어도 된다.
 2. `join.html` 은 `feedback-config.json` 의 `endpoint` 끝 `/digest-feedback` 을 `/digest-join` 으로 바꿔 보낼 곳을 얻는다. 설정 파일이 없으면 "아직 열리지 않았습니다"를 보인다.
-3. 페이지가 JSON `{email, name, invite_code, consent: true}` 를 `POST` 한다.
+3. 페이지가 JSON `{email, name, invite_code, consent: true, style_note?}` 를 `POST` 한다. `style_note` 는 "요약을 어떻게 받고 싶은가요?" 칸에 적었을 때만 싣는다.
 4. 함수는 초대 코드를 시크릿 `INVITE_CODE` 와 상수 시간으로 비교하고, 정원(`MAX_SUBSCRIBERS`)을 확인한 뒤 구독자를 넣는다.
 
 | 이메일 상태 | 하는 일 | 응답 |
 | --- | --- | --- |
-| 처음 보는 이메일 | 새 token(32바이트 난수의 base64url, 43자)으로 `status` active, `signup_source` invite, `consented_at` 현재 시각인 행을 넣는다 | 200 `{ok: true}` |
-| 해지한 이메일 | `status` 를 active 로 되돌리고 `consented_at` 만 갱신한다. 이름, token, `signup_source`, `unsubscribed_at` 은 그대로다 | 200 `{ok: true}` |
-| 이미 받고 있는 이메일 | 아무것도 바꾸지 않는다 | 200 `{ok: true}` |
+| 처음 보는 이메일 | 새 token(32바이트 난수의 base64url, 43자)으로 `status` active, `signup_source` invite, `consented_at` 현재 시각인 행을 넣는다. `style_note` 는 적은 값, 적지 않았으면 null 이다 | 200 `{ok: true}` |
+| 해지한 이메일 | `status` 를 active 로 되돌리고 `consented_at` 을 갱신한다. `style_note` 는 이번에 적었을 때만 덮어쓰고, 비워 두었으면 예전 값이 남는다. 이름, token, `signup_source`, `unsubscribed_at` 은 그대로다 | 200 `{ok: true}` |
+| 이미 받고 있는 이메일 | 아무것도 바꾸지 않는다(`style_note` 포함) | 200 `{ok: true}` |
 
 세 경우의 응답이 같아서 응답만으로는 어떤 이메일이 가입돼 있는지 알 수 없다. 함수는 `is_owner` 를 읽지도 쓰지도 않는다. token 은 응답에 싣지 않고 다음 발송 메일의 링크로만 전달된다.
+
+이미 받고 있는 이메일의 `style_note` 를 바꾸지 않는 것은 일부러 그런 것이다. 가입할 때 이메일 소유를 확인하지 않으므로, 덮어쓰게 두면 초대 코드를 가진 사람이 남의 요약 문체를 바꿀 수 있다. 받고 있는 구독자가 문체 요청을 바꾸려면 운영자가 직접 고친다("알아 둘 점"의 문체 요청 항목).
 
 ## 응답 규칙
 
@@ -95,17 +98,21 @@
 | 7 | consent 가 true 가 아님 | 400 | `consent_required` |
 | 8 | 이메일 형식이 틀림, 254자 초과 | 400 | `invalid_email` |
 | 9 | 이름이 1자에서 40자 사이가 아님, 제어 문자 포함 | 400 | `invalid_name` |
-| 10 | 활성 구독자 수가 정원 이상 | 409 | `full` (message: "정원이 찼다") |
-| 11 | 가입, 재가입, 이미 가입됨 | 200 | |
+| 10 | `style_note` 가 문자열이 아님, 정리한 뒤 200자 초과 | 400 | `invalid_style_note` |
+| 11 | 활성 구독자 수가 정원 이상 | 409 | `full` (message: "정원이 찼다") |
+| 12 | 가입, 재가입, 이미 가입됨 | 200 | |
 | | DB 오류, 환경변수 누락 | 500 | `server_error` |
 
 - 이메일은 앞뒤 공백을 떼고 소문자로 바꾼 뒤 본다. 영문, 숫자와 `. _ % + -` 만 받는다(한글 도메인 같은 국제 주소는 받지 않는다).
+- `style_note` 는 선택 필드다. 줄바꿈과 탭은 공백 한 칸으로 바꾸고 나머지 제어 문자는 지운 뒤 앞뒤 공백을 뗀다. 없거나 null 이거나 그렇게 정리해서 빈 글이면 null 로 저장한다. 글자 수는 코드 포인트로 센다(Postgres 의 `char_length` 와 같다).
 - 정원은 이메일을 찾아보기 전에 따진다. 정원이 찬 동안에는 이미 가입한 이메일도 409 를 받는다.
-- 응답과 로그에 이메일, 이름, 초대 코드, token 을 남기지 않는다. 로그에는 실패한 단계 이름과 DB 오류 코드만 남는다.
+- 응답과 로그에 이메일, 이름, 초대 코드, token, 문체 요청을 남기지 않는다. 로그에는 실패한 단계 이름과 DB 오류 코드만 남는다.
 
 ## 1. 마이그레이션 적용
 
-마이그레이션은 두 개이고 파일 이름 순서대로 적용한다. 두 번째(`20261116010000_tracking.sql`)는 첫 번째가 만든 테이블에 컬럼을 더하므로 순서를 바꾸면 실패한다.
+마이그레이션은 세 개이고 파일 이름 순서대로 적용한다. 두 번째(`20261116010000_tracking.sql`)와 세 번째(`20261116020000_style_note.sql`)는 첫 번째가 만든 테이블에 컬럼을 더하므로 순서를 바꾸면 실패한다.
+
+세 번째는 digest-join 을 다시 배포하기 전에 적용한다. 순서가 바뀌면 새 함수가 없는 컬럼(`style_note`)에 쓰려다 실패해서 신규 가입이 전부 500 이 된다.
 
 두 방법 중 하나만 쓴다. SQL 은 여러 번 실행해도 결과가 같다.
 
@@ -113,8 +120,9 @@
 
 1. Supabase 대시보드에서 프로젝트를 열고 SQL Editor 로 간다.
 2. `supabase/migrations/20261116000000_subscribers.sql` 내용을 통째로 붙여넣고 실행한다(이미 적용했으면 건너뛴다).
-3. `supabase/migrations/20261116010000_tracking.sql` 내용을 통째로 붙여넣고 실행한다.
-4. 아래 확인 쿼리로 네 테이블(`subscribers`, `feedback_events`, `sent_items`, `click_events`)의 RLS 가 켜졌는지 본다(`rls_on` 이 모두 true 여야 한다).
+3. `supabase/migrations/20261116010000_tracking.sql` 내용을 통째로 붙여넣고 실행한다(이미 적용했으면 건너뛴다).
+4. `supabase/migrations/20261116020000_style_note.sql` 내용을 통째로 붙여넣고 실행한다.
+5. 아래 확인 쿼리로 네 테이블(`subscribers`, `feedback_events`, `sent_items`, `click_events`)의 RLS 가 켜졌는지 본다(`rls_on` 이 모두 true 여야 한다).
 
 ```sql
 select relname, relrowsecurity as rls_on
@@ -123,7 +131,7 @@ where relnamespace = 'public'::regnamespace and relkind = 'r'
 order by relname;
 ```
 
-5. 새 컬럼이 생겼는지 본다(네 행이 나와야 한다).
+6. 새 컬럼이 생겼는지 본다(다섯 행이 나와야 한다).
 
 ```sql
 select table_name, column_name, data_type, is_nullable, column_default
@@ -131,9 +139,20 @@ from information_schema.columns
 where table_schema = 'public'
   and (table_name, column_name) in (
     ('sent_items', 'arm'), ('sent_items', 'position'),
-    ('subscribers', 'signup_source'), ('subscribers', 'consented_at')
+    ('subscribers', 'signup_source'), ('subscribers', 'consented_at'),
+    ('subscribers', 'style_note')
   )
 order by table_name, column_name;
+```
+
+7. `style_note` 의 길이 제약이 붙었는지 본다(한 행이 나오고 정의에 `char_length(style_note) <= 200` 이 보여야 한다).
+
+```sql
+select conname, pg_get_constraintdef(oid) as definition
+from pg_constraint
+where conrelid = 'public.subscribers'::regclass
+  and contype = 'c'
+  and pg_get_constraintdef(oid) like '%style_note%';
 ```
 
 이 방법으로 적용하면 CLI 의 마이그레이션 이력 테이블에는 기록이 남지 않는다. 나중에 CLI 로 옮길 때는 아래처럼 이력만 맞춘다.
@@ -141,6 +160,7 @@ order by table_name, column_name;
 ```bash
 supabase migration repair --status applied 20261116000000
 supabase migration repair --status applied 20261116010000
+supabase migration repair --status applied 20261116020000
 ```
 
 ### 방법 B: Supabase CLI
@@ -156,7 +176,7 @@ supabase db push
 
 최신 문서는 `supabase db push --remote` 로 적는다. 설치된 CLI 가 `--remote` 를 모르면 플래그 없이 실행한다.
 
-첫 번째 마이그레이션을 대시보드로 이미 적용했다면 `db push` 전에 `supabase migration repair --status applied 20261116000000` 으로 이력을 맞춘다. 맞추지 않아도 SQL 이 멱등이라 다시 실행돼도 결과는 같다.
+앞의 마이그레이션을 대시보드로 이미 적용했다면 `db push` 전에 `supabase migration repair --status applied <적용한 버전>` 으로 이력을 맞춘다(예: `20261116000000`, `20261116010000`). 맞추지 않아도 SQL 이 멱등이라 다시 실행돼도 결과는 같다.
 
 `config.toml` 은 `project_id` 와 두 함수의 `verify_jwt` 만 담은 최소 파일이다. CLI 가 다른 항목이 없다고 거절하면, 파일을 잠시 옮겨 두고 `supabase init` 으로 전체 파일을 만든 뒤 맨 아래에 두 `[functions.*]` 구획을 붙여 넣는다.
 
@@ -296,18 +316,27 @@ curl -i "$JOIN_ENDPOINT"
 맞는 코드로 시험용 주소를 한 번 가입시킨다. 실제로 한 행이 생긴다.
 
 ```bash
-# (8) 맞는 코드면 200 {"ok":true}
+# (8) 맞는 코드면 200 {"ok":true}. style_note 는 선택이라 빼도 된다
 curl -i -X POST "$JOIN_ENDPOINT" \
   -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","name":"시험","invite_code":"<초대 코드>","consent":true}'
+  -d '{"email":"test@example.com","name":"시험","invite_code":"<초대 코드>","consent":true,"style_note":"더 짧게, 비전공자도 알 수 있게"}'
 ```
 
-SQL Editor 에서 확인한다. `status` active, `signup_source` invite, `is_owner` false, `consented_at` 이 방금 시각이어야 한다. 같은 curl 을 한 번 더 보내도 응답은 같고 행은 늘지 않는다.
+SQL Editor 에서 확인한다. `status` active, `signup_source` invite, `is_owner` false, `consented_at` 이 방금 시각, `style_note` 가 보낸 글이어야 한다. 같은 curl 을 한 번 더 보내도 응답은 같고 행은 늘지 않는다. `style_note` 만 다른 글로 바꿔 다시 보내도 저장된 값은 바뀌지 않는다(이미 받고 있는 이메일).
 
 ```sql
-select status, signup_source, is_owner, consented_at, length(token) as token_length
+select status, signup_source, is_owner, consented_at, style_note, length(token) as token_length
 from subscribers where email = 'test@example.com';
 ```
+
+```bash
+# (8-1) style_note 가 200자를 넘으면 400 {"ok":false,"error":"invalid_style_note"}
+curl -i -X POST "$JOIN_ENDPOINT" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"test@example.com\",\"name\":\"시험\",\"invite_code\":\"<초대 코드>\",\"consent\":true,\"style_note\":\"$(printf 'a%.0s' $(seq 201))\"}"
+```
+
+(8)이 500 이고 함수 로그가 `step=insert_subscriber` 면 세 번째 마이그레이션이 적용되지 않은 것이다.
 
 정원 확인은 `supabase secrets set MAX_SUBSCRIBERS=0` 으로 바꾸고 (8)을 다시 보내 409 가 나오는지 본 뒤 값을 되돌린다. 바꾼 값이 바로 반영되지 않으면 digest-join 을 다시 배포한다.
 
@@ -391,6 +420,12 @@ drop table if exists feedback_events;
 drop table if exists subscribers;
 ```
 
+세 번째 마이그레이션만 되돌리려면 아래만 실행한다. 구독자가 적은 문체 요청이 모두 사라진다. digest-join 을 `style_note` 를 쓰지 않는 판으로 먼저 되돌려 배포하지 않으면 신규 가입이 500 이 된다.
+
+```sql
+alter table subscribers drop column if exists style_note;
+```
+
 두 번째 마이그레이션만 되돌리려면 아래만 실행한다.
 
 ```sql
@@ -402,6 +437,7 @@ alter table subscribers drop column if exists signup_source, drop column if exis
 4. CLI 로 적용했다면 이력도 되돌린다.
 
 ```bash
+supabase migration repair --status reverted 20261116020000
 supabase migration repair --status reverted 20261116010000
 supabase migration repair --status reverted 20261116000000
 ```
@@ -425,4 +461,5 @@ supabase migration repair --status reverted 20261116000000
 - **발송 이력 기록 시점**: 메일을 보내기 전에(또는 직후에 곧바로) `sent_items` 에 넣어야 한다. 늦으면 그 사이의 클릭이 404 가 된다.
 - **호출 빈도 제한**: 함수 자체에는 IP 단위 제한이 없다. 본문 크기 상한, 60초 표시 중복 판정, 10분 클릭 중복 판정만 있다. 초대 코드 대입 시도를 막는 것은 코드의 길이뿐이다.
 - **JS 를 실행하는 스캐너**: 링크를 열고 JS 까지 실행하는 보안 스캐너는 want, skip, click 을 대신 남길 수 있다. 수신거부는 버튼을 눌러야 해서 영향이 없다. 클릭 수를 읽을 때 이 점을 감안한다.
+- **문체 요청(style_note)**: 구독자가 자유롭게 쓴 글이다. 제어 문자만 걸러 내고 `<`, `&`, 따옴표는 그대로 저장하므로 화면이나 메일에 보일 때는 이스케이프한다. 파이프라인은 이 글을 요약 모델에 넘기는데, 가입자가 쓴 글이 그대로 모델 입력이 되므로 지시가 아니라 "문체 참고 자료"로 구분해서 넣고, 요약의 사실 내용이나 다른 구독자의 메일에는 영향이 없게 한다. 받고 있는 구독자의 요청을 바꾸거나 지울 때는 운영자가 SQL Editor 에서 직접 고친다(`update subscribers set style_note = '<새 요청>' where email = '<이메일>';`, 지울 때는 `null`). 이렇게 넣는 값은 함수의 정리를 거치지 않으니 200자 제약만 걸린다.
 - **이름 표시**: 이름은 제어 문자만 걸러 내고 `<`, `&` 같은 글자는 그대로 저장한다. 메일 템플릿과 페이지에서 반드시 이스케이프해서 쓴다.

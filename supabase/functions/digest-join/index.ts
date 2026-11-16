@@ -79,6 +79,7 @@ const store: JoinStore = {
       status: "active",
       signup_source: "invite",
       consented_at: subscriber.consentedAt.toISOString(),
+      style_note: subscriber.styleNote,
     });
     if (error) {
       if (error.code === UNIQUE_VIOLATION) return "conflict";
@@ -87,11 +88,21 @@ const store: JoinStore = {
     return "inserted";
   },
 
-  async reactivateSubscriber(subscriberId: string, consentedAt: Date): Promise<void> {
+  async reactivateSubscriber(
+    subscriberId: string,
+    consentedAt: Date,
+    styleNote: string | null,
+  ): Promise<void> {
+    // 문체 요청은 새로 적었을 때만 덮어쓴다. null 이면 컬럼을 아예 보내지 않아 기존 값이 남는다.
+    const changes: { status: string; consented_at: string; style_note?: string } = {
+      status: "active",
+      consented_at: consentedAt.toISOString(),
+    };
+    if (styleNote !== null) changes.style_note = styleNote;
     // status 조건을 함께 걸어, 그 사이 상태가 바뀐 행은 건드리지 않는다.
     const { error } = await getClient()
       .from("subscribers")
-      .update({ status: "active", consented_at: consentedAt.toISOString() })
+      .update(changes)
       .eq("id", subscriberId)
       .eq("status", "unsubscribed");
     if (error) throw new StoreError("reactivate_subscriber", error.code ?? "unknown");
@@ -105,7 +116,7 @@ const handler = createHandler({
   maxSubscribers: parseMaxSubscribers(Deno.env.get("MAX_SUBSCRIBERS")),
   now: () => new Date(),
   generateToken,
-  // 단계 이름과 오류 코드만 남긴다. 이메일, 이름, 초대 코드, token 은 로그에 쓰지 않는다.
+  // 단계 이름과 오류 코드만 남긴다. 이메일, 이름, 초대 코드, token, 문체 요청은 로그에 쓰지 않는다.
   logError: (step, code) => console.error(`digest-join error step=${step} code=${code}`),
 });
 

@@ -12,10 +12,12 @@ import {
   generateToken,
   isInviteCodeValid,
   isOriginAllowed,
+  MAX_STYLE_NOTE_LENGTH,
   normalizeAllowedOrigin,
   normalizeEmail,
   normalizeInviteCode,
   normalizeName,
+  normalizeStyleNote,
   parseMaxSubscribers,
   resolveServiceKey,
   toBase64Url,
@@ -229,4 +231,82 @@ Deno.test("서비스 키: 레거시 키 우선, 없으면 SUPABASE_SECRET_KEYS �
   assert.equal(resolveServiceKey(env({ SUPABASE_SECRET_KEYS: '{"default":"new"}' })), "new");
   assert.equal(resolveServiceKey(env({ SUPABASE_SECRET_KEYS: "not json" })), null);
   assert.equal(resolveServiceKey(env({})), null);
+});
+
+Deno.test("문체 요청: 본문에 style_note 가 있을 때만 꺼낸다", () => {
+  const base = { email: "a@example.com", name: "가", invite_code: "abc", consent: true };
+  const withNote = extractJoinInput("application/json", JSON.stringify({ ...base, style_note: "짧게" }));
+  assert.deepEqual(withNote, {
+    ok: true,
+    value: { email: "a@example.com", name: "가", inviteCode: "abc", consent: true, styleNote: "짧게" },
+  });
+  const withNull = extractJoinInput("application/json", JSON.stringify({ ...base, style_note: null }));
+  assert.ok(withNull.ok);
+  assert.equal(withNull.value.styleNote, null);
+  const without = extractJoinInput("application/json", JSON.stringify(base));
+  assert.ok(without.ok);
+  assert.equal("styleNote" in without.value, false);
+});
+
+Deno.test("문체 요청: 없음, null, 빈 글은 null", () => {
+  for (const value of [undefined, null, "", "   ", "\n\r\t", "\u0000\u007f\u2028"]) {
+    assert.deepEqual(normalizeStyleNote(value), { ok: true, value: null });
+  }
+});
+
+Deno.test("문체 요청: 앞뒤 공백을 떼고 제어 문자를 걸러 낸다", () => {
+  assert.deepEqual(normalizeStyleNote("  더 짧게, 비전공자도 알 수 있게  "), {
+    ok: true,
+    value: "더 짧게, 비전공자도 알 수 있게",
+  });
+  // 줄바꿈과 탭은 공백 한 칸, 나머지 제어 문자는 사라진다.
+  assert.deepEqual(normalizeStyleNote("짧게\r\n쉽게\t부탁\u0000해요\u009f"), {
+    ok: true,
+    value: "짧게 쉽게 부탁해요",
+  });
+  assert.deepEqual(normalizeStyleNote("\u2028앞\u2029뒤\u0085"), { ok: true, value: "앞 뒤" });
+  // <, &, 따옴표 같은 글자는 그대로 둔다(쓰는 쪽이 이스케이프한다).
+  assert.deepEqual(normalizeStyleNote(`<b>"짧게" & '쉽게'</b>`), {
+    ok: true,
+    value: `<b>"짧게" & '쉽게'</b>`,
+  });
+});
+
+Deno.test("문체 요청: 정리한 값에는 제어 문자가 남지 않는다", () => {
+  let noisy = "가";
+  for (let code = 0; code <= 0x9f; code += 1) {
+    if (code < 0x20 || code >= 0x7f) noisy += `${String.fromCharCode(code)}나`;
+  }
+  const result = normalizeStyleNote(noisy);
+  assert.ok(result.ok);
+  assert.ok(result.value !== null);
+  // deno-lint-ignore no-control-regex
+  assert.equal(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]/.test(result.value), false);
+});
+
+Deno.test("문체 요청: 200자까지 받고 넘으면 400(코드 포인트 기준)", () => {
+  assert.equal(MAX_STYLE_NOTE_LENGTH, 200);
+  const rejected = { ok: false, status: 400, error: "invalid_style_note" };
+  assert.deepEqual(normalizeStyleNote("가".repeat(200)), { ok: true, value: "가".repeat(200) });
+  assert.deepEqual(normalizeStyleNote("가".repeat(201)), rejected);
+  // 이모지 한 글자는 UTF-16 으로 두 칸이지만 한 자로 센다(Postgres char_length 와 같다).
+  assert.deepEqual(normalizeStyleNote("😀".repeat(200)), { ok: true, value: "😀".repeat(200) });
+  assert.deepEqual(normalizeStyleNote("😀".repeat(201)), rejected);
+  // 길이는 정리한 뒤에 잰다.
+  assert.deepEqual(normalizeStyleNote(`  ${"가".repeat(200)}\n\u0000 `), {
+    ok: true,
+    value: "가".repeat(200),
+  });
+});
+
+Deno.test("문체 요청: 문자열이 아니면 400", () => {
+  const rejected = { ok: false, status: 400, error: "invalid_style_note" };
+  for (const value of [0, 123, true, false, ["짧게"], { note: "짧게" }]) {
+    assert.deepEqual(normalizeStyleNote(value), rejected);
+  }
+});
+
+Deno.test("문체 요청: 신청 검증 결과는 그대로 이메일과 이름뿐이다", () => {
+  const result = validateApplication(rawInput({ styleNote: "짧게" }));
+  assert.deepEqual(result, { ok: true, value: { email: "friend@example.com", name: "친구" } });
 });

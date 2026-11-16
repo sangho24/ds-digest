@@ -4,7 +4,10 @@
 // CORS, 서비스 키 고르기는 digest-feedback/logic.ts 와 같은 규칙이다. 함수 하나가 자기 폴더만으로
 // 배포되도록 일부러 복사해 두었다. 한쪽을 고치면 다른 쪽도 같이 고친다.
 
-/** 요청 본문 크기 상한(바이트). 이메일 254자, 이름 40자, 초대 코드를 담고도 남는다. */
+/**
+ * 요청 본문 크기 상한(바이트). 이메일 254자, 이름 40자, 초대 코드, 문체 요청 200자를 담고도 남는다
+ * (문체 요청이 전부 4바이트 글자여도 800바이트다).
+ */
 export const MAX_BODY_BYTES = 2048;
 /** 이메일 전체 길이 상한. */
 export const MAX_EMAIL_LENGTH = 254;
@@ -12,6 +15,8 @@ export const MAX_EMAIL_LENGTH = 254;
 export const MAX_EMAIL_LOCAL_LENGTH = 64;
 /** 이름(별명) 글자 수 상한. */
 export const MAX_NAME_LENGTH = 40;
+/** 문체 요청(style_note) 글자 수 상한. DB 의 check 제약과 같은 값이다. */
+export const MAX_STYLE_NOTE_LENGTH = 200;
 /** MAX_SUBSCRIBERS 가 없거나 숫자가 아닐 때 쓰는 정원. */
 export const DEFAULT_MAX_SUBSCRIBERS = 30;
 /** token 을 만들 때 쓰는 난수 바이트 수. base64url 로 43자가 된다. */
@@ -28,6 +33,7 @@ export type JoinErrorCode =
   | "consent_required"
   | "invalid_email"
   | "invalid_name"
+  | "invalid_style_note"
   | "full"
   | "server_error";
 
@@ -41,6 +47,8 @@ export interface RawJoinInput {
   name: unknown;
   inviteCode: unknown;
   consent: unknown;
+  /** 선택 필드. 본문에 style_note 가 있을 때만 담긴다. */
+  styleNote?: unknown;
 }
 
 /** 검증을 통과한 가입 신청. 초대 코드는 여기에 담지 않는다(비교가 끝나면 버린다). */
@@ -55,6 +63,11 @@ const EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/;
 // 제어 문자(줄바꿈, 탭 포함)가 들어간 이름은 받지 않는다.
 // deno-lint-ignore no-control-regex
 const CONTROL_CHAR_PATTERN = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/;
+// 문체 요청은 거절하지 않고 걸러 낸다. 줄바꿈과 탭은 낱말이 붙지 않게 공백으로 바꾸고 나머지는 지운다.
+// deno-lint-ignore no-control-regex
+const LINE_BREAK_PATTERN = /[\t\n\u000b\u000c\r\u0085\u2028\u2029]+/g;
+// deno-lint-ignore no-control-regex
+const CONTROL_CHAR_GLOBAL_PATTERN = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -84,15 +97,14 @@ export function extractJoinInput(contentType: string | null, bodyText: string): 
   if (!isRecord(parsed)) {
     return { ok: false, status: 400, error: "invalid_json" };
   }
-  return {
-    ok: true,
-    value: {
-      email: parsed.email,
-      name: parsed.name,
-      inviteCode: parsed.invite_code,
-      consent: parsed.consent,
-    },
+  const value: RawJoinInput = {
+    email: parsed.email,
+    name: parsed.name,
+    inviteCode: parsed.invite_code,
+    consent: parsed.consent,
   };
+  if (parsed.style_note !== undefined) value.styleNote = parsed.style_note;
+  return { ok: true, value };
 }
 
 /** 앞뒤 공백을 떼고 소문자로 바꾼 뒤 형식을 본다. 통과하면 정리한 값을, 아니면 null. */
@@ -115,6 +127,28 @@ export function normalizeName(value: unknown): string | null {
   const length = Array.from(name).length;
   if (length < 1 || length > MAX_NAME_LENGTH) return null;
   return name;
+}
+
+/**
+ * 문체 요청(선택 입력)을 정리한다. validateApplication 을 통과한 뒤에 부른다.
+ * - 없음, null, 정리하고 나니 빈 글: null(요청 없음)
+ * - 제어 문자는 걸러 내고 앞뒤 공백을 뗀다. 줄바꿈과 탭은 공백 한 칸이 된다.
+ * - 문자열이 아니거나 정리한 뒤에도 200자를 넘으면 400(글자 수는 코드 포인트 기준).
+ */
+export function normalizeStyleNote(value: unknown): Result<string | null> {
+  if (value === undefined || value === null) return { ok: true, value: null };
+  if (typeof value !== "string") {
+    return { ok: false, status: 400, error: "invalid_style_note" };
+  }
+  const note = value
+    .replace(LINE_BREAK_PATTERN, " ")
+    .replace(CONTROL_CHAR_GLOBAL_PATTERN, "")
+    .trim();
+  if (note.length === 0) return { ok: true, value: null };
+  if (Array.from(note).length > MAX_STYLE_NOTE_LENGTH) {
+    return { ok: false, status: 400, error: "invalid_style_note" };
+  }
+  return { ok: true, value: note };
 }
 
 /**

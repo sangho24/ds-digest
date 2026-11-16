@@ -72,6 +72,9 @@ def _configure(monkeypatch, **env: str) -> None:
         "EFFECT_HOLDOUT_SLOTS": "",
         "EFFECT_HOLDOUT_RATE": "",
         "TRACK_CLICKS": "",
+        # 문체 다듬기도 기본값(켬, 상한 15)으로 둔다.
+        "RESTYLE_ENABLED": "",
+        "RESTYLE_MAX_USERS_PER_RUN": "",
     }
     values.update(env)
     for name, value in values.items():
@@ -777,7 +780,7 @@ def test_pipeline_without_subscribers_is_unchanged(monkeypatch, selection, tmp_p
     pipeline = Pipeline(monkeypatch, tmp_path)
     pipeline.spy_send_digest(monkeypatch)
     resend_calls = _record_resend(monkeypatch)
-    monkeypatch.setattr(delivery, "deliver_to_subscribers", lambda *a, **k: pytest.fail("호출 금지"))
+    monkeypatch.setattr(delivery, "deliver_to_subscribers_async", lambda *a, **k: pytest.fail("호출 금지"))
 
     result = pipeline.run()
 
@@ -883,7 +886,7 @@ def test_pipeline_survives_subscriber_step_crash(monkeypatch, selection, tmp_pat
     def _boom(*a: Any, **k: Any):
         raise RuntimeError("구독자 단계 붕괴")
 
-    monkeypatch.setattr(delivery, "deliver_to_subscribers", _boom)
+    monkeypatch.setattr(delivery, "deliver_to_subscribers_async", _boom)
 
     with structlog.testing.capture_logs() as logs:
         result = pipeline.run()
@@ -1531,3 +1534,550 @@ def test_db_subscriber_errors_are_scrubbed(monkeypatch):
 
     assert len(logs) >= 5
     assert "@" not in json.dumps(logs, ensure_ascii=False, default=str)
+
+
+# ── 요약 문체 다듬기 (PROGRESS §59) ───────────────────────────────────────
+
+STYLE = "요약을 더 짧게, 반말로"
+STYLED_ALICE = ALICE.model_copy(update={"style_note": STYLE})
+
+
+class StyleLLM:
+    """공용 LLM 호출 경로의 대역. 요약 끝에 "!" 를 붙여 돌려준다(검증을 통과하는 다듬기)."""
+
+    def __init__(self, monkeypatch, error: Exception | None = None) -> None:
+        self.prompts: list[str] = []
+        self.titles: list[str] = []
+        self.error = error
+        monkeypatch.setattr(analyzer, "_call_llm_with_fallback", self)
+
+    async def __call__(self, prompt: str, title: str, **kwargs: Any) -> dict[str, Any]:
+        self.prompts.append(prompt)
+        self.titles.append(title)
+        if self.error is not None:
+            raise self.error
+        block = prompt.split("## 원문 요약 (JSON, 데이터)\n", 1)[1].split("\n\n## 출력 형식", 1)[0]
+        return {
+            "items": [
+                {**entry, "one_line_summary": entry["one_line_summary"] + "!"}
+                for entry in json.loads(block)["items"]
+            ]
+        }
+
+
+def _no_llm(monkeypatch) -> None:
+    """LLM 이 한 번이라도 불리면 테스트를 실패시킨다."""
+
+    async def _refuse(*a: Any, **k: Any) -> dict:
+        pytest.fail("LLM 호출 금지")
+
+    monkeypatch.setattr(analyzer, "_call_llm_with_fallback", _refuse)
+
+
+def _html_for(calls: list[dict[str, Any]], address: str) -> str:
+    return next(c["html"] for c in calls if c["to"][0] == address)
+
+
+def test_style_note_changes_only_that_subscribers_mail_text(monkeypatch, selection):
+    _configure(monkeypatch)
+    tables = FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+    pool = _pool()
+    before = [c.item.model_dump() for c in pool]
+
+    summary = delivery.deliver_to_subscribers([STYLED_ALICE, BOB], pool, DATE)
+
+    assert summary.as_dict()["sent"] == 2
+    assert len(llm.prompts) == 1, "문체 요청이 있는 한 사람에게만, 1회"
+    assert llm.titles == [f"restyle:{ALICE.short_id}"]
+    alice, bob = _html_for(calls, "alice@x.com"), _html_for(calls, "bob@x.com")
+    assert "요약 0!" in alice and "요약 1!" in alice
+    assert "요약 0!" not in bob and "요약 0" in bob
+    # 무엇을 받았는지(url, 순서, 비교군)와 링크는 문체와 무관하게 같다.
+    expected = [pool[0].item.raw.url, pool[1].item.raw.url]
+    assert sorted(tables.record_calls) == sorted(
+        [(ALICE.id, expected, DATE), (BOB.id, expected, DATE)]
+    )
+    assert tables.arms[ALICE.id] == tables.arms[BOB.id] == ["shared", "shared"]
+    assert quote(expected[0], safe="") in alice and ALICE.token in alice
+    # 후보 풀의 객체는 바뀌지 않는다.
+    assert [c.item.model_dump() for c in pool] == before
+
+
+def test_subscribers_without_a_request_are_sent_first(monkeypatch, selection):
+    """요청 없는 사람이 먼저 나간다. LLM 대기가 그들의 발송을 늦추지 않는다."""
+    _configure(monkeypatch)
+    FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    order: list[str] = []
+    llm = StyleLLM(monkeypatch)
+    original_call = llm.__call__
+
+    async def _traced(prompt: str, title: str, **kwargs: Any) -> dict[str, Any]:
+        order.append(f"llm 시점의 발송 수 {len(calls)}")
+        return await original_call(prompt, title, **kwargs)
+
+    monkeypatch.setattr(analyzer, "_call_llm_with_fallback", _traced)
+    carol = Subscriber(id="33333333-carol", email="carol@x.com", token="tok-carol-DDDD")
+
+    summary = delivery.deliver_to_subscribers([STYLED_ALICE, BOB, carol], _pool(), DATE)
+
+    assert _to(calls) == ["bob@x.com", "carol@x.com", "alice@x.com"]
+    assert order == ["llm 시점의 발송 수 2"]
+    assert [o.subscriber for o in summary.outcomes] == [BOB.short_id, carol.short_id, ALICE.short_id]
+
+
+def test_restyle_failure_does_not_block_anyone(monkeypatch, selection):
+    """LLM 이 실패해도 요청한 사람은 공용 요약으로, 나머지는 그대로 받는다."""
+    _configure(monkeypatch)
+    tables = FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    StyleLLM(monkeypatch, error=RuntimeError("groq 503"))
+
+    summary = delivery.deliver_to_subscribers([STYLED_ALICE, BOB], _pool(), DATE)
+
+    assert summary.as_dict()["sent"] == 2 and summary.failed == 0
+    assert "요약 0!" not in _html_for(calls, "alice@x.com")
+    assert "요약 0" in _html_for(calls, "alice@x.com")
+    assert {call[0] for call in tables.record_calls} == {ALICE.id, BOB.id}
+
+
+def test_no_style_requests_means_no_llm_call(monkeypatch, selection):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+    blank = BOB.model_copy(update={"style_note": "  \n "})
+
+    summary = delivery.deliver_to_subscribers([ALICE, blank], _pool(), DATE)
+
+    assert _to(calls) == ["alice@x.com", "bob@x.com"] and summary.as_dict()["sent"] == 2
+
+
+def test_already_sent_and_empty_plans_do_not_call_the_llm(monkeypatch, selection):
+    """메일을 만들지 않는 구독자에게는 호출도, 상한 차감도 없다."""
+    _configure(monkeypatch)
+    tables = FakeTables(monkeypatch)
+    _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+    tables.sent[ALICE.id] = {"https://example.com/old": DATE}
+
+    summary = delivery.deliver_to_subscribers([STYLED_ALICE], _pool(), DATE)
+
+    assert [o.status for o in summary.outcomes] == ["already_sent"]
+
+
+def test_restyle_cap_sends_the_rest_with_the_shared_summary(monkeypatch, selection):
+    _configure(monkeypatch, RESTYLE_MAX_USERS_PER_RUN="1")
+    FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+    styled_bob = BOB.model_copy(update={"style_note": "존댓말로 길게"})
+    carol = Subscriber(
+        id="33333333-carol", email="carol@x.com", token="tok-carol-DDDD", style_note="영어 용어는 풀어서"
+    )
+
+    with structlog.testing.capture_logs() as logs:
+        summary = delivery.deliver_to_subscribers([STYLED_ALICE, styled_bob, carol], _pool(), DATE)
+
+    assert len(llm.prompts) == 1
+    assert summary.as_dict()["sent"] == 3, "상한을 넘어도 전원에게 나간다"
+    assert "요약 0!" in _html_for(calls, "alice@x.com")
+    assert "요약 0!" not in _html_for(calls, "bob@x.com")
+    assert "요약 0!" not in _html_for(calls, "carol@x.com")
+    cap = [e for e in logs if e["event"] == "restyle_cap_reached"]
+    assert cap and cap[0]["log_level"] == "warning"
+    assert (cap[0]["limit"], cap[0]["skipped"]) == (1, 2)
+
+
+@pytest.mark.parametrize(
+    ("env", "kwargs"),
+    [({"RESTYLE_ENABLED": "false"}, {}), ({}, {"restyle": False}), ({"DRY_RUN": "true"}, {})],
+)
+def test_restyle_can_be_switched_off(monkeypatch, selection, tmp_path: Path, env, kwargs):
+    _configure(monkeypatch, **env)
+    FakeTables(monkeypatch)
+    _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+
+    summary = delivery.deliver_to_subscribers(
+        [STYLED_ALICE], _pool(), DATE, dry_run_dir=tmp_path / "out", **kwargs
+    )
+
+    assert summary.as_dict()["dry_run"] == 1
+    assert "요약 0!" not in (tmp_path / "out" / f"{ALICE.short_id}.html").read_text(encoding="utf-8")
+
+
+def test_delivery_logs_have_no_style_note_and_no_address(monkeypatch, selection):
+    _configure(monkeypatch, RESTYLE_MAX_USERS_PER_RUN="2")
+    FakeTables(monkeypatch)
+    _record_resend(monkeypatch)
+    StyleLLM(monkeypatch)
+    secret = "반말로 써 줘, 답은 alice@x.com 으로"
+    people = [
+        ALICE.model_copy(update={"style_note": secret}),
+        BOB.model_copy(update={"style_note": secret}),
+        Subscriber(id="33333333-carol", email="carol@x.com", token="tok-carol-DDDD", style_note=secret),
+    ]
+
+    with structlog.testing.capture_logs() as logs:
+        delivery.deliver_to_subscribers(people, _pool(), DATE)
+        StyleLLM(monkeypatch, error=RuntimeError(f"prompt rejected: {secret}"))
+        delivery.deliver_to_subscribers(people[:1], _pool(), "2026-11-17")
+
+    dumped = json.dumps(logs, ensure_ascii=False, default=str)
+    events = {e["event"] for e in logs}
+    assert {"restyle_done", "restyle_failed", "restyle_cap_reached"} <= events
+    assert "@" not in dumped and "반말" not in dumped and "x.com" not in dumped
+    done = [e for e in logs if e["event"] == "restyle_done"]
+    assert [e["subscriber"] for e in done] == [ALICE.short_id, BOB.short_id]
+    assert all((e["restyled"], e["reverted"]) == (2, 0) for e in done)
+
+
+# 컬럼이 아직 없는 테이블(마이그레이션 전)
+
+
+def test_missing_style_note_column_is_read_as_no_request(monkeypatch, selection):
+    """select * 라 조회는 그대로 된다. 행에 키가 없으면 전원 요청 없음이고 경고가 남는다."""
+    _configure(monkeypatch)
+    FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+    old_rows = [
+        {k: v for k, v in s.model_dump().items() if k != "style_note"} for s in (ALICE, BOB)
+    ]
+    monkeypatch.setattr(db, "fetch_subscribers", lambda active_only=False: old_rows)
+
+    with structlog.testing.capture_logs() as logs:
+        people = subscribers.list_active_subscribers()
+
+    assert [s.email for s in people] == ["alice@x.com", "bob@x.com"]
+    assert all(s.style_note is None for s in people)
+    missing = [e for e in logs if e["event"] == "subscribers_style_note_column_missing"]
+    assert missing and missing[0]["log_level"] == "warning"
+    assert delivery.deliver_to_subscribers(people, _pool(), DATE).as_dict()["sent"] == 2
+    assert len(calls) == 2
+
+
+def test_style_note_column_is_read_when_present(monkeypatch):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch, [STYLED_ALICE, BOB])
+    monkeypatch.setattr(
+        db, "fetch_subscribers",
+        lambda active_only=False: [
+            STYLED_ALICE.model_dump(),
+            {**BOB.model_dump(), "style_note": None},
+            {**OWNER.model_dump(), "style_note": 123},
+        ],
+    )
+
+    with structlog.testing.capture_logs() as logs:
+        people = subscribers.list_active_subscribers()
+
+    assert [s.style_note for s in people] == [STYLE, None, None]
+    assert not [e for e in logs if e["event"] == "subscribers_style_note_column_missing"]
+
+
+# 구독자 관리 CLI
+
+
+def test_cli_set_style_normalizes_and_saves(monkeypatch, capsys):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch, [ALICE])
+    updates: list[tuple[str, dict[str, Any]]] = []
+    monkeypatch.setattr(db, "update_subscriber", lambda sid, fields: updates.append((sid, fields)) or True)
+
+    assert subscribers.main(["set-style", "Alice@X.com", "  더 짧게\n쉬운 말로\x00 " + "가" * 300]) == 0
+
+    assert len(updates) == 1 and updates[0][0] == ALICE.id
+    saved = updates[0][1]["style_note"]
+    assert saved.startswith("더 짧게 쉬운 말로 가") and len(saved) == 200
+    out = capsys.readouterr().out
+    assert "a***@x.com" in out and "alice@x.com" not in out and "더 짧게" not in out
+
+
+def test_cli_clear_style_writes_null(monkeypatch, capsys):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch, [STYLED_ALICE])
+    updates: list[tuple[str, dict[str, Any]]] = []
+    monkeypatch.setattr(db, "update_subscriber", lambda sid, fields: updates.append((sid, fields)) or True)
+
+    assert subscribers.main(["clear-style", "alice@x.com"]) == 0
+    assert updates == [(ALICE.id, {"style_note": None})]
+
+
+def test_cli_set_style_failures(monkeypatch, capsys):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch, [ALICE])
+    monkeypatch.setattr(db, "update_subscriber", lambda sid, fields: False)
+
+    assert subscribers.main(["set-style", "alice@x.com", " \n "]) == 1  # 빈 요청문
+    assert subscribers.main(["set-style", "nobody@x.com", "짧게"]) == 1  # 대상 없음
+    assert subscribers.main(["set-style", "alice@x.com", "짧게"]) == 1  # 저장 실패(컬럼 없음 등)
+    assert "style_note 컬럼" in capsys.readouterr().err
+
+
+def test_cli_list_shows_at_most_twenty_chars_of_the_request(monkeypatch, capsys):
+    _configure(monkeypatch)
+    long_note = "아주 길게 쓴 문체 요청입니다 스무 자를 넘기면 잘려야 합니다"
+    FakeTables(monkeypatch, [ALICE.model_copy(update={"style_note": long_note}), BOB])
+
+    assert subscribers.main(["list"]) == 0
+
+    out = capsys.readouterr().out
+    assert "문체 요청" in out
+    assert long_note[:20] + "…" in out and long_note[:21] not in out
+    bob_line = next(line for line in out.splitlines() if "bob@x.com" in line)
+    assert bob_line.rstrip().endswith("-")
+
+
+# 수동 재발송 CLI
+
+
+def test_cli_resend_restyles_and_dry_run_previews_it(monkeypatch, selection, tmp_path: Path):
+    _configure(monkeypatch)
+    tables = FakeTables(monkeypatch, [STYLED_ALICE, BOB])
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+    _save_pool_file(tmp_path)
+
+    assert send_job.main(["--date", DATE, "--dry-run"], base_dir=tmp_path) == 0
+
+    out_dir = tmp_path / "data" / "dryrun" / "subscribers" / DATE
+    assert "요약 0!" in (out_dir / f"{ALICE.short_id}.html").read_text(encoding="utf-8")
+    assert "요약 0!" not in (out_dir / f"{BOB.short_id}.html").read_text(encoding="utf-8")
+    assert len(llm.prompts) == 1 and calls == [] and tables.record_calls == []
+
+    assert send_job.main(["--date", DATE], base_dir=tmp_path) == 0
+    assert len(llm.prompts) == 2 and "요약 0!" in _html_for(calls, "alice@x.com")
+
+
+def test_cli_no_restyle_flag_skips_the_llm(monkeypatch, selection, tmp_path: Path):
+    _configure(monkeypatch)
+    FakeTables(monkeypatch, [STYLED_ALICE])
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+    _save_pool_file(tmp_path)
+
+    assert send_job.main(["--date", DATE, "--no-restyle"], base_dir=tmp_path) == 0
+    assert "요약 0!" not in calls[0]["html"] and "요약 0" in calls[0]["html"]
+
+
+# 운영자: 글쓰기 지시(personal_note)는 운영자 메일 본문에만 적용된다
+
+
+def _operator_pipeline(monkeypatch, tmp_path: Path, personal_note: str = "요약을 더 짧게") -> Pipeline:
+    """운영자가 글쓰기 지시를 남긴 날의 파이프라인. 공용 산출물로 넘어간 아이템을 붙잡아 둔다."""
+    from app.directives import Directive
+    import app.records as records
+
+    pipeline = Pipeline(monkeypatch, tmp_path)
+    pipeline.discord_items: list[DigestItem] = []
+    pipeline.record_items: list[DigestItem] = []
+
+    async def _directive(items: list) -> Directive:
+        return Directive(standing_note=personal_note, personal_note=personal_note)
+
+    async def _discord(items: list[DigestItem]) -> bool:
+        pipeline.discord_items = list(items)
+        return True
+
+    def _save_records(items: list[DigestItem], *a: Any, **k: Any) -> Path:
+        pipeline.record_items = list(items)
+        return tmp_path / "record.json"
+
+    monkeypatch.setattr(job, "resolve_directives", _directive)
+    monkeypatch.setattr(job, "send_discord_digest", _discord)
+    monkeypatch.setattr(records, "save_digest_records", _save_records)
+    return pipeline
+
+
+def _directive_summary(logs: list[dict[str, Any]]) -> str:
+    return next(e["summary"] for e in logs if e["event"] == "directive_active")
+
+
+def test_pipeline_personal_note_restyles_only_the_operator_mail(monkeypatch, selection, tmp_path: Path):
+    _configure(monkeypatch, EMAIL_TO="me@x.com", DELIVERY_CHANNELS="discord,email")
+    FakeTables(monkeypatch, [])
+    pipeline = _operator_pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+    saved_pool: list[dict[str, Any]] = []
+    import app.pool as pool_module
+    monkeypatch.setattr(
+        pool_module, "save_pool", lambda entries, *a, **k: saved_pool.extend(entries) or None
+    )
+
+    with structlog.testing.capture_logs() as logs:
+        result = pipeline.run()
+
+    assert result["delivery"] == {"discord": True, "email": True}
+    assert len(llm.prompts) == 1 and llm.titles == ["restyle:operator"]
+    assert f"{STYLE}" not in llm.prompts[0] and "요약을 더 짧게" in llm.prompts[0]
+    # 메일 본문만 다듬어진다.
+    assert _to(calls) == ["me@x.com"] and "요약 0!" in calls[0]["html"] and "요약 1!" in calls[0]["html"]
+    # Discord, 정본, 풀, 웹 아카이브, 공개 JSON 은 공용 요약 그대로다.
+    shared = ["요약 0", "요약 1"]
+    assert [d.analysis.one_line_summary for d in pipeline.discord_items] == shared
+    assert [d.analysis.one_line_summary for d in pipeline.record_items] == shared
+    assert [d.analysis.one_line_summary for d in pipeline.selected] == shared
+    pool_dump = json.dumps(saved_pool, ensure_ascii=False, default=str)
+    assert len(saved_pool) == 5 and "요약 0" in pool_dump and "요약 0!" not in pool_dump
+    docs = tmp_path / "docs"
+    published = "".join(
+        f.read_text(encoding="utf-8") for f in docs.iterdir() if f.suffix in (".html", ".json")
+    )
+    assert "요약 0" in published and "요약 0!" not in published and "요약 1!" not in published
+    archive = "".join(f.read_text(encoding="utf-8") for f in (tmp_path / "data" / "archive").iterdir())
+    assert "요약 0!" not in archive
+    # 지시 표시는 메일에 적용된다고 알린다.
+    assert "✉️ 메일 요약 문체: 요약을 더 짧게" in _directive_summary(logs)
+    assert "반영되지 않음" not in _directive_summary(logs)
+
+
+def test_pipeline_personal_note_without_mail_is_shown_as_not_applied(monkeypatch, selection, tmp_path: Path):
+    """메일로 받지 않는 날(Discord 만, is_owner 구독자 없음)은 호출도 없고 표시는 💤 그대로다."""
+    _configure(monkeypatch, DELIVERY_CHANNELS="discord")
+    FakeTables(monkeypatch, [ALICE])
+    pipeline = _operator_pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+
+    with structlog.testing.capture_logs() as logs:
+        result = pipeline.run()
+
+    assert "💤 요약 문체 지시는 반영되지 않음: 요약을 더 짧게" in _directive_summary(logs)
+    assert result["subscribers"]["sent"] == 1 and "요약 0!" not in calls[0]["html"]
+
+
+def test_pipeline_personal_note_is_shown_as_not_applied_when_restyle_is_off(monkeypatch, selection, tmp_path: Path):
+    _configure(monkeypatch, EMAIL_TO="me@x.com", RESTYLE_ENABLED="false")
+    FakeTables(monkeypatch, [])
+    pipeline = _operator_pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+
+    with structlog.testing.capture_logs() as logs:
+        pipeline.run()
+
+    assert "💤" in _directive_summary(logs) and "요약 0!" not in calls[0]["html"]
+
+
+def test_pipeline_owner_subscriber_in_email_to_is_restyled_once(monkeypatch, selection, tmp_path: Path):
+    """EMAIL_TO 의 is_owner: 링크 든 한 통이 다듬어져 나가고, 구독자 단계는 다시 부르지 않는다."""
+    _configure(monkeypatch, EMAIL_TO="me@x.com")
+    owner = OWNER.model_copy(update={"style_note": "컬럼에 적은 요청"})
+    tables = FakeTables(monkeypatch, [owner, ALICE])
+    pipeline = _operator_pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+
+    result = pipeline.run()
+
+    assert _to(calls) == ["me@x.com", "alice@x.com"]
+    assert len(llm.prompts) == 1
+    # 둘 다 있으면 글쓰기 지시(personal_note)가 style_note 컬럼보다 우선한다.
+    assert "요약을 더 짧게" in llm.prompts[0] and "컬럼에 적은 요청" not in llm.prompts[0]
+    assert "요약 0!" in calls[0]["html"] and OWNER.token in calls[0]["html"]
+    assert "요약 0!" not in calls[1]["html"], "다른 구독자는 공용 요약을 받는다"
+    assert result["subscribers"]["already_sent"] == 1
+    assert (OWNER.id, [i.raw.url for i in pipeline.selected], job.today_kst()) in tables.record_calls
+
+
+def test_pipeline_owner_subscriber_without_email_channel(monkeypatch, selection, tmp_path: Path):
+    """이메일 채널이 꺼진 날: is_owner 는 구독자 단계에서 받고, 그 메일에 지시가 적용된다."""
+    _configure(monkeypatch, DELIVERY_CHANNELS="discord")
+    owner = OWNER.model_copy(update={"style_note": "컬럼에 적은 요청"})
+    tables = FakeTables(monkeypatch, [owner])
+    fetches: list[bool] = []
+    real_fetch = tables.fetch_subscribers
+    monkeypatch.setattr(
+        db, "fetch_subscribers", lambda active_only=False: fetches.append(active_only) or real_fetch(active_only)
+    )
+    pipeline = _operator_pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+
+    with structlog.testing.capture_logs() as logs:
+        result = pipeline.run()
+
+    assert _to(calls) == ["me@x.com"] and "요약 0!" in calls[0]["html"]
+    assert len(llm.prompts) == 1
+    assert "요약을 더 짧게" in llm.prompts[0] and "컬럼에 적은 요청" not in llm.prompts[0]
+    assert [d.analysis.one_line_summary for d in pipeline.discord_items] == ["요약 0", "요약 1"]
+    assert result["subscribers"]["sent"] == 1
+    assert "✉️ 메일 요약 문체" in _directive_summary(logs)
+    assert len(fetches) == 1, "표시를 위해 먼저 읽은 명단을 발송 단계가 다시 쓴다"
+
+
+def test_pipeline_owner_style_note_alone_restyles_only_the_owner_copy(monkeypatch, selection, tmp_path: Path):
+    """글쓰기 지시가 없고 is_owner 의 style_note 만 있으면 그 주소의 한 통만 다듬는다."""
+    _configure(monkeypatch, EMAIL_TO="me@x.com, friend@x.com")
+    owner = OWNER.model_copy(update={"style_note": "컬럼에 적은 요청"})
+    FakeTables(monkeypatch, [owner])
+    pipeline = Pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    llm = StyleLLM(monkeypatch)
+
+    result = pipeline.run()
+
+    assert _to(calls) == ["me@x.com", "friend@x.com"]
+    assert len(llm.prompts) == 1 and "컬럼에 적은 요청" in llm.prompts[0]
+    assert llm.titles == [f"restyle:{OWNER.short_id}"]
+    assert "요약 0!" in calls[0]["html"] and OWNER.token in calls[0]["html"]
+    assert "요약 0!" not in calls[1]["html"]
+    assert result["subscribers"]["already_sent"] == 1
+
+
+def test_owner_reuses_the_operator_mail_restyle(monkeypatch, selection):
+    """운영자 메일 단계가 같은 요청문으로 다듬어 둔 목록이 있으면 LLM 을 다시 부르지 않는다."""
+    from app.directives import Directive
+    from app.models import UserProfile
+
+    _configure(monkeypatch)
+    FakeTables(monkeypatch)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+    pool = _pool()
+    owner_items = [pool[0].item, pool[1].item]
+    restyled = [
+        i.model_copy(update={"analysis": i.analysis.model_copy(update={"one_line_summary": "미리 다듬음"})})
+        for i in owner_items
+    ]
+    context = delivery.OwnerContext(
+        profile=UserProfile(user_id="default"),
+        directive=Directive(personal_note="요약을 더 짧게"),
+        restyled_items=restyled,
+        restyled_note="요약을 더 짧게",
+    )
+
+    delivery.deliver_to_subscribers([OWNER], pool, DATE, owner_items=owner_items, owner_context=context)
+
+    assert calls[0]["html"].count("미리 다듬음") == 2
+
+
+def test_pipeline_without_subscribers_or_writing_note_never_calls_the_llm(monkeypatch, selection, tmp_path: Path):
+    """구독자 0명, 글쓰기 지시 없음: 문체 단계는 흔적이 없다(호출 0회, 로그 없음, 명단 조회 1회)."""
+    _configure(monkeypatch, EMAIL_TO="me@x.com", DELIVERY_CHANNELS="email")
+    tables = FakeTables(monkeypatch, [])
+    fetches: list[bool] = []
+    real_fetch = tables.fetch_subscribers
+    monkeypatch.setattr(
+        db, "fetch_subscribers", lambda active_only=False: fetches.append(active_only) or real_fetch(active_only)
+    )
+    pipeline = Pipeline(monkeypatch, tmp_path)
+    calls = _record_resend(monkeypatch)
+    _no_llm(monkeypatch)
+
+    with structlog.testing.capture_logs() as logs:
+        result = pipeline.run()
+
+    assert result["delivery"] == {"email": True} and "subscribers" not in result
+    assert _to(calls) == ["me@x.com"]
+    assert calls[0]["html"] == newsletter.render_digest_email(
+        pipeline.selected, date_str=newsletter.kst_date_label(job.today_kst()),
+        archive_url=f"{newsletter.ARCHIVE_BASE}/{job.today_kst()}.html",
+    )
+    assert not [e for e in logs if "restyle" in e["event"]]
+    assert len(fetches) == 1

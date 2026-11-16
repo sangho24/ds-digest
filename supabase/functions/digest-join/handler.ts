@@ -1,5 +1,5 @@
 // 가입 요청 처리 흐름. 저장소(JoinStore)를 주입받으므로 가짜 저장소로 테스트할 수 있다.
-// 이메일과 초대 코드는 응답에도 로그에도 남기지 않는다.
+// 이메일, 초대 코드, 문체 요청은 응답에도 로그에도 남기지 않는다.
 
 import {
   buildCorsHeaders,
@@ -7,6 +7,7 @@ import {
   isInviteCodeValid,
   isOriginAllowed,
   MAX_BODY_BYTES,
+  normalizeStyleNote,
   validateApplication,
 } from "./logic.ts";
 import type { JoinErrorCode } from "./logic.ts";
@@ -22,6 +23,8 @@ export interface NewSubscriber {
   name: string;
   token: string;
   consentedAt: Date;
+  /** 문체 요청. 적지 않았으면 null. */
+  styleNote: string | null;
 }
 
 /** DB 접근 계약. 실패하면 StoreError 를 던진다. */
@@ -34,8 +37,16 @@ export interface JoinStore {
    * 그 사이 같은 이메일이 먼저 들어와 유일 조건에 걸리면 던지지 않고 "conflict" 를 돌려준다.
    */
   insertSubscriber(subscriber: NewSubscriber): Promise<"inserted" | "conflict">;
-  /** 해지 상태인 행만 active 로 되돌리고 consented_at 을 갱신한다. 다른 컬럼은 건드리지 않는다. */
-  reactivateSubscriber(subscriberId: string, consentedAt: Date): Promise<void>;
+  /**
+   * 해지 상태인 행만 active 로 되돌리고 consented_at 을 갱신한다.
+   * styleNote 가 null 이 아니면 style_note 도 그 값으로 덮어쓰고, null 이면 기존 값을 그대로 둔다.
+   * 다른 컬럼은 건드리지 않는다.
+   */
+  reactivateSubscriber(
+    subscriberId: string,
+    consentedAt: Date,
+    styleNote: string | null,
+  ): Promise<void>;
 }
 
 /** 어느 단계에서 어떤 DB 오류 코드로 실패했는지만 담는다(행 내용은 담지 않는다). */
@@ -155,6 +166,10 @@ export function createHandler(deps: JoinHandlerDeps): (req: Request) => Promise<
       if (!parsed.ok) return respond(parsed.status, { ok: false, error: parsed.error });
       const application = parsed.value;
 
+      const note = normalizeStyleNote(raw.value.styleNote);
+      if (!note.ok) return respond(note.status, { ok: false, error: note.error });
+      const styleNote = note.value;
+
       // 정원은 이메일을 찾아보기 전에 따진다. 정원이 찬 동안에는 이미 가입한 이메일과
       // 처음 보는 이메일이 똑같이 409 를 받으므로, 응답으로 가입 여부를 알아낼 수 없다.
       const activeCount = await deps.store.countActiveSubscribers();
@@ -171,11 +186,14 @@ export function createHandler(deps: JoinHandlerDeps): (req: Request) => Promise<
           name: application.name,
           token: deps.generateToken(),
           consentedAt: now,
+          styleNote,
         });
       } else if (existing.status === "unsubscribed") {
-        await deps.store.reactivateSubscriber(existing.id, now);
+        // 문체 요청은 새로 적었을 때만 바뀐다. 비워 두고 다시 가입하면 예전 요청이 남는다.
+        await deps.store.reactivateSubscriber(existing.id, now, styleNote);
       }
-      // 이미 받고 있는 이메일이면 아무것도 바꾸지 않는다(이름, token, 동의 시각 모두 그대로).
+      // 이미 받고 있는 이메일이면 아무것도 바꾸지 않는다(이름, token, 동의 시각, 문체 요청 모두 그대로).
+      // 초대 코드를 가진 다른 사람이 남의 설정을 바꾸지 못하게 하려는 것이다.
 
       // 세 경우 모두 같은 응답이다. token 도 돌려주지 않는다(메일로만 전달된다).
       return respond(200, { ok: true });

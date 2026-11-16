@@ -123,6 +123,10 @@ jobs:
           RELEVANCE_THRESHOLD: ${{ secrets.RELEVANCE_THRESHOLD }}
           YT_FETCH_PER_CHANNEL: ${{ secrets.YT_FETCH_PER_CHANNEL }}
           YT_NEW_PER_CHANNEL: ${{ secrets.YT_NEW_PER_CHANNEL }}
+          # 구독자별 요약 문체 다듬기(app/restyle.py). 코드 배포 없이 끄거나 상한을 바꿀 수
+          # 있게 노출한다. 시크릿이 없으면 빈 값이 내려가고 config 가 기본값(true, 15)을 쓴다.
+          RESTYLE_ENABLED: ${{ secrets.RESTYLE_ENABLED }}
+          RESTYLE_MAX_USERS_PER_RUN: ${{ secrets.RESTYLE_MAX_USERS_PER_RUN }}
           # 수동 실행에서만 드라이런을 켤 수 있다. 스케줄 실행은 항상 실전이다.
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
           # seen 완화도 수동 실행 전용이다. 스케줄은 항상 0(기존 동작)이어야

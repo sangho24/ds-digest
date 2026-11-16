@@ -36,9 +36,25 @@
         세면 사람 간 차이가 비교에 섞인다). 운영자 목록을 같은 후보로 재현할 수 없으면
         전부 None 이다.
     배정 계산이 실패해도 발송은 한다(arm 만 None 으로 남는다).
+
+요약 문체 (PROGRESS §59, app/restyle.py):
+    선정과 비교군 배정이 끝난 뒤, 렌더 직전에 그 구독자의 문체 요청(style_note)이 있으면
+    요약 문장만 다듬은 사본으로 메일을 만든다. 무엇을 받는지(url, arm, position, 링크)는
+    그대로고 sent_items 기록도 같다. 바뀌는 것은 그 사람 메일의 문장뿐이다.
+      - 한 사람당 LLM 호출 1회. 요청이 없는 사람은 호출이 없다.
+      - 요청이 없는 사람을 먼저 전부 보낸다. LLM 대기(8K TPM 페이싱)와 실패가 그 사람들의
+        발송을 늦추거나 막지 않는다. 요청이 있는 사람은 그 뒤에 한 명씩 다듬어 보낸다.
+      - 다듬기는 fail-open 이다. 호출 실패, 시간 초과, 검증 탈락은 공용 요약으로 나간다.
+      - 한 번의 실행에서 다듬는 사람 수는 RESTYLE_MAX_USERS_PER_RUN 까지다. 넘는 사람은
+        공용 요약으로 보내고 경고(restyle_cap_reached)를 남긴다.
+      - is_owner 는 운영자가 Discord 로 남긴 글쓰기 지시(Directive.personal_note)를 먼저
+        쓰고, 없으면 style_note 컬럼을 쓴다. 운영자 메일 단계가 이미 다듬어 둔 목록이
+        있으면(OwnerContext.restyled_items) 다시 부르지 않는다.
+      - 요청문과 주소는 로그에 남기지 않는다.
 """
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 from collections import Counter
@@ -62,6 +78,7 @@ from app.newsletter import (
     unsubscribe_headers,
 )
 from app.pool import ScoredCandidate
+from app.restyle import normalize_style_note, restyle_active, restyle_items
 from app.subscribers import Subscriber, scrub_error
 
 if TYPE_CHECKING:
@@ -142,10 +159,130 @@ class Placement:
 
 @dataclass(frozen=True)
 class OwnerContext:
-    """운영자 흐름이 선정에 쓴 맥락. is_owner 의 기준 선정을 같은 조건으로 계산하는 데 쓴다."""
+    """운영자 흐름이 선정에 쓴 맥락. is_owner 의 기준 선정을 같은 조건으로 계산하는 데 쓴다.
+
+    restyled_items 는 운영자 메일 단계가 restyled_note 로 이미 다듬어 둔 목록이다. is_owner
+    구독자가 같은 요청문으로 메일을 받게 되면 LLM 을 다시 부르지 않고 이것을 쓴다.
+    """
 
     profile: UserProfile
     directive: Directive | None = None
+    restyled_items: list[DigestItem] | None = None
+    restyled_note: str = ""
+
+
+class _RestyleBudget:
+    """한 번의 실행에서 문체를 다듬어 줄 사람 수(= LLM 호출 수) 상한."""
+
+    def __init__(self, limit: int) -> None:
+        self.limit = max(0, limit)
+        self.used = 0
+        self.skipped = 0
+
+    def take(self) -> bool:
+        if self.used >= self.limit:
+            self.skipped += 1
+            return False
+        self.used += 1
+        return True
+
+
+def owner_personal_note(directive: object | None) -> str:
+    """운영자가 남긴 글쓰기 지시(Directive.personal_note)를 정규화한 것. 없으면 빈 문자열."""
+    return normalize_style_note(getattr(directive, "personal_note", "")) if directive else ""
+
+
+def style_note_for(subscriber: Subscriber, owner_context: OwnerContext | None = None) -> str:
+    """이 구독자의 메일에 쓸 문체 요청(정규화). 없으면 빈 문자열.
+
+    is_owner 는 운영자의 글쓰기 지시(personal_note)가 style_note 컬럼보다 우선한다.
+    지시는 14일 뒤 만료되고 매일 다시 해석되는 최신 의사라서다.
+    """
+    if subscriber.is_owner and owner_context is not None:
+        personal = owner_personal_note(owner_context.directive)
+        if personal:
+            return personal
+    return normalize_style_note(subscriber.style_note)
+
+
+@dataclass(frozen=True)
+class OperatorMail:
+    """운영자 메일 단계(send_digest)가 본문에 쓸 목록.
+
+    items 는 EMAIL_TO 전원의 본문이고, owner_items 는 {소문자 주소: 그 주소의 메일에만 쓸
+    목록} 이다. restyled 와 note 는 실제로 다듬은 목록과 그때 쓴 요청문이다(구독자 단계가
+    같은 요청문이면 다시 부르지 않게 OwnerContext 로 넘긴다). 다듬지 않았으면 None, "".
+    """
+
+    items: list[DigestItem]
+    owner_items: dict[str, list[DigestItem]] = field(default_factory=dict)
+    restyled: list[DigestItem] | None = None
+    note: str = ""
+
+
+async def prepare_operator_mail(
+    items: list[DigestItem],
+    directive: object | None,
+    subscribers: Iterable[Subscriber],
+    email_to: str,
+) -> OperatorMail:
+    """운영자 메일(EMAIL_TO)의 본문에 쓸 목록을 정한다. 예외를 올리지 않는다.
+
+    글쓰기 지시(Directive.personal_note)가 있으면 EMAIL_TO 전원의 본문을 그 문체로 다듬는다
+    (EMAIL_TO 는 운영자 자신의 수신 경로다). 지시가 없고 EMAIL_TO 안의 is_owner 구독자에게
+    style_note 가 있으면 그 주소의 한 통만 다듬는다. 어느 쪽이든 LLM 호출은 1회고, 둘 다
+    없으면 호출 없이 items 를 그대로 돌려준다. Discord, Telegram, 웹 아카이브, 정본, 풀은
+    이 결과를 쓰지 않는다(공용 요약 그대로).
+    """
+    plain = OperatorMail(items=items)
+    try:
+        if not items or not restyle_active():
+            return plain
+        personal = owner_personal_note(directive)
+        if personal:
+            restyled = await restyle_items(items, personal, subject="operator")
+            return OperatorMail(items=restyled, restyled=restyled, note=personal)
+        recipients = {addr.strip().lower() for addr in email_to.split(",") if addr.strip()}
+        for subscriber in subscribers:
+            note = normalize_style_note(subscriber.style_note) if subscriber.is_owner else ""
+            if note and subscriber.email in recipients:
+                restyled = await restyle_items(items, note, subject=subscriber.short_id)
+                return OperatorMail(
+                    items=items, owner_items={subscriber.email: restyled},
+                    restyled=restyled, note=note,
+                )
+        return plain
+    except Exception as e:
+        logger.warning("operator_restyle_failed", error=type(e).__name__)
+        return plain
+
+
+async def _restyled_for(
+    subscriber: Subscriber,
+    items: list[DigestItem],
+    style_note: str,
+    budget: _RestyleBudget,
+    owner_context: OwnerContext | None,
+) -> list[DigestItem]:
+    """메일 본문에 쓸 목록. 다듬지 못하면 items 그대로다(예외를 올리지 않는다)."""
+    try:
+        if (
+            subscriber.is_owner
+            and owner_context is not None
+            and owner_context.restyled_items is not None
+            and owner_context.restyled_note == style_note
+            and [d.raw.url for d in owner_context.restyled_items] == [d.raw.url for d in items]
+        ):
+            # 운영자 메일 단계가 같은 요청문으로 이미 다듬었다. 호출을 아낀다.
+            return owner_context.restyled_items
+        if not budget.take():
+            return items
+        return await restyle_items(items, style_note, subject=subscriber.short_id)
+    except Exception as e:
+        logger.warning(
+            "subscriber_restyle_failed", subscriber=subscriber.short_id, error=type(e).__name__
+        )
+        return items
 
 
 def holdout_draw(subscriber_id: str, date_iso: str, pair_index: int) -> float:
@@ -359,7 +496,7 @@ def render_for_subscriber(
     return email_subject(len(items), date_iso), html, unsubscribe_headers(subscriber.token)
 
 
-def _deliver_one(
+async def _deliver_one(
     subscriber: Subscriber,
     scored: list[ScoredCandidate],
     date_iso: str,
@@ -367,6 +504,8 @@ def _deliver_one(
     already_delivered: set[str],
     dry_run_dir: Path | None,
     owner_context: OwnerContext | None = None,
+    style_note: str = "",
+    budget: _RestyleBudget | None = None,
 ) -> SubscriberOutcome:
     from app.db import has_sent_on_date, record_sent_items
 
@@ -398,7 +537,12 @@ def _deliver_one(
         record_sent_items(subscriber.id, urls, date_iso, arms=arms)
         return SubscriberOutcome(subscriber.short_id, STATUS_ALREADY, items=len(items))
 
-    subject, html, headers = render_for_subscriber(subscriber, items, date_iso)
+    # 문체 요청이 있으면 요약 문장만 다듬은 사본으로 렌더한다. 위에서 정한 urls, arms 와
+    # 아래의 sent_items 기록은 공용 목록 기준 그대로다(무엇을 받았는지는 바뀌지 않는다).
+    mail_items = items
+    if style_note and budget is not None:
+        mail_items = await _restyled_for(subscriber, items, style_note, budget, owner_context)
+    subject, html, headers = render_for_subscriber(subscriber, mail_items, date_iso)
 
     if dry_run:
         assert dry_run_dir is not None
@@ -419,7 +563,7 @@ def _deliver_one(
     return SubscriberOutcome(subscriber.short_id, STATUS_SENT, items=len(items))
 
 
-def deliver_to_subscribers(
+async def deliver_to_subscribers_async(
     subscribers: Iterable[Subscriber],
     scored: list[ScoredCandidate],
     date_iso: str,
@@ -427,21 +571,45 @@ def deliver_to_subscribers(
     already_delivered: Iterable[str] = (),
     dry_run_dir: Path | None = None,
     owner_context: OwnerContext | None = None,
+    restyle: bool = True,
 ) -> DeliverySummary:
-    """활성 구독자마다 선정, 렌더, 발송, sent_items 기록을 한다. 예외를 올리지 않는다.
+    """활성 구독자마다 선정, (문체 다듬기,) 렌더, 발송, sent_items 기록을 한다. 예외를 올리지 않는다.
 
     scored 는 그날의 후보 풀(분석된 순서)이다. owner_items 는 운영자 흐름에서 이미 선정된
     목록이고, already_delivered 는 운영자 메일 단계가 이미 링크 든 메일을 보낸 주소다.
     dry_run_dir 를 주면 발송과 DB 기록 없이 수신자별 HTML 만 그 아래에 쓴다.
-    owner_context 는 운영자 흐름이 선정에 쓴 프로필과 지시다. is_owner 의 비교군 표시에만
-    쓰이고, 없으면 빈 프로필과 지시 없음으로 재현을 시도한다(안 맞으면 arm 은 None).
+    owner_context 는 운영자 흐름이 선정에 쓴 프로필과 지시다. is_owner 의 비교군 표시와
+    문체 요청(personal_note)에 쓰이고, 없으면 빈 프로필과 지시 없음으로 재현을 시도한다
+    (안 맞으면 arm 은 None).
+
+    restyle=False 거나 설정(RESTYLE_ENABLED, DRY_RUN)이 막으면 문체 다듬기를 하지 않는다.
+    문체 요청이 없는 구독자를 먼저 전부 처리하고, 요청이 있는 구독자를 그 뒤에 처리한다
+    (결과의 outcomes 도 그 순서다). 요청이 한 명도 없으면 순서와 동작이 예전과 같고 LLM
+    호출이 없다.
     """
     delivered = {addr.lower() for addr in already_delivered}
     summary = DeliverySummary()
-    for subscriber in subscribers:
+    everyone = list(subscribers)
+
+    notes: dict[str, str] = {}
+    budget = _RestyleBudget(0)
+    try:
+        if restyle and restyle_active():
+            notes = {s.id: style_note_for(s, owner_context) for s in everyone}
+            budget = _RestyleBudget(get_settings().restyle_max_users_per_run)
+    except Exception as e:
+        # 문체 준비가 실패해도 발송은 한다(전원 공용 요약).
+        logger.warning("restyle_setup_failed", error=type(e).__name__)
+        notes = {}
+
+    # 요청 없는 사람을 먼저 보낸다. 한 사람의 LLM 대기나 실패가 이들의 발송을 늦추지 않는다.
+    plain = [s for s in everyone if not notes.get(s.id)]
+    styled = [s for s in everyone if notes.get(s.id)]
+    for subscriber in plain + styled:
         try:
-            outcome = _deliver_one(
-                subscriber, scored, date_iso, owner_items, delivered, dry_run_dir, owner_context
+            outcome = await _deliver_one(
+                subscriber, scored, date_iso, owner_items, delivered, dry_run_dir, owner_context,
+                style_note=notes.get(subscriber.id, ""), budget=budget,
             )
         except Exception as e:
             # 한 구독자의 실패가 다음 구독자를 막지 않는다.
@@ -459,5 +627,35 @@ def deliver_to_subscribers(
             items=outcome.items,
             error=outcome.error or None,
         )
+    if budget.skipped:
+        # 상한을 넘은 사람은 공용 요약으로 나갔다. 누구인지는 남기지 않는다(건수만).
+        logger.warning("restyle_cap_reached", limit=budget.limit, skipped=budget.skipped)
     logger.info("subscriber_delivery_done", date=date_iso, **summary.as_dict())
     return summary
+
+
+def deliver_to_subscribers(
+    subscribers: Iterable[Subscriber],
+    scored: list[ScoredCandidate],
+    date_iso: str,
+    owner_items: list[DigestItem] | None = None,
+    already_delivered: Iterable[str] = (),
+    dry_run_dir: Path | None = None,
+    owner_context: OwnerContext | None = None,
+    restyle: bool = True,
+) -> DeliverySummary:
+    """deliver_to_subscribers_async 의 동기 진입점(CLI 용). 인자와 결과는 같다.
+
+    이벤트 루프를 새로 만들어 돌리므로 이미 루프 안에 있는 코드(daily_digest)는 이것을
+    부르지 말고 deliver_to_subscribers_async 를 await 한다.
+    """
+    return asyncio.run(
+        deliver_to_subscribers_async(
+            subscribers, scored, date_iso,
+            owner_items=owner_items,
+            already_delivered=already_delivered,
+            dry_run_dir=dry_run_dir,
+            owner_context=owner_context,
+            restyle=restyle,
+        )
+    )

@@ -200,6 +200,7 @@ async def send_digest(
     subject_prefix: str = "",
     owners: Mapping[str, str] | None = None,
     owner_delivered: set[str] | None = None,
+    owner_items: Mapping[str, list[DigestItem]] | None = None,
 ) -> bool:
     """렌더링된 뉴스레터를 이메일로 발송한다.
 
@@ -221,6 +222,11 @@ async def send_digest(
     않는 이유는 이 함수의 성공 여부(= 채널 성공, _mark_sent)가 실제 발송을 그대로
     반영해야 하기 때문이다. 그렇게 보낸 주소는 owner_delivered 에 담아 구독자 단계가
     다시 보내지 않게 한다. owners 가 비어 있으면 동작은 예전과 완전히 같다.
+
+    owner_items 는 {소문자 이메일: 그 주소의 메일 본문에만 쓸 목록} 이다. is_owner 구독자의
+    style_note 로 다듬은 요약(app/restyle.py)을 그 한 통에만 쓰려는 것이고, owners 에 있는
+    주소에만 적용된다. 아이템 구성(url, 순서)은 items 와 같아야 한다. 운영자의 글쓰기
+    지시(personal_note)로 다듬은 목록은 EMAIL_TO 전원에게 가므로 items 로 넘긴다.
     """
     settings = get_settings()
 
@@ -261,7 +267,7 @@ async def send_digest(
         if owner_token:
             try:
                 body = render_digest_email(
-                    items,
+                    (owner_items or {}).get(addr.lower(), items),
                     date_str=date_label,
                     archive_url=archive_url,
                     recipient=RecipientLinks(token=owner_token, date_iso=today_iso),
