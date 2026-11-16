@@ -41,3 +41,15 @@ def test_failure_alerts_go_to_the_channels_we_read():
         assert notify, f"{workflow}: 알림 단계가 없다"
         env = notify[0].get("env") or {}
         assert "DISCORD_BOT_TOKEN" in env and "RESEND_API_KEY" in env, f"{workflow}: {sorted(env)}"
+
+
+def test_candidate_pool_is_committed_with_the_digest():
+    """후보 풀이 커밋되지 않으면 러너와 함께 사라져 사용자별 재선정을 할 수 없다(PROGRESS §55)."""
+    publish = [
+        s.get("run") or ""
+        for s in _steps("daily_digest.yml", "digest")
+        if "git add docs/" in (s.get("run") or "")
+    ]
+    assert publish, "커밋 단계가 없다"
+    assert "git add data/pool/" in publish[0]
+    assert "!data/pool/" in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()

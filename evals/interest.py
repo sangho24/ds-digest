@@ -8,6 +8,8 @@
 
 범위:
     보고 전용이다. evals/judge.py 와는 독립이다(심판은 근거 검증, 여기는 취향 측정).
+    단, 쌓인 표시는 app/interest_model.py 가 읽어 선정 순서에 되먹인다. report 의 "선정에 반영되는
+    학습 결과" 구획이 그 모델을 그대로 보여 준다.
     페이지에는 모델이 매긴 점수(relevance_score, domain 등)를 보이지 않는다. 사람 판단이 모델 점수에
     끌려가면 안 되기 때문이다. data-* 속성에만 실어 둔다.
 
@@ -34,6 +36,16 @@ from pathlib import Path
 import sys
 from typing import Any, TextIO
 
+from app.interest_model import (
+    MIN_LABELS,
+    FeatureStat,
+    InterestModel,
+    build_interest_model,
+    feature_points,
+    load_interest_labels,
+    ranked_features,
+)
+
 ROOT = Path(__file__).resolve().parent.parent
 RECORDS_DIR = ROOT / "data" / "records"
 DEFAULT_PAGE = ROOT / "data" / "evals" / "interest.html"
@@ -52,6 +64,8 @@ MAX_TAGS = 5
 MAX_TITLES = 20
 MAX_NOTE_LEN = 200
 DEFAULT_DAYS = 14
+# "선정에 반영되는 학습 결과" 구획에서 위·아래로 보여 줄 특징 수.
+LEARNED_TOP_N = 5
 
 
 # ──────────────────────────────────────────────
@@ -384,6 +398,10 @@ def normalize_label(raw: Any) -> dict[str, Any] | None:
     for field in LABEL_KEY_FIELDS:
         value = raw.get(field)
         record[field] = None if value is None else str(value)
+    # 다중 사용자 확장용 키. 온 경우에만 보존하고, 없으면 넣지 않는다(읽는 쪽이 "default" 로 본다).
+    user_id = str(raw.get("user_id") or "").strip()
+    if user_id:
+        record["user_id"] = user_id
     return record
 
 
@@ -545,6 +563,61 @@ def summarize(labels: dict[str, dict[str, Any]], items: list[dict[str, Any]]) ->
     }
 
 
+def _learned_row(stat: FeatureStat) -> dict[str, Any]:
+    return {
+        "kind": stat.kind,
+        "value": stat.value,
+        "want": stat.want,
+        "skip": stat.skip,
+        "rate": round(stat.rate, 3),
+        "deviation": round(stat.deviation, 3),
+        "points": round(feature_points(stat), 2),
+    }
+
+
+def summarize_learned(model: InterestModel, top_n: int = LEARNED_TOP_N) -> dict[str, Any]:
+    """선정에 쓰이는 모델(app/interest_model)을 보고용 dict 로. 조정 폭이 큰 특징 위·아래 top_n 개."""
+    ranked = ranked_features(model)
+    raised = [stat for stat in ranked if stat.deviation > 0][:top_n]
+    lowered = [stat for stat in reversed(ranked) if stat.deviation < 0][:top_n]
+    return {
+        "active": model.active,
+        "label_count": model.label_count,
+        "min_labels": MIN_LABELS,
+        "base_rate": round(model.base_rate, 3) if model.label_count else None,
+        "feature_count": len(ranked),
+        "raised": [_learned_row(stat) for stat in raised],
+        "lowered": [_learned_row(stat) for stat in lowered],
+    }
+
+
+def _format_learned(learned: dict[str, Any]) -> list[str]:
+    state = "활성" if learned["active"] else "비활성"
+    lines = [
+        "선정에 반영되는 학습 결과:",
+        f"  모델 {state} (읽고 싶다+아니다 {learned['label_count']}건 / 필요 {learned['min_labels']}건)",
+    ]
+    if not learned["active"]:
+        lines.append("  표시가 더 쌓일 때까지 선정은 조정 없이 돈다.")
+        return lines
+    lines.append(f"  전체 읽고 싶다 비율 {_pct(learned['base_rate'])}, 학습된 특징 {learned['feature_count']}개")
+
+    def rows(entries: list[dict[str, Any]]) -> list[str]:
+        if not entries:
+            return ["    (없음)"]
+        return [
+            f"    {row['kind']}:{row['value']} {row['points']:+.2f}점 "
+            f"(읽고 싶다 {row['want']}/{row['want'] + row['skip']}, 수축 비율 {_pct(row['rate'])})"
+            for row in entries
+        ]
+
+    lines.append(f"  올리는 특징 (상위 {LEARNED_TOP_N}개, 그 특징만 걸렸을 때의 조정값):")
+    lines.extend(rows(learned["raised"]))
+    lines.append(f"  내리는 특징 (하위 {LEARNED_TOP_N}개):")
+    lines.extend(rows(learned["lowered"]))
+    return lines
+
+
 def _pct(ratio: float | None) -> str:
     return "-" if ratio is None else f"{ratio * 100:.0f}%"
 
@@ -584,6 +657,9 @@ def format_report(summary: dict[str, Any]) -> str:
         f"아니다 제목 (최대 {MAX_TITLES}개):",
         *([f"  [{t['date'] or '----'}] {t['title']}" for t in summary["skip_titles"]] or ["  (없음)"]),
     ]
+    learned = summary.get("learned")
+    if learned:
+        lines.extend(["", *_format_learned(learned)])
     return "\n".join(lines)
 
 
@@ -639,6 +715,9 @@ def _cmd_report(args: argparse.Namespace, out: TextIO) -> int:
     records_dir = Path(args.records_dir) if args.records_dir else RECORDS_DIR
     items = load_items(records_dir)
     summary = summarize(labels, items)
+    # 선정이 쓰는 것과 같은 로더·모델을 그대로 돌린다. 보고와 실제 동작이 갈라지지 않게 한다.
+    model = build_interest_model(load_interest_labels(path=resolve_labels_path(args.labels)), records_dir)
+    summary["learned"] = summarize_learned(model)
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2), file=out)
     else:

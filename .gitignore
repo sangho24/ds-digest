@@ -7,6 +7,9 @@ __pycache__/
 # (노트북 반납 후에도 JSON 정본을 보존하기 위함 — 로컬 JSON이 정본)
 data/*
 !data/records/
+# 후보 풀(app/pool.py). 탈락한 후보의 분석 결과까지 담아 사용자별 재선정에 쓴다.
+# 러너가 ephemeral 이라 커밋하지 않으면 매 런 사라진다. 30일 지난 파일은 저장 시 지운다.
+!data/pool/
 # 퀴즈 정답 라벨. 러너가 ephemeral이라 커밋하지 않으면 매 런 사라지고,
 # Supabase에만 두면 크레덴셜이 끊길 때 통째로 증발한다. 정본은 리포에 둔다.
 !data/quiz_results.jsonl

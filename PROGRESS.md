@@ -1075,6 +1075,48 @@ GitHub Actions (07:30 KST)
 - **남은 것**: 사람 표시 그대로(30건, 질문 255건). 표시 중간 결과는 페이지가 저장하지 않으니
   "결과 JSON 복사"로 수시로 빼 둔다. 같은 id 는 마지막 라벨이 이긴다.
 
+### 54. 관심도 표시를 선정에 되먹인다 (`app/interest_model.py`, `app/analyzer.py`, `evals/interest.py`)
+- **문제**: `interest_labels.jsonl` 의 읽고 싶다/아니다 표시는 보고 전용이라 표시해도 다음 선정이 그대로였다.
+  기존 취향 신호(👍/👎, 지시)는 동점 타이브레이크로만 작동해 점수가 1점이라도 다르면 순서를 못 바꿨다.
+- **구현**: `app/interest_model.py` 가 표시된 url 을 정본과 조인해 출처 계열·도메인·콘텐츠 유형·태그별로
+  want/skip 을 세고 수축 비율 `(want + 5*p0) / (n + 5)` 의 편차를 낸다(p0 = 전체 want 비율). 표본 3건 미만
+  값은 빼고, want+skip 20건 미만이면 모델 비활성이다. 아이템 조정값은 매칭된 종류별 평균 편차를 가중(출처
+  0.4, 도메인 0.3, 태그 0.2, 유형 0.1, 매칭된 종류끼리 재정규화)으로 합쳐 편차 ±0.5 = ±1.5점으로 자른다.
+  `filter_and_analyze` 는 런당 한 번 모델을 만들어 정렬 1차 키와 `_select_diverse`(새 인자 `score_of`)의
+  기준 점수를 `relevance_score + 조정값` 으로 쓴다. `relevance_score`, 바닥값 판정, 발송 순서 정렬은 조정 전
+  값 그대로다(근거 점수에 취향을 넣지 않는다는 `preferences.py` 원칙 유지). 조정이 걸려 발송된 아이템은
+  `analysis.notes` 에 `chapter="interest_adjust"` 인 노트로 조정값과 근거를 남긴다(`Scores` 는 다섯 축이
+  필수라 못 쓴다. notes 는 계약과 지면에 나가지 않는다). 실패하면 `interest_model_failed` 로그만 남기고
+  조정 없이 간다. `user_id` 는 `"default"` 고정이되 인자로 흐른다(레코드에 없으면 default 로 본다).
+  `evals.interest report` 에 "선정에 반영되는 학습 결과" 구획(활성 여부, 올리는/내리는 특징 각 5개) 추가.
+- **검증**: `tests/test_interest_model.py` 25건(비활성 임계, 수축 계산, 클램프, user_id 필터, 파일 없음,
+  7점 대 6점 순서 뒤집힘, 비활성 시 순서 유지, 바닥값 불변, 실패 시 fail-open). 테스트 759 → 784.
+  `tests/conftest.py` 가 기본 라벨 경로를 없는 파일로 돌려, 실제 표시가 쌓여도 기존 선정 테스트가 흔들리지 않는다.
+- **남은 것**: 2026-11-16 사용자 표시 70건(읽고 싶다 42 / 아니다 24 / 모르겠다 4)을 반입해 모델이
+  활성이다. 실측 조정 폭은 특징 하나당 최대 0.6점대라 ±1.5 상한에 닿지 않는다. 표시가 더 쌓인 뒤 가중이
+  과한지 report 구획으로 다시 확인한다. 탈락한 후보의 조정값은 정본이 아니라 로그 건수로만 남는다.
+
+### 55. 선정을 순수 함수로 떼고 후보 풀을 저장한다 (`app/analyzer.py`, `app/pool.py`, `app/jobs/select_preview.py`)
+- **문제**: 분석(LLM)과 선정이 `filter_and_analyze` 한 함수에 묶여 있고, 탈락한 후보의 분석 결과는 로그에만
+  남고 버려졌다. 사용자가 늘면 선정만 사용자별로 다시 해야 하는데 다시 넣을 입력이 없었다.
+- **구현**: 선정 구간(바닥값, 관심도 조정, 정렬, `_select_diverse`)을 `select_for_user(scored, profile,
+  directive, user_id) -> SelectionResult` 로 옮겼다. LLM 과 네트워크를 쓰지 않고 입력 아이템을 바꾸지 않는다.
+  바닥값 판정용 혼합 전 절대 점수는 `ScoredCandidate(item, absolute_score, selected_default)` 로 함께 넘긴다.
+  조정 노트 기록, 감사 로그, 개념 등록은 `filter_and_analyze` 에 그대로 남는다. `app/pool.py` 가 분석된 후보
+  전체(탈락, 바닥 미달 포함)를 `data/pool/pool_{date}.json` 에 저장한다(transcript 와 body 제외, 들여쓰기 없음,
+  `POOL_RETENTION_DAYS=30` 지난 파일은 저장 시 삭제, 실패는 `pool_save_failed` 경고만). 스냅샷은 선정 직후,
+  조정 노트와 개념 표준명 치환이 아이템을 바꾸기 전에 굳힌다(`filter_and_analyze` 의 새 인자 `pool_out`).
+  드라이런은 정본과 같은 규칙으로 `data/dryrun/data/pool/` 에 쓴다. 워크플로 커밋 스텝과 `.gitignore` 에
+  `data/pool/` 을 열었다. `python -m app.jobs.select_preview --date YYYY-MM-DD [--user-id]` 가 풀을 읽어
+  선정/탈락/바닥미달 표를 낸다(지시는 LLM 이 필요해 None, 프로필은 읽기만 한다).
+- **검증**: `tests/test_pool.py` 13건(직접 호출과 `filter_and_analyze` 선정 일치, 저장 후 재선정 일치(관심도
+  조정이 선정을 바꾸는 경우 포함), 원문 미포함, 보존 기간 경계, fail-open, CLI 파일 없음 종료 코드 1)과
+  워크플로 배선 1건. 테스트 784 → 798.
+- **남은 것**: 풀의 점수는 default 사용자의 지시(`standing_note`, 난이도 배합, 출처 제외)가 섞인 채 분석된
+  값이다. 프롬프트에서 개인 지시를 빼기 전까지는 다른 사용자에게 완전히 공용인 분석이 아니다. 퀴즈 약점 개념
+  (`weak_concepts`)과 설정값(바닥값, 정원)도 아직 사용자별이 아니다. 전부 바닥 미달로 발송이 없는 날은 풀을
+  저장하지 않는다(저장 지점이 정본 저장 옆이다).
+
 ---
 
 ## 다음 스텝 아이디에이션

@@ -295,7 +295,11 @@ async def run_daily_digest() -> dict:
         return {"status": "all_seen", "collected": 0}
 
     # 4. 필터링 + 분석
-    digest_items = await filter_and_analyze(raw_items, profile, directive)
+    # pool_entries 에는 분석된 후보 전체(탈락 포함)의 스냅샷이 담긴다(7.6에서 저장).
+    pool_entries: list[dict[str, Any]] = []
+    digest_items = await filter_and_analyze(
+        raw_items, profile, directive, pool_out=pool_entries
+    )
 
     if not digest_items:
         # 상대 랭킹 전환 후 이 분기는 "모든 아이템이 바닥값 미만"인 드문 경우에만 걸린다.
@@ -424,6 +428,17 @@ async def run_daily_digest() -> dict:
     )
     logger.info("records_saved", path=str(record_path), count=len(digest_items))
     await save_digest_records_to_db(digest_items, today_str)  # best-effort 미러
+
+    # 7.6. 후보 풀 저장 — 탈락한 후보의 분석 결과까지 남겨 사용자별 재선정에 쓴다.
+    # 정본이 아니므로 실패해도 경고만 남기고 계속 간다(save_pool 이 삼킨다).
+    # 드라이런은 정본과 같은 규칙으로 data/dryrun/ 아래에 격리한다.
+    from app.pool import save_pool
+    pool_file = save_pool(
+        pool_entries, today_str,
+        base_dir=dryrun_root if settings.dry_run else None,
+    )
+    if pool_file is not None:
+        logger.info("pool_saved", path=str(pool_file), count=len(pool_entries))
 
     elapsed = (datetime.now() - start).total_seconds()
     result = {

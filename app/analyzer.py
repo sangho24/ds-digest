@@ -5,9 +5,12 @@ httpx로 Gemini REST API 직접 호출 — google-generativeai SDK 불필요
 """
 import asyncio
 from collections import Counter
+from collections.abc import Callable
+from dataclasses import dataclass
 import json
 import re
 import time
+from typing import Any
 import structlog
 import httpx
 from urllib.parse import urlparse, parse_qs
@@ -32,10 +35,18 @@ from app.preferences import (
     describe_for_prompt,
     preference_score,
 )
+from app.interest_model import (
+    DEFAULT_USER_ID,
+    build_interest_model,
+    interest_adjust,
+    item_features,
+    load_interest_labels,
+)
 from app.models import (
     RawContent, ContentAnalysis, KeyPoint, QuizItem, SourceType,
-    DigestItem, UserProfile, EvidenceLevel, EVIDENCE_DEPTH_CAPS,
+    DigestItem, UserProfile, EvidenceLevel, EVIDENCE_DEPTH_CAPS, AtomicNote,
 )
+from app.pool import ScoredCandidate, snapshot_pool
 from app.transcript_gemini import fetch_transcript_via_gemini
 
 logger = structlog.get_logger()
@@ -1594,6 +1605,7 @@ def _select_diverse(
     limit: int,
     per_source: int,
     strength: float,
+    score_of: Callable[[DigestItem], float] | None = None,
 ) -> list[DigestItem]:
     """점수순 후보에서 출처 편중을 **물량 기준으로 정규화**하며 limit건을 고른다.
 
@@ -1616,9 +1628,16 @@ def _select_diverse(
     per_source는 안전판이다. 정규화가 예상 밖으로 약할 때 한 소스가 다이제스트를
     통째로 먹는 것만 막는다. 상한 때문에 정원을 못 채우면 상한을 완화한다 —
     약한 날 다이제스트를 짧게 만드는 것이 편중보다 나쁘다(§3.4가 해결한 문제다).
+
+    score_of는 고를 때 쓰는 기준 점수다. 비우면 relevance_score 그대로다.
+    관심도 조정(app/interest_model.py)이 켜진 런에서는 호출부가 "relevance_score +
+    조정값"을 넘긴다. 발송 순서를 되돌리는 마지막 정렬은 표시되는 relevance_score를 쓴다.
     """
     if not candidates or limit <= 0:
         return []
+
+    def base_score(item: DigestItem) -> float:
+        return score_of(item) if score_of is not None else item.analysis.relevance_score
 
     def key_of(item: DigestItem) -> str:
         return source_family(item.raw.source_key or item.raw.source_name)
@@ -1634,7 +1653,7 @@ def _select_diverse(
         def adjusted(item: DigestItem) -> float:
             source = key_of(item)
             over = volume[source] / mean_volume if mean_volume else 1.0
-            return item.analysis.relevance_score - strength * taken[source] * over
+            return base_score(item) - strength * taken[source] * over
 
         # 하드 상한에 걸리지 않은 것 중에서 조정점수 최대를 고른다.
         eligible = [d for d in remaining if taken[key_of(d)] < per_source] or remaining
@@ -1652,10 +1671,149 @@ def _select_diverse(
     return picked
 
 
+# 정본에서 관심도 조정을 찾는 표식. AtomicNote.chapter 에 넣는다.
+INTEREST_NOTE_CHAPTER = "interest_adjust"
+
+
+def _interest_adjustments(
+    candidates: list[DigestItem], user_id: str
+) -> dict[int, tuple[float, list[str]]]:
+    """후보별 관심도 조정값과 근거를 {id(item): (조정값, 근거)}로 돌려준다.
+
+    근거가 매칭된 후보만 들어간다. 라벨 파일이 없거나 표본이 모자라 모델이
+    비활성이면 빈 dict라 선정은 조정 전과 완전히 같다. 로드·계산이 실패해도
+    빈 dict로 계속 간다(fail-open). 취향 신호 하나 때문에 발송이 멈추면 안 된다.
+    """
+    try:
+        model = build_interest_model(load_interest_labels(user_id), user_id=user_id)
+        if not model.active:
+            return {}
+        adjustments: dict[int, tuple[float, list[str]]] = {}
+        for d in candidates:
+            value, reasons = interest_adjust(
+                item_features(
+                    d.raw.source_key or d.raw.source_name,
+                    d.analysis.domain,
+                    d.analysis.content_type,
+                    d.analysis.tags,
+                ),
+                model,
+            )
+            if reasons:
+                adjustments[id(d)] = (value, reasons)
+        logger.info(
+            "interest_model_applied",
+            user_id=user_id,
+            labels=model.label_count,
+            base_rate=round(model.base_rate, 3),
+            adjusted=len(adjustments),
+            candidates=len(candidates),
+        )
+        return adjustments
+    except Exception as e:
+        logger.warning("interest_model_failed", user_id=user_id, error=str(e))
+        return {}
+
+
+@dataclass
+class SelectionResult:
+    """select_for_user 의 결과. selected 가 선정된 목록이고 나머지는 기록용이다."""
+
+    selected: list[DigestItem]
+    # 바닥값을 넘은 후보 수
+    above_floor: int
+    # {id(item): (관심도 조정값, 근거)}. 근거가 매칭된 후보만 들어 있다.
+    adjustments: dict[int, tuple[float, list[str]]]
+    preference_applied: bool
+    review_concepts: list[str]
+
+
+def select_for_user(
+    scored: list[ScoredCandidate],
+    profile: UserProfile,
+    directive: Directive | None = None,
+    user_id: str = DEFAULT_USER_ID,
+) -> SelectionResult:
+    """분석이 끝난 후보에서 한 사용자의 다이제스트 아이템을 고른다.
+
+    LLM 도 네트워크도 쓰지 않는다. 같은 후보 목록에 사용자 맥락(profile, directive,
+    user_id)만 바꿔 다시 부를 수 있고, 저장된 풀(app/pool.py 의 load_pool)을 그대로
+    넣어도 된다. 입력 아이템은 바꾸지 않는다. 조정 노트 기록 같은 발송용 후처리는
+    호출부(filter_and_analyze)가 한다.
+
+    scored 의 순서는 분석된 순서여야 한다. 동점은 입력 순서를 따른다.
+    """
+    # 동점은 👍/👎로 가른다. 점수 자체는 건드리지 않는다 — 근거가 같은 급일
+    # 때만 취향이 순서를 정하므로 근거 게이트가 유지된다. 상대 평가로 점수가
+    # 벌어져도 동점은 여전히 생기고, 그때 취향이 순서를 정한다.
+    settings = get_settings()
+    floor = settings.relevance_floor
+    # 퀴즈에서 반복해서 틀린 개념을 선정에 되먹인다 — 여기가 §4.2 ⑥→⑦이
+    # 닫히는 지점이다. 응답이 없거나 표본이 부족하면 빈 집합이라 무해하다.
+    review = weak_concepts()
+    signal = build_signal(
+        profile.liked_item_ids, profile.disliked_item_ids, review=review
+    )
+    # 바닥값은 **혼합 전 절대 점수**에 건다. 상대 비교가 섞인 값에 문턱을 걸면
+    # 상대 평가가 순서를 정하는 게 아니라 **탈락**을 시킨다. 후보가 전부 약한
+    # 날엔 모델이 시킨 대로 낮은 점수를 뿌리므로 대량 탈락이 일어나 다이제스트가
+    # 짧아지거나 비어버린다 — §3.4가 상대 랭킹을 도입한 목적(빈 다이제스트
+    # 구조적 해소)과 정면으로 충돌한다.
+    #
+    # 바닥값의 역할은 "명백한 저품질 제외"이고, 그건 근거 기반의 절대 판단이다.
+    # 정렬만 혼합 점수로 한다.
+    candidates = [c.item for c in scored if c.absolute_score >= floor]
+
+    # 관심도 표시(want/skip)에서 학습한 조정값. 런당 한 번 만든다.
+    # 👍/👎 타이브레이크와 달리 점수 차를 넘어 순서를 바꾸지만(최대 ±1.5점),
+    # relevance_score 자체와 위의 바닥값 판정은 건드리지 않는다. 근거 점수에
+    # 취향을 넣지 않는다는 원칙(app/preferences.py)은 그대로다.
+    interest = _interest_adjustments(candidates, user_id)
+
+    def selection_score(d: DigestItem) -> float:
+        adjustment = interest.get(id(d))
+        return d.analysis.relevance_score + (adjustment[0] if adjustment else 0.0)
+
+    candidates.sort(
+        key=lambda d: (
+            selection_score(d),
+            # 명시적 지시(±3)가 추론된 취향(±2)보다 무겁다. 사용자가 직접
+            # 말한 것이 내가 눈치로 알아낸 것보다 우선해야 한다.
+            preference_score(
+                signal, d.raw.source_key, d.analysis.tags, d.analysis.concepts
+            )
+            + (
+                directive_score(
+                    directive, d.analysis.tags, d.analysis.concepts, d.analysis.depth
+                )
+                if directive
+                else 0
+            ),
+        ),
+        reverse=True,
+    )
+    selected = _select_diverse(
+        candidates,
+        limit=settings.max_items_per_digest,
+        per_source=settings.max_items_per_source,
+        strength=settings.source_diversity_strength,
+        score_of=selection_score,
+    )
+    return SelectionResult(
+        selected=selected,
+        above_floor=len(candidates),
+        adjustments=interest,
+        preference_applied=not signal.is_empty(),
+        review_concepts=sorted(review),
+    )
+
+
 async def filter_and_analyze(
     items: list[RawContent],
     profile: UserProfile,
     directive: Directive | None = None,
+    user_id: str = DEFAULT_USER_ID,
+    pool_out: list[dict[str, Any]] | None = None,
 ) -> list[DigestItem]:
     """수집된 콘텐츠를 분석 후 상대 랭킹으로 다이제스트 아이템을 선정한다.
 
@@ -1666,6 +1824,9 @@ async def filter_and_analyze(
     상대 랭킹으로 전환한다: 후보를 점수순 정렬해 상위 max_items_per_digest건을
     뽑되, 명백한 저품질(relevance_floor 미만)만 제외한다. 약한 날에도 가용 후보
     중 최선을 발송해 빈 다이제스트를 구조적으로 없앤다.
+
+    pool_out 에 리스트를 넘기면 분석된 후보 전체(탈락 포함)의 스냅샷을 거기에
+    채운다(app/pool.py 의 save_pool 입력). 반환값은 그대로 선정된 목록이다.
     """
     settings = get_settings()
 
@@ -1732,51 +1893,33 @@ async def filter_and_analyze(
         if rated:
             logger.info("relative_rating_applied", rated=rated, total=len(analyzed))
 
-    # 3) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정.
-    #
-    #    동점은 👍/👎로 가른다. 점수 자체는 건드리지 않는다 — 근거가 같은 급일
-    #    때만 취향이 순서를 정하므로 근거 게이트가 유지된다. 상대 평가로 점수가
-    #    벌어져도 동점은 여전히 생기고, 그때 취향이 순서를 정한다.
+    # 3) 바닥값 이상 후보만 남겨 점수순 정렬 후 상위 K건 선정(select_for_user).
     floor = settings.relevance_floor
-    # 퀴즈에서 반복해서 틀린 개념을 선정에 되먹인다 — 여기가 §4.2 ⑥→⑦이
-    # 닫히는 지점이다. 응답이 없거나 표본이 부족하면 빈 집합이라 무해하다.
-    review = weak_concepts()
-    signal = build_signal(
-        profile.liked_item_ids, profile.disliked_item_ids, review=review
-    )
-    # 바닥값은 **혼합 전 절대 점수**에 건다. 상대 비교가 섞인 값에 문턱을 걸면
-    # 상대 평가가 순서를 정하는 게 아니라 **탈락**을 시킨다. 후보가 전부 약한
-    # 날엔 모델이 시킨 대로 낮은 점수를 뿌리므로 대량 탈락이 일어나 다이제스트가
-    # 짧아지거나 비어버린다 — §3.4가 상대 랭킹을 도입한 목적(빈 다이제스트
-    # 구조적 해소)과 정면으로 충돌한다.
-    #
-    # 바닥값의 역할은 "명백한 저품질 제외"이고, 그건 근거 기반의 절대 판단이다.
-    # 정렬만 혼합 점수로 한다.
-    candidates = [d for d in analyzed if absolute_score[id(d)] >= floor]
-    candidates.sort(
-        key=lambda d: (
-            d.analysis.relevance_score,
-            # 명시적 지시(±3)가 추론된 취향(±2)보다 무겁다. 사용자가 직접
-            # 말한 것이 내가 눈치로 알아낸 것보다 우선해야 한다.
-            preference_score(
-                signal, d.raw.source_key, d.analysis.tags, d.analysis.concepts
+    scored = [
+        ScoredCandidate(item=d, absolute_score=absolute_score[id(d)]) for d in analyzed
+    ]
+    result = select_for_user(scored, profile, directive, user_id)
+    selected = result.selected
+    interest = result.adjustments
+    # 후보 풀 스냅샷. 아래 후처리(조정 노트, 개념 표준명 치환)가 아이템을 바꾸기
+    # 전에 굳혀야 풀을 다시 읽어 선정했을 때 같은 입력이 된다.
+    if pool_out is not None:
+        pool_out.extend(snapshot_pool(scored, selected))
+
+    # 조정이 걸린 채 발송되는 아이템은 정본에 조정값과 근거를 남긴다. Scores는
+    # 다섯 축이 모두 필수라 조정값만 담을 수 없으므로, 계약(app/contract.py)과
+    # 지면에 나가지 않는 notes에 표식(chapter)을 달아 넣는다.
+    for d in selected:
+        adjustment = interest.get(id(d))
+        if adjustment is None:
+            continue
+        value, reasons = adjustment
+        d.analysis.notes.append(
+            AtomicNote(
+                text=f"interest_adjust {value:+.2f} ({'; '.join(reasons)})",
+                chapter=INTEREST_NOTE_CHAPTER,
             )
-            + (
-                directive_score(
-                    directive, d.analysis.tags, d.analysis.concepts, d.analysis.depth
-                )
-                if directive
-                else 0
-            ),
-        ),
-        reverse=True,
-    )
-    selected = _select_diverse(
-        candidates,
-        limit=settings.max_items_per_digest,
-        per_source=settings.max_items_per_source,
-        strength=settings.source_diversity_strength,
-    )
+        )
 
     # 4) 감사 로그: 각 아이템을 정확히 한 범주로 남긴다. DigestItem은 pydantic
     #    모델이라 값 기반 `in`은 O(n²)에다 오탐 위험이 있으므로 id()로 판별한다.
@@ -1824,12 +1967,13 @@ async def filter_and_analyze(
     logger.info(
         "relative_ranking_done",
         analyzed=len(analyzed),
-        above_floor=len(candidates),
+        above_floor=result.above_floor,
         selected=len(selected),
         sources=len({d.raw.source_key for d in selected}),
         depth_weight=depth_weight,
         floor=floor,
-        preference_applied=not signal.is_empty(),
-        review_concepts=sorted(review),
+        preference_applied=result.preference_applied,
+        interest_adjusted=len(interest),
+        review_concepts=result.review_concepts,
     )
     return selected
