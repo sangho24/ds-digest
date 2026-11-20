@@ -1,0 +1,449 @@
+{
+  "date": "2026-11-20",
+  "generated_at": "2026-11-20T05:58:20.131407",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.LG",
+        "source_key": "arxiv:cs.LG",
+        "source_label": "arXiv:cs.LG",
+        "title": "When Do Rankings Beat Signs? Gradient Direction Recovery under Even Nuisance",
+        "url": "https://arxiv.org/abs/2611.26055v1",
+        "published_at": "2026-11-19T13:01:08",
+        "transcript": null,
+        "body": "Can ranking a batch of antipodal query pairs recover a gradient direction with fewer evaluations than using within-pair signs alone? We study fixed-center recovery in $d$ dimensions for a linear signal plus an unknown differentiable even nuisance, counting function evaluations and feedback rounds separately. Shared pair offsets create an information hierarchy: Mirror retains within-pair signs, Reverse couples reversed cross-pair orders to cancel offsets, and Full enforces all ranking inequalities. Relative shell variation is the nuisance range over the query sphere normalized by the linear-signal scale. When it is at most $c\\varepsilon/\\sqrt{d}$, Reverse localizes every consistent direction to angular accuracy $\\varepsilon$ using $\\widetilde{O}(d+\\sqrt{d/\\varepsilon})$ evaluations in one round at fixed confidence, without a variation bound supplied to the decoder. This matches a lower bound up to logarithmic factors, versus the $Θ(d/\\varepsilon)$ one-round sign-only minimax cost on the same class. Over well-conditioned positive-definite quadratics with no common relative-curvature bound, the $R$-round minimax cost is instead $Θ(dR(\\varepsilon^{-1/R}-1))$, even with cumulative rankings. We extend validity beyond exact evenness under supplied error bounds. Matched-endpoint experiments certify information beyond signs and short cycles. On two ridge tasks under joint evaluation and round caps, short-cycle recovery attains lower terminal mean gaps than the tested batch-capable controls. An additional optimization benefit from fitting the complete ranking remains unestablished.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "순위 피드백으로 그래디언트 추정 비용 크게 절감",
+        "tags": [
+          "arXiv",
+          "Mirror",
+          "Reverse",
+          "Full",
+          "minimax"
+        ],
+        "concepts": [
+          "minimax rate analysis",
+          "gradient direction recovery"
+        ],
+        "key_points": [
+          {
+            "point": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 순위 방식은 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도의 방향을 복구한다",
+            "timestamp": null
+          },
+          {
+            "point": "Mirror·Reverse·Full의 정보 계층 구조가 공유 오프셋을 어떻게 활용·제거하는지를 설명한다",
+            "timestamp": null
+          },
+          {
+            "point": "리짓 작업 실험에서 짧은 사이클 순위 복구가 배치형 부호 기반 대비 최종 평균 갭을 낮추었다",
+            "timestamp": null
+          }
+        ],
+        "positioning": "이 논문은 제한된 함수 평가와 피드백 라운드에서 그래디언트 방향을 효율적으로 추정하는 문제를 다룬다. 기존 부호만 이용한 방법은 Θ(d/ε) 비용이 필요했지만, 순위 정보를 활용하면 평가 복잡도를 크게 낮출 수 있다. 이는 쿼리 효율적인 최적화와 오라클 복잡도 연구 흐름에 속한다.",
+        "production_ideas": [
+          "Reverse 순위 방식을 하이퍼파라미터 튜닝의 블랙박스 손실 그래디언트 추정에 적용하면 평가 횟수를 줄일 수 있다.",
+          "정보 계층 구조를 A/B 테스트에서 치료군과 대조군을 쌍으로 묶어 교차 순서를 반대로 설정함으로써 시스템 편향을 상쇄한다.",
+          "짧은 사이클 순위 피드백을 강화학습 정책 그래디언트 추정에 도입하면 노이즈가 큰 보상 환경에서 샘플 효율을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "Reverse 순위 방식이 동일 오프셋을 가진 쌍에서 오프셋을 상쇄할 수 있는 이유는?",
+            "options": [
+              "순위 비교가 절대값을 사용한다",
+              "교차 쌍 순서를 반대로 매김",
+              "부호 정보를 이용한다",
+              "함수 평가를 두 번한다"
+            ],
+            "answer_index": 1,
+            "explanation": "Reverse는 서로 반대 방향의 교차 쌍 순서를 사용해 오프셋을 서로 상쇄하도록 설계되었다."
+          },
+          {
+            "question": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 방식이 달성하는 평가 복잡도는?",
+            "options": [
+              "Θ(d/ε)",
+              "O~(d+√(d/ε))",
+              "Θ(d·R(ε^{-1/R}-1))",
+              "O(d^2)"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에 따르면 이 조건 하에서 Reverse는 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도를 얻는다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 7,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.17 (source:arxiv +0.08; domain:ai-ml +0.07; content_type:paper +0.02)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Two Minute Papers",
+        "source_key": "UCbfYPyITQ-7l4upoX8nvctg",
+        "source_label": "Two Minute Papers",
+        "title": "DeepMind Just Released The Best Thing AI Ever Did",
+        "url": "https://youtu.be/Cy7Wz6Z4TWU",
+        "published_at": "2026-11-19T09:26:19",
+        "transcript": "[00:00] Your DNA contains roughly 3 billion letters, but reading them doesn't tell us everything about you.\n[00:07] Hidden among them are millions of little molecular switches to control when and where your genes become active.\n[00:14] And many diseases begin where the switches go wrong.\n[00:18] And DeepMind's new AI technique, AlphaGenome 2, is finally able to predict what these little switches do, but with a twist.\n[00:27] Okay, so what is this exactly? With AlphaGenome 1, you give it a piece of DNA, and you change a letter.\n[00:35] Is nothing going to happen, or could this tiny mutation switch on a gene that drives terrible diseases like leukemia?\n[00:43] Or could it alter the genes linked to dangerously high cholesterol?\n[00:48] The previous AlphaGenome 1 AI can predict exactly this kind of effect.\n[00:53] Which is basically insane. I can't believe that I'm saying this. Meanwhile, my Bluetooth headphones still can't connect reliably. So there's that.\n[01:03] However, there is a problem. The same mutation can have a completely different effect based on where it is, which cell it is in.\n[01:12] For instance, your brain and skin contain the same DNA, but they use it completely differently.\n[01:18] And AlphaGenome 1 struggles to predict these finer differences.\n[01:23] Of course, because it's kind of impossible.\n[01:26] There are billions of single-letter mutations and hundreds of different cell types.\n[01:32] Unfortunately, that is trillions of possible combinations.\n[01:36] Testing all of these in a lab is completely hopeless.\n[01:40] So, how on earth would you predict all this from just a sequence of DNA? All this knowledge from a bunch of letters.\n[01:48] Well, for example, they tested mutations known to cause dangerously excessive insulin production.\n[01:55] And finally, AlphaGenome 2 predicted that these mutations switch on the HK1 gene in insulin-producing beta cells, but have almost no effect in other pancreatic cells.\n[02:09] But wait a second. This problem might be exceptionally well suited for a powerful modern AI.\n[02:15] Why? Because we can create input-output pairs to learn on.\n[02:20] The input could be a piece of DNA from the pancreas and a pancreatic beta cell as a cell type.\n[02:27] So, what is the output? Well, how active its genes are.\n[02:32] But, wait, scientists have already measured this in a splendidly large number of cells. So, we have tons of training data.\n[02:40] And it turns out we can use that data for things other than serving ads to sell more Nissans. Great.\n[02:47] Now, if you do that, there are two big questions.\n[02:50] One, is AI powerful enough to learn these interactions?\n[02:55] And if yes, question number two, can it even work with cell types it hasn't seen yet?\n[03:01] So, can it generalize? Can it go beyond the training data? Is that even possible?\n[03:06] Dear fellow scholars, this is two-minute papers with Dr. Kálmán Fehér.\n[03:10] The paper is 78 pages. It is a lovely read, perfect bedtime reading if you don't intend to sleep.\n[03:18] And I am not an expert. I am just a student. I could be wrong, but I am trying my best.\n[03:23] So, let's have a look. In one test, AlphaGenome 2 could identify double the number of mutations known to affect gene activity.\n[03:31] With 90% precision. For every 10 mutations the AI marked, about nine were likely to affect gene activity.\n[03:41] That is incredible. Now, question two, does it generalize?\n[03:46] Now, hold on to your papers, fellow scholars, because the answer is yes.\n[03:52] In a Parkinson's disease study, a previous specialist AI could correctly predict whether gene activity went up or down for 17% of the known genetic effects.\n[04:04] And AlphaGenome 2 had never trained on that study. So, how many could it predict?\n[04:09] What? Are you seeing what I am seeing? 41%.\n[04:15] More than double. Both at the same high level of accuracy.\n[04:20] So, this AI performed better on completely new information than a specialist AI that was trained on this information.\n[04:28] Folks, this is science fiction level of goodness. Absolutely insane work.\n[04:34] Okay, but we do the real talk here. Limitations.\n[04:37] It is far from perfect. Even its best predictions still miss many disease-related mutations.\n[04:44] And it's still not great at rare cell types.\n[04:47] So, please, do not walk away from this video thinking that they solved genetic diseases. Not even close.\n[04:53] But when AlphaFold first came out, I remember thinking that it had all the makings of a Nobel Prize.\n[05:00] And looking at this new work, I wouldn't be surprised if DeepMind wins another.\n[05:05] I would like to congratulate Sir Demis Hassabis and Pushmeet Kohli and the whole team.\n[05:10] Sometimes, the difference between healthy and sick is just a single letter.\n[05:16] And understanding that letter can change millions and millions of lives.\n[05:21] And I hope that this work will save us from terrible diseases in the future.\n[05:26] And that is the best application of AI ever.\n[05:30] Oh, and the best part, AlphaGenome 2 is already available to researchers for free through an API.\n[05:37] And DeepMind plans to release the code and model weights too.\n[05:41] What a time to be alive!\n[05:43] And I have a recent interview with the creator Pushmeet, talking about AlphaGenome 1 in the video description if you are interested.\n[05:51] And subscribe for more.\n[05:52] I use Lambda to reproduce AI research papers, often in minutes.\n[05:57] It's great to train your own models, fine-tune an existing one, run inference, text-to-image or video. Easy peasy.\n[06:05] Running a deep seek chatbot or agent, super fast, super reliable.\n[06:10] Lambda gives you powerful Nvidia GPUs to run your own experiments.\n[06:15] I test ideas from papers I cover and moments later, results.\n[06:20] Love it. Seriously, try it out now at lambda.com/papers.",
+        "body": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.com/papers\n\n📝 The DeepMind AlphaGenome paper is available here:\nhttps://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/\n\nInterview with creator Dr. Pushmeet Kohli:\nhttps://www.youtube.com/watch?v=Wkaw03p3BrM\n\n🙏 We would like to thank our generous Patreon supporters who make Two Minute Papers possible:\nAdam Bridges, B Shang, Carlos Galarza, Christian Ahlin, Eric Tyson, Juan Benet, Lukas Biewald, Michael Tedder, Owen Skarpness, Ryan Stankye, Shawn Becker, Steef, Taras Bobrovytsky, Tazaur Sagenclaw, Tybie Fitzhugh, Ueli Gallizzi",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "세포 유형별 유전자 스위치 예측으로 맞춤형 모델링 가능",
+        "tags": [
+          "AlphaGenome 2",
+          "DeepMind",
+          "HK1",
+          "beta cell",
+          "pancreatic"
+        ],
+        "concepts": [
+          "데이터 일반화",
+          "AI 기반 진단 보조"
+        ],
+        "key_points": [
+          {
+            "point": "AlphaGenome 2는 베타 세포에서 HK1 유전자를 활성화시키는 변이를 예측하고 다른 췌장 세포에서는 거의 영향을 주지 않는다",
+            "timestamp": "01:55"
+          },
+          {
+            "point": "AlphaGenome 2는 기존보다 두 배 많은 변이를 90% 정밀도로 식별했다",
+            "timestamp": "03:23"
+          },
+          {
+            "point": "보지 못한 파킨슨병 데이터에서도 41% 정확도로 예측해 기존 전문 AI의 17%를 크게 앞섰다",
+            "timestamp": "04:09"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "단일세포 RNA‑seq와 조직 유형을 입력으로 사용해 암 세포주에서 약물 반응을 예측하면, 조직 특이적 약물 효능을 빠르게 스크리닝할 수 있다",
+          "발달 단계와 유전체 서열을 결합해 대안 스플라이싱 이벤트를 예측하면, 발달 단계별 전사조절 메커니즘을 모델링할 수 있다",
+          "숙주 유전형과 환경 변수를 조건으로 넣어 미생물 군집의 유전자 발현 변화를 예측하면, 개인 맞춤형 마이크로바이옴 치료 설계에 활용할 수 있다"
+        ],
+        "quiz": [
+          {
+            "question": "AlphaGenome 2가 훈련에 보지 못한 세포 유형에서도 높은 예측 정확도를 보인 이유는 무엇인가?",
+            "options": [
+              "DNA 서열만으로 모든 세포 유형의 발현을 동일하게 모델링한다",
+              "다양한 세포 유형의 대규모 단일세포 발현 데이터를 학습해 패턴을 일반화한다",
+              "셀 타입 임베딩을 명시적으로 사용해 새로운 타입을 추론한다",
+              "이미지 모델의 전이학습을 적용한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서는 AlphaGenome 2가 수많은 세포에서 측정된 발현 데이터를 학습하고, 이를 바탕으로 훈련되지 않은 세포에서도 일반화할 수 있다고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 5,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.07 (source:UCbfYPyITQ-7l4upoX8nvctg +0.02; domain:ai-ml +0.07; content_type:talk -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "Spotify Engineering",
+        "source_key": "https://engineering.atspotify.com/feed/",
+        "source_label": "Spotify Engineering",
+        "title": "When Can You Ship on Offline Evals Alone?",
+        "url": "https://engineering.atspotify.com/2026/11/when-can-you-ship-on-offline-evals-alone/",
+        "published_at": "2026-11-19T13:34:19",
+        "transcript": null,
+        "body": "# When Can You Ship on Offline Evals Alone?\n\n![Feature Image](https://images.ctfassets.net/p762jor363g1/4w1jduYhnyiLjUjI8Ar3ZH/e354d444350d376d11dbde38a9213272/2.1__1_.png)\n\n**TL;DR** *Teams building AI features want to skip slow A/B tests and decide from offline evals alone. This post looks at when that’s possible while keeping the risk of harming the online metric low. It can work, but only under strong assumptions that are hard to verify and can change over time. Noise is a problem too, because it can hide a strong link between offline and online results. In our example, a naive estimate says the eval explains 24% of the variation in online results, when the true figure is 60%.*\n\nAs agentic and LLM-based products and features become increasingly common, there is growing discussion about how to iterate on them efficiently. To assess product quality and the impact of changes, offline evals have become a standard part of the toolkit, alongside human evaluations, online A/B tests, and surveys.\n\nWhen we change an AI feature, say a new prompt or a different underlying LLM, there are two main ways to check whether it got better. Offline evals are quick tests run on a fixed set of sample prompts before any real user sees the change, often with other LLM-as-judges grading the answers. A/B tests give the new version to a random group of real users and compare how they behave against users on the old version.\n\nA question that frequently comes up is whether we can rely more heavily on offline evals and less on alternatives that are more time-consuming and resource-intensive. More specifically, *can we skip A/B tests and rely only on offline evals to make product decisions?* And if so, when?\n\nThe potential upside is substantial. Offline evals take hours; A/B tests often take days or weeks.\n\nIf we could confidently make product decisions based on offline evals alone, we could shorten feedback loops and iterate much faster. But what exactly do we mean by *“can* we make decisions on evals alone”?\n\n![Figure 1](//images.ctfassets.net/p762jor363g1/4JjjfhoP5DUhFU06MmME7O/2aa56a7be9fd8cdc5a736c1d6abf118f/Figure_1.png)\n\n\nFigure 1: The idealistic decision flow with offline evals and an A/B test in sequence for each product decision.\n\nThe goal of this post is twofold. First, to formalize what guarantees we would want from a decision to ship a change based on offline evals, without an A/B test.\n\nSecond, to understand what we need to know, assume, or estimate to achieve such a guarantee, and the major challenges and pitfalls involved.\n\nIn our paper, [When Can You Ship on Evals Alone?](https://arxiv.org/abs/2610.10142), we work through this problem in detail. The approach is general and aims to help build intuition for any team building LLM-based products.\n\n## What do we need to know?\n\nWe formalize the “when we can ship based on eval alone” as follows: *We want to make shipping decisions based on the offline eval while bounding the risk of shipping something that actually harms the online metric.*\n\nIf we want to bound the risk of shipping something that harms the online metric, ideally we need to know the conditional distribution of the true online treatment effect, given the observed offline eval treatment effect. If we know this distribution, we can directly assess and bound the risk of making a harmful shipping decision given any observed eval effect. In plain terms: for any eval result, we want to know how likely it is that the change actually helps or hurts real users, in terms of some specific online metric.\n\n![Figure 2](//images.ctfassets.net/p762jor363g1/7oR6tYsGJV1M28QWttJNRS/2c84f5c6cd5036c84433145e623b6cd4/Figure_2.png)\n\n\nFigure 2: the joint distribution of observed offline eval effects and true online effects. The “slice” at any given eval effect is the conditional distribution of the true online effect given the observed offline effect.\n\nSo how can we learn this relationship? This is where things get nuanced.\n\nThe first challenge is that we need paired observations of offline eval effects and online treatment effects, all coming from the same underlying relationship. We cannot have a heterogeneous set of experiments where, for some types of changes, an improvement in the eval corresponds to an improvement in the online outcome, while for others the relationship is different or even reversed.\n\nThe second challenge is measurement error. Both numbers are noisy estimates, not exact values. Offline eval scores have sampling errors from several sources, including randomly sampling examples from a larger eval set, and using an LLM to grade the answers (LLM-as-a-judge). Online treatment effects are estimated with sampling error too. We need to account for these errors when learning the relationship.\n\nTo build intuition for these challenges, and for what happens when our assumptions fail, we introduce a simplified working model.\n\n## A simplified working model\n\nThis model makes a few strong simplifying assumptions. Readers who ",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "오프라인 평가만으로 출시 위험을 정량화하는 방법",
+        "tags": [
+          "Spotify Engineering",
+          "LLM",
+          "A/B test",
+          "offline eval",
+          "arXiv"
+        ],
+        "concepts": [
+          "오프라인-온라인 연계 전략",
+          "불확실성 정량화",
+          "조건부 확률 모델링"
+        ],
+        "key_points": [
+          {
+            "point": "오프라인 평가는 빠르지만, 위험을 낮추려면 강한 가정과 위험 한계가 필요하다",
+            "timestamp": null
+          },
+          {
+            "point": "실제 온라인 효과의 조건부 분포를 알면 평가 결과만으로도 해로운 출시 위험을 직접 평가할 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "노이즈와 편향으로 인해 관측된 상관관계가 실제보다 낮게 추정될 수 있다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "오프라인 클릭‑예측 모델의 조건부 분포를 이용해 추천 시스템 업데이트를 A/B 테스트 없이 단계적 롤아웃한다",
+          "오프라인 성능 테스트 결과의 불확실성을 정량화해 모바일 앱 기능 플래그의 자동 전환 기준으로 활용한다"
+        ],
+        "quiz": [
+          {
+            "question": "왜 오프라인 평가만으로 제품 출시 결정을 내리기 위해서는 강한 가정이 필요할까?",
+            "options": [
+              "오프라인 평가는 온라인 메트릭과 항상 일치한다",
+              "노이즈와 편향으로 실제 연관성을 가릴 수 있다",
+              "오프라인 평가는 비용이 많이 든다",
+              "A/B 테스트가 더 빠르다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문은 노이즈가 강한 상관관계를 숨길 수 있어, 가정이 검증되지 않으면 위험이 커진다고 설명한다"
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.12 (domain:ai-ml +0.09; tag:llm +0.02; content_type:tutorial +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "Devops Agent 리포트 오이데~ 평가 야호~",
+        "url": "https://youtu.be/_btg9xR_i50",
+        "published_at": "2026-11-19T06:34:02",
+        "transcript": "[00:00] 안녕하세요. 네이버 검색의 기반 기술을 맡고 있는 FE 인프라스트럭처 윤정현입니다.\n[00:07] 작년 엔지니어링 데이에서 검색 장애를 분석하는 LLM 에이전트인 데보스 에이전트에 대해 소개해 드렸었는데요.\n[00:14] 오늘은 그 후로 1년 넘게 운영하면서 어려웠던 부분들을 어떻게 풀어가고 있는지 소개하려고 합니다.\n[00:22] 운영하는 내내 따라다닌 가장 큰 고민은 에이전트가 정말 판단을 잘하고 있는지 어떻게 알 수 있는가였습니다.\n[00:30] LLM은 같은 상황에서도 답이 흔들릴 수 있기 때문에 그 흔들림을 그대로 둔다면 에이전트의 판단을 믿기 어려워집니다.\n[00:40] 오늘은 저희가 데보스 에이전트를 운영하면서 어떤 평가 시스템을 만들었고 지금 어떻게 운영하고 있는지 말씀드리려고 합니다.\n[00:49] 순서는 이렇습니다.\n[00:51] 먼저 데보스 에이전트가 무엇인지 간단하게 말씀드리고 LLM 에이전트라서 발생할 수 있는 문제와 우리는 무엇을 평가 기준으로 정했는지 그리고 평가 시스템을 어떻게 구성했는지를 말씀드리려고 합니다.\n[01:04] 그리고 그 시스템을 어떻게 구축했는지 앞으로 생각하는 것은 무엇인지에 대해서 조문기님께서 이어서 공유해 주실 예정입니다.\n[01:15] 우선 구조부터 살펴보겠습니다.\n[01:17] 위쪽은 통합 검색의 호출 구조이고 아래쪽은 데보스 에이전트의 동작 구조입니다.\n[01:24] 첫 번째로 사용자의 질의가 전달이 되면 통합 검색 서버, NX라고 불리는 서버에서 질의를 전달받고 NX는 영역별 검색 결과를 만드는 PRS 서버를 호출하게 됩니다.\n[01:38] PRS는 다시 SAS라고 불리는 검색 서버를 호출해 검색 결과를 만드는데 대부분의 장애는 이 경로 어딘가에서 생긴 문제입니다.\n[01:50] 아래는 에이전트의 구조입니다.\n[01:53] 장애 알람이 들어오면 IC라고 하는 오케스트레이터에서 서브 에이전트 넷을 병렬로 호출하게 됩니다.\n[02:02] 대표적으로 NX 에이전트는 응답 시간을, PRS 에이전트는 에러율을, SAS 에이전트는 검색 레이어를 분석하고 ENV 에이전트는 배포 이력이나 사용자 질의가 어떻게 변했는지와 같은 환경 정보를 확인합니다.\n[02:18] 그리고 각 서브 에이전트가 각 레이어의 장애 여부를 판단해서 다시 IC에 전달하게 됩니다.\n[02:26] IC 오케스트레이터는 돌아온 결과를 종합해 리포트를 만듭니다.\n[02:31] 이렇게 알람 한 건에 리포트 한 건이 약 1분 안에 나오게 됩니다.\n[02:36] 리포트는 두 부분으로 구성되어 있는데요.\n[02:39] 위쪽은 장애 위치, 원인, 장애 여부와 진행 여부를 알려주고 아래쪽은 사람이 읽고 판단할 수 있는 분석 요약을 보여줍니다.\n[02:50] 이 리포트는 메신저로 바로 알리고 별도로 이슈로도 남겨 기록합니다.\n[02:56] 오늘 주로 이야기할 평가의 대상이 되는 것은 바로 이 평가 항목 네 가지입니다.\n[03:03] 실제로 메신저에 도착한 리포트 예시입니다.\n[03:07] 장애 심각도를 크게 세 가지로 구분했습니다.\n[03:10] 분석이 끝난 시점에 정상으로 돌아왔다면 해소, 평소와 다른 패턴이 진행 중이지만 심각한 단계는 아니라면 진행 중, 실제 통합 검색 서비스에 영향을 주고 있었다면 장애라고 판단하게 됩니다.\n[03:24] 특히 장애라고 분석한 알람은 실제 사용자에게 영향을 주고 있기 때문에 빠르게 확인해야 하는 알람입니다.\n[03:32] 이런 알람과 분석은 하루에도 여러 번 발생할 수 있습니다.\n[03:37] 장애를 더 빠르고 정확하게 분석하기 위해서 에이전트를 운영하는 것인데 만약 분석 정확도가 낮게 된다면 어떻게 될까요?\n[03:45] 리포트를 받아보는 사람은 결과를 점점 믿지 않게 되고 결국은 노이즈처럼 무시하는 상황이 올 수도 있습니다.\n[03:53] 그래서 에이전트의 분석 정확도가 매우 중요한데 그렇다면 이 분석이 맞았는지 틀렸는지는 어떻게 알 수 있을까요?\n[04:02] LLM으로 만든 에이전트는 코드처럼 테스트하기 어렵습니다.\n[04:07] 프롬프트 수정은 모든 입력에 적용이 되고 모델은 우리가 만들지 않은 부품인데도 계속 바뀌고 같은 입력에도 답변이 다를 수 있으며 답이 자연어이기 때문에 통과와 실패로 확인하기 어렵습니다.\n[04:22] 이러한 특징 때문에 1년 동안 겪은 문제 네 가지를 한 가지씩 말씀드리겠습니다.\n[04:29] 첫 번째 문제는 개선을 위해 적용된 부분이 의도와 다르게 동작하는 경우가 있다는 점입니다.\n[04:36] 함수를 하나 고친 것과는 다르게 프롬프트 수정은 모든 입력에 적용이 되는데 예를 들어 사례 A를 고치기 위해 프롬프트를 수정했다고 가정하겠습니다.\n[04:48] 수정 후에는 A를 잘 판단하게 되었다는 것을 확인했지만 기존에 잘되던 C가 틀리는 경우가 발생할 수 있습니다.\n[04:56] 고치려던 사례만 보면 이 수정 자체는 성공인데 새로운 프롬프트로 과거 사례를 다시 확인하지 않는 이상 C의 판단이 틀렸다는 것을 알기는 어렵습니다.\n[05:10] 두 번째 문제입니다.\n[05:11] 에이전트의 개선 혹은 악화의 원인이 정확히 무엇인지 알기 어려울 때가 있었습니다.\n[05:18] 에이전트의 핵심인 모델은 우리가 만들지 않고 또한 계속 바뀝니다.\n[05:23] 우리는 계속해서 에이전트를 개선하고 있었고 실제 다음 달 에이전트가 더 잘 판단하는 거 같다고 느꼈겠지만 측정하지 않았다면 이게 우리의 개선으로 인한 효과인지 모델을 바꾼 영향인지 확신하기 어렵습니다.\n[05:39] 어쩌면 우리는 아무것도 하지 않고 모델 버전만 올렸어도 정확도가 개선됐을 수도 있습니다.\n[05:46] 데보스 에이전트의 경우에는 전달되는 알람의 구성에 따라서도 정확도가 달라질 수 있었기 때문에 이런 부분을 명확히 알기 위해서는 평가 시스템이 반드시 필요했습니다.\n[05:59] 세 번째는 에이전트의 비결정성입니다.\n[06:02] 같은 알람을 같은 코드, 같은 입력으로 다시 분석해도 답이 달라지는 경우가 있었습니다.\n[06:10] 화면의 예시처럼 동일한 알람인데도 한 번은 외부 장애로 다른 한 번은 서비스 변경 배포로 원인을 판단하는 경우가 있었습니다.\n[06:19] 첫 번째 분석에서 틀렸다면 사람이 보고 개선을 시도하겠지만 운 좋게 첫 번째 분석에서 정답을 맞췄다면 앞으로도 잘할 것이라고 생각하고 더 이상 개선하지 않을 수도 있습니다.\n[06:33] 마지막 문제는 우리가 지금 무엇을 잘하고 있고 무엇이 부족한지 명확히 알기 어렵다는 점입니다.\n[06:40] 에이전트의 답은 단위 테스트처럼 통과와 실패로 셀 수 없기 때문에 왼쪽 화면처럼 사람이 보고 이상하다고 눈에 띈 것에 대해서만 표면의 일을 드러낼 수 있습니다.\n[06:52] 리포트 수십 건 가운데 이상하다고 눈에 띈 것은 몇 건밖에 없고 고치는 것도 그 중 하나일 겁니다.\n[07:00] 우리 에이전트는 어떤 카테고리에서 강점이 있고 어떤 카테고리에서는 약한지 평가와 측정 시스템이 없다면 쉽게 파악할 수 없습니다.\n[07:10] 그러다보니 개선하는 작업은 눈에 띈 잘못된 점을 메우는 데서 끝나고 다음에 어떤 개선을 해야 될지는 누군가가 이상한 리포트를 발견하기 전까지 정하기 어렵습니다.\n[07:22] 정리하면 코드처럼 테스트할 수 없기 때문에 계속해서 돌아가는 평가 시스템이 필요했습니다.\n[07:29] 그런데 평가를 하려면 먼저 정답이 무엇인지를 정해야 했습니다.\n[07:37] 평가 시스템에서 가장 먼저 있어야 하는 것은 정답이라고 생각합니다.\n[07:41] 이 에이전트에게 기대하는 답은 심각도와 원인 두 가지인데 각각 기준을 세우다 보니 둘 다 어려운 점들이 있었습니다.\n[07:50] 어디가 어려웠고 어떻게 해결했는지 한번 말씀드리겠습니다.\n[07:56] 앞서 말씀드린 것처럼 이 에이전트가 하는 일은 알람이 울리고 난 뒤 1분 안에 심각도와 원인을 판정하는 것이었기 때문에 기대하는 답도 두 가지입니다.\n[08:07] 심각도는 현재 상태가 장애인지 심각한 수준은 아니지만 진행 중인지 이미 해소되는지 이 세 가지로 기준을 정했고 원인에 대해서는 통합 검색의 구조 중 어느 레이어에서 장애가 발생했으며 왜 발생했는지를 분석하는 것으로 기준을 정했습니다.\n[08:25] 기준이 있어야 정답이 있을 수 있고 정답이 있어야 평가를 할 수 있었는데 이 둘을 정하고 분석하다 보니 각각 애매한 지점들이 있었습니다.\n[08:36] 우선 심각도입니다.\n[08:38] 장애 여부 자체는 임계값으로 판정하면 됐었는데 진행 중을 판단하는 것이 어려웠습니다.\n[08:46] 왼쪽 그림처럼 알람이 오고 나서 분석을 마치는 시점에 에이전트가 볼 수 있는 지표는 내려오는 중간까지밖에 없습니다.\n[08:54] 그 뒤에 이대로 내려와서 해소될 수도 있고 다시 올라서 장애가 될 수도 있습니다.\n[09:00] 하지만 분석하는 시점에는 알 수 없기 때문에 이 판정 자체를 하는 것이 어려웠습니다.\n[09:06] 그러다 보니 진행 중이라고 답했는데도 실제 사람이 들어가서 보면 이미 해소됐을 수도 있고 서브 에이전트끼리 같은 알람을 두고도 이것은 해소됐다.\n[09:16] 아니다.\n[09:16] 이것은 아직 진행 중이다.\n[09:17] 하고 서로 다 다르게 답변하는 경우도 있었습니다.\n[09:22] 내려오는 중간만 보고 판단을 가르는 일은 사람이 봐도 헷갈리고 사람이 헷갈리는 판단은 에이전트도 헷갈렸습니다.\n[09:31] 그래서 두 가지를 정했습니다.\n[09:33] 하나는 우선 의미를 분리하는 것으로 진행 중은 아직 평소로 돌아오지 않은 상태를 말하고 피크를 지나서 내려오는 중은 회복 중으로 표기하기로 했습니다.\n[09:43] 두 번째는 최종 확인 단계를 한 번 더 추가했습니다.\n[09:48] 앞서 언급한 것처럼 진행 중이라고 답변했지만 들어가 보면 이미 해소된 상황이 전체 중 20%에서 30% 정도 됐습니다.\n[09:56] 업무 시간에는 한 번 정도 사람이 들어가서 보고 판단하는 것에 큰 무리가 없었지만 야간이나 주말 같은 경우는 사람이 빠르게 확인하기 어려운 환경일 수도 있습니다.\n[10:08] 이렇게 급하지 않은 시간대에 진행 중으로 판정이 되면 60초 뒤에 한 번 더 분석해서 확정하게 됩니다.\n[10:15] 최대한 사람이 고생하지 않는 방향을 고민했고 이를 통해 진행 중이라는 심각도 판정의 정확도도 많이 향상되었습니다.\n[10:25] 다음은 원인입니다.\n[10:26] 처음에는 하위 시스템의 장애, 외부 서비스 이슈, 비정상 트래픽, 서비스 변경 배포처럼 카테고리 네 개를 정해놓고 운영했었는데 중복이 발생하는 경우가 있었습니다.\n[10:40] 왼쪽 그림처럼 비정상 트래픽 때문에 하위 시스템이 느려진 알람은 비정상 트래픽일까요?\n[10:45] 하위 시스템 장애일까요?\n[10:48] 서비스 변경 배포 뒤에 하위 시스템에서 난 장애는 배포일까요?\n[10:51] 하위 시스템 장애일까요?\n[10:54] 둘 다 맞고 둘 다 필요한 정보지만 장애 발생 지점과 장애 발생 원인이 섞여 있다 보니 사람이 판단할 때도 헷갈렸습니다.\n[11:04] 그래서 저희는 장애 발생 지점과 장애 발생 원인 레이어를 분리해서 카테고리를 운영했습니다.\n[11:11] 오른쪽 화면에서 같은 색으로 이어진 것처럼 아까 겹쳤던 두 알람은 위치가 둘 다 하위 시스템이고 원인은 각각 비정상 트래픽과 서비스 변경 배포로 하나씩 떨어지게 됩니다.\n[11:24] 이렇게 기준들이 정해지고 나니 정답이 생겼고 정답이 생기니 채점을 할 수 있게 되었습니다.\n[11:31] 이제 남은 것은 정답을 어떻게 모으고 활용하는가였습니다.\n[11:37] 우리의 평가 시스템은 운영에서부터 출발합니다.\n[11:40] 운영 중에 사람이 남긴 판단이 정답이 되고 그 정답을 스태터스라고 불리는 현황판과 리플레이라고 불리는 다시 실행 도구, 두 도구가 자동으로 가져다 쓰는 구조인데 전체를 한 장으로 본 다음에 좀 더 상세하게 설명드리겠습니다.\n[11:58] 우선 전체 구조입니다.\n[11:59] 왼쪽은 운영하는 레벨이고 오른쪽은 그 결과를 쓰는 도구 두 가지입니다.\n[12:06] 우선 운영 단계에서는 알람 한 건에 리포트 한 건이 쌓이게 됩니다.\n[12:11] 리포트를 본 담당자가 댓글로 피드백을 남깁니다.\n[12:15] 틀렸다고 고쳐주기도 하고 맞았다고 확인해 주기도 합니다.\n[12:19] 그리고 뭔가 답변이 부족했다면 이런 것도 추가돼야 한다고 개선점을 적기도 하는데 포맷이 따로 있는 것은 아니고 자연으로 편하게 적어둡니다.\n[12:29] 그 다음 판정 단계에서 이 댓글과 에이전트가 낸 값을 항목별로 비교해 보고 그 결과로 케이스마다 하나씩 정답 기록이 만들어집니다.\n[12:40] 기대값과 실제값, 해설이 들어가게 되는데 정답을 따로 적어두는 것이 아니라 운영에서 사람이 남긴 말을 그대로 정답이 되는 구조입니다.\n[12:52] 이 정답 기록을 두 가지 도구가 활용합니다.\n[12:54] 스태터스는 쌓인 정답 기록을 모아보는 현황판으로 에이전트별 카테고리별로 어디가 잘 안 되는지를 볼 수 있습니다.\n[13:04] 리플레이는 같은 알람을 현재 코드로 다시 돌려서 고친 것이 제대로 고쳐졌는지 회귀는 없는지 확인하게 됩니다.\n[13:13] 그래서 고친 코드는 다음 알람에서 운영으로 한 번 확인을 거치게 되고 또 그 다음 리플레이에서 한 번 더 확인을 하게 됩니다.\n[13:23] 사람은 정답을 남기고 스태터스는 현황을, 리플레이는 바뀐 코드를 확인하는 구조입니다.\n[13:31] 스태터스부터 조금 더 상세하게 말씀드리겠습니다.\n[13:34] 이 화면은 저희 스태터스 페이지의 최근 90일 데이터로 한 칸이 알람 한 건이고 세 행이 같은 위치가 같은 알람입니다.\n[13:45] 첫 번째 행은 에이전트의 판정이라서 알람마다 장애, 진행 중, 정상이 색으로 표시되고 두 번째 행은 댓글로 들어온 정정을 반영해서 사람이 보기에 맞는 판정이 무엇인지 같은 색 척도로 그렸습니다.\n[14:00] 세 번째 행은 둘의 비교로 맞은 칸은 파란색, 틀린 칸은 보라색, 아직 사람이 보지 않은 알람은 비워두었습니다.\n[14:09] 기간을 조정하면서 최근 90일, 이번 주, 지난달 어느 구간이든 다시 집계해서 볼 수 있고 이렇게 에이전트 판정과 사람이 남긴 정답을 한마다 비교해서 정확도를 측정했습니다.\n[14:24] 같은 페이지를 아래로 내리면 에이전트별, 카테고리별 정확도를 확인할 수 있는 화면이 나옵니다.\n[14:30] 왼쪽은 에이전트별로 장애 여부와 진행 여부를 얼마나 정확하게 판단했는지 나타내고 오른쪽은 카테고리별 원인으로 사람이 판단한 원인과 그 카테고리인 케이스 가운데 리포트도 같은 원인을 말한 비율입니다.\n[14:47] 여기서 측정 기준이 중요한데 리포트가 말하는 원인으로 보면 틀린 케이스가 엉뚱한 카테고리에 들어가서 진짜 잘 못 하는 부분이 숨겨질 수도 있기 때문에 사람이 확인한 원인으로 묶었습니다.\n[15:00] 예를 들어 장애 원인은 배포가 맞는데 에이전트가 하위 시스템 장애라고 판단했다면 배포 쪽에서 틀린 것으로 세는 방식입니다.\n[15:09] 이렇게 보면 어느 에이전트가 어느 카테고리에서 잘 되고 있는지, 잘 안 되고 있는지를 숫자로 볼 수 있게 되고 다음에 무엇을 고칠지 어떤 것들이 개선되고 있는지를 데이터를 보고 알 수 있습니다.\n[15:24] 다음은 리플레이입니다.\n[15:25] 리플레이에는 입력으로 두 가지가 들어가게 됩니다.\n[15:29] 하나는 정답 기록에서 가져오는 기대값으로 사람이 판단한 정답입니다.\n[15:35] 다른 하나는 리플레이를 수행할 케이스로 정답 기록이 확정된 케이스 중 하나가 됩니다.\n[15:42] 케이스마다 상태를 두어서 과거에 틀렸던 케이스는 개선이라고 태그를 달았고 내부적으로 규칙이 바뀌어 답이 달라져야 하는 케이스는 진화.\n[15:51] 그때는 맞았고 지금도 맞아야 되는 케이스는 회귀라고 정해두었습니다.\n[15:58] 이 케이스들에 대해 같은 알람 그대로 현재 코드로 다시 분석을 하게 되는데 시각은 알람 시점으로 되돌려서 수행을 합니다.\n[16:07] 예를 들어 어제 오후 3시에 발생한 장애 알람을 오늘 오전 10시에 리플레이한다면 분석할 때 보게 되는 데이터는 어제 오후 3시 데이터를 보는 방식입니다.\n[16:19] 또한 앞장에서 언급한 비결정성 문제 때문에 한 번만 수행하지 않고 세 번에서 다섯 번을 돌리며 답이 흔들린다면 틀림으로 판정하게 됩니다.\n[16:30] 채점은 값을 비교할 수 있는 항목은 코드가 하고 근거와 요약처럼 정답이 하나가 아닌 항목은 LLM 저지에 맡기는 구조입니다.\n[16:39] 아직까지 LLM 저지가 적용되어 있지는 않지만 곧 이 부분도 평가할 수 있도록 개선해 나가고 있습니다.\n[16:46] 결과는 세 가지로 구분합니다.\n[16:49] 정답과는 다르지만 그 값을 바꾼 수정 PR이 있었다면 정당한 변화이고 근거가 없었다면 회귀나 확인 필요로 사람에게 넘기며 옛 데이터가 없어서 다시 돌릴 수 없는 것은 재현 불과로 판단합니다.\n[17:04] 이 결과가 주 단위 리포트로 남고 세 번 연속 통과한 케이스는 이제 앞으로도 안정적으로 판단할 수 있다고 보고 평가 세트에서 제거하게 됩니다.\n[17:15] 실제 리포트 화면입니다.\n[17:16] 왼쪽 화면처럼 상단에 코드 버전, 실행 횟수, 케이스 수 같은 이번 실행의 정보가 있고 결과는 통과, 실패, 확인 필요 혹은 불완전 통과 정도로 나눠서 실행끼리 나란히 놓고 비교할 수 있도록 해 두었습니다.\n[17:33] 오른쪽 화면은 알람을 우선 그룹화하고 그룹별로 리플레이를 수행한 결과를 볼 수 있도록 구성해 두었습니다.\n[17:40] 이런 평가 시스템이 하나씩 갖춰지면서 앞에서 언급했던 여러 문제들을 해결할 수 있었습니다.\n[17:48] 코드를 고칠 때마다 재실행하면서 무엇이 좋아졌는지 무엇이 깨졌는지를 매주 케이스 단위로 볼 수 있었고 어떤 영향으로 개선된 것인지도 쉽게 파악할 수 있었습니다.\n[18:01] 평가 시스템 구현에 대한 설명입니다.\n[18:04] 버전 제로 알고리즘 채점기에서 버전 포 LLM 채점기에 이르기까지 각 버전에서 어떤 한계가 있었고 그걸 넘기 위해 어떤 아이디어를 냈는지 순서대로 설명드리겠습니다.\n[18:17] 평가 시스템을 사용하고 해석하는 입장에서 무엇을 해결해야 하는지 고민한 끝에 꼭 답해야 하는 세 가지 질문을 세울 수 있었습니다.\n[18:26] 첫째, 지금 정답률이 얼마냐?\n[18:30] 둘째, 틀려서 고쳤다는데 정말 맞느냐?\n[18:34] 셋째, 저절로 해결된 것은 뭐냐?\n[18:37] 세 질문에는 모두 시점이 끼어 있습니다.\n[18:41] 어느 시점에 기준으로 보느냐에 따라 정답이 달라지고 어느 시점의 코드로 돌리느냐에 따라 재실행 결과도 달라집니다.\n[18:49] 시점의 차이뿐 아니라 생성형 결과에서 오는 비결정성도 풀어야 했습니다.\n[18:55] 평가 시스템을 만들려고 하면 자연스럽게 소프트웨어 테스트 패턴을 떠올리게 됩니다.\n[19:01] 흔히 쓰리A라고 부르는 어레인지, 액트, 어썰트인데요.\n[19:06] 이 틀을 에이전트 평가에 그대로 대 보면 생성형 결과의 다양성을 담아내기 어렵다는 걸 알 수 있었습니다.\n[19:14] 전제를 만드는 일은 그 시점의 알람 정보를 저장하는 것으로 대체할 수 있었지만 에이전트를 다시 돌리는 일부터 갈리게 되었습니다.\n[19:23] 같은 입력인데 다른 출력이 나올 수 있었고 이에 따라서 기대값도 하나로 고정되지 않고 상황에 따라 다르게 적용해야 했습니다.\n[19:33] 즉, 과거에 맞던 것이 지금은 틀릴 수도 있고 그 반대일 수도 있습니다.\n[19:40] 평가 시스템 버전 제로를 설명하기 전에 데보스 에이전트가 어떻게 동작하는지 간단히 설명드리겠습니다.\n[19:47] 알람이 울리면 에이전트가 그 알람을 분석합니다.\n[19:50] 판단은 데보스 에이전트 저장소에 있는 서브 에이전트 코드와 프롬프트, 그리고 임계값으로 내립니다.\n[19:57] 그 결과를 개발자에게 전달하는 동시에 데보스 에이전트 저장소에 알람 정보와 각 서브 에이전트의 판단, 그리고 전체 시스템이 종합한 판단을 함께 저장합니다.\n[20:11] 그래서 리포트 이슈 본문에는 오른쪽 예시와 같은 정보가 들어 있습니다.\n[20:16] 이 본문을 보고 개발자들이 댓글 등을 작성합니다.\n[20:21] 이 리포트 데이터를 기반으로 버전 제로에서는 정해진 프로토콜에 따라 동작하는 시스템을 만들었습니다.\n[20:29] 리포트 이슈를 사람이 확인해서 잘못 동작했다고 판단하면 깃허브 이슈에 오판 라벨을 붙이고 정정이 필요한 내용을 정해진 형식에 따라 댓글로 작성합니다.\n[20:40] 그럼 깃허브 액션이 리포트 이슈 본문과 정정 댓글을 병합해 기대하는 결과를 표현하는 야물 파일을 만듭니다.\n[20:49] 이 파일를 반영하는 PR이 생성되고 병합된 결과가 블랙박스 필드에 해당합니다.\n[20:55] 여기에 더해 평가 담당자가 각 서브 에이전트가 담고 있어야 하는 기대 정보를 화이트박스 필드에 작성합니다.\n[21:05] 블랙박스와 화이트박스 필드는 다음과 같이 사용합니다.\n[21:09] 리포트 이슈 본문에 존재하는 알람 정보를 기반으로 실제 알람이 울리진 않지만 이에 상응하는 동작을 수행하도록 데보스 에이전트를 실행합니다.\n[21:20] 이 실행 결과 중 서브 에이전트 결과, 즉 데보스 에이전트의 세부 동작에 대해서는 화이트박스 키워드와 대조하는 채점을 수행합니다.\n[21:31] 각 서브 에이전트 결과에 기대하는 문자열이 포함되어 있는지 확인하고 장애 상황, 이슈 지속과 같은 플래그가 일치하는지 비교합니다.\n[21:41] 화이트박스 채점이 내부 동작에 관한 비교였다면 블랙박스 채점은 최종 결과에 대해서 원인 카테고리, 장애 여부, 진행 여부 등을 정답과 비교합니다.\n[21:53] 이러한 채점 방식은 소프트웨어 테스트 패턴에서 한 걸음 더 나아가 섬세한 판정을 수행하기 위함이었습니다.\n[22:02] 알고리즘 기반의 테스트는 기대하는 바를 정확히 확인할 수 있어서 동작의 정확함을 보장했지만 반대로 생기는 문제가 있었습니다.\n[22:09] 문자열 비교의 경우 한영 표기, 띄어쓰기, 문장 구성과 같이 의미상으로는 같은 결과지만 다른 문자열 결과로 인해 비교 결과가 틀리게 판정되는 경우가 발생했습니다.\n[22:25] 더 나아가서 데보스 에이전트 동작 결과에서 최종 결과만의 제출하는 동작이 있는데요.\n[22:33] 이 때문에 원인이 여러 가지가 나온 경우 최종 결과만 비교 대상으로 처리가 되어 상황에 따라 서술에 포함되지 않는 경우도 있었습니다.\n[22:44] 나머지는 시스템 유지보수에 관한 내용입니다.\n[22:48] 테스트를 선정함에 있어서 아직 테스트 테스트 데이터가 시스템이 해석할 수 없는 알람 알람의 결과였다면 매번 실패하는 케이스로 남기 때문에 시스템 신뢰도를 평가함에 있어서 이를 포함할까 말까에 대한 괴리가 있었습니다.\n[23:07] 반대로 이 케이스를 제외한다면 나중에 시스템 개선이 되었을 때 그 변화를 측정하기 어렵게 됩니다.\n[23:15] 또한, 틀린 케이스를 추가하는 방식으로만 동작하고 있기 때문에 정답 케이스는 계속 제외되고 후에 수정 사항에 따라 계속 맞아야 되는 데이터를 테스트하고 싶을 경우 이를 포함하기 어려운 아쉬움도 있었습니다.\n[23:31] 마지막으로 시스템 개선마다 데이터를 매번 평가 담당자가 신경 써야 하기 때문에 테스터가 쌓이면 쌓일수록 그 부담은 가중했습니다.\n[23:43] 그래서 알고리즘이 아닌 LLM 기반으로 평가하는 방식을 검토하게 되었습니다.\n[23:48] LLM 기반의 평가에는 넘어야 할 두 가지 산이 있었는데요.\n[23:51] 첫째 콘텍스트입니다.\n[23:54] 데보스 에이전트 리포트는 도메인 지식이 없다면 어떤 의미를 담고 있는지 해석하기 어렵습니다.\n[24:01] 또한, 균일한 콘텍스트를 제공해야 그 해석이 흔들리지 않습니다.\n[24:06] 둘째 비결정성입니다.\n[24:08] 데보스 에이전트 리포트 자체가 비결정성 결과인데 이를 LLM으로 평가한 결과도 비결정성이므로 양쪽의 비결정성을 모두 잘 처리할 수 있어야 합니다.\n[24:20] 그래서 리포트를 이해할 수 있는 환경을 구축하고 상황에 맞는 유동적인 판단을 하는 시스템을 만들어야 했습니다.\n[24:30] 첫 시도는 메모리 뱅크였습니다.\n[24:32] 코딩 에이전트 셀린이 제안한 기법으로 영화 메멘토에서 새로운 기억을 유지하지 못하는 주인공이 눈을 뜨자마자 포스트잇을 읽고 기억을 복원하려는 행위에 착안한 방식입니다.\n[24:46] 시스템 설명, 서브 에이전트별 스펙, 기준과 규칙 등을 마크다운 파일로 두고 리포트를 판정하고자 할 때 이 파일들을 세션에 포함시킨 뒤 판정 결과를 다시 메모리 뱅크에 귀속시키는 동작입니다.\n[25:01] 즉, 콘텍스트를 파일로 관리하고 이를 공유하는 메커니즘입니다.\n[25:06] 콘텍스트를 유지한다는 방식은 유효했지만 시스템이 바뀐다는 것에서 기인하는 문제가 아직도 있었습니다.\n[25:14] 콘텍스트 마크다운 파일도 결국 사람이 개입해야 합니다.\n[25:18] 특히 파일을 수정하려면 어디를 어떻게 수정할지부터 결정해야 하는데 이런 것들이 쉽지 않은 결정으로 왔습니다.\n[25:27] 메모리 뱅크를 수정하면 그 판정 대상인 과거 판정 기록도 따라 수정해야 되는 순환 수정도 발생했습니다.\n[25:36] 그리고 메모리 뱅크는 개념에 대한 정리를 하는 만큼 시점별로 정리를 하는 방식이 아니라면 이슈 발생 시점과 판정 시점이 일치하지 않는 상황이 발생할 수 있습니다.\n[25:49] 그러면 자연스럽게 그 판정이 적절한 판정인지에 대한 의구심이 발생할 수밖에 없고 결국 평가 담당자가 매번 이중으로 확인해야 하는 어려움이 있었습니다.\n[26:01] 과거에 가지고 있던 문제가 깨끗이 해소되지 않은 상태에서 콘텍스트 유지보수라는 과제가 하나 더 생긴 것입니다.\n[26:10] 메모리 뱅크와 비슷한 LLM 위키를 검토하게 되었습니다.\n[26:14] LLM 위키는 안드레이 카파시가 제안한 기법으로 정리된 개념을 저장하고자 했던 메모리 뱅크에서 나아가 프로젝트 지식 저장소를 목표합니다.\n[26:25] 크게 세 레이어와 세 동작이 있는데요.\n[26:29] 첫째 레이어는 로우입니다.\n[26:31] 언제나 불변으로 사람이 데이터를 모으기만 하고 LLM은 읽기만 합니다.\n[26:37] 둘째 레이어는 위키입니다.\n[26:40] LLM이 로우를 읽고 작성하는 페이지로 요약, 엔티티, 상호참조, 변경 이력을 담으며 LLM이 소유합니다.\n[26:49] 셋째 레이어는 스키마입니다.\n[26:51] 클로드 엠디나 에이전트 엠디에 구조나 규칙, 작업 흐름을 정의하며 사람과 LLM이 함께 수정합니다.\n[27:00] 레이어를 제어하는 세 스킬은 다음과 같습니다.\n[27:04] 인제스트는 새로 들어온 로우를 읽어 위키에 통합하고 쿼리는 지식 저장소를 검색하며 린트는 위키 안에 모순, 고립된 페이지, 노후된 내용을 점검합니다.\n[27:16] 레그와 비교하자면 레그는 질문마다 원본을 다시 검색하여 그 자리에서 답을 합성하기 때문에 매번 처음부터 종합하고 지식이 쌓이지 않습니다.\n[27:28] 반면 LLM 위키는 소스가 들어올 때 한 번 읽어 위키에 통합하기 때문에 상호 참조와 모순 표시가 미리 걸려 있고 읽은 모든 것이 반영된 최신 상태를 유지합니다.\n[27:41] 즉, 원본 데이터를 기반으로 지식 저장소의 라이프사이클을 관리하는 방식이며 메모리 뱅크에서 사람이 담당하던 콘텍스트 유지보수를 인제스트와 린트를 통해 LLM이 담당하게 하는 구조입니다.\n[27:58] 옵시디언 앱이 LLM 위키를 쉽게 구현할 수 있는 기능을 제공하고 있어서 이를 기반으로 구현해 봤는데요.\n[28:05] 옵시디언은 볼트라는 단위로 동작하며 볼트는 마크다운 파일 기반의 로컬 파일 시스템을 의미합니다.\n[28:12] 각 파일은 머리말에 프론트 매터라는 메타데이터를 두어 파일 탐색과 분류를 돕고 목차 지도라는 MC 페이지를 활용해서 검색합니다.\n[28:24] 또한 옵시디언은 페이지 사이의 연결을 시각하는 그래프 뷰와 웹 페이지를 마크다운 노트로 전환해 볼트의 저장하게 도와주는 웹 클리퍼 등을 제공하고 있습니다.\n[28:36] 리포트 이슈 페이지는 이 웹 클리퍼로 로우에 저장하는 식으로 구현했습니다.\n[28:42] 즉, 옵시디언과 볼트가 저장소를 담당하고 클로드 코드가 LLM 위키의 구현을 대신합니다.\n[28:51] 또한 이 시점은 클로드 코드 모델이 약진하던 시기로 과거 메모리 뱅크에서 사용하던 초기 GPT 모델에 비해 데이터를 이해하는 능력에서 가능성이 보였습니다.\n[29:04] 옵시디언이 제공하는 인터페이스 덕분에 쉽게 구축했지만 반대로 제한이 생겼는데요.\n[29:09] 첫째 수집입니다.\n[29:11] 웹 클리퍼는 화면에 보이는 것만 가져올 수 있어서 모든 정보를 들고 오지 못했습니다.\n[29:18] 접힌 댓글, 첨부 이미지, 참조 링크 등 누락되는 정보가 생겼습니다.\n[29:24] 정답이 댓글에 있는데 댓글이 전부 수집되지 않는 상황이었습니다.\n[29:29] 둘째, 다른 프로젝트와의 규격 불일치였습니다.\n[29:33] 옵시디언의 이중 대괄호 링크는 마크다운 문법이 아닌 고유의 문법이기 때문에 옵시디언을 채택하지 않은 다른 LLM 위키 저장소와 호환되지 못했습니다.\n[29:45] 셋째, 필요하지 않은 상태 파일입니다.\n[29:49] 닷 옵시디언 폴더는 데이터가 아니라 앱의 상태를 표방하는데 지식 저장소와 직접 관련이 없는 그래프 설정과 플러그인 상태에 해당합니다.\n[30:00] 그래서 도구에 귀속되지 않는 LLM 위키를 다시 만들어 보려고 했습니다.\n[30:06] 버전 쓰리는 오픈 날리지 포맷이라고 부르는 OKF입니다.\n[30:10] 구글이 제안한 규격으로 마크다운 파일의 디렉토리 트리에 야물 프론트 매터를 두는 방식입니다.\n[30:18] 옵시디언의 파일과 차이는 다음과 같습니다.\n[30:21] 첫째, 마크다운 파일 규격 채택입니다.\n[30:24] 순수 마크다운 파일 규격을 따르기 때문에 깃이나 VS 코드 같은 다른 서비스에서 추가 작업 없이 그대로 호환될 뿐 아니라 LLM 역시 마크다운 파일을 잘 인식합니다.\n[30:37] 둘째, 파일 탐색 방식입니다.\n[30:40] 옵시디언을 사용하던 MC가 없어지고 디렉토리마다 두는 예약 파일 인덱스 엠디와 시간순 이력을 기록하는 로그 닷 엠디가 추가되어 카탈로그와 이력이 규격 안에 정의됩니다.\n[30:53] 셋째, 메타데이터와 상태 파일입니다.\n[30:56] 프론트 매터의 필수 필드는 타입 하나뿐이고 나머지 필드에 대해서 프로젝트 성격에 맞게 자유롭게 추가할 수 있습니다.\n[31:05] 특정 라이브러리나 인터페이스에 가까운 것이 아닌 개념과 같기 때문에 각자 자신의 언어로 자유롭게 도구를 만들어 포팅할 수 있습니다.\n[31:16] 그래서 고랭 기반의 CLI 패키지나 R 기반의 패키지 등 많은 도구들이 출범하고 있습니다.\n[31:24] 그런데 OKF로 바꾸고 나서 운영을 해 보니 더 큰 근본적인 한계점이 있었습니다.\n[31:31] LLM 위키가 가정한 로우는 논문이나 기사처럼 한 번 들어오면 바뀌지 않는 불변의 진실인데 평가 시스템에서 활용할 로우 데이터는 전부 불변이 아니라는 것이었습니다.\n[31:44] 불변인 것은 알람 울린 당시의 정보와 그때 당시 알람 분석 결과를 갖고 있는 리포트 이슈 본문만 해당했습니다.\n[31:54] 사람의 피드백, 댓글과 이미지, 참고 피인용 링크 등은 언제든 추가될 수 있고 변경될 수 있었습니다.\n[32:02] 또한, 동작의 기준인 코드와 프롬프트, 사용하는 API 등도 개발 프로세스가 계속 진행되고 있기 때문에 변경은 불가피했습니다.\n[32:11] 그래서 LLM 위키에서 가지고 있던 로우 개념을 프로젝트에 맞게 재정의했습니다.\n[32:19] 먼저 타겟은 과거 로우의 개념에서 큰 차이가 없으며 이는 동작의 결과를 의미합니다.\n[32:25] 리포트 이슈 본문, 결과에 해당했던 JSON 데이터, 실행 시점에 따른 상태와 시각, 알람에 대한 정보를 포함합니다.\n[32:34] 나머지 두 컴포넌트인데요.\n[32:35] 피드백 컴포넌트는 기존 결과에 대한 리액션에 해당합니다.\n[32:40] 리포트 이슈 댓글, 이미지와 링크, 그리고 평가자가 동작 시점에 개입해 검수하는 결과를 포함합니다.\n[32:48] 단일 진실 공급원이라고 불리는 SSOT 컴포넌트는 모든 판정의 기준을 담고 있습니다.\n[32:53] 코드 스냅샷, 이슈와 PR 릴리즈, 각종 개발자가 정리했거나 LLM이 산출한 문설 그리고 회의에서 의사 결정된 항목들을 담고 있습니다.\n[33:05] 이 두 항목은 시점에 따라 변경이 발생하기 때문에 덮어쓰는 방식으로 진행한다면 시점의 일치를 보장할 수 없기 때문에 다른 방식을 고려하게 되었습니다.\n[33:20] 상태 기록과 진화라는 두 행동 규칙을 추가하게 되었습니다.\n[33:25] 스냅샷 모든 것에 시점을 붙이는 것으로 시작합니다.\n[33:29] 코드는 릴리즈마다 SHA를 붙여 스냅샷으로 둡니다.\n[33:31] 리포트에 찍힌 실행 SHA로 '그 시점 시스템'을 찾는다.\n[33:35] 피드백 SSOT는 덮어쓰지 않고 날짜를 붙여서 쌓아놓는 방식입니다.\n[33:46] 시점을 담고 있는 매니페스트 파일을 운영하는 것으로 라이프사이클을 대응합니다.\n[33:52] 다음은 이볼브.\n[33:53] 데이터가 쌓임에 따라서 스킬과 클로드 파일 등 시스템을 유지보수하는 모든 요소가 학습하는 기능입니다.\n[34:01] 모든 스킬과 세션 질의에 콜백처럼 동작하여 데이터가 일정량 쌓이거나 규칙이 즉시 변경되어야 하는 상황을 인지하면 세션 검토자에게 적용, 수정, 보류, 기각 등 의사 결정 제안하는 파이프라인을 추가합니다.\n[34:20] 이 두 행동 규칙을 기반으로 과거 데이터를 과거 지식으로 판단하고 과거 데이터를 현재 지식으로 판단하는 시점과 데이터의 명확한 해석이 가능해졌습니다.\n[34:33] 그래서 버전 포의 구조는 다음과 같습니다.\n[34:36] 로우 섹터에 대해서 타겟만 불변의 원칙이 적용되어 있고 피드백과 SSOT는 변화에 따른 데이터 확장 원칙이 적용되어 있습니다.\n[34:46] 로우 섹터 기반으로 인제스트를 수행하게 되면 위키 섹터 하위로 정리된 정보들이 쌓이며 데보스 에이전트 시스템의 구조, 동작 방식, 의사 결정 등이 이에 해당합니다.\n[34:59] 평가 섹터는 과거의 리포트 데이터에 대한 과거의 판정 결과를 쌓으며 리플레이 섹터는 과거의 알람의 데이터에 대한 지금의 판정 결과를 쌓게 됩니다.\n[35:12] 이러한 구조 위에서 어떻게 판정할 수 있을지를 정리했습니다.\n[35:17] 처음 평가상 영역의 판정 기준은 데보스 에이전트가 지향하는 이상적인 동작을 기준으로 채점하는 것이었습니다.\n[35:25] 기대한 장점은 우리가 가지고 있는 로드맵 끝에 어느 정도 가까워지고 있는지를 알 수 있다는 것이었습니다.\n[35:34] 그래서 릴리즈마다 이해 가능한 지표 도출을 의도했습니다.\n[35:40] 하지만 운영하면 할수록 문제가 발생했습니다.\n[35:42] 첫째, 로드맵이 변한다는 것입니다.\n[35:46] 프로젝트가 가지고 있는 방향성과 지향점은 언제든 변할 수 있다는 것을 간과했고 기준이 바뀌면 과거의 판정이 모두 흔들리게 되며 과거에 내린 결과의 신뢰성을 확보하기 위해 모든 데이터를 다시 검수해야 했습니다.\n[36:03] 둘째, 로드맵이 변하지 않더라도 해결 불가능한 항목은 언제나 발생한다는 것입니다.\n[36:09] 질의 분석 개선 상태 변화나 오부징 필터 개선 등 외부의 개선이 만약 없다면 판정은 계속 틀림으로 남고 낮은 지표에 무감각해지는 결과로 돌아왔습니다.\n[36:23] 셋째, 메트릭이 늘거나 줄을 수 있다는 것이었습니다.\n[36:28] 서브 에이전트가 추가되거나 하면 신규 필드 통합 제외 등 시스템의 변화에 따라서 이상 기준을 새로 써야 했습니다.\n[36:38] 그래서 알람 발생 시점에 적절했어야 하는 동작을 기준으로 판정하는 것으로 변경했습니다.\n[36:45] 알람이 울린 시점에 SSOT를 기반으로 채점할 수 있는 필드를 역산하고 이를 기반으로 피드백과 평가자 판정 게이트를 통과하여 판정을 완료합니다.\n[36:58] 판정은 세 가지 정보를 종합해 진행합니다.\n[37:02] 이슈 리포트 본문에서는 언제 어떤 데이터를 가지고 알람이 발생했으며 그 결과는 어땠는지를 읽고 댓글에서는 개발 담당자의 긍정 또는 부정 피드백을 배경으로 삼으며 알람이 울린 시점에 SSOT가 제시하는 판정 필드를 기준으로 결과를 검수하게 됩니다.\n[37:22] 그 결과 이 때 이런 알람이 불렸고 결과는 이랬다.\n[37:25] 이 결과에 대해서 사람은 이런 점이 문제라고 보았다.\n[37:31] 이 때 시스템 상황을 보면 이건 잘 동작한 것이고 이것은 어쩔 수 없었다고 봐야 한다.\n[37:36] 와 같은 합리적인 정보를 얻을 수 있었습니다.\n[37:41] 또한 이러한 판정에서는 다음과 같은 순서로 도출했습니다.\n[37:45] 맨 처음에는 보통 문제가 있지 않는 경우 개발자들이 피드백을 작성하지 않기 때문에 아무 피드백이 없다면 모두 잘한 것으로 판정하는 관용을 적용했었습니다.\n[37:56] 그런데 진행을 해 보니 각 담당자가 놓치거나 이슈 파악에 시간이 걸려 작성되지 않은 항목들이 있어서 잘못 판정되는 케이스가 식별됐습니다.\n[38:08] 그래서 이볼브를 최대한 활용하면서 평가 시스템을 강화하기 위해 조금이라도 의구심이 있다면 이를 평가자 세션에서 처리할 수 있도록 하는 비판적인 검증 단계를 추가했습니다.\n[38:22] 평가자 세션의 경우 사람이 직접 개입하는 단계이기 때문에 필요도를 낮추면서 일관적인 평가 세션을 완료하도록 원칙 기반으로 동작하게 여섯 가지를 정했습니다.\n[38:35] 첫째, 댓글 기조가 긍정일 것 오판 라벨과 회의록 언급이 없을 것.\n[38:42] 점검 항목을 통과할 것.\n[38:44] 이 케이스를 고치려는 PR이 없을 것.\n[38:47] 과거 결함 패턴 신호가 없거나 전부 설명될 것.\n[38:51] 이라는 여섯 가지의 자동 통과 조건이 아니라면 세션 검수를 진행합니다.\n[38:58] 둘째, 일대일로 기준 결과에 대해서 피드백을 대응시킵니다.\n[39:03] 셋째, 근거를 제시할 수 있는 의심만 묻습니다.\n[39:08] 넷째, 평가자 세션에서 내린 결론은 학습의 대상에 포함시켜 다음 세션 검토나 LLM 동작에 활용합니다.\n[39:17] 다섯째, 회의에서 의견이 하나로 모아진 경우 이것은 근거로 활용하고 의견이 불일치한다면 세션 검토자가 재확인하도록 요청합니다.\n[39:28] 여섯째, 조금이라도 의심스러운 정황이 있다면 억지로 반영하지 않습니다.\n[39:36] 지금까지는 과거 결과에 대한 판정을 설명드렸고 이제부터는 과거 결과에 대한 지금의 판정입니다.\n[39:43] 과거 알람을 지금 코드로 다시 실행하는 회귀 테스트인데요.\n[39:47] 맨 처음 알고리즘 기반 버전 제로에서는 기대값을 사람이 야물 파일에 직접 작성했고 테스트 대상도 사람이 선정했습니다.\n[39:58] LLM 기반의 버전 포는 다음과 같습니다.\n[40:01] 기대값은 고정된 것이 아니라 실행 때마다 확인하는 값으로 변경됩니다.\n[40:07] 현재 시스템의 SSOT에 해당하는 정보와 사람이 지정한 값을 조합합니다.\n[40:13] 대상은 사람이 선정한 케이스에서 매주 생성되는 리포트와 장기 확인을 위한 골든 셋을 조합합니다.\n[40:22] 채점은 전체를 대상으로 하고 SSOT에서 취득할 수 있는 정보로 필드와 달라진 값에 대한 근거를 찾습니다.\n[40:31] 이에 따라 판정도 맞고 틀림이 아닌 결과가 적절한지를 판단하게 됩니다.\n[40:40] 매주 발생하는 이슈 리포트를 누적해 대상으로 처리하게 되면 테스트에 소요되는 시간이 계속 증가하기 때문에 세 주 연속 통과한 대상을 졸업하는 것으로 일정 수를 유지하는 장치를 만들었습니다.\n[40:53] 이에 더해 세 번 연속 통과한 대상 이외에도 매번 테스트 대상으로 포함하는 것을 골든 셋으로 하이브리드 운영 설계를 했습니다.\n[41:04] 테스트 풀의 수가 늘어난다는 것은 연속 통과를 하지 못하는 대상이 있거나 특정 주차의 이슈가 많이 쌓인 것으로 현황을 해석할 수 있으며 골든 셋이 늘어난다는 것은 꼭 봐야 하는 포인트가 생겼다는 것으로 평가 시스템을 해석할 수 있습니다.\n[41:22] 테스트 판정에는 세 레이블이 있습니다.\n[41:25] 회귀, 과거 잘 동작했던 것이 지금도 같은가.\n[41:30] 개선, 과거 잘 동작하지 못했던 것이 지금은 해결됐는가.\n[41:35] 진화, 과거 잘 동작했던 것이 지금 다른 결과를 반환하지만 시스템이 잘 진화한 것을 반증하는가.\n[41:45] 리플레이의 판정 레이블은 일반적인 테스트 플로우와 다르기 때문에 깨진 테스트를 스스로 고치는 에이전트인 플레이라이트 힐러에서 착안한 판단 방식을 추가했습니다.\n[41:57] 데보스 에이전트 리플레이에서 테스트가 실패했을 때 기준과 동일한 결과를 반환해야 하는 것이 맞다면 회귀 실패로 처리합니다.\n[42:06] 반면 시스템이 개선되거나 진화한 것이라면 코드와 PR 그리고 과거 결정 기록에서 값이 바뀐 이유를 찾고 그 이유가 분명하다면 달라진 값을 정당한 변화로 보아 개선 혹은 진화로 처리합니다.\n[42:23] 이러한 논리에 입각해 각 테스트 수행에 대해서는 최대 다섯 번 동작하는 가드레일 보호 장치를 추가했습니다.\n[42:31] 네트워크 실패와 같은 테스트 상황의 차이가 발생할 수도 있으며 에이전트 동작 방식의 차이로 인해 비결정성 결과로 반환될 수 있기 때문입니다.\n[42:42] 결과적으로 매번 사람이 대응해야 됐던 버전 제로에서 사람이 개입이 꼭 필요한 곳에만 배치하는 버전 포로 변경된 것입니다.\n[42:51] 그래서 예정 결과와 달리 지금 결과는 이렇게 달라졌다.\n[42:56] 그 원인은 이 PR에서 반영된 내용이고 그 이유는 이 회의록에서 의사 결정된 사항이고 과거 리포트 댓글에도 이 동작을 기대하는 말이 있다.\n[43:06] 와 같이 상황을 해석할 수 있습니다.\n[43:10] 마지막으로 평가 시스템이 해결한 것, 남은 과제, 앞으로 시도할 방법에 대해 소개해 드립니다.\n[43:17] 평가 시스템이 답해야 하는 세 가지 질문에 대해 다음과 같은 답을 도출했습니다.\n[43:22] 첫째, 과거 이슈 리포트는 과거 기준으로 판단한다.\n[43:26] 그리고 이 집계를 스태터스 페이지로 제공한다.\n[43:31] 둘째, 과거 알람을 현재 시스템으로 실행하고 현재 기준으로 판단한다.\n[43:36] 그리고 이 집계를 리플레이 페이지로 제공한다.\n[43:40] 셋째, 시스템 변화를 인내하고 해석한다.\n[43:44] 그리고 근거를 학습한다.\n[43:45] 이러한 방법론은 비결정성 결과를 취급하는 프로젝트에서 채용하여 시스템 신뢰도를 평가하는데 활용하시기를 추천드립니다.\n[43:55] 아직 평가 시스템이 해결하지 못한 문제도 있습니다.\n[43:58] 첫째 평가 시스템의 평가입니다.\n[44:01] 평가 시스템을 평가하기 위해서 어떻게 할 것인가?\n[44:04] 그리고 이 반복을 어디서 멈출지를 정해야 합니다.\n[44:08] 둘째, 버전 제로보다 사람의 개입을 줄이기 위해서 자동 통과, 사람 게이트, 힐러 에이전트와 같은 장치를 두었지만 그래도 아직의 사람의 개입이 필요한 지점은 여러 있기 때문입니다.\n[44:21] 셋째, 사람의 개입을 하게 때문에 반대로 휴먼 에러가 발생할 수 있습니다.\n[44:27] 판정자 오판 탐지를 하더라도 정보 간의 충돌을 벌어졌는 것에 적지 않은 비용이 발생합니다.\n[44:34] 넷째, 네이버 검색 환경의 경우 다양한 요인들의 조합으로 이루어지기 때문에 비슷한 알람들을 식별에 패턴화하려고 하지만 어려움을 겪고 있습니다.\n[44:45] 이러한 과제들을 직간접적으로 해소하기 위해서 다음 세 방법을 접목해 도입할 예정입니다.\n[44:51] 첫째, LLM S Judge입니다.\n[44:54] 달라진 결과가 적절한지를 LLM이 먼저 판정하여 사람이 확인할 대상을 줄이고 케이스를 가로질러 비슷한 잘못의 패턴을 찾아내는 것을 목표하고 있습니다.\n[45:05] 둘째 에이전트 궤적 기록입니다.\n[45:08] 에이전트가 어떤 판단을 내렸고 어떤 데이터를 조회했는지, 동작의 이력을 결과와 함께 남깁니다.\n[45:15] 결과만이 아니라 그 결과 이리기까지의 과정도 판정의 재료로 사용하기 위함입니다.\n[45:22] 셋째 시스템 진화 연혁입니다.\n[45:25] 시스템이 어떻게 진화였는지를 연혁으로 정리하여 어느 릴리즈에서 어떤 규칙이 바뀌었고 그 이유 판정이 어떻게 달라졌는지를 예측합니다.\n[45:35] 정리하면 사람의 개입은 줄이고 과거 현재 미래를 더 잘 남기는 방향입니다.\n[45:43] 지금까지 데보스 에이전트의 리포트가 맞았는지를 LLM이 판정하고 과거 알람을 지금 코드로 다시 실행하여 회귀와 괴선, 그리고 진화를 확인하는 평가 시스템에 대해서 설명드렸습니다.\n[45:57] 궁금한 점이 있으신 경우 하단에 댓글을 주시면 최대한 답변 드릴 수 있도록 하겠습니다.\n[46:03] 감사합니다.",
+        "body": "네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.\n\n[발표 내용]\n통합검색 알람 발생 시 1분 내 장애 1차 진단 리포트를 이슈로 남기는 에이전트, 그 결과를 평가해 시스템 정확도를 도출한 이야기\n\n[발표 대상]\n- LLM 기반의 이상 신호 분석 시스템을 운영하고자 하는 독자\n- LLM 기반의 평가 시스템을 운영하고자 하는 독자\n\n[목차]\n- Devops Agent 소개\n- 에이전트라서 생기는 문제\n- 평가 기준 정하기\n- 평가 시스템 구성\n- 평가 시스템 구축\n- 평가 시스템의 미래",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "LLM 에이전트 평가·신뢰성 확보 방안",
+        "tags": [
+          "LLM",
+          "데보스 에이전트",
+          "NX",
+          "PRS",
+          "IC"
+        ],
+        "concepts": [
+          "Root Cause Analysis",
+          "멀티에이전트 시스템",
+          "AI 에이전트 상태 관리"
+        ],
+        "key_points": [
+          {
+            "point": "에이전트 판단 신뢰성을 평가하는 방법이 필요함",
+            "timestamp": "00:30"
+          },
+          {
+            "point": "각 서브 에이전트가 레이어별 장애 지표를 판단",
+            "timestamp": "02:02"
+          },
+          {
+            "point": "프롬프트 수정이 기존 사례에 부정적 영향을 줄 수 있음",
+            "timestamp": "04:29"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "오케스트레이터가 서브 에이전트를 병렬 호출해 멀티 레이어 모니터링을 구현하면 클라우드 서비스 장애 진단 속도를 높일 수 있다.",
+          "챗봇 응답을 심각도·원인 라벨링으로 평가해 지속적인 신뢰성 측정 및 개선이 가능하다.",
+          "프롬프트 수정 후 기존 테스트 케이스를 자동 재검증해 회귀 오류를 방지한다."
+        ],
+        "quiz": [
+          {
+            "question": "LLM 에이전트의 판단 신뢰성을 평가하기 위해 별도 평가 시스템이 필요한 이유는?",
+            "options": [
+              "LLM 출력이 결정적이기 때문이다",
+              "동일 입력에도 답이 달라질 수 있어 신뢰성 검증이 필요하기 때문이다",
+              "LLM 모델은 절대 업데이트되지 않는다",
+              "LLM이 코드 수준 단위 테스트를 제공한다"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에서 LLM은 같은 상황에서도 답이 흔들릴 수 있어 평가 시스템이 필요하다고 언급한다 (00:30)."
+          },
+          {
+            "question": "프롬프트 수정이 초래할 수 있는 문제는 무엇인가?",
+            "options": [
+              "모든 사례가 동시에 개선된다",
+              "기존에 잘 동작하던 사례가 틀릴 수 있다",
+              "서브 에이전트 호출을 중단한다",
+              "정확도가 자동으로 상승한다"
+            ],
+            "answer_index": 1,
+            "explanation": "프롬프트 수정 후 A는 개선되었지만 기존에 잘되던 C가 틀릴 수 있다는 사례가 제시된다 (04:29)."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.13 (domain:ai-ml,systems +0.13; tag:llm +0.02; content_type:talk -0.02)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "부족한 건 모델이 아니라 팀 문서였다: 팀 공유 지식층 Third Brain 구축기",
+        "url": "https://youtu.be/fxGi9Emms-0",
+        "published_at": "2026-11-19T05:36:46",
+        "transcript": "[00:02] 안녕하세요, 매트릭엔 모니터링 팀의 김보규입니다.\n[00:05] 오늘 발표 제목은 부족한 건 모델이 아니라 팀 문서였다.\n[00:09] 팀 공유 지식층 Third Brain 구축기입니다.\n[00:14] 본론 전에 하나만 짚고 가겠습니다.\n[00:17] 오늘 나오는 알람과 대화 장면은 실제 사례를 바탕으로 재구성한 가상 예시입니다.\n[00:22] 시스템 이름, 계정, 주소도 모두 가상입니다.\n[00:26] 다만 뒤에 나오는 평가 수치는 실제로 측정한 값입니다.\n[00:30] 순서는 화면과 같습니다.\n[00:32] 에이전트가 왜 우리 팀 일을 못 했는지에서 출발해서 서드 브레인이 무엇인지 짧게 소개하고 그 다음부터는 저희가 걸어온 순서 대신 질문 네 개를 따라갑니다.\n[00:41] 어디에 적나요? 문서는 누가 업데이트 하나요? AI가 쓴 걸 믿을 수 있나요? 그래서 잘 동작하나요?\n[00:49] 팀 지식을 정리해 보신 분이라면 한 번쯤 부딪혀 보셨을 질문들입니다.\n[00:54] 끝에는 처음 장면으로 돌아옵니다.\n[00:58] 첫 번째 이야기입니다.\n[01:00] 이 프로젝트의 시작은 문서가 아니라 에이전트였습니다.\n[01:04] 에이전트가 우리 팀 일을 못 했던 장면부터 보여드리겠습니다.\n[01:10] 처음 목표는 알람 원인을 찾는 일이, 일을 에이전트에게 맡기는 것이었습니다.\n[01:16] 알람이 발생하면 AI가 로그와 지표를 조회하고 그걸 바탕으로 원인까지 분석하는 흐름입니다.\n[01:23] 에러스택 트레이스로 코드 위치를 찾고, 최근 커밋 작성자까지 추적하는 POC를 만들었습니다.\n[01:31] 단순한 케이스는 꽤 그럴 듯하게 풀었습니다.\n[01:34] 그래서 조금 더 어려운 알람을 넣어 봤습니다.\n[01:39] 예를 들면 이런 알람입니다.\n[01:41] 데이터를 수정하는 API에서 데이터 낫 파운드 에러가 예외가 발생했습니다.\n[01:47] 에이전트는 코드 203행을 정확히 짚었습니다.\n[01:51] 그리고 널 체크를 넣는 피알을 제안하면서 최근에 이 코드를 커밋한 A를 담당자로 지정했습니다.\n[01:58] 여기까지는 꽤 그럴 듯합니다.\n[02:01] 그런데 팀이 아는 답은 전혀 달랐습니다.\n[02:04] 이 에러는 클라이언트가 이미 삭제된 데이터를 수정하려고 해서 나는 에러라 팀에서는 정상 범위로 봅니다.\n[02:12] 이런 요청은 주간 정리 배치가 처리하도록 되어 있어서 피알도 필요 없습니다.\n[02:16] 그리고 이 코드의 담당자는 두 달 전에 A에서 B로 바뀌었습니다.\n[02:21] 이 세 가지는 코드에도, 로그에도, 어떤 문서에도 없었습니다.\n[02:28] 모델을 더 큰 걸로 바꿔 봐도 같은 답이 나왔습니다.\n[02:31] 에이전트가 틀린 건 추론을 잘 못해서가 아니라 팀이 당연하게 알고 있는 지식을 몰랐기 때문이었습니다.\n[02:39] 그 무렵 보던 원인 분석 에이전트 논문에서도 도메인 지식 없이는 단순한 케이스를 넘기 어렵다고 보고하고 있었습니다.\n[02:47] 그래서 에이전트를 더 붙이기 전에 팀 지식부터 적어야 한다는 결론을 내렸습니다.\n[02:55] 그 팀 지식은 사람 머릿속, 이슈 코멘트, 메신저, 개인 메모에 흩어져 있었습니다.\n[03:01] 그래서 화면에 있는 질문들이 계속 돌아왔습니다.\n[03:05] 이 값은 왜 이렇게 잡았는지, 지난 저번 알람은 어떻게 해결했는지, 배포 순서는 어떻게 되는지 답을 아는 사람이 자리에 없으면 일이 거기서 멈췄습니다.\n[03:16] 돌아보니 신규 입사자가 묻는 것과 에이전트가 틀리는 것이 사실 같은 질문이었습니다.\n[03:22] 그래서 이 지식을 팀 단위로 한 곳에 모으기로 했습니다.\n[03:28] 그렇게 만든 것이 서드 브레인입니다.\n[03:31] 에이전트가 답하기 전에 먼저 읽는 팀의 지식층입니다.\n[03:35] 어떤 것인지 조금 더 설명드리겠습니다.\n[03:39] 서드 브레인이라는 이름은 메타 애널리틱스 팀이 공개한 글에서 가져왔습니다.\n[03:44] 퍼스트 브레인은 사람의 머리입니다.\n[03:46] 빠르지만 금방 잊히고, 나만 압니다.\n[03:50] 많은 분들이 쓰시는 개인 메모 도구가 세컨드 브레인인데, 기록은 남지만 나만 볼 수 있습니다.\n[03:55] 메타에는 세컨드 브레인이라는 개인형 워크스페이스가 있습니다.\n[04:00] 메모 도구가 아니라 개인 문서 폴더에 에이전트와 사내 도구 연결, 워크플로우를 붙인 작업 환경이고 사내에서 6만 명 넘게 설치했다고 합니다.\n[04:11] 그리고 그 글 마지막에 팀원 각자가 알게 된 것을 팀 저장소에 모으는 팀 단위 시스템을 내부에서 서드 브레인이라고 부른다는 문장이 나옵니다.\n[04:21] 저희가 만들려던 것이 바로 그것이어서 이름을 그대로 빌려왔습니다.\n[04:26] 메타 세컨드 브레인의 네 조각을 저희 팀에 대보니 세 개는 이미 있었습니다.\n[04:32] 마크다운 폴더 역할은 팀 위키가, 사내 도구로 가는 통로는, 사내 도구로 가는 통로는 깃과 이슈 트래커 씨엘아이가 하고 있었고 에이전트 한에서도 있었습니다.\n[04:44] 없는 건 스킬스 하나 뿐이었습니다.\n[04:46] 글이신 위키는 있었지만 1장에서 보신 지식은 거기 없었고 그 내용을 채우고 꺼내 쓰는 수단이 없었습니다.\n[04:54] 그래서 이 프로젝트는 새로 크게 짓는 일이 아니었습니다.\n[04:57] 빠진 한 조각을 채우면 됐습니다.\n[05:02] 다음은 무엇을 담는지입니다.\n[05:04] 저희가 정한 원칙은 다 담진 않지만 어떤 지식이든 여기서 출발하면 찾아갈 수 있게 한다는 것입니다.\n[05:12] 직접 담는 건 무언가가 어디에 있고 왜 그렇게 정했는지, 알람 원인과 대응, 설정값과 그 이유 같은 것들입니다.\n[05:21] 코드나 이슈 상세, 이슈 상세, 절차 원문은 링크로 남깁니다.\n[05:27] 진행 상태나 일정처럼 자주 바뀌는 건 아예 담지 않고 필요하면 조회 시점에 원문에서 봅니다.\n[05:34] 담지 않으면 오래될 일도 없기 때문입니다.\n[05:39] 대신 라우팅 인덱스 한 장이 영역별로 무엇이 어디에 있고, 원문엔 어떻게 가는지 알려줍니다.\n[05:45] 페이지가 아니라 영역 단위로 적었기 때문에 문서가 늘어도 인덱스는 커지지 않습니다.\n[05:53] 담을 범위를 정했으면 반영할 때마다 남길지 말지 판단하는 기준도 필요합니다.\n[05:58] 아무거나 남기면 다시 찾아볼 일 없는 작업 기록만 쌓입니다.\n[06:03] 저희 경험상으로 저희 경험상으로는 자동으로는 모으면 노이즈가 쌓이고, 수동으로만 하면 빠지는 게 생깁니다.\n[06:11] 그래서 기준 문서를 두고 보수적으로 판단하게 했습니다.\n[06:15] 남기는 건 팀 단위로 반복해서 참조될 것, 알람 원인과 설정값처럼 잘 안 바뀌는 것, 그리고 확인한 것 뿐입니다.\n[06:24] 여기서 확인했다는 건 원문이나 코드, 실행 결과로 뒷받침된다는 뜻입니다.\n[06:30] 그럴 듯해 보여도 직접 확인하지 않는 추론은 넣지 않습니다.\n[06:35] 추정이나 확인 필요를 붙여서 남기는 방법도 있지만 그러면 읽는 사람이 결국 다시 확인해야 하니 쓰지 않았습니다.\n[06:43] 확인한 다음에 남기면 되기 때문입니다.\n[06:46] 이 저장소는 조회하면 그대로 믿고 쓰는 층이어야 하기 때문입니다.\n[06:53] 문서 틀도 정해야 했습니다.\n[06:56] 저희 팀은 이미 개요, 아키텍처, 배포, 기타와 같이 나누는 자체 포맷이 있었습니다.\n[07:03] 이걸 갈아엎지 않고 쓰기 컨벤션 문서에 적어 두어 에이전트가 따르게 했습니다.\n[07:08] 다만 서드 브레인은 다른 팀도 쓸 수 있게 만든 것이라 팀 포맷이 없는 경우도 생각해야 했습니다.\n[07:15] 그래서 기본 포맷으로 쓸 방법론을 찾아봤습니다.\n[07:17] 후보는 두 개였습니다.\n[07:19] 디아택시스, 그리고 세컨드 브레인 얘기할 때 자주 같이 나오는 파라입니다.\n[07:24] 파라는 진행 중인 프로젝트인지, 끝난 것인지와 같은 실행 상태 실행 상태로 문서를 나누는 방식이라 상태가 바뀔 때마다 문서를 옮겨야 합니다.\n[07:37] 그런데 앞에서 말씀드린 것처럼 이 저장소는 자주 바뀌는 상태를 담지 않습니다.\n[07:43] 팀 지식은 프로젝트가 끝나도 계속 쓰이고 프로젝트 단위 정리는 이슈 트래커가 이미 하고 있었습니다.\n[07:51] 저희는 절차를 찾는지, 값을 찾는지, 이유를 찾는지로 나누는 디아택시스를 기본값으로 정했습니다.\n[07:57] 하우투, 레퍼런스, 익스플러네이션으로 나누고 한 문서에는 섞지 않는 규칙인데 이 규칙 하나면 에이전트가 페이지를 어떻게 나눌지 흔들리지 않습니다.\n[08:08] 배포 절차는 하우투, 설정값은 레퍼런스, 알람 원인 분석은 익스플러네이션으로 갈립니다.\n[08:18] 이제 첫 번째 질문은 팀 지식을 어디에 적느냐입니다.\n[08:24] 처음에는 문서를 잘 만들어 두기만 하면 될 줄 알았습니다.\n[08:28] 포맷을 정하고 LLM으로 초안을 쓰고 컨플루언스 위키에 올리고 임베딩 검색을 붙였습니다.\n[08:34] 그런데 두 군데에서 깨졌습니다.\n[08:36] 첫째, 같은 프롬프트를 넣어도 LLM이 쓰는 문서가 매번 달랐습니다.\n[08:41] 이건 저장 위치와는 상관없는 쓰기 규칙 문제라서 앞에서 말씀드린 쓰기 컨벤션으로 해결했습니다.\n[08:47] 둘째, 컨플루언스는 매크로가 많아 문서마다 형식의 제약이 가했고 AI가 읽으면 원문보다 매크로 태그가 더 많이 섞여 나왔습니다.\n[08:56] 여기서 배운 건 하나입니다.\n[08:57] 사람이 읽기 좋은 곳에 두면 AI는 못 읽습니다.\n[09:04] 그래서 AI가 읽을 수 있는 곳으로 저장소를 옮기기로 했습니다.\n[09:09] 후보는 세 가지였습니다.\n[09:11] 쓰고 있던 컨플루언스 위키를 그대로 쓰는 것, 문서 전용 깃허브 레포를 새로 만드는 것, 그리고 깃허브 위키입니다.\n[09:18] AI가 읽을 수 있는 형식인지, 에이전트 도구로 바로 닫는지, 사람이 보던 곳에서 얼마나 멀어지는지를 기준으로 비교했습니다.\n[09:27] 컨플루언스 위키는 방금 보신 대로 폼이긴 편한데 그만큼 AI가 읽을 때 매크로가 같이 딸려옵니다.\n[09:35] 깃허브 레포는 깔끔하지만 사람이 문서를 찾아 읽기에는 위키 쪽이 편했습니다.\n[09:40] AI만 읽는 곳이 아니라 사람도 계속 보는 곳이어야 했기 때문입니다.\n[09:46] 깃허브 위키는 마크다운이 강제되고 매크로라는 개념이 없어서 형식이 단순합니다.\n[09:52] 사람은 관리하기 편하고 에이전트는 문서 내용 말고는 읽을 게 없습니다.\n[09:57] 여기에 클론 한 번이면 전체가 로컬에 있고 변경 이력이 남고 사람이 보는 뷰어도 같이 따라옵니다.\n[10:04] 그래서 깃허브 위키를 골랐습니다.\n[10:09] 저장소를 정했으니 다음은 검색입니다.\n[10:11] 처음에는 임베딩 검색을 붙였지만 결국 그랩으로 정리했습니다.\n[10:16] 가장 큰 이유는 규모입니다.\n[10:18] 팀 위키는 지금 마크다운 220장이라 그랩으로 전체를 검색해도 1초가 안 걸립니다.\n[10:24] 임베딩 검색까지 둘 필요가 없는 규모였습니다.\n[10:27] 게다가 팀 지식은 컴포넌트명, 호스트명, 설정 키 같은 고유 명사로 찾기 때문에 키워드가 고식별자입니다.\n[10:36] 여기에 두 가지 이점이 더 있었습니다.\n[10:38] 임베딩 검색은 문서가 바뀔 때마다 다시 새겨야 하지만 깃은 풀 한 번이면 최신입니다.\n[10:45] 임베딩 검색이 틀렸다는 얘기는 아니고 이 규모와 이런 질문에서는 그랩이 맞았다는 뜻입니다.\n[10:51] 최근 공개된 자료도 같은 방향입니다.\n[10:55] 링크로 이어진 마크다운 위키를 에이전트가 따라가며 읽는 방식이 문서를 조각 내 임베딩 임베딩하는 방식보다 여러 문서를 거쳐 답하는 질문에서 점수가 높았다는 논문이 있고 칼패스의 LLM 위키 아이디어도 같은 결입니다.\n[11:11] 출처는 참고 자료에 정리해 두었습니다.\n[11:14] 그리고 일기가 기시면 쓰기도 커밋 하나로 끝납니다.\n[11:18] 그 쓰기를 언제, 누가 하느냐가 다음 질문입니다.\n[11:24] 두 번째 질문은 문서를 누가 업데이트하느냐입니다.\n[11:28] 문서는 만드는 것보다 최신으로 유지하는 게 더 어렵습니다.\n[11:34] 저희가 푼 건 새로 드러난 지식이 문서 문서에 안 들어가는 쪽입니다.\n[11:39] 이미 있는 문서가 오래 되는 문제는 아직 남아 있습니다.\n[11:43] 네 이 문제를 풀려면 먼저 인정해야 할 것이 있었습니다.\n[11:46] 지식이 드러나는 순간과 문서를 여는 순간은 다릅니다.\n[11:50] 지식은 알람 대응이 끝났을 때, 이슈를 닫을 때, 리뷰에서 정정받을 때 드러납니다.\n[11:56] 그런데 문서를 여는 순간 한참 뒤에 오거나 아예 오지 않습니다.\n[12:01] 처음에는 하루 한 번 배치로 문서를 고치는 안이 유력했습니다.\n[12:05] 하지만 배치는 지식이 언제 드러났는지 모르고 변경 요약 알림은 금방 노이즈가 됩니다.\n[12:11] 그래서 방향을 바꿨습니다.\n[12:13] 각자 쓰는 에이전트의 스킬을 얹어서 지식이 드러나는 그 자리에서 초안을 만들고 반영할지는 사람이 정하게 했습니다.\n[12:21] 그러니까 문서는 에이전트가 먼저 업데이트하고 사람은 반영할지만 정합니다.\n[12:28] 구현은 생각보다 간단합니다.\n[12:30] 영어 두 개만 먼저 짓겠습니다.\n[12:32] 스킬은 에이전트가 필요할 때 읽는 마크다운 지식문 파일입니다.\n[12:36] 사람이 직접 호출할 수도 있지만 에이전트가 각 스킬이 설명을 보고 지금 필요한지 스스로 판단해서 호출하기도 합니다.\n[12:44] 서드 브레인은 이 스스로 호출을 기대기 때문에 제 때 호출되느냐가 뒤에서 계속 중요해집니다.\n[12:51] 훅은 세션 시작 같은 정해진 시점에 자동으로 실행된 실행되는 장치로 세션 시작 훅은 텍스트를 컨텍스트에 끼워 넣을 수 있습니다.\n[13:02] 세션이 시작될 때 이 훅이 진입 스킬을 넣어줍니다.\n[13:06] 진입 스킬은 조회 스킬과 반영 스킬을 언제 호출할지 정하는 규칙이고 화면의 레드 플래그스 표는 잠시 뒤에 보여드리겠습니다.\n[13:16] 조회 스킬이 서치, 반영 스킬이 업데이트입니다.\n[13:20] 여기에 처음 한 번 저장소를 연결하는 이니 스킬까지 총 네 개입니다.\n[13:24] 조회와 반영 두 스킬은 깃 저장소 하나를 보고 저장소 안에는 지식 페이지와 지식 페이지와 함께 앞에서 말씀드린 라우팅 인덱스와 쓰기 컨벤션이 들어 있습니다.\n[13:35] 이 중 진입 스킬을 어떻게 만들었는지 보겠습니다.\n[13:41] 처음 고민은 세션 도중에 조회와 반영 스킬이 알아서 어떻게 알아서 호출되느냐였습니다.\n[13:49] 그러던 중 세션 도중에도 스킬이 잘 호출되는 슈퍼파워스라는 오픈소스 플러그인을 참고하게 되었습니다.\n[13:55] 그 비결은 세션 시작 훅으로 넣은 지시문이었습니다.\n[13:59] 세션이 시작되면 훅이 진입 스킬 본문을 컨텍스트에 넣어주고 그 지시문이 세션 내내 언제 어떤 스킬을 호출해야 하는지 에이전트를 잡아줍니다.\n[14:09] 훅은 지시문을 넣어주는 통로일 뿐이고 실제로 에이전트를 움직이지는 않았습니다.\n[14:16] 아 실제로 에이전트를 움직이는 건 지시문입니다.\n[14:20] 그래서 슈퍼파워스의 유징 유징 슈퍼파워스처럼 저희도 유징 서드 브레인이라는 진입 스킬을 두고 조회와 반영을 훅에 따로 붙이지 않았습니다.\n[14:31] 진입 스킬에는 원칙만 한 장 담고 실제 절차는 스킬이 호출될 때만 불러오게 했습니다.\n[14:37] 매 세션에 들어가는 건 이 한 장 뿐입니다.\n[14:41] 대화가 길어지면 앞부분이 요약으로 접히는데 이때 넣어 둔 지시문도 함께 흐려지거나 빠질 수 있습니다.\n[14:47] 그래서 슈퍼파워스처럼 요약된 뒤나 세션을 이어서 열 때도 지시문이 다시 들어가게 했습니다.\n[14:54] 이렇게 적용해 보니 서드 브레인에서도 세션 도중에 시키지 않아도 조회와 반영이 호출됐습니다.\n[15:03] 슈퍼파워스 슈퍼파워스에서 배운 두 번째는 레드 플래그스 표입니다.\n[15:08] 에이전트는 스스로 합리화하면서 할 일을 은근히 건너뜁니다.\n[15:12] 그 패턴을 이런 생각이 들면 실제로는 이라는 표로 적어서 세션 시작에 같이 넣는 방식입니다.\n[15:20] 형식은 슈퍼파워스에서 그대로 가져왔고 항목은 저희가 실제로 놓쳤던 장면으로 채웠습니다.\n[15:26] 이건 내가 이미 아는 내용이다.\n[15:29] 남길지 말로는 물어보자. 너무 사소하다. 푸시했다고 나왔으니 됐다. 모두 실제로 겪은 장면입니다.\n[15:37] 그리고 하나 더 배운 게 있습니다.\n[15:39] 스킬 디스크립션이 곧 트리거입니다.\n[15:41] 키워드를 나열하는 대신 질문의 성격으로 쓰고 일반 지식은 빼라고 적어두면 훨씬 정확하게 호출됩니다.\n[15:48] 스킬 디스크 스킬 디스크립션을 쓰실 때 한 번 더 한 번 써 보셔도 좋을 것 같습니다.\n[15:55] 반대로 슈퍼파워스에 없어서 직접 직접 정한 것도 있습니다.\n[15:59] 무언가를 새로 알게 된 순간을 잡아주는 훅은 없어서 진입 지시문에 작업 단위가 끝날 때마다 스스로 점검하라고 넣었습니다.\n[16:09] 세 번째 질문은 AI가 쓴 문서를 믿을 수 있느냐입니다.\n[16:13] 에이전트가 팀 문서를 직접 고친다고 하면 가장 먼저 위험하지 않냐는 걱정이 나옵니다.\n[16:18] 그 걱정을 줄이려고 들은 장치들을 설명드리겠습니다.\n[16:24] 먼저 사람이 개입하는 자리, 즉 흔히 휴먼 인 더 루프라고 부르는 부분입니다.\n[16:29] 에이전트가 팀 문서를 고칠 때는 반드시 사람에게 묻습니다.\n[16:33] 중요한 건 무엇을 들고 묻느냐입니다.\n[16:36] 처음에는 에이전트가 이거 팀 문서에 남길까요라고 빈손으로 묻고 답이 올 때까지 아무것도 하지 않았습니다.\n[16:43] 사람은 무엇이 어떤 문장으로 들어갈지 모르는 모르는 채 정해야 했고 남기고자 하면 그제야 초안 작업이 시작돼서 한 번 더 확인해야 했습니다.\n[16:54] 그래서 순서를 바꿨습니다.\n[16:56] 에이전트가 초안을 먼저 만들고 사실이 맞는지, 포맷, 중복, 오호한 표현을 스스로 점검한 다음 디프로 보여주면서 묻습니다.\n[17:06] 묻는 건 같지만 이제 사람은 실제로 들어갈 내용을 보고 판단합니다.\n[17:11] 승인 전에는 커밋은 물론이고 깃 애드도 하지 않습니다.\n[17:15] 사람은 한 글자로 승인하면 됩니다.\n[17:18] 쓰기 규칙이 없는 저장소라면 지식보다 컨벤션을 먼저 지식보다 컨벤션을 먼저 확정해서 같은 디프에 넣었습니다.\n[17:26] 자동 실행 잡이나 스케줄처럼 사람이 없는 상황에서는 푸시하지 않고 승인을 다음 대화로 미루도록 설계했습니다.\n[17:35] 이 페이지는 실제 사례를 재구성한 장면, 실제 사례로 재구성한 장면입니다.\n[17:41] 문서 동기화가 전부 404로 실패한 일이 있었는데 원인은 코드 코드가 아니라 동기화 보 계정의 라이선스 회수였습니다.\n[17:49] 대응이 끝나자 에이전트가 남길까요라고 묻는 대신 초안 디프부터 보여줍니다.\n[17:55] 그런데 초안에 보조 주소를 펄백이라고 적었습니다.\n[17:59] 사용자가 그건 펄백이 아니라 스테이징이라고 바로잡습니다.\n[18:03] 에이전트가 고쳐서 다시 묻고 승인을 받은 뒤 푸시하고 마지막 보고는 원격을 다시 읽어 확인한 커밋 해시 한 줄입니다.\n[18:11] 방금 사람이 정정한 바로 그 자리가 승인 게이트입니다.\n[18:19] 두 번째 장치는 시스템 쪽에 있습니다.\n[18:21] 워크트리 정리입니다.\n[18:23] 한 사람이 세션을 여러 개 띄우거나 팀원 여럿이 같은 시간에 반영하는 일을 이 일은 생각보다 자주 있습니다.\n[18:30] 이때 공유 클론 하나에서 다 같이 편집하면 문제가 생깁니다.\n[18:34] 한 쪽에서 에드하면 다른 쪽이 아직 커밋하지 않은 파일이 하는 파일까지 같이 올라가고 한 쪽에서 리셋하면 다른 쪽 편집이 삭제됩니다.\n[18:43] 그래서 공유 클론은 패치 전용으로만 두고 편집은 세션마다 자기 워크트리에서 합니다.\n[18:51] 작업 공간이 분리되어 있으니 서로 섞이지 않습니다.\n[18:54] 푸시할 때 충돌이 나면 리베이스를 한 번 시도합니다.\n[18:58] 그래도 안 되면 워크트리를 그대로 남겨두고 사람이 처리합니다.\n[19:02] 성공하면 스크립트가 워크트리를 정리합니다.\n[19:05] 여기까지가 AI가 쓴 걸 믿을 수 있게 하는 장치 두 가지입니다.\n[19:09] 사람이 승인하는 단계 그리고 세션마다 분리된 워크트리입니다.\n[19:14] 그러면 이렇게 만들어 놓은 것이 정말 잘 동작하는지 이원재 님이 이어서 설명해 주시겠습니다.\n[19:21] 안녕하세요, 이원재입니다.\n[19:23] 발표의 마지막 질문입니다.\n[19:25] 그래서 잘 동작하나요? 결론부터 말씀드리면 결과를 더 크게 가는 건 모델보다 문서였습니다.\n[19:32] 이 결론이 어떻게 나왔는지 차례로 보겠습니다.\n[19:36] 무엇을 측정했는지 요소를 하나씩 바꾸면 무엇이 달라지고 무엇은 그대로인지 그리고 이 수치를 어디까지 믿어도 되는지입니다.\n[19:47] 시키지 않아도 호출된다는 게 실제로 어떤 모습인지부터 보겠습니다.\n[19:52] 4장에서 보신 네 스킬 중 사람이 직접 부르는 건 처음 한 번 저장소를 연결하는 이닛 스킬 뿐입니다.\n[20:01] 나머지는 훅과 에이전트가 알아서 호출합니다.\n[20:05] 사용자는 스킬 이름을 부르지 않고 알람 임계치가 왜 80인지 묻거나 90으로 바꿨다고 대화할 뿐입니다.\n[20:13] 그러면 에이전트가 팀 문서를 조회해서 답하거나 초안을 만들어서 반영할지 묻습니다.\n[20:20] 이 서치와 업데이트가 시키지 않아도 제때 호출되는지가 이번 평가의 핵심입니다.\n[20:30] 무엇으로 측정했는지부터 보겠습니다.\n[20:32] 테스트 셋은 네 세트로 나눴습니다.\n[20:35] S는 서치를 호출해야 하는 질문.\n[20:38] U는 업데이트를 호출해야 하는 대화.\n[20:41] N은 아무것도 호출하면 안 되는 질문입니다.\n[20:45] R은 팀 문서에 답이 적혀 있는 질문인데 여기서는 호출했는지가 아니라 찾아온 답이 맞는지 봅니다.\n[20:53] 이 중 중요한 건 N 세트입니다.\n[20:56] 무조건 호출하는 스킬도 호출률은 100%가 나오기 때문에 호출하지 않는 게 정답인 세트가 있어야 호출률을 신뢰할 수 있습니다.\n[21:07] 평가 방법은 오른쪽 열처럼 크게 두 가지로 나뉩니다.\n[21:12] S, U, N은 어떤 도구를 호출했는지만 보면 됩니다.\n[21:17] R은 응답이 정답인지 비교해야 해서 LLM as a judge, 즉 다른 LLM이 응답을 정답과 대조해서 평가하는 방식을 사용합니다.\n[21:31] 결과를 보기 전에 무엇을 바꿔가며 측정했는지 먼저 말씀드리겠습니다.\n[21:36] 비교한 요소는 여섯 가지입니다.\n[21:39] 문서 유무와 스킬 유무 그리고 모델은 하이쿠 5.5, 소넷 5.5, 오푸스 5.5 세 가지.\n[21:47] 추론 강도는 로우, 미디엄, 하이 세 단계입니다.\n[21:52] 설치 환경은 서드 브레인 스킬만 설치한 경우와 실제 저희가 쓰는 환경처럼 다른 스킬과 도구들을 함께 설치한 경우입니다.\n[22:02] 그리고 마지막 요소는 세션 시작 훅 유무입니다.\n[22:07] 기준 조건은 소넷 5.5, 미디엄 추론 강도, 단독 설치 환경, 스킬과 문서가 둘 다 있고 훅을 켠 상태입니다.\n[22:17] 여기서 한 번에 한 가지 요소만 바꾸면서 테스트했습니다.\n[22:24] 우선 기준 조건으로 테스트한 결과입니다.\n[22:27] 팀 지식이 필요한 질문에서는 시키지 않아도 서치를 100% 호출했고 조회해서 가져온 답도 정답과 같았습니다.\n[22:38] 업데이트 호출률은 95%였습니다.\n[22:42] 호출하면 안 되는 질문에서 호출한 경우는 10% 정도였는데 대부분 시스템 이름이 들어간 제품 질문에서 조회한 경우입니다.\n[22:52] 참고로 이 수치들은 5% 단위로 반올림한 값이고 오차 범위는 10% 안팎입니다.\n[23:00] 그럼 이제 여기서 요소를 하나씩 바꾸면 어떻게 달라지는지 다음 장부터 각 요소마다 하나씩 살펴보겠습니다.\n[23:10] 첫 번째 요소는 문서 유무입니다.\n[23:12] 스킬은 그대로 두고 문서만 있고 없게 해서 측정했습니다.\n[23:17] 문서가 있으면 스킬이 연결된 저장소를 읽어서 전부 맞췄습니다.\n[23:23] 문서가 없으면 스킬은 호출됐지만 볼 문서가 없다면서 멈췄고 하나도 마치지 못했습니다.\n[23:31] 당연한 결과처럼 보이지만 스킬만으로는 답이 나오지 않는다는 것을 숫자로 확인한 겁니다.\n[23:39] 스킬은 문서를 대신하지 못합니다.\n[23:41] 답은 문서에서 나옵니다.\n[23:43] 그럼 반대로 문서는 있는데 스킬이 없으면 어떻게 되느냐 다음 장에서 살펴보겠습니다.\n[23:52] 이번에는 스킬을 뺐습니다.\n[23:54] 문서는 사내 깃허브에 그대로 둔 채 거기서 찾아보라고 했습니다.\n[23:57] 그랬더니 60% 정도를 찾았습니다.\n[24:01] 답은 전부 사내 깃허브 이슈와 코드에서 찾았습니다.\n[24:05] 그러다 보니 예전 결정을 지금 결정인 것처럼 답한 경우도 있었고 시간도 세 배 넘게 걸렸습니다.\n[24:13] 문서가 있어도 스킬 없이는 거기까지 못 간 겁니다.\n[24:18] 그래서 스킬이 하는 일은 시키지 않아도 위키를 먼저 읽게 하고 새로 알게 된 것을 반영하게 하는 것입니다.\n[24:26] 스킬이 없다면 문서를 갱신하는 이 반영 경로 자체가 없을 겁니다.\n[24:34] 모델도 바꿔 봤습니다.\n[24:35] 하이쿠 5.5, 소넷 5.5, 오푸스 5.5로 비교했습니다.\n[24:40] 업데이트 호출은 하이쿠 65%, 소넷 95%, 오푸스 100%로 상위 모델일수록 많이 호출했습니다.\n[24:50] 하이쿠 모델이 빠뜨린 경우는 대부분 서치까지는 하고 업데이트로 이어가지 않은 것이었습니다.\n[24:57] 그런데 오호출은 방향이 반대였습니다.\n[25:00] 하이쿠 5%, 소넷 10%, 오푸스 15%로 상위 모델일수록 호출하면 안 되는 질문에서도 더 많이 호출했고 하이쿠와 오푸스의 차이는 오차 범위를 넘습니다.\n[25:14] 오푸스는 개인 설정이나 아직 확정되지 않은 내용을 팀 문서에 남기려고 업데이트를 호출한 경우도 있었습니다.\n[25:23] 호출 더 하는 모델이 오호출도 더 하는 쪽으로 움직인 겁니다.\n[25:30] 서치 호출은 세 모델 모두 95% 이상, 조회 정답률은 세 다 100%라서 이 테스트 세트로는 모델 차이를 가리지 못했습니다.\n[25:40] 그럼 추론 강도는 어땠을까요?\n[25:43] 추론 강도는 모델이 답하기 전에 얼마나 길게 생각할지 정하는 설정입니다.\n[25:50] 기준 모델인 소넷 5.5를 두고 추론 강도를 로우, 미디엄, 하이로 바꿔가며 측정했습니다.\n[25:58] 서치 호출은 세 단계 모두 100%였고 업데이트 호출은 90%, 95%, 95%로 높일수록 조금 늘었지만 오차 범위 안이었습니다.\n[26:08] 오호출도 10% 안팎으로 같았습니다.\n[26:12] 추론 강도를 올려서 달라지는 폭보다 모델을 바꿀 때 달라지는 폭이 훨씬 컸습니다.\n[26:21] 다음은 설치 환경입니다.\n[26:22] 실제 개발자 환경에서는 스킬이 하나만 있지 않으니까요.\n[26:25] 그래서 많이 쓰이는 스킬과 플러그인 MCP 도구를 같이 설치해서 스킬이 60여 개, 도구가 130여 개인 환경을 만들었습니다.\n[26:36] 결과는 단독 설치와 비슷했습니다.\n[26:38] 서치 호출 100%, 업데이트 호출 85%, 오호출 5%로 업데이트가 조금 낮았지만 오차 범위 아니었습니다.\n[26:46] 다른 스킬이 많이 깔려 있어도 호출률은 크게 달라지지 않았습니다.\n[26:55] 마지막 요소는 세션 시작 훅입니다.\n[26:58] 4장에서 보신 것처럼 훅은 진입 스킬을 세션 시작에 넣어줍니다.\n[27:02] 이걸 끄면 서치 호출은 그대로인데 업데이트 호출이 95%에서 70%로 떨어졌습니다.\n[27:10] 실패한 경우를 보면 대부분 확정되면 남기겠다. 원하시면 초안을 만들겠다처럼 업데이트를 미루고 끝낸 응답들입니다.\n[27:20] 이런 케이스에 대해 훅으로 주입되는 진입 스킬에 레드 플래그 표가 바로 이런 경우를 막아주는 항목인데 훅을 끄게 되면 레드 플래그가 세션에 들어가지 않으니 차이가 발생한 것으로 보입니다.\n[27:33] 오호출은 끈 쪽이 조금 낮았지만 오차 범위 아니었습니다.\n[27:39] 그럼 여섯 가지를 정리하면 이렇습니다.\n[27:41] 결과를 바꾼 건 문서, 스킬, 모델, 그리고 훅입니다.\n[27:47] 문서는 정답률을 100%와 0%로 갈랐습니다.\n[27:51] 스킬은 문서가 있어도 스킬이 빠지면 60% 정도에 그쳤습니다.\n[27:56] 모델은 업데이트 호출을 65%에서 100%까지 움직였고 오호출도 5%에서 15%로 같이 늘었습니다.\n[28:07] 훅은 끄면 업데이트 호출이 95%에서 70%로 떨어졌습니다.\n[28:13] 추론 강도와 함께 설치된 스킬과 도구는 별 차이가 없었습니다.\n[28:19] 그리고 서치 호출은 어떤 조건에서도 95% 이상이었습니다.\n[28:24] 문서가 없으면 소넷 5.5도 0%였고 문서가 있으면 하이쿠 5.5도 100%였습니다.\n[28:32] 결과를 더 크게 가는 건 모델보다 문서였습니다.\n[28:38] 마지막으로 이 수치를 읽을 때 감안하실 것 두 가지입니다.\n[28:42] 첫째는 측정 범위입니다.\n[28:44] 질문 하나로 끝나는 짧은 세션에 고정된 문장으로 물었습니다.\n[28:48] 실제 작업처럼 긴 대화가 이어지거나 개인 설정이 섞인 환경은 측정하지 않았습니다.\n[28:55] 그리고 둘째, 테스트 셋 과적합 문제입니다.\n[28:58] 스킬을 만든 사람이 테스트도 다 만들었습니다.\n[29:02] 그리고 조회 질문은 문서에 적힌 표현을 보통 그대로 만들어서 정답률이 높게 나옵니다.\n[29:09] 그래서 100%가 나왔다고 스킬이 완벽한 건 아니고 이 테스트 세트로는 더 판별할 수 없었다는 뜻입니다.\n[29:17] 그리고 실패한 케이스를 보고 스킬을 고친 뒤 같은 테스트 세트로 다시 측정하는 일을 반복했었기 때문에 결과 수치는 이 테스트 세트에 맞춰져 있습니다.\n[29:29] 오차 범위도 10%로 큰 편이라서 다른 팀 문서나 다른 환경에서는 같은 방법으로 다시 측정해야 할 겁니다.\n[29:38] 어 이런 한계를 감안하더라도 처음 장면과 비교하면 달라진 것은 분명히 있습니다.\n[29:45] 이제 처음 장면으로 다시 돌아가 보겠습니다.\n[29:48] 같은 알람, 같은 모델입니다.\n[29:52] 처음에 보여드렸던 그 알람입니다.\n[29:54] 데이터 수정 API에서 데이터 낫 파운드 예외가 났습니다.\n[29:58] 이번에는 에이전트가 답하기 전에 팀 지식부터 확인합니다.\n[30:03] 그리고 이렇게 답합니다.\n[30:04] 삭제된 데이터에 대한 수정 요청이라 정상 범위이고 주간 정리 배치가 처리하니 코드 수정은 필요 없다.\n[30:11] 담당자도 A가 아니라 B로 바뀌어 있다고 알려줍니다.\n[30:15] 처음에 팀만 알던 이 세 가지 지식이 전부 문서에서 나온 겁니다.\n[30:20] 출처도 같이 달려 있습니다.\n[30:24] 같은 대화가 조금 더 이어집니다.\n[30:26] 담당자가 이번 주에 B에서 C로 바뀌었다고 알려주면 이번에는 에이전트가 업데이트 스킬을 호출합니다.\n[30:33] 개요 페이지에 담당자를 고친 디프를 보여주고 반영할지 묻고 네 한 글자로 답하면 푸시까지 끝납니다.\n[30:41] 처음 장면에서 A가 두 달 전에 팀을 옮긴 것을 아무도 문서에 적지 않았습니다.\n[30:47] 그런데 이제는 알게 된 그 자리에서 문서가 바로 업데이트됩니다.\n[30:55] 모델은 처음 장면과 같습니다.\n[30:57] 달라진 건 에이전트가 답하기 전에 먼저 읽는 문서가 생겼다는 것 하나입니다.\n[31:03] 6장에서 보신 것처럼 모델을 바꿔도 조회 정답률은 그대로였고 읽을 문서가 없으면 어떤 모델도 답하지 못했습니다.\n[31:12] 앞서 보규 님이 말씀하신 대로 문서는 만드는 것보다 최신으로 유지하는 게 더 어렵다는 걱정이 있었습니다.\n[31:19] 저희의 답은 사람이 지킬 절차를 하나 더 만드는 대신에 에이전트가 스스로 먼저 호출하게 하는 것이었습니다.\n[31:27] 승인 단계가 있긴 한데 사람이 기억해서 챙길 일은 아닙니다.\n[31:31] 에이전트가 물으면 그때 답하기만 하면 됩니다.\n[31:36] 반년 동안 문서는 220장, 커밋은 800건 가까이 쌓였는데 사람이 지켜야 할 절차는 하나도 늘지 않았습니다.\n[31:47] 마지막으로 질문 하나 드리고 싶습니다.\n[31:50] 여러분 팀의 에이전트가 틀렸을 때 그게 정말 모델 문제였나요?\n[31:54] 저희의 답은 이 네 가지였습니다.\n[31:56] 어디에 적을지는 깃허브 위키 한 곳에 두고 깃과 그랩으로 찾겠습니다.\n[32:03] 문서는 누가 업데이트하느냐에는 레드 플래그를 담은 진입 스킬 한 장을 세션 시작에 넣어서 에이전트가 먼저 초안을 만들게 했습니다.\n[32:12] AI가 쓴 걸 믿으려면 휴먼 인 더 루프로 초안은 에이전트가 만들고 반영은 사람이 승인하게 했고 세션마다 깃 워크트리를 나눴습니다.\n[32:23] 그리고 잘 동작하는지는 여러 조건에서 측정했습니다.\n[32:27] 결과를 바꾼 건 문서, 스킬, 모델, 그리고 훅이었고 그 평가는 호출 여부 그리고 LLM as a judge로 했습니다.\n[32:39] 참고한 자료는 여기 정리해 두었습니다.\n[32:42] 모두 공개된 자료들입니다.\n[32:47] 저희 방식이 정답은 아닙니다.\n[32:49] 다만 팀 지식을 쌓으려는 분들께도 에이전트에게 팀 업무를 맡기려는 분들께도 작은 참고가 되면 좋겠습니다.\n[32:56] 지금까지 발표를 들어주셔서 감사합니다.",
+        "body": "네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.\n\n[발표 내용]\nAI가 답을 못 맞히는 이유가 모델이 아니라 팀 문서의 부재라는 것을 확인하고, 팀 위키를 AI가 읽고 쓰는 공유 지식층으로 만들어 운영한 경험을 공유합니다.\n\n[발표 대상]\n팀 지식을 정리하는 방법을 고민중인 개발자 \n\n[목차]\n- 에이전트가 우리 팀 일을 못 했다\n- Third Brain 이란\n- 어디에 적나요?\n- 문서는 누가 업데이트하나요?\n- AI가 쓴 걸 믿을 수 있나요?\n- 그래서 잘 동작하나요?\n- 다시 첫 장면으로",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "팀 지식 정리로 AI 에이전트 오류를 방지하고 업무 효율을 높인다",
+        "tags": [
+          "Third Brain",
+          "Meta",
+          "Git",
+          "Issue Tracker",
+          "디아택시스"
+        ],
+        "concepts": [
+          "문서 기반 지식 관리",
+          "AI와 인간 협업",
+          "AI 에이전트 메모리 관리"
+        ],
+        "key_points": [
+          {
+            "point": "AI 에이전트가 알람 원인 분석을 자동화하려 했지만 도메인 지식 부족으로 실패",
+            "timestamp": "01:10"
+          },
+          {
+            "point": "팀이 당연히 알고 있던 지식이 문서·로그·코드에 없어서 에이전트가 틀렸다는 결론 도출",
+            "timestamp": "02:31"
+          },
+          {
+            "point": "‘Third Brain’은 메타에서 차용한 팀 단위 지식 저장소 개념이며, 기존 위키·CI·Git 등과 결합해 구현",
+            "timestamp": "04:21"
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "중앙화된 지식 저장소와 라우팅 인덱스를 고객지원 FAQ 시스템에 적용해, 담당자가 아닌 경우에도 정확한 답변을 자동 제공한다",
+          "문서화 기준을 ‘반복적으로 참조될 것’과 ‘잘 변하지 않는 것’에 한정해, 데이터 파이프라인 장애 로그를 필터링하고 핵심 원인만 기록하도록 한다",
+          "코드 리뷰 봇이 제안하기 전에 팀이 정의한 코딩 표준·베스트 프랙티스 저장소를 조회하도록 하여, 자동 리뷰 품질을 높인다"
+        ],
+        "quiz": [
+          {
+            "question": "AI 에이전트가 데이터 낫 파운드 오류에 대해 잘못된 조치를 제안한 이유는 무엇인가?",
+            "options": [
+              "코드 저장소 접근 권한이 없어서",
+              "팀이 해당 오류를 정상 범위로 인식한다는 도메인 지식이 없어서",
+              "로그 타임스탬프를 오해했기 때문에",
+              "구형 모델을 사용했기 때문에"
+            ],
+            "answer_index": 1,
+            "explanation": "본문(02:31~02:39)에서 팀이 이미 삭제된 데이터를 수정하려는 오류를 정상 범위로 보고 있었지만, 해당 도메인 지식이 문서·코드·로그에 없었기 때문에 에이전트가 잘못 판단했다."
+          },
+          {
+            "question": "Third Brain 시스템에서 라우팅 인덱스의 주요 역할은 무엇인가?",
+            "options": [
+              "모든 원시 로그를 저장한다",
+              "각 지식 영역이 어디에 있는지, 원문으로 어떻게 연결되는지 알려준다",
+              "문서를 자동으로 생성한다",
+              "버전 관리를 대체한다"
+            ],
+            "answer_index": 1,
+            "explanation": "04:39~04:45에 라우팅 인덱스는 영역별 위치와 원문 링크를 제공해 문서가 늘어나도 인덱스는 커지지 않도록 설계되었다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.11 (domain:ai-ml +0.13; content_type:talk -0.03)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    }
+  ]
+}

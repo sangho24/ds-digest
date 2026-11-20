@@ -1,294 +1,299 @@
 {
   "contract_version": 1,
-  "date": "2026-11-16",
-  "generated_at": "2026-11-16T08:56:54.976487+09:00",
+  "date": "2026-11-20",
+  "generated_at": "2026-11-20T14:58:20.125861+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-16.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-20.html",
   "items": [
     {
-      "id": "aee2db4029bd",
-      "title": "Sheaf-Inspired Structured Scoring Extensions of LightGCN for Collaborative Filtering",
-      "url": "https://arxiv.org/abs/2611.17226v1",
+      "id": "73feb15d5e1d",
+      "title": "When Do Rankings Beat Signs? Gradient Direction Recovery under Even Nuisance",
+      "url": "https://arxiv.org/abs/2611.26055v1",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.IR"
+        "name": "arXiv:cs.LG"
       },
-      "published_at": "2026-11-12T18:20:22",
-      "summary": "그래프 기반 추천에서 스코어링 구조를 바꿔 커버리지를 개선 가능",
-      "positioning": "그래프 기반 협업 필터링에서 LightGCN 같은 모델은 임베딩 전파에 집중했지만 스코어링은 단순 내적에 머물렀다. 본 연구는 스코어링 단계에 sheaf‑inspired 구조적 변환을 도입해 기존 흐름에 점층적 확장을 시도한다. 이는 그래프 추천 연구에서 스코어링 설계의 새로운 방향을 제시한다.",
+      "published_at": "2026-11-19T13:01:08",
+      "summary": "순위 피드백으로 그래디언트 추정 비용 크게 절감",
+      "positioning": "이 논문은 제한된 함수 평가와 피드백 라운드에서 그래디언트 방향을 효율적으로 추정하는 문제를 다룬다. 기존 부호만 이용한 방법은 Θ(d/ε) 비용이 필요했지만, 순위 정보를 활용하면 평가 복잡도를 크게 낮출 수 있다. 이는 쿼리 효율적인 최적화와 오라클 복잡도 연구 흐름에 속한다.",
       "tags": [
-        "LightGCN",
-        "sheaf",
-        "Amazon-Book",
-        "Gowalla",
-        "MovieLens-1M"
-      ],
-      "relevance": 9,
-      "key_points": [
-        {
-          "point": "Sheaf‑inspired scoring은 LightGCN 위에 쌍‑의존 변환을 추가해 전파 방식을 바꾸지 않는다",
-          "timestamp": null
-        },
-        {
-          "point": "다양한 스코어러(내적, 대각, rank‑one, full‑matrix, residual MLP)를 여러 데이터셋에 적용해 순위 품질은 데이터셋에 따라 다소 변하고 커버리지는 크게 변한다",
-          "timestamp": null
-        },
-        {
-          "point": "방법은 sheaf 기하학에서 영감을 얻었지만 실제 sheaf‑Laplacian 확산을 구현하지 않아 기하학적 이득을 입증하지는 않는다",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "Sheaf‑inspired pair‑dependent scoring을 전자상거래 검색 랭킹에 적용해 아이템 커버리지를 확대한다",
-        "Sheaf‑inspired 구조를 지식 그래프 링크 예측에 적용해 관계별 변환을 학습, 예측 정확도를 높인다",
-        "Residual MLP 스코어러를 세션 기반 추천에 적용해 세션 특성을 반영, 실시간 순위 변동성을 개선한다"
-      ],
-      "quiz": [
-        {
-          "question": "이 논문에서 제안한 스코어링 확장은 그래프 전파 단계가 아닌 무엇을 변경한다?",
-          "options": [
-            "노드 특성 초기화",
-            "임베딩 전파 방식",
-            "사용자·아이템 임베딩의 쌍 의존 변환",
-            "그래프 구조 자체"
-          ],
-          "answer_index": 2,
-          "explanation": "논문은 전파는 LightGCN 그대로 두고 스코어링 레이어에 쌍‑의존 변환을 추가한다는 점을 강조한다"
-        },
-        {
-          "question": "실험 결과에 따르면 구조화된 스코어러가 제공한 가장 큰 효과는 무엇인가?",
-          "options": [
-            "일관된 순위 품질 향상",
-            "데이터셋에 따라 순위 품질 변화와 큰 카탈로그 커버리지 변화",
-            "학습 속도 가속",
-            "파라미터 수 감소"
-          ],
-          "answer_index": 1,
-          "explanation": "결과는 순위 품질이 데이터셋에 따라 다소 변하고, 특히 커버리지가 크게 변하는 경우가 있었다는 점을 보고한다"
-        }
-      ]
-    },
-    {
-      "id": "950ac38f23f2",
-      "title": "Understanding Positional Embeddings in Modern LLMs",
-      "url": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
-      "source": {
-        "type": "rss",
-        "name": "HackerNews"
-      },
-      "published_at": null,
-      "summary": "LLM 토큰 위치 인코딩 이해로 성능·해석력 향상",
-      "positioning": null,
-      "tags": [
-        "RoPE",
-        "GPT",
-        "PyTorch",
-        "LLM",
-        "self-attention"
+        "arXiv",
+        "Mirror",
+        "Reverse",
+        "Full",
+        "minimax"
       ],
       "relevance": 8,
       "key_points": [
         {
-          "point": "절대 및 상대 방식(예: RoPE)을 포함한 다양한 위치 임베딩 기법을 소개한다",
+          "point": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 순위 방식은 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도의 방향을 복구한다",
           "timestamp": null
         },
         {
-          "point": "RoPE 작동 원리를 수학적 설명과 PyTorch 구현 예제로 상세히 풀이한다",
+          "point": "Mirror·Reverse·Full의 정보 계층 구조가 공유 오프셋을 어떻게 활용·제거하는지를 설명한다",
           "timestamp": null
         },
         {
-          "point": "2026년 공개 모델들의 위치 인코딩 선택 현황을 조사·비교한다",
+          "point": "리짓 작업 실험에서 짧은 사이클 순위 복구가 배치형 부호 기반 대비 최종 평균 갭을 낮추었다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "RoPE 회전 변환을 시계열 트랜스포머에 적용해 시간 순서 정보를 효율적으로 인코딩한다",
-        "그래프 신경망에서 노드 간 상대 거리 표현을 위해 RoPE와 유사한 회전 임베딩을 도입한다",
-        "코드 생성 모델에 RoPE 기반 위치 인코딩 시각화를 활용해 토큰 수준 해석 가능성을 높인다"
+        "Reverse 순위 방식을 하이퍼파라미터 튜닝의 블랙박스 손실 그래디언트 추정에 적용하면 평가 횟수를 줄일 수 있다.",
+        "정보 계층 구조를 A/B 테스트에서 치료군과 대조군을 쌍으로 묶어 교차 순서를 반대로 설정함으로써 시스템 편향을 상쇄한다.",
+        "짧은 사이클 순위 피드백을 강화학습 정책 그래디언트 추정에 도입하면 노이즈가 큰 보상 환경에서 샘플 효율을 높인다."
       ],
       "quiz": [
         {
-          "question": "RoPE는 토큰 위치 정보를 어떻게 인코딩하나요?",
+          "question": "Reverse 순위 방식이 동일 오프셋을 가진 쌍에서 오프셋을 상쇄할 수 있는 이유는?",
           "options": [
-            "절대 인덱스 벡터를 더한다",
-            "쿼리·키 벡터에 회전 변환을 적용한다",
-            "각 위치마다 별도 임베딩 테이블을 사용한다",
-            "위치 정보를 무시한다"
+            "순위 비교가 절대값을 사용한다",
+            "교차 쌍 순서를 반대로 매김",
+            "부호 정보를 이용한다",
+            "함수 평가를 두 번한다"
           ],
           "answer_index": 1,
-          "explanation": "RoPE는 쿼리와 키 벡터에 회전 연산을 적용해 상대적인 거리 정보를 인코딩한다"
+          "explanation": "Reverse는 서로 반대 방향의 교차 쌍 순서를 사용해 오프셋을 서로 상쇄하도록 설계되었다."
         },
         {
-          "question": "전통적인 절대 위치 인코딩과 RoPE의 주요 차이점은 무엇인가요?",
+          "question": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 방식이 달성하는 평가 복잡도는?",
           "options": [
-            "RoPE는 상대적 거리 정보를 제공한다",
-            "절대 인코딩은 회전 변환을 사용한다",
-            "RoPE는 학습되지 않는다",
-            "절대 인코딩은 토큰 간 상관관계를 고려한다"
+            "Θ(d/ε)",
+            "O~(d+√(d/ε))",
+            "Θ(d·R(ε^{-1/R}-1))",
+            "O(d^2)"
           ],
-          "answer_index": 0,
-          "explanation": "절대 위치 인코딩은 고정된 위치 벡터를 더하지만, RoPE는 회전 변환을 통해 토큰 간 상대 거리 정보를 캡처한다"
+          "answer_index": 1,
+          "explanation": "논문에 따르면 이 조건 하에서 Reverse는 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도를 얻는다."
         }
       ]
     },
     {
-      "id": "5ebc2d3160c3",
-      "title": "검수도 답변도 호출도 AI가? 커머스API의 2026",
-      "url": "https://youtu.be/-jiSMqYOHKA",
+      "id": "51b584009fc6",
+      "title": "DeepMind Just Released The Best Thing AI Ever Did",
+      "url": "https://youtu.be/Cy7Wz6Z4TWU",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-11-19T09:26:19",
+      "summary": "세포 유형별 유전자 스위치 예측으로 맞춤형 모델링 가능",
+      "positioning": null,
+      "tags": [
+        "AlphaGenome 2",
+        "DeepMind",
+        "HK1",
+        "beta cell",
+        "pancreatic"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "AlphaGenome 2는 베타 세포에서 HK1 유전자를 활성화시키는 변이를 예측하고 다른 췌장 세포에서는 거의 영향을 주지 않는다",
+          "timestamp": "01:55"
+        },
+        {
+          "point": "AlphaGenome 2는 기존보다 두 배 많은 변이를 90% 정밀도로 식별했다",
+          "timestamp": "03:23"
+        },
+        {
+          "point": "보지 못한 파킨슨병 데이터에서도 41% 정확도로 예측해 기존 전문 AI의 17%를 크게 앞섰다",
+          "timestamp": "04:09"
+        }
+      ],
+      "ideas": [
+        "단일세포 RNA‑seq와 조직 유형을 입력으로 사용해 암 세포주에서 약물 반응을 예측하면, 조직 특이적 약물 효능을 빠르게 스크리닝할 수 있다",
+        "발달 단계와 유전체 서열을 결합해 대안 스플라이싱 이벤트를 예측하면, 발달 단계별 전사조절 메커니즘을 모델링할 수 있다",
+        "숙주 유전형과 환경 변수를 조건으로 넣어 미생물 군집의 유전자 발현 변화를 예측하면, 개인 맞춤형 마이크로바이옴 치료 설계에 활용할 수 있다"
+      ],
+      "quiz": [
+        {
+          "question": "AlphaGenome 2가 훈련에 보지 못한 세포 유형에서도 높은 예측 정확도를 보인 이유는 무엇인가?",
+          "options": [
+            "DNA 서열만으로 모든 세포 유형의 발현을 동일하게 모델링한다",
+            "다양한 세포 유형의 대규모 단일세포 발현 데이터를 학습해 패턴을 일반화한다",
+            "셀 타입 임베딩을 명시적으로 사용해 새로운 타입을 추론한다",
+            "이미지 모델의 전이학습을 적용한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 AlphaGenome 2가 수많은 세포에서 측정된 발현 데이터를 학습하고, 이를 바탕으로 훈련되지 않은 세포에서도 일반화할 수 있다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "463e48f0d50a",
+      "title": "When Can You Ship on Offline Evals Alone?",
+      "url": "https://engineering.atspotify.com/2026/11/when-can-you-ship-on-offline-evals-alone/",
+      "source": {
+        "type": "rss",
+        "name": "Spotify Engineering"
+      },
+      "published_at": "2026-11-19T13:34:19",
+      "summary": "오프라인 평가만으로 출시 위험을 정량화하는 방법",
+      "positioning": null,
+      "tags": [
+        "Spotify Engineering",
+        "LLM",
+        "A/B test",
+        "offline eval",
+        "arXiv"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "오프라인 평가는 빠르지만, 위험을 낮추려면 강한 가정과 위험 한계가 필요하다",
+          "timestamp": null
+        },
+        {
+          "point": "실제 온라인 효과의 조건부 분포를 알면 평가 결과만으로도 해로운 출시 위험을 직접 평가할 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "노이즈와 편향으로 인해 관측된 상관관계가 실제보다 낮게 추정될 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "오프라인 클릭‑예측 모델의 조건부 분포를 이용해 추천 시스템 업데이트를 A/B 테스트 없이 단계적 롤아웃한다",
+        "오프라인 성능 테스트 결과의 불확실성을 정량화해 모바일 앱 기능 플래그의 자동 전환 기준으로 활용한다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 오프라인 평가만으로 제품 출시 결정을 내리기 위해서는 강한 가정이 필요할까?",
+          "options": [
+            "오프라인 평가는 온라인 메트릭과 항상 일치한다",
+            "노이즈와 편향으로 실제 연관성을 가릴 수 있다",
+            "오프라인 평가는 비용이 많이 든다",
+            "A/B 테스트가 더 빠르다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 노이즈가 강한 상관관계를 숨길 수 있어, 가정이 검증되지 않으면 위험이 커진다고 설명한다"
+        }
+      ]
+    },
+    {
+      "id": "63e0412c967c",
+      "title": "Devops Agent 리포트 오이데~ 평가 야호~",
+      "url": "https://youtu.be/_btg9xR_i50",
       "source": {
         "type": "youtube",
         "name": "NAVER D2"
       },
-      "published_at": "2026-11-11T04:43:08",
-      "summary": "AI 자동 검수·툴로 API 운영 효율 상승",
+      "published_at": "2026-11-19T06:34:02",
+      "summary": "LLM 에이전트 평가·신뢰성 확보 방안",
       "positioning": null,
       "tags": [
-        "AI",
         "LLM",
-        "OAS3",
-        "MCP 게이트웨이",
-        "LLMS.TXT"
+        "데보스 에이전트",
+        "NX",
+        "PRS",
+        "IC"
       ],
       "relevance": 6,
       "key_points": [
         {
-          "point": "검수는 엑셀 점검표로 수작업했으며 병목이 되었다.",
-          "timestamp": "02:14"
+          "point": "에이전트 판단 신뢰성을 평가하는 방법이 필요함",
+          "timestamp": "00:30"
         },
         {
-          "point": "AI로 규칙 22개 자동 검수 가능.",
-          "timestamp": "02:40"
+          "point": "각 서브 에이전트가 레이어별 장애 지표를 판단",
+          "timestamp": "02:02"
         },
         {
-          "point": "AI 검수 도입으로 소요 시간 1분 이하로 단축.",
-          "timestamp": "07:06"
+          "point": "프롬프트 수정이 기존 사례에 부정적 영향을 줄 수 있음",
+          "timestamp": "04:29"
         }
       ],
       "ideas": [
-        "데이터 파이프라인 스키마에 AI 기반 자동 검증을 적용해 오류 탐지 시간을 단축한다.",
-        "마이크로서비스 호출을 AI 에이전트가 중재하도록 하여 동적 라우팅을 최적화한다.",
-        "고객 FAQ 문서를 AI가 학습해 자동 응답 시스템을 구축한다."
+        "오케스트레이터가 서브 에이전트를 병렬 호출해 멀티 레이어 모니터링을 구현하면 클라우드 서비스 장애 진단 속도를 높일 수 있다.",
+        "챗봇 응답을 심각도·원인 라벨링으로 평가해 지속적인 신뢰성 측정 및 개선이 가능하다.",
+        "프롬프트 수정 후 기존 테스트 케이스를 자동 재검증해 회귀 오류를 방지한다."
       ],
       "quiz": [
         {
-          "question": "AI 검수가 기존 수작업 검수보다 시간을 크게 단축한 주요 이유는?",
+          "question": "LLM 에이전트의 판단 신뢰성을 평가하기 위해 별도 평가 시스템이 필요한 이유는?",
           "options": [
-            "AI가 명세를 자동으로 읽고 규칙을 적용한다",
-            "AI가 네트워크 지연을 없앤다",
-            "AI가 하드웨어 성능을 높인다",
-            "AI가 검수 인력을 추가한다"
+            "LLM 출력이 결정적이기 때문이다",
+            "동일 입력에도 답이 달라질 수 있어 신뢰성 검증이 필요하기 때문이다",
+            "LLM 모델은 절대 업데이트되지 않는다",
+            "LLM이 코드 수준 단위 테스트를 제공한다"
           ],
-          "answer_index": 0,
-          "explanation": "AI는 OAS3 명세를 파싱해 규칙을 자동 적용하므로 사람이 일일이 확인할 필요가 없어 시간이 크게 감소한다."
+          "answer_index": 1,
+          "explanation": "본문에서 LLM은 같은 상황에서도 답이 흔들릴 수 있어 평가 시스템이 필요하다고 언급한다 (00:30)."
         },
         {
-          "question": "발표에서 언급된 두 종류의 검수기는 무엇인가?",
+          "question": "프롬프트 수정이 초래할 수 있는 문제는 무엇인가?",
           "options": [
-            "결정적 검수기와 비결정적 검수기",
-            "정적 검수기와 동적 검수기",
-            "사전 검수기와 사후 검수기",
-            "자동 검수기와 수동 검수기"
+            "모든 사례가 동시에 개선된다",
+            "기존에 잘 동작하던 사례가 틀릴 수 있다",
+            "서브 에이전트 호출을 중단한다",
+            "정확도가 자동으로 상승한다"
           ],
-          "answer_index": 0,
-          "explanation": "결정적 검수기는 코드 기반 규칙을, 비결정적 검수기는 문맥을 LLM으로 판단한다."
+          "answer_index": 1,
+          "explanation": "프롬프트 수정 후 A는 개선되었지만 기존에 잘되던 C가 틀릴 수 있다는 사례가 제시된다 (04:29)."
         }
       ]
     },
     {
-      "id": "54eb929577b7",
-      "title": "AI와 함께 일하는 보안팀 : 취약점 관리부터 도구 개발까지 | GUARDIANS 26",
-      "url": "https://youtu.be/uW5SSxwafGs",
+      "id": "b058f5792761",
+      "title": "부족한 건 모델이 아니라 팀 문서였다: 팀 공유 지식층 Third Brain 구축기",
+      "url": "https://youtu.be/fxGi9Emms-0",
       "source": {
         "type": "youtube",
-        "name": "토스 챌린저스"
+        "name": "NAVER D2"
       },
-      "published_at": "2026-11-15T07:00:08",
-      "summary": "AI 에이전트로 보안 취약점 자동 관리 사례",
+      "published_at": "2026-11-19T05:36:46",
+      "summary": "팀 지식 정리로 AI 에이전트 오류를 방지하고 업무 효율을 높인다",
       "positioning": null,
       "tags": [
-        "AI Agent Team",
-        "Toss",
-        "VulnOps",
-        "GUARDIANS 26"
+        "Third Brain",
+        "Meta",
+        "Git",
+        "Issue Tracker",
+        "디아택시스"
       ],
       "relevance": 6,
       "key_points": [
         {
-          "point": "AI Agent Team을 활용한 취약점 점검·관리 방법 소개",
-          "timestamp": null
+          "point": "AI 에이전트가 알람 원인 분석을 자동화하려 했지만 도메인 지식 부족으로 실패",
+          "timestamp": "01:10"
         },
         {
-          "point": "VulnOps와 협업해 AI에게 보안 업무를 맡기는 사례",
-          "timestamp": null
+          "point": "팀이 당연히 알고 있던 지식이 문서·로그·코드에 없어서 에이전트가 틀렸다는 결론 도출",
+          "timestamp": "02:31"
         },
         {
-          "point": "소규모 보안팀이 AI로 자체 보안 도구를 개발한 과정",
-          "timestamp": null
-        }
-      ],
-      "ideas": [],
-      "quiz": []
-    },
-    {
-      "id": "611b907ce22d",
-      "title": "잘 만들었다면, 잘 배운 것일까?: 카카오테크 캠퍼스가 고민한 주니어 개발자의 성장 | 상생과 성장",
-      "url": "https://youtu.be/Jjz5F9rZhDU",
-      "source": {
-        "type": "youtube",
-        "name": "kakao tech"
-      },
-      "published_at": "2026-10-30T06:00:36",
-      "summary": "코딩 에이전트 활용 교육에서 학습 효과와 결과 검증 방법을 탐구",
-      "positioning": null,
-      "tags": [
-        "코딩 에이전트",
-        "LLM",
-        "RAG",
-        "MCP",
-        "멀티 에이전트"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "커리큘럼을 AI 서비스 개발 과정으로 개편, 트랙 없이 엔드‑투‑엔드 학습 설계",
-          "timestamp": "04:00"
-        },
-        {
-          "point": "6주 클론 코딩에서 LLM 툴콜부터 멀티 에이전트 구축까지 단계별 학습",
-          "timestamp": "05:19"
-        },
-        {
-          "point": "코딩 에이전트를 과제에 도입해 AI와 협업하도록 가이드 제공",
-          "timestamp": "06:22"
+          "point": "‘Third Brain’은 메타에서 차용한 팀 단위 지식 저장소 개념이며, 기존 위키·CI·Git 등과 결합해 구현",
+          "timestamp": "04:21"
         }
       ],
       "ideas": [
-        "코딩 에이전트와 4단계 가이드를 데이터 사이언스 과제에 적용해 학생들이 분석·모델링·검증 과정을 스스로 설계하도록 유도한다",
-        "멀티 에이전트 구조를 활용해 기업 내부 업무 자동화 파이프라인을 설계, 각 서브 에이전트가 특정 데이터 처리 역할을 담당하도록 만든다",
-        "RAG 기법을 사내 문서 검색 시스템에 적용해 최신 기술 문서를 자동으로 요약·제공함으로써 엔지니어의 정보 탐색 시간을 단축한다"
+        "중앙화된 지식 저장소와 라우팅 인덱스를 고객지원 FAQ 시스템에 적용해, 담당자가 아닌 경우에도 정확한 답변을 자동 제공한다",
+        "문서화 기준을 ‘반복적으로 참조될 것’과 ‘잘 변하지 않는 것’에 한정해, 데이터 파이프라인 장애 로그를 필터링하고 핵심 원인만 기록하도록 한다",
+        "코드 리뷰 봇이 제안하기 전에 팀이 정의한 코딩 표준·베스트 프랙티스 저장소를 조회하도록 하여, 자동 리뷰 품질을 높인다"
       ],
       "quiz": [
         {
-          "question": "코딩 에이전트를 도입하면서 학생들의 PR 리뷰 과정에서 나타난 주요 변화는 무엇인가?",
+          "question": "AI 에이전트가 데이터 낫 파운드 오류에 대해 잘못된 조치를 제안한 이유는 무엇인가?",
           "options": [
-            "리뷰 질문이 많아졌다",
-            "승인만 빠르게 이루어졌다",
-            "코드 길이가 늘어났다",
-            "멘토가 없었다"
+            "코드 저장소 접근 권한이 없어서",
+            "팀이 해당 오류를 정상 범위로 인식한다는 도메인 지식이 없어서",
+            "로그 타임스탬프를 오해했기 때문에",
+            "구형 모델을 사용했기 때문에"
           ],
           "answer_index": 1,
-          "explanation": "본문에 따르면 코딩 에이전트 도입 후 PR을 올리자 바로 승인이 나왔고 질문이나 재리뷰가 없었다."
+          "explanation": "본문(02:31~02:39)에서 팀이 이미 삭제된 데이터를 수정하려는 오류를 정상 범위로 보고 있었지만, 해당 도메인 지식이 문서·코드·로그에 없었기 때문에 에이전트가 잘못 판단했다."
         },
         {
-          "question": "클론 코딩 단계에서 4주차에 학습하는 기술은 무엇인가?",
+          "question": "Third Brain 시스템에서 라우팅 인덱스의 주요 역할은 무엇인가?",
           "options": [
-            "툴콜",
-            "RAG",
-            "MCP",
-            "슈퍼바이저와 서브 에이전트"
+            "모든 원시 로그를 저장한다",
+            "각 지식 영역이 어디에 있는지, 원문으로 어떻게 연결되는지 알려준다",
+            "문서를 자동으로 생성한다",
+            "버전 관리를 대체한다"
           ],
           "answer_index": 1,
-          "explanation": "4주차에는 참고 자료를 검색하는 RAG를 학습한다는 내용이 언급된다."
+          "explanation": "04:39~04:45에 라우팅 인덱스는 영역별 위치와 원문 링크를 제공해 문서가 늘어나도 인덱스는 커지지 않도록 설계되었다."
         }
       ]
     }

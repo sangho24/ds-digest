@@ -1,0 +1,301 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-20",
+  "generated_at": "2026-11-20T14:58:20.125861+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-20.html",
+  "items": [
+    {
+      "id": "73feb15d5e1d",
+      "title": "When Do Rankings Beat Signs? Gradient Direction Recovery under Even Nuisance",
+      "url": "https://arxiv.org/abs/2611.26055v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.LG"
+      },
+      "published_at": "2026-11-19T13:01:08",
+      "summary": "순위 피드백으로 그래디언트 추정 비용 크게 절감",
+      "positioning": "이 논문은 제한된 함수 평가와 피드백 라운드에서 그래디언트 방향을 효율적으로 추정하는 문제를 다룬다. 기존 부호만 이용한 방법은 Θ(d/ε) 비용이 필요했지만, 순위 정보를 활용하면 평가 복잡도를 크게 낮출 수 있다. 이는 쿼리 효율적인 최적화와 오라클 복잡도 연구 흐름에 속한다.",
+      "tags": [
+        "arXiv",
+        "Mirror",
+        "Reverse",
+        "Full",
+        "minimax"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 순위 방식은 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도의 방향을 복구한다",
+          "timestamp": null
+        },
+        {
+          "point": "Mirror·Reverse·Full의 정보 계층 구조가 공유 오프셋을 어떻게 활용·제거하는지를 설명한다",
+          "timestamp": null
+        },
+        {
+          "point": "리짓 작업 실험에서 짧은 사이클 순위 복구가 배치형 부호 기반 대비 최종 평균 갭을 낮추었다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Reverse 순위 방식을 하이퍼파라미터 튜닝의 블랙박스 손실 그래디언트 추정에 적용하면 평가 횟수를 줄일 수 있다.",
+        "정보 계층 구조를 A/B 테스트에서 치료군과 대조군을 쌍으로 묶어 교차 순서를 반대로 설정함으로써 시스템 편향을 상쇄한다.",
+        "짧은 사이클 순위 피드백을 강화학습 정책 그래디언트 추정에 도입하면 노이즈가 큰 보상 환경에서 샘플 효율을 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "Reverse 순위 방식이 동일 오프셋을 가진 쌍에서 오프셋을 상쇄할 수 있는 이유는?",
+          "options": [
+            "순위 비교가 절대값을 사용한다",
+            "교차 쌍 순서를 반대로 매김",
+            "부호 정보를 이용한다",
+            "함수 평가를 두 번한다"
+          ],
+          "answer_index": 1,
+          "explanation": "Reverse는 서로 반대 방향의 교차 쌍 순서를 사용해 오프셋을 서로 상쇄하도록 설계되었다."
+        },
+        {
+          "question": "Relative shell variation이 c·ε/√d 이하일 때 Reverse 방식이 달성하는 평가 복잡도는?",
+          "options": [
+            "Θ(d/ε)",
+            "O~(d+√(d/ε))",
+            "Θ(d·R(ε^{-1/R}-1))",
+            "O(d^2)"
+          ],
+          "answer_index": 1,
+          "explanation": "논문에 따르면 이 조건 하에서 Reverse는 한 라운드에 O~(d+√(d/ε)) 평가로 ε 정확도를 얻는다."
+        }
+      ]
+    },
+    {
+      "id": "51b584009fc6",
+      "title": "DeepMind Just Released The Best Thing AI Ever Did",
+      "url": "https://youtu.be/Cy7Wz6Z4TWU",
+      "source": {
+        "type": "youtube",
+        "name": "Two Minute Papers"
+      },
+      "published_at": "2026-11-19T09:26:19",
+      "summary": "세포 유형별 유전자 스위치 예측으로 맞춤형 모델링 가능",
+      "positioning": null,
+      "tags": [
+        "AlphaGenome 2",
+        "DeepMind",
+        "HK1",
+        "beta cell",
+        "pancreatic"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "AlphaGenome 2는 베타 세포에서 HK1 유전자를 활성화시키는 변이를 예측하고 다른 췌장 세포에서는 거의 영향을 주지 않는다",
+          "timestamp": "01:55"
+        },
+        {
+          "point": "AlphaGenome 2는 기존보다 두 배 많은 변이를 90% 정밀도로 식별했다",
+          "timestamp": "03:23"
+        },
+        {
+          "point": "보지 못한 파킨슨병 데이터에서도 41% 정확도로 예측해 기존 전문 AI의 17%를 크게 앞섰다",
+          "timestamp": "04:09"
+        }
+      ],
+      "ideas": [
+        "단일세포 RNA‑seq와 조직 유형을 입력으로 사용해 암 세포주에서 약물 반응을 예측하면, 조직 특이적 약물 효능을 빠르게 스크리닝할 수 있다",
+        "발달 단계와 유전체 서열을 결합해 대안 스플라이싱 이벤트를 예측하면, 발달 단계별 전사조절 메커니즘을 모델링할 수 있다",
+        "숙주 유전형과 환경 변수를 조건으로 넣어 미생물 군집의 유전자 발현 변화를 예측하면, 개인 맞춤형 마이크로바이옴 치료 설계에 활용할 수 있다"
+      ],
+      "quiz": [
+        {
+          "question": "AlphaGenome 2가 훈련에 보지 못한 세포 유형에서도 높은 예측 정확도를 보인 이유는 무엇인가?",
+          "options": [
+            "DNA 서열만으로 모든 세포 유형의 발현을 동일하게 모델링한다",
+            "다양한 세포 유형의 대규모 단일세포 발현 데이터를 학습해 패턴을 일반화한다",
+            "셀 타입 임베딩을 명시적으로 사용해 새로운 타입을 추론한다",
+            "이미지 모델의 전이학습을 적용한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서는 AlphaGenome 2가 수많은 세포에서 측정된 발현 데이터를 학습하고, 이를 바탕으로 훈련되지 않은 세포에서도 일반화할 수 있다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "463e48f0d50a",
+      "title": "When Can You Ship on Offline Evals Alone?",
+      "url": "https://engineering.atspotify.com/2026/11/when-can-you-ship-on-offline-evals-alone/",
+      "source": {
+        "type": "rss",
+        "name": "Spotify Engineering"
+      },
+      "published_at": "2026-11-19T13:34:19",
+      "summary": "오프라인 평가만으로 출시 위험을 정량화하는 방법",
+      "positioning": null,
+      "tags": [
+        "Spotify Engineering",
+        "LLM",
+        "A/B test",
+        "offline eval",
+        "arXiv"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "오프라인 평가는 빠르지만, 위험을 낮추려면 강한 가정과 위험 한계가 필요하다",
+          "timestamp": null
+        },
+        {
+          "point": "실제 온라인 효과의 조건부 분포를 알면 평가 결과만으로도 해로운 출시 위험을 직접 평가할 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "노이즈와 편향으로 인해 관측된 상관관계가 실제보다 낮게 추정될 수 있다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "오프라인 클릭‑예측 모델의 조건부 분포를 이용해 추천 시스템 업데이트를 A/B 테스트 없이 단계적 롤아웃한다",
+        "오프라인 성능 테스트 결과의 불확실성을 정량화해 모바일 앱 기능 플래그의 자동 전환 기준으로 활용한다"
+      ],
+      "quiz": [
+        {
+          "question": "왜 오프라인 평가만으로 제품 출시 결정을 내리기 위해서는 강한 가정이 필요할까?",
+          "options": [
+            "오프라인 평가는 온라인 메트릭과 항상 일치한다",
+            "노이즈와 편향으로 실제 연관성을 가릴 수 있다",
+            "오프라인 평가는 비용이 많이 든다",
+            "A/B 테스트가 더 빠르다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문은 노이즈가 강한 상관관계를 숨길 수 있어, 가정이 검증되지 않으면 위험이 커진다고 설명한다"
+        }
+      ]
+    },
+    {
+      "id": "63e0412c967c",
+      "title": "Devops Agent 리포트 오이데~ 평가 야호~",
+      "url": "https://youtu.be/_btg9xR_i50",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-19T06:34:02",
+      "summary": "LLM 에이전트 평가·신뢰성 확보 방안",
+      "positioning": null,
+      "tags": [
+        "LLM",
+        "데보스 에이전트",
+        "NX",
+        "PRS",
+        "IC"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "에이전트 판단 신뢰성을 평가하는 방법이 필요함",
+          "timestamp": "00:30"
+        },
+        {
+          "point": "각 서브 에이전트가 레이어별 장애 지표를 판단",
+          "timestamp": "02:02"
+        },
+        {
+          "point": "프롬프트 수정이 기존 사례에 부정적 영향을 줄 수 있음",
+          "timestamp": "04:29"
+        }
+      ],
+      "ideas": [
+        "오케스트레이터가 서브 에이전트를 병렬 호출해 멀티 레이어 모니터링을 구현하면 클라우드 서비스 장애 진단 속도를 높일 수 있다.",
+        "챗봇 응답을 심각도·원인 라벨링으로 평가해 지속적인 신뢰성 측정 및 개선이 가능하다.",
+        "프롬프트 수정 후 기존 테스트 케이스를 자동 재검증해 회귀 오류를 방지한다."
+      ],
+      "quiz": [
+        {
+          "question": "LLM 에이전트의 판단 신뢰성을 평가하기 위해 별도 평가 시스템이 필요한 이유는?",
+          "options": [
+            "LLM 출력이 결정적이기 때문이다",
+            "동일 입력에도 답이 달라질 수 있어 신뢰성 검증이 필요하기 때문이다",
+            "LLM 모델은 절대 업데이트되지 않는다",
+            "LLM이 코드 수준 단위 테스트를 제공한다"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에서 LLM은 같은 상황에서도 답이 흔들릴 수 있어 평가 시스템이 필요하다고 언급한다 (00:30)."
+        },
+        {
+          "question": "프롬프트 수정이 초래할 수 있는 문제는 무엇인가?",
+          "options": [
+            "모든 사례가 동시에 개선된다",
+            "기존에 잘 동작하던 사례가 틀릴 수 있다",
+            "서브 에이전트 호출을 중단한다",
+            "정확도가 자동으로 상승한다"
+          ],
+          "answer_index": 1,
+          "explanation": "프롬프트 수정 후 A는 개선되었지만 기존에 잘되던 C가 틀릴 수 있다는 사례가 제시된다 (04:29)."
+        }
+      ]
+    },
+    {
+      "id": "b058f5792761",
+      "title": "부족한 건 모델이 아니라 팀 문서였다: 팀 공유 지식층 Third Brain 구축기",
+      "url": "https://youtu.be/fxGi9Emms-0",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-19T05:36:46",
+      "summary": "팀 지식 정리로 AI 에이전트 오류를 방지하고 업무 효율을 높인다",
+      "positioning": null,
+      "tags": [
+        "Third Brain",
+        "Meta",
+        "Git",
+        "Issue Tracker",
+        "디아택시스"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "AI 에이전트가 알람 원인 분석을 자동화하려 했지만 도메인 지식 부족으로 실패",
+          "timestamp": "01:10"
+        },
+        {
+          "point": "팀이 당연히 알고 있던 지식이 문서·로그·코드에 없어서 에이전트가 틀렸다는 결론 도출",
+          "timestamp": "02:31"
+        },
+        {
+          "point": "‘Third Brain’은 메타에서 차용한 팀 단위 지식 저장소 개념이며, 기존 위키·CI·Git 등과 결합해 구현",
+          "timestamp": "04:21"
+        }
+      ],
+      "ideas": [
+        "중앙화된 지식 저장소와 라우팅 인덱스를 고객지원 FAQ 시스템에 적용해, 담당자가 아닌 경우에도 정확한 답변을 자동 제공한다",
+        "문서화 기준을 ‘반복적으로 참조될 것’과 ‘잘 변하지 않는 것’에 한정해, 데이터 파이프라인 장애 로그를 필터링하고 핵심 원인만 기록하도록 한다",
+        "코드 리뷰 봇이 제안하기 전에 팀이 정의한 코딩 표준·베스트 프랙티스 저장소를 조회하도록 하여, 자동 리뷰 품질을 높인다"
+      ],
+      "quiz": [
+        {
+          "question": "AI 에이전트가 데이터 낫 파운드 오류에 대해 잘못된 조치를 제안한 이유는 무엇인가?",
+          "options": [
+            "코드 저장소 접근 권한이 없어서",
+            "팀이 해당 오류를 정상 범위로 인식한다는 도메인 지식이 없어서",
+            "로그 타임스탬프를 오해했기 때문에",
+            "구형 모델을 사용했기 때문에"
+          ],
+          "answer_index": 1,
+          "explanation": "본문(02:31~02:39)에서 팀이 이미 삭제된 데이터를 수정하려는 오류를 정상 범위로 보고 있었지만, 해당 도메인 지식이 문서·코드·로그에 없었기 때문에 에이전트가 잘못 판단했다."
+        },
+        {
+          "question": "Third Brain 시스템에서 라우팅 인덱스의 주요 역할은 무엇인가?",
+          "options": [
+            "모든 원시 로그를 저장한다",
+            "각 지식 영역이 어디에 있는지, 원문으로 어떻게 연결되는지 알려준다",
+            "문서를 자동으로 생성한다",
+            "버전 관리를 대체한다"
+          ],
+          "answer_index": 1,
+          "explanation": "04:39~04:45에 라우팅 인덱스는 영역별 위치와 원문 링크를 제공해 문서가 늘어나도 인덱스는 커지지 않도록 설계되었다."
+        }
+      ]
+    }
+  ]
+}
