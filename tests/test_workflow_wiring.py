@@ -8,6 +8,9 @@
 
 from __future__ import annotations
 
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 import yaml
@@ -32,6 +35,22 @@ def test_preflight_runs_before_the_digest():
     assert preflight, f"preflight 단계가 없다: {names}"
     assert digest, f"다이제스트 단계가 없다: {names}"
     assert preflight[0] < digest[0], f"preflight 가 발송 뒤에 있다: {names}"
+
+
+def test_preflight_passes_on_the_current_code():
+    """preflight 는 pytest 밖에 있어 계약을 바꾸고도 CI 에서야 깨진 것을 알았다.
+
+    실측 2026-11-17~18: §59 에서 사람 지시를 공용 프롬프트에서 뺐는데 preflight 는
+    옛 계약(사람 지시가 분석·상대 평가 프롬프트에 들어간다)을 검사하고 있어 이틀 연속
+    발송 전에 멈췄다. 같은 일이 다시 나면 push 전에 여기서 걸린다.
+    """
+    env = {k: v for k, v in os.environ.items() if not k.startswith(("SUPABASE", "SMTP", "RESEND"))}
+    result = subprocess.run(
+        [sys.executable, "scripts/preflight.py"],
+        cwd=ROOT, env=env, capture_output=True, text=True, timeout=120,
+    )
+    tail = "\n".join(result.stdout.splitlines()[-5:])
+    assert result.returncode == 0, f"preflight 실패\n{tail}\n{result.stderr[-1500:]}"
 
 
 def test_failure_alerts_go_to_the_channels_we_read():

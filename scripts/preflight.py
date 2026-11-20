@@ -15,6 +15,8 @@ API 키가 없으므로 httpx.AsyncClient.post만 가짜로 바꾸고, 프롬프
 특히 잡으려는 것:
   - 프롬프트 .format() 키 불일치 (한 건이라도 나면 전 아이템 분석 실패 → 빈 다이제스트)
   - 새로 넣은 standing_note / concept_vocabulary 키가 실제 경로에서 채워지는가
+    (standing_note 자리에는 계기판 권고 system_note 만 들어가고, 사람 지시
+    personal_note 는 공용 프롬프트에 들어가지 않는가. PROGRESS §59)
   - 상대 평가가 strict 스키마로 나가고 혼합·천장이 적용되는가
   - 타임스탬프가 전사 → 분석 → 레코드까지 살아서 도착하는가
   - 난이도 지시가 depth 가중·상대 평가 프롬프트까지 실제로 닿는가
@@ -47,6 +49,11 @@ def check(name, ok, detail=""):
 
 # ── 가짜 전송 계층 ────────────────────────────────────────────────────────
 sent = []          # 보낸 요청 (url, payload)
+
+# 사람이 남긴 지시를 해석기가 돌려주는 값(personal_note)과 품질 계기판 권고(system_note).
+# 공용 프롬프트에는 뒤의 것만 들어가야 한다.
+PERSONAL_NOTE = "실무 사례 우선"
+SYSTEM_NOTE = "수치 근거가 있는 문장을 우선한다"
 
 TRANSCRIPT_WITH_TS = (
     "[00:00] 안녕하세요, 오늘은 피처 스토어 운영에 대해 이야기하겠습니다.\n"
@@ -117,7 +124,7 @@ async def fake_post(self, url, headers=None, json=None, params=None, **kw):
         ]}))
     if "설정 해석기" in prompt:                              # 자연어 지시
         return Resp(200, _groq_body({"boost": ["피처 스토어"], "suppress": [],
-                                     "drop_sources": [], "standing_note": "실무 사례 우선",
+                                     "drop_sources": [], "standing_note": PERSONAL_NOTE,
                                      "difficulty": "harder"}))
     return Resp(200, _groq_body(ANALYSIS_REPLY))            # 분석
 
@@ -154,6 +161,10 @@ async def main():
     dmod.DIRECTIVES_PATH = Path(tempfile.gettempdir()) / "preflight_directives.jsonl"
     dmod.DIRECTIVES_PATH.unlink(missing_ok=True)
     dmod.capture("요즘 논문보다 실무 사례가 더 필요해")
+    # 공용 프롬프트에 들어가는 것은 품질 계기판 권고(system_note)뿐이다(PROGRESS §59).
+    # 사람 지시(personal_note)는 운영자 메일 문체에만 쓰이고 공용 분석에는 들어가면
+    # 안 된다. 두 경로를 다 검사하려고 계기판 권고도 한 줄 심는다.
+    dmod.capture(f"{dmod.DASHBOARD_PREFIX} {SYSTEM_NOTE}")
 
     items = make_items()
     profile = UserProfile()
@@ -162,21 +173,25 @@ async def main():
     directive = await analyzer.resolve_directives(items)
     check("지시 프롬프트가 포맷된다", any("설정 해석기" in p["messages"][0]["content"]
                                     for _, p in sent if "messages" in p))
-    check("standing_note 파싱", directive.standing_note == "실무 사례 우선", directive.describe())
+    check("사람 지시가 personal_note 로 파싱", directive.personal_note == PERSONAL_NOTE,
+          directive.describe())
+    check("계기판 권고가 system_note 로 분리", directive.system_note == SYSTEM_NOTE,
+          directive.describe())
     # 자유 텍스트는 정렬 키가 될 수 없다. 난이도 지시가 구조화 축으로 떨어져야
     # 선정에 닿는다(실측 2026-09-03: 해석은 맞았는데 선정은 지시와 무관했다).
     check("난이도 지시가 depth_bias로 떨어짐", directive.depth_bias == 1,
           f"depth_bias={directive.depth_bias}")
     check("적용 중인 지시에 난이도가 보인다", "🎚" in directive.describe(), directive.describe())
 
-    print("\n[2] Stage 1 메타 랭킹 (standing_note 주입)")
+    print("\n[2] Stage 1 메타 랭킹 (system_note 주입)")
     sent.clear()
     await analyzer.resolve_youtube_transcripts(items[:1], profile, 1, directive)
     print("     (YouTube 1건이라 랭킹 생략 — 프롬프트 포맷은 아래에서 직접 검증)")
     rank_prompt = analyzer._METADATA_RANKING_PROMPT.format(
         budget=2, keywords="없음", liked_tags="없음", disliked_tags="없음",
-        standing_note=directive.standing_note, listing="[0] ...")
-    check("랭킹 프롬프트 .format 성공", "실무 사례 우선" in rank_prompt)
+        standing_note=analyzer._system_note(directive) or "없음", listing="[0] ...")
+    check("랭킹 프롬프트 .format 성공", SYSTEM_NOTE in rank_prompt)
+    check("랭킹 프롬프트에 사람 지시가 없다", PERSONAL_NOTE not in rank_prompt)
 
     print("\n[3] 분석 — 프롬프트 조립 + 타임스탬프 관통")
     sent.clear()
@@ -186,7 +201,11 @@ async def main():
     check("분석 프롬프트 .format 성공 (KeyError 없음)", len(analysis_prompts) == 3,
           f"{len(analysis_prompts)}건")
     check("concept_vocabulary 주입됨", all("기존 개념" in p for p in analysis_prompts))
-    check("standing_note 주입됨", all("실무 사례 우선" in p for p in analysis_prompts))
+    check("system_note 주입됨", all(SYSTEM_NOTE in p for p in analysis_prompts))
+    # 분석 결과는 모든 구독자가 공유한다. 한 사람의 지시가 여기 들어가면 친구들이
+    # 받는 요약과 점수가 그 사람 기준으로 만들어진다.
+    check("공용 분석 프롬프트에 사람 지시가 없다",
+          all(PERSONAL_NOTE not in p for p in analysis_prompts))
     check("전사의 [MM:SS]가 프롬프트에 실림", any("[00:47]" in p for p in analysis_prompts))
     check("positioning이 프롬프트에서 요청됨", all("positioning" in p for p in analysis_prompts))
     positioning = [d.analysis.positioning for d in digest if d.analysis.positioning]
@@ -201,9 +220,12 @@ async def main():
                     and "서로 비교해서" in p["messages"][0]["content"]]
     check("상대 평가가 호출됨", len(rating_calls) == 1)
     if rating_calls:
-        # 점수를 벌리는 단계에 지시가 없으면 글쓰기만 바뀌고 순위는 그대로다.
-        check("상대 평가 프롬프트에 지시가 실림",
-              "실무 사례 우선" in rating_calls[0]["messages"][0]["content"])
+        # 점수를 벌리는 단계에 계기판 권고가 없으면 글쓰기만 바뀌고 순위는 그대로다.
+        rating_prompt = rating_calls[0]["messages"][0]["content"]
+        check("상대 평가 프롬프트에 system_note 가 실림", SYSTEM_NOTE in rating_prompt)
+        # 사람별 취향은 공용 점수가 아니라 선정 단계(관심도 모델, boost/suppress,
+        # depth_bias)에서 반영된다. 상대 평가 점수는 모두가 같이 쓴다.
+        check("상대 평가 프롬프트에 사람 지시가 없다", PERSONAL_NOTE not in rating_prompt)
     if rating_calls:
         rf = rating_calls[0].get("response_format", {})
         check("strict json_schema로 나감",
