@@ -1,6 +1,6 @@
 {
  "tracker_version": 1,
- "generated_at": "2026-11-20T03:48:08.716387+00:00",
+ "generated_at": "2026-11-21T03:39:01.218074+00:00",
  "orgs": [
   {
    "key": "anthropic",
@@ -1272,7 +1272,7 @@
    "kind": "weights-open",
    "priority": 1,
    "hf_org": "Qwen",
-   "tracked": 89,
+   "tracked": 91,
    "models": [
     {
      "repo_id": "Qwen/Qwen-Image-2.1-Turbo",
@@ -1696,7 +1696,7 @@
      "repo_id": "Qwen/Qwen3.6-27B",
      "url": "https://huggingface.co/Qwen/Qwen3.6-27B",
      "created_at": "2026-04-21T07:50:43+00:00",
-     "last_modified": "2026-11-07T04:41:21+00:00",
+     "last_modified": "2026-11-20T06:46:39+00:00",
      "weights_at": "2026-04-21T07:50:43+00:00",
      "has_weights": true,
      "model_card_at": "2026-04-21T07:50:43+00:00",
@@ -6470,6 +6470,57 @@
  ],
  "recent_events": [
   {
+   "org": "qwen",
+   "repo_id": "Qwen/Qwen2-VL-2B-Instruct",
+   "transition": "repo_created",
+   "observed_at": "2026-11-21T03:39:01.218074Z",
+   "at": "2026-11-20T06:46:42Z",
+   "source_url": "https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [
+     "2308.12966",
+     "2409.12191"
+    ],
+    "license": "apache-2.0",
+    "gated": "false",
+    "derivative": "finetune",
+    "base_models": [
+     "Qwen/Qwen2-VL-2B"
+    ],
+    "surfaced": true,
+    "created_at": "2024-08-28T09:02:15+00:00"
+   }
+  },
+  {
+   "org": "qwen",
+   "repo_id": "Qwen/Qwen2-1.5B-Instruct",
+   "transition": "repo_created",
+   "observed_at": "2026-11-21T03:39:01.218074Z",
+   "at": "2026-11-20T06:45:50Z",
+   "source_url": "https://huggingface.co/Qwen/Qwen2-1.5B-Instruct",
+   "method": "hf_api",
+   "confidence": "unverified",
+   "bootstrap": false,
+   "backfill": false,
+   "detail": {
+    "weights": true,
+    "card": true,
+    "arxiv_ids": [],
+    "license": "apache-2.0",
+    "gated": "false",
+    "derivative": null,
+    "base_models": [],
+    "surfaced": true,
+    "created_at": "2024-06-03T09:08:12+00:00"
+   }
+  },
+  {
    "org": "nvidia",
    "repo_id": "nvidia/Llama-3.2-1B-Qwen3.8-27B-Draft",
    "transition": "repo_created",
@@ -7880,61 +7931,11 @@
     "surfaced": false,
     "created_at": "2026-10-08T18:24:21+00:00"
    }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-S_all",
-   "transition": "repo_created",
-   "observed_at": "2026-10-19T00:38:13.353084Z",
-   "at": "2026-10-07T16:51:49Z",
-   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-S_all",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "nvidia/Cosmos3-Nano"
-    ],
-    "surfaced": false,
-    "created_at": "2026-10-07T16:51:49+00:00"
-   }
-  },
-  {
-   "org": "nvidia",
-   "repo_id": "nvidia/cosmos3-nano-libero10-sdg-export-D_half",
-   "transition": "repo_created",
-   "observed_at": "2026-10-19T00:38:13.353084Z",
-   "at": "2026-10-07T16:48:52Z",
-   "source_url": "https://huggingface.co/nvidia/cosmos3-nano-libero10-sdg-export-D_half",
-   "method": "hf_api",
-   "confidence": "verified",
-   "bootstrap": false,
-   "backfill": false,
-   "detail": {
-    "weights": true,
-    "card": true,
-    "arxiv_ids": [],
-    "license": "other",
-    "gated": "false",
-    "derivative": "finetune",
-    "base_models": [
-     "nvidia/Cosmos3-Nano"
-    ],
-    "surfaced": false,
-    "created_at": "2026-10-07T16:48:52+00:00"
-   }
   }
  ],
  "counts": {
   "orgs": 16,
-  "models": 672,
-  "events": 686
+  "models": 674,
+  "events": 688
  }
 }
