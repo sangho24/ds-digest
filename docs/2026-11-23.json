@@ -1,0 +1,243 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-23",
+  "generated_at": "2026-11-23T11:59:52.975084+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-23.html",
+  "items": [
+    {
+      "id": "60d7303f7bb2",
+      "title": "Variants of Beam Search for DiskANN",
+      "url": "https://arxiv.org/abs/2611.26609v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.IR"
+      },
+      "published_at": "2026-11-19T18:57:05",
+      "summary": "대규모 ANN 검색 Beam Search 효율 크게 개선",
+      "positioning": "대규모 근사 최근접 이웃 검색에서 그래프 기반 인덱스의 탐색 효율이 한계에 봉착했다. 기존에는 α‑reachable 그래프에 대해 (α+1)/(α-1) 근사와 ABS가 2/γ 근사를 제공했지만 보장되지 않았다. 본 논문은 두 접근을 통합해 일반적인 근사 한계를 제시하고, 실제 DiskANN 구축 그래프에 적용 가능한 Beam predictor를 제안한다.",
+      "tags": [
+        "DiskANN",
+        "HNSW",
+        "NSG",
+        "adaptive beam search",
+        "beam predictor"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "ABS와 γ 파라미터를 결합하면 α‑reachable 그래프에서 근사 비율 (α+1)/(α(γ+1)-1)을 달성한다.",
+          "timestamp": null
+        },
+        {
+          "point": "정렬된 α‑reachable 그래프(ℓ2)에서는 max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))라는 더 강한 경계가 얻어진다.",
+          "timestamp": null
+        },
+        {
+          "point": "Beam predictor는 SSD‑상 인덱스에서 CBS 대비 평균 지연시간을 최대 29.6% 감소시키고, 거리 계산도 1‑24% 절감한다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "Beam predictor의 특성 기반 적응형 빔 크기 선택을 추천 시스템의 실시간 유사 아이템 검색에 적용해 응답 지연을 줄인다.",
+        "ABS의 γ 완화 파라미터를 네트워크 라우팅 그래프에 도입해 경로 탐색 비용을 조절하고, 최단 경로 근사 정확도를 제어한다.",
+        "정렬된 α‑reachable 그래프의 강화된 근사 경계를 이용해 고차원 이미지 특징 검색 엔진에서 거리 계산량을 최소화한다."
+      ],
+      "quiz": [
+        {
+          "question": "ABS가 α‑reachable 그래프에서 달성하는 근사 비율은 어떤 식으로 표현되는가?",
+          "options": [
+            "(α+1)/(α-1)",
+            "(α+1)/(α(γ+1)-1)",
+            "2/γ",
+            "max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))"
+          ],
+          "answer_index": 1,
+          "explanation": "논문에서는 ABS와 γ 파라미터를 결합하면 (α+1)/(α(γ+1)-1) 근사 비율을 얻는다고 명시한다."
+        },
+        {
+          "question": "Beam predictor가 기존 CBS 대비 평균 쿼리 지연 시간을 얼마나 감소시켰는가?",
+          "options": [
+            "최대 10%",
+            "최대 20%",
+            "최대 29.6%",
+            "최대 40%"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에 Beam predictor가 CBS 대비 평균 지연시간을 최대 29.6% 감소시킨다고 기술되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "f0b432b3175a",
+      "title": "Optimizing Image AI Serving: Reducing CPU and GPU idle time to save 67 H100 GPUs",
+      "url": "https://youtu.be/w3EL9TSPK3U",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-16T08:25:28",
+      "summary": "이미지 AI 서빙 최적화로 GPU 활용도와 레이턴시 크게 개선",
+      "positioning": null,
+      "tags": [
+        "LitServe",
+        "SNOW",
+        "H100",
+        "GPU sharing",
+        "traffic-based tuning"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LitServe 로 마이그레이션해 레이턴시와 안정성 향상",
+          "timestamp": null
+        },
+        {
+          "point": "파라미터 튜닝으로 CPU/GPU 유휴 시간 최소화",
+          "timestamp": null
+        },
+        {
+          "point": "GPU 공유와 트래픽 기반 튜닝으로 약 67대 H100 GPU 절감",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    },
+    {
+      "id": "4fc1d4280274",
+      "title": "Image AI 서빙 최적화: CPU와 GPU의 빈 시간을 줄여 H100 67장을 절감하기까지",
+      "url": "https://youtu.be/FHbA-aaQbGg",
+      "source": {
+        "type": "youtube",
+        "name": "NAVER D2"
+      },
+      "published_at": "2026-11-16T08:10:37",
+      "summary": "GPU·CPU 대기시간 줄여 이미지 AI 서빙 비용 절감",
+      "positioning": null,
+      "tags": [
+        "SNOW",
+        "LitServe",
+        "H100",
+        "GPU",
+        "NAVER Engineering Day"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LitServe 전환으로 불필요 연산 및 CPU·GPU 대기시간 감소",
+          "timestamp": null
+        },
+        {
+          "point": "실제 트래픽에 맞춘 파라미터 조정으로 서빙 효율성 향상",
+          "timestamp": null
+        },
+        {
+          "point": "작업 분리와 GPU 공유로 H100 67장 절감 달성",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    },
+    {
+      "id": "1453f17487b0",
+      "title": "직접 만든 ZTNA, 어떻게 운영할까? | 타이탄 개발기·정책 복구·Zero Trust 정책 점검 | Track B 3~5 | GUARDIANS 26",
+      "url": "https://youtu.be/8yN4vkMsJCo",
+      "source": {
+        "type": "youtube",
+        "name": "토스 챌린저스"
+      },
+      "published_at": "2026-11-14T07:00:34",
+      "summary": "ZTNA 운영 노하우로 보안 인프라 자동화 가능",
+      "positioning": null,
+      "tags": [
+        "ZTNA",
+        "Titan",
+        "Zero Trust",
+        "GUARDIANS 26",
+        "토스"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "Titan 기반 맞춤형 ZTNA 배포 및 운영 절차 소개",
+          "timestamp": null
+        },
+        {
+          "point": "정책 변경 시 배포 파이프라인 적용 방법",
+          "timestamp": null
+        },
+        {
+          "point": "Zero Trust 원칙을 정책에 적용한 사례 분석",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    },
+    {
+      "id": "3c4f4993adca",
+      "title": "Show HN: I built a game where you are an LLM's subagent",
+      "url": "https://github.com/gulivan/worker755",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "AI 매니저와 협업하는 서브에이전트 게임",
+      "positioning": null,
+      "tags": [
+        "Claude",
+        "GPT",
+        "Ollama",
+        "Vercel AI Gateway",
+        "OpenRouter"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "LLM 매니저가 서브에이전트를 생성해 90초 안에 작업을 수행하도록 지시하고, 결과와 로그를 검토해 성과를 평가한다.",
+          "timestamp": null
+        },
+        {
+          "point": "사용자는 서버 키 또는 개인 API 키를 이용해 무료 혹은 유료 시프트를 실행하고, 샌드박스와 레거시 환경을 선택할 수 있다.",
+          "timestamp": null
+        },
+        {
+          "point": "로컬 모델(Ollama 등)을 OpenAI 호환 API로 연결해 매니저가 직접 실행하도록 설정할 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LLM 매니저가 데이터 파이프라인 검증 작업을 서브에이전트에게 할당해 자동 QA를 수행하고, 리뷰를 통해 오류를 즉시 수정한다.",
+        "서브에이전트 구조를 활용해 자동 피처 엔지니어링 파이프라인을 구축, 매니저 LLM이 후보 피처를 생성·평가하도록 하여 모델 성능 향상을 가속화한다.",
+        "모델 모니터링 시스템에 서브에이전트를 두어 드리프트 보고서를 작성하게 하고, 매니저 LLM이 리뷰와 알림을 자동으로 제공해 운영 효율성을 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "서브에이전트가 90초 내에 작업을 완료하지 못하면 매니저가 반환하는 메시지는 무엇인가?",
+          "options": [
+            "작업이 완료되었다는 확인",
+            "Subagent did nothing. Write a new instruction.",
+            "자동으로 다음 작업으로 넘어간다.",
+            "에러 로그를 저장한다."
+          ],
+          "answer_index": 1,
+          "explanation": "텍스트에 서브에이전트가 작업을 수행하지 않으면 매니저가 'Subagent did nothing. Write a new instruction.' 메시지를 반환한다는 설명이 있다."
+        },
+        {
+          "question": "'Allow skipping failed tasks' 옵션이 기본적으로 꺼져 있을 때 발생하는 효과는?",
+          "options": [
+            "매니저가 실패한 작업을 자동으로 건너뛴다",
+            "사용자가 실패한 작업을 재시도해야 한다",
+            "시프트가 즉시 종료된다",
+            "작업 결과가 자동으로 승인된다"
+          ],
+          "answer_index": 1,
+          "explanation": "옵션이 꺼져 있으면 매니저가 포기하지 못하게 하여 사용자가 실패한 작업을 다시 시도하도록 만든다."
+        }
+      ]
+    }
+  ]
+}

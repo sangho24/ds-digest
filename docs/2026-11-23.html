@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 23일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 23일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">그래프 분석</span><span class="concept">GPU 가속</span><span class="concept">모델 서빙</span><span class="concept">병렬 처리</span><span class="concept">Zero Trust 네트워크 접근</span><span class="concept">보안 정책 자동화</span><span class="concept">멀티에이전트 시스템</span><span class="concept">AI와 인간 협업</span><span class="concept">AI 생산성 도구</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.IR</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.26609v1" target="_blank" rel="noopener">Variants of Beam Search for DiskANN</a>
+        </h2>
+
+        <p class="summary">대규모 ANN 검색 Beam Search 효율 크게 개선</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>대규모 근사 최근접 이웃 검색에서 그래프 기반 인덱스의 탐색 효율이 한계에 봉착했다. 기존에는 α‑reachable 그래프에 대해 (α+1)/(α-1) 근사와 ABS가 2/γ 근사를 제공했지만 보장되지 않았다. 본 논문은 두 접근을 통합해 일반적인 근사 한계를 제시하고, 실제 DiskANN 구축 그래프에 적용 가능한 Beam predictor를 제안한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>ABS와 γ 파라미터를 결합하면 α‑reachable 그래프에서 근사 비율 (α+1)/(α(γ+1)-1)을 달성한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정렬된 α‑reachable 그래프(ℓ2)에서는 max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))라는 더 강한 경계가 얻어진다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Beam predictor는 SSD‑상 인덱스에서 CBS 대비 평균 지연시간을 최대 29.6% 감소시키고, 거리 계산도 1‑24% 절감한다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>Beam predictor의 특성 기반 적응형 빔 크기 선택을 추천 시스템의 실시간 유사 아이템 검색에 적용해 응답 지연을 줄인다.</span></li>
+            
+            <li><span class="box"></span><span>ABS의 γ 완화 파라미터를 네트워크 라우팅 그래프에 도입해 경로 탐색 비용을 조절하고, 최단 경로 근사 정확도를 제어한다.</span></li>
+            
+            <li><span class="box"></span><span>정렬된 α‑reachable 그래프의 강화된 근사 경계를 이용해 고차원 이미지 특징 검색 엔진에서 거리 계산량을 최소화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">ABS가 α‑reachable 그래프에서 달성하는 근사 비율은 어떤 식으로 표현되는가?</div>
+            
+            <div class="q-opt">① (α+1)/(α-1)</div>
+            
+            <div class="q-opt">② (α+1)/(α(γ+1)-1)</div>
+            
+            <div class="q-opt">③ 2/γ</div>
+            
+            <div class="q-opt">④ max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))</div>
+            
+            <div class="q-answer">
+              <div class="correct">② (α+1)/(α(γ+1)-1)</div>
+              <div class="why">논문에서는 ABS와 γ 파라미터를 결합하면 (α+1)/(α(γ+1)-1) 근사 비율을 얻는다고 명시한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">Beam predictor가 기존 CBS 대비 평균 쿼리 지연 시간을 얼마나 감소시켰는가?</div>
+            
+            <div class="q-opt">① 최대 10%</div>
+            
+            <div class="q-opt">② 최대 20%</div>
+            
+            <div class="q-opt">③ 최대 29.6%</div>
+            
+            <div class="q-opt">④ 최대 40%</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 최대 29.6%</div>
+              <div class="why">본문에 Beam predictor가 CBS 대비 평균 지연시간을 최대 29.6% 감소시킨다고 기술되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">DiskANN</span><span class="tag">HNSW</span><span class="tag">NSG</span><span class="tag">adaptive beam search</span><span class="tag">beam predictor</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">NAVER D2</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/w3EL9TSPK3U" target="_blank" rel="noopener">Optimizing Image AI Serving: Reducing CPU and GPU idle time to save 67 H100 GPUs</a>
+        </h2>
+
+        <p class="summary">이미지 AI 서빙 최적화로 GPU 활용도와 레이턴시 크게 개선</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LitServe 로 마이그레이션해 레이턴시와 안정성 향상</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>파라미터 튜닝으로 CPU/GPU 유휴 시간 최소화</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU 공유와 트래픽 기반 튜닝으로 약 67대 H100 GPU 절감</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">LitServe</span><span class="tag">SNOW</span><span class="tag">H100</span><span class="tag">GPU sharing</span><span class="tag">traffic-based tuning</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">NAVER D2</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/FHbA-aaQbGg" target="_blank" rel="noopener">Image AI 서빙 최적화: CPU와 GPU의 빈 시간을 줄여 H100 67장을 절감하기까지</a>
+        </h2>
+
+        <p class="summary">GPU·CPU 대기시간 줄여 이미지 AI 서빙 비용 절감</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LitServe 전환으로 불필요 연산 및 CPU·GPU 대기시간 감소</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실제 트래픽에 맞춘 파라미터 조정으로 서빙 효율성 향상</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>작업 분리와 GPU 공유로 H100 67장 절감 달성</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">SNOW</span><span class="tag">LitServe</span><span class="tag">H100</span><span class="tag">GPU</span><span class="tag">NAVER Engineering Day</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">토스 챌린저스</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/8yN4vkMsJCo" target="_blank" rel="noopener">직접 만든 ZTNA, 어떻게 운영할까? | 타이탄 개발기·정책 복구·Zero Trust 정책 점검 | Track B 3~5 | GUARDIANS 26</a>
+        </h2>
+
+        <p class="summary">ZTNA 운영 노하우로 보안 인프라 자동화 가능</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:20%"></span></span>
+            <span class="axis-num">2</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Titan 기반 맞춤형 ZTNA 배포 및 운영 절차 소개</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>정책 변경 시 배포 파이프라인 적용 방법</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Zero Trust 원칙을 정책에 적용한 사례 분석</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">ZTNA</span><span class="tag">Titan</span><span class="tag">Zero Trust</span><span class="tag">GUARDIANS 26</span><span class="tag">토스</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://github.com/gulivan/worker755" target="_blank" rel="noopener">Show HN: I built a game where you are an LLM's subagent</a>
+        </h2>
+
+        <p class="summary">AI 매니저와 협업하는 서브에이전트 게임</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM 매니저가 서브에이전트를 생성해 90초 안에 작업을 수행하도록 지시하고, 결과와 로그를 검토해 성과를 평가한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>사용자는 서버 키 또는 개인 API 키를 이용해 무료 혹은 유료 시프트를 실행하고, 샌드박스와 레거시 환경을 선택할 수 있다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>로컬 모델(Ollama 등)을 OpenAI 호환 API로 연결해 매니저가 직접 실행하도록 설정할 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LLM 매니저가 데이터 파이프라인 검증 작업을 서브에이전트에게 할당해 자동 QA를 수행하고, 리뷰를 통해 오류를 즉시 수정한다.</span></li>
+            
+            <li><span class="box"></span><span>서브에이전트 구조를 활용해 자동 피처 엔지니어링 파이프라인을 구축, 매니저 LLM이 후보 피처를 생성·평가하도록 하여 모델 성능 향상을 가속화한다.</span></li>
+            
+            <li><span class="box"></span><span>모델 모니터링 시스템에 서브에이전트를 두어 드리프트 보고서를 작성하게 하고, 매니저 LLM이 리뷰와 알림을 자동으로 제공해 운영 효율성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">서브에이전트가 90초 내에 작업을 완료하지 못하면 매니저가 반환하는 메시지는 무엇인가?</div>
+            
+            <div class="q-opt">① 작업이 완료되었다는 확인</div>
+            
+            <div class="q-opt">② Subagent did nothing. Write a new instruction.</div>
+            
+            <div class="q-opt">③ 자동으로 다음 작업으로 넘어간다.</div>
+            
+            <div class="q-opt">④ 에러 로그를 저장한다.</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Subagent did nothing. Write a new instruction.</div>
+              <div class="why">텍스트에 서브에이전트가 작업을 수행하지 않으면 매니저가 'Subagent did nothing. Write a new instruction.' 메시지를 반환한다는 설명이 있다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">'Allow skipping failed tasks' 옵션이 기본적으로 꺼져 있을 때 발생하는 효과는?</div>
+            
+            <div class="q-opt">① 매니저가 실패한 작업을 자동으로 건너뛴다</div>
+            
+            <div class="q-opt">② 사용자가 실패한 작업을 재시도해야 한다</div>
+            
+            <div class="q-opt">③ 시프트가 즉시 종료된다</div>
+            
+            <div class="q-opt">④ 작업 결과가 자동으로 승인된다</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 사용자가 실패한 작업을 재시도해야 한다</div>
+              <div class="why">옵션이 꺼져 있으면 매니저가 포기하지 못하게 하여 사용자가 실패한 작업을 다시 시도하도록 만든다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">GPT</span><span class="tag">Ollama</span><span class="tag">Vercel AI Gateway</span><span class="tag">OpenRouter</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

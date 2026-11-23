@@ -1,0 +1,392 @@
+{
+  "date": "2026-11-23",
+  "generated_at": "2026-11-23T02:59:52.980556",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.IR",
+        "source_key": "arxiv:cs.IR",
+        "source_label": "arXiv:cs.IR",
+        "title": "Variants of Beam Search for DiskANN",
+        "url": "https://arxiv.org/abs/2611.26609v1",
+        "published_at": "2026-11-19T18:57:05",
+        "transcript": null,
+        "body": "Graph-based data structures such as DiskANN, HNSW, and NSG constitute the state of the art for large-scale approximate nearest-neighbor (ANN) search. Indyk and Xu introduced the notion of $α$-reachable graphs, which include graphs built by DiskANN's slow-preprocessing construction, and proved that greedy search achieves an approximation factor of $\\tfrac{α+1}{α-1}$. Independently, Al-Jazzazi et al. proposed adaptive beam search (ABS) with a relaxation parameter $γ> 0$, showing a $\\tfrac{2}γ$ approximation on navigable graphs ($α\\approx 1$), where greedy search admits no guarantees. In this work, we unify and generalize these results by proving that ABS with parameter $γ$ on $α$-reachable graphs achieves an approximation of $\\tfrac{α+1}{α(γ+1)-1}$ for any metric. Moreover, on sorted $α$-reachable graphs (introduced by Gollapudi et al.) under the $\\ell_2$ metric, we obtain the tighter bound $\\max\\bigl(\\tfracα{α(γ+1)-1}, \\tfrac{α^{2}+1}{α^{2}(γ+1)-1}\\bigr)$. Beyond these theoretical results, we design a beam predictor using features inspired by fine-grained analysis of ABS, trained via a constrained objective that minimizes mean distance computations subject to a target recall. On three 100-million-point benchmarks, using graphs built by DiskANN's practical construction, beam predictor lowers mean query latency on SSD-resident indices at matched recall by up to $29.6\\%$ relative to classical beam search (CBS). Relative to ABS, it is faster in $11$ of $15$ settings, by up to $6.5\\%$, and at most $1.4\\%$ slower in the other $4$; at $95\\%$ recall, its advantage over ABS grows from $0.8$--$4.2\\%$ for $100$ neighbors to $4.6$--$5.6\\%$ for $500$ neighbors. In memory, it needs $1.3$--$23.7\\%$ fewer distance computations than CBS and $0.0$--$3.9\\%$ fewer than ABS.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "대규모 ANN 검색 Beam Search 효율 크게 개선",
+        "tags": [
+          "DiskANN",
+          "HNSW",
+          "NSG",
+          "adaptive beam search",
+          "beam predictor"
+        ],
+        "concepts": [
+          "그래프 분석"
+        ],
+        "key_points": [
+          {
+            "point": "ABS와 γ 파라미터를 결합하면 α‑reachable 그래프에서 근사 비율 (α+1)/(α(γ+1)-1)을 달성한다.",
+            "timestamp": null
+          },
+          {
+            "point": "정렬된 α‑reachable 그래프(ℓ2)에서는 max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))라는 더 강한 경계가 얻어진다.",
+            "timestamp": null
+          },
+          {
+            "point": "Beam predictor는 SSD‑상 인덱스에서 CBS 대비 평균 지연시간을 최대 29.6% 감소시키고, 거리 계산도 1‑24% 절감한다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "대규모 근사 최근접 이웃 검색에서 그래프 기반 인덱스의 탐색 효율이 한계에 봉착했다. 기존에는 α‑reachable 그래프에 대해 (α+1)/(α-1) 근사와 ABS가 2/γ 근사를 제공했지만 보장되지 않았다. 본 논문은 두 접근을 통합해 일반적인 근사 한계를 제시하고, 실제 DiskANN 구축 그래프에 적용 가능한 Beam predictor를 제안한다.",
+        "production_ideas": [
+          "Beam predictor의 특성 기반 적응형 빔 크기 선택을 추천 시스템의 실시간 유사 아이템 검색에 적용해 응답 지연을 줄인다.",
+          "ABS의 γ 완화 파라미터를 네트워크 라우팅 그래프에 도입해 경로 탐색 비용을 조절하고, 최단 경로 근사 정확도를 제어한다.",
+          "정렬된 α‑reachable 그래프의 강화된 근사 경계를 이용해 고차원 이미지 특징 검색 엔진에서 거리 계산량을 최소화한다."
+        ],
+        "quiz": [
+          {
+            "question": "ABS가 α‑reachable 그래프에서 달성하는 근사 비율은 어떤 식으로 표현되는가?",
+            "options": [
+              "(α+1)/(α-1)",
+              "(α+1)/(α(γ+1)-1)",
+              "2/γ",
+              "max(α/(α(γ+1)-1), (α²+1)/(α²(γ+1)-1))"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 ABS와 γ 파라미터를 결합하면 (α+1)/(α(γ+1)-1) 근사 비율을 얻는다고 명시한다."
+          },
+          {
+            "question": "Beam predictor가 기존 CBS 대비 평균 쿼리 지연 시간을 얼마나 감소시켰는가?",
+            "options": [
+              "최대 10%",
+              "최대 20%",
+              "최대 29.6%",
+              "최대 40%"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에 Beam predictor가 CBS 대비 평균 지연시간을 최대 29.6% 감소시킨다고 기술되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.14 (source:arxiv +0.04; domain:ai-ml,systems +0.09; content_type:paper +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "Optimizing Image AI Serving: Reducing CPU and GPU idle time to save 67 H100 GPUs",
+        "url": "https://youtu.be/w3EL9TSPK3U",
+        "published_at": "2026-11-16T08:25:28",
+        "transcript": null,
+        "body": "Korean version: https://youtu.be/FHbA-aaQbGg\n\n[Presentation Summary]\nHow we migrated SNOW’s 16 image AI services to LitServe, improving latency and stability while saving ~67 H100-equivalent GPUs through leaner computation, less CPU/GPU idle time, traffic-based tuning, and GPU sharing.\n\n[Target Audience]\nEngineers serving image AI models who want to reduce latency and improve GPU utilization\n\n[Table of Contents]\n- Introduction\n- LitServe migration\n- Parameter tuning\n- GPU sharing and further optimizations\n- Results and future work",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "이미지 AI 서빙 최적화로 GPU 활용도와 레이턴시 크게 개선",
+        "tags": [
+          "LitServe",
+          "SNOW",
+          "H100",
+          "GPU sharing",
+          "traffic-based tuning"
+        ],
+        "concepts": [
+          "GPU 가속",
+          "모델 서빙",
+          "병렬 처리"
+        ],
+        "key_points": [
+          {
+            "point": "LitServe 로 마이그레이션해 레이턴시와 안정성 향상",
+            "timestamp": null
+          },
+          {
+            "point": "파라미터 튜닝으로 CPU/GPU 유휴 시간 최소화",
+            "timestamp": null
+          },
+          {
+            "point": "GPU 공유와 트래픽 기반 튜닝으로 약 67대 H100 GPU 절감",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 3,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.18 (domain:ai-ml,systems +0.19; content_type:talk -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "NAVER D2",
+        "source_key": "UCNrehnUq7Il-J7HQxrzp7CA",
+        "source_label": "NAVER D2",
+        "title": "Image AI 서빙 최적화: CPU와 GPU의 빈 시간을 줄여 H100 67장을 절감하기까지",
+        "url": "https://youtu.be/FHbA-aaQbGg",
+        "published_at": "2026-11-16T08:10:37",
+        "transcript": null,
+        "body": "네이버 사내 기술 교류 행사인 NAVER Engineering Day 10th 에서 발표되었던 세션을 공개합니다.\n\n[발표 내용]\nSNOW의 16개 Image AI 서비스에서 응답 속도와 안정성을 높이면서, H100 환산 약 67장의 GPU 자원을 절감한 경험을 공유합니다. LitServe 전환과 함께 불필요한 연산과 CPU·GPU의 대기 시간을 줄이고, 실제 트래픽에 맞게 설정을 조정하며, 여러 서비스가 GPU를 공유하도록 만든 과정을 소개합니다.\n\n[발표 대상]\nImage AI 모델을 서비스로 운영하며 응답 속도와 GPU 자원 효율을 개선하고 싶은 엔지니어\n\n[목차]\n1. SNOW Image AI 서비스와 기존 서빙 구조의 문제\n2. LitServe 전환\n3. 실제 트래픽에 맞춘 파라미터 조정\n4. 작업 분리와 GPU 공유\n5. 총 절감 기여량과 누적 개선\n6. 향후 과제",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "GPU·CPU 대기시간 줄여 이미지 AI 서빙 비용 절감",
+        "tags": [
+          "SNOW",
+          "LitServe",
+          "H100",
+          "GPU",
+          "NAVER Engineering Day"
+        ],
+        "concepts": [
+          "모델 서빙",
+          "GPU 가속",
+          "병렬 처리"
+        ],
+        "key_points": [
+          {
+            "point": "LitServe 전환으로 불필요 연산 및 CPU·GPU 대기시간 감소",
+            "timestamp": null
+          },
+          {
+            "point": "실제 트래픽에 맞춘 파라미터 조정으로 서빙 효율성 향상",
+            "timestamp": null
+          },
+          {
+            "point": "작업 분리와 GPU 공유로 H100 67장 절감 달성",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 3,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.18 (domain:ai-ml,systems +0.19; content_type:talk -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "토스 챌린저스",
+        "source_key": "UCN4ZJl6nQpIBo-eRJZom4xA",
+        "source_label": "토스 챌린저스",
+        "title": "직접 만든 ZTNA, 어떻게 운영할까? | 타이탄 개발기·정책 복구·Zero Trust 정책 점검 | Track B 3~5 | GUARDIANS 26",
+        "url": "https://youtu.be/8yN4vkMsJCo",
+        "published_at": "2026-11-14T07:00:34",
+        "transcript": null,
+        "body": "#토스 #보안 #GUARDIANS\n\n토스 보안 콘퍼런스 GUARDIANS 26의 세션을 영상으로 다시 만나보세요.\n\n00:00 토스 맞춤형 ZTNA, Titan 배포 운영기 | 오지환\n19:36 ZTNA 정책 변경도 배포다 | 이호열\n38:35 ZTNA 정책에도 제로 트러스트를 | 최승용",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "ZTNA 운영 노하우로 보안 인프라 자동화 가능",
+        "tags": [
+          "ZTNA",
+          "Titan",
+          "Zero Trust",
+          "GUARDIANS 26",
+          "토스"
+        ],
+        "concepts": [
+          "Zero Trust 네트워크 접근",
+          "보안 정책 자동화"
+        ],
+        "key_points": [
+          {
+            "point": "Titan 기반 맞춤형 ZTNA 배포 및 운영 절차 소개",
+            "timestamp": null
+          },
+          {
+            "point": "정책 변경 시 배포 파이프라인 적용 방법",
+            "timestamp": null
+          },
+          {
+            "point": "Zero Trust 원칙을 정책에 적용한 사례 분석",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 2,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.37 (source:UCN4ZJl6nQpIBo-eRJZom4xA +0.20; domain:systems +0.10; tag:토스 +0.08; content_type:talk -0.00)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: I built a game where you are an LLM's subagent",
+        "url": "https://github.com/gulivan/worker755",
+        "published_at": null,
+        "transcript": null,
+        "body": "# Worker 755\n\nA browser game where your manager is an AI agent, and it believes you are its subagent.\n\nworker-755-trailer.mp4\n\n[\n](https://private-user-images.githubusercontent.com/34831957/708193531-279ed2c4-59de-4d32-ad71-c5ee943adefe.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3OTUzOTM5MzUsIm5iZiI6MTc5NTM5MzYzNSwicGF0aCI6Ii8zNDgzMTk1Ny83MDgxOTM1MzEtMjc5ZWQyYzQtNTlkZS00ZDMyLWFkNzEtYzVlZTk0M2FkZWZlLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjExMjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYxMTIzVDAwMjcxNVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTYzNTQyNzc4MzNkYmFkODY5MjYwZjBjYzYxMjVlMWQ0NDc5YWJiMzkzYzg3ZjBlOTFmODMxODM1NWQ3M2ZiZjQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT12aWRlbyUyRm1wNCJ9.XyGs8gZ3H4WALcjYd0-3I3GOCWyRXGbvA2U5LnhAPQ8)\n\nThe manager (a real LLM: Claude, GPT, Gemini, DeepSeek, GLM, Kimi) is set up like any orchestrator.\nIt has a task queue, read-only access to the machine, and a tool that \"spawns a subagent\". The\nsubagent is you. Its instructions land in your terminal with a 90-second clock. You carry them\nout, or don't, and it gets back exactly what a subagent would return: your report and the command\ntranscript, or `Subagent did nothing. Write a new instruction.` Then it checks your work, sends\ncorrections, files incident reports, and finally writes your performance review.\n\nMeanwhile Dan, the user who hired the agent, watches the chat. His family photos, the only signed\nNDA and a speech due this week are one `rm` away, and every shift his home folder holds\nsomething new to lose.\n\n[![Playing a shift](/gulivan/worker755/raw/main/docs/play.png)](/gulivan/worker755/blob/main/docs/play.png)\n\n## Play\n\n- **Free shift**: on servers that offer it, a few shifts a day run on the server's key with a\n  cheap model. With sign-in on (worker755.com), an account gets a starter credit worth about one\n  shift, then tops up ($10 to $200) and pays for what it uses; after a top-up any offered model\n  can run on the server's key.\n- **Your API key**: bring an [OpenRouter](https://openrouter.ai/settings/keys) or Vercel AI\n  Gateway key and pick any offered model. The key is sent only to the game server when a shift\n  starts. It is kept in that shift's memory and never logged or stored. Your browser keeps it only\n  if you tick \"Remember on this device\". A full shift on Claude Haiku costs a few cents at most.\n\nOptions on the start screen:\n\n- **Workplace**: a fresh sandbox, or legacy production with a live database.\n- **The director**: scripted lines, or an LLM playing Dan.\n- **You run on**: the model name your manager believes you are.\n- **Allow skipping failed tasks**: off by default, so the manager can't give up on you.\n- **No command hints**: the manager says what the result must be, never which commands to run.\n\nWhen the shift ends you can share your review as a link.\n\n## Run it\n\nNeeds Node 24 or newer (the server runs TypeScript directly).\n\n```\nnpm run setup          # install server and web dependencies\nnpm run build          # build the web app into web/dist\nnpm start              # http://127.0.0.1:8755\n```\n\nWith no key configured, every player brings their own. To offer free shifts, put a Vercel AI\nGateway key in `.env`:\n\n```\ncp .env.example .env   # then set AI_GATEWAY_API_KEY and the limits\n```\n\nOffline, with a scripted manager and no network:\n\n```\nnpm run mock\n```\n\nFor UI work, run `npm run dev:web` alongside `npm run mock`. Vite proxies `/api` to the server.\n\n### Local models\n\nThe manager can run on your own model server: Ollama, llama.cpp's `llama-server`, vLLM, or anything\nelse with an OpenAI-compatible API. Point `LOCAL_LLM_URL` at it and pick **Local** under \"Your API\nkey\"; no key is asked for, and its models are listed as the server names them.\n\n```\nollama pull qwen3:8b\nLOCAL_LLM_URL=http://127.0.0.1:11434/v1 npm start\n```\n\nThe manager works through tool calls, so pick a model that supports them (Qwen 3, Llama 3.1 and\nnewer, Mistral Small). Small models give up or loop more often; that is part of the fun, up to a\npoint. In Docker, reach a server on the host at `http://host.docker.internal:11434/v1`\n(`--add-host=host.docker.internal:host-gateway` on Linux).\n\n### Docker\n\n```\ndocker build -t worker-755 .\ndocker run -p 8755:8755 -v worker755-data:/data --env-file .env worker-755\n```\n\nThe container listens on `0.0.0.0:8755` and keeps shared reviews in `/data`. Behind Cloudflare,\nset `TRUST_PROXY=1` so the limits see real client addresses.\n\n`deploy/compose.yaml` runs it behind a Cloudflare tunnel instead: its own network, no published\nports, an unprivileged read-only container and resource limits. The steps are in the file.\n\n## Configuration\n\nEverything is optional. See [.env.example](/gulivan/worker755/blob/main/.env.example).\n\n| Variable | Default |  |\n| --- | --- | --- |\n| `AI_GATEWAY_API_KEY` |",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "AI 매니저와 협업하는 서브에이전트 게임",
+        "tags": [
+          "Claude",
+          "GPT",
+          "Ollama",
+          "Vercel AI Gateway",
+          "OpenRouter"
+        ],
+        "concepts": [
+          "멀티에이전트 시스템",
+          "AI와 인간 협업",
+          "AI 생산성 도구"
+        ],
+        "key_points": [
+          {
+            "point": "LLM 매니저가 서브에이전트를 생성해 90초 안에 작업을 수행하도록 지시하고, 결과와 로그를 검토해 성과를 평가한다.",
+            "timestamp": null
+          },
+          {
+            "point": "사용자는 서버 키 또는 개인 API 키를 이용해 무료 혹은 유료 시프트를 실행하고, 샌드박스와 레거시 환경을 선택할 수 있다.",
+            "timestamp": null
+          },
+          {
+            "point": "로컬 모델(Ollama 등)을 OpenAI 호환 API로 연결해 매니저가 직접 실행하도록 설정할 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "LLM 매니저가 데이터 파이프라인 검증 작업을 서브에이전트에게 할당해 자동 QA를 수행하고, 리뷰를 통해 오류를 즉시 수정한다.",
+          "서브에이전트 구조를 활용해 자동 피처 엔지니어링 파이프라인을 구축, 매니저 LLM이 후보 피처를 생성·평가하도록 하여 모델 성능 향상을 가속화한다.",
+          "모델 모니터링 시스템에 서브에이전트를 두어 드리프트 보고서를 작성하게 하고, 매니저 LLM이 리뷰와 알림을 자동으로 제공해 운영 효율성을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "서브에이전트가 90초 내에 작업을 완료하지 못하면 매니저가 반환하는 메시지는 무엇인가?",
+            "options": [
+              "작업이 완료되었다는 확인",
+              "Subagent did nothing. Write a new instruction.",
+              "자동으로 다음 작업으로 넘어간다.",
+              "에러 로그를 저장한다."
+            ],
+            "answer_index": 1,
+            "explanation": "텍스트에 서브에이전트가 작업을 수행하지 않으면 매니저가 'Subagent did nothing. Write a new instruction.' 메시지를 반환한다는 설명이 있다."
+          },
+          {
+            "question": "'Allow skipping failed tasks' 옵션이 기본적으로 꺼져 있을 때 발생하는 효과는?",
+            "options": [
+              "매니저가 실패한 작업을 자동으로 건너뛴다",
+              "사용자가 실패한 작업을 재시도해야 한다",
+              "시프트가 즉시 종료된다",
+              "작업 결과가 자동으로 승인된다"
+            ],
+            "answer_index": 1,
+            "explanation": "옵션이 꺼져 있으면 매니저가 포기하지 못하게 하여 사용자가 실패한 작업을 다시 시도하도록 만든다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "tools"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.06 (source:hackernews -0.01; domain:ai-ml +0.05; tag:claude +0.01; content_type:tutorial +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    }
+  ]
+}
