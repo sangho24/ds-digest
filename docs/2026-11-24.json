@@ -1,0 +1,297 @@
+{
+  "contract_version": 1,
+  "date": "2026-11-24",
+  "generated_at": "2026-11-24T14:54:33.077364+09:00",
+  "count": 5,
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-24.html",
+  "items": [
+    {
+      "id": "c05d50d52451",
+      "title": "When Does Fine-Tuning Beat Prompting for Qiskit-to-CUDA-Q Translation? An Execution-Verified Study",
+      "url": "https://arxiv.org/abs/2611.29793v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.AI"
+      },
+      "published_at": "2026-11-22T21:50:27",
+      "summary": "LLM 파인튜닝, 양자 코드 변환 효율 시점",
+      "positioning": "양자 회로를 Qiskit에서 NVIDIA CUDA‑Q로 옮기는 비용을 줄이기 위해, 기존 텍스트 치환 방식의 한계를 드러내고 실행 결과(상태벡터 유사도 ≥0.999)로 정확성을 검증하는 640‑task 벤치마크를 제시한다. 연구는 파인튜닝(LoRA)이 일부 베이스 모델에서 프롬프트 기반보다 높은 번역 정확도를 보이며, 코드 변환 연구에서 실행‑기반 평가의 필요성을 강조한다.",
+      "tags": [
+        "Qiskit",
+        "CUDA-Q",
+        "Nemotron 3 Nano",
+        "Qwen2.5-Coder",
+        "QuantumKatas"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "LoRA 파인튜닝이 일부 베이스 모델에서 프롬프트보다 높은 번역 정확도를 보이며, 특히 Qwen2.5‑Coder 7B에서 전체 및 보이지 않는 스타일 모두 우수함",
+          "timestamp": null
+        },
+        {
+          "point": "640개의 작업을 실행 기반(상태벡터 충실도 ≥0.999)으로 검증하는 벤치마크를 도입해 텍스트 치환만으로는 해결되지 않는 문제를 드러냄",
+          "timestamp": null
+        },
+        {
+          "point": "실제 QED‑C 커널에 대해서는 모든 모델이 0% 성공률을 기록해, 현재 LLM은 단순 파라메트릭 코드만 변환 가능함을 보여줌",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "실행 기반 정확도 검증 방식을 이용해 Python‑to‑Julia 코드 변환 시 단위 테스트 통과 여부로 번역 품질을 평가한다",
+        "프롬프트와 LoRA 파인튜닝을 혼합해 의료 보고서 생성에 적용하면, 스타일 일관성은 유지하면서 정확도는 향상될 수 있다",
+        "표면 규칙 기반 전처리기를 활용해 SQL 방언 간 변환을 먼저 수행한 뒤 LLM에 전달하면 복잡한 쿼리 변환 효율을 높일 수 있다"
+      ],
+      "quiz": [
+        {
+          "question": "표면 규칙 기반 번역기가 원본 3개의 스플릿 중 2개만 해결할 수 있었던 이유는?",
+          "options": [
+            "텍스트 치환만 수행했기 때문",
+            "실행 검증을 수행하지 못했기 때문",
+            "모델 크기가 작았기 때문",
+            "파라미터 수가 부족했기 때문"
+          ],
+          "answer_index": 0,
+          "explanation": "표면 규칙 기반 번역기는 단순 텍스트 치환만 수행하므로 실행 수준의 차이를 포착하지 못해 일부 스플릿을 해결하지 못한다."
+        },
+        {
+          "question": "LoRA 파인튜닝이 프롬프트 기반보다 더 좋은 성능을 보인 상황은?",
+          "options": [
+            "모든 베이스 모델에서",
+            "Qwen2.5‑Coder 7B와 같은 큰 모델에서",
+            "작은 1.5B 모델에서",
+            "보이지 않는 코딩 스타일에서"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 Qwen2.5‑Coder 7B 모델에서 LoRA 파인튜닝이 전체 및 보이지 않는 스타일 모두에서 프롬프트보다 높은 정확도를 기록했다."
+        }
+      ]
+    },
+    {
+      "id": "df08ab47e08b",
+      "title": "NariQ: BF16-level Qwen3.8-27B in a 10 GB file",
+      "url": "https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF",
+      "source": {
+        "type": "rss",
+        "name": "HackerNews"
+      },
+      "published_at": null,
+      "summary": "3비트 이하 양자화로 BF16 수준 성능 유지, 모델 경량화",
+      "positioning": null,
+      "tags": [
+        "NariQ",
+        "Qwen3.8-27B",
+        "llama.cpp",
+        "RTX PRO 6000",
+        "DeepSWE"
+      ],
+      "relevance": 7,
+      "key_points": [
+        {
+          "point": "NariQ는 3비트 이하 양자화에도 불구하고 다양한 에이전트·수학·멀티링꾼·이미지 이해 작업에서 BF16 수준의 품질을 유지한다.",
+          "timestamp": null
+        },
+        {
+          "point": "벤치마크 결과에서 3비트 모델이 BF16과 거의 동등하거나 일부 지표에서 더 높은 점수를 기록한다.",
+          "timestamp": null
+        },
+        {
+          "point": "RTX PRO 6000에서 디코드 속도가 다른 양자화 모델과 비슷하며, 이를 사용하려면 nari‑llama.cpp 포크가 필요하다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "3비트 이하 양자화를 비전 트랜스포머에 적용해 엣지 디바이스에서 이미지 인식 지연 시간을 감소시킨다.",
+        "추천 시스템의 임베딩 테이블을 저비트 양자화해 메모리 사용량을 줄이면서 랭킹 정확도를 유지한다.",
+        "CPU 전용 서버에 저비트 양자화된 LLM을 배치해 실시간 챗봇 서비스 비용을 크게 절감한다."
+      ],
+      "quiz": [
+        {
+          "question": "어떤 벤치마크에서 3비트 양자화 모델이 BF16 모델과 동일한 점수를 기록했나요?",
+          "options": [
+            "DeepSWE",
+            "RealWorldQA",
+            "MSGM",
+            "AIME"
+          ],
+          "answer_index": 1,
+          "explanation": "본문에 따르면 RealWorldQA에서 BF16과 3비트 모두 82.4점을 기록했다."
+        },
+        {
+          "question": "NariQ의 디코드 속도 비교에 사용된 GPU 모델은 무엇인가요?",
+          "options": [
+            "RTX PRO 6000",
+            "RTX 3090",
+            "Tesla V100",
+            "AMD Radeon"
+          ],
+          "answer_index": 0,
+          "explanation": "본문에 'Decode speed is comparable ... on an RTX PRO 6000'이라고 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "id": "c59387b24a5e",
+      "title": "목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기",
+      "url": "https://toss.tech/article/multi-task-learning-in-finance",
+      "source": {
+        "type": "rss",
+        "name": "토스 기술 블로그, 토스 테크"
+      },
+      "published_at": "2026-11-23T03:02:00",
+      "summary": "멀티태스크로 수백 트리 모델을 하나로 통합, 효율·성능 동시 개선",
+      "positioning": null,
+      "tags": [
+        "TOSS",
+        "멀티태스크 학습",
+        "AP",
+        "MAE",
+        "AUC"
+      ],
+      "relevance": 6,
+      "key_points": [
+        {
+          "point": "수십~수백 개의 트리 모델을 하나의 멀티태스크 모델로 통합해 평균 정밀도(AP)를 약 54% 향상하고 마케팅 발송을 35% 절감했다.",
+          "timestamp": null
+        },
+        {
+          "point": "상품별 세 가지 예측 과제를 하나의 MTL 모델에 묶어 MAE를 66~79% 감소, AUC를 약 10% 상승시켰으며, 새 상품도 별도 모델 없이 예측 가능하게 했다.",
+          "timestamp": null
+        },
+        {
+          "point": "공유 인코더와 공유 전문가 구조를 도입해 과제 간 데이터 활용을 촉진하고, 모델 수가 늘어나도 운영·재학습 부담을 크게 낮췄다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "공유 인코더·전문가 구조를 전자상거래 카테고리별 추천에 적용해 신규 카테고리를 별도 모델 없이 즉시 지원한다.",
+        "금융 서비스 전반의 사기 탐지를 위한 멀티태스크 모델에 적용해 각 상품별 사기 탐지 모델을 하나로 통합한다.",
+        "SaaS 플랫폼에서 이탈 예측과 업셀 기회 예측을 하나의 멀티태스크 모델로 묶어 운영 효율성을 높인다."
+      ],
+      "quiz": [
+        {
+          "question": "멀티태스크 모델을 도입하면 운영 부담이 감소하는 주요 이유는 무엇인가?",
+          "options": [
+            "모델 수가 줄어 배포·모니터링 비용이 감소한다",
+            "각 모델이 더 빠르게 학습한다",
+            "데이터 라벨이 적게 필요하다",
+            "GPU 사용량이 증가한다"
+          ],
+          "answer_index": 0,
+          "explanation": "여러 과제를 하나의 모델에 통합하면 모델 수가 감소해 배포, 모니터링, 재학습 등 운영 작업이 줄어든다."
+        },
+        {
+          "question": "멀티태스크 모델에 새 상품을 추가할 때 필요한 주요 변경은 무엇인가?",
+          "options": [
+            "전체 모델을 재학습한다",
+            "새로운 출력층을 추가한다",
+            "상품 정보를 입력으로 제공한다",
+            "새로운 공유 전문가를 만든다"
+          ],
+          "answer_index": 2,
+          "explanation": "본문에서는 상품 정보를 입력으로 받아 새 상품을 별도 모델 없이 예측하도록 설계했다고 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "90aea27119ad",
+      "title": "12월 9일, 2026 혁신의숲 어워즈 개최!",
+      "url": "https://innoforest.stibee.com/p/694",
+      "source": {
+        "type": "newsletter",
+        "name": "혁신의 숲"
+      },
+      "published_at": "2026-11-22T00:00:00",
+      "summary": "데이터 기반 스타트업 성장·LER 인사이트",
+      "positioning": null,
+      "tags": [
+        "혁신의숲",
+        "LER",
+        "OpenAI",
+        "Growth Bridge",
+        "COEX"
+      ],
+      "relevance": 5,
+      "key_points": [
+        {
+          "point": "혁신의숲 어워즈는 서비스 방문자·거래액·고용·투자 등 실제 비즈니스 지표를 기반으로 성장 스타트업을 선정한다.",
+          "timestamp": null
+        },
+        {
+          "point": "LER(매출총이익÷급여) 지표를 활용해 인력 확대와 매출 성장 간 효율성을 분석하고, 흑자 전환 기준을 제시한다.",
+          "timestamp": null
+        },
+        {
+          "point": "다양한 오픈이노베이션 공고와 투자 리포트가 제공돼 스타트업·대기업 협업 및 투자 판단에 활용할 수 있다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "LER 지표를 SaaS 제품팀에 적용해 엔지니어 급여 대비 발생 이익을 측정하고 인력 효율성을 개선한다.",
+        "후보기업 선정에 사용된 방문자·거래·고용·투자 지표를 데이터 파이프라인에 넣어 벤처캐피털의 초기 스타트업 스크리닝 모델을 만든다.",
+        "혁신의숲 어워즈 선정 과정을 학습 데이터로 활용해 고성장 스타트업을 예측하는 머신러닝 모델을 구축한다."
+      ],
+      "quiz": [
+        {
+          "question": "LER 지표는 무엇을 나타내는가?",
+          "options": [
+            "매출총이익 대비 급여 비율",
+            "매출 대비 광고비 비율",
+            "순이익 대비 급여 비율",
+            "매출총이익 대비 연구비 비율"
+          ],
+          "answer_index": 0,
+          "explanation": "LER은 매출총이익을 급여 비용으로 나눈 값으로, 1원 급여로 얼마나 매출총이익을 창출했는지를 나타낸다."
+        },
+        {
+          "question": "혁신의숲 어워즈에서 후보기업을 선정할 때 주요하게 고려한 비즈니스 지표는?",
+          "options": [
+            "서비스 방문자 수·소비자 거래액·고용인원 추이·투자 이력",
+            "CEO 연령·학력",
+            "특허 보유 수",
+            "소셜 미디어 팔로워 수"
+          ],
+          "answer_index": 0,
+          "explanation": "후보기업은 서비스 방문자 수, 소비자 거래액, 고용인원 추이, 투자 이력 등 실제 비즈니스 지표를 기준으로 선정한다."
+        }
+      ]
+    },
+    {
+      "id": "3ae2be62ecb0",
+      "title": "What a Squirrel Does That LLMs Don't (Michael Tomasello)",
+      "url": "https://youtu.be/io7qhEjJoik",
+      "source": {
+        "type": "youtube",
+        "name": "Machine Learning Street Talk"
+      },
+      "published_at": "2026-11-19T14:22:11",
+      "summary": "예측 불가능성으로 AI 설계 시 행동 차이 통찰",
+      "positioning": null,
+      "tags": [
+        "Michael Tomasello",
+        "Max Planck Institute",
+        "Duke University",
+        "LLM",
+        "squirrel"
+      ],
+      "relevance": 4,
+      "key_points": [
+        {
+          "point": "환경이 예측 불가능할 때 에이전시가 형성된다는 기본 가설을 제시한다",
+          "timestamp": null
+        },
+        {
+          "point": "다람쥐가 낙하를 상상해 다른 가지로 이동하는 행동은 단순 제어 루프를 넘어선 예측 능력이다",
+          "timestamp": null
+        },
+        {
+          "point": "LLM은 공동 목표와 관점 공유가 부족해 인간과 같은 협업 에이전시를 구현하지 못한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [],
+      "quiz": []
+    }
+  ]
+}

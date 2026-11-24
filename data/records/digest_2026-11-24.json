@@ -1,0 +1,443 @@
+{
+  "date": "2026-11-24",
+  "generated_at": "2026-11-24T05:54:33.082203",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.AI",
+        "source_key": "arxiv:cs.AI",
+        "source_label": "arXiv:cs.AI",
+        "title": "When Does Fine-Tuning Beat Prompting for Qiskit-to-CUDA-Q Translation? An Execution-Verified Study",
+        "url": "https://arxiv.org/abs/2611.29793v1",
+        "published_at": "2026-11-22T21:50:27",
+        "transcript": null,
+        "body": "Moving quantum code from Qiskit to NVIDIA CUDA-Q is a practical adoption cost that language models are starting to automate. We ask whether a small open model can learn this translation, and how to measure it so that the result can be trusted. Both programs can be executed and their state vectors compared, so a kernel counts as correct only if it prepares the same state as the Qiskit reference (fidelity >= 0.999), with no text matching and no LLM judge. We build a 640-task benchmark with three test sets (larger circuits, an unseen circuit family, an unseen Qiskit coding style) and a QuantumKatas regression probe, and we test the evaluator before training. Measurement counts miss every phase-only error; a surface rule-based translator solves two of three original splits (text substitution); a converter that executes the Qiskit input and maps the circuit solves all 640 tasks -- so the benchmark measures source-level translation, not whether a circuit can be ported after running it. No base model emits a valid CUDA-Q kernel zero-shot. On Nemotron 3 Nano 4B, LoRA reaches 83.9%, tying a 4-shot prompt (83.1%), but generalizes worse to unseen style (48.5% vs. 65.5%) and cuts QuantumKatas from 23.8% to 8.9%; on Qwen2.5-Coder 7B, LoRA beats the prompt overall (92.0% vs. 82.8%) and on unseen style (78.5% vs. 65.0%), and on the 1.5B model as well, so whether fine-tuning pays off depends on the base model, while the Qiskit regression appears in all three. Mixing two replay formats is the best mitigation trade-off (84.4% translation, Katas 21.5%). On 48 parametric functions that must become kernels with arguments -- where executing the input cannot yield a parametric kernel -- models reach up to 83%; on 27 real QED-C kernels, every model scores 0%. Language models can do source-level translation of simple parametric code, but not yet of real programs.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "LLM 파인튜닝, 양자 코드 변환 효율 시점",
+        "tags": [
+          "Qiskit",
+          "CUDA-Q",
+          "Nemotron 3 Nano",
+          "Qwen2.5-Coder",
+          "QuantumKatas"
+        ],
+        "concepts": [
+          "모델 파인튜닝",
+          "코드 자동생성",
+          "GPU 가속"
+        ],
+        "key_points": [
+          {
+            "point": "LoRA 파인튜닝이 일부 베이스 모델에서 프롬프트보다 높은 번역 정확도를 보이며, 특히 Qwen2.5‑Coder 7B에서 전체 및 보이지 않는 스타일 모두 우수함",
+            "timestamp": null
+          },
+          {
+            "point": "640개의 작업을 실행 기반(상태벡터 충실도 ≥0.999)으로 검증하는 벤치마크를 도입해 텍스트 치환만으로는 해결되지 않는 문제를 드러냄",
+            "timestamp": null
+          },
+          {
+            "point": "실제 QED‑C 커널에 대해서는 모든 모델이 0% 성공률을 기록해, 현재 LLM은 단순 파라메트릭 코드만 변환 가능함을 보여줌",
+            "timestamp": null
+          }
+        ],
+        "positioning": "양자 회로를 Qiskit에서 NVIDIA CUDA‑Q로 옮기는 비용을 줄이기 위해, 기존 텍스트 치환 방식의 한계를 드러내고 실행 결과(상태벡터 유사도 ≥0.999)로 정확성을 검증하는 640‑task 벤치마크를 제시한다. 연구는 파인튜닝(LoRA)이 일부 베이스 모델에서 프롬프트 기반보다 높은 번역 정확도를 보이며, 코드 변환 연구에서 실행‑기반 평가의 필요성을 강조한다.",
+        "production_ideas": [
+          "실행 기반 정확도 검증 방식을 이용해 Python‑to‑Julia 코드 변환 시 단위 테스트 통과 여부로 번역 품질을 평가한다",
+          "프롬프트와 LoRA 파인튜닝을 혼합해 의료 보고서 생성에 적용하면, 스타일 일관성은 유지하면서 정확도는 향상될 수 있다",
+          "표면 규칙 기반 전처리기를 활용해 SQL 방언 간 변환을 먼저 수행한 뒤 LLM에 전달하면 복잡한 쿼리 변환 효율을 높일 수 있다"
+        ],
+        "quiz": [
+          {
+            "question": "표면 규칙 기반 번역기가 원본 3개의 스플릿 중 2개만 해결할 수 있었던 이유는?",
+            "options": [
+              "텍스트 치환만 수행했기 때문",
+              "실행 검증을 수행하지 못했기 때문",
+              "모델 크기가 작았기 때문",
+              "파라미터 수가 부족했기 때문"
+            ],
+            "answer_index": 0,
+            "explanation": "표면 규칙 기반 번역기는 단순 텍스트 치환만 수행하므로 실행 수준의 차이를 포착하지 못해 일부 스플릿을 해결하지 못한다."
+          },
+          {
+            "question": "LoRA 파인튜닝이 프롬프트 기반보다 더 좋은 성능을 보인 상황은?",
+            "options": [
+              "모든 베이스 모델에서",
+              "Qwen2.5‑Coder 7B와 같은 큰 모델에서",
+              "작은 1.5B 모델에서",
+              "보이지 않는 코딩 스타일에서"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 Qwen2.5‑Coder 7B 모델에서 LoRA 파인튜닝이 전체 및 보이지 않는 스타일 모두에서 프롬프트보다 높은 정확도를 기록했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.13 (source:arxiv +0.06; domain:ai-ml +0.06; content_type:paper +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "NariQ: BF16-level Qwen3.8-27B in a 10 GB file",
+        "url": "https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF",
+        "published_at": null,
+        "transcript": null,
+        "body": "We built NariQ: 3-bit-or-lower quantizations of Qwen3.8-27B that retain near-BF16 quality across agentic tasks, math, multilingual reasoning, and image understanding.<p>To our knowledge, this is the first 3-bit-or-lower quantization that retains BF16 lvl performance on long-horizon agentic tasks.<p>Benchmarks (BF16 &#x2F; 3-bit &#x2F; 2.5-bit &#x2F; 2-bit):<p>- DeepSWE: 39.8 &#x2F; 41.0 &#x2F; 41.9 &#x2F; 28.6<p>- Terminal-Bench 2.1: 62.6 &#x2F; 63.8 &#x2F; 60.2 &#x2F; 52.4<p>- AIME 25+26: 97.7 &#x2F; 98.3 &#x2F; 96.5 &#x2F; 86.0<p>- MSGM: 94.0 &#x2F; 93.1 &#x2F; 91.8 &#x2F; 90.6<p>- RealWorldQA: 82.4 &#x2F; 82.4 &#x2F; 81.3 &#x2F; 80.9<p>Decode speed is comparable to other quants on an RTX PRO 6000. Context-length results below<p>(3-bit &#x2F; 2.5-bit &#x2F; 2-bit &#x2F; Unsloth UD-IQ3_XXS):<p>- 4K: 88.9 &#x2F; 99.2 &#x2F; 111.7 &#x2F; 94.7<p>- 16K: 84.5 &#x2F; 93.8 &#x2F; 105.1 &#x2F; 89.8<p>- 64K: 70.7 &#x2F; 77.5 &#x2F; 85.0 &#x2F; 74.8<p>Running these currently require our llama.cpp fork:\n(<a href=\"https:&#x2F;&#x2F;github.com&#x2F;nari-labs&#x2F;nari-llama.cpp\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;nari-labs&#x2F;nari-llama.cpp</a>)<p>Feedback and questions welcome. We&#x27;d love to hear how these perform on your workloads.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "3비트 이하 양자화로 BF16 수준 성능 유지, 모델 경량화",
+        "tags": [
+          "NariQ",
+          "Qwen3.8-27B",
+          "llama.cpp",
+          "RTX PRO 6000",
+          "DeepSWE"
+        ],
+        "concepts": [
+          "AI 비용 효율성",
+          "GPU 가속",
+          "모델 서빙"
+        ],
+        "key_points": [
+          {
+            "point": "NariQ는 3비트 이하 양자화에도 불구하고 다양한 에이전트·수학·멀티링꾼·이미지 이해 작업에서 BF16 수준의 품질을 유지한다.",
+            "timestamp": null
+          },
+          {
+            "point": "벤치마크 결과에서 3비트 모델이 BF16과 거의 동등하거나 일부 지표에서 더 높은 점수를 기록한다.",
+            "timestamp": null
+          },
+          {
+            "point": "RTX PRO 6000에서 디코드 속도가 다른 양자화 모델과 비슷하며, 이를 사용하려면 nari‑llama.cpp 포크가 필요하다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "3비트 이하 양자화를 비전 트랜스포머에 적용해 엣지 디바이스에서 이미지 인식 지연 시간을 감소시킨다.",
+          "추천 시스템의 임베딩 테이블을 저비트 양자화해 메모리 사용량을 줄이면서 랭킹 정확도를 유지한다.",
+          "CPU 전용 서버에 저비트 양자화된 LLM을 배치해 실시간 챗봇 서비스 비용을 크게 절감한다."
+        ],
+        "quiz": [
+          {
+            "question": "어떤 벤치마크에서 3비트 양자화 모델이 BF16 모델과 동일한 점수를 기록했나요?",
+            "options": [
+              "DeepSWE",
+              "RealWorldQA",
+              "MSGM",
+              "AIME"
+            ],
+            "answer_index": 1,
+            "explanation": "본문에 따르면 RealWorldQA에서 BF16과 3비트 모두 82.4점을 기록했다."
+          },
+          {
+            "question": "NariQ의 디코드 속도 비교에 사용된 GPU 모델은 무엇인가요?",
+            "options": [
+              "RTX PRO 6000",
+              "RTX 3090",
+              "Tesla V100",
+              "AMD Radeon"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 'Decode speed is comparable ... on an RTX PRO 6000'이라고 명시되어 있다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.06 (source:hackernews -0.01; domain:ai-ml +0.07)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "토스 기술 블로그, 토스 테크",
+        "source_key": "https://toss.tech/rss.xml",
+        "source_label": "토스 기술 블로그, 토스 테크",
+        "title": "목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기",
+        "url": "https://toss.tech/article/multi-task-learning-in-finance",
+        "published_at": "2026-11-23T03:02:00",
+        "transcript": null,
+        "body": "<div class=\"css-1vn47db\"><p class=\"css-14on8x8\" id=\"406a360d-33e3-801a-9983-f83be5f8cb5e\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">회사가 커지면 서비스가 늘고, 서비스마다 끌어올리고 싶은 목표도 늘어납니다. &quot;이 유저가 다음 달에 특정 상품을 신청할까&quot;, &quot;이 유저가 어떤 상품에서 어떤 결과를 받고, 그때 조건은 어떻게 될까&quot; 같은 질문이 하나씩 생길 때마다 모델을 하나씩 만들다 보면, 과제마다 · 상품마다 트리 모델이 계속 늘어 금세 수십~수백 개가 됩니다. 게다가 그 모델들은 대부분 매일 돌아야 해서, 배포 · 모니터링 · 재학습 · 유지보수 같은 운영 부담이 모델 수만큼 눈덩이처럼 불어나요. 어느새 ML 엔지니어(MLE)가 정작 판단에 써야 할 시간을 반복적인 모델 양산과 운영에 빼앗기게 됩니다. 모델을 잘 만드는 것만큼, 많은 모델을 효율적으로 관리하는 것이 중요해지는 이유예요.</span></span></span></p><p class=\"css-14on8x8\" id=\"406a360d-33e3-80d3-94b5-da87cd97c873\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">토스의 서비스에서도 두 곳에서 실제로 그랬습니다. 하나는 </span><span class=\"css-q3ktjb\">마케팅 유입</span><span class=\"css-1kxrhf3\">입니다. 새 마케팅 목적이 생길 때마다 타겟팅에 쓸 예측 모델이 필요했고, 그때마다 트리 모델이 하나씩 늘었어요. 다른 하나는 </span><span class=\"css-q3ktjb\">상품</span><span class=\"css-1kxrhf3\">입니다. 상품마다 여러 가지 예측이 필요한데, 상품마다 트리 모델을 따로 두다 보니 모델이 수백 개로 불어났습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"d0ea9171-9ea2-4b63-86a0-6297a3b5ec95\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><a class=\"css-iynyr0\" href=\"https://toss.tech/article/taste\" rel=\"noreferrer noopener\" target=\"_blank\">지난 글(TASTE, 토스의 추천 파운데이션 플랫폼)</a><span class=\"css-1kxrhf3\">에서는 여러 행동을 함께 학습해 얻은 사용자 표현을 다른 서비스 모델에 전달하는 이야기를 했습니다. 멀티태스크 학습은 크게 두 가지로 쓸 수 있습니다. 하나는 여러 과제를 함께 학습하며 좋은 공유 표현을 만들고, 그 표현을 다른 모델에서 가져다 쓰는 것입니다. 다른 하나는 여러 과제의 예측값 자체를 하나의 모델로 잘 맞히는 것이에요. 지난 글이 앞의 경우에 무게를 두었다면, 이번 글은 뒤의 경우에 집중합니다. 같은 멀티태스크 학습 구조를 금융 도메인에 적용해, 목적마다 · 상품마다 늘던 예측 모델을 하나로 묶고 그 예측을 실제 마케팅과 서비스에 바로 쓰는 데 집중했습니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"406a360d-33e3-8098-8f5e-e7ad17719a27\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">저희는 이 두 곳에서 늘어난 트리 모델들을 하나의 멀티태스크 모델(MTL, Multi-Task Learning)로 합치는 작업을 진행했습니다. 결론부터 말하면,</span></span></span></p><aside class=\"css-nv7vyi\" id=\"406a360d-33e3-8052-9682-c48abd205334\"><div class=\"css-1vn47db\"><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"406a360d-33e3-8035-8ec2-da049d989afd\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">여러 목적의 유저 금융 행동 예측</span><span class=\"css-1kxrhf3\">: 목적마다 따로 두던 트리 모델들을, 수십 개 행동을 한 번에 예측하는 </span><span class=\"css-q3ktjb\">단 하나의</span><span class=\"css-1kxrhf3\"> 멀티태스크 모델로 합쳤습니다. 공유 인코더와 공유 전문가로 과제들이 서로의 데이터를 나눠 쓰도록 설계한 결과, 목적별 트리 모델 대비 평균 정밀도(AP, Average Precision)를 상대적으로 약 54% 끌어올렸고, 실제 마케팅에서도 불필요한 발송을 약 35% 줄이는 효율 개선으로 이어졌어요.</span></span></span></li><li class=\"css-1hwiibq\" id=\"406a360d-33e3-80f1-b2ec-da539b24077a\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">상품마다 따로 두던 과제들을 한 모델로</span><span class=\"css-1kxrhf3\">: 저희 경우에는 상품마다 서로 성격이 다른 세 가지 예측 과제가 필요했는데, 원래는 과제마다, 그리고 상품마다 트리 모델을 따로 두어 수백 개였습니다. 이를 세 과제를 함께 학습하는 MTL 하나로 묶고, 상품 정보를 입력으로 받아 </span><span class=\"css-q3ktjb\">새로 생기는 상품까지 모델을 새로 만들지 않고</span><span class=\"css-1kxrhf3\"> 한 번에 예측하게 했어요. 성능도 상품별 트리 모델보다 예측 오차(MAE)는 약 66~79% 줄고, AUC는 상대적으로 약 10% 올랐습니다. 상품이 몇 배로 늘어도 모델은 여전히 하나입니다.</span></span></span></li></ul></div></aside><p class=\"css-14on8x8\" id=\"406a360d-33e3-803f-867d-c56015a33cd4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">여기서 핵심 메시지는 두 가지예요. 하나는 </span><span class=\"css-q3ktjb\">통합</span><span class=\"css-1kxrhf3\"> — 과제마다, 상품마다 늘어나던 개별 모델을 </span><span class=\"css-q3ktjb\">하나의 모델로 묶었다</span><span class=\"css-1kxrhf3\">는 것. 다른 하나는 </span><span class=\"css-q3ktjb\">확장성</span><span class=\"css-1kxrhf3\"> — 새 과제는 출력층을 더해 같은 모델에서 학습하고, 새 상품은 상품 정보를 입력으로 받기 때문에 모델을 새로 만들지 않고 </span><span class=\"css-q3ktjb\">같은 하나로 대응</span><span class=\"css-1kxrhf3\">한다는 것이에요. 규모를 키우면서 성능도 올리고, 질문이 계속 늘어나도 무리 없이 운영하고 개선할 수 있게 만드는 것이 목표였습니다. 이 글에서는 두 사례를 통해 멀티태스크 학습이 무엇을 해결해 줬는지, 그리고 무엇이 어려웠는지를 이야기하려 합니다.</span></span></span></p><p class=\"css-14on8x8\" id=\"421a360d-33e3-80c7-9b65-d2a15eeaad72\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"></span></span></p><h2 class=\"css-1c1qox8\" id=\"406a360d-33e3-806d-8e0a-e9ef98f7cb63\"><span class=\"css-1r3ko7u\"><span class=\"css-p4abj2\"><span class=\"css-1kxrhf3\">개별 모델이 많아지면 생기는 문제</span></span></span></h2><p class=\"css-14on8x8\" id=\"406a360d-33e3-8047-8ed6-c2cc1567fed4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-1kxrhf3\">과제 하나에 모델 하나를 두는 방식은 처음에는 가장 단순합니다. 트리 모델은 빨리 만들 수 있고 성능도 괜찮아서, 새 목적이 생길 때마다 하나씩 더하기 좋습니다. 그런데 그렇게 모인 트리 모델이 수백 개가 되면, 비용도 과제 수 × 상품 수만큼 늘어요. 마케팅 목적이 늘 때마다, 상품이 늘 때마다 저희가 실제로 겪은 일입니다.</span></span></span></p><ul class=\"css-uswsmm\"><li class=\"css-1hwiibq\" id=\"406a360d-33e3-8013-8f16-dc9ca99cc063\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">운영 비용</span><span class=\"css-1kxrhf3\">: 모델마다 학습 데이터 준비, 학습, 배포, 모니터링이 따로 있습니다. 모델이 수백 개면 파이프라인도 수백 개이고, 장애 지점도 그만큼 많습니다.</span></span></span></li><li class=\"css-1hwiibq\" id=\"406a360d-33e3-8093-afa9-da1c3905b9b4\"><span class=\"css-1r3ko7u\"><span class=\"css-1iisb9p\"><span class=\"css-q3ktjb\">재학습 부담</span><span c",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 6,
+        "one_line_summary": "멀티태스크로 수백 트리 모델을 하나로 통합, 효율·성능 동시 개선",
+        "tags": [
+          "TOSS",
+          "멀티태스크 학습",
+          "AP",
+          "MAE",
+          "AUC"
+        ],
+        "concepts": [
+          "멀티태스크 학습",
+          "모델 서빙"
+        ],
+        "key_points": [
+          {
+            "point": "수십~수백 개의 트리 모델을 하나의 멀티태스크 모델로 통합해 평균 정밀도(AP)를 약 54% 향상하고 마케팅 발송을 35% 절감했다.",
+            "timestamp": null
+          },
+          {
+            "point": "상품별 세 가지 예측 과제를 하나의 MTL 모델에 묶어 MAE를 66~79% 감소, AUC를 약 10% 상승시켰으며, 새 상품도 별도 모델 없이 예측 가능하게 했다.",
+            "timestamp": null
+          },
+          {
+            "point": "공유 인코더와 공유 전문가 구조를 도입해 과제 간 데이터 활용을 촉진하고, 모델 수가 늘어나도 운영·재학습 부담을 크게 낮췄다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "공유 인코더·전문가 구조를 전자상거래 카테고리별 추천에 적용해 신규 카테고리를 별도 모델 없이 즉시 지원한다.",
+          "금융 서비스 전반의 사기 탐지를 위한 멀티태스크 모델에 적용해 각 상품별 사기 탐지 모델을 하나로 통합한다.",
+          "SaaS 플랫폼에서 이탈 예측과 업셀 기회 예측을 하나의 멀티태스크 모델로 묶어 운영 효율성을 높인다."
+        ],
+        "quiz": [
+          {
+            "question": "멀티태스크 모델을 도입하면 운영 부담이 감소하는 주요 이유는 무엇인가?",
+            "options": [
+              "모델 수가 줄어 배포·모니터링 비용이 감소한다",
+              "각 모델이 더 빠르게 학습한다",
+              "데이터 라벨이 적게 필요하다",
+              "GPU 사용량이 증가한다"
+            ],
+            "answer_index": 0,
+            "explanation": "여러 과제를 하나의 모델에 통합하면 모델 수가 감소해 배포, 모니터링, 재학습 등 운영 작업이 줄어든다."
+          },
+          {
+            "question": "멀티태스크 모델에 새 상품을 추가할 때 필요한 주요 변경은 무엇인가?",
+            "options": [
+              "전체 모델을 재학습한다",
+              "새로운 출력층을 추가한다",
+              "상품 정보를 입력으로 제공한다",
+              "새로운 공유 전문가를 만든다"
+            ],
+            "answer_index": 2,
+            "explanation": "본문에서는 상품 정보를 입력으로 받아 새 상품을 별도 모델 없이 예측하도록 설계했다고 설명한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.12 (domain:ai-ml +0.13; content_type:case-study -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "newsletter",
+        "source_name": "혁신의 숲",
+        "source_key": "innoforest.stibee.com",
+        "source_label": "혁신의 숲",
+        "title": "12월 9일, 2026 혁신의숲 어워즈 개최!",
+        "url": "https://innoforest.stibee.com/p/694",
+        "published_at": "2026-11-22T00:00:00",
+        "transcript": null,
+        "body": "2026 혁신의숲 어워즈에서 올해의 스타트업이 공개 됩니다.  12월 9일 오후 1시 COEX    2022년부터 매년 이어 온 혁신의숲 어워즈는 한 해 동안 눈에 띄게 성장한 초기 스타트업을 데이터로 찾고, 스타트업 생태계의 선배 기업(파트너사)과 구성원들이 함께 응원하는 자리입니다. 지난 6월, 8월, 10월 세 차례에 걸쳐 30개사씩 총 90개 후보기업을 공개했습니다. 후보기업은 서비스 방문자 수, 소비자 거래액, 고용인원 추이, 투자 이력 같은 실제 비즈니스 지표를 기준으로, 최근 1년간 성장세가 뚜렷한 초기 스타트업 가운데 골랐습니다. 그리고 오는 12월 9일(수)에 최종 라이징 스타트업 수상 기업과 부문별 수상 기업들이 공개 되며 파트너사와 함께 시상식이 진행될 예정입니다. 세부 내용과 참석 방법은 소개글에서 확인하세요!  [**2026 혁신의숲 어워즈 확인하기 👉🏻**](https://www.innoforest.co.kr/report/595)\n\n사람을 줄여도 흑자는 났습니다.  그런데 이듬해 매출은 사람을 늘린 회사가 네 배 가까이 더 늘었습니다.    고위드는 고객사 3,039곳의 재무제표와 국민연금 가입자 수를 바탕으로 한국 기업의 LER을 직접 계산했습니다. LER은 매출총이익을 판관비 급여로 나눈 값입니다. 급여 1원을 써서 매출총이익을 얼마나 만들어 내는지 보여 주는 지표죠. 2022년부터 2025년까지 결산 데이터를 연결해 세 가지를 살펴봤습니다. 어느 정도의 LER을 확보해야 흑자를 낼 수 있는지, LER을 높인 회사들은 어떤 선택을 했는지, 그리고 그 선택이 이듬해 실적에 어떤 영향을 미쳤는지입니다. 데이터에서 눈에 띈 점이 있습니다. 매출이 크게 성장한 회사들은 사람을 늘리면서도 직원 한 명이 만들어 내는 매출총이익을 급여보다 빠르게 키웠다는 것입니다. 자세한 리포트 내용은 콘텐츠에서 확인하실 수 있습니다.  [**리포트 보러가기 👉🏻**](https://www.innoforest.co.kr/report/596)\n\n[글로벌 자본이 향하는 곳은? 올해 글로벌 투자유치 Top 20 기업](https://www.innoforest.co.kr/report/594)  [투자결산: 퓨리오사AI 8,200억 · 더휴식 650억… 10월 투자 금액 1조 3,006억원](https://www.innoforest.co.kr/report/593)\n\n[💵OpenAI를 먼저 알아본 첫 투자사, 지금 어디에 투자하고 있을까요?](https://www.innoforest.co.kr/report/592)  [혁신의숲 5주년 리포트: 글로벌 데이터와 인재 매칭으로 넓힌 스타트업 생태계](https://www.innoforest.co.kr/report/591)\n\n[**더 많은 인사이트 보러가기**👉🏻](https://www.innoforest.co.kr/report/list)\n\n📌 Growth Bridge에서 주목할 만한 오픈이노베이션 공고 추천 받기  [전체 공고 보러가기 (Click)](https://www.innoforest.co.kr/growth-bridge) 11월 23일 기준, 모집중 공고 수: 총 12건\n\n(~11/27) [한국기술교육대학교｜오픈이노베이션 프로그램](https://www.innoforest.co.kr/growth-bridge/OI00000840/한국기술교육대학교-오픈이노베이션-프로그램-참여기업-모집-통합-공고)\n\n(~12/07) [로토제약｜Startup OI Osaka #Beauty & Wellness Tech](https://www.innoforest.co.kr/growth-bridge/OI00000844/Startup-OI-Osaka-Beauty-Wellness-Tech)\n\n(~12/18) [한국산업은행｜2027년 상반기 KDB NextONE 부산 6기](https://www.innoforest.co.kr/growth-bridge/OI00000842/2027년-상반기-KDB-NextONE-부산-6기-기업-모집)\n\n[2025년 오픈이노베이션 결산 리포트: 숫자로 읽는 오픈이노베이션 트렌드 보러가기👆](https://www.innoforest.co.kr/report/427)\n\n[Growth Bridge와의 오픈이노베이션 협업 방안이 궁금하다면? 소개서 보러가기👆](https://featpaper.com/l/z5Nlp7nJ)\n\n오픈 이노베이션 프로그램의 홍보부터 PoC까지  전 과정을 보다 잘 운영하고 싶은 대기업 담당자라면  마크앤컴퍼니 x Growth Bridge와 함께  스타트업 발굴부터 성과 발표까지 성공을 이끌어내 보세요!\n\n[Growth Bridge 문의하기](https://markncompany.notion.site/Growth-Bridge-978b0ecab3aa47348f9f3209a1789954)\n\n[❓ 순수 AI드라마로 시청률 1위!.. '후서유기'는 어떻게 만들었을까?](https://outstanding.kr/eastfantasy20260928)\n\n[🗯️ 투자금이 많이 남은 벤처펀드 10곳을 살펴봤습니다](https://outstanding.kr/drypowder20260930)\n\n[🔎 유니콘 14곳이 투자한 스타트업들을 확인해 봤습니다](https://outstanding.kr/unicorn20260928)",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 5,
+        "one_line_summary": "데이터 기반 스타트업 성장·LER 인사이트",
+        "tags": [
+          "혁신의숲",
+          "LER",
+          "OpenAI",
+          "Growth Bridge",
+          "COEX"
+        ],
+        "concepts": [
+          "스타트업 성장 지표",
+          "재무 데이터 추적"
+        ],
+        "key_points": [
+          {
+            "point": "혁신의숲 어워즈는 서비스 방문자·거래액·고용·투자 등 실제 비즈니스 지표를 기반으로 성장 스타트업을 선정한다.",
+            "timestamp": null
+          },
+          {
+            "point": "LER(매출총이익÷급여) 지표를 활용해 인력 확대와 매출 성장 간 효율성을 분석하고, 흑자 전환 기준을 제시한다.",
+            "timestamp": null
+          },
+          {
+            "point": "다양한 오픈이노베이션 공고와 투자 리포트가 제공돼 스타트업·대기업 협업 및 투자 판단에 활용할 수 있다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "LER 지표를 SaaS 제품팀에 적용해 엔지니어 급여 대비 발생 이익을 측정하고 인력 효율성을 개선한다.",
+          "후보기업 선정에 사용된 방문자·거래·고용·투자 지표를 데이터 파이프라인에 넣어 벤처캐피털의 초기 스타트업 스크리닝 모델을 만든다.",
+          "혁신의숲 어워즈 선정 과정을 학습 데이터로 활용해 고성장 스타트업을 예측하는 머신러닝 모델을 구축한다."
+        ],
+        "quiz": [
+          {
+            "question": "LER 지표는 무엇을 나타내는가?",
+            "options": [
+              "매출총이익 대비 급여 비율",
+              "매출 대비 광고비 비율",
+              "순이익 대비 급여 비율",
+              "매출총이익 대비 연구비 비율"
+            ],
+            "answer_index": 0,
+            "explanation": "LER은 매출총이익을 급여 비용으로 나눈 값으로, 1원 급여로 얼마나 매출총이익을 창출했는지를 나타낸다."
+          },
+          {
+            "question": "혁신의숲 어워즈에서 후보기업을 선정할 때 주요하게 고려한 비즈니스 지표는?",
+            "options": [
+              "서비스 방문자 수·소비자 거래액·고용인원 추이·투자 이력",
+              "CEO 연령·학력",
+              "특허 보유 수",
+              "소셜 미디어 팔로워 수"
+            ],
+            "answer_index": 0,
+            "explanation": "후보기업은 서비스 방문자 수, 소비자 거래액, 고용인원 추이, 투자 이력 등 실제 비즈니스 지표를 기준으로 선정한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "business"
+        ],
+        "content_type": "news",
+        "half_life": "seasonal",
+        "actionability": 6,
+        "depth": 4,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.04 (source:innoforest.stibee.com +0.01; domain:business +0.01; tag:openai +0.01; content_type:news +0.00)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "Machine Learning Street Talk",
+        "source_key": "UCMLtBahI5DMrt0NPvDSoIRQ",
+        "source_label": "Machine Learning Street Talk",
+        "title": "What a Squirrel Does That LLMs Don't (Michael Tomasello)",
+        "url": "https://youtu.be/io7qhEjJoik",
+        "published_at": "2026-11-19T14:22:11",
+        "transcript": null,
+        "body": "Michael Tomasello is a developmental psychologist who spent twenty years at the Max Planck Institute in Germany putting children and great apes into the same experiments, and is now back at Duke University. His book The Evolution of Agency asks what it takes for a living thing, or a machine, to act for its own reasons.\n\nSPONSOR:\n---\nCyber Fund built the Monastery to help founders ship products that were impossible a year ago.\nApply now: https://cyber.fund\n---\n\nHis answer starts with unpredictability. Where the environment is predictable, nature builds the behaviour in; where it isn't, it builds a decision maker. Tim and Tomasello test that on a dumb traffic light, a thermostat and a robot vacuum, then follow the line to humans: reptiles running simple control loops, a squirrel that imagines itself falling and takes another branch, and great apes that go looking for more information before they commit.\n\nThe second half is about shared agency. Humans form joint goals, attend to the same things together, and learn that one object can be seen from different perspectives. Children who lose the sound on a video call invent gestures and turn them into conventions. Large language models, Tomasello argues, started at the endpoint and skipped that infrastructure. On the way: the stag hunt, why lying only works among cooperators, whether capital is an agent, why a Turing test isn't close to sufficient, and Dennett's intentional stance.\n\nTABLE OF CONTENTS:\n0:00 Cold open: agency begins with unpredictability\n0:29 Michael Tomasello and The Evolution of Agency\n0:59 From chimpanzees to two-year-olds\n2:05 Agents exist because the world is unpredictable\n3:56 Defining agency: control loops, will and causal power\n7:19 Sponsor: Cyber Fund\n7:55 How would you make a traffic light smart?\n9:57 Thermostats, robot vacuums and what is missing\n11:32 Could a machine have more agency than we do?\n16:26 Darwin, emergence and the limits of learning\n21:04 Selfish genes, Chomsky and where goals come from\n24:17 Modules, emotions and nature's finger on the scale\n28:25 Why Tomasello avoids the word intelligence\n32:06 Four levels of agency: reptiles, squirrels, great apes\n37:04 Shared agency, joint attention and perspective\n42:25 Why language models do not create conventions\n44:08 The stag hunt and conventions as coordination devices\n47:41 Perspective, grammar and why discourse matters\n53:12 Pointing and building agents from the bottom up\n55:44 Money, presidents and status functions\n59:26 Lying, gullibility and the dark side of cooperation\n1:01:27 Is capital an agent? Emergence and the invisible hand\n1:04:48 Acting like an agent: the intentional stance\n1:06:16 Closing\n\nBOOK:\nMichael Tomasello, The Evolution of Agency: Behavioral Organization from Lizards to Humans (MIT Press, 2022)\nhttps://mitpress.mit.edu/9780262047005/the-evolution-of-agency/\n\nKEY REFERENCES:\n[11:41] Benjamin Recht, The Irrational Decision (Princeton UP, 2026) https://doi.org/10.1515/9780691272467\n[28:07] Mark Solms,",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 4,
+        "one_line_summary": "예측 불가능성으로 AI 설계 시 행동 차이 통찰",
+        "tags": [
+          "Michael Tomasello",
+          "Max Planck Institute",
+          "Duke University",
+          "LLM",
+          "squirrel"
+        ],
+        "concepts": [
+          "불확실성 정량화",
+          "AI와 인간 협업",
+          "멀티에이전트 시스템"
+        ],
+        "key_points": [
+          {
+            "point": "환경이 예측 불가능할 때 에이전시가 형성된다는 기본 가설을 제시한다",
+            "timestamp": null
+          },
+          {
+            "point": "다람쥐가 낙하를 상상해 다른 가지로 이동하는 행동은 단순 제어 루프를 넘어선 예측 능력이다",
+            "timestamp": null
+          },
+          {
+            "point": "LLM은 공동 목표와 관점 공유가 부족해 인간과 같은 협업 에이전시를 구현하지 못한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 5,
+        "depth": 3,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.12 (domain:ai-ml +0.08; tag:llm +0.04; content_type:talk -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    }
+  ]
+}

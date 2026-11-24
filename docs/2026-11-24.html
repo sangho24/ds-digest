@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 24일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 24일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">모델 파인튜닝</span><span class="concept">코드 자동생성</span><span class="concept">GPU 가속</span><span class="concept">AI 비용 효율성</span><span class="concept">모델 서빙</span><span class="concept">멀티태스크 학습</span><span class="concept">스타트업 성장 지표</span><span class="concept">재무 데이터 추적</span><span class="concept">불확실성 정량화</span><span class="concept">AI와 인간 협업</span><span class="concept">멀티에이전트 시스템</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.AI</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.29793v1" target="_blank" rel="noopener">When Does Fine-Tuning Beat Prompting for Qiskit-to-CUDA-Q Translation? An Execution-Verified Study</a>
+        </h2>
+
+        <p class="summary">LLM 파인튜닝, 양자 코드 변환 효율 시점</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>양자 회로를 Qiskit에서 NVIDIA CUDA‑Q로 옮기는 비용을 줄이기 위해, 기존 텍스트 치환 방식의 한계를 드러내고 실행 결과(상태벡터 유사도 ≥0.999)로 정확성을 검증하는 640‑task 벤치마크를 제시한다. 연구는 파인튜닝(LoRA)이 일부 베이스 모델에서 프롬프트 기반보다 높은 번역 정확도를 보이며, 코드 변환 연구에서 실행‑기반 평가의 필요성을 강조한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LoRA 파인튜닝이 일부 베이스 모델에서 프롬프트보다 높은 번역 정확도를 보이며, 특히 Qwen2.5‑Coder 7B에서 전체 및 보이지 않는 스타일 모두 우수함</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>640개의 작업을 실행 기반(상태벡터 충실도 ≥0.999)으로 검증하는 벤치마크를 도입해 텍스트 치환만으로는 해결되지 않는 문제를 드러냄</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>실제 QED‑C 커널에 대해서는 모든 모델이 0% 성공률을 기록해, 현재 LLM은 단순 파라메트릭 코드만 변환 가능함을 보여줌</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>실행 기반 정확도 검증 방식을 이용해 Python‑to‑Julia 코드 변환 시 단위 테스트 통과 여부로 번역 품질을 평가한다</span></li>
+            
+            <li><span class="box"></span><span>프롬프트와 LoRA 파인튜닝을 혼합해 의료 보고서 생성에 적용하면, 스타일 일관성은 유지하면서 정확도는 향상될 수 있다</span></li>
+            
+            <li><span class="box"></span><span>표면 규칙 기반 전처리기를 활용해 SQL 방언 간 변환을 먼저 수행한 뒤 LLM에 전달하면 복잡한 쿼리 변환 효율을 높일 수 있다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">표면 규칙 기반 번역기가 원본 3개의 스플릿 중 2개만 해결할 수 있었던 이유는?</div>
+            
+            <div class="q-opt">① 텍스트 치환만 수행했기 때문</div>
+            
+            <div class="q-opt">② 실행 검증을 수행하지 못했기 때문</div>
+            
+            <div class="q-opt">③ 모델 크기가 작았기 때문</div>
+            
+            <div class="q-opt">④ 파라미터 수가 부족했기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 텍스트 치환만 수행했기 때문</div>
+              <div class="why">표면 규칙 기반 번역기는 단순 텍스트 치환만 수행하므로 실행 수준의 차이를 포착하지 못해 일부 스플릿을 해결하지 못한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">LoRA 파인튜닝이 프롬프트 기반보다 더 좋은 성능을 보인 상황은?</div>
+            
+            <div class="q-opt">① 모든 베이스 모델에서</div>
+            
+            <div class="q-opt">② Qwen2.5‑Coder 7B와 같은 큰 모델에서</div>
+            
+            <div class="q-opt">③ 작은 1.5B 모델에서</div>
+            
+            <div class="q-opt">④ 보이지 않는 코딩 스타일에서</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Qwen2.5‑Coder 7B와 같은 큰 모델에서</div>
+              <div class="why">본문에 따르면 Qwen2.5‑Coder 7B 모델에서 LoRA 파인튜닝이 전체 및 보이지 않는 스타일 모두에서 프롬프트보다 높은 정확도를 기록했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Qiskit</span><span class="tag">CUDA-Q</span><span class="tag">Nemotron 3 Nano</span><span class="tag">Qwen2.5-Coder</span><span class="tag">QuantumKatas</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF" target="_blank" rel="noopener">NariQ: BF16-level Qwen3.8-27B in a 10 GB file</a>
+        </h2>
+
+        <p class="summary">3비트 이하 양자화로 BF16 수준 성능 유지, 모델 경량화</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>NariQ는 3비트 이하 양자화에도 불구하고 다양한 에이전트·수학·멀티링꾼·이미지 이해 작업에서 BF16 수준의 품질을 유지한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>벤치마크 결과에서 3비트 모델이 BF16과 거의 동등하거나 일부 지표에서 더 높은 점수를 기록한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RTX PRO 6000에서 디코드 속도가 다른 양자화 모델과 비슷하며, 이를 사용하려면 nari‑llama.cpp 포크가 필요하다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>3비트 이하 양자화를 비전 트랜스포머에 적용해 엣지 디바이스에서 이미지 인식 지연 시간을 감소시킨다.</span></li>
+            
+            <li><span class="box"></span><span>추천 시스템의 임베딩 테이블을 저비트 양자화해 메모리 사용량을 줄이면서 랭킹 정확도를 유지한다.</span></li>
+            
+            <li><span class="box"></span><span>CPU 전용 서버에 저비트 양자화된 LLM을 배치해 실시간 챗봇 서비스 비용을 크게 절감한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">어떤 벤치마크에서 3비트 양자화 모델이 BF16 모델과 동일한 점수를 기록했나요?</div>
+            
+            <div class="q-opt">① DeepSWE</div>
+            
+            <div class="q-opt">② RealWorldQA</div>
+            
+            <div class="q-opt">③ MSGM</div>
+            
+            <div class="q-opt">④ AIME</div>
+            
+            <div class="q-answer">
+              <div class="correct">② RealWorldQA</div>
+              <div class="why">본문에 따르면 RealWorldQA에서 BF16과 3비트 모두 82.4점을 기록했다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">NariQ의 디코드 속도 비교에 사용된 GPU 모델은 무엇인가요?</div>
+            
+            <div class="q-opt">① RTX PRO 6000</div>
+            
+            <div class="q-opt">② RTX 3090</div>
+            
+            <div class="q-opt">③ Tesla V100</div>
+            
+            <div class="q-opt">④ AMD Radeon</div>
+            
+            <div class="q-answer">
+              <div class="correct">① RTX PRO 6000</div>
+              <div class="why">본문에 'Decode speed is comparable ... on an RTX PRO 6000'이라고 명시되어 있다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">NariQ</span><span class="tag">Qwen3.8-27B</span><span class="tag">llama.cpp</span><span class="tag">RTX PRO 6000</span><span class="tag">DeepSWE</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">토스 기술 블로그, 토스 테크</div>
+
+        <h2 class="title">
+          <a href="https://toss.tech/article/multi-task-learning-in-finance" target="_blank" rel="noopener">목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기</a>
+        </h2>
+
+        <p class="summary">멀티태스크로 수백 트리 모델을 하나로 통합, 효율·성능 동시 개선</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>수십~수백 개의 트리 모델을 하나의 멀티태스크 모델로 통합해 평균 정밀도(AP)를 약 54% 향상하고 마케팅 발송을 35% 절감했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>상품별 세 가지 예측 과제를 하나의 MTL 모델에 묶어 MAE를 66~79% 감소, AUC를 약 10% 상승시켰으며, 새 상품도 별도 모델 없이 예측 가능하게 했다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>공유 인코더와 공유 전문가 구조를 도입해 과제 간 데이터 활용을 촉진하고, 모델 수가 늘어나도 운영·재학습 부담을 크게 낮췄다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>공유 인코더·전문가 구조를 전자상거래 카테고리별 추천에 적용해 신규 카테고리를 별도 모델 없이 즉시 지원한다.</span></li>
+            
+            <li><span class="box"></span><span>금융 서비스 전반의 사기 탐지를 위한 멀티태스크 모델에 적용해 각 상품별 사기 탐지 모델을 하나로 통합한다.</span></li>
+            
+            <li><span class="box"></span><span>SaaS 플랫폼에서 이탈 예측과 업셀 기회 예측을 하나의 멀티태스크 모델로 묶어 운영 효율성을 높인다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">멀티태스크 모델을 도입하면 운영 부담이 감소하는 주요 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 모델 수가 줄어 배포·모니터링 비용이 감소한다</div>
+            
+            <div class="q-opt">② 각 모델이 더 빠르게 학습한다</div>
+            
+            <div class="q-opt">③ 데이터 라벨이 적게 필요하다</div>
+            
+            <div class="q-opt">④ GPU 사용량이 증가한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 모델 수가 줄어 배포·모니터링 비용이 감소한다</div>
+              <div class="why">여러 과제를 하나의 모델에 통합하면 모델 수가 감소해 배포, 모니터링, 재학습 등 운영 작업이 줄어든다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">멀티태스크 모델에 새 상품을 추가할 때 필요한 주요 변경은 무엇인가?</div>
+            
+            <div class="q-opt">① 전체 모델을 재학습한다</div>
+            
+            <div class="q-opt">② 새로운 출력층을 추가한다</div>
+            
+            <div class="q-opt">③ 상품 정보를 입력으로 제공한다</div>
+            
+            <div class="q-opt">④ 새로운 공유 전문가를 만든다</div>
+            
+            <div class="q-answer">
+              <div class="correct">③ 상품 정보를 입력으로 제공한다</div>
+              <div class="why">본문에서는 상품 정보를 입력으로 받아 새 상품을 별도 모델 없이 예측하도록 설계했다고 설명한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">TOSS</span><span class="tag">멀티태스크 학습</span><span class="tag">AP</span><span class="tag">MAE</span><span class="tag">AUC</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">혁신의 숲</div>
+
+        <h2 class="title">
+          <a href="https://innoforest.stibee.com/p/694" target="_blank" rel="noopener">12월 9일, 2026 혁신의숲 어워즈 개최!</a>
+        </h2>
+
+        <p class="summary">데이터 기반 스타트업 성장·LER 인사이트</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:40%"></span></span>
+            <span class="axis-num">4</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>혁신의숲 어워즈는 서비스 방문자·거래액·고용·투자 등 실제 비즈니스 지표를 기반으로 성장 스타트업을 선정한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LER(매출총이익÷급여) 지표를 활용해 인력 확대와 매출 성장 간 효율성을 분석하고, 흑자 전환 기준을 제시한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>다양한 오픈이노베이션 공고와 투자 리포트가 제공돼 스타트업·대기업 협업 및 투자 판단에 활용할 수 있다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>LER 지표를 SaaS 제품팀에 적용해 엔지니어 급여 대비 발생 이익을 측정하고 인력 효율성을 개선한다.</span></li>
+            
+            <li><span class="box"></span><span>후보기업 선정에 사용된 방문자·거래·고용·투자 지표를 데이터 파이프라인에 넣어 벤처캐피털의 초기 스타트업 스크리닝 모델을 만든다.</span></li>
+            
+            <li><span class="box"></span><span>혁신의숲 어워즈 선정 과정을 학습 데이터로 활용해 고성장 스타트업을 예측하는 머신러닝 모델을 구축한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">LER 지표는 무엇을 나타내는가?</div>
+            
+            <div class="q-opt">① 매출총이익 대비 급여 비율</div>
+            
+            <div class="q-opt">② 매출 대비 광고비 비율</div>
+            
+            <div class="q-opt">③ 순이익 대비 급여 비율</div>
+            
+            <div class="q-opt">④ 매출총이익 대비 연구비 비율</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 매출총이익 대비 급여 비율</div>
+              <div class="why">LER은 매출총이익을 급여 비용으로 나눈 값으로, 1원 급여로 얼마나 매출총이익을 창출했는지를 나타낸다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">혁신의숲 어워즈에서 후보기업을 선정할 때 주요하게 고려한 비즈니스 지표는?</div>
+            
+            <div class="q-opt">① 서비스 방문자 수·소비자 거래액·고용인원 추이·투자 이력</div>
+            
+            <div class="q-opt">② CEO 연령·학력</div>
+            
+            <div class="q-opt">③ 특허 보유 수</div>
+            
+            <div class="q-opt">④ 소셜 미디어 팔로워 수</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 서비스 방문자 수·소비자 거래액·고용인원 추이·투자 이력</div>
+              <div class="why">후보기업은 서비스 방문자 수, 소비자 거래액, 고용인원 추이, 투자 이력 등 실제 비즈니스 지표를 기준으로 선정한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">혁신의숲</span><span class="tag">LER</span><span class="tag">OpenAI</span><span class="tag">Growth Bridge</span><span class="tag">COEX</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">Machine Learning Street Talk</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/io7qhEjJoik" target="_blank" rel="noopener">What a Squirrel Does That LLMs Don't (Michael Tomasello)</a>
+        </h2>
+
+        <p class="summary">예측 불가능성으로 AI 설계 시 행동 차이 통찰</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:50%"></span></span>
+            <span class="axis-num">5</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>환경이 예측 불가능할 때 에이전시가 형성된다는 기본 가설을 제시한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>다람쥐가 낙하를 상상해 다른 가지로 이동하는 행동은 단순 제어 루프를 넘어선 예측 능력이다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>LLM은 공동 목표와 관점 공유가 부족해 인간과 같은 협업 에이전시를 구현하지 못한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Michael Tomasello</span><span class="tag">Max Planck Institute</span><span class="tag">Duke University</span><span class="tag">LLM</span><span class="tag">squirrel</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>
