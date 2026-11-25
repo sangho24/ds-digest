@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Digest — 2026년 11월 25일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+  /* ── 토큰 ────────────────────────────────────────────────────────────
+     이 문서는 이메일과 공개 아카이브를 겸한다. 그래서 색을 변수로 두되
+     본문 배경·글자색만은 var()에 리터럴 폴백을 함께 준다 — 커스텀 속성을
+     버리는 메일 클라이언트에서 색 없는 페이지가 나오는 것을 막는다. */
+  :root {
+    color-scheme: light dark;
+    --paper:      #F2F4F6;
+    --surface:    #FFFFFF;
+    --ink:        #131A22;
+    --muted:      #59636F;
+    --faint:      #8B96A2;
+    --rule:       #DFE4E9;
+    --rule-soft:  #EDF0F3;
+    --accent:     #0F6E78;   /* 측정·신호 */
+    --accent-dim: #E2EFF0;
+    --idea:       #8A5A16;   /* 적용 아이디어 — 이 문서의 결과물 */
+    --idea-dim:   #EAEDF1;
+    --shadow:     0 1px 2px rgba(19, 26, 34, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1317;
+      --surface:    #171D23;
+      --ink:        #E7EBEF;
+      --muted:      #97A3AF;
+      --faint:      #6D7986;
+      --rule:       #28313A;
+      --rule-soft:  #1F262D;
+      --accent:     #52BEC8;
+      --accent-dim: #10333A;
+      --idea:       #DCA765;
+      --idea-dim:   #1C232B;
+      --shadow:     none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0F1317;
+    --surface:    #171D23;
+    --ink:        #E7EBEF;
+    --muted:      #97A3AF;
+    --faint:      #6D7986;
+    --rule:       #28313A;
+    --rule-soft:  #1F262D;
+    --accent:     #52BEC8;
+    --accent-dim: #10333A;
+    --idea:       #DCA765;
+    --idea-dim:   #1C232B;
+    --shadow:     none;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F2F4F6;
+    background: var(--paper, #F2F4F6);
+    color: #131A22;
+    color: var(--ink, #131A22);
+    font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 56px; }
+
+  /* ── 머리말 ───────────────────────────────────────────────────────── */
+  .masthead { padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+  .masthead-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .masthead h1 {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0; color: var(--ink);
+  }
+  .masthead .stamp {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* 오늘 다룬 개념 — 하루를 한 줄로 요약한다. 개념은 태그와 달리 다음 날에도
+     다시 등장하는 층이라, 여기 반복해서 뜨는 말이 곧 내 관심사의 형태다. */
+  .today { margin-top: 14px; }
+  /* 구역 표시는 전부 이 활자다 — 모노 대문자. 본문(산세리프)·제목(세리프)과
+     활자부터 달라서, 선이나 색으로 칸을 나누지 않아도 구역이 읽힌다. */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; color: var(--faint);
+  }
+  .today-label { margin-bottom: 7px; }
+  .today-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .concept {
+    font-size: 12.5px; color: var(--accent);
+    background: var(--accent-dim); border-radius: 3px; padding: 3px 9px;
+  }
+
+  /* ── 아이템 ───────────────────────────────────────────────────────── */
+  .item { padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-of-type { border-bottom: none; }
+
+  .item-head { display: flex; align-items: flex-start; gap: 14px; }
+  .rank {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; color: var(--faint);
+    padding-top: 4px; min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+  .item-body { flex: 1; min-width: 0; }
+
+  .source {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); letter-spacing: .01em;
+    word-break: break-all;
+  }
+
+  .title {
+    font-family: 'Noto Serif KR', Georgia, serif;
+    font-size: 19px; font-weight: 600; line-height: 1.45;
+    margin: 6px 0 8px; text-wrap: balance;
+  }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .summary { margin: 0 0 14px; color: var(--ink); }
+
+  /* 논문의 배경·위치. 요약은 결론만, 핵심 포인트는 세부만 담아서
+     "이 논문이 어느 흐름의 어디에 있는가"가 빠져 있었다. */
+  .placing { margin: 0 0 16px; font-size: 14px; color: var(--muted); }
+
+  /* 두 축 계기 — 이 다이제스트가 실제로 채점하는 값이다.
+     실행가능성과 깊이를 따로 재고 그 배합으로 관련도가 나온다. */
+  /* 두 축을 각각 다른 행에 쌓는다. 라벨 폭이 달라서(실행가능성 / 깊이)
+     라벨 열을 고정 폭으로 잡아야 막대 시작점이 세로로 맞는다. */
+  .gauge { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin: 0 0 16px; }
+  .axis { display: flex; align-items: center; gap: 8px; }
+  .axis-name { flex: none; width: 62px; font-size: 11.5px; color: var(--faint); }
+  .axis-track {
+    width: 62px; height: 4px; border-radius: 2px;
+    background: var(--rule); overflow: hidden;
+  }
+  .axis-fill { display: block; height: 4px; background: var(--accent); border-radius: 2px; }
+  .axis-num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .points { margin: 0 0 16px; padding: 0; list-style: none; }
+  .points li {
+    display: flex; gap: 9px; align-items: baseline;
+    font-size: 14.5px; padding: 3px 0; color: var(--ink);
+  }
+  .points .ts {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--accent); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .points .dot { color: var(--faint); }
+
+  /* 이 문서에서 유일하게 채워진 블록. 아이디어를 얻으려고 읽는 것이므로
+     여기가 결과물이다. 나머지는 조용히 둔다.
+     구분은 색 띠가 아니라 **형태**로 한다 — 실제로 체크박스가 붙은 할 일
+     목록이라, 다른 블록과 생긴 것 자체가 다르다. */
+  .ideas {
+    background: var(--idea-dim); border-radius: 4px;
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .ideas-label { color: var(--idea); display: block; margin-bottom: 9px; }
+  .ideas ul { margin: 0; padding: 0; list-style: none; }
+  .ideas li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14.5px; line-height: 1.6; padding: 3px 0;
+  }
+  /* 글자(☐)가 아니라 그린 사각형이다 — 폰트에 따라 안 나오거나 크기가
+     제각각인 문자에 기대지 않는다. */
+  .ideas .box {
+    flex: none; width: 9px; height: 9px; margin-top: 7px;
+    border: 1.5px solid var(--idea); border-radius: 2px;
+  }
+
+  .quiz { margin: 0 0 14px; }
+  .quiz summary {
+    font-size: 12.5px; color: var(--accent); cursor: pointer;
+    list-style: none; display: inline-block;
+    border: 1px solid var(--rule); border-radius: 4px; padding: 4px 11px;
+  }
+  .quiz summary::-webkit-details-marker { display: none; }
+  .quiz summary:hover { border-color: var(--accent); }
+  .quiz[open] summary { margin-bottom: 12px; }
+  .q { margin-bottom: 14px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-text { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+  .q-opt {
+    font-size: 13.5px; color: var(--muted); padding: 2px 0 2px 18px;
+    text-indent: -18px;
+  }
+  .q-answer {
+    margin-top: 8px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+  }
+  .q-answer .correct { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .q-answer .why { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--faint);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* ── 꼬리말 ───────────────────────────────────────────────────────── */
+  .colophon {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--faint); line-height: 1.7;
+  }
+  .colophon b { color: var(--muted); font-weight: 500; }
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 24px 16px 40px; }
+    .item-head { gap: 10px; }
+    .rank { min-width: 18px; }
+    .title { font-size: 17.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <h1>DS Digest</h1>
+      <span class="stamp">2026년 11월 25일 · 5건</span>
+    </div>
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    <div class="today">
+      <div class="label today-label">오늘의 개념</div>
+      <div class="today-list">
+        <span class="concept">네트워크 규칙 동기화</span><span class="concept">서비스 신뢰성</span><span class="concept">모델 서빙</span><span class="concept">스케줄링</span><span class="concept">GPU 가속</span><span class="concept">레거시 시스템 리팩터링</span><span class="concept">Root Cause Analysis</span><span class="concept">semantic query processing</span><span class="concept">멀티모달 표현 학습</span>
+      </div>
+    </div>
+    
+  </header>
+
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">01</div>
+      <div class="item-body">
+
+        <div class="source">당근 기술 블로그 - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/daangn/why-cant-my-running-pods-be-reached-our-journey-to-kube-proxy-nftables-mode-6fceb1d2a5f7?source=rss----4505f82a2dbd---4" target="_blank" rel="noopener">Why Can’t My Running Pods Be Reached? Our Journey to kube-proxy nftables Mode</a>
+        </h2>
+
+        <p class="summary">kube-proxy 지연 문제, nftables로 해결</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>kube-proxy 규칙 동기화 지연이 서비스 호출 실패를 유발하고, Karpenter 도입 후 신규 노드 증가로 악화됨</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>iptables에서 nftables 모드로 전환하면 규칙 처리 효율이 향상되어 레이턴시와 백로그가 감소한다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>2024‑2026 사이 서비스와 Pod 수가 급증하면서 NAT 규칙이 80 000개까지 늘었으며, 이를 관리하기 위한 모니터링과 설계 변경이 필요했다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>IoT 엣지 디바이스에 nftables 기반 규칙 동기화를 적용해 네트워크 지연을 감소시킨다</span></li>
+            
+            <li><span class="box"></span><span>서버리스 플랫폼에서 규칙 동기화 지연 모니터링을 신뢰성 경고 지표로 활용한다</span></li>
+            
+            <li><span class="box"></span><span>고빈도 트레이딩 클러스터에 Karpenter와 유사한 동적 노드 프로비저닝을 도입하고, 네트워크 규칙 캐시를 사전 로드해 콜드 스타트 지연을 최소화한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">Karpenter 도입 후 kube-proxy 규칙 지연이 증가한 주요 원인은 무엇인가?</div>
+            
+            <div class="q-opt">① 기존 Overprovisioner 유지</div>
+            
+            <div class="q-opt">② 신규 노드에 Pod가 자주 배치</div>
+            
+            <div class="q-opt">③ nftables 사용</div>
+            
+            <div class="q-opt">④ 서비스 수 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 신규 노드에 Pod가 자주 배치</div>
+              <div class="why">Karpenter로 빠르게 노드를 추가하면서 Overprovisioner를 중단했기 때문에 새 노드에 Pod가 자주 배치되어 규칙 동기화가 완료되기 전에 트래픽이 발생해 지연이 늘었다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">iptables에서 nftables 모드로 전환했을 때 기대되는 효과는?</div>
+            
+            <div class="q-opt">① 규칙 처리 효율 향상</div>
+            
+            <div class="q-opt">② 규칙 수 증가</div>
+            
+            <div class="q-opt">③ 모니터링 어려워짐</div>
+            
+            <div class="q-opt">④ 서비스 수 감소</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 규칙 처리 효율 향상</div>
+              <div class="why">nftables는 iptables보다 효율적인 네트워크 프로그래밍을 제공하므로 규칙 적용 속도가 빨라지고 레이턴시와 백로그가 감소한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">kube-proxy</span><span class="tag">iptables</span><span class="tag">nftables</span><span class="tag">Karpenter</span><span class="tag">Kubernetes</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">02</div>
+      <div class="item-body">
+
+        <div class="source">arXiv:cs.DC</div>
+
+        <h2 class="title">
+          <a href="https://arxiv.org/abs/2611.31869v1" target="_blank" rel="noopener">RankServe: Rank-Aware CPU-GPU Scheduling for Memory-Constrained MoE Serving</a>
+        </h2>
+
+        <p class="summary">GPU 메모리 제한 MoE 서빙 가속</p>
+
+        
+        <div class="placing">
+          <span class="label">배경과 위치</span>
+          <div>MoE 모델은 메모리 요구량이 커서 기존 서빙 방식은 전문가 인기만 고려해 GPU에 적재했다. RankServe는 전문가 랭크와 토큰 로드를 포함한 비용 절감량을 기준으로 CPU‑GPU 스케줄링을 수행해, 메모리 제약 하에서 효율적인 서빙을 목표로 하는 모델 서빙 연구 흐름에 새로운 접근을 제시한다.</div>
+        </div>
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RankServe는 전문가의 랭크와 토큰 부하를 기반으로 GPU 상주 여부를 바이트당 절감량으로 평가해 우선순위를 정한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>가변 랭크 런타임을 도입해 공통 랭크 패딩 없이 이질적인 전문가들을 그룹화된 행렬 곱셈으로 실행한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>단일 CPU‑GPU 플랫폼에서 TTFT 1.69‑2.29배, TPOT 1.71‑2.48배 속도 향상을 달성했다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>CPU‑GPU 스케줄링 로직을 변형해 혼합 정밀도 Transformer 레이어를 메모리 사용량에 따라 동적으로 배치하면, 메모리 제한 환경에서 추론 속도를 높일 수 있다.</span></li>
+            
+            <li><span class="box"></span><span>엣지 디바이스에서 대규모 모델의 일부 모듈을 가변 랭크 실행으로 처리해, 제한된 온칩 메모리와 외부 메모리 간 전송 비용을 최소화한다.</span></li>
+            
+            <li><span class="box"></span><span>데이터 파이프라인에서 대용량 피처 집합을 랭크 기반으로 SSD와 RAM 사이에 캐시하고, 사용 빈도와 크기에 따라 저장 위치를 최적화한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 2문항</summary>
+          
+          <div class="q">
+            <div class="q-text">RankServe가 GPU에 전문가를 유지할지 결정할 때 고려하는 핵심 요소는 무엇인가?</div>
+            
+            <div class="q-opt">① 전문가 인기만</div>
+            
+            <div class="q-opt">② 전문가 랭크와 토큰 부하</div>
+            
+            <div class="q-opt">③ 모델 정확도</div>
+            
+            <div class="q-opt">④ 학습 손실</div>
+            
+            <div class="q-answer">
+              <div class="correct">② 전문가 랭크와 토큰 부하</div>
+              <div class="why">논문에서는 각 전문가의 랭크와 현재 토큰 로드를 기반으로 GPU 상주에 따른 절감량을 계산한다.</div>
+            </div>
+          </div>
+          
+          <div class="q">
+            <div class="q-text">이질적인 전문가 랭크를 패딩 없이 처리하기 위해 RankServe가 사용하는 방법은?</div>
+            
+            <div class="q-opt">① 행렬 곱셈을 그룹화한다</div>
+            
+            <div class="q-opt">② 0으로 채워 패딩한다</div>
+            
+            <div class="q-opt">③ 높은 랭크를 잘라낸다</div>
+            
+            <div class="q-opt">④ 모두 동일 랭크로 변환한다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① 행렬 곱셈을 그룹화한다</div>
+              <div class="why">가변 랭크 런타임은 전문가들을 그룹화된 행렬 곱셈으로 실행해 공통 랭크 패딩 없이 처리한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">RankServe</span><span class="tag">vLLM</span><span class="tag">MoE</span><span class="tag">CPU-GPU</span><span class="tag">TTFT</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">03</div>
+      <div class="item-body">
+
+        <div class="source">당근 기술 블로그 - Medium</div>
+
+        <h2 class="title">
+          <a href="https://medium.com/daangn/%ED%8C%8C%EB%93%9C%EB%8A%94-%EB%96%B4%EB%8A%94%EB%8D%B0-%EC%99%9C-%ED%86%B5%EC%8B%A0%EC%9D%B4-%EC%95%88-%EB%90%A0%EA%B9%8C-kube-proxy-nftables-%EC%A0%84%ED%99%98-%EC%97%AC%EC%A0%95-545dfd2cfc4f?source=rss----4505f82a2dbd---4" target="_blank" rel="noopener">파드는 떴는데 왜 통신이 안 될까? kube-proxy nftables 전환 여정</a>
+        </h2>
+
+        <p class="summary">kube-proxy 규칙 지연이 서비스 가용성을 위협한다</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:70%"></span></span>
+            <span class="axis-num">7</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>kube-proxy 규칙 동기화 지연이 서비스 가용성을 저해하고, 노드 스케일아웃 시 문제를 악화시킨다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>iptables 모드에서는 Service·Endpoint 규칙을 순차 비교해 O(N) 비용이 발생하고, 전체 동기화에 4분 이상 걸릴 수 있다</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>nftables 모드로 전환하면 map 기반 O(1) 조회와 변경량 기반 증분 업데이트로 지연이 크게 감소한다</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>nftables와 동일한 map 기반 라우팅을 API 게이트웨이의 요청 매핑에 적용하면 라우팅 지연을 크게 낮출 수 있다</span></li>
+            
+            <li><span class="box"></span><span>kube-proxy의 증분 동기화 방식을 구성 관리 시스템에 도입하면 전체 설정 재로드 없이 변경된 부분만 적용해 서비스 중단을 최소화한다</span></li>
+            
+            <li><span class="box"></span><span>규칙 동기화 지연 모니터링을 활용해 자동 스케일링 시점에 사전 워밍업을 트리거하면 신규 Pod의 초기 통신 실패를 방지한다</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">iptables 모드에서 kube-proxy 규칙 조회 비용이 O(N)인 이유는 무엇인가?</div>
+            
+            <div class="q-opt">① 규칙이 트리 구조로 저장돼서</div>
+            
+            <div class="q-opt">② Service와 Endpoint 규칙을 순차적으로 비교하기 때문</div>
+            
+            <div class="q-opt">③ 해시 맵을 사용하지 않기 때문</div>
+            
+            <div class="q-opt">④ 커널이 규칙을 캐시하지 않기 때문</div>
+            
+            <div class="q-answer">
+              <div class="correct">② Service와 Endpoint 규칙을 순차적으로 비교하기 때문</div>
+              <div class="why">iptables 모드에서는 Service마다, Endpoint마다 개별 규칙을 만들고 패킷이 들어오면 Service 규칙을 위에서부터 순차 비교한 뒤, 해당 Service의 Endpoint 규칙을 다시 순차 비교해 목적지를 찾는다. 이 두 단계의 순차 탐색이 O(N) 비용을 초래한다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">kube-proxy</span><span class="tag">iptables</span><span class="tag">nftables</span><span class="tag">Karpenter</span><span class="tag">Endpoint</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">04</div>
+      <div class="item-body">
+
+        <div class="source">HackerNews</div>
+
+        <h2 class="title">
+          <a href="https://masondata.ai/" target="_blank" rel="noopener">Show HN: Mason – A lightweight Postgres read-replica, built on columnar storage</a>
+        </h2>
+
+        <p class="summary">Postgres 읽기 복제에 컬럼형 엔진 적용</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Mason은 DuckDB의 컬럼형 엔진을 활용해 기존 Postgres와 호환되는 고성능 읽기 복제본을 제공한다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>5,410개의 실제 쿼리 테스트에서 DuckDB는 Postgres와 84.1% 일치하고 14.3%를 오류로 반환해 pg_clickhouse보다 우수한 결과를 보였다.</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>ClickHouse, pg_mooncake, materialize 등은 학습 곡선, 라이선스, 사전 쿼리 형태 요구 등 이유로 플러그‑인 대안에서 제외되었다.</span>
+          </li>
+          
+        </ul>
+        
+
+        
+        <div class="ideas">
+          <span class="label ideas-label">Action&nbsp;Items</span>
+          <ul>
+            
+            <li><span class="box"></span><span>MySQL에 DuckDB 기반 컬럼형 엔진을 적용해 읽기 복제본을 만들면, 기존 OLTP와 별도 분석 워크로드를 고성능으로 처리할 수 있다.</span></li>
+            
+            <li><span class="box"></span><span>실제 스키마를 이용해 동적으로 합성 데이터를 생성하고, 동일 쿼리 집합을 여러 엔진에 실행해 성능과 호환성을 자동 평가한다.</span></li>
+            
+            <li><span class="box"></span><span>클라우드 공급자에 독립적인 오픈소스 읽기 복제 레이어를 구축해, 다중 데이터베이스 환경에서 일관된 분석 인터페이스를 제공한다.</span></li>
+            
+          </ul>
+        </div>
+        
+
+        
+        
+        <details class="quiz">
+          <summary>퀴즈 1문항</summary>
+          
+          <div class="q">
+            <div class="q-text">왜 저자들은 ClickHouse를 ad‑hoc Postgres 워크로드에 사용하지 않기로 했나요?</div>
+            
+            <div class="q-opt">① ClickHouse는 학습 곡선이 가파르고 SQL 문법이 Postgres와 달라서</div>
+            
+            <div class="q-opt">② ClickHouse는 분석 쿼리에서 속도가 느리다</div>
+            
+            <div class="q-opt">③ ClickHouse는 라이선스가 제한적이다</div>
+            
+            <div class="q-opt">④ ClickHouse는 컬럼형 저장을 지원하지 않는다</div>
+            
+            <div class="q-answer">
+              <div class="correct">① ClickHouse는 학습 곡선이 가파르고 SQL 문법이 Postgres와 달라서</div>
+              <div class="why">본문에 따르면 ClickHouse는 빠르지만 학습 곡선이 높고 SQL 문법 차이 때문에 ad‑hoc 워크로드에 적합하지 않다고 언급했다.</div>
+            </div>
+          </div>
+          
+        </details>
+        
+
+        
+        <div class="tags">
+          <span class="tag">Mason</span><span class="tag">Postgres</span><span class="tag">duckdb</span><span class="tag">ClickHouse</span><span class="tag">cedarDB</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+  <article class="item">
+    <div class="item-head">
+      <div class="rank">05</div>
+      <div class="item-body">
+
+        <div class="source">kakao tech</div>
+
+        <h2 class="title">
+          <a href="https://youtu.be/JWutEd3RoR0" target="_blank" rel="noopener">오답도 골라서 가르쳐야 하는 이유 | "그 사진 찾아줘" 한마디면 끝: Kanana 멀티모달 임베딩 모델 개발기 | Model & Agent</a>
+        </h2>
+
+        <p class="summary">멀티모달 임베딩으로 검색·추천 효율을 높이는 실전 노하우</p>
+
+        
+
+        <div class="gauge">
+          <div class="axis">
+            <span class="axis-name">실행가능성</span>
+            <span class="axis-track"><span class="axis-fill" style="width:60%"></span></span>
+            <span class="axis-num">6</span>
+          </div>
+          <div class="axis">
+            <span class="axis-name">깊이</span>
+            <span class="axis-track"><span class="axis-fill" style="width:30%"></span></span>
+            <span class="axis-num">3</span>
+          </div>
+        </div>
+
+        
+        <ul class="points">
+          
+          <li>
+            <span class="dot">·</span>
+            <span>Kanana‑v‑embedding 멀티모달 임베딩 모델 개발 과정 소개</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>GPU 메모리 제약을 극복한 대규모 학습 노하우와 시행착오 공유</span>
+          </li>
+          
+          <li>
+            <span class="dot">·</span>
+            <span>RAG 기반 상품 검색·추천 등 서비스 연동 사례 설명</span>
+          </li>
+          
+        </ul>
+        
+
+        
+
+        
+
+        
+        <div class="tags">
+          <span class="tag">Kanana-v-embedding</span><span class="tag">GPU</span><span class="tag">RAG</span><span class="tag">Kakao</span>
+        </div>
+        
+
+      </div>
+    </div>
+  </article>
+  
+
+  <footer class="colophon">
+    <b>피드백은 Discord에서 받습니다.</b>
+    아이템에 👍 👎 를 누르면 다음 큐레이션의 순서가 바뀌고, 채널에 한국말로
+    쓰면 지시로 접수됩니다. 퀴즈는 투표로 답하면 다음 날 아침에 채점 결과가
+    돌아옵니다.
+  </footer>
+
+</div>
+</body>
+</html>

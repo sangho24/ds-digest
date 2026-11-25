@@ -104,9 +104,9 @@
     },
     "GPU 가속": {
       "aliases": [],
-      "count": 9,
+      "count": 11,
       "first_seen": "2026-11-03",
-      "last_seen": "2026-11-24"
+      "last_seen": "2026-11-25"
     },
     "IAM 역할 샤딩": {
       "aliases": [],
@@ -170,9 +170,9 @@
     },
     "Root Cause Analysis": {
       "aliases": [],
-      "count": 7,
+      "count": 8,
       "first_seen": "2026-10-10",
-      "last_seen": "2026-11-20"
+      "last_seen": "2026-11-25"
     },
     "SMS 인증 비용 정산 구조": {
       "aliases": [],
@@ -260,9 +260,9 @@
     },
     "semantic query processing": {
       "aliases": [],
-      "count": 10,
+      "count": 11,
       "first_seen": "2026-10-05",
-      "last_seen": "2026-11-11"
+      "last_seen": "2026-11-25"
     },
     "source and capacity conditions": {
       "aliases": [],
@@ -462,6 +462,12 @@
       "first_seen": "2026-11-11",
       "last_seen": "2026-11-11"
     },
+    "네트워크 규칙 동기화": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "논블로킹 I/O": {
       "aliases": [],
       "count": 1,
@@ -596,9 +602,9 @@
     },
     "레거시 시스템 리팩터링": {
       "aliases": [],
-      "count": 10,
+      "count": 12,
       "first_seen": "2026-09-06",
-      "last_seen": "2026-11-11"
+      "last_seen": "2026-11-25"
     },
     "레거시 어셈블리 현대화": {
       "aliases": [],
@@ -626,9 +632,9 @@
     },
     "멀티모달 표현 학습": {
       "aliases": [],
-      "count": 28,
+      "count": 29,
       "first_seen": "2026-09-02",
-      "last_seen": "2026-11-14"
+      "last_seen": "2026-11-25"
     },
     "멀티비율 비디오 자동 크롭": {
       "aliases": [],
@@ -734,9 +740,9 @@
     },
     "모델 서빙": {
       "aliases": [],
-      "count": 8,
+      "count": 9,
       "first_seen": "2026-10-20",
-      "last_seen": "2026-11-24"
+      "last_seen": "2026-11-25"
     },
     "모델 파인튜닝": {
       "aliases": [],
@@ -1008,6 +1014,12 @@
       "first_seen": "2026-11-11",
       "last_seen": "2026-11-11"
     },
+    "서비스 신뢰성": {
+      "aliases": [],
+      "count": 1,
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "선언적 관리": {
       "aliases": [],
       "count": 1,
@@ -1052,9 +1064,9 @@
     },
     "스케줄링": {
       "aliases": [],
-      "count": 8,
+      "count": 10,
       "first_seen": "2026-09-05",
-      "last_seen": "2026-10-23"
+      "last_seen": "2026-11-25"
     },
     "스타트업 성장 지표": {
       "aliases": [],
@@ -1867,6 +1879,6 @@
       "last_seen": "2026-09-28"
     }
   },
-  "updated_at": "2026-11-24T14:54:19.093618+09:00",
+  "updated_at": "2026-11-25T17:25:14.971489+09:00",
   "version": 1
 }

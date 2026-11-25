@@ -1,292 +1,269 @@
 {
   "contract_version": 1,
-  "date": "2026-11-24",
-  "generated_at": "2026-11-24T14:54:33.077364+09:00",
+  "date": "2026-11-25",
+  "generated_at": "2026-11-25T17:25:29.331117+09:00",
   "count": 5,
-  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-24.html",
+  "archive_url": "https://sangho24.github.io/ds-digest/2026-11-25.html",
   "items": [
     {
-      "id": "c05d50d52451",
-      "title": "When Does Fine-Tuning Beat Prompting for Qiskit-to-CUDA-Q Translation? An Execution-Verified Study",
-      "url": "https://arxiv.org/abs/2611.29793v1",
+      "id": "37d3eb75b26f",
+      "title": "Why Can’t My Running Pods Be Reached? Our Journey to kube-proxy nftables Mode",
+      "url": "https://medium.com/daangn/why-cant-my-running-pods-be-reached-our-journey-to-kube-proxy-nftables-mode-6fceb1d2a5f7?source=rss----4505f82a2dbd---4",
       "source": {
         "type": "rss",
-        "name": "arXiv:cs.AI"
+        "name": "당근 기술 블로그 - Medium"
       },
-      "published_at": "2026-11-22T21:50:27",
-      "summary": "LLM 파인튜닝, 양자 코드 변환 효율 시점",
-      "positioning": "양자 회로를 Qiskit에서 NVIDIA CUDA‑Q로 옮기는 비용을 줄이기 위해, 기존 텍스트 치환 방식의 한계를 드러내고 실행 결과(상태벡터 유사도 ≥0.999)로 정확성을 검증하는 640‑task 벤치마크를 제시한다. 연구는 파인튜닝(LoRA)이 일부 베이스 모델에서 프롬프트 기반보다 높은 번역 정확도를 보이며, 코드 변환 연구에서 실행‑기반 평가의 필요성을 강조한다.",
+      "published_at": "2026-11-24T05:46:20",
+      "summary": "kube-proxy 지연 문제, nftables로 해결",
+      "positioning": null,
       "tags": [
-        "Qiskit",
-        "CUDA-Q",
-        "Nemotron 3 Nano",
-        "Qwen2.5-Coder",
-        "QuantumKatas"
+        "kube-proxy",
+        "iptables",
+        "nftables",
+        "Karpenter",
+        "Kubernetes"
       ],
-      "relevance": 7,
+      "relevance": 8,
       "key_points": [
         {
-          "point": "LoRA 파인튜닝이 일부 베이스 모델에서 프롬프트보다 높은 번역 정확도를 보이며, 특히 Qwen2.5‑Coder 7B에서 전체 및 보이지 않는 스타일 모두 우수함",
+          "point": "kube-proxy 규칙 동기화 지연이 서비스 호출 실패를 유발하고, Karpenter 도입 후 신규 노드 증가로 악화됨",
           "timestamp": null
         },
         {
-          "point": "640개의 작업을 실행 기반(상태벡터 충실도 ≥0.999)으로 검증하는 벤치마크를 도입해 텍스트 치환만으로는 해결되지 않는 문제를 드러냄",
+          "point": "iptables에서 nftables 모드로 전환하면 규칙 처리 효율이 향상되어 레이턴시와 백로그가 감소한다",
           "timestamp": null
         },
         {
-          "point": "실제 QED‑C 커널에 대해서는 모든 모델이 0% 성공률을 기록해, 현재 LLM은 단순 파라메트릭 코드만 변환 가능함을 보여줌",
+          "point": "2024‑2026 사이 서비스와 Pod 수가 급증하면서 NAT 규칙이 80 000개까지 늘었으며, 이를 관리하기 위한 모니터링과 설계 변경이 필요했다",
           "timestamp": null
         }
       ],
       "ideas": [
-        "실행 기반 정확도 검증 방식을 이용해 Python‑to‑Julia 코드 변환 시 단위 테스트 통과 여부로 번역 품질을 평가한다",
-        "프롬프트와 LoRA 파인튜닝을 혼합해 의료 보고서 생성에 적용하면, 스타일 일관성은 유지하면서 정확도는 향상될 수 있다",
-        "표면 규칙 기반 전처리기를 활용해 SQL 방언 간 변환을 먼저 수행한 뒤 LLM에 전달하면 복잡한 쿼리 변환 효율을 높일 수 있다"
+        "IoT 엣지 디바이스에 nftables 기반 규칙 동기화를 적용해 네트워크 지연을 감소시킨다",
+        "서버리스 플랫폼에서 규칙 동기화 지연 모니터링을 신뢰성 경고 지표로 활용한다",
+        "고빈도 트레이딩 클러스터에 Karpenter와 유사한 동적 노드 프로비저닝을 도입하고, 네트워크 규칙 캐시를 사전 로드해 콜드 스타트 지연을 최소화한다"
       ],
       "quiz": [
         {
-          "question": "표면 규칙 기반 번역기가 원본 3개의 스플릿 중 2개만 해결할 수 있었던 이유는?",
+          "question": "Karpenter 도입 후 kube-proxy 규칙 지연이 증가한 주요 원인은 무엇인가?",
           "options": [
-            "텍스트 치환만 수행했기 때문",
-            "실행 검증을 수행하지 못했기 때문",
-            "모델 크기가 작았기 때문",
-            "파라미터 수가 부족했기 때문"
-          ],
-          "answer_index": 0,
-          "explanation": "표면 규칙 기반 번역기는 단순 텍스트 치환만 수행하므로 실행 수준의 차이를 포착하지 못해 일부 스플릿을 해결하지 못한다."
-        },
-        {
-          "question": "LoRA 파인튜닝이 프롬프트 기반보다 더 좋은 성능을 보인 상황은?",
-          "options": [
-            "모든 베이스 모델에서",
-            "Qwen2.5‑Coder 7B와 같은 큰 모델에서",
-            "작은 1.5B 모델에서",
-            "보이지 않는 코딩 스타일에서"
+            "기존 Overprovisioner 유지",
+            "신규 노드에 Pod가 자주 배치",
+            "nftables 사용",
+            "서비스 수 감소"
           ],
           "answer_index": 1,
-          "explanation": "본문에 따르면 Qwen2.5‑Coder 7B 모델에서 LoRA 파인튜닝이 전체 및 보이지 않는 스타일 모두에서 프롬프트보다 높은 정확도를 기록했다."
+          "explanation": "Karpenter로 빠르게 노드를 추가하면서 Overprovisioner를 중단했기 때문에 새 노드에 Pod가 자주 배치되어 규칙 동기화가 완료되기 전에 트래픽이 발생해 지연이 늘었다."
+        },
+        {
+          "question": "iptables에서 nftables 모드로 전환했을 때 기대되는 효과는?",
+          "options": [
+            "규칙 처리 효율 향상",
+            "규칙 수 증가",
+            "모니터링 어려워짐",
+            "서비스 수 감소"
+          ],
+          "answer_index": 0,
+          "explanation": "nftables는 iptables보다 효율적인 네트워크 프로그래밍을 제공하므로 규칙 적용 속도가 빨라지고 레이턴시와 백로그가 감소한다."
         }
       ]
     },
     {
-      "id": "df08ab47e08b",
-      "title": "NariQ: BF16-level Qwen3.8-27B in a 10 GB file",
-      "url": "https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF",
+      "id": "5fc63218cf02",
+      "title": "RankServe: Rank-Aware CPU-GPU Scheduling for Memory-Constrained MoE Serving",
+      "url": "https://arxiv.org/abs/2611.31869v1",
+      "source": {
+        "type": "rss",
+        "name": "arXiv:cs.DC"
+      },
+      "published_at": "2026-11-24T03:21:07",
+      "summary": "GPU 메모리 제한 MoE 서빙 가속",
+      "positioning": "MoE 모델은 메모리 요구량이 커서 기존 서빙 방식은 전문가 인기만 고려해 GPU에 적재했다. RankServe는 전문가 랭크와 토큰 로드를 포함한 비용 절감량을 기준으로 CPU‑GPU 스케줄링을 수행해, 메모리 제약 하에서 효율적인 서빙을 목표로 하는 모델 서빙 연구 흐름에 새로운 접근을 제시한다.",
+      "tags": [
+        "RankServe",
+        "vLLM",
+        "MoE",
+        "CPU-GPU",
+        "TTFT"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "RankServe는 전문가의 랭크와 토큰 부하를 기반으로 GPU 상주 여부를 바이트당 절감량으로 평가해 우선순위를 정한다.",
+          "timestamp": null
+        },
+        {
+          "point": "가변 랭크 런타임을 도입해 공통 랭크 패딩 없이 이질적인 전문가들을 그룹화된 행렬 곱셈으로 실행한다.",
+          "timestamp": null
+        },
+        {
+          "point": "단일 CPU‑GPU 플랫폼에서 TTFT 1.69‑2.29배, TPOT 1.71‑2.48배 속도 향상을 달성했다.",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "CPU‑GPU 스케줄링 로직을 변형해 혼합 정밀도 Transformer 레이어를 메모리 사용량에 따라 동적으로 배치하면, 메모리 제한 환경에서 추론 속도를 높일 수 있다.",
+        "엣지 디바이스에서 대규모 모델의 일부 모듈을 가변 랭크 실행으로 처리해, 제한된 온칩 메모리와 외부 메모리 간 전송 비용을 최소화한다.",
+        "데이터 파이프라인에서 대용량 피처 집합을 랭크 기반으로 SSD와 RAM 사이에 캐시하고, 사용 빈도와 크기에 따라 저장 위치를 최적화한다."
+      ],
+      "quiz": [
+        {
+          "question": "RankServe가 GPU에 전문가를 유지할지 결정할 때 고려하는 핵심 요소는 무엇인가?",
+          "options": [
+            "전문가 인기만",
+            "전문가 랭크와 토큰 부하",
+            "모델 정확도",
+            "학습 손실"
+          ],
+          "answer_index": 1,
+          "explanation": "논문에서는 각 전문가의 랭크와 현재 토큰 로드를 기반으로 GPU 상주에 따른 절감량을 계산한다."
+        },
+        {
+          "question": "이질적인 전문가 랭크를 패딩 없이 처리하기 위해 RankServe가 사용하는 방법은?",
+          "options": [
+            "행렬 곱셈을 그룹화한다",
+            "0으로 채워 패딩한다",
+            "높은 랭크를 잘라낸다",
+            "모두 동일 랭크로 변환한다"
+          ],
+          "answer_index": 0,
+          "explanation": "가변 랭크 런타임은 전문가들을 그룹화된 행렬 곱셈으로 실행해 공통 랭크 패딩 없이 처리한다."
+        }
+      ]
+    },
+    {
+      "id": "5bde47bb7743",
+      "title": "파드는 떴는데 왜 통신이 안 될까? kube-proxy nftables 전환 여정",
+      "url": "https://medium.com/daangn/%ED%8C%8C%EB%93%9C%EB%8A%94-%EB%96%B4%EB%8A%94%EB%8D%B0-%EC%99%9C-%ED%86%B5%EC%8B%A0%EC%9D%B4-%EC%95%88-%EB%90%A0%EA%B9%8C-kube-proxy-nftables-%EC%A0%84%ED%99%98-%EC%97%AC%EC%A0%95-545dfd2cfc4f?source=rss----4505f82a2dbd---4",
+      "source": {
+        "type": "rss",
+        "name": "당근 기술 블로그 - Medium"
+      },
+      "published_at": "2026-11-24T05:45:56",
+      "summary": "kube-proxy 규칙 지연이 서비스 가용성을 위협한다",
+      "positioning": null,
+      "tags": [
+        "kube-proxy",
+        "iptables",
+        "nftables",
+        "Karpenter",
+        "Endpoint"
+      ],
+      "relevance": 8,
+      "key_points": [
+        {
+          "point": "kube-proxy 규칙 동기화 지연이 서비스 가용성을 저해하고, 노드 스케일아웃 시 문제를 악화시킨다",
+          "timestamp": null
+        },
+        {
+          "point": "iptables 모드에서는 Service·Endpoint 규칙을 순차 비교해 O(N) 비용이 발생하고, 전체 동기화에 4분 이상 걸릴 수 있다",
+          "timestamp": null
+        },
+        {
+          "point": "nftables 모드로 전환하면 map 기반 O(1) 조회와 변경량 기반 증분 업데이트로 지연이 크게 감소한다",
+          "timestamp": null
+        }
+      ],
+      "ideas": [
+        "nftables와 동일한 map 기반 라우팅을 API 게이트웨이의 요청 매핑에 적용하면 라우팅 지연을 크게 낮출 수 있다",
+        "kube-proxy의 증분 동기화 방식을 구성 관리 시스템에 도입하면 전체 설정 재로드 없이 변경된 부분만 적용해 서비스 중단을 최소화한다",
+        "규칙 동기화 지연 모니터링을 활용해 자동 스케일링 시점에 사전 워밍업을 트리거하면 신규 Pod의 초기 통신 실패를 방지한다"
+      ],
+      "quiz": [
+        {
+          "question": "iptables 모드에서 kube-proxy 규칙 조회 비용이 O(N)인 이유는 무엇인가?",
+          "options": [
+            "규칙이 트리 구조로 저장돼서",
+            "Service와 Endpoint 규칙을 순차적으로 비교하기 때문",
+            "해시 맵을 사용하지 않기 때문",
+            "커널이 규칙을 캐시하지 않기 때문"
+          ],
+          "answer_index": 1,
+          "explanation": "iptables 모드에서는 Service마다, Endpoint마다 개별 규칙을 만들고 패킷이 들어오면 Service 규칙을 위에서부터 순차 비교한 뒤, 해당 Service의 Endpoint 규칙을 다시 순차 비교해 목적지를 찾는다. 이 두 단계의 순차 탐색이 O(N) 비용을 초래한다."
+        }
+      ]
+    },
+    {
+      "id": "7e17428b3f39",
+      "title": "Show HN: Mason – A lightweight Postgres read-replica, built on columnar storage",
+      "url": "https://masondata.ai/",
       "source": {
         "type": "rss",
         "name": "HackerNews"
       },
       "published_at": null,
-      "summary": "3비트 이하 양자화로 BF16 수준 성능 유지, 모델 경량화",
+      "summary": "Postgres 읽기 복제에 컬럼형 엔진 적용",
       "positioning": null,
       "tags": [
-        "NariQ",
-        "Qwen3.8-27B",
-        "llama.cpp",
-        "RTX PRO 6000",
-        "DeepSWE"
+        "Mason",
+        "Postgres",
+        "duckdb",
+        "ClickHouse",
+        "cedarDB"
       ],
       "relevance": 7,
       "key_points": [
         {
-          "point": "NariQ는 3비트 이하 양자화에도 불구하고 다양한 에이전트·수학·멀티링꾼·이미지 이해 작업에서 BF16 수준의 품질을 유지한다.",
+          "point": "Mason은 DuckDB의 컬럼형 엔진을 활용해 기존 Postgres와 호환되는 고성능 읽기 복제본을 제공한다.",
           "timestamp": null
         },
         {
-          "point": "벤치마크 결과에서 3비트 모델이 BF16과 거의 동등하거나 일부 지표에서 더 높은 점수를 기록한다.",
+          "point": "5,410개의 실제 쿼리 테스트에서 DuckDB는 Postgres와 84.1% 일치하고 14.3%를 오류로 반환해 pg_clickhouse보다 우수한 결과를 보였다.",
           "timestamp": null
         },
         {
-          "point": "RTX PRO 6000에서 디코드 속도가 다른 양자화 모델과 비슷하며, 이를 사용하려면 nari‑llama.cpp 포크가 필요하다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "3비트 이하 양자화를 비전 트랜스포머에 적용해 엣지 디바이스에서 이미지 인식 지연 시간을 감소시킨다.",
-        "추천 시스템의 임베딩 테이블을 저비트 양자화해 메모리 사용량을 줄이면서 랭킹 정확도를 유지한다.",
-        "CPU 전용 서버에 저비트 양자화된 LLM을 배치해 실시간 챗봇 서비스 비용을 크게 절감한다."
-      ],
-      "quiz": [
-        {
-          "question": "어떤 벤치마크에서 3비트 양자화 모델이 BF16 모델과 동일한 점수를 기록했나요?",
-          "options": [
-            "DeepSWE",
-            "RealWorldQA",
-            "MSGM",
-            "AIME"
-          ],
-          "answer_index": 1,
-          "explanation": "본문에 따르면 RealWorldQA에서 BF16과 3비트 모두 82.4점을 기록했다."
-        },
-        {
-          "question": "NariQ의 디코드 속도 비교에 사용된 GPU 모델은 무엇인가요?",
-          "options": [
-            "RTX PRO 6000",
-            "RTX 3090",
-            "Tesla V100",
-            "AMD Radeon"
-          ],
-          "answer_index": 0,
-          "explanation": "본문에 'Decode speed is comparable ... on an RTX PRO 6000'이라고 명시되어 있다."
-        }
-      ]
-    },
-    {
-      "id": "c59387b24a5e",
-      "title": "목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기",
-      "url": "https://toss.tech/article/multi-task-learning-in-finance",
-      "source": {
-        "type": "rss",
-        "name": "토스 기술 블로그, 토스 테크"
-      },
-      "published_at": "2026-11-23T03:02:00",
-      "summary": "멀티태스크로 수백 트리 모델을 하나로 통합, 효율·성능 동시 개선",
-      "positioning": null,
-      "tags": [
-        "TOSS",
-        "멀티태스크 학습",
-        "AP",
-        "MAE",
-        "AUC"
-      ],
-      "relevance": 6,
-      "key_points": [
-        {
-          "point": "수십~수백 개의 트리 모델을 하나의 멀티태스크 모델로 통합해 평균 정밀도(AP)를 약 54% 향상하고 마케팅 발송을 35% 절감했다.",
-          "timestamp": null
-        },
-        {
-          "point": "상품별 세 가지 예측 과제를 하나의 MTL 모델에 묶어 MAE를 66~79% 감소, AUC를 약 10% 상승시켰으며, 새 상품도 별도 모델 없이 예측 가능하게 했다.",
-          "timestamp": null
-        },
-        {
-          "point": "공유 인코더와 공유 전문가 구조를 도입해 과제 간 데이터 활용을 촉진하고, 모델 수가 늘어나도 운영·재학습 부담을 크게 낮췄다.",
+          "point": "ClickHouse, pg_mooncake, materialize 등은 학습 곡선, 라이선스, 사전 쿼리 형태 요구 등 이유로 플러그‑인 대안에서 제외되었다.",
           "timestamp": null
         }
       ],
       "ideas": [
-        "공유 인코더·전문가 구조를 전자상거래 카테고리별 추천에 적용해 신규 카테고리를 별도 모델 없이 즉시 지원한다.",
-        "금융 서비스 전반의 사기 탐지를 위한 멀티태스크 모델에 적용해 각 상품별 사기 탐지 모델을 하나로 통합한다.",
-        "SaaS 플랫폼에서 이탈 예측과 업셀 기회 예측을 하나의 멀티태스크 모델로 묶어 운영 효율성을 높인다."
+        "MySQL에 DuckDB 기반 컬럼형 엔진을 적용해 읽기 복제본을 만들면, 기존 OLTP와 별도 분석 워크로드를 고성능으로 처리할 수 있다.",
+        "실제 스키마를 이용해 동적으로 합성 데이터를 생성하고, 동일 쿼리 집합을 여러 엔진에 실행해 성능과 호환성을 자동 평가한다.",
+        "클라우드 공급자에 독립적인 오픈소스 읽기 복제 레이어를 구축해, 다중 데이터베이스 환경에서 일관된 분석 인터페이스를 제공한다."
       ],
       "quiz": [
         {
-          "question": "멀티태스크 모델을 도입하면 운영 부담이 감소하는 주요 이유는 무엇인가?",
+          "question": "왜 저자들은 ClickHouse를 ad‑hoc Postgres 워크로드에 사용하지 않기로 했나요?",
           "options": [
-            "모델 수가 줄어 배포·모니터링 비용이 감소한다",
-            "각 모델이 더 빠르게 학습한다",
-            "데이터 라벨이 적게 필요하다",
-            "GPU 사용량이 증가한다"
+            "ClickHouse는 학습 곡선이 가파르고 SQL 문법이 Postgres와 달라서",
+            "ClickHouse는 분석 쿼리에서 속도가 느리다",
+            "ClickHouse는 라이선스가 제한적이다",
+            "ClickHouse는 컬럼형 저장을 지원하지 않는다"
           ],
           "answer_index": 0,
-          "explanation": "여러 과제를 하나의 모델에 통합하면 모델 수가 감소해 배포, 모니터링, 재학습 등 운영 작업이 줄어든다."
-        },
-        {
-          "question": "멀티태스크 모델에 새 상품을 추가할 때 필요한 주요 변경은 무엇인가?",
-          "options": [
-            "전체 모델을 재학습한다",
-            "새로운 출력층을 추가한다",
-            "상품 정보를 입력으로 제공한다",
-            "새로운 공유 전문가를 만든다"
-          ],
-          "answer_index": 2,
-          "explanation": "본문에서는 상품 정보를 입력으로 받아 새 상품을 별도 모델 없이 예측하도록 설계했다고 설명한다."
+          "explanation": "본문에 따르면 ClickHouse는 빠르지만 학습 곡선이 높고 SQL 문법 차이 때문에 ad‑hoc 워크로드에 적합하지 않다고 언급했다."
         }
       ]
     },
     {
-      "id": "90aea27119ad",
-      "title": "12월 9일, 2026 혁신의숲 어워즈 개최!",
-      "url": "https://innoforest.stibee.com/p/694",
-      "source": {
-        "type": "newsletter",
-        "name": "혁신의 숲"
-      },
-      "published_at": "2026-11-22T00:00:00",
-      "summary": "데이터 기반 스타트업 성장·LER 인사이트",
-      "positioning": null,
-      "tags": [
-        "혁신의숲",
-        "LER",
-        "OpenAI",
-        "Growth Bridge",
-        "COEX"
-      ],
-      "relevance": 5,
-      "key_points": [
-        {
-          "point": "혁신의숲 어워즈는 서비스 방문자·거래액·고용·투자 등 실제 비즈니스 지표를 기반으로 성장 스타트업을 선정한다.",
-          "timestamp": null
-        },
-        {
-          "point": "LER(매출총이익÷급여) 지표를 활용해 인력 확대와 매출 성장 간 효율성을 분석하고, 흑자 전환 기준을 제시한다.",
-          "timestamp": null
-        },
-        {
-          "point": "다양한 오픈이노베이션 공고와 투자 리포트가 제공돼 스타트업·대기업 협업 및 투자 판단에 활용할 수 있다.",
-          "timestamp": null
-        }
-      ],
-      "ideas": [
-        "LER 지표를 SaaS 제품팀에 적용해 엔지니어 급여 대비 발생 이익을 측정하고 인력 효율성을 개선한다.",
-        "후보기업 선정에 사용된 방문자·거래·고용·투자 지표를 데이터 파이프라인에 넣어 벤처캐피털의 초기 스타트업 스크리닝 모델을 만든다.",
-        "혁신의숲 어워즈 선정 과정을 학습 데이터로 활용해 고성장 스타트업을 예측하는 머신러닝 모델을 구축한다."
-      ],
-      "quiz": [
-        {
-          "question": "LER 지표는 무엇을 나타내는가?",
-          "options": [
-            "매출총이익 대비 급여 비율",
-            "매출 대비 광고비 비율",
-            "순이익 대비 급여 비율",
-            "매출총이익 대비 연구비 비율"
-          ],
-          "answer_index": 0,
-          "explanation": "LER은 매출총이익을 급여 비용으로 나눈 값으로, 1원 급여로 얼마나 매출총이익을 창출했는지를 나타낸다."
-        },
-        {
-          "question": "혁신의숲 어워즈에서 후보기업을 선정할 때 주요하게 고려한 비즈니스 지표는?",
-          "options": [
-            "서비스 방문자 수·소비자 거래액·고용인원 추이·투자 이력",
-            "CEO 연령·학력",
-            "특허 보유 수",
-            "소셜 미디어 팔로워 수"
-          ],
-          "answer_index": 0,
-          "explanation": "후보기업은 서비스 방문자 수, 소비자 거래액, 고용인원 추이, 투자 이력 등 실제 비즈니스 지표를 기준으로 선정한다."
-        }
-      ]
-    },
-    {
-      "id": "3ae2be62ecb0",
-      "title": "What a Squirrel Does That LLMs Don't (Michael Tomasello)",
-      "url": "https://youtu.be/io7qhEjJoik",
+      "id": "cc066849cb0e",
+      "title": "오답도 골라서 가르쳐야 하는 이유 | \"그 사진 찾아줘\" 한마디면 끝: Kanana 멀티모달 임베딩 모델 개발기 | Model & Agent",
+      "url": "https://youtu.be/JWutEd3RoR0",
       "source": {
         "type": "youtube",
-        "name": "Machine Learning Street Talk"
+        "name": "kakao tech"
       },
-      "published_at": "2026-11-19T14:22:11",
-      "summary": "예측 불가능성으로 AI 설계 시 행동 차이 통찰",
+      "published_at": "2026-11-24T09:00:21",
+      "summary": "멀티모달 임베딩으로 검색·추천 효율을 높이는 실전 노하우",
       "positioning": null,
       "tags": [
-        "Michael Tomasello",
-        "Max Planck Institute",
-        "Duke University",
-        "LLM",
-        "squirrel"
+        "Kanana-v-embedding",
+        "GPU",
+        "RAG",
+        "Kakao"
       ],
-      "relevance": 4,
+      "relevance": 7,
       "key_points": [
         {
-          "point": "환경이 예측 불가능할 때 에이전시가 형성된다는 기본 가설을 제시한다",
+          "point": "Kanana‑v‑embedding 멀티모달 임베딩 모델 개발 과정 소개",
           "timestamp": null
         },
         {
-          "point": "다람쥐가 낙하를 상상해 다른 가지로 이동하는 행동은 단순 제어 루프를 넘어선 예측 능력이다",
+          "point": "GPU 메모리 제약을 극복한 대규모 학습 노하우와 시행착오 공유",
           "timestamp": null
         },
         {
-          "point": "LLM은 공동 목표와 관점 공유가 부족해 인간과 같은 협업 에이전시를 구현하지 못한다",
+          "point": "RAG 기반 상품 검색·추천 등 서비스 연동 사례 설명",
           "timestamp": null
         }
       ],

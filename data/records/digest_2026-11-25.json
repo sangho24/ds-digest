@@ -1,0 +1,422 @@
+{
+  "date": "2026-11-25",
+  "generated_at": "2026-11-25T08:25:29.337212",
+  "schema_version": 2,
+  "items": [
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "Why Can’t My Running Pods Be Reached? Our Journey to kube-proxy nftables Mode",
+        "url": "https://medium.com/daangn/why-cant-my-running-pods-be-reached-our-journey-to-kube-proxy-nftables-mode-6fceb1d2a5f7?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-11-24T05:46:20",
+        "transcript": null,
+        "body": "<p>Hi, I’m Karin, and I’m on the Cluster squad within SRE at Karrot. Our team designs and runs the Kubernetes platform that every service at Karrot runs on. We take responsibility for everything that keeps our clusters observable and reliable, from monitoring infrastructure all the way to the service mesh and security, along with the policies and roadmaps that keep it all maintainable. In this post, I’ll share how we migrated kube-proxy from iptables mode to nftables mode.</p><p>kube-proxy runs on every node in a Kubernetes cluster and programs network rules into the Linux kernel so that traffic sent to a Service reaches the actual Pods. For years, our clusters ran kube-proxy in iptables mode to provide this core feature. Below, I’ll walk through how we moved to nftables, its more efficient successor, and what we learned along the way.</p><h3>1. kube-proxy latency was hurting service reliability</h3><p>In Kubernetes, nodes come and go and Pods spin up all the time. That’s just how it works. But when a Pod lands on a fresh node and the app starts up, is it actually ready to talk to other services?</p><p>kube-proxy manages <strong>the network rules (just “rules” from here on) on each node that let traffic headed for a Service reach the actual Pods</strong>. On a new node, if an application starts up while those rules are still being prepared, its DNS lookups and calls to other services can fail.</p><p>kube-proxy rule sync lag had been creeping up for a while. We’d been watching the metrics since 2024, and latency was noticeably higher in our production cluster in the Korea region, the largest of all the regions we serve. But we judged it wasn’t serious enough to cause operational problems, and in practice, it never actually turned into an incident.</p><p>Then, in the first half of this year, we made a big change: we adopted Karpenter. Now that we could scale out nodes quickly, we stopped using the Overprovisioner that used to keep spare nodes ready for Pods. As a result, Pods were landing on freshly created nodes much more often, which also raised the odds that an application would try to talk to something before rule sync had finished.</p><p>Soon after, we started getting reports like the ones below, and most of them boiled down to “my Pod can’t talk to anything.”</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*QMoUcgAWUpcZVZR-EJsz_g.png\" /></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*F8zYdA9yucDX0W3sthVyMg.png\" /></figure><p>Putting our kube-proxy metrics from 2024 and 2026 side by side made it obvious how much heavier kube-proxy’s workload had gotten in just two years. Our service footprint and NAT rule count had grown noticeably, and Pods were being created and terminated far more often. Every time a Pod changes, the Service’s Endpoints (the IPs of the Pods that receive its traffic) change with it, so the number of changes kube-proxy had to apply grew right along with it. Rule sync latency got several times worse, and endpoint changes pending, which tracks Endpoint changes not yet reflected in the rules, went from occasional brief spikes to a steady backlog.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*lcUiEm2_9VRtLI6qVSmZxw.png\" /><figcaption>Latency and endpoint changes pending in 2024</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*HtGfwLlAPchaciOYH1eZ5w.png\" /><figcaption>Latency and endpoint changes pending in 2026</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*OZEH_6TJHLePa2k6J9Y75g.png\" /><figcaption>network programming rate in 2024</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/798/1*U7jmpo3WgczT24_FdLfNwQ.png\" /><figcaption>network programming rate in 2026</figcaption></figure><p>In the first half of 2026, our service cluster had roughly 1,400 Services and 27,000 Pods, with about 80,000 iptables NAT rules. With Endpoints constantly churning from deploys and autoscaling, and nodes repeatedly being torn down and spun up, the initial rule sync on a new node sometimes took as long as <strong>4 minutes and 20 seconds</strong>. (That’s over four minutes with no working Service or DNS traffic!)</p><p>Once we confirmed this was actually affecting production, we had to fix it. After some intense discussion with the team, we decided to try switching kube-proxy from iptables mode to nftables mode. Here’s how the two modes differ.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*pLckYAsdjyf6MeKRK67-Jg.png\" /></figure><p>In iptables mode, kube-proxy creates rules for every Service and every Endpoint. When a packet comes in, it’s first matched against the Service rules one by one, top to bottom, to find the destination Service, and then against that Service’s Endpoint rules, again one by one, to pick a Pod. Both steps are sequential scans, so the more Services and Endpoints behind them you hav",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "kube-proxy 지연 문제, nftables로 해결",
+        "tags": [
+          "kube-proxy",
+          "iptables",
+          "nftables",
+          "Karpenter",
+          "Kubernetes"
+        ],
+        "concepts": [
+          "네트워크 규칙 동기화",
+          "서비스 신뢰성"
+        ],
+        "key_points": [
+          {
+            "point": "kube-proxy 규칙 동기화 지연이 서비스 호출 실패를 유발하고, Karpenter 도입 후 신규 노드 증가로 악화됨",
+            "timestamp": null
+          },
+          {
+            "point": "iptables에서 nftables 모드로 전환하면 규칙 처리 효율이 향상되어 레이턴시와 백로그가 감소한다",
+            "timestamp": null
+          },
+          {
+            "point": "2024‑2026 사이 서비스와 Pod 수가 급증하면서 NAT 규칙이 80 000개까지 늘었으며, 이를 관리하기 위한 모니터링과 설계 변경이 필요했다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "IoT 엣지 디바이스에 nftables 기반 규칙 동기화를 적용해 네트워크 지연을 감소시킨다",
+          "서버리스 플랫폼에서 규칙 동기화 지연 모니터링을 신뢰성 경고 지표로 활용한다",
+          "고빈도 트레이딩 클러스터에 Karpenter와 유사한 동적 노드 프로비저닝을 도입하고, 네트워크 규칙 캐시를 사전 로드해 콜드 스타트 지연을 최소화한다"
+        ],
+        "quiz": [
+          {
+            "question": "Karpenter 도입 후 kube-proxy 규칙 지연이 증가한 주요 원인은 무엇인가?",
+            "options": [
+              "기존 Overprovisioner 유지",
+              "신규 노드에 Pod가 자주 배치",
+              "nftables 사용",
+              "서비스 수 감소"
+            ],
+            "answer_index": 1,
+            "explanation": "Karpenter로 빠르게 노드를 추가하면서 Overprovisioner를 중단했기 때문에 새 노드에 Pod가 자주 배치되어 규칙 동기화가 완료되기 전에 트래픽이 발생해 지연이 늘었다."
+          },
+          {
+            "question": "iptables에서 nftables 모드로 전환했을 때 기대되는 효과는?",
+            "options": [
+              "규칙 처리 효율 향상",
+              "규칙 수 증가",
+              "모니터링 어려워짐",
+              "서비스 수 감소"
+            ],
+            "answer_index": 0,
+            "explanation": "nftables는 iptables보다 효율적인 네트워크 프로그래밍을 제공하므로 규칙 적용 속도가 빨라지고 레이턴시와 백로그가 감소한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "tutorial",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.29 (domain:systems +0.28; content_type:tutorial +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "arXiv:cs.DC",
+        "source_key": "arxiv:cs.DC",
+        "source_label": "arXiv:cs.DC",
+        "title": "RankServe: Rank-Aware CPU-GPU Scheduling for Memory-Constrained MoE Serving",
+        "url": "https://arxiv.org/abs/2611.31869v1",
+        "published_at": "2026-11-24T03:21:07",
+        "transcript": null,
+        "body": "Mixture-of-Experts (MoE) models scale model capacity through sparse expert activation, but their large expert pools impose substantial memory requirements during inference. Low-rank compression reduces the memory footprint of Mixture-of-Experts (MoE) models. However, the heterogeneous expert ranks create unequal storage, transfer, and execution costs. Under limited GPU memory, expert popularity and transfer cost alone cannot determine which experts are most valuable to retain. We present RankServe, a CPU-GPU serving system for compressed MoE checkpoints with fixed expert ranks. Its key insight is to value GPU residency against the cheaper nonresident path, CPU execution or weight transfer followed by GPU execution, under each expert's rank and token load. RankServe aggregates the resulting estimated savings over routing demand and prioritizes experts by savings per byte. It updates residency from recent routing history and selects miss paths using current token loads, allowing temporary GPU execution without cache admission. A variable-rank runtime executes heterogeneous factors through grouped matrix multiplications without common-rank padding. Implemented on vLLM, RankServe is evaluated on three MoE models against six serving systems on a single CPU-GPU platform. Across five batch sizes from 1 to 32, it achieves per-model geometric-mean speedups of $1.69$--$2.29\\times$ in time to first token (TTFT) and $1.71$--$2.48\\times$ in time per output token (TPOT), relative to the fastest baseline for each configuration and metric.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "GPU 메모리 제한 MoE 서빙 가속",
+        "tags": [
+          "RankServe",
+          "vLLM",
+          "MoE",
+          "CPU-GPU",
+          "TTFT"
+        ],
+        "concepts": [
+          "모델 서빙",
+          "스케줄링",
+          "GPU 가속"
+        ],
+        "key_points": [
+          {
+            "point": "RankServe는 전문가의 랭크와 토큰 부하를 기반으로 GPU 상주 여부를 바이트당 절감량으로 평가해 우선순위를 정한다.",
+            "timestamp": null
+          },
+          {
+            "point": "가변 랭크 런타임을 도입해 공통 랭크 패딩 없이 이질적인 전문가들을 그룹화된 행렬 곱셈으로 실행한다.",
+            "timestamp": null
+          },
+          {
+            "point": "단일 CPU‑GPU 플랫폼에서 TTFT 1.69‑2.29배, TPOT 1.71‑2.48배 속도 향상을 달성했다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": "MoE 모델은 메모리 요구량이 커서 기존 서빙 방식은 전문가 인기만 고려해 GPU에 적재했다. RankServe는 전문가 랭크와 토큰 로드를 포함한 비용 절감량을 기준으로 CPU‑GPU 스케줄링을 수행해, 메모리 제약 하에서 효율적인 서빙을 목표로 하는 모델 서빙 연구 흐름에 새로운 접근을 제시한다.",
+        "production_ideas": [
+          "CPU‑GPU 스케줄링 로직을 변형해 혼합 정밀도 Transformer 레이어를 메모리 사용량에 따라 동적으로 배치하면, 메모리 제한 환경에서 추론 속도를 높일 수 있다.",
+          "엣지 디바이스에서 대규모 모델의 일부 모듈을 가변 랭크 실행으로 처리해, 제한된 온칩 메모리와 외부 메모리 간 전송 비용을 최소화한다.",
+          "데이터 파이프라인에서 대용량 피처 집합을 랭크 기반으로 SSD와 RAM 사이에 캐시하고, 사용 빈도와 크기에 따라 저장 위치를 최적화한다."
+        ],
+        "quiz": [
+          {
+            "question": "RankServe가 GPU에 전문가를 유지할지 결정할 때 고려하는 핵심 요소는 무엇인가?",
+            "options": [
+              "전문가 인기만",
+              "전문가 랭크와 토큰 부하",
+              "모델 정확도",
+              "학습 손실"
+            ],
+            "answer_index": 1,
+            "explanation": "논문에서는 각 전문가의 랭크와 현재 토큰 로드를 기반으로 GPU 상주에 따른 절감량을 계산한다."
+          },
+          {
+            "question": "이질적인 전문가 랭크를 패딩 없이 처리하기 위해 RankServe가 사용하는 방법은?",
+            "options": [
+              "행렬 곱셈을 그룹화한다",
+              "0으로 채워 패딩한다",
+              "높은 랭크를 잘라낸다",
+              "모두 동일 랭크로 변환한다"
+            ],
+            "answer_index": 0,
+            "explanation": "가변 랭크 런타임은 전문가들을 그룹화된 행렬 곱셈으로 실행해 공통 랭크 패딩 없이 처리한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "ai-ml",
+          "systems"
+        ],
+        "content_type": "paper",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.17 (source:arxiv +0.06; domain:ai-ml,systems +0.10; content_type:paper +0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "당근 기술 블로그 - Medium",
+        "source_key": "https://medium.com/feed/daangn",
+        "source_label": "당근 기술 블로그 - Medium",
+        "title": "파드는 떴는데 왜 통신이 안 될까? kube-proxy nftables 전환 여정",
+        "url": "https://medium.com/daangn/%ED%8C%8C%EB%93%9C%EB%8A%94-%EB%96%B4%EB%8A%94%EB%8D%B0-%EC%99%9C-%ED%86%B5%EC%8B%A0%EC%9D%B4-%EC%95%88-%EB%90%A0%EA%B9%8C-kube-proxy-nftables-%EC%A0%84%ED%99%98-%EC%97%AC%EC%A0%95-545dfd2cfc4f?source=rss----4505f82a2dbd---4",
+        "published_at": "2026-11-24T05:45:56",
+        "transcript": null,
+        "body": "<p>안녕하세요, 당근 SRE팀 클러스터 파트에서 일하고 있는 Karin(카린)이에요. 클러스터 파트는 당근 내부의 모든 서비스가 운영되는 쿠버네티스 환경을 설계하고 관리해요. 쿠버네티스 환경의 가시성과 서비스 안정성을 확보하기 위해 모니터링 인프라부터 서비스 메시, 보안까지 여러 방면에서 정책과 로드맵을 설계하고 적용해요.</p><p>이 글에서는 kube-proxy를 iptables 모드에서 nftables 모드로 전환한 이야기를 해보려고 해요. kube-proxy는 쿠버네티스의 모든 노드에서 동작하면서, Service로 들어온 트래픽이 실제 Pod로 전달되도록 리눅스 커널에 네트워크 규칙을 설정하는 컴포넌트예요. 이 규칙을 관리하는 방식으로 오랫동안 iptables를 써왔는데, 이를 더 효율적인 후속 도구인 nftables로 바꾼 과정과 그 과정에서 배운 점을 공유하려고 해요.</p><h3><strong>1. kube-proxy latency가 서비스 안정성에 영향을 미쳤어요</strong></h3><p>쿠버네티스에서 노드가 새로 생기고 Pod가 뜨는 것은 매우 자연스러운 일이죠. 그런데 새 노드에 Pod가 스케줄링되고 애플리케이션이 시작되었다고 해서, 다른 서비스와 통신할 준비도 모두 끝난 걸까요?</p><p>kube-proxy는 각 <strong>노드에서 Service로 향하는 트래픽이 실제 Pod에 도달할 수 있게 네트워크 규칙(이하 ‘규칙’)을 관리</strong>하는데요, 새 노드에서는 이 규칙을 준비하는 동안 애플리케이션이 먼저 시작하면 DNS 조회나 다른 서비스와의 통신에 실패할 수 있어요.</p><p>kube-proxy의 규칙 동기화가 느려지고 있다는 것은 예전부터 알고 있었어요. 2024년부터 지표를 지켜보니, 다른 리전보다 규모가 큰 한국 프로덕션에서 유독 지연이 높았거든요. 그러나 운영상 문제가 될 정도는 아니라고 판단했고, 실제로도 이슈로 이어진 적은 없었어요.</p><p>하지만 올해 상반기에 Karpenter를 도입하는 큰 변화가 있었어요. 노드를 빠르게 scale-out할 수 있게 되면서 Pod가 사용할 노드를 미리 준비하던 Overprovisioner를 더 이상 사용하지 않게 됐어요. 그 결과 새로 생성된 노드에 Pod가 곧바로 스케줄링되는 상황을 더 자주 마주했어요. 규칙 동기화가 끝나기 전에 애플리케이션이 통신을 시도할 가능성도 커진 거죠.</p><p>이후에 아래와 같은 문의가 들어오기 시작했고, 대부분은 ‘Pod가 통신이 안 된다’라는 제보였어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*vW4_UGFIjjf2SZm17F_-Iw.png\" /></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*UZ51t1dBnLb6brc4URJG7w.png\" /></figure><p>2024년과 2026년의 kube-proxy 지표를 나란히 놓고 보니, 2년 사이 kube-proxy의 부담이 크게 늘어난 걸 뚜렷하게 확인할 수 있었어요. 서비스 규모와 NAT 규칙 수가 눈에 띄게 늘었고, Pod가 생성되고 종료되는 일도 잦아졌어요. Pod가 바뀔 때마다 Service의 목적지를 나타내는 Endpoint, 즉 트래픽을 받을 Pod의 IP도 함께 바뀌기 때문에 kube-proxy가 반영해야 할 변경도 그만큼 늘어났어요. 그 결과 규칙 동기화 지연은 이전보다 몇 배 커졌고, 아직 규칙에 반영되지 못한 Endpoint 변경을 나타내는 endpoint changes pending 지표도 과거에는 잠깐씩 튀던 값이 지속적으로 쌓이는 모습으로 바뀌었어요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*kO4Oqhsqf1UO-q6a-WBmIA.png\" /><figcaption>2024년의 latency와 endpoint changes pending</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*BG05katwHOG2oHA8mzvGww.png\" /><figcaption>2026년의 latency와 endpoint changes pending</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*OZEH_6TJHLePa2k6J9Y75g.png\" /><figcaption>2024년의 network programming rate</figcaption></figure><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/798/1*U7jmpo3WgczT24_FdLfNwQ.png\" /><figcaption>2026년의 network programming rate</figcaption></figure><p>2026년 상반기 당시 서비스 클러스터에는 약 1,400개의 Service와 27,000개의 Pod가 있었고, iptables의 NAT 규칙은 약 80,000개에 달했어요. 배포와 오토스케일링으로 Endpoint가 계속 바뀌는 가운데, 노드가 반복적으로 종료되고 생성될 때는 첫 규칙 동기화에 최대 <strong>4분 20초</strong>가 걸리기도 했어요. 4분 넘게 Service와 DNS 통신이 안 되는 상태였던 거예요!</p><p>실제 서비스 운영에 영향을 주는 문제라는 것을 확인했기 때문에 이 문제를 해결해야 했어요. 팀원들과 개선 방안을 치열하게 의논한 결과 iptables 모드에서 nftables 모드로 전환해 보기로 했어요. 두 모드의 차이점은 다음과 같아요.</p><figure><img alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*KhX2DQR7LSyFuJmqtYfiNg.png\" /></figure><p>iptables 모드에서 kube-proxy는 Service마다, 그리고 Endpoint마다 규칙을 만들어요. 패킷이 들어오면 먼저 Service 규칙을 위에서부터 차례로 비교해 목적지 Service를 찾고, 다시 그 Service의 Endpoint 규칙을 차례로 비교해 보낼 Pod를 골라요. 두 단계 모두 순차 비교라서 Service가 많을수록, 그리고 Service 하나에 붙은 Endpoint가 많을수록 비교할 규칙이 늘어나 조회 비용이 O(N)이에요.</p><p>더 큰 문제는 규칙을 갱신할 때예요. 전체 규칙 수는 Service와 Endpoint 수에 비례하고, 규칙이 많을수록 갱신 시간도 길어져요. 그런데 Endpoint는 Pod가 변경될 때 함께 바뀌어서 갱신이 자주 일어나다 보니, 반영하지 못한 변경이 점점 쌓였어요. 특히 kube-proxy가 시작한 직후에는 전체 규칙을 새로 쓰는 full sync를 하는데, 규모가 커진 당근 클러스터에서는 이 시간이 4분을 넘기도 했어요.</p><p>nftables 모드는 Service를 찾는 단계와 Endpoint를 고르는 단계를 모두 map 기반으로 처리해요. 목적지 IP . 프로토콜 . 포트를 키로 map을 조회해서 해당 Service로 바로 이동하고, Endpoint도 목록을 하나씩 훑지 않고 map에서 바로 골라요. 그래서 Service나 Endpoint가 늘어나도 조회 비용은 O(1)에 가깝게 유지돼요. 갱신할 때도 지난 동기화 이후 바뀐 Service와 Endpoint만 반영하므로, 비용이 전체 규모가 아니라 변경량에 비례해요. Endpoint가 많고 자주 바뀌는 환경일수록 이 차이가 크게 드러나요.</p><p>하지만 모드를 변경하기 전에, 몇 가지 질문이 있었어요. 무엇이 규칙 동기화를 느리게 만들고 있었을까요? Service와 Endpoint가 많아서일까요? 변경이 자주 발생해서일까요? nftables로 바꾸면 얼마나 개선될까요? nftables 모드로 ‘안전하게’ 전환할 수 있을까요?</p><p>이 질문에 답하기 위해, 테스트 클러스터에서 조건을 바꿔가며 latency를 측정하고 iptables와 nftables를 비교하는 실험을 해보기로 했어요. 첫 동기화 시간을 20초 이내로 줄여야 한다고 판단했고, 실험으로 이를 검증하고자 했어요.</p><h3>2. 실험의 네 가지 목표</h3><p>실험을 시작하기 전에, 이 프로젝트에서 무엇을 확인할지 네 가지로 정리했어요.</p><h4><strong>1. </strong>조건에 따른 규칙 동기화 지연 시간 확인</h4><p>Service와 Endpoint가 많은 것과, 그 Endpoint가 자주 바뀌는 것은 다른 조건이겠죠? 같은 수의 Pod를 배포하더라도 조금씩 교체할 때와 한꺼번에 교체할 때의 영향이 다를 수 있고요. 규모, 변경 빈도, 배포 패턴을 나눠서 각각 latency에 어떤 영향을 주는지 측정해보기로 했어요.</p><h4><strong>2. 같은 조건에서 iptables와 nftables를 비교</strong></h4><p>nftables의 성능이 좋다고 알려져 있어도, 당근의 운영 환경에서 얼마나 개선될지는 직접 확인하고 싶었어요. 테스트 클러스터에서 같은 부하를 만들어 성능을 비교하기로 했어요.</p><h4><strong>3. 프로덕션에 안전하게 적용할 수 있는지</strong> 확인</h4><p>테스트에서 빨라졌다고 바로 전환할 수는 없겠죠? 당근에서 사용하는 VPC CNI, Istio 등의 addon 구성과 충돌 없이 동작하는지, 알려진 이슈 중 우리 환경에 해당하는 것은 없는지 살펴봐야 했어요.</p><h4><strong>4. kube-proxy 버전을 유지할지, 함께 업그레이드할지</strong></h4><p>당시 EKS는 v1.34이지만, kube-proxy는 v1.34에서 이슈(<a href=\"https://github.com/kubernetes/kubernetes/issues/135323\">https://github.com/kubernetes/kubernetes/is",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 8,
+        "one_line_summary": "kube-proxy 규칙 지연이 서비스 가용성을 위협한다",
+        "tags": [
+          "kube-proxy",
+          "iptables",
+          "nftables",
+          "Karpenter",
+          "Endpoint"
+        ],
+        "concepts": [
+          "레거시 시스템 리팩터링",
+          "스케줄링",
+          "Root Cause Analysis"
+        ],
+        "key_points": [
+          {
+            "point": "kube-proxy 규칙 동기화 지연이 서비스 가용성을 저해하고, 노드 스케일아웃 시 문제를 악화시킨다",
+            "timestamp": null
+          },
+          {
+            "point": "iptables 모드에서는 Service·Endpoint 규칙을 순차 비교해 O(N) 비용이 발생하고, 전체 동기화에 4분 이상 걸릴 수 있다",
+            "timestamp": null
+          },
+          {
+            "point": "nftables 모드로 전환하면 map 기반 O(1) 조회와 변경량 기반 증분 업데이트로 지연이 크게 감소한다",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "nftables와 동일한 map 기반 라우팅을 API 게이트웨이의 요청 매핑에 적용하면 라우팅 지연을 크게 낮출 수 있다",
+          "kube-proxy의 증분 동기화 방식을 구성 관리 시스템에 도입하면 전체 설정 재로드 없이 변경된 부분만 적용해 서비스 중단을 최소화한다",
+          "규칙 동기화 지연 모니터링을 활용해 자동 스케일링 시점에 사전 워밍업을 트리거하면 신규 Pod의 초기 통신 실패를 방지한다"
+        ],
+        "quiz": [
+          {
+            "question": "iptables 모드에서 kube-proxy 규칙 조회 비용이 O(N)인 이유는 무엇인가?",
+            "options": [
+              "규칙이 트리 구조로 저장돼서",
+              "Service와 Endpoint 규칙을 순차적으로 비교하기 때문",
+              "해시 맵을 사용하지 않기 때문",
+              "커널이 규칙을 캐시하지 않기 때문"
+            ],
+            "answer_index": 1,
+            "explanation": "iptables 모드에서는 Service마다, Endpoint마다 개별 규칙을 만들고 패킷이 들어오면 Service 규칙을 위에서부터 순차 비교한 뒤, 해당 Service의 Endpoint 규칙을 다시 순차 비교해 목적지를 찾는다. 이 두 단계의 순차 탐색이 O(N) 비용을 초래한다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "systems"
+        ],
+        "content_type": "case-study",
+        "half_life": "durable",
+        "actionability": 7,
+        "depth": 7,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.27 (domain:systems +0.28; content_type:case-study -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "rss",
+        "source_name": "HackerNews",
+        "source_key": "hackernews",
+        "source_label": "HackerNews",
+        "title": "Show HN: Mason – A lightweight Postgres read-replica, built on columnar storage",
+        "url": "https://masondata.ai/",
+        "published_at": null,
+        "transcript": null,
+        "body": "Hi HN! TLDR: we’ve built an open-source drop-in replacement for a postgres read-replica, powered by duckdb’s columnar compute engine. It’s very fast. And it looks like postgres.<p>So, this started out as: let’s just connect Clickhouse to our postgres dbs and throw our analytics queries at it instead. That will speed everything up.  But we quickly found that 1) Clickhouse comes with quite the learning curve (engine optimisation) to make it fast (we needed something we could easily drop in to any customer’s postgres scenario), and 2) we had underestimated how different clickhouse’s SQL syntax was to postgres.  Don’t get me wrong: we love Clickhouse (it’s ridiculously fast if you know what queries to expect), it just didn’t work for our ad-hoc postgres workloads.<p>So we went searching for alternatives that were 1) more plug-and-play and 2) looked a lot more like postgres.<p>We dismissed a bunch based on desk research alone:<p>- pg_mooncake (seems to have stalled since data bricks bought them)<p>- pg_duckdb (seems to offer fast queries, or fresh data, but not both - we needed both)<p>- materialize&#x2F;risingwave&#x2F;readyset (like Clickhouse, they require knowing the query shapes upfront - not ideal for ad-hoc workloads)<p>- firebolt (license makes it challenging to offer to our customers)<p>- redshift &#x2F; alloydb &#x2F; etc (we wanted something cloud-provider agnostic)<p>And we shortlisted 3:<p>- pg_clickhouse (Postgres extension that parses SQL in Postgres and pushes the work down to ClickHouse)<p>- cedarDB  (closed-source, Postgres-compatible analytical database)<p>- duckdb  (open-source, embedded columnar analytics engine with a Postgres-like SQL dialect)<p>We needed to know how they would perform on real postgres queries, so we took a backlog of 5,410 (hand-written) queries (chosen because they had been slow to execute against postgres) from 159 real postgres databases.  We then generated synthetic data (dynamically using the schemas from those 159 databases) to fill 159 local databases so we could run the experiment.<p>We then spun up the 3 short-listed tools locally, and ran each of the 5,410 queries against both postgres and the 3 tools, and compared the results:<p>- pg_clickhouse (matched postgres 59.4% of the time, refused 39.9% of the queries and was “wrong” 0.8% of the time).<p>- cedarDB (matched postgres 88.1% of the time, refused 8% of the queries and was “wrong” 3.9% of the time).<p>- duckdb (matched postgres 84.1% of the time, refused 14.3% of the queries and was “wrong” 1.6% of the time).<p>Matched meant they returned exactly the same result as postgres.  Refused meant they returned an error message (usually telling you some syntax isn’t recognised). And “wrong” meant they didn’t return the same results as postgres.  I appreciate that arguably postgres may be the one that is wrong in some cases - but for our use case, we considered postgres the golden source of truth.<p>So, both duckdb and cedardb performed pretty well (correct",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "Postgres 읽기 복제에 컬럼형 엔진 적용",
+        "tags": [
+          "Mason",
+          "Postgres",
+          "duckdb",
+          "ClickHouse",
+          "cedarDB"
+        ],
+        "concepts": [
+          "semantic query processing",
+          "레거시 시스템 리팩터링"
+        ],
+        "key_points": [
+          {
+            "point": "Mason은 DuckDB의 컬럼형 엔진을 활용해 기존 Postgres와 호환되는 고성능 읽기 복제본을 제공한다.",
+            "timestamp": null
+          },
+          {
+            "point": "5,410개의 실제 쿼리 테스트에서 DuckDB는 Postgres와 84.1% 일치하고 14.3%를 오류로 반환해 pg_clickhouse보다 우수한 결과를 보였다.",
+            "timestamp": null
+          },
+          {
+            "point": "ClickHouse, pg_mooncake, materialize 등은 학습 곡선, 라이선스, 사전 쿼리 형태 요구 등 이유로 플러그‑인 대안에서 제외되었다.",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [
+          "MySQL에 DuckDB 기반 컬럼형 엔진을 적용해 읽기 복제본을 만들면, 기존 OLTP와 별도 분석 워크로드를 고성능으로 처리할 수 있다.",
+          "실제 스키마를 이용해 동적으로 합성 데이터를 생성하고, 동일 쿼리 집합을 여러 엔진에 실행해 성능과 호환성을 자동 평가한다.",
+          "클라우드 공급자에 독립적인 오픈소스 읽기 복제 레이어를 구축해, 다중 데이터베이스 환경에서 일관된 분석 인터페이스를 제공한다."
+        ],
+        "quiz": [
+          {
+            "question": "왜 저자들은 ClickHouse를 ad‑hoc Postgres 워크로드에 사용하지 않기로 했나요?",
+            "options": [
+              "ClickHouse는 학습 곡선이 가파르고 SQL 문법이 Postgres와 달라서",
+              "ClickHouse는 분석 쿼리에서 속도가 느리다",
+              "ClickHouse는 라이선스가 제한적이다",
+              "ClickHouse는 컬럼형 저장을 지원하지 않는다"
+            ],
+            "answer_index": 0,
+            "explanation": "본문에 따르면 ClickHouse는 빠르지만 학습 곡선이 높고 SQL 문법 차이 때문에 ad‑hoc 워크로드에 적합하지 않다고 언급했다."
+          }
+        ],
+        "skip_reason": null,
+        "evidence_level": "full",
+        "domain": [
+          "data-eng",
+          "systems"
+        ],
+        "content_type": "release",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 6,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust +0.10 (source:hackernews -0.01; domain:data-eng,systems +0.11)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    },
+    {
+      "raw": {
+        "source_type": "youtube",
+        "source_name": "kakao tech",
+        "source_key": "UCdQF7F6hwjSpulj_fwB9iDQ",
+        "source_label": "kakao tech",
+        "title": "오답도 골라서 가르쳐야 하는 이유 | \"그 사진 찾아줘\" 한마디면 끝: Kanana 멀티모달 임베딩 모델 개발기 | Model & Agent",
+        "url": "https://youtu.be/JWutEd3RoR0",
+        "published_at": "2026-11-24T09:00:21",
+        "transcript": null,
+        "body": "\"그 사진 찾아줘!\" 한마디면 사진부터 상품, 문서까지 검색 끝!\n텍스트와 이미지, 비디오를 하나의 공간에서 엮어내는 멀티모달 임베딩 모델 \n'Kanana-v-embedding'의 개발기를 소개합니다. \nGPU 메모리 제약을 극복한 대규모 학습 노하우와 시행착오부터 \nRAG, 상품 검색 및 추천까지 아우르는 다채로운 서비스 연동 과정을 확인해 보세요.\n\n#ifkakao26 #이프카카오 #이프카카오26 #kakao #카카오 #AI #LLM #Multimodal\n\n발표자료 보러 가기\nhttps://if.kakao.com/2026/session/time-table?sessionId=96\n\n정성효 | 카카오\n멀티모달 언어 모델을 연구·개발하며, \n사용자가 원하는 것을 빠르고 자연스럽게 찾아내는 AI를 만들고 있는 정성효(Shawn)입니다.\n\n박상하 | 카카오\n멀티모달 모델을 연구·개발하며, \nAI 기술로 사용자 문제를 해결하고 이를 실질적인 가치로 연결하는 데 집중하는 박상하(Hash)입니다.",
+        "duration_seconds": null
+      },
+      "analysis": {
+        "relevance_score": 7,
+        "one_line_summary": "멀티모달 임베딩으로 검색·추천 효율을 높이는 실전 노하우",
+        "tags": [
+          "Kanana-v-embedding",
+          "GPU",
+          "RAG",
+          "Kakao"
+        ],
+        "concepts": [
+          "멀티모달 표현 학습",
+          "GPU 가속"
+        ],
+        "key_points": [
+          {
+            "point": "Kanana‑v‑embedding 멀티모달 임베딩 모델 개발 과정 소개",
+            "timestamp": null
+          },
+          {
+            "point": "GPU 메모리 제약을 극복한 대규모 학습 노하우와 시행착오 공유",
+            "timestamp": null
+          },
+          {
+            "point": "RAG 기반 상품 검색·추천 등 서비스 연동 사례 설명",
+            "timestamp": null
+          }
+        ],
+        "positioning": null,
+        "production_ideas": [],
+        "quiz": [],
+        "skip_reason": null,
+        "evidence_level": "description",
+        "domain": [
+          "ai-ml",
+          "product"
+        ],
+        "content_type": "talk",
+        "half_life": "durable",
+        "actionability": 6,
+        "depth": 3,
+        "scores": null,
+        "notes": [
+          {
+            "text": "interest_adjust -0.04 (source:UCdQF7F6hwjSpulj_fwB9iDQ -0.11; domain:ai-ml,product +0.08; content_type:talk -0.01)",
+            "concepts": [],
+            "source_timestamp": null,
+            "chapter": "interest_adjust"
+          }
+        ],
+        "triplets": []
+      }
+    }
+  ]
+}
